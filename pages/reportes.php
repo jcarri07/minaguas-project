@@ -19,9 +19,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/logos/cropped-mminaguas.webp">
   <title>
-    Argon Dashboard 2 by Creative Tim
+    Minaguas
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -186,18 +186,18 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Authors table</h6>
+              <h6>Embalses</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
-                      <th class="text-secondary opacity-7"></th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre de Embalse</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Capacidad (m³)</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estados</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nivel de Agua (m)</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Reporte</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -205,27 +205,27 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                            <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">John Michael</h6>
-                            <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
+                            <h6 class="mb-0 text-sm">Embalse 1</h6>
+                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                        <p class="text-xs text-secondary mb-0">Organization</p>
+                        <p class="text-xs font-weight-bold mb-0">230.000</p>
+                        <p class="text-xs text-secondary mb-0">m³</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
+                        <span class="badge badge-sm bg-gradient-success">Normal</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">220</span>
                       </td>
-                      <td class="align-middle">
+                      <td class="align-middle text-center">
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
+                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
                         </a>
                       </td>
                     </tr>
@@ -233,27 +233,27 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user2">
+                          <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                            <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
+                            <h6 class="mb-0 text-sm">Embalse 2</h6>
+                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
+                        <p class="text-xs font-weight-bold mb-0">200.000</p>
+                        <p class="text-xs text-secondary mb-0">m³</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
+                        <span class="badge badge-sm bg-gradient-danger">Critico</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">11/01/19</span>
+                        <span class="text-secondary text-xs font-weight-bold">150</span>
                       </td>
-                      <td class="align-middle">
+                      <td class="align-middle text-center">
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
+                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
                         </a>
                       </td>
                     </tr>
@@ -261,27 +261,27 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user3">
+                            <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                            <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
+                            <h6 class="mb-0 text-sm">Embalse 3</h6>
+                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Executive</p>
-                        <p class="text-xs text-secondary mb-0">Projects</p>
+                        <p class="text-xs font-weight-bold mb-0">180.000</p>
+                        <p class="text-xs text-secondary mb-0">m³</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
+                        <span class="badge badge-sm bg-gradient-success">Normal</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">19/09/17</span>
+                        <span class="text-secondary text-xs font-weight-bold">300</span>
                       </td>
-                      <td class="align-middle">
+                      <td class="align-middle text-center">
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
+                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
                         </a>
                       </td>
                     </tr>
@@ -289,27 +289,27 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user4">
+                          <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Michael Levi</h6>
-                            <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
+                            <h6 class="mb-0 text-sm">Embalse 4</h6>
+                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
+                        <p class="text-xs font-weight-bold mb-0">300.000</p>
+                        <p class="text-xs text-secondary mb-0">m³</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
+                        <span class="badge badge-sm bg-gradient-success">Normal</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">24/12/08</span>
+                        <span class="text-secondary text-xs font-weight-bold">130</span>
                       </td>
-                      <td class="align-middle">
+                      <td class="align-middle text-center">
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
+                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
                         </a>
                       </td>
                     </tr>
@@ -317,27 +317,27 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user5">
+                          <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Richard Gran</h6>
-                            <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
+                            <h6 class="mb-0 text-sm">Embalse 5</h6>
+                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                        <p class="text-xs text-secondary mb-0">Executive</p>
+                        <p class="text-xs font-weight-bold mb-0">200.000</p>
+                        <p class="text-xs text-secondary mb-0">m³</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
+                        <span class="badge badge-sm bg-gradient-secondary">Bajo</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">04/10/21</span>
+                        <span class="text-secondary text-xs font-weight-bold">350</span>
                       </td>
-                      <td class="align-middle">
+                      <td class="align-middle text-center">
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
+                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
                         </a>
                       </td>
                     </tr>
@@ -345,27 +345,27 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user6">
+                          <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                            <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
+                            <h6 class="mb-0 text-sm">Embalse 6</h6>
+                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Programtor</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
+                        <p class="text-xs font-weight-bold mb-0">150.000</p>
+                        <p class="text-xs text-secondary mb-0">m³</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
+                        <span class="badge badge-sm bg-gradient-secondary">Bajo</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
+                        <span class="text-secondary text-xs font-weight-bold">280</span>
                       </td>
-                      <td class="align-middle">
+                      <td class="align-middle text-center">
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
+                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
                         </a>
                       </td>
                     </tr>
