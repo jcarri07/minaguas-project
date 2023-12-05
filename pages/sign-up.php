@@ -18,10 +18,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/minaguas.png">
+  <link rel="icon" type="image/png" href="../assets/img/minaguas.png">
   <title>
-    Argon Dashboard 2 by Creative Tim
+    Minaguas Project
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -35,12 +35,11 @@
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
 
-<body class="">
+<body class="" style="background-color: #5e72e4;">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
-    <div class="container">
-      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="../pages/dashboard.html">
-        Argon Dashboard 2
+    <div class="container" style="text-align: left;">
+      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white ni ni-bold-left" href="sign-in.php" >
       </a>
       <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon mt-2">
@@ -49,7 +48,7 @@
           <span class="navbar-toggler-bar bar3"></span>
         </span>
       </button>
-      <div class="collapse navbar-collapse" id="navigation">
+      <!--div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="../pages/dashboard.html">
@@ -81,18 +80,18 @@
             <a href="https://www.creative-tim.com/product/argon-dashboard" class="btn btn-sm mb-0 me-1 bg-gradient-light">Free Download</a>
           </li>
         </ul>
-      </div>
+      </div-->
     </div>
   </nav>
   <!-- End Navbar -->
   <main class="main-content  mt-0">
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signup-cover.jpg'); background-position: top;">
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('../assets/img/bacino.jpg'); background-position: center;">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">Welcome!</h1>
-            <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
+            <h1 class="text-white mb-2 mt-5">Bienvenido!</h1>
+            <!--p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p-->
           </div>
         </div>
       </div>
@@ -102,9 +101,9 @@
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
-              <h5>Register with</h5>
+              <h5>Datos de Nuevo Usuario</h5>
             </div>
-            <div class="row px-xl-5 px-sm-4 px-3">
+            <!--div class="row px-xl-5 px-sm-4 px-3">
               <div class="col-3 ms-auto px-1">
                 <a class="btn btn-outline-light w-100" href="javascript:;">
                   <svg width="24px" height="32px" viewBox="0 0 64 64" version="1.1">
@@ -147,28 +146,40 @@
                   or
                 </p>
               </div>
-            </div>
+            </div-->
             <div class="card-body">
               <form role="form">
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Name" aria-label="Name">
+                  <input type="text" class="form-control" placeholder="Primer Nombre" aria-label="Nombre-1">
+                </div>
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Segundo Nombre" aria-label="Nombre-2">
+                </div>
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Primer Apellido" aria-label="apellido-1">
+                </div>
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Segundo Apellido" aria-label="apellido-2">
+                </div>
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}">
                 </div>
                 <div class="mb-3">
                   <input type="email" class="form-control" placeholder="Email" aria-label="Email">
                 </div>
                 <div class="mb-3">
-                  <input type="password" class="form-control" placeholder="Password" aria-label="Password">
+                  <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password">
                 </div>
-                <div class="form-check form-check-info text-start">
+                <!--div class="form-check form-check-info text-start">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                   <label class="form-check-label" for="flexCheckDefault">
                     I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
                   </label>
-                </div>
+                </div-->
                 <div class="text-center">
-                  <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
+                  <a href="sign-in.php"><button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2">Crear Usuario</button></a>
                 </div>
-                <p class="text-sm mt-3 mb-0">Already have an account? <a href="javascript:;" class="text-dark font-weight-bolder">Sign in</a></p>
+                <p class="text-sm mt-3 mb-0">Ya tienes una Cuenta? <a href="sign-in.php" class="text-dark font-weight-bolder">Iniciar Sesion</a></p>
               </form>
             </div>
           </div>
@@ -179,7 +190,7 @@
   <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <footer class="footer py-5">
     <div class="container">
-      <div class="row">
+      <!--div class="row">
         <div class="col-lg-8 mb-4 mx-auto text-center">
           <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
             Company
@@ -217,13 +228,13 @@
             <span class="text-lg fab fa-github"></span>
           </a>
         </div>
-      </div>
+      </div-->
       <div class="row">
         <div class="col-8 mx-auto text-center mt-1">
-          <p class="mb-0 text-secondary">
+          <p class="mb-0" style="color: white;">
             Copyright © <script>
               document.write(new Date().getFullYear())
-            </script> Soft by Creative Tim.
+            </script> Desarrolládo por la Dirección de Investigación eh Innovación Espacia.
           </p>
         </div>
       </div>
