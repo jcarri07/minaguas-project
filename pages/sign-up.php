@@ -35,7 +35,7 @@
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
 
-<body class="" style="background-color: #5e72e4;">
+<body class="min-vh-100" style="background-color: #5e72e4;">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
     <div class="container" style="text-align: left;">
@@ -84,7 +84,7 @@
     </div>
   </nav>
   <!-- End Navbar -->
-  <main class="main-content  mt-0">
+  <main class="main-content  mt-0 ">
     <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('../assets/img/bacino.jpg'); background-position: center;">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container" style="position:relative;top: -100px;">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
@@ -188,7 +188,7 @@
     </div>
   </main>
   <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-  <footer class="footer py-5">
+  <footer class="footer py-5" style="position:relative;top: -100px;">
     <div class="container">
       <!--div class="row">
         <div class="col-lg-8 mb-4 mx-auto text-center">
