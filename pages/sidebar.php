@@ -17,7 +17,7 @@
       <ul class="navbar-nav">
         <div class="d-flex flex-column">
           <li class="nav-item">
-              <a class="nav-link <?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>" href="../index.php">
+              <a class="nav-link <?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>" href="<?php echo ($currentPage == 'index.php') ? '#' : '../index.php'; ?>">
                   <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
               </div>
