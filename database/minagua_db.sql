@@ -1,0 +1,81 @@
+CREATE DATABASE minagua_db;
+
+USE minagua_db;
+
+CREATE TABLE Usuarios (
+    Id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(255),
+    Apellido VARCHAR(255),
+    Cedula VARCHAR(255),
+    Telefono VARCHAR(255),
+    Correo VARCHAR(255)
+);
+
+CREATE TABLE embalses (
+    Id_embalse INT AUTO_INCREMENT PRIMARY KEY,
+    Cuenca_Principal VARCHAR(255),
+    Afluentes_Principales VARCHAR(255),
+    Area_de_la_cuenca FLOAT,
+    Escurrimiento_medio FLOAT,
+    Ubicacion_embalse TEXT,
+    Organo_Rector VARCHAR(255),
+    Personal_Encargado INT,
+    Operador VARCHAR(255),
+    Autoridad_responsable INT,
+    Proyectista VARCHAR(255),
+    Constructor VARCHAR(255),
+    Año_de_inicio_de_construccion INT,
+    Duracion_de_construccion INT,
+    Inicio_de_Operacion INT,
+    Monitoreo_del_embalse VARCHAR(255),
+    Batimetria TEXT,
+    Vida_util INT,
+    Numero_de_presas INT,
+    tipo_de_presa VARCHAR(255),
+    Altura FLOAT,
+    talud_aguas_arriba FLOAT,
+    talud_aguas_abajo FLOAT,
+    Longitud_de_la_cresta FLOAT,
+    Cota_de_la_cresta FLOAT,
+    Ancho_de_la_cresta FLOAT,
+    Volumen_del_terraplen FLOAT,
+    Ancho_maximo_de_base FLOAT,
+    Ubicacion_aliviadero VARCHAR(255),
+    Tipo_aliviadero VARCHAR(255),
+    Numero_compuertas_aliviadero FLOAT,
+    Carga_sobre_el_vertedero FLOAT,
+    Descarga_Maxima FLOAT,
+    Longitud FLOAT,
+    Ubicacion_obra_de_toma VARCHAR(255),
+    Tipo_obra_de_toma VARCHAR(255),
+    Numero_compuertas_obra FLOAT,
+    Mecanismos_de_emergencia VARCHAR(255),
+    mecanismos_de_regulacion VARCHAR(255),
+    Gasto_maximo FLOAT,
+    Descarga_de_fondo FLOAT,
+    Posee_obra VARCHAR(255),
+    Tipo_de_obra VARCHAR(255),
+    Accion_requerida VARCHAR(255),
+    Proposito VARCHAR(255),
+    uso_actual VARCHAR(255),
+    Sectores_beneficiados VARCHAR(255),
+    Poblacion_beneficiada DOUBLE,
+    Area_de_riego_beneficiada FLOAT,
+    Funcionario_responsable INT,
+    Imagenes TEXT,
+    Id_encargado INT,
+    FOREIGN KEY (Id_encargado) REFERENCES Usuarios (Id_usuario)
+);
+
+CREATE TABLE datos_embalse (
+    Id_registro INT AUTO_INCREMENT PRIMARY KEY,
+    Id_embalse INT,
+    Fecha DATE,
+    Hora DATE,
+    Cota_actual FLOAT,
+    Extraccion FLOAT,
+    Tipo_de_extraccion VARCHAR(255),
+    Id_encargado INT,
+    FOREIGN KEY (Id_embalse) REFERENCES embalses (Id_embalse),
+    FOREIGN KEY (Id_encargado) REFERENCES Usuarios (Id_usuario)
+);
