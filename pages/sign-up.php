@@ -101,7 +101,7 @@
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
-              <h5>Datos de Nuevo Usuario</h5>
+              <h5>Introduzca sus datos en las casillas correspondientes</h5>
             </div>
             <!--div class="row px-xl-5 px-sm-4 px-3">
               <div class="col-3 ms-auto px-1">
@@ -150,16 +150,10 @@
             <div class="card-body">
               <form role="form">
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Primer Nombre" aria-label="Nombre-1">
+                  <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="Nombre-1">
                 </div>
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Segundo Nombre" aria-label="Nombre-2">
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Primer Apellido" aria-label="apellido-1">
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Segundo Apellido" aria-label="apellido-2">
+                  <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellido-1">
                 </div>
                 <div class="mb-3">
                   <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}">
