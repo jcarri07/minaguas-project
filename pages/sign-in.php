@@ -35,7 +35,7 @@
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
 
-<body class="" style="background-image: linear-gradient(rgb(20,28,49,0.8),rgb(20,28,49,0.8)),url(../assets/img/world-map-wallpaper.jpg);">
+<body class="" style="background-image: linear-gradient(rgb(20,28,49,0.8),rgb(20,28,49,0.8)),url(../assets/img/world-map-wallpaper.jpg);overflow-x:hidden;overflow-y:auto">
 
     <div class="">
       <div class="" >
@@ -91,11 +91,11 @@
       </div>
     </div>
   </div>
-  <main class="main-content mt-0 w-100" >
+  <main class="main-content mt-0"  >
     
-    <section class="row d-flex flex-column min-vh-100" style="width:100%;">
+    <section class="row" style="">
     <div class="col-12 d-flex px-0" style="height: 175px;">
-    <img src="../assets/img/mina.png" style="width:100%; background-position: center;object-fit:cover;">
+    <img src="../assets/img/mina.png" class="col-12" style="background-position: center;object-fit:cover;">
   </div>
         <div class="col-12 justify-content-center">
         <div class="container ">
@@ -155,9 +155,9 @@
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script>
+  <!--script src="../assets/js/plugins/perfect-scrollbar.min.js"></script-->
+  <!--script src="../assets/js/plugins/smooth-scrollbar.min.js"></script-->
+  <!--script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -165,7 +165,7 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-  </script>
+  </script-->
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
