@@ -35,7 +35,7 @@
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
 
-<body class="" style="background-image: linear-gradient(rgb(20,28,49,0.8),rgb(20,28,49,0.8)),url(../assets/img/world-map-wallpaper.jpg);">
+<body class="" style="background-image: linear-gradient(rgb(20,28,49,0.8),rgb(20,28,49,0.8)),url(../assets/img/world-map-wallpaper.jpg); overflow-x: hidden;">
 
     <div class="">
       <div class="" >
@@ -91,9 +91,9 @@
       </div>
     </div>
   </div>
-  <main class="main-content mt-0 w-100" >
+  <main class="main-content mt-0" >
     
-    <section class="row d-flex flex-column min-vh-100" style="width:100%;">
+    <section class="row d-flex flex-column min-vh-100" style="">
     <div class="col-12 d-flex px-0" style="height: 175px;">
     <img src="../assets/img/mina.png" style="width:100%; background-position: center;object-fit:cover;">
   </div>
@@ -155,8 +155,8 @@
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <!-- <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script> -->
+  <!-- <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script> -->
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
