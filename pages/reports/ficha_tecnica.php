@@ -1,11 +1,43 @@
 <?php
-$HOST = basename(getcwd());
-$image_logo =  "/" . $HOST . "/assets/img/logos/cropped-mminaguas.jpg";
-$logo_letters =  "/" . $HOST . "/assets/img/logos/MinaguasLetters.png";
+include '../../php/Conexion.php';
 
-$imagen_mapa_dibujo =  "/" . $HOST . "/pages/reports_images/Imagen_map.png";
-$imagen_mapa = "/" . $HOST . "/pages/reports_images/Imagens_map_report.png";
-$PIE_PAGINA =  "/" . $HOST . "/pages/reports_images/pie_de_pagina.png";
+$id = $_GET['id'];
+
+$sql = "SELECT * FROM embalses WHERE Id_embalse = $id";
+
+$res = mysqli_query($conn, $sql);
+$data = array();
+
+if (mysqli_num_rows($res) > 0) {
+
+  while ($row = mysqli_fetch_assoc($res)) {
+    $data[] = $row;
+  }
+
+  print_r($data);
+} else {
+  echo "No se encontraron resultados.";
+}
+
+
+$HOST = basename(getcwd());
+$fullPath = getcwd();
+
+$parts = explode(DIRECTORY_SEPARATOR, $fullPath);
+
+if (count($parts) >= 4) {
+  $projectName = $parts[3];
+  echo "Nombre del proyecto: " . $projectName;
+} else {
+  echo "No se pudo obtener el nombre del proyecto desde la ruta.";
+}
+
+$image_logo =  "/" . $projectName . "/assets/img/logos/cropped-mminaguas.jpg";
+$logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";
+
+$imagen_mapa_dibujo =  "/" . $projectName . "/pages/reports_images/Imagen_map.png";
+$imagen_mapa = "/" . $projectName . "/pages/reports_images/Imagens_map_report.png";
+$PIE_PAGINA =  "/" . $projectName . "/pages/reports_images/pie_de_pagina.png";
 
 $ESTE = 385441;
 $NORTE = 983161;
@@ -116,6 +148,95 @@ $CORREO_FUNCIONARIO = "hector8@hotmail.com";
 $CEDULA_FUNCIONARIO = "V.-17.049.840";
 $APELLIDOS_FUNCIONARIO = "Ledezma";
 $FIRMA_FUNCIONARIO = "";
+
+
+foreach ($data as $row) {
+  //INFO CUENCA
+  $CUENCA = $row['Cuenca_Principal'];
+  $AFLUENTES = $row['Afluentes_Principales'];
+  $AREA_CUENCA = $row['Area_de_la_cuenca'];
+  $ESCURRIMIENTO = $row['Escurrimiento_medio'];
+  //INFO EMBALSE
+  $UBICACION = $row['Ubicacion_embalse'];
+  $ORGANO_RECTOR = $row['Organo_Rector'];
+  $PERSONAL_ENCARGADO = $row['Personal_Encargado'];
+  $OPERADOR = $row['Operador'];
+  $AUTORIDAD_RESPONSABLE = $row['Autoridad_responsable'];
+  $PROYECTISTA = $row['Proyectista'];
+  $CONSTRUCTOR = $row['Constructor'];
+  $AÑO_INICIO = $row['Año_de_inicio_de_construccion'];
+  $DURACION_CONSTRUCCION = $row['Duracion_de_construccion'];
+  $INCIO_OPERACION = $row['Inicio_de_Operacion'];
+  $MONITOREO = $row['Monitoreo_del_embalse'];
+  //CARACTERISTICAS EMBALSE
+  $BATIMETRIA = $row['Batimetria'];
+  $COTA = 237;
+  $COTA2 = 267;
+  $COTA3 = 269;
+  $FIRTS_VOLUMEN = 88983;
+  $SECOND_VOLUMEN = 8798;
+  $FIRTS_SUPERFICIE = 548305;
+  $SECOND_SUPERFICIE = 569794;
+  $FIRTS_VOLUMEN2 = 88983;
+  $SECOND_VOLUMEN2 = 8798;
+  $FIRTS_SUPERFICIE2 = 548305;
+  $SECOND_SUPERFICIE2 = 569794;
+  $FIRTS_VOLUMEN3 = 88983;
+  $SECOND_VOLUMEN3 = 8798;
+  $FIRTS_SUPERFICIE3 = 548305;
+  $SECOND_SUPERFICIE3 = 569794;
+  $CAPACIDAD_UTIL = 2595;
+  $CAPACIDAD_UTIL2 = 2052;
+  $VIDA_UTIL = $row['Vida_util'];
+  $VIDA_UTIL_RESTANTE = 65;
+  //COMPONENTES EMBALSE
+  $NUMERO_PRESAS = $row['Numero_de_presas'];
+  $TIPO = $row['tipo_de_presa'];
+  $ALTURA = $row['Altura'];
+  $TALUD_AGUAS_ARRIBA = $row['talud_aguas_arriba'];
+  $TALUD_AGUAS_ABAJO = $row['talud_aguas_abajo'];
+  $LONGITUD_CRESTA = $row["Longitud_de_la_cresta"];
+  $COTA_CRESTA = $row['Cota_de_la_cresta'];
+  $ANCHO_CRESTA = $row['Ancho_de_la_cresta'];
+  $VOLUMEN_TERRAPLEN = $row['Volumen_del_terraplen'];
+  $ANCHO_MAX_BASE = $row['Ancho_maximo_de_base'];
+  //ALIVIADERO
+  $UBICACION_ALIVIADERO = $row['Ubicacion_aliviadero'];
+  $TIPO_ALIVIADERO = $row['Tipo_aliviadero'];
+  $COMPUERTAS_ALIVIADERO = $row['Numero_compuertas_aliviadero'];
+  $CARGA_ALIVIADERO = $row['Carga_sobre_el_vertedero'];
+  $DESCARGA_ALIVIADERO = $row['Descarga_Maxima'];
+  $LONGITUD_ALIVIADERO = $row['Longitud'];
+  //OBRA
+  $UBICACION_OBRA = $row['Ubicacion_obra_de_toma'];
+  $TIPO_OBRA = $row['Tipo_obra_de_toma'];
+  $NUMERO_COMPUERTAS_OBRA = $row['Numero_compuertas_obra'];
+  $MECANISMO_EMERGENCIA = $row['Mecanismos_de_emergencia'];
+  $MECANISMO_REGULACION = $row['mecanismos_de_regulacion'];
+  $GASTO_MAXIMO = $row['Gasto_maximo'];
+  $DESCARGA_FONDO = $row['Descarga_de_fondo'];
+  //OBRA HIDRAULICA
+  $POSEE_OBRA = $row['Posee_obra'];
+  $TIPO_OBRA_2 = $row['Tipo_de_obra'];
+  $ACCION_REQUERIDA = $row['Accion_requerida'];
+  //BENEFICIOS
+  $PROPOSITO = $row['Proposito'];
+  $USO_ACTUAL = $row['uso_actual'];
+  $SECTOR_BENEFICIADO = $row['Sectores_beneficiados'];
+  $POBLACION = $row['Poblacion_beneficiada'];
+  $AREA_RIEGO = $row['Area_de_riego_beneficiada'];
+  //FUNCIONARIO RESPONSABLE
+  $CARGO_FUNCIONARIO = $row['Funcionario_responsable'];
+  $NOMBRES_FUNCIONARIO = "Hector";
+  $TLF_FUNCIONARIO = "0414-5221503";
+  $CORREO_FUNCIONARIO = "hector8@hotmail.com";
+  $CEDULA_FUNCIONARIO = "V.-17.049.840";
+  $APELLIDOS_FUNCIONARIO = "Ledezma";
+  $FIRMA_FUNCIONARIO = "";
+  //IMAGENES
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -228,7 +349,7 @@ $FIRMA_FUNCIONARIO = "";
     </div>
   </div>
   <div class="header-title">
-    <h4><?php echo $NOMBRE_EMBALSE; ?></h4>
+    <h4><?php echo $row['Cuenca_Principal']; ?></h4>
   </div>
   <div class="header-info">
     <table style="padding-top: 130px;">
@@ -451,7 +572,7 @@ $FIRMA_FUNCIONARIO = "";
       <td><?php echo $ANCHO_MAX_BASE ?></td>
     </tr>
   </table>
-  <table style="padding-top: 10px;">
+  <!-- <table style="padding-top: 10px;">
     <tr>
       <th class="subtitle" style="width: 100%; text-align: center" colspan="3">4.- COMPONENTES DEL EMBALSE</th>
     </tr>
@@ -460,29 +581,35 @@ $FIRMA_FUNCIONARIO = "";
     </tr>
     <tr>
       <td class="subtitle">4.2.1.- Ubicación</td>
-      <td><?php echo $UBICACION2 ?></td>
+      <td><?php //echo $UBICACION2 
+          ?></td>
     </tr>
     <tr>
       <td class=" subtitle">4.2.2.- Tipo</td>
-      <td style="width: 200px;"><?php echo $TIPO2 ?></td>
+      <td style="width: 200px;"><?php //echo $TIPO2 
+                                ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.3.- N° de compuertas</td>
-      <td><?php echo number_format($NUMERO_COMPUERTAS, 2, ',', '.'); ?></td>
+      <td><?php //echo number_format($NUMERO_COMPUERTAS, 2, ',', '.'); 
+          ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.4.- Carga Sobre el Vertedero (m)</td>
-      <td><?php echo number_format($CARGA_VERTEDERO, 2, ',', '.'); ?></td>
+      <td><?php // echo number_format($CARGA_VERTEDERO, 2, ',', '.'); 
+          ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.5.- Descarga máxima (m³/s)</td>
-      <td><?php echo number_format($DESCARGA_MAXIMA, 2, ',', '.'); ?></td>
+      <td><?php //echo number_format($DESCARGA_MAXIMA, 2, ',', '.'); 
+          ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.5.- Descarga máxima (m³/s)</td>
-      <td><?php echo number_format($LONGITUD, 2, ',', '.'); ?></td>
+      <td><?php //echo number_format($LONGITUD, 2, ',', '.'); 
+          ?></td>
     </tr>
-  </table>
+  </table> -->
   <table>
     <tr>
       <td style="width: 100%; text-align: center" colspan="3"></td>
