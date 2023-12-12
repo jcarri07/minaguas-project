@@ -158,7 +158,7 @@
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+              <a class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
                   <i class="sidenav-toggler-line bg-white"></i>
                   <i class="sidenav-toggler-line bg-white"></i>
@@ -730,6 +730,17 @@
     </div>
   </div>
   <!--   Core JS Files   -->
+  <script>
+    // Función para manejar el evento de clic en el botón
+    function toggleClass() {
+      var body = document.body;
+      body.classList.toggle('g-sidenav-pinned');
+    }
+
+    // Obtener el botón y agregar un event listener
+    var toggleButton = document.getElementById('iconNavbarSidenav');
+    toggleButton.addEventListener('click', toggleClass);
+  </script>
   <script src="./assets/js/core/popper.min.js"></script>
   <script src="./assets/js/core/bootstrap.min.js"></script>
   <script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
