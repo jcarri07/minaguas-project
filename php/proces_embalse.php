@@ -7,7 +7,7 @@
 
 // $conexion = mysqli_connect($host, $username, $password, $database) or die(mysqli_error());
 
-require_once "../database/conexion.php";
+require_once "../database/Conexion.php";
 
 // Obtener los datos del formulario
 $cuenca = $_POST["cuenca"];
