@@ -14,7 +14,17 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+};
+if (!isset($_SESSION["Id_usuario"])) {
 
+  print "<script>window.location='index.php';</script>";
+}
+
+date_default_timezone_set("America/Caracas");
+?>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

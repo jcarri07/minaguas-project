@@ -4,7 +4,6 @@ USE minagua_db;
 
 CREATE TABLE `usuarios` (
   Id_usuario int(11) NOT NULL,
-  N_Usuario varchar(255) DEFAULT NULL,
   Contrasena varchar(255) DEFAULT NULL,
   P_Nombre varchar(255) DEFAULT NULL,
   S_Nombre varchar(255) DEFAULT NULL,

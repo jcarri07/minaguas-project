@@ -6,8 +6,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="navbar-brand m-2" href="#">
-      <img src="<?php echo ($currentPage == 'index.php') ? './assets/img/logos/cropped-mminaguas.webp' : '../assets/img/logos/cropped-mminaguas.webp' ?>" class="navbar-brand-img h-100" alt="main_logo">
-      <img src="<?php echo ($currentPage == 'index.php') ? './assets/img/logos/minaguas-title.svg' : '../assets/img/logos/minaguas-title.svg' ?>" class="navbar-brand-img h-100" alt="main_title">
+      <img src="<?php echo ($currentPage == 'main.php') ? './assets/img/logos/cropped-mminaguas.webp' : '../assets/img/logos/cropped-mminaguas.webp' ?>" class="navbar-brand-img h-100" alt="main_logo">
+      <img src="<?php echo ($currentPage == 'main.php') ? './assets/img/logos/minaguas-title.svg' : '../assets/img/logos/minaguas-title.svg' ?>" class="navbar-brand-img h-100" alt="main_title">
     </a>
   </div>
 
@@ -16,7 +16,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <ul class="navbar-nav">
       <div class="d-flex flex-column">
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>" href="<?php echo ($currentPage == 'index.php') ? '#' : '../index.php'; ?>">
+          <a class="nav-link <?php echo ($currentPage == 'main.php') ? 'active' : ''; ?>" href="<?php echo ($currentPage == 'main.php') ? '#' : '../main.php'; ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -82,6 +82,14 @@ $currentPage = basename($_SERVER['PHP_SELF']);
               <i class="ni ni-collection text-info text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Registrarse</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <?php echo ($currentPage == 'logout.php') ? "active" : ''; ?>" href="./php/login/logout.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-collection text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Salir</span>
           </a>
         </li>
       </div>

@@ -17,17 +17,11 @@
 <?php
 if (!isset($_SESSION)) {
   session_start();
-  if (isset($_SESSION["id_usuario"])) {
+};
+if (!isset($_SESSION["Id_usuario"])) {
 
-    print "<script>window.location='home/dashboard.php';</script>";
-  }
-} else {
-  if (isset($_SESSION["id_usuario"])) {
-
-    print "<script>window.location='home/dashboard.php';</script>";
-  }
+  print "<script>window.location='index.php';</script>";
 }
-
 
 date_default_timezone_set("America/Caracas");
 ?>
@@ -139,9 +133,9 @@ date_default_timezone_set("America/Caracas");
                           <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula" required>
                         </div>
                       </div>
-                      <div class="mb-3">
+                      <!--div class="mb-3">
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
-                      </div>
+                      </div-->
                       <div class="row ">
                         <div class="mb-3 col-6">
                           <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
@@ -319,7 +313,7 @@ date_default_timezone_set("America/Caracas");
               values.append("telefono", $("[name='telefono']").prop("value"));
               values.append("cedula", $("[name='cedula']").prop("value"));
               values.append("email", $("[name='email']").prop("value"));
-              values.append("usuario", $("[name='usuario']").prop("value"));
+              //values.append("usuario", $("[name='usuario']").prop("value"));
               values.append("pass", $("[name='password']").prop("value"));
               console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
                 return n != ''

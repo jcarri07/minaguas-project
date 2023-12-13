@@ -1,6 +1,6 @@
 <?php
 require_once "../Conexion.php";
-$user = $_POST["usuario"];
+//$user = $_POST["usuario"];
 $nombre = $_POST["nombre"];
 $contra = $_POST["pass"];
 $apellido = $_POST["apellido"];
@@ -28,7 +28,7 @@ if ($num_r >= 1) {
         return;
     } else {
 
-        $res = mysqli_query($conn, "INSERT INTO usuarios (P_Nombre,S_Nombre, P_Apellido,S_Apellido, Cedula,Telefono, N_Usuario, Contrasena,Tipo,Correo) VALUES ('$nombre1','$nombre2', '$apellido1','$apellido2','$cedula','$telefono','$user','$contra','User','$email');");
+        $res = mysqli_query($conn, "INSERT INTO usuarios (P_Nombre,S_Nombre, P_Apellido,S_Apellido, Cedula,Telefono, Contrasena,Tipo,Correo) VALUES ('$nombre1','$nombre2', '$apellido1','$apellido2','$cedula','$telefono','$contra','User','$email');");
 
         if ($res) {
             echo "si";
