@@ -100,7 +100,7 @@
 
   <main class="main-content mt-0 h-100">
 
-    <section class="row" style="">
+    <section class="row">
       <div class="col-12 d-flex justify-content-center d-none d-sm-flex" style="height: 120px; background-color:#0081d5;">
         <img src="./assets/img/mina.png" class="col-xxl-8 col-xl-9 col-lg-10 col-md-12 col-sm-12 col-xs-12" style="background-position: center;object-fit:cover;">
       </div>
@@ -204,7 +204,7 @@
           <p class="mb-0" style="color: white;">
             Copyright © <script>
               document.write(new Date().getFullYear())
-            </script> Desarrolládo por la Dirección de Investigación eh Innovación Espacia.
+            </script> Desarrolládo por la Dirección de Investigación eh Innovación Espacia - ABAE.
           </p>
         </div>
       </div>
@@ -282,7 +282,7 @@
   <!-- Github buttons >
   <script async defer src="https://buttons.github.io/buttons.js"></script-->
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="./assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+  <!--script src="./assets/js/argon-dashboard.min.js?v=2.0.4"></script-->
 
 </body>
 
