@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,9 +5,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/logos/cropped-mminaguas.webp">
   <title>
-    Argon Dashboard 2 by Creative Tim
+    Minaguas
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -317,7 +303,6 @@
                     <span class="text-xs">Embalse 2</span>
                   </div>
                   <div class="d-flex align-items-center text-sm">
-                    <!--$250-->
                     <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
                     <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
                   </div>

@@ -19,9 +19,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/logos/cropped-mminaguas.webp">
   <title>
-    Argon Dashboard 2 by Creative Tim
+    Minaguas
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -284,22 +284,22 @@
           <div class="card h-100">
             <!-- inicio -->
 
-            <form>
-              <div class="p-5">
+            <form method="POST" action="../php/proces_embalse.php" enctype="multipart/form-data">
+              <div class="p-5 m-5">
 
                 <h3 class="pb-3">Información de la cuenca:</h3>
 
                 <div class="row">
                   <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="cuenca">Cuenca Principal</label>
+                    <label for="cuenca">Cuenca principal</label>
                     <input type="text" class="form-control" id="cuenca" name="cuenca" placeholder="Ingrese la cuenca principal">
                   </div>
                   <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="afluentes">Afluentes Principales</label>
+                    <label for="afluentes">Afluentes principales</label>
                     <input type="text" class="form-control" id="afluentes" name="afluentes" placeholder="Ingrese los afluentes principales">
                   </div>
                   <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="area">Area de la cuenca</label>
+                    <label for="area">Área de la cuenca</label>
                     <input type="number" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca en km2">
                   </div>
                   <div class="col-xl-3 col-lg-6 form-group">
@@ -312,209 +312,247 @@
 
                 <div class="row">
                   <div class="col-md-6 col-sm-12 form-group">
-                    <label for="ubicacion_embalse">Ubicacion del embalse</label>
+                    <label for="ubicacion_embalse">Ubicación del embalse</label>
                     <textarea class="form-control" id="ubicacion_embalse" name="ubicacion_embalse" rows="5" placeholder="Ingrese la ubicacion del embalse"></textarea>
                   </div>
                   <div class="col-md-6 col-sm-12">
                     <div class="form-group">
-                      <label for="organo">Organo Rector</label>
+                      <label for="organo">Órgano rector</label>
                       <input type="text" class="form-control" id="organo" name="organo" placeholder="Ingrese el organo rector">
                     </div>
                     <div class="form-group">
-                      <label for="personal">Personal Encargado</label>
-                      <input type="number" class="form-control" id="personal" name="personal" placeholder="Ingrese el numero de personal encargado">
+                      <label for="personal">Personal encargado a nivel central</label>
+                      <select class="form-control" id="personal" name="personal">
+                        <option value=""></option>
+                        <option value="1">1 persona</option>
+                        <option value="2">2 personas</option>
+                        <option value="3">3 personas</option>
+                        <option value="4">4 personas</option>
+                        <option value="5">5 personas</option>
+                        <option value="6">6 o más personas</option>
+                      </select>
                     </div>
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="operador">Operador</label>
-                  <input type="text" class="form-control" id="operador" name="operador" placeholder="Ingrese el operador">
-                </div>
-                <div class="form-group">
-                  <label for="autoridad">Autoridad responsable</label>
-                  <input type="number" class="form-control" id="autoridad" name="autoridad" placeholder="Ingrese el codigo de la autoridad responsable">
-                </div>
-                <div class="form-group">
-                  <label for="proyectista">Proyectista</label>
-                  <input type="text" class="form-control" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
-                </div>
-                <div class="form-group">
-                  <label for="constructor">Constructor</label>
-                  <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Ingrese el constructor">
-                </div>
-                <div class="form-group">
-                  <label for="inicio_construccion">Año de inicio de construccion</label>
-                  <input type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construccion">
-                </div>
-                <div class="form-group">
-                  <label for="duracion_construccion">Duracion de construccion</label>
-                  <input type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duracion de construccion en años">
-                </div>
-                <div class="form-group">
-                  <label for="inicio_operacion">Inicio de operacion</label>
-                  <input type="number" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operacion">
-                </div>
-                <div class="form-group">
-                  <label for="monitoreo">Monitoreo del embalse</label>
-                  <input type="text" class="form-control" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="operador">Operador</label>
+                    <input type="text" class="form-control" id="operador" name="operador" placeholder="Ingrese el operador">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="autoridad">Autoridad responsable del embalse</label>
+                    <select class="form-control" id="autoridad" name="autoridad">
+                      <option value=""></option>
+                      <option value="1">Ministerio del Poder Popular para el Ambiente</option>
+                      <option value="2">Ministerio del Poder Popular para la Energía Eléctrica</option>
+                      <option value="3">Ministerio del Poder Popular para la Agricultura y Tierras</option>
+                      <option value="4">Ministerio del Poder Popular para el Turismo</option>
+                      <option value="5">Ministerio del Poder Popular para la Defensa</option>
+                      <option value="6">Otra autoridad</option>
+                    </select>
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="proyectista">Proyectista</label>
+                    <input type="text" class="form-control" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="constructor">Constructor</label>
+                    <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Ingrese el constructor">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="inicio_construccion">Año de inicio de construccion</label>
+                    <input type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construccion">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="duracion_construccion">Duración de construcción</label>
+                    <input type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duracion de construccion en años">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="inicio_operacion">Inicio de operación</label>
+                    <input type="number" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operacion">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="monitoreo">Monitoreo de niveles del embalse</label>
+                    <input type="text" class="form-control" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
+                  </div>
                 </div>
 
-                <h3 class="pb-3 pt-3">Carácteristicas de los embalses:</h3>
+                <h3 class="pb-3 pt-3">Características de los embalses:</h3>
 
                 <div class="form-group">
-                  <label for="batimetria">Batimetria</label>
+                  <label for="batimetria">Batimetría</label>
                   <input type="text" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
                 </div>
                 <div class="form-group">
-                  <label for="vida_util">Vida util</label>
+                  <label for="vida_util">Vida útil</label>
                   <input type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida util en años">
                 </div>
 
                 <h3 class="pb-3 pt-3">Presa:</h3>
 
-                <div class="form-group">
-                  <label for="numero_presas">Numero de presas</label>
-                  <input type="number" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el numero de presas">
-                </div>
-                <div class="form-group">
-                  <label for="tipo_presa">Tipo de presa</label>
-                  <input type="text" class="form-control" id="tipo_presa" name="tipo_presa" placeholder="Ingrese el tipo de presa">
-                </div>
-                <div class="form-group">
-                  <label for="altura">Altura</label>
-                  <input type="number" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
-                </div>
-                <div class="form-group">
-                  <label for="talud_arriba">Talud aguas arriba</label>
-                  <input type="number" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba en grados">
-                </div>
-                <div class="form-group">
-                  <label for="talud_abajo">Talud aguas abajo</label>
-                  <input type="number" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo en grados">
-                </div>
-                <div class="form-group">
-                  <label for="longitud_cresta">Longitud de la cresta</label>
-                  <input type="number" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
-                </div>
-                <div class="form-group">
-                  <label for="cota_cresta">Cota de la cresta</label>
-                  <input type="number" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros sobre el nivel del mar">
-                </div>
-                <div class="form-group">
-                  <label for="ancho_cresta">Ancho de la cresta</label>
-                  <input type="number" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
-                </div>
-                <div class="form-group">
-                  <label for="volumen_terraplen">Volumen del terraplen</label>
-                  <input type="number" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen en m3">
-                </div>
-                <div class="form-group">
-                  <label for="ancho_base">Ancho maximo de base</label>
-                  <input type="number" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho maximo de base en metros">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="numero_presas">Número de presas</label>
+                    <input type="number" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el numero de presas">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="tipo_presa">Tipo de presa</label>
+                    <input type="text" class="form-control" id="tipo_presa" name="tipo_presa" placeholder="Ingrese el tipo de presa">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="altura">Altura</label>
+                    <input type="number" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="talud_arriba">Talud aguas arriba</label>
+                    <input type="number" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba en grados">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="talud_abajo">Talud aguas abajo</label>
+                    <input type="number" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo en grados">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="longitud_cresta">Longitud de la cresta</label>
+                    <input type="number" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="cota_cresta">Cota de la cresta</label>
+                    <input type="number" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros sobre el nivel del mar">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="ancho_cresta">Ancho de la cresta</label>
+                    <input type="number" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="volumen_terraplen">Volumen del terraplen</label>
+                    <input type="number" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen en m3">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="ancho_base">Ancho maximo de base</label>
+                    <input type="number" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho maximo de base en metros">
+                  </div>
                 </div>
 
                 <h3 class="pb-3 pt-3">Aliviadero:</h3>
 
-                <div class="form-group">
-                  <label for="ubicacion_aliviadero">Ubicacion del aliviadero</label>
-                  <input type="text" class="form-control" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicacion del aliviadero">
-                </div>
-                <div class="form-group">
-                  <label for="tipo_aliviadero">Tipo de aliviadero</label>
-                  <input type="text" class="form-control" id="tipo_aliviadero" name="tipo_aliviadero" placeholder="Ingrese el tipo de aliviadero">
-                </div>
-                <div class="form-group">
-                  <label for="numero_compuertas_aliviadero">Numero de compuertas del aliviadero</label>
-                  <input type="number" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el numero de compuertas del aliviadero">
-                </div>
-                <div class="form-group">
-                  <label for="carga_aliviadero">Carga sobre el vertedero</label>
-                  <input type="number" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero en metros">
-                </div>
-                <div class="form-group">
-                  <label for="descarga_aliviadero">Descarga maxima</label>
-                  <input type="number" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga maxima en m3/s">
-                </div>
-                <div class="form-group">
-                  <label for="longitud_aliviadero">Longitud</label>
-                  <input type="number" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud en metros">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="ubicacion_aliviadero">Ubicacion del aliviadero</label>
+                    <input type="text" class="form-control" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicacion del aliviadero">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="tipo_aliviadero">Tipo de aliviadero</label>
+                    <input type="text" class="form-control" id="tipo_aliviadero" name="tipo_aliviadero" placeholder="Ingrese el tipo de aliviadero">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="numero_compuertas_aliviadero">Numero de compuertas del aliviadero</label>
+                    <input type="number" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el numero de compuertas del aliviadero">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="carga_aliviadero">Carga sobre el vertedero</label>
+                    <input type="number" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero en metros">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="descarga_aliviadero">Descarga maxima</label>
+                    <input type="number" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga maxima en m3/s">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="longitud_aliviadero">Longitud</label>
+                    <input type="number" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud en metros">
+                  </div>
                 </div>
 
                 <h3 class="pb-3 pt-3">Obra de toma:</h3>
 
-                <div class="form-group">
-                  <label for="ubicacion_toma">Ubicacion de la obra de toma</label>
-                  <input type="text" class="form-control" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicacion de la obra de toma">
-                </div>
-                <div class="form-group">
-                  <label for="tipo_toma">Tipo de obra de toma</label>
-                  <input type="text" class="form-control" id="tipo_toma" name="tipo_toma" placeholder="Ingrese el tipo de obra de toma">
-                </div>
-                <div class="form-group">
-                  <label for="numero_compuertas_toma">Numero de compuertas de la obra de toma</label>
-                  <input type="number" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el numero de compuertas de la obra de toma">
-                </div>
-                <div class="form-group">
-                  <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
-                  <input type="text" class="form-control" id="emergencia_toma" name="emergencia_toma" placeholder="Ingrese los mecanismos de emergencia de la obra de toma">
-                </div>
-                <div class="form-group">
-                  <label for="regulacion_toma">Mecanismos de regulacion de la obra de toma</label>
-                  <input type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulacion de la obra de toma">
-                </div>
-                <div class="form-group">
-                  <label for="gasto_toma">Gasto maximo de la obra de toma</label>
-                  <input type="number" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto maximo de la obra de toma en m3/s">
-                </div>
-                <div class="form-group">
-                  <label for="descarga_fondo">Descarga de fondo</label>
-                  <input type="text" class="form-control" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo en m3/s o N/A si no aplica">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="ubicacion_toma">Ubicación de la obra de toma</label>
+                    <input type="text" class="form-control" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicacion de la obra de toma">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="tipo_toma">Tipo de obra de toma</label>
+                    <input type="text" class="form-control" id="tipo_toma" name="tipo_toma" placeholder="Ingrese el tipo de obra de toma">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="numero_compuertas_toma">Numero de compuertas de la obra de toma</label>
+                    <input type="number" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el numero de compuertas de la obra de toma">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
+                    <input type="text" class="form-control" id="emergencia_toma" name="emergencia_toma" placeholder="Ingrese los mecanismos de emergencia de la obra de toma">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="regulacion_toma">Mecanismos de regulacion de la obra de toma</label>
+                    <input type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulacion de la obra de toma">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="gasto_toma">Gasto máximo de la obra de toma</label>
+                    <input type="number" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto maximo de la obra de toma en m3/s">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="descarga_fondo">Descarga de fondo</label>
+                    <input type="text" class="form-control" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo en m3/s o N/A si no aplica">
+                  </div>
                 </div>
 
                 <h3 class="pb-3 pt-3">Obra hidraulica:</h3>
 
-                <div class="form-group">
-                  <label for="obra_conduccion">Posee obra de conduccion</label>
-                  <input type="text" class="form-control" id="obra_conduccion" name="obra_conduccion" placeholder="Ingrese SI o NO si posee obra de conduccion">
-                </div>
-                <div class="form-group">
-                  <label for="tipo_conduccion">Tipo de obra de conduccion</label>
-                  <input type="text" class="form-control" id="tipo_conduccion" name="tipo_conduccion" placeholder="Ingrese el tipo de obra de conduccion o N/A si no aplica">
-                </div>
-                <div class="form-group">
-                  <label for="accion_conduccion">Accion requerida de la obra de conduccion</label>
-                  <input type="text" class="form-control" id="accion_conduccion" name="accion_conduccion" placeholder="Ingrese la accion requerida de la obra de conduccion o N/A si no aplica">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-6 form-group">
+                    <label for="obra_conduccion">Posee obra de conduccion</label>
+                    <input type="text" class="form-control" id="obra_conduccion" name="obra_conduccion" placeholder="Ingrese SI o NO si posee obra de conduccion">
+                  </div>
+                  <div class="col-xl-4 col-lg-6 form-group">
+                    <label for="tipo_conduccion">Tipo de obra de conduccion</label>
+                    <input type="text" class="form-control" id="tipo_conduccion" name="tipo_conduccion" placeholder="Ingrese el tipo de obra de conduccion o N/A si no aplica">
+                  </div>
+                  <div class="col-xl-4 col-lg-6 form-group">
+                    <label for="accion_conduccion">Accion requerida de la obra de conduccion</label>
+                    <input type="text" class="form-control" id="accion_conduccion" name="accion_conduccion" placeholder="Ingrese la accion requerida de la obra de conduccion o N/A si no aplica">
+                  </div>
                 </div>
 
-                <h3 class="pb-3 pt-3">Propósito:</h3>
+                <h3 class="pb-3 pt-3">Beneficios:</h3>
 
-                <div class="form-group">
-                  <label for="proposito">Proposito del embalse</label>
-                  <input type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el proposito del embalse">
-                </div>
-                <div class="form-group">
-                  <label for="uso">Uso actual del embalse</label>
-                  <input type="text" class="form-control" id="uso" name="uso" placeholder="Ingrese el uso actual del embalse">
-                </div>
-                <div class="form-group">
-                  <label for="sectores">Sectores beneficiados</label>
-                  <input type="text" class="form-control" id="sectores" name="sectores" placeholder="Ingrese los sectores beneficiados">
-                </div>
-                <div class="form-group">
-                  <label for="poblacion">Poblacion beneficiada</label>
-                  <input type="number" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la poblacion beneficiada en habitantes">
-                </div>
-                <div class="form-group">
-                  <label for="area_riego">Area de riego beneficiada</label>
-                  <input type="number" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada en km2">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="proposito">Propósito del embalse</label>
+                    <input type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el proposito del embalse">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="uso">Uso actual del embalse</label>
+                    <input type="text" class="form-control" id="uso" name="uso" placeholder="Ingrese el uso actual del embalse">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="sectores">Sectores beneficiados</label>
+                    <input type="text" class="form-control" id="sectores" name="sectores" placeholder="Ingrese los sectores beneficiados">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="poblacion">Población beneficiada</label>
+                    <input type="number" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la poblacion beneficiada en habitantes">
+                  </div>
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="area_riego">Área de riego beneficiada</label>
+                    <input type="number" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada en km2">
+                  </div>
                 </div>
 
                 <h3 class="pb-3 pt-3">Responsable:</h3>
 
-                <div class="form-group">
-                  <label for="funcionario">Funcionario responsable</label>
-                  <input type="number" class="form-control" id="funcionario" name="funcionario" placeholder="Ingrese el codigo del funcionario responsable">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-6 form-group">
+                    <label for="funcionario">Funcionario responsable</label>
+                    <select class="form-control" id="funcionario" name="funcionario">
+                      <option value=""></option>
+                      <option value="1">Juan Pérez (Director General de Recursos Hídricos)</option>
+                      <option value="2">María García (Gerente de Planificación y Proyectos)</option>
+                      <option value="3">Carlos Rodríguez (Coordinador de Operaciones y Mantenimiento)</option>
+                      <option value="4">Ana López (Jefa de Control de Calidad)</option>
+                      <option value="5">Luis Sánchez (Asesor Técnico)</option>
+                      <option value="6">Otro funcionario</option>
+                    </select>
+                  </div>
                 </div>
 
                 <h3 class="pb-3 pt-3">Carga de imágenes:</h3>
@@ -524,7 +562,9 @@
                   <input type="text" class="form-control" id="imagenes" name="imagenes" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <div class="row justify-content-center mt-5">
+                  <button type="submit" class="col-2 btn btn-primary" name="Guardar">Guardar embalse</button>
+                </div>
 
             </form>
 

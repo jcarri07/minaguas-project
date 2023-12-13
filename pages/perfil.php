@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logos/cropped-mminaguas.webp">
   <title>
-    Argon Dashboard 2 by Creative Tim
+    Minaguas
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -366,7 +366,7 @@
           </div>
         </div>
       </div>
-      <footer class="footer pt-3  ">
+      <!-- <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
@@ -397,7 +397,7 @@
             </div>
           </div>
         </div>
-      </footer>
+      </footer> -->
     </div>
   </div>
   <div class="fixed-plugin">

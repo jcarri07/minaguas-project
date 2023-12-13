@@ -1,17 +1,20 @@
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
+<?php
+include '../php/Conexion.php';
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
+$sql = "SELECT * FROM embalses";
 
-=========================================================
+$res = mysqli_query($conn, $sql);
+$data = array();
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
+if (mysqli_num_rows($res) > 0) {
+
+  while ($row = mysqli_fetch_assoc($res)) {
+    $data[] = $row;
+  }
+} else {
+  echo "No se encontraron resultados.";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,33 +40,7 @@
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
-    <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Argon Dashboard 2</span>
-      </a>
-    </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-      <!-- SIDEBAR -->
-      <?php include './sidebar.php'; ?>
-    </div>
-    <div class="sidenav-footer mx-3 ">
-      <div class="card card-plain shadow-none" id="sidenavCard">
-        <img class="w-50 mx-auto" src="../assets/img/illustrations/icon-documentation.svg" alt="sidebar_illustration">
-        <div class="card-body text-center p-3 w-100 pt-0">
-          <div class="docs-info">
-            <h6 class="mb-0">Need help?</h6>
-            <p class="text-xs font-weight-bold mb-0">Please check our docs</p>
-          </div>
-        </div>
-      </div>
-      <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
-      <a class="btn btn-primary btn-sm mb-0 w-100" href="https://www.creative-tim.com/product/argon-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
-    </div>
-  </aside>
+  <?php include './sidebar.php'; ?>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
@@ -193,182 +170,44 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre de Embalse</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Capacidad (m³)</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estados</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nivel de Agua (m)</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cuenca Principal</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Area de la Cuenca</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ubicacion del Embalse</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Uso Actual</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Reporte</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
+                    <?php foreach ($data as $row) { ?>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div>
+                              <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm"><?php echo $row["Cuenca_Principal"] ?></h6>
+                              <p class="text-xs text-secondary mb-0">codigo: <?php echo $row['Id_embalse'] ?> </p>
+                            </div>
                           </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Embalse 1</h6>
-                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">230.000</p>
-                        <p class="text-xs text-secondary mb-0">m³</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Normal</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">220</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                          <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Embalse 2</h6>
-                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">200.000</p>
-                        <p class="text-xs text-secondary mb-0">m³</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-danger">Critico</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">150</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Embalse 3</h6>
-                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">180.000</p>
-                        <p class="text-xs text-secondary mb-0">m³</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Normal</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">300</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                          <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Embalse 4</h6>
-                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">300.000</p>
-                        <p class="text-xs text-secondary mb-0">m³</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Normal</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">130</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                          <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Embalse 5</h6>
-                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">200.000</p>
-                        <p class="text-xs text-secondary mb-0">m³</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Bajo</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">350</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                          <img src="../assets/img/embalse.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Embalse 6</h6>
-                            <p class="text-xs text-secondary mb-0">codigo: 0544544</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">150.000</p>
-                        <p class="text-xs text-secondary mb-0">m³</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Bajo</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">280</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
-                        </a>
-                      </td>
-                    </tr>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0"><?php echo $row['Area_de_la_cuenca'] ?></p>
+                          <p class="text-xs text-secondary mb-0">m³</p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          <span class="badge badge-sm bg-gradient-success"><?php echo $row['Ubicacion_embalse'] ?></span>
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold"><?php echo $row['uso_actual'] ?></span>
+                        </td>
+                        <td class="align-middle text-center">
+                          <a id="<?php echo $row['Id_embalse']; ?>" onclick="getId(<?php echo $row['Id_embalse']; ?>)" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="fas fa-file-pdf text-lg me-1"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    <?php } ?>
                   </tbody>
                 </table>
               </div>
@@ -600,7 +439,7 @@
           </div>
         </div>
       </div>
-      <footer class="footer pt-3  ">
+      <!-- <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
@@ -631,7 +470,7 @@
             </div>
           </div>
         </div>
-      </footer>
+      </footer> -->
     </div>
   </main>
   <div class="fixed-plugin">
@@ -707,6 +546,21 @@
     </div>
   </div>
   <!--   Core JS Files   -->
+  <script>
+    function getId(id) {
+      console.log(id);
+      window.open('./reports/print_ficha_tecnica.php?id=' + id, '_blank');
+    }
+    // Función para manejar el evento de clic en el botón
+    function toggleClass() {
+      var body = document.body;
+      body.classList.toggle('g-sidenav-pinned');
+    }
+
+    // Obtener el botón y agregar un event listener
+    var toggleButton = document.getElementById('iconNavbarSidenav');
+    toggleButton.addEventListener('click', toggleClass);
+  </script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
