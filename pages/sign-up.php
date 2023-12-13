@@ -40,7 +40,7 @@ date_default_timezone_set("America/Caracas");
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="./assets/js/fontawesome.js" crossorigin="anonymous"></script>
+  <script src="./assets/js/fontawesome/42d5adcbca.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
@@ -337,7 +337,7 @@ date_default_timezone_set("America/Caracas");
                         timer: 2000
                       }); //CUANDO REGISTRA EXITOSAMENTE
                       setTimeout(function() {
-                        window.location = "../sign-in.php";
+                        window.location = "../index.php";
                       }, 2000);
                       break;
                     case "no":
