@@ -156,7 +156,7 @@ date_default_timezone_set("America/Caracas");
                         <a href="sign-in.php"><button type="submit" class="btn btn-primary w-100 my-4 mb-2">Crear Usuario</button></a>
                       </div>
                       <div class="text-center">
-                        <p class="text-sm mt-3 mb-0">Ya tienes una Cuenta? <a href="../sign-in.php" class="text-primary font-weight-bolder">Iniciar Sesion</a></p>
+                        <p class="text-sm mt-3 mb-0">Ya tienes una Cuenta? <a href="../index.php" class="text-primary font-weight-bolder">Iniciar Sesion</a></p>
                       </div>
                     </form>
                   </div>
