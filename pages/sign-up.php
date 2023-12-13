@@ -98,7 +98,7 @@ date_default_timezone_set("America/Caracas");
   <!-- End Navbar -->
   <main class="main-content mt-0 h-75">
 
-    <section class="row" style="">
+    <section class="row">
       <div class="col-12 d-flex justify-content-center d-none d-sm-flex" style="height: 120px; background-color:#0081d5;">
         <img src="../assets/img/mina.png" class="col-xxl-8 col-xl-9 col-lg-10 col-md-12 col-sm-12 col-xs-12" style="background-position: center;object-fit:cover;">
       </div>
@@ -117,17 +117,17 @@ date_default_timezone_set("America/Caracas");
 
                     <form id="form" role="form">
                       <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" required>
+                        <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" pattern="[A-Z][a-z]" required>
                       </div>
                       <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" required>
+                        <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" pattern="[A-Z][a-z]" required>
                       </div>
                       <div class="mb-3">
                         <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required>
                       </div>
                       <div class="row ">
                         <div class="mb-3 col-6">
-                          <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" name="telefono" required>
+                          <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="telefono" required>
                         </div>
                         <div class="mb-3 col-6">
                           <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula" required>
@@ -248,7 +248,7 @@ date_default_timezone_set("America/Caracas");
           <p class="mb-0" style="color: white;">
             Copyright © <script>
               document.write(new Date().getFullYear())
-            </script> Desarrolládo por la Dirección de Investigación eh Innovación Espacia.
+            </script> Desarrolládo por la Dirección de Investigación eh Innovación - ABAE.
           </p>
         </div>
       </div>
@@ -407,12 +407,12 @@ date_default_timezone_set("America/Caracas");
 
 
       });
-    });
+});
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+  <!--script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script-->
 </body>
 
 </html>
