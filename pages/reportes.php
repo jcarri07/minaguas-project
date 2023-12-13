@@ -12,7 +12,7 @@ if (mysqli_num_rows($res) > 0) {
     $data[] = $row;
   }
 } else {
-  echo "No se encontraron resultados.";
+  // echo "No se encontraron resultados.";
 }
 ?>
 <!DOCTYPE html>
@@ -28,6 +28,7 @@ if (!isset($_SESSION["Id_usuario"])) {
 
 date_default_timezone_set("America/Caracas");
 ?>
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
