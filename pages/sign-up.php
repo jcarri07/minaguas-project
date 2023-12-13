@@ -18,9 +18,9 @@
 if (!isset($_SESSION)) {
   session_start();
 };
-if (!isset($_SESSION["Id_usuario"])) {
+if (isset($_SESSION["Id_usuario"])) {
 
-  print "<script>window.location='index.php';</script>";
+  print "<script>window.location='../main.php';</script>";
 }
 
 date_default_timezone_set("America/Caracas");
@@ -40,7 +40,7 @@ date_default_timezone_set("America/Caracas");
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <script src="./assets/js/fontawesome.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
