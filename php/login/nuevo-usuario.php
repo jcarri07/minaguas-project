@@ -21,7 +21,7 @@ if ($num_r >= 1) {
     echo 'existe_cedula';
     return;
 } else {
-    $res = mysqli_query($conn, "SELECT N_Usuario FROM usuarios WHERE N_Usuario = '$user';");
+    $res = mysqli_query($conn, "SELECT Correo FROM usuarios WHERE Correo = '$email';");
     $num_r = mysqli_num_rows($res);
     if ($num_r >= 1) {
         echo 'existe_usuario';

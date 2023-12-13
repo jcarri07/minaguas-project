@@ -171,7 +171,7 @@ date_default_timezone_set("America/Caracas");
                 
                   <img src="../assets/img/computadora.png" class="px-lg-4 px-xl-6" style="object-fit:cover;">
                 
-                <p class="text-white position-relative text-left px-lg-3 mt-4">Es un proceso sencillo, solo debe llenar las casillas con sus datos y podrá disponer de una cuenta para ilgresar al sistema.</p>
+                <p class="text-white position-relative text-left px-lg-3 mt-4">Es un proceso sencillo, solo debe llenar las casillas con sus datos y podrá disponer de una cuenta para ingresar al sistema.</p>
                 <div class="row" style="padding-left: 27px;">
                   <div class="row col-12">
                     <div class="col-1" style="height: 20px;padding:1px;">
