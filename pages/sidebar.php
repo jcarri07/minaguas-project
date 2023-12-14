@@ -24,7 +24,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'usuarios.php') ? "active" : ''; ?>" href="/minaguas-project/pages/usuarios.php">
+          <a class="nav-link <?php echo ($currentPage == 'usuarios.php') ? "active" : ''; ?>" href="usuarios.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
             </div>
@@ -32,7 +32,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'embalses.php') ? "active" : ''; ?>" href="/minaguas-project/pages/embalses.php">
+          <a class="nav-link <?php echo ($currentPage == 'embalses.php') ? "active" : ''; ?>" href="embalses.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-chart-pie-35 text-primary text-sm opacity-10"></i>
             </div>
@@ -40,7 +40,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'datos.php') ? "active" : ''; ?>" href="/minaguas-project/pages/datos.php">
+          <a class="nav-link <?php echo ($currentPage == 'datos.php') ? "active" : ''; ?>" href="datos.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
             </div>
@@ -48,7 +48,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'reportes.php') ? "active" : ''; ?>" href="/minaguas-project/pages/reportes.php">
+          <a class="nav-link <?php echo ($currentPage == 'reportes.php') ? "active" : ''; ?>" href="reportes.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
@@ -61,7 +61,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'perfil.php') ? "active" : ''; ?>" href="/minaguas-project/pages/perfil.php">
+          <a class="nav-link <?php echo ($currentPage == 'perfil.php') ? "active" : ''; ?>" href="pages/perfil.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
             </div>
@@ -69,7 +69,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'sign-in.php') ? "active" : ''; ?>" href="/minaguas-project/pages/sign-in.php">
+          <a class="nav-link <?php echo ($currentPage == 'sign-in.php') ? "active" : ''; ?>" href="sign-in.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
             </div>
@@ -77,7 +77,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'sign-up.php') ? "active" : ''; ?>" href="/minaguas-project/pages/sign-up.php">
+          <a class="nav-link <?php echo ($currentPage == 'sign-up.php') ? "active" : ''; ?>" href="sign-up.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-info text-sm opacity-10"></i>
             </div>
@@ -85,7 +85,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'logout.php') ? "active" : ''; ?>" href="../php/login/logout.php">
+          <a class="nav-link <?php echo ($currentPage == 'logout.php') ? "active" : ''; ?>" href="php/login/logout.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-info text-sm opacity-10"></i>
             </div>
