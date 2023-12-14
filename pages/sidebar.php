@@ -1,13 +1,14 @@
 <?php
-$currentPage = basename($_SERVER['PHP_SELF']);
+//echo $currentPage = basename($_SERVER['PHP_SELF']);
+$page = isset($_GET['page']) ? $_GET['page'] : "";
 ?>
 
 <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="navbar-brand m-2" href="#">
-      <img src="<?php echo ($currentPage == 'main.php') ? './assets/img/logos/cropped-mminaguas.webp' : '../assets/img/logos/cropped-mminaguas.webp' ?>" class="navbar-brand-img h-100" alt="main_logo">
-      <img src="<?php echo ($currentPage == 'main.php') ? './assets/img/logos/minaguas-title.svg' : '../assets/img/logos/minaguas-title.svg' ?>" class="navbar-brand-img h-100" alt="main_title">
+      <img src="./assets/img/logos/cropped-mminaguas.webp" class="navbar-brand-img h-100" alt="main_logo">
+      <img src="./assets/img/logos/minaguas-title.svg" class="navbar-brand-img h-100" alt="main_title">
     </a>
   </div>
 
@@ -16,7 +17,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <ul class="navbar-nav">
       <div class="d-flex flex-column">
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'main.php') ? 'active' : ''; ?>" href="<?php echo ($currentPage == 'main.php') ? '#' : '../main.php'; ?>">
+          <a class="nav-link <?php echo ($page == '') ? 'active' : ''; ?>" href="?page=">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -24,7 +25,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'usuarios.php') ? "active" : ''; ?>" href="usuarios.php">
+          <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
             </div>
@@ -32,7 +33,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'embalses.php') ? "active" : ''; ?>" href="embalses.php">
+          <a class="nav-link <?php echo ($page == 'embalses') ? "active" : ''; ?>" href="?page=embalses">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-chart-pie-35 text-primary text-sm opacity-10"></i>
             </div>
@@ -40,7 +41,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'datos.php') ? "active" : ''; ?>" href="datos.php">
+          <a class="nav-link <?php echo ($page == 'datos') ? "active" : ''; ?>" href="?page=datos">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
             </div>
@@ -48,7 +49,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'reportes.php') ? "active" : ''; ?>" href="reportes.php">
+          <a class="nav-link <?php echo ($page == 'reportes') ? "active" : ''; ?>" href="?page=reportes">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
@@ -61,31 +62,16 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'perfil.php') ? "active" : ''; ?>" href="pages/perfil.php">
+          <a class="nav-link <?php echo ($page == 'perfil') ? "active" : ''; ?>" href="?page=perfil">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Perfil</span>
           </a>
         </li>
+        
         <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'sign-in.php') ? "active" : ''; ?>" href="sign-in.php">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Iniciar sesion</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'sign-up.php') ? "active" : ''; ?>" href="sign-up.php">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-collection text-info text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Registrarse</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <?php echo ($currentPage == 'logout.php') ? "active" : ''; ?>" href="php/login/logout.php">
+          <a class="nav-link <?php echo ($page == 'logout') ? "active" : ''; ?>" href="?page=cerrar_sesion">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-info text-sm opacity-10"></i>
             </div>
