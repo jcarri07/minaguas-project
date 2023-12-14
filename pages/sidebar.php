@@ -21,7 +21,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Dashboard</span>
+            <span class="nav-link-text ms-1">Inicio</span>
           </a>
         </li>
         <li class="nav-item">
@@ -35,7 +35,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'embalses') ? "active" : ''; ?>" href="?page=embalses">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-chart-pie-35 text-primary text-sm opacity-10"></i>
+              <i class="ni ni-square-pin text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Embalses</span>
           </a>
@@ -43,7 +43,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'datos') ? "active" : ''; ?>" href="?page=datos">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+              <i class="ni ni-calendar-grid-58 text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Carga de Datos</span>
           </a>
@@ -51,15 +51,17 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'reportes') ? "active" : ''; ?>" href="?page=reportes">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+              <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Reportes</span>
           </a>
         </li>
       </div>
-      <div class="d-flex flex-column">
+      
+      <div class="d-flex flex-column col-12" style="position: absolute; bottom: 0;">
+        <hr class="horizontal dark mt-0">
         <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Cuenta</h6>
         </li>
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'perfil') ? "active" : ''; ?>" href="?page=perfil">
@@ -73,7 +75,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'logout') ? "active" : ''; ?>" href="?page=cerrar_sesion">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-collection text-info text-sm opacity-10"></i>
+              <i class="ni ni-button-power text-info text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Salir</span>
           </a>
