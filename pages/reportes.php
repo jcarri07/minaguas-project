@@ -192,7 +192,7 @@ if (mysqli_num_rows($res) > 0) {
                           </div>
                         </td>
                         <td>
-                          <p class="text-xs font-weight-bold mb-0"><?php echo $row['Area_de_la_cuenca'] ?></p>
+                          <p class="text-xs font-weight-bold mb-0"><?php echo $row['Area_cuenca'] ?></p>
                           <p class="text-xs text-secondary mb-0">m³</p>
                         </td>
                         <td class="align-middle text-center text-sm">

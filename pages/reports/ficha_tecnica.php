@@ -151,10 +151,15 @@ $FIRMA_FUNCIONARIO = "";
 
 
 foreach ($data as $row) {
+  //INFO GENERAL
+  $NOMBRE_EMBALSE = $row['Nombre_embalse'];
   //INFO CUENCA
+  $ESTE = $row['Este'];
+  $NORTE = $row['Norte'];
+  $HUSO = $row['Huso'];
   $CUENCA = $row['Cuenca_Principal'];
   $AFLUENTES = $row['Afluentes_Principales'];
-  $AREA_CUENCA = $row['Area_de_la_cuenca'];
+  $AREA_CUENCA = $row['Area_cuenca'];
   $ESCURRIMIENTO = $row['Escurrimiento_medio'];
   //INFO EMBALSE
   $UBICACION = $row['Ubicacion_embalse'];
@@ -164,26 +169,26 @@ foreach ($data as $row) {
   $AUTORIDAD_RESPONSABLE = $row['Autoridad_responsable'];
   $PROYECTISTA = $row['Proyectista'];
   $CONSTRUCTOR = $row['Constructor'];
-  $AÑO_INICIO = $row['Año_de_inicio_de_construccion'];
+  $AÑO_INICIO = $row['Inicio_construccion'];
   $DURACION_CONSTRUCCION = $row['Duracion_de_construccion'];
   $INCIO_OPERACION = $row['Inicio_de_Operacion'];
   $MONITOREO = $row['Monitoreo_del_embalse'];
   //CARACTERISTICAS EMBALSE
   $BATIMETRIA = $row['Batimetria'];
-  $COTA = 237;
-  $COTA2 = 267;
-  $COTA3 = 269;
-  $FIRTS_VOLUMEN = 88983;
+  $COTA = $row['cota_min'];
+  $COTA2 = $row['cota_nor'];
+  $COTA3 = $row['cota_max'];
+  $FIRTS_VOLUMEN = $row['vol_min'];
   $SECOND_VOLUMEN = 8798;
-  $FIRTS_SUPERFICIE = 548305;
+  $FIRTS_SUPERFICIE = $row['sup_min'];
   $SECOND_SUPERFICIE = 569794;
-  $FIRTS_VOLUMEN2 = 88983;
+  $FIRTS_VOLUMEN2 = $row['vol_nor'];
   $SECOND_VOLUMEN2 = 8798;
-  $FIRTS_SUPERFICIE2 = 548305;
+  $FIRTS_SUPERFICIE2 = $row['sup_nor'];
   $SECOND_SUPERFICIE2 = 569794;
-  $FIRTS_VOLUMEN3 = 88983;
+  $FIRTS_VOLUMEN3 = $row['vol_max'];
   $SECOND_VOLUMEN3 = 8798;
-  $FIRTS_SUPERFICIE3 = 548305;
+  $FIRTS_SUPERFICIE3 = $row['sup_max'];
   $SECOND_SUPERFICIE3 = 569794;
   $CAPACIDAD_UTIL = 2595;
   $CAPACIDAD_UTIL2 = 2052;
@@ -195,21 +200,21 @@ foreach ($data as $row) {
   $ALTURA = $row['Altura'];
   $TALUD_AGUAS_ARRIBA = $row['talud_aguas_arriba'];
   $TALUD_AGUAS_ABAJO = $row['talud_aguas_abajo'];
-  $LONGITUD_CRESTA = $row["Longitud_de_la_cresta"];
-  $COTA_CRESTA = $row['Cota_de_la_cresta'];
-  $ANCHO_CRESTA = $row['Ancho_de_la_cresta'];
-  $VOLUMEN_TERRAPLEN = $row['Volumen_del_terraplen'];
-  $ANCHO_MAX_BASE = $row['Ancho_maximo_de_base'];
+  $LONGITUD_CRESTA = $row["Longitud_cresta"];
+  $COTA_CRESTA = $row['Cota_cresta'];
+  $ANCHO_CRESTA = $row['Ancho_cresta'];
+  $VOLUMEN_TERRAPLEN = $row['Volumen_terraplen'];
+  $ANCHO_MAX_BASE = $row['Ancho_base'];
   //ALIVIADERO
   $UBICACION_ALIVIADERO = $row['Ubicacion_aliviadero'];
   $TIPO_ALIVIADERO = $row['Tipo_aliviadero'];
   $COMPUERTAS_ALIVIADERO = $row['Numero_compuertas_aliviadero'];
-  $CARGA_ALIVIADERO = $row['Carga_sobre_el_vertedero'];
+  $CARGA_ALIVIADERO = $row['Carga_vertedero'];
   $DESCARGA_ALIVIADERO = $row['Descarga_Maxima'];
-  $LONGITUD_ALIVIADERO = $row['Longitud'];
+  $LONGITUD_ALIVIADERO = $row['Longitud_Aliviadero'];
   //OBRA
-  $UBICACION_OBRA = $row['Ubicacion_obra_de_toma'];
-  $TIPO_OBRA = $row['Tipo_obra_de_toma'];
+  $UBICACION_OBRA = $row['Ubicacion_toma'];
+  $TIPO_OBRA = $row['Tipo_toma'];
   $NUMERO_COMPUERTAS_OBRA = $row['Numero_compuertas_obra'];
   $MECANISMO_EMERGENCIA = $row['Mecanismos_de_emergencia'];
   $MECANISMO_REGULACION = $row['mecanismos_de_regulacion'];
@@ -226,12 +231,12 @@ foreach ($data as $row) {
   $POBLACION = $row['Poblacion_beneficiada'];
   $AREA_RIEGO = $row['Area_de_riego_beneficiada'];
   //FUNCIONARIO RESPONSABLE
-  $CARGO_FUNCIONARIO = $row['Funcionario_responsable'];
-  $NOMBRES_FUNCIONARIO = "Hector";
-  $TLF_FUNCIONARIO = "0414-5221503";
-  $CORREO_FUNCIONARIO = "hector8@hotmail.com";
-  $CEDULA_FUNCIONARIO = "V.-17.049.840";
-  $APELLIDOS_FUNCIONARIO = "Ledezma";
+  $CARGO_FUNCIONARIO = $row['F_cargo'];
+  $NOMBRES_FUNCIONARIO = $row['F_nombres'];
+  $TLF_FUNCIONARIO = $row['F_telefono'];
+  $CORREO_FUNCIONARIO = $row['F_correo'];
+  $CEDULA_FUNCIONARIO = $row['F_cedula'];
+  $APELLIDOS_FUNCIONARIO = $row['F_apellidos'];
   $FIRMA_FUNCIONARIO = "";
   //IMAGENES
 
@@ -349,7 +354,7 @@ foreach ($data as $row) {
     </div>
   </div>
   <div class="header-title">
-    <h4><?php echo $row['Cuenca_Principal']; ?></h4>
+    <h4><?php echo $NOMBRE_EMBALSE; ?></h4>
   </div>
   <div class="header-info">
     <table style="padding-top: 130px;">

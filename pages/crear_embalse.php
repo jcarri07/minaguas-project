@@ -12,6 +12,14 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
+
+<?php
+include '../php/Conexion.php';
+
+$queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
+$queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -287,6 +295,62 @@
             <form method="POST" action="../php/proces_embalse.php" enctype="multipart/form-data">
               <div class="p-5 m-5">
 
+                <h3 class="pb-3">Información principal:</h3>
+
+                <div class="row">
+                  <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label for="embalse_nombre">Nombre del embalse</label>
+                      <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nomnbre del embalse">
+                    </div>
+                    <div class="form-group">
+                      <label for="presa_nombre">Nombre de la presa</label>
+                      <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nomnbre de la presa">
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label for="estado">Estado</label>
+                      <select class="form-control" id="estado" name="estado">
+                        <option value=""></option>
+                        <?php
+                        while ($row = mysqli_fetch_array($queryEstados)) {
+                        ?>
+                          <option value="<?php echo $row['id_estado']; ?>"><?php echo $row['estado']; ?></option>
+                        <?php
+                        }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="municipio">Municipio</label>
+                      <select class="form-control" id="municipio" name="municipio">
+                        <option value=""></option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="parroquia">Parroquia</label>
+                      <select class="form-control" id="parroquia" name="parroquia">
+                        <option value=""></option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <div class=" form-group">
+                      <label for="norte">Norte</label>
+                      <input type="text" class="form-control" id="norte" name="norte" placeholder="Ingrese los afluentes principales">
+                    </div>
+                    <div class=" form-group">
+                      <label for="este">Este</label>
+                      <input type="number" class="form-control" id="este" name="este" placeholder="Ingrese el area de la cuenca en km2">
+                    </div>
+                    <div class=" form-group">
+                      <label for="huso">Huso</label>
+                      <input type="number" class="form-control" id="huso" name="huso" placeholder="Ingrese el escurrimiento medio en m3/s">
+                    </div>
+                  </div>
+                </div>
+
                 <h3 class="pb-3">Información de la cuenca:</h3>
 
                 <div class="row">
@@ -322,15 +386,7 @@
                     </div>
                     <div class="form-group">
                       <label for="personal">Personal encargado a nivel central</label>
-                      <select class="form-control" id="personal" name="personal">
-                        <option value=""></option>
-                        <option value="1">1 persona</option>
-                        <option value="2">2 personas</option>
-                        <option value="3">3 personas</option>
-                        <option value="4">4 personas</option>
-                        <option value="5">5 personas</option>
-                        <option value="6">6 o más personas</option>
-                      </select>
+                      <input type="text" class="form-control" id="personal" name="personal" placeholder="Personal encargado a nivel central">
                     </div>
                   </div>
                 </div>
@@ -342,15 +398,7 @@
                   </div>
                   <div class="col-xl-3 col-lg-6 form-group">
                     <label for="autoridad">Autoridad responsable del embalse</label>
-                    <select class="form-control" id="autoridad" name="autoridad">
-                      <option value=""></option>
-                      <option value="1">Ministerio del Poder Popular para el Ambiente</option>
-                      <option value="2">Ministerio del Poder Popular para la Energía Eléctrica</option>
-                      <option value="3">Ministerio del Poder Popular para la Agricultura y Tierras</option>
-                      <option value="4">Ministerio del Poder Popular para el Turismo</option>
-                      <option value="5">Ministerio del Poder Popular para la Defensa</option>
-                      <option value="6">Otra autoridad</option>
-                    </select>
+                    <input type="text" class="form-control" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
                   </div>
                   <div class="col-xl-3 col-lg-6 form-group">
                     <label for="proyectista">Proyectista</label>
@@ -380,13 +428,60 @@
 
                 <h3 class="pb-3 pt-3">Características de los embalses:</h3>
 
-                <div class="form-group">
-                  <label for="batimetria">Batimetría</label>
-                  <input type="text" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
-                </div>
-                <div class="form-group">
-                  <label for="vida_util">Vida útil</label>
-                  <input type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida util en años">
+                <div class="row">
+                  <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                      <label for="batimetria">Batimetría</label>
+                      <input type="text" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
+                    </div>
+                    <div class="form-group">
+                      <label for="vida_util">Vida útil</label>
+                      <input type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida util en años">
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <div class=" form-group">
+                      <label for="cota_min">Cota mínima</label>
+                      <input type="text" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese los afluentes principales">
+                    </div>
+                    <div class=" form-group">
+                      <label for="vol_min">Volumen mínimo</label>
+                      <input type="number" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el area de la cuenca en km2">
+                    </div>
+                    <div class=" form-group">
+                      <label for="sup_min">Superficie mínima</label>
+                      <input type="number" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese el escurrimiento medio en m3/s">
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-12">
+                    <div class=" form-group">
+                      <label for="cota_nor">Cota normal</label>
+                      <input type="text" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese los afluentes principales">
+                    </div>
+                    <div class=" form-group">
+                      <label for="vol_nor">Volumen normal</label>
+                      <input type="number" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el area de la cuenca en km2">
+                    </div>
+                    <div class=" form-group">
+                      <label for="sup_nor">Superficie normal</label>
+                      <input type="number" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese el escurrimiento medio en m3/s">
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-12">
+                    <div class=" form-group">
+                      <label for="cota_max">Cota máxima</label>
+                      <input type="text" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese los afluentes principales">
+                    </div>
+                    <div class=" form-group">
+                      <label for="vol_max">Volumen máximo</label>
+                      <input type="number" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el area de la cuenca en km2">
+                    </div>
+                    <div class=" form-group">
+                      <label for="sup_max">Superficie máxima</label>
+                      <input type="number" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese el escurrimiento medio en m3/s">
+                    </div>
+                  </div>
                 </div>
 
                 <h3 class="pb-3 pt-3">Presa:</h3>
@@ -541,29 +636,65 @@
                 <h3 class="pb-3 pt-3">Responsable:</h3>
 
                 <div class="row">
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="funcionario">Funcionario responsable</label>
-                    <select class="form-control" id="funcionario" name="funcionario">
-                      <option value=""></option>
-                      <option value="1">Juan Pérez (Director General de Recursos Hídricos)</option>
-                      <option value="2">María García (Gerente de Planificación y Proyectos)</option>
-                      <option value="3">Carlos Rodríguez (Coordinador de Operaciones y Mantenimiento)</option>
-                      <option value="4">Ana López (Jefa de Control de Calidad)</option>
-                      <option value="5">Luis Sánchez (Asesor Técnico)</option>
-                      <option value="6">Otro funcionario</option>
-                    </select>
+                  <div class="col-xl-4 col-lg-6 form-group">
+                    <label for="f_cargo">Cargo</label>
+                    <input type="text" class="form-control" id="f_cargo" name="f_cargo" placeholder="Ingrese el nomnbre del embalse">
+                  </div>
+                  <div class="col-xl-4 col-lg-6 form-group">
+                    <label for="f_cedula">Cédula</label>
+                    <input type="text" class="form-control" id="f_cedula" name="f_cedula" placeholder="Ingrese el nomnbre del embalse">
+                  </div>
+                  <div class="col-xl-4 col-lg-6 form-group">
+                    <label for="f_nombres">Nombres</label>
+                    <input type="text" class="form-control" id="f_nombres" name="f_nombres" placeholder="Ingrese el nomnbre del embalse">
+                  </div>
+                  <div class="col-xl-4 col-lg-6 form-group">
+                    <label for="f_apellidos">Apellidos</label>
+                    <input type="text" class="form-control" id="f_apellidos" name="f_apellidos" placeholder="Ingrese el nomnbre del embalse">
+                  </div>
+                  <div class="col-xl-4 col-lg-6 form-group">
+                    <label for="f_telefono">Teléfono</label>
+                    <input type="text" class="form-control" id="f_telefono" name="f_telefono" placeholder="Ingrese el nomnbre del embalse">
+                  </div>
+                  <div class="col-xl-4 col-lg-6 form-group">
+                    <label for="f_correo">Correo</label>
+                    <input type="text" class="form-control" id="f_correo" name="f_correo" placeholder="Ingrese el nomnbre del embalse">
                   </div>
                 </div>
 
                 <h3 class="pb-3 pt-3">Carga de imágenes:</h3>
 
-                <div class="form-group">
-                  <label for="imagenes">Imagenes</label>
-                  <input type="text" class="form-control" id="imagenes" name="imagenes" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-12 form-group">
+                    <label for="imagen_uno">Ubicación relativa Estado/Municipio/Región hidrográfica</label>
+                    <input type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_uno" name="imagen_uno" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
+                  </div>
+                  <div class="col-xl-6 col-lg-12 form-group">
+                    <label for="imagen_dos">Ubicación relativa de los componentes del embalse</label>
+                    <input type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_dos" name="imagen_dos" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
+                  </div>
                 </div>
 
                 <div class="row justify-content-center mt-5">
                   <button type="submit" class="col-2 btn btn-primary" name="Guardar">Guardar embalse</button>
+                </div>
+
+                <h3 class="pb-3 pt-3">Responsable del embalse:</h3>
+
+                <div class="row">
+                  <div class="form-group col-xl-6 col-lg-12">
+                    <label for="responsable">Responsable</label>
+                    <select class="form-control" id="responsable" name="responsable">
+                      <option value=""></option>
+                      <?php
+                      while ($row1 = mysqli_fetch_array($queryResponsable)) {
+                      ?>
+                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']; ?></option>
+                      <?php
+                      }
+                      ?>
+                    </select>
+                  </div>
                 </div>
 
             </form>
@@ -752,6 +883,7 @@
   </main>
 
   <!--   Core JS Files   -->
+  <script src="../assets/js/get-ubication-select.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
