@@ -3,7 +3,7 @@ CREATE DATABASE minagua_db;
 USE minagua_db;
 
 CREATE TABLE `usuarios` (
-  Id_usuario int(11) PRIMARY KEY NOT NULL,
+  Id_usuario int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   Contrasena varchar(255) DEFAULT NULL,
   P_Nombre varchar(255) DEFAULT NULL,
   S_Nombre varchar(255) DEFAULT NULL,
