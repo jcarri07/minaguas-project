@@ -14,6 +14,17 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+};
+if (!isset($_SESSION["Id_usuario"])) {
+
+  print "<script>window.location='index.php';</script>";
+}
+
+date_default_timezone_set("America/Caracas");
+?>
 
 <head>
   <meta charset="utf-8" />
@@ -29,7 +40,7 @@
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <script src="../assets/js/fontawesome/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />

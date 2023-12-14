@@ -3,17 +3,16 @@ CREATE DATABASE minagua_db;
 USE minagua_db;
 
 CREATE TABLE `usuarios` (
-  Id_usuario INT(11) NOT NULL PRIMARY KEY,
-  N_Usuario VARCHAR(255) DEFAULT NULL,
-  Contrasena VARCHAR(255) DEFAULT NULL,
-  P_Nombre VARCHAR(255) DEFAULT NULL,
-  S_Nombre VARCHAR(255) DEFAULT NULL,
-  P_Apellido VARCHAR(255) DEFAULT NULL,
-  S_Apellido VARCHAR(255) DEFAULT NULL,
-  Cedula VARCHAR(255) DEFAULT NULL,
-  Correo VARCHAR(255) DEFAULT NULL,
-  Telefono VARCHAR(255) DEFAULT NULL,
-  Tipo ENUM('Admin', 'User') DEFAULT NULL
+  Id_usuario int(11) PRIMARY KEY NOT NULL,
+  Contrasena varchar(255) DEFAULT NULL,
+  P_Nombre varchar(255) DEFAULT NULL,
+  S_Nombre varchar(255) DEFAULT NULL,
+  P_Apellido varchar(255) DEFAULT NULL,
+  S_Apellido varchar(255) DEFAULT NULL,
+  Cedula varchar(255) DEFAULT NULL,
+  Correo varchar(255) DEFAULT NULL,
+  Telefono varchar(255) DEFAULT NULL,
+  Tipo enum('Admin','User') DEFAULT NULL
 );
 
 --
