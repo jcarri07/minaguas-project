@@ -40,8 +40,8 @@ date_default_timezone_set("America/Caracas");
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="./assets/js/fontawesome/42d5adcbca.js" ></script>
-  <script src="../../assets//js/sweetalerts.js"></script>
+  <script src="../assets/js/fontawesome/42d5adcbca.js" ></script>
+  <script src="../assets/js/sweetalerts.js"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
@@ -117,10 +117,10 @@ date_default_timezone_set("America/Caracas");
 
                     <form id="form" role="form">
                       <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" pattern="[A-Z][a-z]" required>
+                        <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres"  required>
                       </div>
                       <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" pattern="[A-Z][a-z]" required>
+                        <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos"  required>
                       </div>
                       <div class="mb-3">
                         <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required>
@@ -138,10 +138,10 @@ date_default_timezone_set("America/Caracas");
                       </div-->
                       <div class="row ">
                         <div class="mb-3 col-6">
-                          <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
+                          <input type="text" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
                         </div>
                         <div class="mb-3 col-6">
-                          <input type="text" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
+                          <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
                         </div>
 
                       </div>
@@ -277,7 +277,7 @@ date_default_timezone_set("America/Caracas");
       $("#form").submit(function(e) {
         e.preventDefault();
 
-        if ($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+        /*if ($("[name='nombres']").prop("value").split(' ').filter(function(n) {
             return n != ''
           }).length != 2) {
           Swal.fire({
@@ -296,7 +296,7 @@ date_default_timezone_set("America/Caracas");
               confirmButtonText: 'Aceptar',
               confirmButtonColor: '#01a9ac',
             });
-          } else {
+          } else {*/
             if ($("[name='password']").prop("value") == $("[name='confirmar']").prop("value")) {
               var values = new FormData();
               Swal.fire({
@@ -403,10 +403,10 @@ date_default_timezone_set("America/Caracas");
               });
             }
           }
-        }
+        
 
 
-      });
+      /*}}*/);
 });
   </script>
   <!-- Github buttons -->
