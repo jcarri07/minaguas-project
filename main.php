@@ -43,6 +43,11 @@
   <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <!--DataTables-->
+  <link href="vendor/datatables/css/datatables.min.css" rel="stylesheet">
+  <script src="vendor/datatables/js/datatables.min.js"></script>
+  <script src="vendor/datatables/js/datatable-basic.init.js"></script>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
