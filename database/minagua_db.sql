@@ -1167,7 +1167,7 @@ INSERT INTO `parroquias` (`id_parroquia`, `id_municipio`, `parroquia`) VALUES
 (742, 289, 'Ramón Peraza'),
 (743, 290, 'Papelón'),
 (744, 290, 'Caño Delgadito'),
-(745, 291, 'San Genaro de Boconoito'),
+(745, 291, 'San Genaro de Boconoíto'),
 (746, 291, 'Antolín Tovar'),
 (747, 292, 'San Rafael de Onoto'),
 (748, 292, 'Santa Fe'),

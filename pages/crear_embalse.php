@@ -374,7 +374,7 @@ date_default_timezone_set("America/Caracas");
                   </div>
                   <div class="col-xl-3 col-lg-6 form-group">
                     <label for="area">Área de la cuenca</label>
-                    <input type="number" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca en km2">
+                    <input type="number" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca en hm3">
                   </div>
                   <div class="col-xl-3 col-lg-6 form-group">
                     <label for="escurrimiento">Escurrimiento medio</label>

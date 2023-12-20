@@ -10,7 +10,13 @@ if (!isset($_SESSION["Id_usuario"])) {
 }
 
 date_default_timezone_set("America/Caracas");
+
+include '../php/Conexion.php';
+
+$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses;");
+
 ?>
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,7 +35,43 @@ date_default_timezone_set("America/Caracas");
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+  <!-- Datatables CSS -->
+  <link rel="stylesheet" type="text/css" href="../assets/css/datatable/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/datatable/buttons.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/datatable/responsive.bootstrap4.min.css">
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <style>
+    tr th,
+    tr td {
+      word-break: break-word !important;
+      white-space: normal !important;
+    }
+
+    tr th:first-letter,
+    tr td:first-letter {
+      text-transform: uppercase;
+    }
+
+    table .btn-table {
+      padding: 6px;
+      padding-right: 2px;
+      font-size: 15px;
+    }
+
+    table tr th,
+    table tr {
+      text-align: center !important;
+    }
+
+    table tr th {
+      background: #01A9AC;
+      color: black;
+    }
+  </style>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -296,57 +338,165 @@ date_default_timezone_set("America/Caracas");
                   </button>
                 </a>
               </div>
+
+              <div class="dt-responsive table-responsive">
+                <table id="table-embalses" class="table table-striped table-bordered nowrap">
+                  <thead>
+                    <tr>
+                      <th>Embalse</th>
+                      <th>Volumen actual</th>
+                      <th>Encargado</th>
+                      <th>Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="d-flex flex-column">
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm">Bocono - Tucupido</h6>
+                          <span class="text-xs">Guarico</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex flex-column">
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm">1.247,3 Hm3 (50%)</h6>
+                          <span class="text-xs">20/12/2023</span>
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <div class="d-flex justify-content-center">
+                          <div><h6 class="mb-1 text-dark font-weight-bold text-sm">Juan Ruiz</h6></div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center justify-content-center text-sm">
+                          <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
+                          <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Presa Hoover</td>
+                      <td>80%</td>
+                      <td>Alto</td>
+                      <td>Liberar agua</td>
+                    </tr>
+                    <tr>
+                      <td>Presa Glen Canyon</td>
+                      <td>90%</td>
+                      <td>Muy alto</td>
+                      <td>Abrir compuertas</td>
+                    </tr>
+                    <tr>
+                      <td>El Cajón</td>
+                      <td>50%</td>
+                      <td>Normal</td>
+                      <td>Ninguna</td>
+                    </tr>
+                    <tr>
+                      <td>Presa Hoover</td>
+                      <td>80%</td>
+                      <td>Alto</td>
+                      <td>Liberar agua</td>
+                    </tr>
+                    <tr>
+                      <td>Presa Glen Canyon</td>
+                      <td>90%</td>
+                      <td>Muy alto</td>
+                      <td>Abrir compuertas</td>
+                    </tr>
+                    <tr>
+                      <td>El Cajón</td>
+                      <td>50%</td>
+                      <td>Normal</td>
+                      <td>Ninguna</td>
+                    </tr>
+                    <tr>
+                      <td>Presa Hoover</td>
+                      <td>80%</td>
+                      <td>Alto</td>
+                      <td>Liberar agua</td>
+                    </tr>
+                    <tr>
+                      <td>Presa Glen Canyon</td>
+                      <td>90%</td>
+                      <td>Muy alto</td>
+                      <td>Abrir compuertas</td>
+                    </tr>
+                    <tr>
+                      <td>El Cajón</td>
+                      <td>50%</td>
+                      <td>Normal</td>
+                      <td>Ninguna</td>
+                    </tr>
+                    <tr>
+                      <td>Presa Hoover</td>
+                      <td>80%</td>
+                      <td>Alto</td>
+                      <td>Liberar agua</td>
+                    </tr>
+                    <tr>
+                      <td>Presa Glen Canyon</td>
+                      <td>90%</td>
+                      <td>Muy alto</td>
+                      <td>Abrir compuertas</td>
+                    </tr>
+                    <tr>
+                      <td>El Cajón</td>
+                      <td>50%</td>
+                      <td>Normal</td>
+                      <td>Ninguna</td>
+                    </tr>
+                    <tr>
+                      <td>Presa Hoover</td>
+                      <td>80%</td>
+                      <td>Alto</td>
+                      <td>Liberar agua</td>
+                    </tr>
+                    <tr>
+                      <td>Presa Glen Canyon</td>
+                      <td>90%</td>
+                      <td>Muy alto</td>
+                      <td>Abrir compuertas</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <br><br><br>
+
               <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-1 text-dark font-weight-bold text-sm">16 de Octubre 2023</h6>
-                    <span class="text-xs">Boconó - Tucupido</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">10 de Febrero 2021</h6>
-                    <span class="text-xs">Embalse 2</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">05 de April 2020</h6>
-                    <span class="text-xs">Embalse 3</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">25 de Junio 2019</h6>
-                    <span class="text-xs">Embalse 4</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">01 de Marzo 2019</h6>
-                    <span class="text-xs">Embalse 5</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
+                <?php
+                if (mysqli_num_rows($queryEmbalses) > 0) {
+                  while ($row = mysqli_fetch_array($queryEmbalses)) {
+                ?>
+                    <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                      <div class="d-flex flex-column">
+                        <h6 class="mb-1 text-dark font-weight-bold text-sm">Bocono - Tucupido</h6>
+                        <span class="text-xs">Guarico</span>
+                      </div>
+                      <div class="d-flex align-items-center text-sm">
+                        <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
+                        <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
+                      </div>
+                    </li>
+                  <?php
+                  }
+                } else {
+                  ?>
+                  <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                    <div class="d-flex flex-column">
+                      <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay embalses cargados aún</h6>
+                      <span class="text-xs">Guarico</span>
+                    </div>
+                    <div class="d-flex align-items-center text-sm">
+                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
+                      <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
+                    </div>
+                  </li>
+                <?php
+                }
+                ?>
+
               </ul>
             </div>
           </div>
@@ -536,6 +686,19 @@ date_default_timezone_set("America/Caracas");
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <!-- Datatables -->
+  <!-- <script src="../assets/js/datatable/jquery.min.js"></script> -->
+  <script src="../assets/js/datatable/jquery.dataTables.min.js"></script>
+  <script src="../assets/js/datatable/dataTables.buttons.min.js"></script>
+  <script src="../assets/js/datatable/jszip.min.js"></script>
+  <script src="../assets/js/datatable/pdfmake.min.js"></script>
+  <script src="../assets/js/datatable/vfs_fonts.js"></script>
+  <script src="../assets/js/datatable/buttons.print.min.js"></script>
+  <script src="../assets/js/datatable/buttons.html5.min.js"></script>
+  <script src="../assets/js/datatable/dataTables.bootstrap4.min.js"></script>
+  <script src="../assets/js/datatable/dataTables.responsive.min.js"></script>
+  <script src="../assets/js/datatable/responsive.bootstrap4.min.js"></script>
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -544,6 +707,29 @@ date_default_timezone_set("America/Caracas");
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+    $('#table-embalses').DataTable({
+      language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+          "first": "Primero",
+          "last": "Ultimo",
+          "next": ">",
+          "previous": "<"
+        }
+      },
+    });
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
