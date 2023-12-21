@@ -24,7 +24,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <span class="nav-link-text ms-1">Inicio</span>
           </a>
         </li>
-        <?php if($_SESSION["Tipo"] = "Admin"){
+        <?php if($_SESSION["Tipo"] == "Admin"){
           ?>
           <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
