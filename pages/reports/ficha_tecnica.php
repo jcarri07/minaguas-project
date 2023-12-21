@@ -3,7 +3,7 @@ include '../../php/Conexion.php';
 
 $id = $_GET['id'];
 
-$sql = "SELECT * FROM embalses WHERE Id_embalse = $id";
+$sql = "SELECT * FROM embalses WHERE id_embalse = $id";
 
 $res = mysqli_query($conn, $sql);
 $data = array();
@@ -152,29 +152,34 @@ $FIRMA_FUNCIONARIO = "";
 
 foreach ($data as $row) {
   //INFO GENERAL
-  $NOMBRE_EMBALSE = $row['Nombre_embalse'];
+  $NOMBRE_EMBALSE = $row['nombre_embalse'];
+  $NOMBRE_CUENCA = $row['nombre_cuenca'];
+  $idE = $row['id_estado'];  $idM = $row['id_municipio']; $idP = $row['id_parroquia'];
+  $ESTADO = mysqli_fetch_assoc(mysqli_query($conn, "SELECT estado FROM estados WHERE id_estado = $idE"))['estado'];
+  $MUNICIPIO = mysqli_fetch_assoc(mysqli_query($conn, "SELECT municipio FROM municipios WHERE id_municipio = $idM"))['municipio'];
+  $PARROQUIA = mysqli_fetch_assoc(mysqli_query($conn, "SELECT parroquia FROM parroquias WHERE id_parroquia = $idP"))['parroquia']; 
   //INFO CUENCA
-  $ESTE = $row['Este'];
-  $NORTE = $row['Norte'];
-  $HUSO = $row['Huso'];
-  $CUENCA = $row['Cuenca_Principal'];
-  $AFLUENTES = $row['Afluentes_Principales'];
-  $AREA_CUENCA = $row['Area_cuenca'];
-  $ESCURRIMIENTO = $row['Escurrimiento_medio'];
+  $ESTE = $row['este'];
+  $NORTE = $row['norte'];
+  $HUSO = $row['huso'];
+  $CUENCA = $row['cuenca_principal'];
+  $AFLUENTES = $row['afluentes_principales'];
+  $AREA_CUENCA = $row['area_cuenca'];
+  $ESCURRIMIENTO = $row['escurrimiento_medio'];
   //INFO EMBALSE
-  $UBICACION = $row['Ubicacion_embalse'];
-  $ORGANO_RECTOR = $row['Organo_Rector'];
-  $PERSONAL_ENCARGADO = $row['Personal_Encargado'];
-  $OPERADOR = $row['Operador'];
-  $AUTORIDAD_RESPONSABLE = $row['Autoridad_responsable'];
-  $PROYECTISTA = $row['Proyectista'];
-  $CONSTRUCTOR = $row['Constructor'];
-  $AÑO_INICIO = $row['Inicio_construccion'];
-  $DURACION_CONSTRUCCION = $row['Duracion_de_construccion'];
-  $INCIO_OPERACION = $row['Inicio_de_Operacion'];
-  $MONITOREO = $row['Monitoreo_del_embalse'];
+  $UBICACION = $row['ubicacion_embalse'];
+  $ORGANO_RECTOR = $row['organo_rector'];
+  $PERSONAL_ENCARGADO = $row['personal_encargado'];
+  $OPERADOR = $row['operador'];
+  $AUTORIDAD_RESPONSABLE = $row['autoridad_responsable'];
+  $PROYECTISTA = $row['proyectista'];
+  $CONSTRUCTOR = $row['constructor'];
+  $AÑO_INICIO = $row['inicio_construccion'];
+  $DURACION_CONSTRUCCION = $row['duracion_de_construccion'];
+  $INCIO_OPERACION = $row['inicio_de_operacion'];
+  $MONITOREO = $row['monitoreo_del_embalse'];
   //CARACTERISTICAS EMBALSE
-  $BATIMETRIA = $row['Batimetria'];
+  $BATIMETRIA = $row['batimetria'];
   $COTA = $row['cota_min'];
   $COTA2 = $row['cota_nor'];
   $COTA3 = $row['cota_max'];
@@ -192,51 +197,51 @@ foreach ($data as $row) {
   $SECOND_SUPERFICIE3 = 569794;
   $CAPACIDAD_UTIL = 2595;
   $CAPACIDAD_UTIL2 = 2052;
-  $VIDA_UTIL = $row['Vida_util'];
+  $VIDA_UTIL = $row['vida_util'];
   $VIDA_UTIL_RESTANTE = 65;
   //COMPONENTES EMBALSE
-  $NUMERO_PRESAS = $row['Numero_de_presas'];
+  $NUMERO_PRESAS = $row['numero_de_presas'];
   $TIPO = $row['tipo_de_presa'];
-  $ALTURA = $row['Altura'];
+  $ALTURA = $row['altura'];
   $TALUD_AGUAS_ARRIBA = $row['talud_aguas_arriba'];
   $TALUD_AGUAS_ABAJO = $row['talud_aguas_abajo'];
-  $LONGITUD_CRESTA = $row["Longitud_cresta"];
-  $COTA_CRESTA = $row['Cota_cresta'];
-  $ANCHO_CRESTA = $row['Ancho_cresta'];
-  $VOLUMEN_TERRAPLEN = $row['Volumen_terraplen'];
-  $ANCHO_MAX_BASE = $row['Ancho_base'];
+  $LONGITUD_CRESTA = $row["longitud_cresta"];
+  $COTA_CRESTA = $row['cota_cresta'];
+  $ANCHO_CRESTA = $row['ancho_cresta'];
+  $VOLUMEN_TERRAPLEN = $row['volumen_terraplen'];
+  $ANCHO_MAX_BASE = $row['ancho_base'];
   //ALIVIADERO
-  $UBICACION_ALIVIADERO = $row['Ubicacion_aliviadero'];
-  $TIPO_ALIVIADERO = $row['Tipo_aliviadero'];
-  $COMPUERTAS_ALIVIADERO = $row['Numero_compuertas_aliviadero'];
-  $CARGA_ALIVIADERO = $row['Carga_vertedero'];
-  $DESCARGA_ALIVIADERO = $row['Descarga_Maxima'];
-  $LONGITUD_ALIVIADERO = $row['Longitud_Aliviadero'];
+  $UBICACION_ALIVIADERO = $row['ubicacion_aliviadero'];
+  $TIPO_ALIVIADERO = $row['tipo_aliviadero'];
+  $COMPUERTAS_ALIVIADERO = $row['numero_compuertas_aliviadero'];
+  $CARGA_ALIVIADERO = $row['carga_vertedero'];
+  $DESCARGA_ALIVIADERO = $row['descarga_maxima'];
+  $LONGITUD_ALIVIADERO = $row['longitud_aliviadero'];
   //OBRA
-  $UBICACION_OBRA = $row['Ubicacion_toma'];
-  $TIPO_OBRA = $row['Tipo_toma'];
-  $NUMERO_COMPUERTAS_OBRA = $row['Numero_compuertas_obra'];
-  $MECANISMO_EMERGENCIA = $row['Mecanismos_de_emergencia'];
+  $UBICACION_OBRA = $row['ubicacion_toma'];
+  $TIPO_OBRA = $row['tipo_toma'];
+  $NUMERO_COMPUERTAS_OBRA = $row['numero_compuertas_toma'];
+  $MECANISMO_EMERGENCIA = $row['mecanismos_de_emergencia'];
   $MECANISMO_REGULACION = $row['mecanismos_de_regulacion'];
-  $GASTO_MAXIMO = $row['Gasto_maximo'];
-  $DESCARGA_FONDO = $row['Descarga_de_fondo'];
+  $GASTO_MAXIMO = $row['gasto_maximo'];
+  $DESCARGA_FONDO = $row['descarga_de_fondo'];
   //OBRA HIDRAULICA
-  $POSEE_OBRA = $row['Posee_obra'];
-  $TIPO_OBRA_2 = $row['Tipo_de_obra'];
-  $ACCION_REQUERIDA = $row['Accion_requerida'];
+  $POSEE_OBRA = $row['posee_obra'];
+  $TIPO_OBRA_2 = $row['tipo_de_obra'];
+  $ACCION_REQUERIDA = $row['accion_requerida'];
   //BENEFICIOS
-  $PROPOSITO = $row['Proposito'];
+  $PROPOSITO = $row['proposito'];
   $USO_ACTUAL = $row['uso_actual'];
-  $SECTOR_BENEFICIADO = $row['Sectores_beneficiados'];
-  $POBLACION = $row['Poblacion_beneficiada'];
-  $AREA_RIEGO = $row['Area_de_riego_beneficiada'];
+  $SECTOR_BENEFICIADO = $row['sectores_beneficiados'];
+  $POBLACION = $row['poblacion_beneficiada'];
+  $AREA_RIEGO = $row['area_de_riego_beneficiada'];
   //FUNCIONARIO RESPONSABLE
-  $CARGO_FUNCIONARIO = $row['F_cargo'];
-  $NOMBRES_FUNCIONARIO = $row['F_nombres'];
-  $TLF_FUNCIONARIO = $row['F_telefono'];
-  $CORREO_FUNCIONARIO = $row['F_correo'];
-  $CEDULA_FUNCIONARIO = $row['F_cedula'];
-  $APELLIDOS_FUNCIONARIO = $row['F_apellidos'];
+  $CARGO_FUNCIONARIO = $row['f_cargo'];
+  $NOMBRES_FUNCIONARIO = $row['f_nombres'];
+  $TLF_FUNCIONARIO = $row['f_telefono'];
+  $CORREO_FUNCIONARIO = $row['f_correo'];
+  $CEDULA_FUNCIONARIO = $row['f_cedula'];
+  $APELLIDOS_FUNCIONARIO = $row['f_apellidos'];
   $FIRMA_FUNCIONARIO = "";
   //IMAGENES
 
@@ -363,12 +368,12 @@ foreach ($data as $row) {
         <td class="info" style="width: 165px;"><?php echo $ESTADO ?></td>
       </tr>
       <tr>
-        <td class="title-info">Parroquia</td>
-        <td class="info" style="width: 165px;"><?php echo $PARROQUIA ?></td>
-      </tr>
-      <tr>
         <td class="title-info">Municipio</td>
         <td class="info" style="width: 165px;"><?php echo $MUNICIPIO ?></td>
+      </tr>
+      <tr>
+        <td class="title-info">Parroquia</td>
+        <td class="info" style="width: 165px;"><?php echo $PARROQUIA ?></td>
       </tr>
     </table>
   </div>
@@ -473,51 +478,51 @@ foreach ($data as $row) {
     <tr>
       <td class="subtitle" rowspan="3" style="text-align: center;">3.2.1.- Mínimo</td>
       <td class="subtitle" class="subtitle">3.2.1.1.- Cota (m s.n.m.)</td>
-      <td colspan="2" style="text-align: center;"><?php echo number_format($COTA, 2, ',', '.'); ?></td>
+      <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA), 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">3.2.1.2.- Volumen (hm³)</td>
-      <td style="width: 130px;"><?php echo number_format($FIRTS_VOLUMEN, 2, ',', '.'); ?></td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN), 2, ',', '.'); ?></td>
       <td><?php echo number_format($SECOND_VOLUMEN, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">3.2.1.3.- Superficie (ha)</td>
-      <td style="width: 130px;"><?php echo number_format($FIRTS_SUPERFICIE, 2, ',', '.'); ?></td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_SUPERFICIE), 2, ',', '.'); ?></td>
       <td><?php echo number_format($SECOND_SUPERFICIE, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle" rowspan="3" style="text-align: center;">3.2.2.- Normal</td>
       <td class="subtitle">3.2.2.1.- Cota (m s.n.m.)</td>
-      <td colspan="2" style="text-align: center;"><?php echo number_format($COTA2, 2, ',', '.'); ?></td>
+      <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA2), 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">3.2.2.2.- Volumen (hm³)</td>
-      <td style="width: 130px;"><?php echo number_format($FIRTS_VOLUMEN2, 2, ',', '.'); ?></td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN2), 2, ',', '.'); ?></td>
       <td><?php echo number_format($SECOND_VOLUMEN2, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">3.2.2.3.- Superficie (ha)</td>
-      <td style="width: 130px;"><?php echo number_format($FIRTS_SUPERFICIE2, 2, ',', '.'); ?></td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_SUPERFICIE2), 2, ',', '.'); ?></td>
       <td><?php echo number_format($SECOND_SUPERFICIE2, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle" rowspan="3" style="text-align: center;">3.2.3.- Máximo</td>
       <td class="subtitle">3.2.3.1.- Cota (m s.n.m.)</td>
-      <td colspan="2" style="text-align: center;"><?php echo number_format($COTA3, 2, ',', '.'); ?></td>
+      <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA3), 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">3.2.3.2.- Volumen (hm³)</td>
-      <td style="width: 130px;"><?php echo number_format($FIRTS_VOLUMEN3, 2, ',', '.'); ?></td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN3), 2, ',', '.'); ?></td>
       <td><?php echo number_format($SECOND_VOLUMEN3, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">3.2.3.3.- Superficie (ha)</td>
-      <td style="width: 130px;"><?php echo number_format($FIRTS_SUPERFICIE3, 2, ',', '.'); ?></td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_SUPERFICIE3), 2, ',', '.'); ?></td>
       <td><?php echo number_format($SECOND_SUPERFICIE3, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">3.2.4.- Capacidad Útil (hm³)</td>
-      <td style="width: 180px;"><?php echo number_format($CAPACIDAD_UTIL, 2, ',', '.'); ?></td>
+      <td style="width: 180px;"><?php echo number_format(floatval($CAPACIDAD_UTIL), 2, ',', '.'); ?></td>
       <td colspan="2"><?php echo number_format($CAPACIDAD_UTIL2, 2, ',', '.'); ?></td>
     </tr>
     <tr>
