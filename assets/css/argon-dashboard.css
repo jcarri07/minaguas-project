@@ -24598,6 +24598,22 @@ hr.horizontal.gray-light {
   border-bottom: 1px solid #e9ecef;
 }
 
+.table-sm thead th{
+  padding: 0.3rem 1.5rem;
+}
+
+.table-sm thead th:first-child{
+  border-top-left-radius: 10px;
+}
+
+.table-sm thead th:last-child{
+  border-top-right-radius: 10px;
+}
+
+.table.text-center thead th{
+  text-align: center;
+}
+
 .table th {
   font-weight: 600;
 }
@@ -25400,6 +25416,10 @@ p {
 
 .pagination .paginate_button.page-item{
   margin: 4px;
+}
+
+.text-red{
+  color: var(--bs-red);
 }
 
 body.dark-version {

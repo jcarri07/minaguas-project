@@ -1,21 +1,31 @@
+<script>
+  $("#breadcrumb .modulo").text("Principal");
+  $("#breadcrumb .submodulo").text("Carga de Datos");
+</script>
+
 <?php
-require_once 'php/Conexion.php';
+  require_once 'php/Conexion.php';
 
-$sql = "SELECT * FROM embalses;";
+  $add_where = "";
 
-$query = mysqli_query($conn, $sql);
-/*$data = array();
-
-if (mysqli_num_rows($res) > 0) {
-
-  while ($row = mysqli_fetch_assoc($res)) {
-    $data[] = $row;
+  if($_SESSION['Tipo'] == "User"){
+    //$add_where
   }
-} else {
-  // echo "No se encontraron resultados.";
-}*/
 
-closeConection($conn);
+  $sql = "SELECT Id_embalse, Nombre_embalse, estado, municipio, parroquia
+          FROM embalses em, estados e, municipios m, parroquias p
+          WHERE em.Id_estado = e.id_estado AND em.Id_municipio = m.id_municipio AND em.Id_parroquia = p.id_parroquia AND m.id_estado = e.id_estado AND p.id_municipio = m.id_municipio;";
+
+  $query = mysqli_query($conn, $sql);
+
+  closeConection($conn);
+
+  $options_extraccion = '<option value="">Seleccione</option>';
+  $options_extraccion .='<option value="Riego">Riego</option>';
+  $options_extraccion .='<option value="Hidroelectricidad">Hidroelectricidad</option>';
+  $options_extraccion .='<option value="Consumo Humano">Consumo Humano</option>';
+  $options_extraccion .='<option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>';
+  $options_extraccion .='<option value="Recreación">Recreación</option>';
 ?>
 
 
@@ -27,7 +37,7 @@ closeConection($conn);
             <div class="card-header pb-0 p-3">
               <div class="row">
                 <div class="col-6 d-flex align-items-center">
-                  <h4 class="mb-3">Embalses</h4>
+                  <h4 class="mb-3">Carga de Datos</h4>
                 </div>
                 <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
@@ -48,8 +58,8 @@ closeConection($conn);
 ?>
                 <div class="table-responsive">
                   <div class="mb-3">
-                    <table class="table align-items-center text-center" id="table">
-                      <thead class="table-dark">
+                    <table class="table align-items-center text-sm text-center table-sm" id="table">
+                      <thead class="table-primary">
                         <tr>
                             <th scope="col" class="sort" data-sort="name">Nombre</th>
                             <th scope="col" class="sort" data-sort="budget">Ubicación</th>
@@ -73,10 +83,13 @@ closeConection($conn);
                     </div>
                   </th>
                   <td class="budget">
-                    Sex
+                    <?php echo $row['estado'] . ", " . $row['municipio'] . ", " . $row['parroquia'];?>
                   </td>
                   <td class="budget">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#add').modal('show');"><i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>Añadir Reporte</a>
+                    <a class="btn btn-primary btn-sm px-3 mb-0" href="javascript:;" onclick="$('#add').modal('show');">
+                      <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
+                      Añadir Reporte
+                    </a>
                   </td>
                 </tr>
 <?php
@@ -210,6 +223,39 @@ closeConection($conn);
 
   <script>
     iniciarTabla('table');
+
+
+    var count = 1;
+    $(document).on('click', '#addRows', function() { 
+      count++;
+      var htmlRows = '';
+      htmlRows += '<div class="row">';
+      htmlRows += '   <div class="col">';
+      htmlRows += '       <label>Tipo</label>';
+      htmlRows += '       <div class="input-group mb-3">';
+      htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" required>';
+      htmlRows += '               <?php echo $options_extraccion;?>';
+      htmlRows += '           </select>';
+      htmlRows += '       </div>';
+      htmlRows += '   </div>';
+      htmlRows += '   <div class="col">';
+      htmlRows += '       <label>Valor</label>';
+      htmlRows += '       <div class="input-group mb-3">';
+      htmlRows += '           <input type="text" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor de la Extracción" required>';
+      htmlRows += '       </div>';
+      htmlRows += '   </div>';
+      htmlRows += '   <div class="col" style="flex: 0 0 0% !important;">';
+      htmlRows += '       <label style="color: transparent;">Valor</label>';
+      htmlRows += '       <button class="btn btn-danger btn-sm" id="removeRow" type="button" style="padding: 10px;"><i class="fa fa-trash"></i></button>';
+      htmlRows += '   </div>';
+      htmlRows += '</div>';
+
+      $('#box-extraccion').append(htmlRows);
+    });
+
+    $(document).on('click', '#removeRow', function(){
+      $(this).closest('.row').remove();
+    });
   </script>
 
 
@@ -223,18 +269,24 @@ closeConection($conn);
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
-                <h3 class="font-weight-bolder text-primary text-gradient">Añadir</h3>
+                <h3 class="font-weight-bolder text-primary text-gradient">Añadir Reporte</h3>
                 <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
                 <!--<p class="mb-0">Enter your email and password to register</p>-->
               </div>
               <div class="card-body pb-3">
                 <form role="form text-left" id="form">
-
+    <?php
+                if(date("H:i") . ":00" > "10:00:00"){
+    ?>
+                  <h6 class="text-red text-center">Estás retrasado al enviar el reporte</h6>
+    <?php
+                }
+    ?>
                   <div class="row">
                     <div class="col">
                       <label>Fecha</label>
                       <div class="input-group mb-3">
-                        <input type="date" class="form-control" value="<?php echo date("Y-m-d");?>" disabled required>
+                        <input type="date" class="form-control" name="fecha" id="fecha" value="<?php echo date("Y-m-d");?>" disabled required>
                       </div>
                     </div>
                   </div>
@@ -243,7 +295,7 @@ closeConection($conn);
                     <div class="col">
                       <label>Hora</label>
                       <div class="input-group mb-3">
-                        <input type="time" class="form-control" value="<?php echo date("H:i") . ":00";?>" disabled required>
+                        <input type="time" class="form-control" name="hora" id="hora" value="<?php echo date("H:i") . ":00";?>" disabled required>
                       </div>
                     </div>
                   </div>
@@ -252,31 +304,34 @@ closeConection($conn);
                     <div class="col">
                       <label>Cota</label>
                       <div class="input-group mb-3">
-                        <input type="number" class="form-control" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
+                        <input type="number" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
                       </div>
                     </div>
                   </div>
 
                   <h6 class="mt-2">Extracción</h6>
-                  <div class="row">
-                    <div class="col">
-                      <label>Tipo</label>
-                      <div class="input-group mb-3">
-                        <select class="form-select" required>
-                          <option value="">Seleccione</option>
-                          <option value="Riego">Riego</option>
-                          <option value="Hidroelectricidad">Hidroelectricidad</option>
-                          <option value="Consumo Humano">Consumo Humano</option>
-                          <option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>
-                          <option value="Recreación">Recreación</option>
-                        </select>
+                  <div id="box-extraccion">
+                    <div class="row">
+                      <div class="col">
+                        <label>Tipo</label>
+                        <div class="input-group mb-3">
+                          <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_1" required>
+                            <?php echo $options_extraccion;?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <label>Valor</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor de la Extracción" required>
+                        </div>
                       </div>
                     </div>
-                    <div class="col">
-                      <label>Valor</label>
-                      <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Valor de la Extracción" required>
-                      </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 text-center" style="margin-top: 12px;">
+                        <button class="btn btn-success" id="addRows" type="button">Añadir Otra Extracción</button>
                     </div>
                   </div>
 
