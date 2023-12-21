@@ -8,13 +8,13 @@
 
   $add_where = "";
 
-  if($_SESSION['Tipo'] == "User"){
-    //$add_where
+  if($_SESSION["Tipo"] == "User"){
+    $add_where .= " AND Id_encargado = '$_SESSION[Id_usuario]'";
   }
 
-  $sql = "SELECT Id_embalse, Nombre_embalse, estado, municipio, parroquia
+  $sql = "SELECT Id_embalse, Nombre_embalse, estado, municipio, parroquia, Id_encargado
           FROM embalses em, estados e, municipios m, parroquias p
-          WHERE em.Id_estado = e.id_estado AND em.Id_municipio = m.id_municipio AND em.Id_parroquia = p.id_parroquia AND m.id_estado = e.id_estado AND p.id_municipio = m.id_municipio;";
+          WHERE em.Id_estado = e.id_estado AND em.Id_municipio = m.id_municipio AND em.Id_parroquia = p.id_parroquia AND m.id_estado = e.id_estado AND p.id_municipio = m.id_municipio $add_where;";
 
   $query = mysqli_query($conn, $sql);
 
