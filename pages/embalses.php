@@ -153,67 +153,65 @@ closeConection($conn);
 
           <div class="dt-responsive table-responsive">
             <?php
-            if ($queryEmbalses !== false) {
-              if (mysqli_num_rows($queryEmbalses) > 0) {
+            if (mysqli_num_rows($queryEmbalses) > 0) {
             ?>
-                <table id="table-embalses" class="table table-striped table-bordered nowrap">
-                  <thead>
+              <table id="table-embalses" class="table table-striped table-bordered nowrap">
+                <thead>
+                  <tr>
+                    <th>Embalse</th>
+                    <th>Volumen actual</th>
+                    <th style="text-align: center;">Encargado</th>
+                    <th style="text-align: center;">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  while ($row = mysqli_fetch_array($queryEmbalses)) {
+                  ?>
                     <tr>
-                      <th>Embalse</th>
-                      <th>Volumen actual</th>
-                      <th style="text-align: center;">Encargado</th>
-                      <th style="text-align: center;">Acción</th>
+                      <td>
+                        <div class="d-flex flex-column px-3">
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
+                          <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex flex-column px-3">
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm">1.247,3 Hm3 (50%)</h6>
+                          <span class="text-xs">20/12/2023</span>
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <div class="d-flex justify-content-center">
+                          <div><?php
+                                if ($row['id_encargado'] == '0') { ?>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay personal encargado</h6>
+                            <?php
+                                } else {
+                            ?>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
+                            <?php } ?>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center justify-content-center text-sm">
+                          <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-3 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
+                          <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-3 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i>Eliminar</a>
+                          <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
+                        </div>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    while ($row = mysqli_fetch_array($queryEmbalses)) {
-                    ?>
-                      <tr>
-                        <td>
-                          <div class="d-flex flex-column px-3">
-                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
-                            <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex flex-column px-3">
-                            <h6 class="mb-1 text-dark font-weight-bold text-sm">1.247,3 Hm3 (50%)</h6>
-                            <span class="text-xs">20/12/2023</span>
-                          </div>
-                        </td>
-                        <td style="vertical-align: middle;">
-                          <div class="d-flex justify-content-center">
-                            <div><?php
-                                  if ($row['id_encargado'] == '0') { ?>
-                                <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay personal encargado</h6>
-                              <?php
-                                  } else {
-                              ?>
-                                <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
-                              <?php } ?>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center justify-content-center text-sm">
-                            <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-3 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                            <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-3 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i>Eliminar</a>
-                            <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                          </div>
-                        </td>
-                      </tr>
-                    <?php
-                    }
-                    ?>
-                  </tbody>
-                </table>
-              <?php
-              } else {
-              ?>
-                <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No existen embalses cargados</h2>
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
             <?php
-              }
+            } else {
+            ?>
+              <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No existen embalses cargados</h2>
+            <?php
             }
             ?>
           </div>

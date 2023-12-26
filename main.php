@@ -1,3 +1,14 @@
+<?php
+  if (!isset($_SESSION)) {
+    session_start();
+  };
+  if(!isset($_SESSION["Id_usuario"])){
+    
+    print "<script>window.location='index.php';</script>";
+  }
+
+  date_default_timezone_set("America/Caracas");
+?>
 <!--
 =========================================================
 * Argon Dashboard 2 - v2.0.4
@@ -12,15 +23,7 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
-<?php
-session_start();
-if (!isset($_SESSION["Id_usuario"])) {
 
-  print "<script>window.location='index.php';</script>";
-}
-
-date_default_timezone_set("America/Caracas");
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +41,7 @@ date_default_timezone_set("America/Caracas");
   <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="./assets/js/fontawesome/42d5adcbca.js"></script>
+  <script src="./assets/js/fontawesome/42d5adcbca.js" ></script>
   <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
   <script src="./assets//js/sweetalerts.js"></script>
   <!-- CSS Files -->
@@ -266,9 +269,9 @@ date_default_timezone_set("America/Caracas");
       </div>
     </nav>
     <!-- End Navbar -->
-
+    
     <?php
-    require "content.php";
+      require "content.php";
     ?>
 
 
