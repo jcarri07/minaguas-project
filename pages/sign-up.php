@@ -1,3 +1,14 @@
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+};
+if (isset($_SESSION["Id_usuario"])) {
+
+  print "<script>window.location='../main.php';</script>";
+}
+
+date_default_timezone_set("America/Caracas");
+?>
 <!--
 =========================================================
 * Argon Dashboard 2 - v2.0.4
@@ -12,17 +23,7 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
-<?php
-if (!isset($_SESSION)) {
-  session_start();
-};
-if (isset($_SESSION["Id_usuario"])) {
 
-  print "<script>window.location='../main.php';</script>";
-}
-
-date_default_timezone_set("America/Caracas");
-?>
 <!DOCTYPE html>
 <html lang="en">
 
