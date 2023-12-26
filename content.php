@@ -12,6 +12,9 @@
         if($_GET['page'] == "crear_embalse"){
             include "pages/crear_embalse.php";
         }
+        if($_GET['page'] == "editar_embalse"){
+            include "pages/editar_embalse.php";
+        }
         if($_GET['page'] == "datos"){
             include "pages/datos.php";
         }
@@ -26,5 +29,6 @@
         if($_GET['page'] == "cerrar_sesion"){
             include "php/login/logout.php";
         }
+
     }
 ?>

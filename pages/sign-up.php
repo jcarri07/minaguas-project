@@ -12,8 +12,6 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
-<!DOCTYPE html>
-<html lang="en">
 <?php
 if (!isset($_SESSION)) {
   session_start();
@@ -25,6 +23,9 @@ if (isset($_SESSION["Id_usuario"])) {
 
 date_default_timezone_set("America/Caracas");
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
 
 <head>
   <meta charset="utf-8" />
@@ -286,8 +287,23 @@ date_default_timezone_set("America/Caracas");
               confirmButtonText: 'Aceptar',
               confirmButtonColor: '#01a9ac',
             });
+<<<<<<< HEAD
           } else {
             if ($("[name='apellidos']").prop("value").split(' ').filter(function(n) {
+=======
+          } else {*/
+            if ($("[name='password']").prop("value") == $("[name='confirmar']").prop("value")) {
+              var values = new FormData();
+
+              values.append("nombre", $("[name='nombres']").prop("value"));
+              values.append("apellido", $("[name='apellidos']").prop("value"));
+              values.append("telefono", $("[name='telefono']").prop("value"));
+              values.append("cedula", $("[name='cedula']").prop("value"));
+              values.append("email", $("[name='email']").prop("value"));
+              //values.append("usuario", $("[name='usuario']").prop("value"));
+              values.append("pass", $("[name='password']").prop("value"));
+              console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+>>>>>>> 0d6ad9940dfd112dcd7cc21d96c442635b6d545e
                 return n != ''
               }).length != 2) {
               Swal.fire({

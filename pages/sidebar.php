@@ -24,8 +24,10 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <span class="nav-link-text ms-1">Inicio</span>
           </a>
         </li>
-        <?php if($_SESSION["Tipo"] = "Admin"){
-          ?>
+
+        <?php 
+          if($_SESSION["Tipo"] == "Admin"){
+        ?>
           <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -34,9 +36,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <span class="nav-link-text ms-1">Usuarios</span>
           </a>
         </li>
-        <?php
-        } ?>
-        
+
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'embalses') ? "active" : ''; ?>" href="?page=embalses">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -45,6 +45,11 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <span class="nav-link-text ms-1">Embalses</span>
           </a>
         </li>
+
+        <?php
+          } 
+        ?>
+
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'datos') ? "active" : ''; ?>" href="?page=datos">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -53,6 +58,11 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <span class="nav-link-text ms-1">Carga de Datos</span>
           </a>
         </li>
+
+        <?php 
+          if($_SESSION["Tipo"] == "Admin"){
+        ?>
+
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'reportes') ? "active" : ''; ?>" href="?page=reportes">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -61,6 +71,10 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <span class="nav-link-text ms-1">Reportes</span>
           </a>
         </li>
+
+        <?php
+          } 
+        ?>
       </div>
       
       <div class="d-flex flex-column col-12" style="position: absolute; bottom: 0;">
@@ -73,7 +87,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Perfil</span>
+            <span class="nav-link-text ms-1">Editar Perfil</span>
           </a>
         </li>
         

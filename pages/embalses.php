@@ -1,9 +1,40 @@
+<?php
+require_once 'php/Conexion.php';
+
+$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
+$queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
+$queryUsers = mysqli_query($conn, "SELECT * FROM usuarios;");
+// $result = mysqli_fetch_assoc($queriEstados);
+
+$estados = array();
+while ($row = mysqli_fetch_array($queryEstados)) {
+  $id = $row['id_estado'];
+  $estado = $row['estado'];
+  $estados[$id] = $estado;
+}
+
+$encargados = array();
+while ($row = mysqli_fetch_array($queryUsers)) {
+  $id = $row['Id_usuario'];
+  $nombre = $row['P_Nombre'] . " " . $row['P_Apellido'];
+  $encargados[$id] = $nombre;
+}
 
 
+// Ahora puedes acceder a la capital de un estado específico
+// $capitalCarabobo = $estados["24"];
 
-    <div class="container-fluid py-4">
-      <div class="row">
-        <!--<div class="col-lg-8">
+// Muestra la capital de Carabobo
+// echo "La capital de Carabobo es: " . $capitalCarabobo;
+
+// echo json_encode($arrayEstados);
+// echo $arrayEstados[0]['2'];
+// echo json_encode($arrayEstados[0][1], $estados['1']);
+closeConection($conn);
+?>
+<div class="container-fluid py-4">
+  <div class="row">
+    <!--<div class="col-lg-8">
           <div class="row">
             <div class="col-xl-6 mb-xl-0 mb-4">
               <div class="card bg-transparent shadow-xl">
@@ -99,83 +130,100 @@
             </div>
           </div>
         </div>-->
-        <div class="col-lg-12">
-          <div class="card h-100">
-            <div class="card-header pb-0 p-3">
-              <div class="row">
-                <div class="col-6 d-flex align-items-center">
-                  <h6 class="mb-0">Embalses</h6>
-                </div>
-                <!--<div class="col-6 text-end">
+    <div class="col-lg-12">
+      <div class="card h-100">
+        <div class="card-header pb-0 p-3">
+          <div class="row">
+            <div class="col-6 d-flex align-items-center">
+              <h6 class="mb-0">Embalses</h6>
+            </div>
+            <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
                 </div>-->
-              </div>
-            </div>
-            <div class="card-body p-3 pb-0">
-              <div class="text-center">
-                <a href="?page=crear_embalse">
-                  <button type="button" class="btn bg-gradient-info btn-block">
-                    Nuevo
-                  </button>
-                </a>
-              </div>
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-1 text-dark font-weight-bold text-sm">16 de Octubre 2023</h6>
-                    <span class="text-xs">Boconó - Tucupido</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">10 de Febrero 2021</h6>
-                    <span class="text-xs">Embalse 2</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">05 de April 2020</h6>
-                    <span class="text-xs">Embalse 3</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">25 de Junio 2019</h6>
-                    <span class="text-xs">Embalse 4</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">01 de Marzo 2019</h6>
-                    <span class="text-xs">Embalse 5</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
+        <div class="card-body p-3 pb-0">
+          <div class="text-center">
+            <a href="?page=crear_embalse">
+              <button type="button" class="btn bg-gradient-info btn-block">
+                Nuevo
+              </button>
+            </a>
+          </div>
+
+          <div class="dt-responsive table-responsive">
+            <?php
+            if ($queryEmbalses !== false) {
+              if (mysqli_num_rows($queryEmbalses) > 0) {
+            ?>
+                <table id="table-embalses" class="table table-striped table-bordered nowrap">
+                  <thead>
+                    <tr>
+                      <th>Embalse</th>
+                      <th>Volumen actual</th>
+                      <th style="text-align: center;">Encargado</th>
+                      <th style="text-align: center;">Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    while ($row = mysqli_fetch_array($queryEmbalses)) {
+                    ?>
+                      <tr>
+                        <td>
+                          <div class="d-flex flex-column px-3">
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
+                            <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex flex-column px-3">
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm">1.247,3 Hm3 (50%)</h6>
+                            <span class="text-xs">20/12/2023</span>
+                          </div>
+                        </td>
+                        <td style="vertical-align: middle;">
+                          <div class="d-flex justify-content-center">
+                            <div><?php
+                                  if ($row['id_encargado'] == '0') { ?>
+                                <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay personal encargado</h6>
+                              <?php
+                                  } else {
+                              ?>
+                                <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
+                              <?php } ?>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center justify-content-center text-sm">
+                            <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-3 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
+                            <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-3 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i>Eliminar</a>
+                            <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
+                          </div>
+                        </td>
+                      </tr>
+                    <?php
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              <?php
+              } else {
+              ?>
+                <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No existen embalses cargados</h2>
+            <?php
+              }
+            }
+            ?>
+          </div>
+          <br><br><br>
+
+        </div>
       </div>
-      <!--<div class="row">
+    </div>
+  </div>
+  <!--<div class="row">
         <div class="col-md-7 mt-4">
           <div class="card">
             <div class="card-header pb-0 px-3">
@@ -319,53 +367,156 @@
           </div>
         </div>
       </div>-->
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                desarrollado por
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Dirección de Investigación e Innovación - ABAE
-                </a>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                </li>
-              </ul>
-            </div>
+  <footer class="footer pt-3  ">
+    <div class="container-fluid">
+      <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6 mb-lg-0 mb-4">
+          <div class="copyright text-center text-sm text-muted text-lg-start">
+            © <script>
+              document.write(new Date().getFullYear())
+            </script>,
+            desarrollado por
+            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Dirección de Investigación e Innovación - ABAE
+            </a>
           </div>
         </div>
-      </footer>
+        <div class="col-lg-6">
+          <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </footer>
+</div>
 
 
-  <!--   Core JS Files   -->
+<!--   Core JS Files   -->
 
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+<script>
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
     }
-  </script>
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
 
+  iniciarTabla('table-embalses');
+  // $('#table-embalses').DataTable({
+  //   language: {
+  //     "decimal": "",
+  //     "emptyTable": "No hay información",
+  //     "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+  //     "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+  //     "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+  //     "infoPostFix": "",
+  //     "thousands": ",",
+  //     "lengthMenu": "Mostrar _MENU_ Entradas",
+  //     "loadingRecords": "Cargando...",
+  //     "processing": "Procesando...",
+  //     "search": "Buscar:",
+  //     "zeroRecords": "Sin resultados encontrados",
+  //     "paginate": {
+  //       "first": "Primero",
+  //       "last": "Ultimo",
+  //       "next": ">",
+  //       "previous": "<"
+  //     }
+  //   },
+  // });
+
+  $(document).ready(function() {
+    $(".editar-embalse").click(function(e) {
+      // Evitar que el enlace realice la acción predeterminada (navegación)
+      e.preventDefault();
+
+      // Obtener el valor del atributo data-id
+      var id = $(this).data("id");
+      console.log(id)
+      $.ajax({
+        type: "POST",
+        url: "pages/session_variable.php",
+        data: {
+          valor: id
+        },
+        success: function(response) {
+          // console.log(response, "si")
+          window.location.href = "?page=editar_embalse";
+
+        }
+      });
+    });
+
+    $(".eliminar-embalse").on("click", function(e) {
+      // Realizar la consulta AJAX al servidor
+      console.log("Eliminar");
+      e.preventDefault();
+      var id_embalse = $(this).data("id");
+      console.log(id_embalse)
+      $.ajax({
+        url: "./php/get-embalse.php", // Ruta a tu script PHP de consulta
+        type: "POST",
+        data: {
+          id: id_embalse
+        },
+        success: function(data) {
+          // Mostrar el resultado en la modal
+          console.log(data)
+          $("#embalseNombre").text(data);
+          $("#embalseIdInput")[0].value = id_embalse;
+          $('#modal-form').modal('show');
+        },
+        error: function() {
+          alert("Error al realizar la consulta.");
+        }
+      });
+    });
+
+  });
+</script>
+
+
+
+<div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+
+          <div class="card-body">
+
+            <div class="">
+              <h6 style="text-align:center;" class="mb-0">Eliminar el embalse</h6>
+              <h3 style="text-align:center;" id="embalseNombre" class=""></h3>
+            </div>
+            <form method="POST" action="php/proces_embalse.php" enctype="multipart/form-data">
+
+              <div class="input-group mb-3">
+                <input style="display: none;" id="embalseIdInput" type="text" class="form-control" name="id_embalse" value="">
+              </div>
+
+              <div class="text-center">
+                <button type="submit" name="delete" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Confirmar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

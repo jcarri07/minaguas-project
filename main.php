@@ -12,8 +12,6 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
-<!DOCTYPE html>
-<html lang="en">
 <?php
 session_start();
 if (!isset($_SESSION["Id_usuario"])) {
@@ -23,6 +21,8 @@ if (!isset($_SESSION["Id_usuario"])) {
 
 date_default_timezone_set("America/Caracas");
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
@@ -40,10 +40,16 @@ date_default_timezone_set("America/Caracas");
   <!-- Font Awesome Icons -->
   <script src="./assets/js/fontawesome/42d5adcbca.js"></script>
   <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="./assets//js/sweetalerts.js"></script>
   <!-- CSS Files -->
   <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <!--DataTables-->
+  <link href="vendor/datatables/css/datatables.min.css" rel="stylesheet">
+  <script src="vendor/datatables/js/datatables.min.js"></script>
+  <script src="vendor/datatables/js/datatable-basic.init.js"></script>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -147,28 +153,28 @@ date_default_timezone_set("America/Caracas");
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
       <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb" id="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+            <li class="breadcrumb-item text-sm modulo"><a class="opacity-5 text-white" href="javascript:;">Carga de Datos</a></li>
+            <li class="breadcrumb-item text-sm text-white submodulo active" aria-current="page">Dashboard</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+          <!--<h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>-->
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
               <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Type here...">
+              <input type="text" class="form-control" placeholder="Escriba aqui...">
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
+            <!--li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
                 <span class="d-sm-inline d-none">Sign In</span>
               </a>
-            </li>
-            <!--li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            </li-->
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
                   <i class="sidenav-toggler-line bg-white"></i>
@@ -176,7 +182,7 @@ date_default_timezone_set("America/Caracas");
                   <i class="sidenav-toggler-line bg-white"></i>
                 </div>
               </a>
-            </li-->
+            </li>
             <li class="nav-item px-3 d-flex align-items-center">
               <a href="?page=perfil" class="nav-link text-white p-0">
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
@@ -268,9 +274,9 @@ date_default_timezone_set("America/Caracas");
 
   </main>
   <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+    <!--a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>
-    </a>
+    </a-->
     <div class="card shadow-lg">
       <div class="card-header pb-0 pt-3 ">
         <div class="float-start">
@@ -357,7 +363,7 @@ date_default_timezone_set("America/Caracas");
   <script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="./assets/js/plugins/chartjs.min.js"></script>
   <script>
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
+    /*var ctx1 = document.getElementById("chart-line").getContext("2d");
 
     var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
 
@@ -437,7 +443,7 @@ date_default_timezone_set("America/Caracas");
           },
         },
       },
-    });
+    });*/
   </script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
