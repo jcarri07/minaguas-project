@@ -299,15 +299,7 @@ date_default_timezone_set("America/Caracas");
           } else {*/
             if ($("[name='password']").prop("value") == $("[name='confirmar']").prop("value")) {
               var values = new FormData();
-              Swal.fire({
-                icon: 'warning',
-                title: 'Ingrese sus 2 Nombres',
-                text: $("[name='nombres']").prop("value").split(' ').filter(function(n) {
-                  return n != ''
-                }).length,
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#01a9ac',
-              });
+
               values.append("nombre", $("[name='nombres']").prop("value"));
               values.append("apellido", $("[name='apellidos']").prop("value"));
               values.append("telefono", $("[name='telefono']").prop("value"));
