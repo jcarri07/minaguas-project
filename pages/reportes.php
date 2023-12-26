@@ -392,3 +392,4 @@ date_default_timezone_set("America/Caracas");
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
 </script>
+<?php closeConection($conn); ?>
