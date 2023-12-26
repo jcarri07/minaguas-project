@@ -1,6 +1,6 @@
 <?php
 include "php/Conexion.php";
-$res = mysqli_query($conn, "SELECT * FROM Usuarios WHERE NOT Tipo = 'Admin';");
+$res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin';");
 $count = mysqli_num_rows($res);
 if ($count >= 1) {
 
