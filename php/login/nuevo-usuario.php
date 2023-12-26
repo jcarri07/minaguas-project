@@ -49,5 +49,6 @@ if ($num_r >= 1) {
             echo "no";
         };
     }
-    closeConection($conn);
+    
 }
+closeConection($conn);

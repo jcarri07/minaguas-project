@@ -1,431 +1,461 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="text-center">
 
+        <button type="button" onclick="$('#new-user').modal('show');" class="btn bg-gradient-info btn-block">
+          Nuevo
+        </button>
 
+      </div>
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Usuarios Registrados</h6>
+        </div>
+        <div class="card-body px-4 pt-0 pb-2">
+          <div class="dt-responsive table-responsive p-0">
+            <?php include "php/Usuario/Lista_usuario.php"; ?>
 
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>Usuarios Registrados</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <?php include "php/Usuario/Lista_usuario.php";?>
-                <!--table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Foto</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre(s)</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Apellido(s)</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ultima Entrada</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                      <div>
-                            <img src="assets/img/team-2.jpg" class="avatar avatar-xl me-2" alt="user1">
-                          </div>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">John Michael</h6>
-                            <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                        <p class="text-xs text-secondary mb-0">Organization</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Editar
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Borrar
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user2">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                            <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">11/01/19</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user3">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                            <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Executive</p>
-                        <p class="text-xs text-secondary mb-0">Projects</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">19/09/17</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user4">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Michael Levi</h6>
-                            <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">24/12/08</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user5">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Richard Gran</h6>
-                            <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                        <p class="text-xs text-secondary mb-0">Executive</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">04/10/21</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user6">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                            <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programtor</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table-->
-              </div>
-            </div>
           </div>
         </div>
       </div>
-      <!--div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>Projects table</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center justify-content-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Budget</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Completion</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm rounded-circle me-2" alt="spotify">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Spotify</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">60%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="assets/img/small-logos/logo-invision.svg" class="avatar avatar-sm rounded-circle me-2" alt="invision">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Invision</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$5,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="assets/img/small-logos/logo-jira.svg" class="avatar avatar-sm rounded-circle me-2" alt="jira">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Jira</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$3,400</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">30%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="30" style="width: 30%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="assets/img/small-logos/logo-slack.svg" class="avatar avatar-sm rounded-circle me-2" alt="slack">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Slack</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$1,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">0%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="assets/img/small-logos/logo-webdev.svg" class="avatar avatar-sm rounded-circle me-2" alt="webdev">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Webdev</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$14,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">80%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80" style="width: 80%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm rounded-circle me-2" alt="xd">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Adobe XD</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,300</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+    </div>
+  </div>
+
+</div>
+<!-- Modal-New -->
+<div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true">
+  <div class="modal-dialog modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+          <div class="card-header pb-0 text-left">
+            <h3 class="font-weight-bolder text-primary text-gradient">Nuevo Usuario</h3>
+            <!--<p class="mb-0">Enter your email and password to register</p>-->
+          </div>
+          <div class="card-body pb-3">
+            <form id="form" role="form">
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" required>
               </div>
-            </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" required>
+              </div>
+              <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required>
+              </div>
+              <div class="row ">
+                <div class="mb-3 col-6">
+                  <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="telefono" required>
+                </div>
+                <div class="mb-3 col-6">
+                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula" required>
+                </div>
+              </div>
+              <!--div class="mb-3">
+                        <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
+                      </div-->
+              <div class="row ">
+                <div class="mb-3 col-6">
+                  <input type="text" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
+                </div>
+                <div class="mb-3 col-6">
+                  <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
+                </div>
+
+              </div>
+
+              <!--div class="form-check form-check-info text-start">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">
+                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                  </label>
+                </div-->
+              <div class="text-center">
+                <a href="sign-in.php"><button type="submit" class="btn btn-primary w-100 my-4 mb-2">Crear Usuario</button></a>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-center pt-0 px-sm-4 px-1">
+            <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
           </div>
         </div>
-      </div-->
+      </div>
     </div>
+  </div>
+</div>
+<!-- Modal-Edit -->
+<div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
+  <div class="modal-dialog modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+          <div class="card-header pb-0 text-left">
+            <h3 class="font-weight-bolder text-primary text-gradient">Editar</h3>
+            <!--<p class="mb-0">Enter your email and password to register</p>-->
+          </div>
+          <div class="card-body pb-3">
+            <form id="form2" role="form">
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="Enombres" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="Eapellidos" required>
+              </div>
+              <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="Eemail" required>
+              </div>
+              <div class="row ">
+                <div class="mb-3 col-6">
+                  <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="Etelefono" required>
+                </div>
+                <div class="mb-3 col-6">
+                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="Ecedula" required>
+                </div>
+
+              </div>
+              <div class="">
+                  <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="Ecedula2" hidden>
+                </div>
+              <!--div class="mb-3">
+                        <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
+                      </div-->
+
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" required>
+                </div>
+                <!--div class="mb-3 col-6">
+                  <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="Econfirmar" required>
+                </div-->
+
+
+              <!--div class="form-check form-check-info text-start">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">
+                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                  </label>
+                </div-->
+              <div class="text-center">
+                <a href="sign-in.php"><button type="submit" class="btn btn-primary w-100 my-4 mb-2">Editar Usuario</button></a>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-center pt-0 px-sm-4 px-1">
+            <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('#table-user').DataTable({
+      language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando resultados _START_ a _END_ de _TOTAL_",
+        "infoEmpty": "Mostrando 0 to_MENU_of_TOTAL_Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+          "first": "Primero",
+          "last": "Ultimo",
+          "next": ">",
+          "previous": "<"
+        }
+      },
+    });
+  });
+
+
+  function Modaledit(p_nom, s_nom, p_ape, s_ape, pass, ced, correo, telf) {
+    $("[name='Enombres']").val(p_nom+' '+s_nom);
+    $("[name='Eapellidos']").val(p_ape+' '+s_ape);
+    $("[name='Etelefono']").val(telf);
+    $("[name='Ecedula']").val(ced);
+    $("[name='Ecedula2']").val(ced);
+    $("[name='Eemail']").val(correo);
+    $("[name='Epassword']").val(pass);
+    $("#edit-user").modal("show");
+
+  };
+
+  function Modaldelete(id) {
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "Una vez Eliminado no podra deshacer su elección",
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: "#5e72e4",
+      cancelButtonColor: "#d33",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        var values = new FormData();
+        values.append("id", id);
+
+        $.ajax({
+          url: 'php/Usuario/Borrar_usuario.php',
+          type: 'POST',
+          data: values,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            switch (response) {
+              case "borrado":
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Usuario Eliminado',
+                  showConfirmButton: false,
+                  timer: 1200
+                });
+                setTimeout(function() {
+                  window.location.reload();
+                }, 1200);
+                break;
+              case "usuario no existe":
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Error en eliminacion',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                });
+                break;
+              default:
+                console.log(response);
+                break;
+            }
+
+          },
+        });
+      } else {
+        console.log("presiono cancelar");
+      }
+    });
+
+  };
+
+  $(document).ready(function() {
+
+    $("#form").submit(function(e) {
+      e.preventDefault();
+
+      if ($("[name='password']").prop("value") == $("[name='confirmar']").prop("value")) {
+        var values = new FormData();
+
+        values.append("nombre", $("[name='nombres']").prop("value"));
+        values.append("apellido", $("[name='apellidos']").prop("value"));
+        values.append("telefono", $("[name='telefono']").prop("value"));
+        values.append("cedula", $("[name='cedula']").prop("value"));
+        values.append("email", $("[name='email']").prop("value"));
+        //values.append("usuario", $("[name='usuario']").prop("value"));
+        values.append("pass", $("[name='password']").prop("value"));
+        console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+          return n != ''
+        }).length);
+
+        $.ajax({
+          url: 'php/login/nuevo-usuario.php',
+          type: 'POST',
+          data: values,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+
+            switch (response) {
+              case "si":
+                $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Usuario Registrado',
+                  showConfirmButton: false,
+                  timer: 1500
+                }); //CUANDO REGISTRA EXITOSAMENTE
+                setTimeout(function() {
+                  window.location.reload();
+                }, 1500);
+                break;
+              case "no":
+                $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Usuario no Registrado',
+                  text: 'Problema de comunicación con el servidor, intente más tarde',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //ERROR AL REGISTRAR
+                console.log("no");
+                break;
+              case "existe_cedula":
+                $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Usuario no Registrado',
+                  text: 'El número de cédula ya existe',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //CEDULA EXISTENTE
+                console.log("no ced");
+                break;
+              case "existe_usuario":
+                $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Usuario no Registrado',
+                  text: 'El nombre de usuario ya existe',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //NOMBRE DE USUARIO EXISTENTE
+                console.log("no usu");
+                break;
+              default:
+              $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error Inesperado',
+                  text: toString(response),
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                });
+                console.log(response);
+                break;
+            }
+
+          },
+          error: function(response) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error Inesperado',
+              text: toString(response),
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#01a9ac',
+            });
+            console.log("err2");
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: 'warning',
+          text: 'Las contraseñas no coinciden',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#01a9ac',
+        });
+      }
+    });
+
+    $("#form2").submit(function(e) {
+      e.preventDefault();
+
+        var values = new FormData();
+
+        values.append("nombre", $("[name='Enombres']").prop("value"));
+        values.append("apellido", $("[name='Eapellidos']").prop("value"));
+        values.append("telefono", $("[name='Etelefono']").prop("value"));
+        values.append("cedula", $("[name='Ecedula']").prop("value"));
+        values.append("cedula2", $("[name='Ecedula2']").prop("value"));
+        values.append("email", $("[name='Eemail']").prop("value"));
+        //values.append("usuario", $("[name='usuario']").prop("value"));
+        values.append("pass", $("[name='Epassword']").prop("value"));
+        console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+          return n != ''
+        }).length);
+
+        $.ajax({
+          url: 'php/Usuario/editar-usuario.php',
+          type: 'POST',
+          data: values,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+
+            switch (response) {
+              case "si":
+                $('#edit-user').modal('hide');
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Usuario Editado',
+                  showConfirmButton: false,
+                  timer: 1500
+                }); //CUANDO REGISTRA EXITOSAMENTE
+                setTimeout(function() {
+                  window.location.reload();
+                }, 1500);
+                break;
+              case "no":
+                $('#edit-user').modal('hide');
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Usuario no Editado',
+                  text: 'Problema de comunicación con el servidor, intente más tarde',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //ERROR AL REGISTRAR
+                console.log("no");
+                break;
+              case "existe_cedula":
+                $('#edit-user').modal('hide');
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Usuario no Editado',
+                  text: 'El número de cédula ya existe',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //CEDULA EXISTENTE
+                console.log("no ced");
+                break;
+              case "existe_usuario":
+                $('#edit-user').modal('hide');
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Usuario no Editado',
+                  text: 'El nombre de usuario ya existe',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //NOMBRE DE USUARIO EXISTENTE
+                console.log("no usu");
+                break;
+              default:
+              $('#edit-user').modal('hide');
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error Inesperado',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                });
+                console.log(response);
+                break;
+            }
+
+          },
+          error: function(response) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error Inesperado',
+              text: toString(response),
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#01a9ac',
+            });
+            console.log("err2");
+          }
+        });
+
+    });
+  });
+</script>

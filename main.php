@@ -39,6 +39,7 @@
   <!-- Font Awesome Icons -->
   <script src="./assets/js/fontawesome/42d5adcbca.js" ></script>
   <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="./assets//js/sweetalerts.js"></script>
   <!-- CSS Files -->
   <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
@@ -162,16 +163,16 @@
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
               <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Type here...">
+              <input type="text" class="form-control" placeholder="Escriba aqui...">
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
+            <!--li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
                 <span class="d-sm-inline d-none">Sign In</span>
               </a>
-            </li>
+            </li-->
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
@@ -272,9 +273,9 @@
 
   </main>
   <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+    <!--a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>
-    </a>
+    </a-->
     <div class="card shadow-lg">
       <div class="card-header pb-0 pt-3 ">
         <div class="float-start">

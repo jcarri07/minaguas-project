@@ -1,85 +1,76 @@
+<?php 
 
-    
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
-                <p class="mb-0">Edit Profile</p>
-                <button class="btn btn-primary btn-sm ms-auto">Settings</button>
-              </div>
-            </div>
-            <div class="card-body">
-              <p class="text-uppercase text-sm">User Information</p>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Username</label>
-                    <input class="form-control" type="text" value="lucky.jesse">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Email address</label>
-                    <input class="form-control" type="email" value="jesse@example.com">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">First name</label>
-                    <input class="form-control" type="text" value="Jesse">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Last name</label>
-                    <input class="form-control" type="text" value="Lucky">
-                  </div>
-                </div>
-              </div>
-              <hr class="horizontal dark">
-              <p class="text-uppercase text-sm">Contact Information</p>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Address</label>
-                    <input class="form-control" type="text" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">City</label>
-                    <input class="form-control" type="text" value="New York">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Country</label>
-                    <input class="form-control" type="text" value="United States">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Postal code</label>
-                    <input class="form-control" type="text" value="437300">
-                  </div>
-                </div>
-              </div>
-              <hr class="horizontal dark">
-              <p class="text-uppercase text-sm">About me</p>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">About me</label>
-                    <input class="form-control" type="text" value="A beautiful Dashboard for Bootstrap 5. It is Free and Open Source.">
-                  </div>
-                </div>
-              </div>
-            </div>
+require_once 'php/Conexion.php';
+$ced = $_SESSION["Cedula"];
+$res = mysqli_query($conn, "SELECT * FROM usuarios WHERE Cedula = '$ced'");
+$data = mysqli_fetch_array($res);
+$pass = $data["Contrasena"];
+closeConection($conn);
+$aux = "disable";
+if($_SESSION["Tipo"] == "Admin"){
+$aux = "";
+}
+?>
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <div class="d-flex align-items-center">
+            <p class="mb-0">Editar Perfil</p>
+            <button type="button" id="edit" class="btn btn-primary btn-sm ms-auto">Editar</button>
+
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="card-body">
+          <p class="text-uppercase text-sm">User Information</p>
+          <form id="form" role="form">
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required>
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" value="<?php echo $_SESSION["P_Apellido"] . ' ' . $_SESSION["S_Apellido"] ?>" required>
+            </div>
+            <div class="mb-3">
+              <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" value="<?php echo $_SESSION["Correo"] ?>" required <?php echo $aux;?>>
+            </div>
+            <div class="row ">
+              <div class="mb-3 col-6">
+                <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="telefono" value="<?php echo $_SESSION["Telefono"] ?>" required>
+              </div>
+              <div class="mb-3 col-6">
+                <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula" value="<?php echo $_SESSION["Cedula"] ?>" required <?php echo $aux;?>>
+              </div>
+            </div>
+            <div class="">
+                  <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula2" value="<?php echo $_SESSION["Cedula"] ?>" hidden>
+                </div>
+            <!--div class="mb-3">
+                        <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
+                      </div-->
+            <div id="con" class="row">
+              <div class="mb-3 col-6">
+                <input type="text" class="form-control" placeholder="Contraseña Anterior" aria-label="Password" name="confirmar" Value="" required>
+              </div>
+              <div class="mb-3 col-6">
+                <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="confirmar" name="password" Value="" required>
+              </div>
+
+            </div>
+
+            <!--div class="form-check form-check-info text-start">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">
+                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                  </label>
+                </div-->
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--div class="col-md-4">
           <div class="card card-profile">
             <img src="assets/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
             <div class="row justify-content-center">
@@ -134,9 +125,9 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- <footer class="footer pt-3  ">
+        </div-->
+  </div>
+  <!-- <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
@@ -168,15 +159,115 @@
           </div>
         </div>
       </footer> -->
-    </div>
- 
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
+</div>
 
+<script>
+  $(Document).ready(function(){
+
+    $("#edit").click(function() {
+
+      if ($("[name='confirmar']").prop("value") == <?php echo $pass?>) {
+      var values = new FormData();
+
+      values.append("nombre", $("[name='nombres']").prop("value"));
+      values.append("apellido", $("[name='apellidos']").prop("value"));
+      values.append("telefono", $("[name='telefono']").prop("value"));
+      values.append("cedula", $("[name='cedula']").prop("value"));
+      values.append("cedula2", $("[name='cedula2']").prop("value"));
+      values.append("email", $("[name='email']").prop("value"));
+      //values.append("usuario", $("[name='usuario']").prop("value"));
+      values.append("pass", $("[name='password']").prop("value"));
+
+
+      $.ajax({
+        url: 'php/Usuario/editar-usuario.php',
+        type: 'POST',
+        data: values,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+
+          switch (response) {
+            case "si":
+              
+              Swal.fire({
+                icon: 'success',
+                title: 'Usuario Editado',
+                showConfirmButton: false,
+                timer: 1500
+              }); //CUANDO REGISTRA EXITOSAMENTE
+              setTimeout(function() {
+                window.location.reload();
+              }, 1500);
+              break;
+            case "no":
+              
+              Swal.fire({
+                icon: 'error',
+                title: 'Usuario no Editado',
+                text: 'Problema de comunicación con el servidor, intente más tarde',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac',
+              }); //ERROR AL REGISTRAR
+              console.log("no");
+              break;
+            case "existe_cedula":
+              
+              Swal.fire({
+                icon: 'warning',
+                title: 'Usuario no Editado',
+                text: 'El número de cédula ya existe',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac',
+              }); //CEDULA EXISTENTE
+              console.log("no ced");
+              break;
+            case "existe_usuario":
+              
+              Swal.fire({
+                icon: 'warning',
+                title: 'Usuario no Editado',
+                text: 'El nombre de usuario ya existe',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac',
+              }); //NOMBRE DE USUARIO EXISTENTE
+              console.log("no usu");
+              break;
+            default:
+              
+              Swal.fire({
+                icon: 'error',
+                title: 'Error Inesperado',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac',
+              });
+              console.log(response);
+              break;
+          }
+
+        },
+        error: function(response) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error Inesperado',
+            text: toString(response),
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#01a9ac',
+          });
+          console.log("err2");
+        }
+      });
+    }else{
+      Swal.fire({
+                icon: 'warning',
+                title: 'Usuario no Editado',
+                text: 'Las contraseñas no coinciden',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac',
+              });
+      console.log("error");
+    }
+    });
+  });
+</script>

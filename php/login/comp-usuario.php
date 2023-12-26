@@ -21,6 +21,8 @@ if ($num_r >= 1) {
     $_SESSION["P_Apellido"] = $obj->P_Apellido;
     $_SESSION["S_Apellido"] = $obj->S_Apellido;
     $_SESSION["Cedula"] = $obj->Cedula;
+    $_SESSION["Correo"] = $obj->Correo;
+    $_SESSION["Telefono"] = $obj->Telefono;
     $_SESSION["Tipo"] = $obj->Tipo;
     
     echo "si";
