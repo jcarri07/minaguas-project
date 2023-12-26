@@ -12,8 +12,6 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
-<!DOCTYPE html>
-<html lang="en">
 <?php
 if (!isset($_SESSION)) {
   session_start();
@@ -25,6 +23,9 @@ if (isset($_SESSION["Id_usuario"])) {
 
 date_default_timezone_set("America/Caracas");
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
 
 <head>
   <meta charset="utf-8" />
