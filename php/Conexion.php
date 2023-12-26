@@ -18,8 +18,7 @@ if (!$conn) {
 // echo "Conexión exitosa a la base de datos project-manager";
 
 // Cerrar conexión
-function closeConection($conn) {
+function closeConection($conn)
+{
     mysqli_close($conn);
 }
-
-?>

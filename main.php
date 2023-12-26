@@ -15,14 +15,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-  session_start();
-  if(!isset($_SESSION["Id_usuario"])){
-    
-    print "<script>window.location='index.php';</script>";
-  }
+session_start();
+if (!isset($_SESSION["Id_usuario"])) {
 
-  date_default_timezone_set("America/Caracas");
+  print "<script>window.location='index.php';</script>";
+}
+
+date_default_timezone_set("America/Caracas");
 ?>
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -37,7 +38,7 @@
   <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="./assets/js/fontawesome/42d5adcbca.js" ></script>
+  <script src="./assets/js/fontawesome/42d5adcbca.js"></script>
   <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
@@ -259,9 +260,9 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    
+
     <?php
-      require "content.php";
+    require "content.php";
     ?>
 
 

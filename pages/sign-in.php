@@ -37,10 +37,10 @@
 
 <body class="" style="background-image: linear-gradient(rgb(20,28,49,0.8),rgb(20,28,49,0.8)),url(../assets/img/world-map-wallpaper.jpg); overflow-x: hidden;">
 
+  <div class="">
     <div class="">
-      <div class="" >
-        <!-- Navbar -->
-        <!--nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4" >
+      <!-- Navbar -->
+      <!--nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4" >
           <div class="container-fluid">
             <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
               Argon Dashboard 2
@@ -87,68 +87,68 @@
             </div>
           </div>
         </nav-->
-        <!-- End Navbar -->
-      </div>
+      <!-- End Navbar -->
     </div>
   </div>
-  <main class="main-content mt-0" >
-    
-    <section class="row d-flex flex-column min-vh-100" style="">
-    <div class="col-12 d-flex px-0" style="height: 175px;">
-    <img src="../assets/img/mina.png" style="width:100%; background-position: center;object-fit:cover;">
   </div>
-        <div class="col-12 justify-content-center">
+  <main class="main-content mt-0">
+
+    <section class="row d-flex flex-column min-vh-100" style="">
+      <div class="col-12 d-flex px-0" style="height: 175px;">
+        <img src="../assets/img/mina.png" style="width:100%; background-position: center;object-fit:cover;">
+      </div>
+      <div class="col-12 justify-content-center">
         <div class="container ">
-          
-          
+
+
           <div class="row my-7 justify-content-center">
-            <div class="col-xl-6 col-lg-6 col-md-9 col-sm-8 col-xs-5 d-flex flex-column mx-lg-0 justify-content-center" >
+            <div class="col-xl-6 col-lg-6 col-md-9 col-sm-8 col-xs-5 d-flex flex-column mx-lg-0 justify-content-center">
               <div class="px-xl-6 px-md-4">
-              <div class="card card-plain" style="background-color: white;">
-                <div class="card-header pb-0 text-start">
-                  <h4 class="font-weight-bolder">Inicie Sesion</h4>
-                  <!--p class="mb-0">Enter your email and password to sign in</p-->
-                </div>
-                <div class="card-body">
-                  <form role="form">
-                    <div class="mb-3">
-                      <input type="email" class="form-control form-control-lg" placeholder="Email" aria-label="Email">
-                    </div>
-                    <div class="mb-3">
-                      <input type="password" class="form-control form-control-lg" placeholder="Contraseña" aria-label="Contraseña">
-                    </div>
-                    <!--div class="form-check form-switch">
+                <div class="card card-plain" style="background-color: white;">
+                  <div class="card-header pb-0 text-start">
+                    <h4 class="font-weight-bolder">Inicie Sesion</h4>
+                    <!--p class="mb-0">Enter your email and password to sign in</p-->
+                  </div>
+                  <div class="card-body">
+                    <form role="form">
+                      <div class="mb-3">
+                        <input type="email" class="form-control form-control-lg" placeholder="Email" aria-label="Email">
+                      </div>
+                      <div class="mb-3">
+                        <input type="password" class="form-control form-control-lg" placeholder="Contraseña" aria-label="Contraseña">
+                      </div>
+                      <!--div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="rememberMe">
                       <label class="form-check-label" for="rememberMe">Remember me</label>
                     </div-->
-                    <div class="text-center" >
-                      <a href="../index.php"><button type="button"  class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Iniciar Sesion</button></a>
-                    </div>
-                  </form>
+                      <div class="text-center">
+                        <a href="../index.php"><button type="button" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Iniciar Sesion</button></a>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                    <p class="mb-4 text-sm mx-auto">
+                      Usuario nuevo?
+                      <a href="../pages/sign-up.php" class="text-primary text-gradient font-weight-bold">Nuevo Usuario</a>
+                    </p>
+                  </div>
                 </div>
-                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                  <p class="mb-4 text-sm mx-auto">
-                    Usuario nuevo?
-                    <a href="../pages/sign-up.php" class="text-primary text-gradient font-weight-bold">Nuevo Usuario</a>
-                  </p>
-                </div>
-              </div>
               </div>
             </div>
-            
-            <div class="col-xl-6 col-lg-6 col-md-9 col-sm-8 col-sx-5 d-flex flex-column mx-lg-0 justify-content-center" >
+
+            <div class="col-xl-6 col-lg-6 col-md-9 col-sm-8 col-sx-5 d-flex flex-column mx-lg-0 justify-content-center">
               <div class="m-3 border-radius-lg d-flex flex-column justify-content-center px-lg-2">
                 <!--span class="mask bg-gradient-primary opacity-6" style="background-size: cover;"></span-->
                 <img src="../assets/img/minaguas.png" class="px-lg-4 px-xl-6" style="object-fit:cover;">
-                <p class="text-white position-relative text-center px-lg-3 d-none d-sm-block"  >“Ejercer como Autoridad Nacional una gestión integral de las aguas, elemento indispensable para la vida, el bienestar humano y el desarrollo sustentable del país.”</p>
+                <p class="text-white position-relative text-center px-lg-3 d-none d-sm-block">“Ejercer como Autoridad Nacional una gestión integral de las aguas, elemento indispensable para la vida, el bienestar humano y el desarrollo sustentable del país.”</p>
               </div>
-              
+
             </div>
           </div>
-          
+
         </div>
-        </div>
-        
+      </div>
+
     </section>
   </main>
   </div>
@@ -170,7 +170,7 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
-  
+
 </body>
 
 </html>
