@@ -1645,22 +1645,24 @@ CREATE TABLE embalses (
   FOREIGN KEY (id_parroquia) REFERENCES parroquias (id_parroquia)
 );
 
-CREATE TABLE tipo_extraccion (
-  id_extraccion INT AUTO_INCREMENT PRIMARY KEY,
-  tipo_extraccion VARCHAR(50),
-  extraccion FLOAT
-);
-
 
 CREATE TABLE datos_embalse (
-  Id_registro INT AUTO_INCREMENT PRIMARY KEY,
-  Id_embalse INT,
-  Fecha DATE,
-  Hora DATE,
-  Cota_actual FLOAT,
-  tipo_extraccion INT,
-  Id_encargado INT(11) NOT NULL,
-  FOREIGN KEY (Id_embalse) REFERENCES embalses (id_embalse),
-  FOREIGN KEY (Id_encargado) REFERENCES usuarios (id_usuario),
-  FOREIGN KEY (tipo_extraccion) REFERENCES tipo_extraccion (id_extraccion)
+  id_registro INT AUTO_INCREMENT PRIMARY KEY,
+  id_embalse INT,
+  fecha DATE,
+  hora TIME,
+  cota_actual FLOAT,
+  id_encargado INT(11) NOT NULL,
+  estatus VARCHAR(20) NOT NULL,
+  FOREIGN KEY (id_embalse) REFERENCES embalses (id_embalse),
+  FOREIGN KEY (id_encargado) REFERENCES usuarios (Id_usuario)
+);
+
+CREATE TABLE detalles_extraccion (
+  id_detalles_extraccion INT AUTO_INCREMENT PRIMARY KEY,
+  tipo_extraccion VARCHAR(50),
+  extraccion FLOAT,
+  id_registro INT,
+  estatus VARCHAR(20) NOT NULL,
+  FOREIGN KEY (id_registro) REFERENCES datos_embalse (id_registro)
 );
