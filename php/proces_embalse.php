@@ -9,6 +9,7 @@
 
 // require_once "../database/Conexion.php";
 include '../php/Conexion.php';
+require_once '../vendor/PHPExcel/Classes/PHPExcel.php';
 
 if (isset($_POST["Guardar"])) {
 
@@ -36,7 +37,7 @@ if (isset($_POST["Guardar"])) {
     $duracion_construccion = $_POST["duracion_construccion"];
     $inicio_operacion = $_POST["inicio_operacion"];
     $monitoreo = $_POST["monitoreo"];
-    $batimetria = $_POST["batimetria"];
+    // $batimetria = $_POST["batimetria"];
     $vida_util = $_POST["vida_util"];
     $cota_min = ["cota_min"];
     $volumen_min = ["vol_min"];
@@ -92,31 +93,71 @@ if (isset($_POST["Guardar"])) {
     $imagen_dos = $_FILES["imagen_dos"]['name'];
     $imagen_dos_tmp = $_FILES["imagen_dos"]['tmp_name'];
 
+    $archivo_batimetria = $_FILES["batimetria"]['tmp_name']; //Batimetria en excel";
+
+    //ARCHIVOS DE IMAGEN
     $aux_uno = $imagen_uno;
     $aux_dos = $imagen_dos;
 
-    $i = 1;
-    while (1) {
-        if (file_exists('../pages/reports_images/' . $imagen_uno)) {
-            $imagen_uno = $i . '-' . $aux_uno;
-            $i++;
-        } else {
-            break;
+    if (!empty($imagen_uno) && count($imagen_uno) > 0) {
+        $i = 1;
+        while (1) {
+            if (file_exists('../pages/reports_images/' . $imagen_uno)) {
+                $imagen_uno = $i . '-' . $aux_uno;
+                $i++;
+            } else {
+                break;
+            }
         }
+    } else {
+        $imagen_uno = "";
     }
 
-    $i = 1;
-    while (1) {
-        if (file_exists('../pages/reports_images/' . $imagen_dos)) {
-            $imagen_dos = $i . '-' . $aux_dos;
-            $i++;
-        } else {
-            break;
+    if (!empty($imagen_dos) && count($imagen_dos) > 0) {
+        $i = 1;
+        while (1) {
+            if (file_exists('../pages/reports_images/' . $imagen_dos)) {
+                $imagen_dos = $i . '-' . $aux_dos;
+                $i++;
+            } else {
+                break;
+            }
         }
+    } else {
+        $imagen_dos = "";
     }
+
+    //ARCHIVOS DE EXCEL BATIMETRIA
+
+    $inputFileType = PHPExcel_IOFactory::identify($archivo_batimetria);
+    $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+
+    $objPHPExcel = $objReader->load($archivo_batimetria);
+    $sheet = $objPHPExcel->getSheet(0);
+    $highestRow = $sheet->getHighestRow();
+    $highestColumn = $sheet->getHighestColumn();
+
+    $cota_embalse = array();
+    $cotas_embalse = array();
+    $num = 0;
+    for ($sht = 0; $sht < $objPHPExcel->getSheetCount(); $sht++) {
+        $sheet = $objPHPExcel->getSheet($sht);
+        $highestRow = $sheet->getHighestRow();
+        for ($row = 2; $row <= $highestRow; $row++) {
+            $num++;
+            $cota = number_format($sheet->getCell("A" . $row)->getValue(), 3, '.', '');
+            $area = $sheet->getCell("B" . $row)->getValue();
+            $capacidad = $sheet->getCell("C" . $row)->getValue();
+            $cota_embalse[$cota] = $area . "-" . $capacidad;
+        }
+        $cotas_embalse[$objPHPExcel->getSheetNames()[$sht]] = $cota_embalse;
+    }
+
+    $batimetria = json_encode($cotas_embalse);
+
     // Insertar los datos en la tabla embalse
-    $consulta = "INSERT INTO embalses (nombre_embalse, nombre_presa, id_estado, id_municipio, id_parroquia, este, norte, huso, cuenca_principal, afluentes_principales, area_cuenca, escurrimiento_medio, ubicacion_embalse, organo_rector, personal_encargado, operador, autoridad_responsable, proyectista, constructor, inicio_construccion, duracion_de_construccion, inicio_de_operacion, monitoreo_del_embalse, batimetria, vida_util, cota_min, cota_nor, cota_max, vol_min, vol_nor, vol_max, sup_min, sup_nor, sup_max, numero_de_presas, tipo_de_presa, altura, talud_aguas_arriba, talud_aguas_abajo, longitud_cresta, cota_cresta, ancho_cresta, volumen_terraplen, ancho_base, ubicacion_aliviadero, tipo_aliviadero, numero_compuertas_aliviadero, carga_vertedero, descarga_maxima, longitud_aliviadero, ubicacion_toma, tipo_toma, numero_compuertas_toma, mecanismos_de_emergencia, mecanismos_de_regulacion, gasto_maximo, descarga_de_fondo, posee_obra, tipo_de_obra, accion_requerida, proposito, uso_actual, sectores_beneficiados, poblacion_beneficiada, area_de_riego_beneficiada, f_cargo, f_cedula, f_nombres, f_apellidos, f_telefono, f_correo, imagen_uno, imagen_dos, id_encargado) 
-            VALUES ('$nombre_embalse', '$nombre_presa' ,'$estado', '$municipio' ,'$parroquia' ,'$este' ,'$norte' ,'$huso' ,'$cuenca', '$afluentes', '$area', '$escurrimiento', '$ubicacion_embalse', '$organo', '$personal', '$operador', '$autoridad', '$proyectista', '$constructor', '$inicio_construccion', '$duracion_construccion', '$inicio_operacion', '$monitoreo', '$batimetria', '$vida_util', '$cota_min', '$cota_nor', '$cota_max', '$volumen_min', '$volumen_nor', '$volumen_max', '$superficie_min', '$superficie_nor', '$superficie_max', '$numero_presas', '$tipo_presa', '$altura', '$talud_arriba', '$talud_abajo', '$longitud_cresta', '$cota_cresta', '$ancho_cresta', '$volumen_terraplen', '$ancho_base', '$ubicacion_aliviadero', '$tipo_aliviadero', '$numero_compuertas_aliviadero', '$carga_aliviadero', '$descarga_aliviadero', '$longitud_aliviadero', '$ubicacion_toma', '$tipo_toma', '$numero_compuertas_toma', '$emergencia_toma', '$regulacion_toma', '$gasto_toma', '$descarga_fondo', '$obra_conduccion', '$tipo_conduccion', '$accion_conduccion', '$proposito', '$uso', '$sectores', '$poblacion', '$area_riego', '$f_cargo', '$f_cedula', '$f_nombres', '$f_apellidos', '$f_telefono', '$f_correo', '$imagen_uno', '$imagen_dos', '$responsable')";
+    $consulta = "INSERT INTO embalses (nombre_embalse, nombre_presa, id_estado, id_municipio, id_parroquia, este, norte, huso, cuenca_principal, afluentes_principales, area_cuenca, escurrimiento_medio, ubicacion_embalse, organo_rector, personal_encargado, operador, autoridad_responsable, proyectista, constructor, inicio_construccion, duracion_de_construccion, inicio_de_operacion, monitoreo_del_embalse, batimetria, vida_util, cota_min, cota_nor, cota_max, vol_min, vol_nor, vol_max, sup_min, sup_nor, sup_max, numero_de_presas, tipo_de_presa, altura, talud_aguas_arriba, talud_aguas_abajo, longitud_cresta, cota_cresta, ancho_cresta, volumen_terraplen, ancho_base, ubicacion_aliviadero, tipo_aliviadero, numero_compuertas_aliviadero, carga_vertedero, descarga_maxima, longitud_aliviadero, ubicacion_toma, tipo_toma, numero_compuertas_toma, mecanismos_de_emergencia, mecanismos_de_regulacion, gasto_maximo, descarga_de_fondo, posee_obra, tipo_de_obra, accion_requerida, proposito, uso_actual, sectores_beneficiados, poblacion_beneficiada, area_de_riego_beneficiada, f_cargo, f_cedula, f_nombres, f_apellidos, f_telefono, f_correo, imagen_uno, imagen_dos, id_encargado, estatus) 
+            VALUES ('$nombre_embalse', '$nombre_presa' ,'$estado', '$municipio' ,'$parroquia' ,'$este' ,'$norte' ,'$huso' ,'$cuenca', '$afluentes', '$area', '$escurrimiento', '$ubicacion_embalse', '$organo', '$personal', '$operador', '$autoridad', '$proyectista', '$constructor', '$inicio_construccion', '$duracion_construccion', '$inicio_operacion', '$monitoreo', '$batimetria', '$vida_util', '$cota_min', '$cota_nor', '$cota_max', '$volumen_min', '$volumen_nor', '$volumen_max', '$superficie_min', '$superficie_nor', '$superficie_max', '$numero_presas', '$tipo_presa', '$altura', '$talud_arriba', '$talud_abajo', '$longitud_cresta', '$cota_cresta', '$ancho_cresta', '$volumen_terraplen', '$ancho_base', '$ubicacion_aliviadero', '$tipo_aliviadero', '$numero_compuertas_aliviadero', '$carga_aliviadero', '$descarga_aliviadero', '$longitud_aliviadero', '$ubicacion_toma', '$tipo_toma', '$numero_compuertas_toma', '$emergencia_toma', '$regulacion_toma', '$gasto_toma', '$descarga_fondo', '$obra_conduccion', '$tipo_conduccion', '$accion_conduccion', '$proposito', '$uso', '$sectores', '$poblacion', '$area_riego', '$f_cargo', '$f_cedula', '$f_nombres', '$f_apellidos', '$f_telefono', '$f_correo', '$imagen_uno', '$imagen_dos', '$responsable', 'activo')";
 
     // Ejecutar la consulta y verificar si se realizó correctamente
     $resultado = mysqli_query($conn, $consulta);
@@ -128,6 +169,7 @@ if (isset($_POST["Guardar"])) {
 
 
         echo "Los datos se guardaron correctamente en la base de datos.";
+        header("Location: ../main.php?page=embalses");
     } else {
         echo "Ocurrió un error al guardar los datos: " . mysqli_error($conn);
     }
@@ -289,6 +331,24 @@ if (isset($_POST["Update"])) {
     if ($resultado) {
 
         echo "Los datos se actualizaron correctamente en la base de datos.";
+        header("Location: ../main.php?page=embalses");
+    } else {
+        echo "Ocurrió un error al actualizar los datos: " . mysqli_error($conn);
+    }
+}
+
+if (isset($_POST["delete"])) {
+    $id_embalse = $_POST["id_embalse"];
+
+    $consulta = "UPDATE embalses 
+    SET estatus = 'inactivo'
+    WHERE id_embalse = '$id_embalse'";
+
+    $resultado = mysqli_query($conn, $consulta);
+    if ($resultado) {
+
+        echo "Los datos se actualizaron correctamente en la base de datos.";
+        header("Location: ../main.php?page=embalses");
     } else {
         echo "Ocurrió un error al actualizar los datos: " . mysqli_error($conn);
     }

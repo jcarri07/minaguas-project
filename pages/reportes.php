@@ -1,7 +1,7 @@
 <?php
 require_once 'php/Conexion.php';
 
-$sql = "SELECT * FROM embalses";
+$sql = "SELECT * FROM embalses WHERE estatus = 'activo'";
 
 $res = mysqli_query($conn, $sql);
 $data = array();

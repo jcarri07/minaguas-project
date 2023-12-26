@@ -1,7 +1,7 @@
 <?php
 require_once 'php/Conexion.php';
 
-$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses;");
+$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryUsers = mysqli_query($conn, "SELECT * FROM usuarios;");
 // $result = mysqli_fetch_assoc($queriEstados);
@@ -197,6 +197,7 @@ closeConection($conn);
                       <td>
                         <div class="d-flex align-items-center justify-content-center text-sm">
                           <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-3 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
+                          <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-3 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i>Eliminar</a>
                           <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
                         </div>
                       </td>
@@ -450,14 +451,70 @@ closeConection($conn);
         },
         success: function(response) {
           // console.log(response, "si")
-            window.location.href = "?page=editar_embalse";
+          window.location.href = "?page=editar_embalse";
 
         }
       });
     });
+
+    $(".eliminar-embalse").on("click", function(e) {
+      // Realizar la consulta AJAX al servidor
+      console.log("Eliminar");
+      e.preventDefault();
+      var id_embalse = $(this).data("id");
+      console.log(id_embalse)
+      $.ajax({
+        url: "./php/get-embalse.php", // Ruta a tu script PHP de consulta
+        type: "POST",
+        data: {
+          id: id_embalse
+        },
+        success: function(data) {
+          // Mostrar el resultado en la modal
+          console.log(data)
+          $("#embalseNombre").text(data);
+          $("#embalseIdInput")[0].value = id_embalse;
+          $('#modal-form').modal('show');
+        },
+        error: function() {
+          alert("Error al realizar la consulta.");
+        }
+      });
+    });
+
   });
 </script>
 
+
+
+<div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+
+          <div class="card-body">
+
+            <div class="">
+              <h6 style="text-align:center;" class="mb-0">Eliminar el embalse</h6>
+              <h3 style="text-align:center;" id="embalseNombre" class=""></h3>
+            </div>
+            <form method="POST" action="php/proces_embalse.php" enctype="multipart/form-data">
+
+              <div class="input-group mb-3">
+                <input style="display: none;" id="embalseIdInput" type="text" class="form-control" name="id_embalse" value="">
+              </div>
+
+              <div class="text-center">
+                <button type="submit" name="delete" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Confirmar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
