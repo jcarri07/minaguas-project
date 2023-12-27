@@ -23,6 +23,18 @@ if (mysqli_num_rows($res) > 0) {
 $HOST = basename(getcwd());
 $fullPath = getcwd();
 
+function cutRoute($rutaCompleta)
+{
+  $publicHtmlPos = strpos($rutaCompleta, 'public_html');
+
+  if ($publicHtmlPos !== false) {
+    $rutaAntesDePublicHtml = substr($rutaCompleta, 0, $publicHtmlPos + strlen('public_html'));
+    return $rutaAntesDePublicHtml;
+  } else {
+    return $rutaCompleta;
+  }
+}
+
 $parts = explode(DIRECTORY_SEPARATOR, $fullPath);
 
 if (count($parts) >= 4) {
@@ -32,7 +44,14 @@ if (count($parts) >= 4) {
   echo "No se pudo obtener el nombre del proyecto desde la ruta.";
 }
 
-$image_logo =  "/" . $projectName . "/assets/img/logos/cropped-mminaguas.jpg";
+$srcLogo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
+$srcLogoLetters = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
+
+$srcMap = "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Imagen_map.png";
+$srcMapReport = "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Imagens_map_report.png";
+$srcFooter = "https://embalsesminaguas.000webhostapp.com/pages/reports_images/pie_de_pagina.png";
+
+$image_logo =  "/" . cutRoute($fullPath) . "/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";
 
 $imagen_mapa_dibujo =  "/" . $projectName . "/pages/reports_images/Imagen_map.png";
@@ -362,10 +381,8 @@ foreach ($data as $row) {
 <body>
   <div class="header">
     <div>
-      <img class="image-logo" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                          echo $image_logo ?>" />
-      <img class="letters-logo" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                            echo $logo_letters ?>" />
+      <img class="image-logo" src="<?php echo $srcLogo; ?>" />
+      <img class="letters-logo" src="<?php echo $srcLogoLetters; ?>" />
     </div>
   </div>
   <div class="header-title">
@@ -771,21 +788,18 @@ foreach ($data as $row) {
     </tr>
     <tr style="text-align: center;">
       <td>
-        <?php if ($IMAGEN_UNO != "" && $IMAGEN_UNO != null) { ?>
-          <img style="width: 280px; height: 200px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                                                echo $imagen_mapa ?>" />
+        <?php if ($srcMap != "" && $srcMap != null) { ?>
+          <img style="width: 280px; height: 200px;" src="<?php echo $srcMap; ?>" />
         <?php } ?>
       </td>
       <td>
-        <?php if ($IMAGEN_UNO != "" && $IMAGEN_UNO != null) { ?>
-          <img style="width: 280px; height: 200px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                                                echo $imagen_mapa_dibujo ?>" />
-        <?php } ?>
+        <?php if ($srcMapReport != "" &&  $srcMapReport != null) { ?>
+          <img style="width: 280px; height: 200px;" src="<?php echo $srcMapReport; ?>" />
+          <?php } ?>-->
       </td>
     </tr>
   </table>
-  <img style="float: right; padding-top: 10px; width: 280px; height: 30px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                                                                        echo $PIE_PAGINA ?>" />
+  <img style="float: right; padding-top: 10px; width: 280px; height: 30px;" src="<?php echo $srcFooter ?>" />
 </body>
 
 </html>
