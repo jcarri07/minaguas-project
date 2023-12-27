@@ -27020,4 +27020,9 @@ table td, table div, table th {
   table td, table div, table th, table .text-sm, table a{
     font-size: 12px !important;
   }
+
+  table .hide-cell{
+    visibility: collapse;
+    display: none;
+  }
 }

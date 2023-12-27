@@ -63,7 +63,7 @@
                       <thead class="table-primary">
                         <tr>
                             <th scope="col" class="sort" data-sort="name">Nombre</th>
-                            <th scope="col" class="sort" data-sort="budget">Ubicación</th>
+                            <th scope="col" class="sort hide-cell" data-sort="budget">Ubicación</th>
                             <th scope="col"></th>
                         </tr>
                       </thead>
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                   </th>
-                  <td>
+                  <td class="hide-cell">
                     <?php echo $row['estado'] . ", " . $row['municipio'] . ", " . $row['parroquia'];?>
                   </td>
                   <td>
