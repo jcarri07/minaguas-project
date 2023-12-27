@@ -102,7 +102,7 @@
 ?>
                     <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalAdd('<?php echo $row['id_embalse'];?>');">
                       <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
-                      Añadir Reporte
+                      <span class="hide-cell">Añadir Reporte</span>
                     </a>
 <?php
                 }
@@ -111,7 +111,7 @@
 ?>
                     <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse'];?>');">
                       <i class="fas fa-history text-dark me-2" aria-hidden="true"></i>
-                      Historial de Reportes
+                      <span class="hide-cell">Historial de Reportes</span>
                     </a>
 <?php
                 }

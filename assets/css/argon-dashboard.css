@@ -27025,4 +27025,8 @@ table td, table div, table th {
     visibility: collapse;
     display: none;
   }
+
+  table a i{
+    font-size: 24px;
+  }
 }
