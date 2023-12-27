@@ -125,7 +125,7 @@
                       </div-->
 
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" required>
+                  <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" required>
                 </div>
                 <!--div class="mb-3 col-6">
                   <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="Econfirmar" required>
@@ -157,7 +157,8 @@
 
 <script>
   $(document).ready(function() {
-    $('#table-user').DataTable({
+    iniciarTabla('table-user');
+ /*   $('#table-user').DataTable({
       language: {
         "decimal": "",
         "emptyTable": "No hay información",
@@ -178,7 +179,7 @@
           "previous": "<"
         }
       },
-    });
+    });*/
   });
 
 
