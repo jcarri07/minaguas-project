@@ -14,7 +14,7 @@
 
   $fecha = date("Y-m-d");
 
-  $sql = "SELECT id_embalse, nombre_embalse, estado, municipio, parroquia, id_encargado, (SELECT (IF(COUNT(id_registro) > 0, 'si', 'no')) FROM datos_embalse de WHERE de.id_embalse = em.id_embalse AND fecha = '$fecha' ) AS 'reportado_hoy'
+  $sql = "SELECT id_embalse, nombre_embalse, estado, municipio, parroquia, id_encargado, (SELECT (IF(COUNT(id_registro) > 0, 'si', 'no')) FROM datos_embalse de WHERE de.id_embalse = em.id_embalse AND estatus = 'activo' AND fecha = '$fecha' ) AS 'reportado_hoy'
           FROM embalses em, estados e, municipios m, parroquias p
           WHERE em.id_estado = e.id_estado AND em.id_municipio = m.id_municipio AND em.id_parroquia = p.id_parroquia AND m.id_estado = e.id_estado AND p.id_municipio = m.id_municipio $add_where;";
 
@@ -58,8 +58,7 @@
 <?php
             if(mysqli_num_rows($query) > 0){
 ?>
-                <div class="table-responsive">
-                  <div class="mb-3">
+                <div class="table-responsive mb-3">
                     <table class="table align-items-center text-sm text-center table-sm" id="table">
                       <thead class="table-primary">
                         <tr>
@@ -124,7 +123,6 @@
 ?>
                       </tbody>
                     </table>
-                  </div>
                 </div>
 <?php
             }
@@ -275,7 +273,7 @@
     <?php
                 if(date("H:i") . ":00" > "10:00:00"){
     ?>
-                  <h6 class="text-red text-center">Estás retrasado al enviar el reporte</h6>
+                  <h6 class="text-red text-center text-retraso">Estás retrasado al enviar el reporte</h6>
     <?php
                 }
     ?>
@@ -438,6 +436,7 @@
       $("#tipo_extraccion_1").attr("disabled", false);
       $("#valor_extraccion_1").attr("disabled", false);
 
+      $("#add .text-retraso").show();
       $("#add .btn-submit").show();
       $("#add .btn-add-extraccion").show();
       $("#add .btn-edit").hide();
@@ -574,6 +573,7 @@
 
       $("#valor_cota").attr("disabled", true);
 
+      $("#add .text-retraso").hide();
       $("#add .btn-submit").hide();
       $("#add .btn-add-extraccion").hide();
       $("#add .btn-edit").show();

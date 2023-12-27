@@ -27011,3 +27011,7 @@ pre[class*="language-"] {
 .text-green{
   color: #2dce89;
 }
+
+table td {
+  white-space: normal !important;
+}
