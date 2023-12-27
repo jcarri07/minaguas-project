@@ -184,7 +184,7 @@ closeConection($conn);
                       <td style="vertical-align: middle;">
                         <div class="d-flex justify-content-center">
                           <div><?php
-                                if ($row['id_encargado'] == '0') { ?>
+                                if ($row['id_encargado'] == '0' || $row['id_encargado'] == null || $row['id_encargado'] == '') { ?>
                               <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay personal encargado</h6>
                             <?php
                                 } else {

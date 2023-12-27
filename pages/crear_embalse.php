@@ -223,7 +223,7 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-4 col-sm-12">
                   <div class="form-group">
                     <label for="estado">Estado</label>
-                    <select class="form-control" id="estado" name="estado" required>
+                    <select class="form-select" id="estado" name="estado" required>
                       <option value=""></option>
                       <?php
                       while ($row = mysqli_fetch_array($queryEstados)) {
@@ -236,13 +236,13 @@ date_default_timezone_set("America/Caracas");
                   </div>
                   <div class="form-group">
                     <label for="municipio">Municipio</label>
-                    <select class="form-control" id="municipio" name="municipio" required>
+                    <select class="form-select" id="municipio" name="municipio" required>
                       <option value=""></option>
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="parroquia">Parroquia</label>
-                    <select class="form-control" id="parroquia" name="parroquia" required>
+                    <select class="form-select" id="parroquia" name="parroquia" required>
                       <option value=""></option>
                     </select>
                   </div>
@@ -250,15 +250,15 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-4 col-sm-12">
                   <div class=" form-group">
                     <label for="norte">Norte</label>
-                    <input type="text" class="form-control" id="norte" name="norte" placeholder="Ingrese los afluentes principales">
+                    <input type="number" step="0.001" class="form-control" id="norte" name="norte" placeholder="Ingrese los afluentes principales">
                   </div>
                   <div class=" form-group">
                     <label for="este">Este</label>
-                    <input type="number" class="form-control" id="este" name="este" placeholder="Ingrese el area de la cuenca en km2">
+                    <input type="number" step="0.001" class="form-control" id="este" name="este" placeholder="Ingrese el area de la cuenca en km2">
                   </div>
                   <div class=" form-group">
                     <label for="huso">Huso</label>
-                    <input type="number" class="form-control" id="huso" name="huso" placeholder="Ingrese el escurrimiento medio en m3/s">
+                    <input type="number" step="0.001" class="form-control" id="huso" name="huso" placeholder="Ingrese el escurrimiento medio en m3/s">
                   </div>
                 </div>
               </div>
@@ -276,11 +276,11 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="area">Área de la cuenca</label>
-                  <input type="number" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca en hm3">
+                  <input type="number" step="0.001" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca en hm3">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="escurrimiento">Escurrimiento medio</label>
-                  <input type="number" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio en m3/s">
+                  <input type="number" step="0.001" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio en m3/s">
                 </div>
               </div>
 
@@ -358,43 +358,43 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cota_min">Cota mínima</label>
-                    <input type="number" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese los afluentes principales">
+                    <input type="number" step="0.001" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese los afluentes principales">
                   </div>
                   <div class=" form-group">
                     <label for="vol_min">Volumen mínimo</label>
-                    <input type="number" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el area de la cuenca en km2">
+                    <input type="number" step="0.001" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el area de la cuenca en km2">
                   </div>
                   <div class=" form-group">
                     <label for="sup_min">Superficie mínima</label>
-                    <input type="number" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese el escurrimiento medio en m3/s">
+                    <input type="number" step="0.001" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese el escurrimiento medio en m3/s">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cota_nor">Cota normal</label>
-                    <input type="number" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese los afluentes principales">
+                    <input type="number" step="0.001" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese los afluentes principales">
                   </div>
                   <div class=" form-group">
                     <label for="vol_nor">Volumen normal</label>
-                    <input type="number" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el area de la cuenca en km2">
+                    <input type="number" step="0.001" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el area de la cuenca en km2">
                   </div>
                   <div class=" form-group">
                     <label for="sup_nor">Superficie normal</label>
-                    <input type="number" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese el escurrimiento medio en m3/s">
+                    <input type="number" step="0.001" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese el escurrimiento medio en m3/s">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cota_max">Cota máxima</label>
-                    <input type="number" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese los afluentes principales">
+                    <input type="number" step="0.001" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese los afluentes principales">
                   </div>
                   <div class=" form-group">
                     <label for="vol_max">Volumen máximo</label>
-                    <input type="number" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el area de la cuenca en km2">
+                    <input type="number" step="0.001" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el area de la cuenca en km2">
                   </div>
                   <div class=" form-group">
                     <label for="sup_max">Superficie máxima</label>
-                    <input type="number" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese el escurrimiento medio en m3/s">
+                    <input type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese el escurrimiento medio en m3/s">
                   </div>
                 </div>
               </div>
@@ -412,35 +412,35 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="altura">Altura</label>
-                  <input type="number" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
+                  <input type="number" step="0.001" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="talud_arriba">Talud aguas arriba</label>
-                  <input type="number" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba en grados">
+                  <input type="number" step="0.001" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba en grados">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="talud_abajo">Talud aguas abajo</label>
-                  <input type="number" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo en grados">
+                  <input type="number" step="0.001" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo en grados">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="longitud_cresta">Longitud de la cresta</label>
-                  <input type="number" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
+                  <input type="number" step="0.001" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="cota_cresta">Cota de la cresta</label>
-                  <input type="number" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros sobre el nivel del mar">
+                  <input type="number" step="0.001" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros sobre el nivel del mar">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="ancho_cresta">Ancho de la cresta</label>
-                  <input type="number" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
+                  <input type="number" step="0.001" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="volumen_terraplen">Volumen del terraplen</label>
-                  <input type="number" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen en m3">
+                  <input type="number" step="0.001" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen en m3">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="ancho_base">Ancho maximo de base</label>
-                  <input type="number" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho maximo de base en metros">
+                  <input type="number" step="0.001" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho maximo de base en metros">
                 </div>
               </div>
 
@@ -461,15 +461,15 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="carga_aliviadero">Carga sobre el vertedero</label>
-                  <input type="number" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero en metros">
+                  <input type="number" step="0.001" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="descarga_aliviadero">Descarga maxima</label>
-                  <input type="number" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga maxima en m3/s">
+                  <input type="number" step="0.001" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga maxima en m3/s">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="longitud_aliviadero">Longitud</label>
-                  <input type="number" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud en metros">
+                  <input type="number" step="0.001" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud en metros">
                 </div>
               </div>
 
@@ -498,7 +498,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="gasto_toma">Gasto máximo de la obra de toma</label>
-                  <input type="number" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto maximo de la obra de toma en m3/s">
+                  <input type="number" step="0.001" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto maximo de la obra de toma en m3/s">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="descarga_fondo">Descarga de fondo</label>
@@ -544,7 +544,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="area_riego">Área de riego beneficiada</label>
-                  <input type="number" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada en km2">
+                  <input type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada en km2">
                 </div>
               </div>
 
@@ -596,7 +596,7 @@ date_default_timezone_set("America/Caracas");
               <div class="row">
                 <div class="form-group col-xl-6 col-lg-12">
                   <label for="responsable">Responsable</label>
-                  <select class="form-control" id="responsable" name="responsable">
+                  <select class="form-select" id="responsable" name="responsable">
                     <option value=""></option>
                     <?php
                     while ($row1 = mysqli_fetch_array($queryResponsable)) {

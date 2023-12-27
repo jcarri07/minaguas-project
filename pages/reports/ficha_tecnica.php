@@ -153,11 +153,13 @@ $FIRMA_FUNCIONARIO = "";
 foreach ($data as $row) {
   //INFO GENERAL
   $NOMBRE_EMBALSE = $row['nombre_embalse'];
-  $NOMBRE_CUENCA = $row['nombre_cuenca'];
-  $idE = $row['id_estado'];  $idM = $row['id_municipio']; $idP = $row['id_parroquia'];
+  $NOMBRE_CUENCA = $row['nombre_presa'];
+  $idE = $row['id_estado'];
+  $idM = $row['id_municipio'];
+  $idP = $row['id_parroquia'];
   $ESTADO = mysqli_fetch_assoc(mysqli_query($conn, "SELECT estado FROM estados WHERE id_estado = $idE"))['estado'];
   $MUNICIPIO = mysqli_fetch_assoc(mysqli_query($conn, "SELECT municipio FROM municipios WHERE id_municipio = $idM"))['municipio'];
-  $PARROQUIA = mysqli_fetch_assoc(mysqli_query($conn, "SELECT parroquia FROM parroquias WHERE id_parroquia = $idP"))['parroquia']; 
+  $PARROQUIA = mysqli_fetch_assoc(mysqli_query($conn, "SELECT parroquia FROM parroquias WHERE id_parroquia = $idP"))['parroquia'];
   //INFO CUENCA
   $ESTE = $row['este'];
   $NORTE = $row['norte'];
@@ -179,7 +181,12 @@ foreach ($data as $row) {
   $INCIO_OPERACION = $row['inicio_de_operacion'];
   $MONITOREO = $row['monitoreo_del_embalse'];
   //CARACTERISTICAS EMBALSE
-  $BATIMETRIA = $row['batimetria'];
+  $bat_embalse = json_decode($row['batimetria']);
+  $BATIMETRIA = "";
+  foreach ($bat_embalse as $key => $value) {
+    $BATIMETRIA .= $key . "-";
+  }
+
   $COTA = $row['cota_min'];
   $COTA2 = $row['cota_nor'];
   $COTA3 = $row['cota_max'];
@@ -244,7 +251,10 @@ foreach ($data as $row) {
   $APELLIDOS_FUNCIONARIO = $row['f_apellidos'];
   $FIRMA_FUNCIONARIO = "";
   //IMAGENES
-
+  $IMAGEN_UNO = $row['imagen_uno'];
+  $IMAGEN_DOS = $row['imagen_dos'];
+  $imagen_mapa_dibujo =  "/" . $projectName . "/pages/reports_images/" . $IMAGEN_DOS;
+  $imagen_mapa = "/" . $projectName . "/pages/reports_images/" . $IMAGEN_UNO;
 }
 
 ?>
@@ -384,15 +394,15 @@ foreach ($data as $row) {
       </tr>
       <tr>
         <td class="title-info">Este </td>
-        <td class="info" style="width: 165px;"><?php echo number_format($ESTE, 2, ',', '.'); ?></td>
+        <td class="info" style="width: 165px;"><?php echo number_format(floatval($ESTE), 2, ',', '.'); ?></td>
       </tr>
       <tr>
         <td class="title-info">Norte</td>
-        <td class="info" style="width: 165px;"><?php echo number_format($NORTE, 2, ',', '.'); ?></td>
+        <td class="info" style="width: 165px;"><?php echo number_format(floatval($NORTE), 2, ',', '.'); ?></td>
       </tr>
       <tr>
         <td class="title-info">Huso</td>
-        <td class="info" style="width: 165px;"><?php echo number_format($HUSO, 2, ',', '.'); ?></td>
+        <td class="info" style="width: 165px;"><?php echo number_format(floatval($HUSO), 2, ',', '.'); ?></td>
       </tr>
     </table>
   </div>
@@ -760,10 +770,18 @@ foreach ($data as $row) {
       <td style="font-weight: bold; font-size: 12px">7.2.- Ubicación relativa de los componentes del embalse</td>
     </tr>
     <tr style="text-align: center;">
-      <td><img style="width: 280px; height: 200px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                                                echo $imagen_mapa ?>" /></td>
-      <td><img style="width: 280px; height: 200px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                                                echo $imagen_mapa_dibujo ?>" /></td>
+      <td>
+        <?php if ($IMAGEN_UNO != "" && $IMAGEN_UNO != null) { ?>
+          <img style="width: 280px; height: 200px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
+                                                                echo $imagen_mapa ?>" />
+        <?php } ?>
+      </td>
+      <td>
+        <?php if ($IMAGEN_UNO != "" && $IMAGEN_UNO != null) { ?>
+          <img style="width: 280px; height: 200px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
+                                                                echo $imagen_mapa_dibujo ?>" />
+        <?php } ?>
+      </td>
     </tr>
   </table>
   <img style="float: right; padding-top: 10px; width: 280px; height: 30px;" src="http://<?php echo $_SERVER['HTTP_HOST'];

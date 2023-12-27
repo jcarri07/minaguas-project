@@ -1630,7 +1630,7 @@ CREATE TABLE embalses (
   proposito VARCHAR(255),
   uso_actual VARCHAR(255),
   sectores_beneficiados VARCHAR(255),
-  poblacion_beneficiada DOUBLE,
+  poblacion_beneficiada VARCHAR(255),
   area_de_riego_beneficiada FLOAT,
   f_cargo VARCHAR(255),
   f_cedula VARCHAR(255),
