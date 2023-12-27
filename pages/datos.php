@@ -475,7 +475,7 @@
         cache:          false,
         contentType:    false,
         processData:    false,
-        success: function(response){console.log(response);
+        success: function(response){ //console.log(response);
           $('.loaderParent').hide();
           if(response == 'si'){
             $("#modal-generic .message").text("Registro exitoso");
