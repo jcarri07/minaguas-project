@@ -36,22 +36,28 @@
           <div class="card-body pb-3">
             <form id="form" role="form">
               <div class="mb-3">
+              <label >Nombre(s)</label>
                 <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" required>
               </div>
               <div class="mb-3">
+              <label >Apellido(s)</label>
                 <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" required>
               </div>
               <div class="mb-3">
+              <label >Correo</label>
                 <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required>
               </div>
               <div class="row ">
                 <div class="mb-3 col-6">
+                <label >Telefono</label>
                   <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" name="telefono" required>
                 </div>
                 <div class="mb-3 col-6">
+                <label >Cedula</label>
                   <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula" required>
                 </div>
               </div>
+              <label >Contraseña</label>
               <!--div class="mb-3">
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
                       </div-->
@@ -89,7 +95,7 @@
 </div>
 <!-- Modal-Edit -->
 <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
-  <div class="modal-dialog modal-dialog modal-sm" role="document">
+  <div class="modal-dialog modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
         <div class="card card-plain">
