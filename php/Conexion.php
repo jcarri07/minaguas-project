@@ -8,18 +8,16 @@ function contiene_subcadena($cadena, $subcadena)
 
 $fullPath = getcwd();
 
-if (contiene_subcadena($fullPath, "xampp")) {
-    // Datos de la base de datos
-    $host = "localhost"; // servidor
-    $user = "root"; // nombre de usuario
-    $pass = ""; // contraseña
-    $dbname = "minagua_db"; // nombre de la base de datos
+if (contiene_subcadena($fullPath, "C:")) {
+    $host = "localhost";
+    $user = "root";
+    $pass = "";
+    $dbname = "minagua_db";
 } else {
-    // Datos de la base de datos
-    $host = "localhost"; // servidor
-    $user = "id21716991_jcarri07"; // nombre de usuario
-    $pass = "Negro0414*"; // contraseña
-    $dbname = "id21716991_minagua_db"; // nombre de la base de datos
+    $host = "localhost";
+    $user = "id21716991_jcarri07";
+    $pass = "Negro0414*";
+    $dbname = "id21716991_minagua_db";
 }
 
 // Crear conexión
