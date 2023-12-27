@@ -27012,6 +27012,12 @@ pre[class*="language-"] {
   color: #2dce89;
 }
 
-table td {
+table td, table div, table th {
   white-space: normal !important;
+}
+
+@media (max-width: 575.98px) {
+  table td, table div, table th, table .text-sm, table a{
+    font-size: 12px !important;
+  }
 }
