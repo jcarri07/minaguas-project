@@ -158,7 +158,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb" id="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm modulo"><a class="opacity-5 text-white" href="javascript:;">Carga de Datos</a></li>
+            <li class="breadcrumb-item text-sm modulo"><a class="opacity-5 text-white" href="javascript:;"></a></li>
             <li class="breadcrumb-item text-sm text-white submodulo active" aria-current="page">Dashboard</li>
           </ol>
           <!--<h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>-->
@@ -178,7 +178,7 @@
               </a>
             </li-->
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a class="nav-link text-white p-0" id="iconNavbarSidenav">
+              <a class="nav-link text-white p-0 cursor-pointer" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
                   <i class="sidenav-toggler-line bg-white"></i>
                   <i class="sidenav-toggler-line bg-white"></i>
@@ -188,7 +188,7 @@
             </li>
             <li class="nav-item px-3 d-flex align-items-center">
               <a href="?page=perfil" class="nav-link text-white p-0">
-                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                <i class="fa fa-cog cursor-pointer"></i> <!--fixed-plugin-button-nav (esta clase despliega el menu de configuracion lateral)-->
               </a>
             </li>
             <!--li class="nav-item dropdown pe-2 d-flex align-items-center">
@@ -351,14 +351,14 @@
   <!--   Core JS Files   -->
   <script>
     // Función para manejar el evento de clic en el botón
-    function toggleClass() {
+    /*function toggleClass() {
       var body = document.body;
       body.classList.toggle('g-sidenav-pinned');
     }
 
     // Obtener el botón y agregar un event listener
     var toggleButton = document.getElementById('iconNavbarSidenav');
-    toggleButton.addEventListener('click', toggleClass);
+    toggleButton.addEventListener('click', toggleClass);*/
   </script>
   <script src="./assets/js/core/popper.min.js"></script>
   <script src="./assets/js/core/bootstrap.min.js"></script>
@@ -460,7 +460,7 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="./assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+  <script src="./assets/js/argon-dashboard.js?v=2.0.4"></script>
 </body>
 
 </html>

@@ -356,14 +356,14 @@ date_default_timezone_set("America/Caracas");
     window.open('pages/reports/print_ficha_tecnica.php?id=' + id, '_blank');
   }
   // Función para manejar el evento de clic en el botón
-  function toggleClass() {
+  /*function toggleClass() {
     var body = document.body;
     body.classList.toggle('g-sidenav-pinned');
   }
 
   // Obtener el botón y agregar un event listener
   var toggleButton = document.getElementById('iconNavbarSidenav');
-  toggleButton.addEventListener('click', toggleClass);
+  toggleButton.addEventListener('click', toggleClass);*/
 </script>
 
 <script>
