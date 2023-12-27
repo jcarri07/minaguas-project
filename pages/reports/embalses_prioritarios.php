@@ -10,7 +10,7 @@ if (count($parts) >= 4) {
 }
 $image_logo =  "/" . $projectName . "/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";
-$area =  "/" . $projectName . "/pages/reports_images/Area_cuenta.png";
+$area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
 $codigo = "08RHL0101";
 $titulo = "EMBALSE CAMATAGUA - ESTADO ARAGUA";
 $cota = 289.87;
