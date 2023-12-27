@@ -15,8 +15,8 @@ CREATE TABLE `usuarios` (
   Tipo enum('Admin','User') DEFAULT NULL
 );
 
-INSERT INTO `usuarios` (`Contrasena`, `P_Nombre`,`S_Nombre`, `P_Apellido`, `S_Apellido`,`Cedula`, `Correo`, `Telefono`, `Tipo`) VALUES
-( '1234', 'Admin','Admin', 'Admin','Admin', '00000000','Admin@gmail.com','00000000000', 'Admin');
+-- INSERT INTO `usuarios` (`Contrasena`, `P_Nombre`,`S_Nombre`, `P_Apellido`, `S_Apellido`,`Cedula`, `Correo`, `Telefono`, `Tipo`) VALUES
+-- ( '1234', 'Admin','Admin', 'Admin','Admin', '00000000', 'admin@gmail.com','00000000000', 'Admin');
 --
 -- Estructura de tabla para la tabla `estados`
 --

@@ -25,29 +25,29 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
           </a>
         </li>
 
-        <?php 
-          if($_SESSION["Tipo"] == "Admin"){
+        <?php
+        if ($_SESSION["Tipo"] == "Admin") {
         ?>
           <li class="nav-item">
-          <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Usuarios</span>
-          </a>
-        </li>
+            <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Usuarios</span>
+            </a>
+          </li>
 
-        <li class="nav-item">
-          <a class="nav-link <?php echo ($page == 'embalses') ? "active" : ''; ?>" href="?page=embalses">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-square-pin text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Embalses</span>
-          </a>
-        </li>
+          <li class="nav-item">
+            <a class="nav-link <?php echo ($page == 'embalses') ? "active" : ''; ?>" href="?page=embalses">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-square-pin text-primary text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Embalses</span>
+            </a>
+          </li>
 
         <?php
-          } 
+        }
         ?>
 
         <li class="nav-item">
@@ -59,24 +59,24 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
           </a>
         </li>
 
-        <?php 
-          if($_SESSION["Tipo"] == "Admin"){
+        <?php
+        if ($_SESSION["Tipo"] == "Admin") {
         ?>
 
-        <li class="nav-item">
-          <a class="nav-link <?php echo ($page == 'reportes') ? "active" : ''; ?>" href="?page=reportes">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Reportes</span>
-          </a>
-        </li>
+          <li class="nav-item">
+            <a class="nav-link <?php echo ($page == 'reportes') ? "active" : ''; ?>" href="?page=reportes">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Reportes</span>
+            </a>
+          </li>
 
         <?php
-          } 
+        }
         ?>
       </div>
-      
+
       <div class="d-flex flex-column col-12" style="position: absolute; bottom: 0;">
         <hr class="horizontal dark mt-0">
         <li class="nav-item mt-3">
@@ -90,7 +90,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <span class="nav-link-text ms-1">Editar Perfil</span>
           </a>
         </li>
-        
+
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'logout') ? "active" : ''; ?>" href="?page=cerrar_sesion">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">

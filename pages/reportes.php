@@ -1,5 +1,5 @@
 <?php
-require_once 'php/Conexion.php';
+require_once './php/Conexion.php';
 
 $sql = "SELECT * FROM embalses WHERE estatus = 'activo'";
 
@@ -14,6 +14,7 @@ if (mysqli_num_rows($res) > 0) {
 } else {
   // echo "No se encontraron resultados.";
 }
+
 ?>
 
 
@@ -27,7 +28,6 @@ if (!isset($_SESSION["Id_usuario"])) {
 
   print "<script>window.location='index.php';</script>";
 }
-
 date_default_timezone_set("America/Caracas");
 ?>
 
