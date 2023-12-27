@@ -75,7 +75,11 @@ date_default_timezone_set("America/Caracas");
     border: 1px solid #000;
   } */
 
-  
+  @media (min-width: 1000px) {
+    .p-5-lg{
+      padding: 3rem;
+    }
+  }
 </style>
 
 
@@ -205,7 +209,7 @@ date_default_timezone_set("America/Caracas");
         <!-- inicio -->
         <div id="form-contenedor">
           <form id="form-embalse" method="POST" action="php/proces_embalse.php" enctype="multipart/form-data">
-            <div class="p-5 m-5">
+            <div class="p-5-lg m-5">
 
               <h3 class="pb-3">Información principal:</h3>
 
@@ -609,8 +613,8 @@ date_default_timezone_set("America/Caracas");
                 </div>
               </div>
 
-              <div class="row justify-content-center mt-5" style="margin: 0 auto;">
-                <button id="submitFornBtn" type="submit" class="col-2 btn btn-primary" name="Guardar">Guardar embalse</button>
+              <div class="text-center mt-5" style="margin: 0 auto;">
+                <button id="submitFornBtn" type="submit" class="btn btn-primary" name="Guardar">Guardar embalse</button>
               </div>
           </form>
         </div>
