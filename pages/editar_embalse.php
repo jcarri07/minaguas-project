@@ -160,7 +160,7 @@ date_default_timezone_set("America/Caracas");
             <!-- inicio -->
 
             <form method="POST" action="php/proces_embalse.php" enctype="multipart/form-data">
-              <div class="p-5 m-5">
+              <div class="p-5-lg m-5">
 
                 <h3 class="pb-3">Información principal:</h3>
 
@@ -577,8 +577,8 @@ date_default_timezone_set("America/Caracas");
                 
                 <input style="display: none;" value="<?php echo $id_embalse ?>" type="text" class="form-control" id="id_embalse" name="id_embalse" placeholder="Ingrese el nomnbre del embalse">
 
-                <div class="row justify-content-center mt-5">
-                  <button type="submit" class="col-2 btn btn-primary" name="Update">Editar embalse</button>
+                <div class="text-center mt-5" style="margin: 0 auto;">
+                  <button type="submit" class="btn btn-primary" name="Update">Editar embalse</button>
                 </div>
               </form>
 
