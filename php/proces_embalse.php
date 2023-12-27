@@ -39,15 +39,15 @@ if (isset($_POST["Guardar"])) {
     $monitoreo = $_POST["monitoreo"];
     // $batimetria = $_POST["batimetria"];
     $vida_util = $_POST["vida_util"];
-    $cota_min = ["cota_min"];
-    $volumen_min = ["vol_min"];
-    $superficie_min = ["sup_min"];
-    $cota_nor = ["cota_nor"];
-    $volumen_nor = ["vol_nor"];
-    $superficie_nor = ["sup_nor"];
-    $cota_max = ["cota_max"];
-    $volumen_max = ["vol_max"];
-    $superficie_max = ["sup_max"];
+    $cota_min = $_POST["cota_min"];
+    $volumen_min = $_POST["vol_min"];
+    $superficie_min = $_POST["sup_min"];
+    $cota_nor = $_POST["cota_nor"];
+    $volumen_nor = $_POST["vol_nor"];
+    $superficie_nor = $_POST["sup_nor"];
+    $cota_max = $_POST["cota_max"];
+    $volumen_max = $_POST["vol_max"];
+    $superficie_max = $_POST["sup_max"];
     $numero_presas = $_POST["numero_presas"];
     $tipo_presa = $_POST["tipo_presa"];
     $altura = $_POST["altura"];
@@ -99,7 +99,7 @@ if (isset($_POST["Guardar"])) {
     $aux_uno = $imagen_uno;
     $aux_dos = $imagen_dos;
 
-    if (!empty($imagen_uno) && count($imagen_uno) > 0) {
+    if (!empty($imagen_uno) && count($_FILES["imagen_uno"]) > 0) {
         $i = 1;
         while (1) {
             if (file_exists('../pages/reports_images/' . $imagen_uno)) {
@@ -113,7 +113,7 @@ if (isset($_POST["Guardar"])) {
         $imagen_uno = "";
     }
 
-    if (!empty($imagen_dos) && count($imagen_dos) > 0) {
+    if (!empty($imagen_dos) && count($_FILES["imagen_dos"]) > 0) {
         $i = 1;
         while (1) {
             if (file_exists('../pages/reports_images/' . $imagen_dos)) {
@@ -204,15 +204,15 @@ if (isset($_POST["Update"])) {
     $monitoreo = $_POST["monitoreo"];
     // $batimetria = $_POST["batimetria"];   // AUN NO SE COMO HACER ESTE!
     $vida_util = $_POST["vida_util"];
-    $cota_min = ["cota_min"];
-    $volumen_min = ["vol_min"];
-    $superficie_min = ["sup_min"];
-    $cota_nor = ["cota_nor"];
-    $volumen_nor = ["vol_nor"];
-    $superficie_nor = ["sup_nor"];
-    $cota_max = ["cota_max"];
-    $volumen_max = ["vol_max"];
-    $superficie_max = ["sup_max"];
+    $cota_min = $_POST["cota_min"];
+    $volumen_min = $_POST["vol_min"];
+    $superficie_min = $_POST["sup_min"];
+    $cota_nor = $_POST["cota_nor"];
+    $volumen_nor = $_POST["vol_nor"];
+    $superficie_nor = $_POST["sup_nor"];
+    $cota_max = $_POST["cota_max"];
+    $volumen_max = $_POST["vol_max"];
+    $superficie_max = $_POST["sup_max"];
     $numero_presas = $_POST["numero_presas"];
     $tipo_presa = $_POST["tipo_presa"];
     $altura = $_POST["altura"];
