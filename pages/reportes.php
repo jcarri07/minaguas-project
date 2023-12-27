@@ -14,7 +14,7 @@ if (mysqli_num_rows($res) > 0) {
 } else {
   // echo "No se encontraron resultados.";
 }
-
+closeConection($conn);
 ?>
 
 
@@ -73,7 +73,7 @@ date_default_timezone_set("America/Caracas");
                       <span class="text-secondary text-xs font-weight-bold"><?php echo $row['uso_actual'] ?></span>
                     </td>
                     <td class="align-middle text-center">
-                      <a id="<?php echo $row['id_embalse']; ?>" onclick="getId(<?php echo $row['id_embalse']; ?>)" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                      <a id="<?php echo $row['id_embalse']; ?>" onclick="getId(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                         <div style="display: flex; flex-direction: column; justify-content: space-evenly; align-items:center;">
                           <span class="hide-cell">Generar Ficha Técnica </span>
                           <i class="fas fa-file-pdf text-lg me-1 mt-1"></i>
@@ -129,9 +129,8 @@ date_default_timezone_set("America/Caracas");
 <script>
   iniciarTabla('table-report');
 
-  function getId(id) {
-    console.log(id);
-    window.open('pages/reports/print_ficha_tecnica.php?id=' + id, '_blank');
+  function getId(id, name) {
+    window.open('pages/reports/print_ficha_tecnica.php?id=' + id + "&name=" + name, '_blank');
   }
   // Función para manejar el evento de clic en el botón
   /*function toggleClass() {
