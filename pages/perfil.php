@@ -18,8 +18,8 @@ if ($_SESSION["Tipo"] == "Admin") {
       <div class=col-md-3></div>
       <div class="card col-md-6">
         <div class="card-header pb-0">
-          <div class="d-flex align-items-center">
-            <p class="mb-0">Editar Perfil</p>
+          <div class="d-flex">
+            <p class="mb-0 mt-1">Editar Perfil</p>
             <button type="button" id="edit" class="btn btn-primary btn-sm ms-auto">Editar</button>
 
           </div>
