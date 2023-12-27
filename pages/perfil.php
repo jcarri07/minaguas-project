@@ -12,9 +12,11 @@ if ($_SESSION["Tipo"] == "Admin") {
 }
 ?>
 <div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
+  
+    
+    <div class="row">
+      <div class=col-md-3></div>
+      <div class="card col-md-6">
         <div class="card-header pb-0">
           <div class="d-flex align-items-center">
             <p class="mb-0">Editar Perfil</p>
@@ -69,6 +71,7 @@ if ($_SESSION["Tipo"] == "Admin") {
           </form>
         </div>
       </div>
+      <div class=col-md-3></div>
     </div>
     <!--div class="col-md-4">
           <div class="card card-profile">
@@ -126,7 +129,7 @@ if ($_SESSION["Tipo"] == "Admin") {
             </div>
           </div>
         </div-->
-  </div>
+  
   <!-- <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
