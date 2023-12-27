@@ -57,7 +57,7 @@
                       </div-->
               <div class="row ">
                 <div class="mb-3 col-6">
-                  <input type="text" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
+                  <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
                 </div>
                 <div class="mb-3 col-6">
                   <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
@@ -99,20 +99,25 @@
           </div>
           <div class="card-body pb-3">
             <form id="form2" role="form">
-              <div class="mb-3">
+              <div class="mb-2">
+                <label >Nombre(s)</label>
                 <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="Enombres" required>
               </div>
-              <div class="mb-3">
+              <div class="mb-2">
+              <label >Apellido(s)</label>
                 <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="Eapellidos" required>
               </div>
-              <div class="mb-3">
+              <div class="mb-2">
+              <label >Correo</label>
                 <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="Eemail" required>
               </div>
               <div class="row ">
-                <div class="mb-3 col-6">
+                <div class="mb-2 col-6">
+                <label >Telefono</label>
                   <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" name="Etelefono" required>
                 </div>
-                <div class="mb-3 col-6">
+                <div class="mb-2 col-6">
+                <label >Cedula</label>
                   <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="Ecedula" required>
                 </div>
 
@@ -124,7 +129,8 @@
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
                       </div-->
 
-                <div class="mb-3">
+                <div class="mb-2">
+                <label >Contraseña</label>
                   <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" required>
                 </div>
                 <!--div class="mb-3 col-6">
@@ -340,6 +346,7 @@
 
           },
           error: function(response) {
+            $('#new-user').modal('hide');
             Swal.fire({
               icon: 'error',
               title: 'Error Inesperado',
@@ -351,6 +358,7 @@
           }
         });
       } else {
+        $('#new-user').modal('hide');
         Swal.fire({
           icon: 'warning',
           text: 'Las contraseñas no coinciden',
@@ -446,6 +454,7 @@
 
           },
           error: function(response) {
+            $('#edit-user').modal('hide');
             Swal.fire({
               icon: 'error',
               title: 'Error Inesperado',
