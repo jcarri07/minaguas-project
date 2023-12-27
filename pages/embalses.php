@@ -159,8 +159,8 @@ closeConection($conn);
                 <thead>
                   <tr>
                     <th>Embalse</th>
-                    <th>Volumen actual</th>
-                    <th style="text-align: center;">Encargado</th>
+                    <th class="hide-cell">Volumen actual</th>
+                    <th style="text-align: center;" class="hide-cell">Encargado</th>
                     <th style="text-align: center;">Acción</th>
                   </tr>
                 </thead>
@@ -175,13 +175,13 @@ closeConection($conn);
                           <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
                         </div>
                       </td>
-                      <td>
+                      <td class="hide-cell">
                         <div class="d-flex flex-column px-3">
                           <h6 class="mb-1 text-dark font-weight-bold text-sm">1.247,3 Hm3 (50%)</h6>
                           <span class="text-xs">20/12/2023</span>
                         </div>
                       </td>
-                      <td style="vertical-align: middle;">
+                      <td style="vertical-align: middle;" class="hide-cell">
                         <div class="d-flex justify-content-center">
                           <div><?php
                                 if ($row['id_encargado'] == '0' || $row['id_encargado'] == null || $row['id_encargado'] == '') { ?>
@@ -196,9 +196,9 @@ closeConection($conn);
                       </td>
                       <td>
                         <div class="d-flex align-items-center justify-content-center text-sm">
-                          <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-3 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                          <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-3 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i>Eliminar</a>
-                          <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
+                          <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
+                          <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i><span class="hide-cell">Eliminar</span></a>
+                          <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
                         </div>
                       </td>
                     </tr>
