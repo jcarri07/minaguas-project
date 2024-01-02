@@ -179,16 +179,23 @@
             </li-->
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a class="nav-link text-white p-0 cursor-pointer" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
+                <div class="sidenav-toggler-inner p-0">
                   <i class="sidenav-toggler-line bg-white"></i>
+                  <i class="sidenav-toggler-line bg-transparent"></i>
                   <i class="sidenav-toggler-line bg-white"></i>
+                  <i class="sidenav-toggler-line bg-transparent"></i>
                   <i class="sidenav-toggler-line bg-white"></i>
                 </div>
               </a>
             </li>
             <li class="nav-item px-3 d-flex align-items-center">
-              <a href="?page=perfil" class="nav-link text-white p-0">
+              <a href="?page=perfil" class="nav-link text-white p-0 text-lg">
                 <i class="fa fa-cog cursor-pointer"></i> <!--fixed-plugin-button-nav (esta clase despliega el menu de configuracion lateral)-->
+              </a>
+            </li>
+            <li class="nav-item pe-3 d-flex align-items-center">
+              <a href="?page=cerrar_sesion" class="nav-link text-white p-0 text-lg">
+                <i class="fa fa-power-off cursor-pointer"></i>
               </a>
             </li>
             <!--li class="nav-item dropdown pe-2 d-flex align-items-center">
