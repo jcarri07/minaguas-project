@@ -1,5 +1,5 @@
 <?php
-  print "<script>window.location='maintenance.php';</script>";
+ // print "<script>window.location='maintenance.php';</script>";
   if (!isset($_SESSION)) {
     session_start();
   };
@@ -35,7 +35,7 @@
   <link rel="icon" type="image/png" href="./assets/img/logos/cropped-mminaguas.webp">
   <title>
     Minaguas
-  </title>
+  </title> 
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -209,7 +209,7 @@
           <p class="mb-0" style="color: white;">
             Copyright © <script>
               document.write(new Date().getFullYear())
-            </script> Desarrolládo por la Dirección de Investigación eh Innovación Espacia - ABAE.
+            </script> Desarrollado por la Dirección de Investigación e Innovación Espacial - ABAE.
           </p>
         </div>
       </div>
