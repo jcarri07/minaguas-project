@@ -4,6 +4,9 @@
   color: black;
 
 }
+.icon-g:hover {
+  transform: scale(1.2); /* Escala el tamaño del icono al 120% */
+}
 </style>
 
 <div class="container-fluid py-5">
@@ -341,8 +344,8 @@
         <div class="card-body p-3">
           <div class="row">
             <div class="col-3 text-end" style="padding-left: 25px;">
-              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-              <a href="https://www.facebook.com/MinAguasVzla/" target="_blank"><i class="fa fa-facebook text-lg opacity-10" aria-hidden="true"></i></a>
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://www.facebook.com/MinAguasVzla/" target="_blank"><i class="fa fa-facebook text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
@@ -354,8 +357,8 @@
         <div class="card-body p-3">
           <div class="row">
             <div class="col-2 text-end" style="padding-left: 25px;">
-              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-              <a href="https://twitter.com/minaguasoficial" class="download-icon" target="_blank"><i class="fa fa-twitter text-lg opacity-10" aria-hidden="true"></i></a>
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://twitter.com/minaguasoficial" class="download-icon" target="_blank"><i class="fa fa-twitter text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
@@ -367,8 +370,8 @@
         <div class="card-body p-3">
           <div class="row">
             <div class="col-2 text-end" style="padding-left: 25px;">
-              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-              <a href="https://www.instagram.com/mppaaguas/" class="download-icon" target="_blank"><i class="fa fa-instagram text-lg opacity-10" aria-hidden="true"></i></a>
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://www.instagram.com/mppaaguas/" class="download-icon" target="_blank"><i class="fa fa-instagram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
@@ -380,8 +383,8 @@
         <div class="card-body p-3">
           <div class="row">
             <div class="col-2 text-end" style="padding-left: 25px;">
-              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-              <a href="https://t.me/minaguas/55" class="download-icon" target="_blank"><i class="fab fa-telegram text-lg opacity-10" aria-hidden="true"></i></a>
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://t.me/minaguas/55" class="download-icon" target="_blank"><i class="fab fa-telegram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
@@ -393,8 +396,8 @@
         <div class="card-body p-3">
           <div class="row">
             <div class="col-2 text-end" style="padding-left: 25px;">
-              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-              <a href="https://www.youtube.com/channel/UCMpEiajv0YEBTIr0nlA---g" class="download-icon" target="_blank"><i class="fa fa-youtube-play text-lg opacity-10" aria-hidden="true"></i></a>
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://www.youtube.com/channel/UCMpEiajv0YEBTIr0nlA---g" class="download-icon" target="_blank"><i class="fa fa-youtube-play text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
@@ -406,8 +409,8 @@
         <div class="card-body p-3">
           <div class="row">
             <div class="col-2 text-end" style="padding-left: 25px;">
-              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-              <a href="https://www.tiktok.com/@minaguasven" class="download-icon" target="_blank"><i class="fab fa-tiktok text-lg opacity-10" aria-hidden="true"></i></a>
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://www.tiktok.com/@minaguasven" class="download-icon" target="_blank"><i class="fab fa-tiktok text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
