@@ -1,3 +1,11 @@
+<style>
+.arrow-color{
+
+  color: black;
+
+}
+</style>
+
 <div class="container-fluid py-5">
       <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -312,11 +320,11 @@
                 </div>
               </div>
               <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="fa fa-chevron-left arrow-color" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
               <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="fa fa-chevron-right arrow-color" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
             </div>
