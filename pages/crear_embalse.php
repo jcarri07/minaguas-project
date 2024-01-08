@@ -230,7 +230,7 @@ date_default_timezone_set("America/Caracas");
                       <?php
                       while ($row1 = mysqli_fetch_array($queryResponsable)) {
                       ?>
-                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']; ?></option>
+                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']." ".$row1['S_Nombre']." ".$row1['P_Apellido']." ".$row1['S_Apellido']; ?></option>
                       <?php
                       }
                       ?>

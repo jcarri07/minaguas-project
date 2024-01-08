@@ -180,13 +180,13 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nomnbre de la presa" value="<?php echo $embalse["nombre_presa"]; ?>">
                 </div>
                 <div class="form-group">
-                  <label for="responsable">Responsable</label>
+                  <label for="responsable">Responsable de la carga de datos</label>
                   <select class="form-select" id="responsable" name="responsable">
                     <option value=""></option>
                     <?php
                     while ($row1 = mysqli_fetch_array($queryResponsable)) {
                     ?>
-                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']; ?></option>
+                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']." ".$row1['S_Nombre']." ".$row1['P_Apellido']." ".$row1['S_Apellido']; ?></option>
                     <?php
                     }
                     ?>
