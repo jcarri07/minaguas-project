@@ -1,24 +1,35 @@
-    <div class="container-fluid py-4">
+<style>
+.arrow-color{
+
+  color: black;
+
+}
+.icon-g:hover {
+  transform: scale(1.2); /* Escala el tamaño del icono al 120% */
+}
+</style>
+
+<div class="container-fluid py-5">
       <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
-            <div class="card-body p-3">
+          <div class="card-body p-3">
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Money</p>
-                    <h5 class="font-weight-bolder">
-                      $53,000
-                    </h5>
-                    <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder">+55%</span>
-                      since yesterday
-                    </p>
+                    <p class="text-xs mb-0 font-weight-bold ">Usuarios registrados en el sistema</p>
+                    <a href="?page=usuarios"><h5 class="font-weight-bolder" style="margin-top: 10px;">
+                      USUARIOS
+                    </h5></a>
+                    <!--<p class="mb-0 text-sm">
+                      <span class="text-success text-xs font-weight-bolder">1</span>
+                      actualmente
+                    </p>-->
                   </div>
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                  <a href="?page=usuarios"><i class="fa fa-users text-lg opacity-10" aria-hidden="true"></i></a>
                   </div>
                 </div>
               </div>
@@ -31,44 +42,44 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Users</p>
-                    <h5 class="font-weight-bolder">
-                      2,300
-                    </h5>
-                    <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder">+3%</span>
-                      since last week
-                    </p>
+                    <p class="text-xs mb-0 font-weight-bold">Usuarios registrados en el sistema</p>
+                    <a href="?page=embalses"><h5 class="font-weight-bolder" style="margin-top: 10px;">
+                      EMBALSES
+                    </h5></a>
+                   <!-- <p class="mb-0 text-sm">
+                      <span class="text-success text-xs font-weight-bolder">1</span>
+                      actualmente
+                    </p>-->
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                <a href="?page=embalses"><i class="fa fa-tint text-lg opacity-10" aria-hidden="true" ></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-xs mb-0 font-weight-bold">Registro y carga de datos al sistema</p>
+                    <a href="?page=datos"><h5 class="font-weight-bolder" style="margin-top: 10px;">
+                     CARGA DE DATOS
+                    </h5></a>
+                    <!--<p class="mb-0 text-sm">
+                      <span class="text-danger text-xs font-weight-bolder"></span>
+                      Cargar datos a tiempo real
+                    </p>-->
                   </div>
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">New Clients</p>
-                    <h5 class="font-weight-bolder">
-                      +3,462
-                    </h5>
-                    <p class="mb-0">
-                      <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                      since last quarter
-                    </p>
-                  </div>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                  <a href="?page=datos"> <i class="fa fa-folder-open-o text-lg opacity-10" aria-hidden="true"></i></a>
                   </div>
                 </div>
               </div>
@@ -81,18 +92,18 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Sales</p>
-                    <h5 class="font-weight-bolder">
-                      $103,430
-                    </h5>
-                    <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
-                    </p>
+                    <p class="text-xs mb-0 font-weight-bold">Reportes generados y disponibles</p>
+                    <a href="?page=reportes"><h5 class="font-weight-bolder" style="margin-top: 10px;">
+                      REPORTES
+                    </h5></a>
+                    <!--<p class="mb-0 text-sm">
+                      <span class="text-success text-xs font-weight-bolder"></span> Lectura y descarga de reportes
+                    </p>-->
                   </div>
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                    <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                  <a href="?page=reportes"><i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i></a>
                   </div>
                 </div>
               </div>
@@ -100,279 +111,315 @@
           </div>
         </div>
       </div>
-      <div class="row mt-4">
-        <div class="col-lg-7 mb-lg-0 mb-4">
-          <div class="card z-index-2 h-100">
-            <div class="card-header pb-0 pt-3 bg-transparent">
-              <h6 class="text-capitalize">Sales overview</h6>
+
+                                       
+                           <div class="row mt-6">        
+                                   <div class="col-lg-9 mb-lg-0 mb-1">
+                                            <div class="card user-card-full">
+                                                <div class="row m-l-0 m-r-0">
+                                                    <div class="col-sm-4 bg-c-lite-green user-profile">
+                                                        <div class="card-block text-center text-white">
+                                                            <div class="m-b-25">
+                                                                <img src="./assets/img/logos/cropped-mminaguas.jpg" style="width: 200px; height=100px; margin-top: 15px;" class="img-radius" alt="User-Profile-Image">
+                                                                <img src="./assets/img/logos/minaguas-title.svg" style="width: 200px; height=100px; margin-top: 15px;">
+
+                                                              </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-8" style="display: flex;">
+                                                        <div class="card-block">
+                                                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="margin-top: 15px;">UN HITO INNOVADOR</h6>
+                                                            <div class="row">
+                                                                <div class="col-sm-12" style="text-align: justify;">
+                                                                    <p class="m-b-10 text-sm" style="margin-right: 25px;"> 
+                                                                    
+                                                                    En general, para la gestión del agua, los países de América Latina y el Caribe tienen mecanismos de coordinación a nivel del gobierno central. Venezuela se convierte en el primer país que cuenta en la actualidad con una cartera ministerial dedicada específica y exclusivamente al sector agua.
+
+                                                                  Este hito innovador trasciende el esquema establecido en América Latina y el Caribe donde otros sectores estratégicos y sensibles como la salud, la electricidad y la agricultura tienen atención específica pero en relación al sector agua se manejan en Ministerios de Tutela, organismos interministeriales, estructuras de alto nivel, entidades centrales, programas interentidades, mecanismos ministeriales o grupos coordinados por expertos.
+
+                                                                    Venezuela es hoy en día el país latinoamericano con un Ministerio dedicado exclusivamente a la Gestión Integral del Recurso Hídrico entendida como la atención a todos los usos y aprovechamiento de las aguas en fuentes (ríos, lagos, mares, acuíferos) en calidad y cantidad de aguas superficiales y subterráneas. Lo que atiende directamente la condición estratégica de nuestro territorio al ser la 4ta reserva de agua dulce en América Latina y el 11vo en el Mundo.
+                                                                    
+                                                                    <!--“Ejercer como Autoridad Nacional una gestión integral de las aguas, 
+                                                                    elemento indispensable para la vida, el bienestar humano y el desarrollo sustentable del país,
+                                                                      basada en la administración sostenible de las regiones hidrográficas e hidrogeológicas,
+                                                                      brindar un acceso justo y equitativo al servicio de agua potable, el saneamiento y sus otros usos.”
+                                                                      <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Visión:</h6>
+
+                                                                      <p class="m-b-10">  “Ser el órgano del Ejecutivo Nacional que garantice la soberanía del Estado Venezolano 
+                                                                      en materia de aprovechamiento responsable del recurso hídrico y la prestación de servicios de agua potable
+                                                                      y saneamiento para los ciudadanos y ciudadanas, aplicando un nuevo modelo de gestión integrador, efectivo y revolucionario,
+                                                                        con la participación protagónica del Gobierno Popular en el marco de un aprovechamiento responsable, óptimo y sostenible 
+                                                                        en todos los usos del agua, mediante la utilización de tecnología de vanguardia, liderado por servidores públicos conscientes,
+                                                                        capacitados y comprometidos en contribuir con el bienestar de la población venezolana”
+-->
+                                                                    <h6 class="text-muted f-w-400"><a href="..\..\..\cdn-cgi\l\email-protection.htm" class="__cf_email__" data-cfemail="3a505f54437a5d575b535614595557"></a></h6>
+                                                                </div>
+                                                               <!-- <div class="col-sm-6">
+                                                                    <p class="m-b-10 f-w-600">Agencia Bolivariana para Actividades Espaciales</p>
+                                                                    <h6 class="text-muted f-w-400"></h6>
+                                                                </div>
+                                                            </div>
+                                                            <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <p class="m-b-10 f-w-600">Recent</p>
+                                                                    <h6 class="text-muted f-w-400">Guruable Admin</h6>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <p class="m-b-10 f-w-600">Most Viewed</p>
+                                                                    <h6 class="text-muted f-w-400">Able Pro Admin</h6>
+                                                                </div>-->
+                                                            </div>
+                                                            <!--<ul class="social-link list-unstyled m-t-40 m-b-10">
+                                                                <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook"><i class="feather icon-facebook facebook" aria-hidden="true"></i></a></li>
+                                                                <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter"><i class="feather icon-twitter twitter" aria-hidden="true"></i></a></li>
+                                                                <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram"><i class="feather icon-instagram instagram" aria-hidden="true"></i></a></li>
+                                                            </ul>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                          
+                                        </div>
+
+  <!--<div class="card z-index-2 h-100">
+          
+
+          <div class="col-lg-2">
+             <img src="./assets/img/minaguas.png" alt="Image" width="200px" height="100px">
+           </div>
+           <div class="col-lg-4">
+           <div class="card-header pb-0 pt-3 bg-transparent">
+                         <h6 class="text-capitalize">MINAGUAS</h6>
               <p class="text-sm mb-0">
                 <i class="fa fa-arrow-up text-success"></i>
-                <span class="font-weight-bold">4% more</span> in 2021
+                <span class="font-weight-bold">MISIÓN</span>
+               “Ejercer como Autoridad Nacional una gestión integral de las aguas, 
+               elemento indispensable para la vida, el bienestar humano y el desarrollo sustentable del país,
+                basada en la administración sostenible de las regiones hidrográficas e hidrogeológicas,
+                 brindar un acceso justo y equitativo al servicio de agua potable, el saneamiento y sus otros usos.”
+              </p>
+
+              <p class="text-sm mb-0">
+                <i class="fa fa-arrow-up text-success"></i>
+                <span class="font-weight-bold">VISIÓN</span>
+                “Ser el órgano del Ejecutivo Nacional que garantice la soberanía del Estado Venezolano 
+                en materia de aprovechamiento responsable del recurso hídrico y la prestación de servicios de agua potable
+                 y saneamiento para los ciudadanos y ciudadanas, aplicando un nuevo modelo de gestión integrador, efectivo y revolucionario,
+                  con la participación protagónica del Gobierno Popular en el marco de un aprovechamiento responsable, óptimo y sostenible 
+                  en todos los usos del agua, mediante la utilización de tecnología de vanguardia, liderado por servidores públicos conscientes,
+                   capacitados y comprometidos en contribuir con el bienestar de la población venezolana”
               </p>
             </div>
+</div>
             <div class="card-body p-3">
               <div class="chart">
                 <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
               </div>
             </div>
-          </div>
+          </div>-->
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-3">
           <div class="card card-carousel overflow-hidden h-100 p-0">
             <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
               <div class="carousel-inner border-radius-lg h-100">
-                <div class="carousel-item h-100 active" style="background-image: url('./assets/img/carousel-1.jpg');
-      background-size: cover;">
-                  <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                    <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                      <i class="ni ni-camera-compact text-dark opacity-10"></i>
-                    </div>
-                    <h5 class="text-white mb-1">Get started with Argon</h5>
-                    <p>There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
-                  </div>
+                <div class="carousel-item h-100 active">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/aguasdecojedes.png" class="d-block w-100" alt="Wild Landscape"/>
                 </div>
-                <div class="carousel-item h-100" style="background-image: url('./assets/img/carousel-2.jpg');
-      background-size: cover;">
-                  <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                    <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                      <i class="ni ni-bulb-61 text-dark opacity-10"></i>
-                    </div>
-                    <h5 class="text-white mb-1">Faster way to create web pages</h5>
-                    <p>That’s my skill. I’m not really specifically talented at anything except for the ability to learn.</p>
-                  </div>
+                <div class="carousel-item h-100">
+                     <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/aguasdeejido.png" class="d-block w-100" alt="Wild Landscape"/>
                 </div>
-                <div class="carousel-item h-100" style="background-image: url('./assets/img/carousel-3.jpg');
-      background-size: cover;">
-                  <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                    <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                      <i class="ni ni-trophy text-dark opacity-10"></i>
-                    </div>
-                    <h5 class="text-white mb-1">Share with us your design tips!</h5>
-                    <p>Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
-                  </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/aguasdemonagas.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/aguasdeyaracuy.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/enmohca.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/fonaguas.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroamazonas.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroandes.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrobolivar.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrocentro.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrofalcon.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrolago.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrolara.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrollanos.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrologicadelta.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidropaez.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroportuguesa.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrosgc.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrosuroeste.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroven.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroweb.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/inasa.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/shtrujillano.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/tubhelca.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
+                </div>
+                <div class="carousel-item h-100">
+                    <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/yacambu.png" class="d-block w-100" alt="Wild Landscape"/>
+                 
                 </div>
               </div>
               <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="fa fa-chevron-left arrow-color" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
               <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="fa fa-chevron-right arrow-color" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
             </div>
           </div>
-        </div>
+        </div>        
       </div>
-      <div class="row mt-4">
-        <div class="col-lg-7 mb-lg-0 mb-4">
-          <div class="card ">
-            <div class="card-header pb-0 p-3">
-              <div class="d-flex justify-content-between">
-                <h6 class="mb-2">Sales by Country</h6>
+
+      <!--RRSS-->
+
+    <div class="container-fluid py-5">
+  <div class="row justify-content-center" style="gap: 50px;">
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-3 text-end" style="padding-left: 25px;">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://www.facebook.com/MinAguasVzla/" target="_blank"><i class="fa fa-facebook text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
-            <div class="table-responsive">
-              <table class="table align-items-center ">
-                <tbody>
-                  <tr>
-                    <td class="w-30">
-                      <div class="d-flex px-2 py-1 align-items-center">
-                        <div>
-                          <img src="./assets/img/icons/flags/US.png" alt="Country flag">
-                        </div>
-                        <div class="ms-4">
-                          <p class="text-xs font-weight-bold mb-0">Country:</p>
-                          <h6 class="text-sm mb-0">United States</h6>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="text-center">
-                        <p class="text-xs font-weight-bold mb-0">Sales:</p>
-                        <h6 class="text-sm mb-0">2500</h6>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="text-center">
-                        <p class="text-xs font-weight-bold mb-0">Value:</p>
-                        <h6 class="text-sm mb-0">$230,900</h6>
-                      </div>
-                    </td>
-                    <td class="align-middle text-sm">
-                      <div class="col text-center">
-                        <p class="text-xs font-weight-bold mb-0">Bounce:</p>
-                        <h6 class="text-sm mb-0">29.9%</h6>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="w-30">
-                      <div class="d-flex px-2 py-1 align-items-center">
-                        <div>
-                          <img src="./assets/img/icons/flags/DE.png" alt="Country flag">
-                        </div>
-                        <div class="ms-4">
-                          <p class="text-xs font-weight-bold mb-0">Country:</p>
-                          <h6 class="text-sm mb-0">Germany</h6>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="text-center">
-                        <p class="text-xs font-weight-bold mb-0">Sales:</p>
-                        <h6 class="text-sm mb-0">3.900</h6>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="text-center">
-                        <p class="text-xs font-weight-bold mb-0">Value:</p>
-                        <h6 class="text-sm mb-0">$440,000</h6>
-                      </div>
-                    </td>
-                    <td class="align-middle text-sm">
-                      <div class="col text-center">
-                        <p class="text-xs font-weight-bold mb-0">Bounce:</p>
-                        <h6 class="text-sm mb-0">40.22%</h6>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="w-30">
-                      <div class="d-flex px-2 py-1 align-items-center">
-                        <div>
-                          <img src="./assets/img/icons/flags/GB.png" alt="Country flag">
-                        </div>
-                        <div class="ms-4">
-                          <p class="text-xs font-weight-bold mb-0">Country:</p>
-                          <h6 class="text-sm mb-0">Great Britain</h6>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="text-center">
-                        <p class="text-xs font-weight-bold mb-0">Sales:</p>
-                        <h6 class="text-sm mb-0">1.400</h6>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="text-center">
-                        <p class="text-xs font-weight-bold mb-0">Value:</p>
-                        <h6 class="text-sm mb-0">$190,700</h6>
-                      </div>
-                    </td>
-                    <td class="align-middle text-sm">
-                      <div class="col text-center">
-                        <p class="text-xs font-weight-bold mb-0">Bounce:</p>
-                        <h6 class="text-sm mb-0">23.44%</h6>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="w-30">
-                      <div class="d-flex px-2 py-1 align-items-center">
-                        <div>
-                          <img src="./assets/img/icons/flags/BR.png" alt="Country flag">
-                        </div>
-                        <div class="ms-4">
-                          <p class="text-xs font-weight-bold mb-0">Country:</p>
-                          <h6 class="text-sm mb-0">Brasil</h6>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="text-center">
-                        <p class="text-xs font-weight-bold mb-0">Sales:</p>
-                        <h6 class="text-sm mb-0">562</h6>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="text-center">
-                        <p class="text-xs font-weight-bold mb-0">Value:</p>
-                        <h6 class="text-sm mb-0">$143,960</h6>
-                      </div>
-                    </td>
-                    <td class="align-middle text-sm">
-                      <div class="col text-center">
-                        <p class="text-xs font-weight-bold mb-0">Bounce:</p>
-                        <h6 class="text-sm mb-0">32.14%</h6>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
-        <div class="col-lg-5">
-          <div class="card">
-            <div class="card-header pb-0 p-3">
-              <h6 class="mb-0">Categories</h6>
-            </div>
-            <div class="card-body p-3">
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                      <i class="ni ni-mobile-button text-white opacity-10"></i>
-                    </div>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Devices</h6>
-                      <span class="text-xs">250 in stock, <span class="font-weight-bold">346+ sold</span></span>
-                    </div>
-                  </div>
-                  <div class="d-flex">
-                    <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                      <i class="ni ni-tag text-white opacity-10"></i>
-                    </div>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Tickets</h6>
-                      <span class="text-xs">123 closed, <span class="font-weight-bold">15 open</span></span>
-                    </div>
-                  </div>
-                  <div class="d-flex">
-                    <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                      <i class="ni ni-box-2 text-white opacity-10"></i>
-                    </div>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Error logs</h6>
-                      <span class="text-xs">1 is active, <span class="font-weight-bold">40 closed</span></span>
-                    </div>
-                  </div>
-                  <div class="d-flex">
-                    <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                      <i class="ni ni-satisfied text-white opacity-10"></i>
-                    </div>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Happy users</h6>
-                      <span class="text-xs font-weight-bold">+ 430</span>
-                    </div>
-                  </div>
-                  <div class="d-flex">
-                    <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></button>
-                  </div>
-                </li>
-              </ul>
+      </div>
+    </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://twitter.com/minaguasoficial" class="download-icon" target="_blank"><i class="fa fa-twitter text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- <footer class="footer pt-3  ">
+    </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://www.instagram.com/mppaaguas/" class="download-icon" target="_blank"><i class="fa fa-instagram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://t.me/minaguas/55" class="download-icon" target="_blank"><i class="fab fa-telegram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://www.youtube.com/channel/UCMpEiajv0YEBTIr0nlA---g" class="download-icon" target="_blank"><i class="fa fa-youtube-play text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+              <a href="https://www.tiktok.com/@minaguasven" class="download-icon" target="_blank"><i class="fab fa-tiktok text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
@@ -380,28 +427,11 @@
                 © <script>
                   document.write(new Date().getFullYear())
                 </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
+                desarrollado por Dirección de Investigación e Innovación - ABAE
+
               </div>
             </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                </li>
-              </ul>
-            </div>
+            
           </div>
         </div>
-      </footer> -->
-    </div>
+      </footer>
