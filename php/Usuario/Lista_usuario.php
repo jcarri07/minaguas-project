@@ -11,8 +11,8 @@ if ($count >= 1) {
                     <!--th class="text-uppercase text-xxs font-weight-bolder  ps-2">Foto</th-->
                       <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Nombre(s)</th>
                       <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Apellido(s)</th>
-                      <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Email</th>
-                      <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Ultima Entrada</th>
+                      <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Email</th>
+                      <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Ultima Entrada</th>
                       <th class="text-uppercase text-xxs font-weight-bolder  text-center">Opciones</th>
                     </tr>
                   </thead>
@@ -38,12 +38,12 @@ if ($count >= 1) {
           <h6 class="mb-0 text-secondary text-sm"><?php echo $val["P_Apellido"] . " " . $val["S_Apellido"]; ?></h6>
         </div>
       </td>
-      <td class="align-middle text-sm">
+      <td class="align-middle text-sm hide-cell">
         <div class="d-flex flex-column justify-content-center">
           <h6 class="mb-0 text-secondary text-sm"><?php echo $val["Correo"]; ?></h6>
         </div>
       </td>
-      <td class="align-middle">
+      <td class="align-middle hide-cell">
         <?php
         $aux = $val["Id_usuario"];
         $re = mysqli_query($conn, "SELECT Fecha FROM datos_embalse WHERE Id_encargado = $aux");
@@ -73,7 +73,7 @@ if ($count >= 1) {
   }
   echo '</tbody></table>';
 } else {
-  echo '<p class="letra">Ningun Usuario Registrado</p>';
+  echo '<h2 class="mb-1 text-dark font-weight-bold text-center mt-4">Ningun Usuario Registrado</h2>';
 }
 closeConection($conn);
 ?>

@@ -16,7 +16,7 @@
 
   $sql = "SELECT id_embalse, nombre_embalse, estado, municipio, parroquia, id_encargado, (SELECT (IF(COUNT(id_registro) > 0, 'si', 'no')) FROM datos_embalse de WHERE de.id_embalse = em.id_embalse AND estatus = 'activo' AND fecha = '$fecha' ) AS 'reportado_hoy'
           FROM embalses em, estados e, municipios m, parroquias p
-          WHERE em.id_estado = e.id_estado AND em.id_municipio = m.id_municipio AND em.id_parroquia = p.id_parroquia AND m.id_estado = e.id_estado AND p.id_municipio = m.id_municipio $add_where;";
+          WHERE em.id_estado = e.id_estado AND em.id_municipio = m.id_municipio AND em.id_parroquia = p.id_parroquia AND m.id_estado = e.id_estado AND p.id_municipio = m.id_municipio AND em.estatus = 'activo' $add_where;";
 
   $query = mysqli_query($conn, $sql);
 
@@ -36,15 +36,15 @@
         
         <div class="col-lg-12">
           <div class="card h-100 mb-3">
-            <div class="card-header pb-0 p-3">
-              <div class="row">
-                <div class="col-6 d-flex align-items-center">
-                  <h4 class="mb-3">Carga de Datos</h4>
-                </div>
+            <div class="card-header pb-0">
+              <!-- <div class="row"> -->
+                <!-- <div class="col-6 d-flex align-items-center"> -->
+                  <h6 class="">Carga de Datos</h6>
+                <!-- </div> -->
                 <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
                 </div>-->
-              </div>
+              <!-- </div> -->
             </div>
 
             <div class="card-body p-3 pb-0">
@@ -124,11 +124,13 @@
                       </tbody>
                     </table>
                 </div>
+                
 <?php
             }
             else{
 ?>
                   <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No hay información</h2>
+                  <br><br><br>
 <?php                  
             }
 ?>

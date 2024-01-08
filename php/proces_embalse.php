@@ -164,12 +164,19 @@ if (isset($_POST["Guardar"])) {
     if ($resultado) {
 
 
-        move_uploaded_file($imagen_uno_tmp, '../pages/reports_images/' . $imagen_uno);
-        move_uploaded_file($imagen_dos_tmp, '../pages/reports_images/' . $imagen_dos);
+        if (!empty($imagen_uno) && count($_FILES["imagen_uno"]) > 0) {
+
+            move_uploaded_file($imagen_uno_tmp, '../pages/reports_images/' . $imagen_uno);
+        }
+        if (!empty($imagen_dos) && count($_FILES["imagen_dos"]) > 0) {
+
+            move_uploaded_file($imagen_dos_tmp, '../pages/reports_images/' . $imagen_dos);
+        }
 
 
         echo "Los datos se guardaron correctamente en la base de datos.";
-        header("Location: ../main.php?page=embalses");
+        // header("Location: ../main.php?page=embalses");
+        echo "<script>window.location='../main.php?page=embalses';</script>";
     } else {
         echo "Ocurrió un error al guardar los datos: " . mysqli_error($conn);
     }
@@ -253,6 +260,56 @@ if (isset($_POST["Update"])) {
     $responsable = $_POST["responsable"];
     $id_embalse = $_POST["id_embalse"];
 
+    $imagen_uno = $_FILES["imagen_uno"]['name'];
+    $imagen_uno_tmp = $_FILES["imagen_uno"]['tmp_name'];
+    $imagen_dos = $_FILES["imagen_dos"]['name'];
+    $imagen_dos_tmp = $_FILES["imagen_dos"]['tmp_name'];
+
+    $pre_imagen_uno = $_POST["pre_imagen_uno"];
+    $pre_imagen_dos = $_POST["pre_imagen_dos"];
+
+    $aux_uno = $imagen_uno;
+    $aux_dos = $imagen_dos;
+
+    $queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = $id_embalse");
+    $embalse = mysqli_fetch_assoc($queryEmbalse);
+
+    if (!empty($imagen_uno) && count($_FILES["imagen_uno"]) > 0) {
+        $i = 1;
+        while (1) {
+            if (file_exists('../pages/reports_images/' . $imagen_uno)) {
+                $imagen_uno = $i . '-' . $aux_uno;
+                $i++;
+            } else {
+                break;
+            }
+        }
+    } else {
+        if ($pre_imagen_uno == "") {
+            $imagen_uno = "";
+        } else {
+            $imagen_uno = $embalse["imagen_uno"];
+        }
+    }
+
+    if (!empty($imagen_dos) && count($_FILES["imagen_dos"]) > 0) {
+        $i = 1;
+        while (1) {
+            if (file_exists('../pages/reports_images/' . $imagen_dos)) {
+                $imagen_dos = $i . '-' . $aux_dos;
+                $i++;
+            } else {
+                break;
+            }
+        }
+    } else {
+        if ($pre_imagen_dos == "") {
+            $imagen_dos = "";
+        } else {
+            $imagen_dos = $embalse["imagen_dos"];
+        }
+    }
+
     $consulta = "UPDATE embalses 
     SET nombre_embalse = '$nombre_embalse',
     nombre_presa = '$nombre_presa',
@@ -324,14 +381,26 @@ if (isset($_POST["Update"])) {
     f_apellidos = '$f_apellidos',
     f_telefono = '$f_telefono',
     f_correo = '$f_correo',
+    imagen_uno = '$imagen_uno',
+    imagen_dos = '$imagen_dos',
     id_encargado = '$responsable'
     WHERE id_embalse = '$id_embalse'";
 
     $resultado = mysqli_query($conn, $consulta);
     if ($resultado) {
 
+        if (!empty($imagen_uno) && count($_FILES["imagen_uno"]) > 0) {
+
+            move_uploaded_file($imagen_uno_tmp, '../pages/reports_images/' . $imagen_uno);
+        }
+        if (!empty($imagen_dos) && count($_FILES["imagen_dos"]) > 0) {
+
+            move_uploaded_file($imagen_dos_tmp, '../pages/reports_images/' . $imagen_dos);
+        }
+
         echo "Los datos se actualizaron correctamente en la base de datos.";
-        header("Location: ../main.php?page=embalses");
+        // header("Location: ../main.php?page=embalses");
+        echo "<script>window.location='../main.php?page=embalses';</script>";
     } else {
         echo "Ocurrió un error al actualizar los datos: " . mysqli_error($conn);
     }
@@ -348,7 +417,8 @@ if (isset($_POST["delete"])) {
     if ($resultado) {
 
         echo "Los datos se actualizaron correctamente en la base de datos.";
-        header("Location: ../main.php?page=embalses");
+        // header("Location: ../main.php?page=embalses");
+        echo "<script>window.location='../main.php?page=embalses';</script>";
     } else {
         echo "Ocurrió un error al actualizar los datos: " . mysqli_error($conn);
     }

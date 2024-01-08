@@ -132,20 +132,20 @@ closeConection($conn);
         </div>-->
     <div class="col-lg-12">
       <div class="card h-100">
-        <div class="card-header pb-0 p-3">
-          <div class="row">
-            <div class="col-6 d-flex align-items-center">
-              <h6 class="mb-0">Embalses</h6>
-            </div>
+        <div class="card-header pb-0">
+          <!-- <div class="row"> -->
+            <!-- <div class="col-6 d-flex align-items-center"> -->
+              <h6 class="">Embalses</h6>
+            <!-- </div> -->
             <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
                 </div>-->
-          </div>
+          <!-- </div> -->
         </div>
         <div class="card-body p-3 pb-0">
           <div class="text-center">
             <a href="?page=crear_embalse">
-              <button type="button" class="btn bg-gradient-info btn-block">
+              <button type="button" class="btn btn-primary btn-block">
                 Nuevo
               </button>
             </a>

@@ -1,5 +1,5 @@
 <?php
-  print "<script>window.location='maintenance.php';</script>";
+  // print "<script>window.location='maintenance.php';</script>";
   if (!isset($_SESSION)) {
     session_start();
   };

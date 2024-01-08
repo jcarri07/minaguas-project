@@ -76,7 +76,7 @@ date_default_timezone_set("America/Caracas");
   } */
 
   @media (min-width: 1000px) {
-    .p-5-lg{
+    .p-5-lg {
       padding: 3rem;
     }
   }
@@ -223,6 +223,19 @@ date_default_timezone_set("America/Caracas");
                     <label for="presa_nombre">Nombre de la presa</label>
                     <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nomnbre de la presa">
                   </div>
+                  <div class="form-group">
+                    <label for="responsable">Responsable de la carga de datos</label>
+                    <select class="form-select" id="responsable" name="responsable">
+                      <option value=""></option>
+                      <?php
+                      while ($row1 = mysqli_fetch_array($queryResponsable)) {
+                      ?>
+                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']; ?></option>
+                      <?php
+                      }
+                      ?>
+                    </select>
+                  </div>
                 </div>
                 <div class="col-md-4 col-sm-12">
                   <div class="form-group">
@@ -251,6 +264,7 @@ date_default_timezone_set("America/Caracas");
                     </select>
                   </div>
                 </div>
+
                 <div class="col-md-4 col-sm-12">
                   <div class=" form-group">
                     <label for="norte">Norte</label>
@@ -267,7 +281,68 @@ date_default_timezone_set("America/Caracas");
                 </div>
               </div>
 
-              <h3 class="pb-3">Información de la cuenca:</h3>
+              <h3 class="pb-3 pt-3">Características del embase:</h3>
+
+              <div class="row">
+                <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">
+                  <div class="form-group">
+                    <label for="batimetria">Batimetría</label>
+                    <input type="file" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria" required>
+                  </div>
+                  <!-- <div class="form-group d-flex justify-content-center"> -->
+                  <a onclick="$('#show-batimetria').modal('show');" class="show-bat no-visible btn btn-link text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a>
+                  <!-- </div> -->
+                  <div class="form-group">
+                    <label for="vida_util">Vida útil</label>
+                    <input type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida util en años">
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-12">
+                  <div class=" form-group">
+                    <label for="cota_min">Cota mínima</label>
+                    <input type="number" step="0.001" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese los afluentes principales">
+                  </div>
+                  <div class=" form-group">
+                    <label for="vol_min">Volumen mínimo</label>
+                    <input type="number" step="0.001" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el area de la cuenca en km2">
+                  </div>
+                  <div class=" form-group">
+                    <label for="sup_min">Superficie mínima</label>
+                    <input type="number" step="0.001" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese el escurrimiento medio en m3/s">
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                  <div class=" form-group">
+                    <label for="cota_nor">Cota normal</label>
+                    <input type="number" step="0.001" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese los afluentes principales">
+                  </div>
+                  <div class=" form-group">
+                    <label for="vol_nor">Volumen normal</label>
+                    <input type="number" step="0.001" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el area de la cuenca en km2">
+                  </div>
+                  <div class=" form-group">
+                    <label for="sup_nor">Superficie normal</label>
+                    <input type="number" step="0.001" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese el escurrimiento medio en m3/s">
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                  <div class=" form-group">
+                    <label for="cota_max">Cota máxima</label>
+                    <input type="number" step="0.001" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese los afluentes principales">
+                  </div>
+                  <div class=" form-group">
+                    <label for="vol_max">Volumen máximo</label>
+                    <input type="number" step="0.001" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el area de la cuenca en km2">
+                  </div>
+                  <div class=" form-group">
+                    <label for="sup_max">Superficie máxima</label>
+                    <input type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese el escurrimiento medio en m3/s">
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="pb-3 pt-5">Información de la cuenca:</h3>
 
               <div class="row">
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -342,66 +417,6 @@ date_default_timezone_set("America/Caracas");
                 </div>
               </div>
 
-              <h3 class="pb-3 pt-3">Características de los embalses:</h3>
-
-              <div class="row">
-                <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">
-                  <div class="form-group">
-                    <label for="batimetria">Batimetría</label>
-                    <input type="file" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria" required>
-                  </div>
-                  <!-- <div class="form-group d-flex justify-content-center"> -->
-                  <a onclick="$('#show-batimetria').modal('show');" class="show-bat no-visible btn btn-link text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a>
-                  <!-- </div> -->
-                  <div class="form-group">
-                    <label for="vida_util">Vida útil</label>
-                    <input type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida util en años">
-                  </div>
-                </div>
-
-                <div class="col-md-3 col-sm-12">
-                  <div class=" form-group">
-                    <label for="cota_min">Cota mínima</label>
-                    <input type="number" step="0.001" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese los afluentes principales">
-                  </div>
-                  <div class=" form-group">
-                    <label for="vol_min">Volumen mínimo</label>
-                    <input type="number" step="0.001" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el area de la cuenca en km2">
-                  </div>
-                  <div class=" form-group">
-                    <label for="sup_min">Superficie mínima</label>
-                    <input type="number" step="0.001" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese el escurrimiento medio en m3/s">
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                  <div class=" form-group">
-                    <label for="cota_nor">Cota normal</label>
-                    <input type="number" step="0.001" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese los afluentes principales">
-                  </div>
-                  <div class=" form-group">
-                    <label for="vol_nor">Volumen normal</label>
-                    <input type="number" step="0.001" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el area de la cuenca en km2">
-                  </div>
-                  <div class=" form-group">
-                    <label for="sup_nor">Superficie normal</label>
-                    <input type="number" step="0.001" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese el escurrimiento medio en m3/s">
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                  <div class=" form-group">
-                    <label for="cota_max">Cota máxima</label>
-                    <input type="number" step="0.001" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese los afluentes principales">
-                  </div>
-                  <div class=" form-group">
-                    <label for="vol_max">Volumen máximo</label>
-                    <input type="number" step="0.001" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el area de la cuenca en km2">
-                  </div>
-                  <div class=" form-group">
-                    <label for="sup_max">Superficie máxima</label>
-                    <input type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese el escurrimiento medio en m3/s">
-                  </div>
-                </div>
-              </div>
 
               <h3 class="pb-3 pt-3">Presa:</h3>
 
@@ -585,16 +600,30 @@ date_default_timezone_set("America/Caracas");
 
               <div class="row">
                 <div class="col-xl-6 col-lg-12 form-group">
-                  <label for="imagen_uno">Ubicación relativa Estado/Municipio/Región hidrográfica</label>
-                  <input type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_uno" name="imagen_uno" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
+                  <label style="width: 100%;" for="imagen_uno">Ubicación relativa Estado/Municipio/Región hidrográfica<br>
+                    <div style="width:100%; display:flex; justify-content:center;">
+                      <div style="height: 250px; width:300px;" class="my-3"><img src="./assets/img/default-img.png" id="imagen_uno-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
+                    </div>
+                    <div style="display: flex; justify-content:center;">
+                      <span class="mx-2"><a class="btn btn-primary">Subir archivo</a></span> <span><a id="imagen_uno-remove" class="btn btn-primary"><i class="fas fa-backspace text-lg me-1"></i></a></span>
+                    </div>
+                  </label>
+                  <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_uno" name="imagen_uno" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
                 </div>
                 <div class="col-xl-6 col-lg-12 form-group">
-                  <label for="imagen_dos">Ubicación relativa de los componentes del embalse</label>
-                  <input type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_dos" name="imagen_dos" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
+                  <label style="width: 100%;" for="imagen_dos">Ubicación relativa de los componentes del embalse<br>
+                    <div style="width:100%; display:flex; justify-content:center;">
+                      <div style="height: 250px; width:300px;" class="my-3"><img src="./assets/img/default-img.png" id="imagen_dos-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
+                    </div>
+                    <div style="display: flex; justify-content:center;">
+                      <span class="mx-2"><a class="btn btn-primary">Subir archivo</a></span> <span><a id="imagen_dos-remove" class="btn btn-primary"><i class="fas fa-backspace text-lg me-1"></i></a></span>
+                    </div>
+                  </label>
+                  <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_dos" name="imagen_dos" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
                 </div>
               </div>
 
-
+<!-- 
               <h3 class="pb-3 pt-3">Responsable del embalse:</h3>
 
               <div class="row">
@@ -603,15 +632,15 @@ date_default_timezone_set("America/Caracas");
                   <select class="form-select" id="responsable" name="responsable">
                     <option value=""></option>
                     <?php
-                    while ($row1 = mysqli_fetch_array($queryResponsable)) {
+                    //while ($row1 = mysqli_fetch_array($queryResponsable)) {
                     ?>
-                      <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']; ?></option>
+                      <option value="<?php //echo $row1['Id_usuario']; ?>"><?php //echo $row1['P_Nombre']; ?></option>
                     <?php
-                    }
+                    //}
                     ?>
                   </select>
                 </div>
-              </div>
+              </div> -->
 
               <div class="text-center mt-5" style="margin: 0 auto;">
                 <button id="submitFornBtn" type="submit" class="btn btn-primary" name="Guardar">Guardar embalse</button>
@@ -949,7 +978,6 @@ date_default_timezone_set("America/Caracas");
           type: 'array'
         });
 
-
         workbook.SheetNames.forEach(function(sheetName) {
           var cotaEmbalse = {};
           var worksheet = workbook.Sheets[sheetName];
@@ -1045,4 +1073,24 @@ date_default_timezone_set("America/Caracas");
       // modal_body.innerHTML += tablaHTML;
     }
   }
+
+  function previewImage(id) {
+    document.querySelector("#" + id).addEventListener("change", function(e) {
+      if (e.target.files.length == 0) {
+        document.querySelector("#" + id + "-preview").src = "./assets/img/default-img.png";
+        return;
+      }
+      let file = e.target.files[0];
+      let url = URL.createObjectURL(file);
+      document.querySelector("#" + id + "-preview").src = url;
+    });
+
+    document.querySelector("#" + id + "-remove").addEventListener("click", function(e) {
+      e.preventDefault();
+      document.querySelector("#" + id + "-preview").src = "./assets/img/default-img.png";
+    });
+  }
+
+  previewImage("imagen_uno");
+  previewImage("imagen_dos");
 </script>
