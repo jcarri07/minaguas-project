@@ -1,9 +1,5 @@
 <?php
-<<<<<<< HEAD
-  // print "<script>window.location='maintenance.php';</script>";
-=======
  // print "<script>window.location='maintenance.php';</script>";
->>>>>>> 7264a0afbdc806b1af4a657dc836227f1b7fbae7
   if (!isset($_SESSION)) {
     session_start();
   };
