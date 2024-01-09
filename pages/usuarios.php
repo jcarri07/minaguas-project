@@ -131,7 +131,7 @@
                   </label>
                 </div-->
               <div class="text-center">
-                <a href="sign-in.php"><button type="submit" class="btn btn-primary w-100 my-4 mb-2">Editar Usuario</button></a>
+                <a href="sign-in.php"><button type="submit" class="btn btn-primary w-100 my-4 mb-2">Guardar cambios</button></a>
               </div>
             </form>
           </div>
