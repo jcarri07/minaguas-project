@@ -227,7 +227,7 @@ if ($count >= 1) {
                         <td class="align-middle text-center">
                             <a type='button' onclick="recuperar( <?php echo $val['Id_usuario']; ?>)" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                               <i class="fas fa-redo text-dark me-1"></i>
-                              Recuperar
+                              Restaurar
                             </a>
                           
                         </td>
