@@ -138,12 +138,12 @@
                       </div>
                     </form>
                   </div>
-                  <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                  <!--div class="card-footer text-center pt-0 px-lg-2 px-1">
                     <p class="mb-4 text-sm mx-auto">
                       Usuario nuevo?
                       <a href="./pages/sign-up.php" class="text-primary text-gradient font-weight-bold">Nuevo Usuario</a>
                     </p>
-                  </div>
+                  </div-->
                 </div>
               </div>
             </div>
