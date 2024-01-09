@@ -90,7 +90,7 @@ if ($count >= 1) {
 
                         <a type='button' onclick="Modaldelete( <?php echo $val['Id_usuario']; ?>)" class="text-secondary font-weight-bold text-xs mx-2" data-toggle="tooltip" data-original-title="Edit user">
                           <i class="fas fa-trash text-dark me-1" aria-hidden="true"></i>
-                          Borrar
+                          Eliminar
                         </a>
 
                       </td>
