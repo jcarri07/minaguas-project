@@ -194,7 +194,7 @@ date_default_timezone_set("America/Caracas");
               </a>
             </li>
             <li class="nav-item pe-3 d-flex align-items-center">
-              <a href="?page=cerrar_sesion" class="nav-link text-white p-0 text-lg">
+              <a href="?page=cerrar_sesion" class="nav-link text-white p-0 text-lg off">
                 <i class="fa fa-power-off cursor-pointer"></i>
               </a>
             </li>
@@ -482,6 +482,24 @@ date_default_timezone_set("America/Caracas");
     });*/
   </script>
   <script>
+    $(document).ready(function(){
+      $('.off').on('click', function(e){
+        e.preventDefault();
+        Swal.fire({
+      title: "Cerrar sesion?",
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: "#5e72e4",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location='./php/login/logout.php';
+      }
+    });
+      });
+    });
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {

@@ -196,6 +196,7 @@
       showConfirmButton: true,
       confirmButtonColor: "#5e72e4",
       cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
         var values = new FormData();
