@@ -2,11 +2,12 @@
 
 require_once 'php/Conexion.php';
 $ced = $_SESSION["Cedula"];
+$tipo = $_SESSION["Tipo"];
 $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE Cedula = '$ced'");
 $data = mysqli_fetch_array($res);
 $pass = $data["Contrasena"];
 closeConection($conn);
-$aux = "disable";
+$aux = "disabled";
 if ($_SESSION["Tipo"] == "Admin") {
   $aux = "";
 }
@@ -28,10 +29,10 @@ if ($_SESSION["Tipo"] == "Admin") {
           <p class="text-uppercase text-sm">User Information</p>
           <form id="form" role="form">
             <div class="mb-3">
-              <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required>
+              <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux;?>>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" value="<?php echo $_SESSION["P_Apellido"] . ' ' . $_SESSION["S_Apellido"] ?>" required>
+              <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" value="<?php echo $_SESSION["P_Apellido"] . ' ' . $_SESSION["S_Apellido"] ?>" required <?php echo $aux;?>>
             </div>
             <div class="mb-3">
               <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" value="<?php echo $_SESSION["Correo"] ?>" required <?php echo $aux; ?>>
