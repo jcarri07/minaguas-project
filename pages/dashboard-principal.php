@@ -18,7 +18,12 @@
                 <div class="col-8">
                   <div class="numbers">
                     <p class="text-xs mb-0 font-weight-bold ">Usuarios registrados en el sistema</p>
+
+                    <?php if ($_SESSION["Tipo"] == "Admin") {?>
                     <a href="?page=usuarios"><h5 class="font-weight-bolder" style="margin-top: 10px;">
+                    <?php }else {?>
+                    <a><h5 class="font-weight-bolder" style="margin-top: 10px;">
+                    <?php }?>
                       USUARIOS
                     </h5></a>
                     <!--<p class="mb-0 text-sm">
@@ -29,7 +34,11 @@
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                  <a href="?page=usuarios"><i class="fa fa-users text-lg opacity-10" aria-hidden="true"></i></a>
+                  <?php if ($_SESSION["Tipo"] == "Admin") {?>
+                    <a href="?page=usuarios"><i class="fa fa-users text-lg opacity-10" aria-hidden="true"></i></a>
+                    <?php }else {?>
+                      <a><i class="fa fa-users text-lg opacity-10" aria-hidden="true"></i></a>
+                    <?php }?>
                   </div>
                 </div>
               </div>
@@ -43,8 +52,12 @@
                 <div class="col-8">
                   <div class="numbers">
                     <p class="text-xs mb-0 font-weight-bold">Usuarios registrados en el sistema</p>
+                    <?php if ($_SESSION["Tipo"] == "Admin") {?>
                     <a href="?page=embalses"><h5 class="font-weight-bolder" style="margin-top: 10px;">
-                      EMBALSES
+                    <?php }else {?>
+                    <a><h5 class="font-weight-bolder" style="margin-top: 10px;">
+                    <?php }?>
+                     EMBALSES
                     </h5></a>
                    <!-- <p class="mb-0 text-sm">
                       <span class="text-success text-xs font-weight-bolder">1</span>
@@ -54,7 +67,11 @@
                 </div>
                 <div class="col-4 text-end">
                 <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                <a href="?page=embalses"><i class="fa fa-tint text-lg opacity-10" aria-hidden="true" ></i></a>
+                <?php if ($_SESSION["Tipo"] == "Admin") {?>
+                  <a href="?page=embalses"><i class="fa fa-tint text-lg opacity-10" aria-hidden="true" ></i></a>
+                    <?php }else {?>
+                      <a><i class="fa fa-tint text-lg opacity-10" aria-hidden="true" ></i></a>
+                    <?php }?>
                   </div>
                 </div>
               </div>
@@ -93,8 +110,12 @@
                 <div class="col-8">
                   <div class="numbers">
                     <p class="text-xs mb-0 font-weight-bold">Reportes generados y disponibles</p>
+                    <?php if ($_SESSION["Tipo"] == "Admin") {?>
                     <a href="?page=reportes"><h5 class="font-weight-bolder" style="margin-top: 10px;">
-                      REPORTES
+                    <?php }else {?>
+                    <a><h5 class="font-weight-bolder" style="margin-top: 10px;">
+                    <?php }?>                      
+                    REPORTES
                     </h5></a>
                     <!--<p class="mb-0 text-sm">
                       <span class="text-success text-xs font-weight-bolder"></span> Lectura y descarga de reportes
@@ -103,7 +124,11 @@
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                  <a href="?page=reportes"><i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i></a>
+                  <?php if ($_SESSION["Tipo"] == "Admin") {?>
+                    <a href="?page=reportes"><i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i></a>
+                    <?php }else {?>
+                      <a><i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i></a>
+                    <?php }?>
                   </div>
                 </div>
               </div>
