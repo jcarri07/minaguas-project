@@ -3,7 +3,7 @@ include '../php/Conexion.php';
 
 $id = $_POST['id'];
 
-$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = $id AND estatus = 'activo';");
+$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = $id");
 // $num = mysqli_fetch_row($queryEmbalses);
 // echo mysqli_fetch_row($queryEmbalses)>0;
 

@@ -5,6 +5,8 @@ $queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'ac
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryUsers = mysqli_query($conn, "SELECT * FROM usuarios;");
 // $result = mysqli_fetch_assoc($queriEstados);
+$queryEmbalsesEliminados = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'inactivo';");
+$numEliminados = mysqli_num_rows($queryEmbalsesEliminados);
 
 $estados = array();
 while ($row = mysqli_fetch_array($queryEstados)) {
@@ -220,6 +222,103 @@ closeConection($conn);
         </div>
       </div>
     </div>
+    <?php
+    if($numEliminados > 0){
+      ?>
+      
+      <div class="col-lg-12 mt-5">
+      <div class="card h-100">
+        <div class="card-header pb-0">
+          <!-- <div class="row"> -->
+            <!-- <div class="col-6 d-flex align-items-center"> -->
+              <h6 class="">Embalses eliminados</h6>
+            <!-- </div> -->
+            <!--<div class="col-6 text-end">
+                  <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
+                </div>-->
+          <!-- </div> -->
+        </div>
+        <div class="card-body p-3 pb-0">
+          <!-- <div class="text-center">
+            <a href="?page=crear_embalse">
+              <button type="button" class="btn btn-primary btn-block">
+                Nuevo
+              </button>
+            </a>
+          </div> -->
+
+          <div class="dt-responsive table-responsive">
+            <?php
+            if (mysqli_num_rows($queryEmbalsesEliminados) > 0) {
+            ?>
+              <table id="table-embalses-eliminados" class="table table-striped table-bordered nowrap">
+                <thead>
+                  <tr>
+                    <th>Embalse</th>
+                    <th class="hide-cell">Volumen actual</th>
+                    <th style="text-align: center;" class="hide-cell">Encargado</th>
+                    <th style="text-align: center;">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  while ($row = mysqli_fetch_array($queryEmbalsesEliminados)) {
+                  ?>
+                    <tr>
+                      <td>
+                        <div class="d-flex flex-column px-3">
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
+                          <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
+                        </div>
+                      </td>
+                      <td class="hide-cell">
+                        <div class="d-flex flex-column px-3">
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm">1.247,3 Hm3 (50%)</h6>
+                          <span class="text-xs">20/12/2023</span>
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;" class="hide-cell">
+                        <div class="d-flex justify-content-center">
+                          <div><?php
+                                if ($row['id_encargado'] == '0' || $row['id_encargado'] == null || $row['id_encargado'] == '') { ?>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay personal encargado</h6>
+                            <?php
+                                } else {
+                            ?>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
+                            <?php } ?>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center justify-content-center text-sm">
+                          <a data-id="<?php echo $row['id_embalse']; ?>" class="restaurar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-redo text-dark me-2" aria-hidden="true"></i><span class="hide-cell">Restaurar</span></a>
+                          <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
+                        </div>
+                      </td>
+                    </tr>
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+            <?php
+            } else {
+            ?>
+              <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No existen embalses cargados</h2>
+            <?php
+            }
+            ?>
+          </div>
+          <br><br><br>
+
+        </div>
+      </div>
+    </div>
+
+      <?php
+    }
+    ?>
   </div>
   <!--<div class="row">
         <div class="col-md-7 mt-4">
@@ -412,6 +511,7 @@ closeConection($conn);
   }
 
   iniciarTabla('table-embalses');
+  if($("#table-embalses-eliminados")){iniciarTabla('table-embalses-eliminados');}
   // $('#table-embalses').DataTable({
   //   language: {
   //     "decimal": "",
@@ -467,13 +567,44 @@ closeConection($conn);
         url: "./php/get-embalse.php", // Ruta a tu script PHP de consulta
         type: "POST",
         data: {
-          id: id_embalse
+          id: id_embalse,
+          action: "eliminar"
         },
         success: function(data) {
           // Mostrar el resultado en la modal
           console.log(data)
+          $("#embalseTitulo").text("Eliminar embalse")
           $("#embalseNombre").text(data);
           $("#embalseIdInput")[0].value = id_embalse;
+          $("#buttom-form")[0].name = "eliminar";
+          $('#modal-form').modal('show');
+        },
+        error: function() {
+          alert("Error al realizar la consulta.");
+        }
+      });
+    });
+
+    $(".restaurar-embalse").on("click", function(e) {
+      // Realizar la consulta AJAX al servidor
+      console.log("Restaurar");
+      e.preventDefault();
+      var id_embalse = $(this).data("id");
+      console.log(id_embalse)
+      $.ajax({
+        url: "./php/get-embalse.php", // Ruta a tu script PHP de consulta
+        type: "POST",
+        data: {
+          id: id_embalse,
+          action: "restaurar"
+        },
+        success: function(data) {
+          // Mostrar el resultado en la modal
+          console.log(data)
+          $("#embalseTitulo").text("Restaurar embalse")
+          $("#embalseNombre").text(data);
+          $("#embalseIdInput")[0].value = id_embalse;
+          $("#buttom-form")[0].name = "restaurar";
           $('#modal-form').modal('show');
         },
         error: function() {
@@ -496,7 +627,7 @@ closeConection($conn);
           <div class="card-body">
 
             <div class="">
-              <h6 style="text-align:center;" class="mb-0">Eliminar el embalse</h6>
+              <h6 style="text-align:center;" id="embalseTitulo" class="mb-0"></h6>
               <h3 style="text-align:center;" id="embalseNombre" class=""></h3>
             </div>
             <form method="POST" action="php/proces_embalse.php" enctype="multipart/form-data">
@@ -506,7 +637,7 @@ closeConection($conn);
               </div>
 
               <div class="text-center">
-                <button type="submit" name="delete" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Confirmar</button>
+                <button type="submit" id="buttom-form" name="delete" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Confirmar</button>
               </div>
             </form>
           </div>

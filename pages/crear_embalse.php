@@ -287,7 +287,7 @@ date_default_timezone_set("America/Caracas");
                 <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">
                   <div class="form-group">
                     <label for="batimetria">Batimetría</label>
-                    <input type="file" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria" required>
+                    <input type="file" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
                   </div>
                   <!-- <div class="form-group d-flex justify-content-center"> -->
                   <a onclick="$('#show-batimetria').modal('show');" class="show-bat no-visible btn btn-link text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a>
