@@ -79,13 +79,19 @@ if ($count >= 1) {
                         ?>
 
                       </td>
-                      <td class="align-middle text-center">
+                      <td class="align-middle text-center justify-content-center d-flex">
+                        <div class="px-3">
+                        <i class="fas fa-pencil-alt text-dark me-1" aria-hidden="true"></i>
                         <a type='button' onclick="Modaledit('<?php echo $val['P_Nombre']; ?>','<?php echo $val['S_Nombre']; ?>','<?php echo $val['P_Apellido']; ?>','<?php echo $val['S_Apellido']; ?>','<?php echo $val['Contrasena']; ?>','<?php echo $val['Cedula']; ?>','<?php echo $val['Correo']; ?>','<?php echo $val['Telefono'] ?>')" class="text-secondary font-weight-bold text-xs pe-1" data-toggle="tooltip" data-original-title="Edit user">
                           Editar
                         </a>
+                      </div>
+                        <div class="px-3">
+                        <i class="fas fa-trash text-dark me-1" aria-hidden="true"></i>
                         <a type='button' onclick="Modaldelete( <?php echo $val['Id_usuario']; ?>)" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                           Borrar
                         </a>
+                      </div>
                       </td>
                     </tr>
                   <?php
