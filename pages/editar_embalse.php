@@ -180,13 +180,13 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nomnbre de la presa" value="<?php echo $embalse["nombre_presa"]; ?>">
                 </div>
                 <div class="form-group">
-                  <label for="responsable">Responsable</label>
+                  <label for="responsable">Responsable de la carga de datos</label>
                   <select class="form-select" id="responsable" name="responsable">
                     <option value=""></option>
                     <?php
                     while ($row1 = mysqli_fetch_array($queryResponsable)) {
                     ?>
-                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']; ?></option>
+                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']." ".$row1['S_Nombre']." ".$row1['P_Apellido']." ".$row1['S_Apellido']; ?></option>
                     <?php
                     }
                     ?>
@@ -780,7 +780,7 @@ date_default_timezone_set("America/Caracas");
           </div>
         </div>
       </div>-->
-  <footer class="footer pt-3  ">
+  <!--<footer class="footer pt-3  ">
     <div class="container-fluid">
       <div class="row align-items-center justify-content-lg-between">
         <div class="col-lg-6 mb-lg-0 mb-4">
@@ -811,7 +811,7 @@ date_default_timezone_set("America/Caracas");
         </div>
       </div>
     </div>
-  </footer>
+  </footer>-->
 </div>
 
 

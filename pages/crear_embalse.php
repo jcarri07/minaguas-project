@@ -230,7 +230,7 @@ date_default_timezone_set("America/Caracas");
                       <?php
                       while ($row1 = mysqli_fetch_array($queryResponsable)) {
                       ?>
-                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']; ?></option>
+                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']." ".$row1['S_Nombre']." ".$row1['P_Apellido']." ".$row1['S_Apellido']; ?></option>
                       <?php
                       }
                       ?>
@@ -287,7 +287,7 @@ date_default_timezone_set("America/Caracas");
                 <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">
                   <div class="form-group">
                     <label for="batimetria">Batimetría</label>
-                    <input type="file" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria" required>
+                    <input type="file" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
                   </div>
                   <!-- <div class="form-group d-flex justify-content-center"> -->
                   <a onclick="$('#show-batimetria').modal('show');" class="show-bat no-visible btn btn-link text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a>
@@ -796,7 +796,7 @@ date_default_timezone_set("America/Caracas");
           </div>
         </div>
       </div>-->
-  <footer class="footer pt-3  ">
+  <!--<footer class="footer pt-3  ">
     <div class="container-fluid">
       <div class="row align-items-center justify-content-lg-between">
         <div class="col-lg-6 mb-lg-0 mb-4">
@@ -827,7 +827,7 @@ date_default_timezone_set("America/Caracas");
         </div>
       </div>
     </div>
-  </footer>
+  </footer>-->
 </div>
 
 

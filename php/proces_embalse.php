@@ -93,6 +93,7 @@ if (isset($_POST["Guardar"])) {
     $imagen_dos = $_FILES["imagen_dos"]['name'];
     $imagen_dos_tmp = $_FILES["imagen_dos"]['tmp_name'];
 
+    $archivo_bat_name = $_FILES["batimetria"]['name'];
     $archivo_batimetria = $_FILES["batimetria"]['tmp_name']; //Batimetria en excel";
 
     //ARCHIVOS DE IMAGEN
@@ -128,32 +129,34 @@ if (isset($_POST["Guardar"])) {
     }
 
     //ARCHIVOS DE EXCEL BATIMETRIA
+    $batimetria = "";
 
-    $inputFileType = PHPExcel_IOFactory::identify($archivo_batimetria);
-    $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+    if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
+        $inputFileType = PHPExcel_IOFactory::identify($archivo_batimetria);
+        $objReader = PHPExcel_IOFactory::createReader($inputFileType);
 
-    $objPHPExcel = $objReader->load($archivo_batimetria);
-    $sheet = $objPHPExcel->getSheet(0);
-    $highestRow = $sheet->getHighestRow();
-    $highestColumn = $sheet->getHighestColumn();
-
-    $cota_embalse = array();
-    $cotas_embalse = array();
-    $num = 0;
-    for ($sht = 0; $sht < $objPHPExcel->getSheetCount(); $sht++) {
-        $sheet = $objPHPExcel->getSheet($sht);
+        $objPHPExcel = $objReader->load($archivo_batimetria);
+        $sheet = $objPHPExcel->getSheet(0);
         $highestRow = $sheet->getHighestRow();
-        for ($row = 2; $row <= $highestRow; $row++) {
-            $num++;
-            $cota = number_format($sheet->getCell("A" . $row)->getValue(), 3, '.', '');
-            $area = $sheet->getCell("B" . $row)->getValue();
-            $capacidad = $sheet->getCell("C" . $row)->getValue();
-            $cota_embalse[$cota] = $area . "-" . $capacidad;
-        }
-        $cotas_embalse[$objPHPExcel->getSheetNames()[$sht]] = $cota_embalse;
-    }
+        $highestColumn = $sheet->getHighestColumn();
 
-    $batimetria = json_encode($cotas_embalse);
+        $cota_embalse = array();
+        $cotas_embalse = array();
+        $num = 0;
+        for ($sht = 0; $sht < $objPHPExcel->getSheetCount(); $sht++) {
+            $sheet = $objPHPExcel->getSheet($sht);
+            $highestRow = $sheet->getHighestRow();
+            for ($row = 2; $row <= $highestRow; $row++) {
+                $num++;
+                $cota = number_format($sheet->getCell("A" . $row)->getValue(), 3, '.', '');
+                $area = $sheet->getCell("B" . $row)->getValue();
+                $capacidad = $sheet->getCell("C" . $row)->getValue();
+                $cota_embalse[$cota] = $area . "-" . $capacidad;
+            }
+            $cotas_embalse[$objPHPExcel->getSheetNames()[$sht]] = $cota_embalse;
+        }
+        $batimetria = json_encode($cotas_embalse);
+    }
 
     // Insertar los datos en la tabla embalse
     $consulta = "INSERT INTO embalses (nombre_embalse, nombre_presa, id_estado, id_municipio, id_parroquia, este, norte, huso, cuenca_principal, afluentes_principales, area_cuenca, escurrimiento_medio, ubicacion_embalse, organo_rector, personal_encargado, operador, autoridad_responsable, proyectista, constructor, inicio_construccion, duracion_de_construccion, inicio_de_operacion, monitoreo_del_embalse, batimetria, vida_util, cota_min, cota_nor, cota_max, vol_min, vol_nor, vol_max, sup_min, sup_nor, sup_max, numero_de_presas, tipo_de_presa, altura, talud_aguas_arriba, talud_aguas_abajo, longitud_cresta, cota_cresta, ancho_cresta, volumen_terraplen, ancho_base, ubicacion_aliviadero, tipo_aliviadero, numero_compuertas_aliviadero, carga_vertedero, descarga_maxima, longitud_aliviadero, ubicacion_toma, tipo_toma, numero_compuertas_toma, mecanismos_de_emergencia, mecanismos_de_regulacion, gasto_maximo, descarga_de_fondo, posee_obra, tipo_de_obra, accion_requerida, proposito, uso_actual, sectores_beneficiados, poblacion_beneficiada, area_de_riego_beneficiada, f_cargo, f_cedula, f_nombres, f_apellidos, f_telefono, f_correo, imagen_uno, imagen_dos, id_encargado, estatus) 
@@ -406,11 +409,29 @@ if (isset($_POST["Update"])) {
     }
 }
 
-if (isset($_POST["delete"])) {
+if (isset($_POST["eliminar"])) {
     $id_embalse = $_POST["id_embalse"];
 
     $consulta = "UPDATE embalses 
     SET estatus = 'inactivo'
+    WHERE id_embalse = '$id_embalse'";
+
+    $resultado = mysqli_query($conn, $consulta);
+    if ($resultado) {
+
+        echo "Los datos se actualizaron correctamente en la base de datos.";
+        // header("Location: ../main.php?page=embalses");
+        echo "<script>window.location='../main.php?page=embalses';</script>";
+    } else {
+        echo "Ocurrió un error al actualizar los datos: " . mysqli_error($conn);
+    }
+}
+
+if (isset($_POST["restaurar"])) {
+    $id_embalse = $_POST["id_embalse"];
+
+    $consulta = "UPDATE embalses 
+    SET estatus = 'activo'
     WHERE id_embalse = '$id_embalse'";
 
     $resultado = mysqli_query($conn, $consulta);

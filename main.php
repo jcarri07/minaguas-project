@@ -194,7 +194,7 @@ date_default_timezone_set("America/Caracas");
               </a>
             </li>
             <li class="nav-item pe-3 d-flex align-items-center">
-              <a href="?page=cerrar_sesion" class="nav-link text-white p-0 text-lg">
+              <a href="?page=cerrar_sesion" class="nav-link text-white p-0 text-lg off">
                 <i class="fa fa-power-off cursor-pointer"></i>
               </a>
             </li>
@@ -282,7 +282,33 @@ date_default_timezone_set("America/Caracas");
     ?>
 
 
+    <footer class="footer pt-2 pb-4">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4">
+          <div class="copyright text-center text-sm text-muted text-lg-start">
+              © <script>
+                document.write(new Date().getFullYear())
+              </script>,
+              desarrollado por
+              <a href="JavaScript:Void(0)" class="font-weight-bold">Dirección de Investigación e Innovación - ABAE
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
   </main>
+
+  
+
+
+
+
+
+
   <div class="fixed-plugin">
     <!--a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>
@@ -456,6 +482,24 @@ date_default_timezone_set("America/Caracas");
     });*/
   </script>
   <script>
+    $(document).ready(function(){
+      $('.off').on('click', function(e){
+        e.preventDefault();
+        Swal.fire({
+      title: "Cerrar sesion?",
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: "#5e72e4",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location='./php/login/logout.php';
+      }
+    });
+      });
+    });
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {

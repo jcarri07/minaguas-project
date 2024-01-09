@@ -12,7 +12,8 @@ CREATE TABLE `usuarios` (
   Cedula varchar(255) DEFAULT NULL,
   Correo varchar(255) DEFAULT NULL,
   Telefono varchar(255) DEFAULT NULL,
-  Tipo enum('Admin','User') DEFAULT NULL
+  Tipo enum('Admin','User') DEFAULT NULL,
+  estatus enum('activo','inactivo') DEFAULT NULL
 );
 
 -- INSERT INTO `usuarios` (`Contrasena`, `P_Nombre`,`S_Nombre`, `P_Apellido`, `S_Apellido`,`Cedula`, `Correo`, `Telefono`, `Tipo`) VALUES
@@ -1668,3 +1669,31 @@ CREATE TABLE detalles_extraccion (
   estatus VARCHAR(20) NOT NULL,
   FOREIGN KEY (id_registro) REFERENCES datos_embalse (id_registro)
 );
+
+-- data para usuarios
+insert  into `usuarios`(`Id_usuario`,`Contrasena`,`P_Nombre`,`S_Nombre`,`P_Apellido`,`S_Apellido`,`Cedula`,`Correo`,`Telefono`,`Tipo`,`estatus`) values 
+(1,'1234','Admin','Admin','Admin','Admin','00000000','admin@gmail.com','00000000000','Admin','activo'),
+(2,'1234','Pedro','Antonio','Rodrigues','Vargas','12345678','pedro@gmail.com','04121234567','User','activo');
+
+-- data para embalses
+insert  into `embalses`(`id_embalse`,`nombre_embalse`,`nombre_presa`,`id_estado`,`id_municipio`,`id_parroquia`,`este`,`norte`,`huso`,`cuenca_principal`,`afluentes_principales`,`area_cuenca`,`escurrimiento_medio`,`ubicacion_embalse`,`organo_rector`,`personal_encargado`,`operador`,`autoridad_responsable`,`proyectista`,`constructor`,`inicio_construccion`,`duracion_de_construccion`,`inicio_de_operacion`,`monitoreo_del_embalse`,`batimetria`,`vida_util`,`cota_min`,`cota_nor`,`cota_max`,`vol_min`,`vol_nor`,`vol_max`,`sup_min`,`sup_nor`,`sup_max`,`numero_de_presas`,`tipo_de_presa`,`altura`,`talud_aguas_arriba`,`talud_aguas_abajo`,`longitud_cresta`,`cota_cresta`,`ancho_cresta`,`volumen_terraplen`,`ancho_base`,`ubicacion_aliviadero`,`tipo_aliviadero`,`numero_compuertas_aliviadero`,`carga_vertedero`,`descarga_maxima`,`longitud_aliviadero`,`ubicacion_toma`,`tipo_toma`,`numero_compuertas_toma`,`mecanismos_de_emergencia`,`mecanismos_de_regulacion`,`gasto_maximo`,`descarga_de_fondo`,`posee_obra`,`tipo_de_obra`,`accion_requerida`,`proposito`,`uso_actual`,`sectores_beneficiados`,`poblacion_beneficiada`,`area_de_riego_beneficiada`,`f_cargo`,`f_cedula`,`f_nombres`,`f_apellidos`,`f_telefono`,`f_correo`,`imagen_uno`,`imagen_dos`,`id_encargado`,`estatus`) values 
+(1,'Bocono','Ing. Jose Ortega Martinez',17,291,745,'385.441','983.161','19','Rio Bocono','Río Bocono',1367.91,2620,'Constituido por dos (2) embalses: uno sobre el río Boconó y el otro sobre el río Tucupido, que a determinada cota forman uno solo (Boconó-Tucupido), debido a que están comunicados por medio de un canal excavado en la fila que los separa. A 50 km del sur-oeste de Guanare','Ministerio del Poder Popular de Atención de las Aguas','Dirección General de Manejo de Embalses  (Telf. 0212 - 5649428)','HIDROSPORTUGUESA - CORPOELEC - UTAA PORTUGUESA','Ing. Naika Nadedja (Telf. 04245729126)','COMISION BOCONO-TUCUPIDO; MOP (DGRH)','VINCCLER (Boconó); BARSANTI (Tucupido)',1974,13,1988,'Lectura de manera convenional mediante la observación de las regletas limnimétricas (miras)','{\"2001\":{\"210.006\":\"1286.95-53.88\",\"210.010\":\"1288.602-54.0316\",\"210.020\":\"1290.254-54.1832\",\"210.030\":\"1291.906-54.3348\",\"210.040\":\"1293.559-54.4864\",\"210.050\":\"1295.211-54.638\",\"210.060\":\"1296.863-54.7896\",\"210.070\":\"1298.515-54.9412\",\"210.080\":\"1300.168-55.0928\",\"210.090\":\"1301.82-55.2444\",\"210.100\":\"1303.472-55.396\",\"210.110\":\"1305.124-55.5476\",\"210.120\":\"1306.776-55.6992\",\"210.130\":\"1308.429-55.8508\",\"210.140\":\"1310.081-56.0024\",\"210.150\":\"1311.733-56.154\",\"210.160\":\"1313.385-56.3056\",\"210.170\":\"1315.037-56.4572\",\"210.180\":\"1316.69-56.6088\",\"210.190\":\"1318.342-56.7604\",\"210.200\":\"1319.994-56.912\",\"210.210\":\"1321.646-57.0636\",\"210.220\":\"1323.298-57.2152\",\"210.230\":\"1324.951-57.3668\",\"210.240\":\"1326.603-57.5184\",\"210.250\":\"1328.255-57.67\",\"210.260\":\"1329.907-57.8216\",\"210.270\":\"1331.559-57.9732\",\"210.280\":\"1333.212-58.1248\",\"210.290\":\"1334.864-58.2764\"},\"2012\":{\"210.006\":\"1286.95-53.88\",\"210.010\":\"1288.602-54.0316\",\"210.020\":\"1290.254-54.1832\",\"210.030\":\"1291.906-54.3348\",\"210.040\":\"1293.559-54.4864\",\"210.050\":\"1295.211-54.638\",\"210.060\":\"1296.863-54.7896\",\"210.070\":\"1298.515-54.9412\",\"210.080\":\"1300.168-55.0928\",\"210.090\":\"1301.82-55.2444\",\"210.100\":\"1303.472-55.396\",\"210.110\":\"1305.124-55.5476\",\"210.120\":\"1306.776-55.6992\",\"210.130\":\"1308.429-55.8508\",\"210.140\":\"1310.081-56.0024\",\"210.150\":\"1311.733-56.154\",\"210.160\":\"1313.385-56.3056\",\"210.170\":\"1315.037-56.4572\",\"210.180\":\"1316.69-56.6088\",\"210.190\":\"1318.342-56.7604\",\"210.200\":\"1319.994-56.912\",\"210.210\":\"1321.646-57.0636\",\"210.220\":\"1323.298-57.2152\",\"210.230\":\"1324.951-57.3668\",\"210.240\":\"1326.603-57.5184\",\"210.250\":\"1328.255-57.67\",\"210.260\":\"1329.907-57.8216\",\"210.270\":\"1331.559-57.9732\",\"210.280\":\"1333.212-58.1248\",\"210.290\":\"1334.864-58.2764\",\"210.300\":\"1336.516-58.428\",\"210.310\":\"1338.168-58.5796\",\"210.320\":\"1339.82-58.7312\",\"210.330\":\"1341.473-58.8828\",\"210.340\":\"1343.125-59.0344\",\"210.350\":\"1344.777-59.186\",\"210.360\":\"1346.429-59.3376\",\"210.370\":\"1348.081-59.4892\",\"210.380\":\"1349.734-59.6408\",\"210.390\":\"1351.386-59.7924\",\"210.400\":\"1353.038-59.944\",\"210.410\":\"1354.69-60.0956\",\"210.420\":\"1356.342-60.2472\",\"210.430\":\"1357.995-60.3988\",\"210.440\":\"1359.647-60.5504\",\"210.450\":\"1361.299-60.702\",\"210.460\":\"1362.951-60.8536\",\"210.470\":\"1364.603-61.0052\",\"210.480\":\"1366.256-61.1568\",\"210.490\":\"1367.908-61.3084\"}}',100,'237.000','267.000','269.000','889.830','3484.910','3734.04','5483.000','12465.51','12948.27',2,'Presa Boconó ubicada a 7 km. aguas arriba del puente Páez sobre la carretera Guanare-Barinas. Es de tierra, zonificada,',80,2.5,2,395,272,10,6004000,400,'En el estribo izquierdo','De entrada frontal controlado por compuerta radial de (10 x 11,5) m',1,13,950,10,'En el estribo derecho','Torre-toma de 50 m de altura con compuertas',0,'Dos (2) válvulas mariposa, ø = 3,20 m, de protección','Dos (2) válvulas Howell Bunger, ø = 2,80 m, de regulación.',320,0,'S/I','S/I','S/I','Riego, hidroelectricidad, consumo humano, control de inundaciones, recreación. ','Riego, hidroelectricidad, consumo humano, control de inundaciones, recreación. ','Mun. San Genaro de Boconoito, Mun. Guanare','211466',2000,'Apoyo Tecnico','17049840','Hector','Ledezma','0414-5221503','hector8@hotmail.com','3-Area_cuenca.png','3-Imagens_map_report.png',2,'activo');
+
+-- data para datos_embalse
+insert  into `datos_embalse`(`id_registro`,`id_embalse`,`fecha`,`hora`,`cota_actual`,`id_encargado`,`estatus`) values 
+(1,1,'2024-01-08','17:07:00',210.03,1,'activo'),
+(2,1,'2024-01-08','17:08:00',210.12,1,'activo'),
+(3,1,'2024-01-08','17:09:00',210.36,1,'activo'),
+(4,1,'2024-01-08','17:09:00',210.1,1,'activo');
+
+-- data para detalles_extraccion
+insert  into `detalles_extraccion`(`id_detalles_extraccion`,`tipo_extraccion`,`extraccion`,`id_registro`,`estatus`) values 
+(1,'Riego',30,1,'activo'),
+(2,'Hidroelectricidad',40,1,'activo'),
+(3,'Consumo Humano',60,1,'activo'),
+(4,'Control de Inundaciones (Aliviadero)',80,2,'activo'),
+(5,'Hidroelectricidad',80,2,'activo'),
+(6,'Consumo Humano',100,3,'activo'),
+(7,'Riego',10,3,'activo'),
+(8,'Hidroelectricidad',40,3,'activo'),
+(9,'Consumo Humano',300,4,'activo');
