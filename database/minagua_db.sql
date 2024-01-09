@@ -12,7 +12,8 @@ CREATE TABLE `usuarios` (
   Cedula varchar(255) DEFAULT NULL,
   Correo varchar(255) DEFAULT NULL,
   Telefono varchar(255) DEFAULT NULL,
-  Tipo enum('Admin','User') DEFAULT NULL
+  Tipo enum('Admin','User') DEFAULT NULL,
+  estatus enum('activo','inactivo') DEFAULT NULL
 );
 
 -- INSERT INTO `usuarios` (`Contrasena`, `P_Nombre`,`S_Nombre`, `P_Apellido`, `S_Apellido`,`Cedula`, `Correo`, `Telefono`, `Tipo`) VALUES
@@ -1670,9 +1671,9 @@ CREATE TABLE detalles_extraccion (
 );
 
 -- data para usuarios
-insert  into `usuarios`(`Id_usuario`,`Contrasena`,`P_Nombre`,`S_Nombre`,`P_Apellido`,`S_Apellido`,`Cedula`,`Correo`,`Telefono`,`Tipo`) values 
-(1,'1234','Admin','Admin','Admin','Admin','00000000','admin@gmail.com','00000000000','Admin'),
-(2,'1234','Pedro','Antonio','Rodrigues','Vargas','12345678','pedro@gmail.com','04121234567','User');
+insert  into `usuarios`(`Id_usuario`,`Contrasena`,`P_Nombre`,`S_Nombre`,`P_Apellido`,`S_Apellido`,`Cedula`,`Correo`,`Telefono`,`Tipo`,`estatus`) values 
+(1,'1234','Admin','Admin','Admin','Admin','00000000','admin@gmail.com','00000000000','Admin','activo'),
+(2,'1234','Pedro','Antonio','Rodrigues','Vargas','12345678','pedro@gmail.com','04121234567','User','activo');
 
 -- data para embalses
 insert  into `embalses`(`id_embalse`,`nombre_embalse`,`nombre_presa`,`id_estado`,`id_municipio`,`id_parroquia`,`este`,`norte`,`huso`,`cuenca_principal`,`afluentes_principales`,`area_cuenca`,`escurrimiento_medio`,`ubicacion_embalse`,`organo_rector`,`personal_encargado`,`operador`,`autoridad_responsable`,`proyectista`,`constructor`,`inicio_construccion`,`duracion_de_construccion`,`inicio_de_operacion`,`monitoreo_del_embalse`,`batimetria`,`vida_util`,`cota_min`,`cota_nor`,`cota_max`,`vol_min`,`vol_nor`,`vol_max`,`sup_min`,`sup_nor`,`sup_max`,`numero_de_presas`,`tipo_de_presa`,`altura`,`talud_aguas_arriba`,`talud_aguas_abajo`,`longitud_cresta`,`cota_cresta`,`ancho_cresta`,`volumen_terraplen`,`ancho_base`,`ubicacion_aliviadero`,`tipo_aliviadero`,`numero_compuertas_aliviadero`,`carga_vertedero`,`descarga_maxima`,`longitud_aliviadero`,`ubicacion_toma`,`tipo_toma`,`numero_compuertas_toma`,`mecanismos_de_emergencia`,`mecanismos_de_regulacion`,`gasto_maximo`,`descarga_de_fondo`,`posee_obra`,`tipo_de_obra`,`accion_requerida`,`proposito`,`uso_actual`,`sectores_beneficiados`,`poblacion_beneficiada`,`area_de_riego_beneficiada`,`f_cargo`,`f_cedula`,`f_nombres`,`f_apellidos`,`f_telefono`,`f_correo`,`imagen_uno`,`imagen_dos`,`id_encargado`,`estatus`) values 
