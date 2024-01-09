@@ -10,7 +10,7 @@ if ($count >= 1) {
     <div class="row">
       <div class="col-12">
 
-        <div class="card h-auto">
+        <div class="card h-auto pb-3">
           <div class="card-header pb-0">
             <h6>Usuarios Registrados</h6>
           </div>
