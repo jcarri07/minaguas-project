@@ -20,7 +20,7 @@ if ($_SESSION["Tipo"] == "Admin") {
         <div class="card-header pb-0">
           <div class="d-flex">
             <p class="mb-0 mt-1">Editar Perfil</p>
-            <button type="button" id="edit" class="btn btn-primary btn-sm ms-auto">Editar</button>
+            <button type="button" id="edit" class="btn btn-primary btn-sm ms-auto">Guardar</button>
 
           </div>
         </div>
