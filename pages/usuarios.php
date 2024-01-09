@@ -1,65 +1,8 @@
-<div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-12">
 
-      <div class="card h-100">
-        <div class="card-header pb-0">
-          <h6>Usuarios Registrados</h6>
-        </div>
-        <div class="card-body p-3 pb-0">
-
-          <div class="text-center">
-
-            <button type="button" onclick="$('#new-user').modal('show');" class="btn btn-primary btn-block">
-              Nuevo
-            </button>
-
-          </div>
-
-          <div class="dt-responsive table-responsive p-0">
             <?php include "php/Usuario/Lista_usuario.php"; ?>
 
-          </div>
-          <br><br><br>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!--<footer class="footer pt-3">
-    <div class="container-fluid">
-      <div class="row align-items-center justify-content-lg-between">
-        <div class="col-lg-6 mb-lg-0 mb-4">
-          <div class="copyright text-center text-sm text-muted text-lg-start">
-            © <script>
-              document.write(new Date().getFullYear())
-            </script>,
-            desarrollado por
-            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Dirección de Investigación e Innovación - ABAE
-            </a>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>-->
 
-</div>
 <!-- Modal-New -->
 <div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true">
   <div class="modal-dialog modal-dialog modal-md" role="document">
@@ -257,9 +200,10 @@
       if (result.isConfirmed) {
         var values = new FormData();
         values.append("id", id);
+        values.append("ident",'borrar');
 
         $.ajax({
-          url: 'php/Usuario/Borrar_usuario.php',
+          url: 'php/Usuario/editar_usuario.php',
           type: 'POST',
           data: values,
           cache: false,
@@ -297,6 +241,49 @@
         console.log("presiono cancelar");
       }
     });
+
+  };
+  function recuperar(id) {
+
+        var values = new FormData();
+        values.append("id", id);
+        values.append("ident",'recuperar');
+
+        $.ajax({
+          url: 'php/Usuario/editar_usuario.php',
+          type: 'POST',
+          data: values,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            switch (response) {
+              case "recuperado":
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Usuario Restaurado',
+                  showConfirmButton: false,
+                  timer: 1200
+                });
+                setTimeout(function() {
+                  window.location.reload();
+                }, 1200);
+                break;
+              case "usuario no existe":
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Error en recuperar',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                });
+                break;
+              default:
+                console.log(response);
+                break;
+            }
+
+          },
+        });
 
   };
 
@@ -424,12 +411,13 @@
       values.append("email", $("[name='Eemail']").prop("value"));
       //values.append("usuario", $("[name='usuario']").prop("value"));
       values.append("pass", $("[name='Epassword']").prop("value"));
-      console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+      values.append("ident",'editar');
+      /*console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
         return n != ''
-      }).length);
+      }).length);*/
 
       $.ajax({
-        url: 'php/Usuario/editar-usuario.php',
+        url: 'php/Usuario/editar_usuario.php',
         type: 'POST',
         data: values,
         cache: false,
