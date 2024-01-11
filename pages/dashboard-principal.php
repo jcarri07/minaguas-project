@@ -242,106 +242,27 @@
       <div class="card card-carousel overflow-hidden h-100 p-0">
         <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
           <div class="carousel-inner border-radius-lg h-100">
+
             <div class="carousel-item h-100 active">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/aguasdecojedes.png" class="d-block w-100" alt="Wild Landscape" />
+              <img style="display: flex; margin-top:50px;" src="./assets/img/carousel/mision.png" class="d-block w-100" alt="Wild Landscape" />
             </div>
             <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/aguasdeejido.png" class="d-block w-100" alt="Wild Landscape" />
+              <img style="display: flex; margin-top:50px;" src="./assets/img/carousel/vision.png" class="d-block w-100" alt="Wild Landscape" />
             </div>
             <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/aguasdemonagas.png" class="d-block w-100" alt="Wild Landscape" />
+              <img style="display: flex; margin-top:50px;" src="./assets/img/carousel/valores.png" class="d-block w-100" alt="Wild Landscape" />
+            </div>
+            <div class="carousel-item h-100">
+              <img style="display: flex; margin-top:50px;" src="./assets/img/carousel/objetivos.png" class="d-block w-100" alt="Wild Landscape" />
+            </div>
+            <div class="carousel-item h-100">
+              <img style="display: flex; margin-top:50px;" src="./assets/img/carousel/principios.png" class="d-block w-100" alt="Wild Landscape" />
 
             </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/aguasdeyaracuy.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/enmohca.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/fonaguas.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroamazonas.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroandes.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrobolivar.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrocentro.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrofalcon.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrolago.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrolara.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrollanos.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrologicadelta.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidropaez.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroportuguesa.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrosgc.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidrosuroeste.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroven.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/hidroweb.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/inasa.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/shtrujillano.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/tubhelca.png" class="d-block w-100" alt="Wild Landscape" />
-
-            </div>
-            <div class="carousel-item h-100">
-              <img style="display: flex; margin-top:85px;" src="./assets/img/carousel/yacambu.png" class="d-block w-100" alt="Wild Landscape" />
 
             </div>
           </div>
-          <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <button  style="display: flex; margin-left:10px;" class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
             <span class="fa fa-chevron-left arrow-color" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
