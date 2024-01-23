@@ -26,7 +26,7 @@
                                     <th scope="col" class="sort" data-sort="budget">Cota</th>
                                     <th scope="col" class="sort" data-sort="budget">Extraccion</th>
                                     <th scope="col" class="sort" data-sort="budget">Cargado por</th>
-                                    <th scope="col"></th>
+                                    <th scope="col" style="min-width: 60px;"></th>
                                 </tr>
                             </thead>
                             <tbody class="list">

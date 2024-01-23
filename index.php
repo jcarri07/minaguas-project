@@ -1,14 +1,14 @@
 <?php
- // print "<script>window.location='maintenance.php';</script>";
-  if (!isset($_SESSION)) {
-    session_start();
-  };
-  if(isset($_SESSION["Id_usuario"])){
-    
-    print "<script>window.location='main.php';</script>";
-  }
+// print "<script>window.location='nance.php';</script>";
+if (!isset($_SESSION)) {
+  session_start();
+};
+if (isset($_SESSION["Id_usuario"])) {
 
-  date_default_timezone_set("America/Caracas");
+  print "<script>window.location='main.php';</script>";
+}
+
+date_default_timezone_set("America/Caracas");
 ?>
 <!--
 =========================================================
@@ -35,7 +35,7 @@
   <link rel="icon" type="image/png" href="./assets/img/logos/cropped-mminaguas.webp">
   <title>
     Minaguas
-  </title> 
+  </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -234,55 +234,55 @@
   </script-->
   <script>
     $(document).ready(function() {
-          $("#form").submit(function(e) {
-            e.preventDefault();
-            var values = new FormData();
+      $("#form").submit(function(e) {
+        e.preventDefault();
+        var values = new FormData();
 
-            values.append("email", $("#email").val());
-            values.append("pass", $("#pass").val());
+        values.append("email", $("#email").val());
+        values.append("pass", $("#pass").val());
 
-            $.ajax({
-              url: 'php/login/comp-usuario.php',
-              type: 'POST',
-              data: values,
-              cache: false,
-              contentType: false,
-              processData: false,
-              success: function(response) {
-                switch (response) {
-                  case "si":
-                    Swal.fire({
-                      icon: 'success',
-                      title: 'Sesión Iniciada',
-                      showConfirmButton: false,
-                      timer: 1500
-                    }); //CUANDO INICIA SESION
-                    setTimeout(function() {
-                      window.location = "index.php";
-                    }, 1500);
-                    break;
-                  case "no":
-                    Swal.fire({
-                      icon: 'warning',
-                      title: 'Error en verificación',
-                      text: 'Nombre de usuario o contraseña incorrecto',
-                      confirmButtonText: 'Aceptar',
-                      confirmButtonColor: '#01a9ac',
-                    }); //CONTRASEÑA O USUARIO INCORRECTOS
-                    break;
-                  default:
-                    console.log(response);
-                    break;
-                }
+        $.ajax({
+          url: 'php/login/comp-usuario.php',
+          type: 'POST',
+          data: values,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            switch (response) {
+              case "si":
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Sesión Iniciada',
+                  showConfirmButton: false,
+                  timer: 1500
+                }); //CUANDO INICIA SESION
+                setTimeout(function() {
+                  window.location = "index.php";
+                }, 1500);
+                break;
+              case "no":
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Error en verificación',
+                  text: 'Nombre de usuario o contraseña incorrecto',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //CONTRASEÑA O USUARIO INCORRECTOS
+                break;
+              default:
+                console.log(response);
+                break;
+            }
 
-              },
-              error: function(response) {
+          },
+          error: function(response) {
 
-              }
-            });
-
-          });
+          }
         });
+
+      });
+    });
   </script>
   <!-- Github buttons >
   <script async defer src="https://buttons.github.io/buttons.js"></script-->
