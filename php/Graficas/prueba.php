@@ -7,7 +7,7 @@
     <script src="../../assets/js/Chart.js"></script>
     <script src="../../assets/js/date-fns.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    
+
 
 
     <script src="../../assets/js/html2canvas.min.js"></script>
@@ -16,114 +16,191 @@
 
 <body>
     <div>
-        <canvas class="al" id="chart"></canvas>
+        <canvas class="al" id="chart" style="width: 600px; height:400px"></canvas>
         <canvas class="alM" id="chartM"></canvas>
     </div>
 </body>
 
 <script>
     $(document).ready(function() {
-    chartM = document.getElementById("chartM");
-    charts = document.getElementById("chart");
+        chartM = document.getElementById("chartM");
+        charts = document.getElementById("chart");
 
-    <?php
-    include "consulta.php";
-    $aux = $embalses[0]["id_embalse"];
-    $i = 0;
-    $j = 0;
-    $nom = array("Cota ".date("Y"),"Cota ".date("Y")-1);
-    $pivote = 0;
-    
-    ?>
-    pru = '<?php echo $nom[0]." ".$nom[1]; ?>';
-    console.log(pru);
+        <?php
+        include "consulta.php";
+        $aux = $embalses[0]["id_embalse"];
+        $i = 0;
+        $j = 0;
+        $nom = array("Cota " . date("Y"), "Cota " . date("Y") - 1);
+        $pivote = 0;
 
+        ?>
+        pru = '<?php echo $nom[0] . " " . $nom[1]; ?>';
+        console.log(pru);
 
-    let chart = new Chart(charts, {
-                type: 'line',
-                //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
-                data: {
-                    datasets: [{
+const arbi = {
+    id: 'arbitraryLine',
+    beforeDatasetsDraw(){}
+}
+        let chart = new Chart(charts, {
+            type: 'line',
+            title: 'grafica',
+            //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
+            data: {
+                datasets: [
 
-                            <?php echo "label:'".$nom[0]."',
+                    <?php echo "{label:'" . $nom[0] . "',
+                                
+                                tension: 0.4,
                                 data: [";
-                                $pivote = date("Y",strtotime($datos_embalses[0]["fecha"]));
-                            while ($embalses[$i]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
+                    $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
+                    while ($embalses[$i]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
 
-                                
-                                
-                                $arFecha = explode('-',$datos_embalses[$j]["fecha"]);
-                                
-                                ?>{
-                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
-                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                },
+                        if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
 
-                            <?php
-                                $j++;
-                                if ($j >= count($datos_embalses)) {
-                                    break;
-                                }
-                                if(date("Y",strtotime($datos_embalses[$i]["fecha"])) != $pivote){ 
+                            echo "]},";
+                            break;
+                        } else {
 
-                                    echo "], label:'".$nom[1]."',
-                                    data: [";
-                                    $pivote = date("Y",strtotime($datos_embalses[$i]["fecha"]));
-    
-                                }
-                             } echo ?> 
-                        
-                }],
-                },
-                options: {
-                    scales: {
+                            $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                        x: {
-                        type:'time',
-                        time: {
-                    unit: 'month'
-                },
-                min:'2024-01',
-                    max:'2024-12',
-                }
-                    },
-                
-                y: {
-                    min: 200<?php //echo round($embalses[$i]["cota_min"], 2); 
-                                ?>,
-                    max: <?php echo $embalses[$i]["cota_max"]; ?>,
+                    ?> {
+                                x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                            },
+
                     <?php
-                    $i++;
+                            $j++;
+                            if ($j >= count($datos_embalses)) {
+                                break;
+                            }
+                        }
+                    }; ?>
+
+                    <?php echo "{label:'" . $nom[1] . "',
+                               tension: 0.4,
+                                data: [";
+                    $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
+                    while ($embalses[$i]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
+
+                        if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
+
+                            echo "],";
+                            break;
+                        } else {
+
+
+                            $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
+
+                    ?> {
+                                x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                            },
+
+                    <?php
+                            $j++;
+                            if ($j >= count($datos_embalses)) {
+                                break;
+                            }
+                        }
+                    }
+                    echo "]},"; ?>
+
+
+                ],
+            },
+            
+            options: {
+                plugins: {
+
+                    legend: {
+                        labels: {
+                            // This more specific font property overrides the global property
+                            font: {
+                                size: 28
+                            },
+
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: '<?php $i = 0;
+                                echo $embalses[$i]['nombre_embalse'] ?>',
+                        fullSize: true,
+                        font: {
+                            size: 28
+                        }
+                    },
+                },
+                scales: {
+
+                    x: {
+                        labelString: 'Año',
+                        type: 'time',
+                        time: {
+                            unit: 'month'
+                        },
+                        min: '2024-01',
+                        max: '2024-12',
+                    }
+                },
+
+                y: {
+                    labelString: 'Cota',
+                    min: 200,
+                    <?php //echo round($embalses[$i]["cota_min"], 2); 
                     ?>
-                }
+                    max: <?php echo $embalses[$i]["cota_max"];
+                            $i++; ?>,
+
+                },
             },
         });
 
         let chartsM = new Chart(chartM, {
-                type: 'line',
-                //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
-                data: {
-                    datasets: [{
-                        data: [
-                        ],
-                    }],
-                },
-                options: {
-                    scales: {
+            type: 'line',
+            //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
+            data: {
+                datasets: [{
+                    data: [],
+                }],
+            },
+            options: {
+                plugins: {
 
-                        x: {
-                        type:'time',
-                        time: {
-                    unit: 'week'
-                },
-                    min:'lunes',
-                    max:'martes',
-                }
+                    legend: {
+                        labels: {
+                            // This more specific font property overrides the global property
+                            font: {
+                                size: 14
+                            }
+                        }
                     },
-                
+                    title: {
+                        display: true,
+                        text: '<?php $i = 0;
+                                echo $embalses[$i]['nombre_embalse'] ?>',
+                        fullSize: true,
+                        font: {
+                            size: 28
+                        }
+                    },
+                },
+                scales: {
+
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'week'
+                        },
+                        min: 'lunes',
+                        max: 'martes',
+                    }
+                },
+
                 y: {
                     min: 200,
-                    max:270,
+                    max: 270,
                 },
             },
         });
