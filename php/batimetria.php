@@ -40,7 +40,7 @@ class Batimetria
     public function getByCota($año, $cota)
     {
         $cota = number_format(floatval($cota),3,".","");
-        return (array_key_exists((string)$cota, $this->batimetria[$año])) ? $this->batimetria[$año][(string)$cota] : $this->getCloseCota($this->batimetria[$año], $cota, 0.001);
+        return (array_key_exists((string)$cota, $this->batimetria[$año])) ? explode("-", $this->batimetria[$año][(string)$cota]) : $this->getCloseCota($this->batimetria[$año], $cota, 0.001);
     }
 
     public function getCloseCota($batimetria, $cota, $step){
@@ -49,11 +49,12 @@ class Batimetria
         $step = ($step > 0) ? (($step + 0.001) * -1) : (($step * -1) + 0.001);
 
         if(array_key_exists((string)$cota,$batimetria)){
-            return $batimetria[(string)$cota];
+            return explode("-",$batimetria[(string)$cota]);
         }else{
             return $this->getCloseCota($batimetria, $cota, $step);
         }
     }
+
 
 
     // public function AuxGetCloseCota($año, $cota)
