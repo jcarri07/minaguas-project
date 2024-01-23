@@ -9,7 +9,9 @@
 
 // require_once "../database/Conexion.php";
 include '../php/Conexion.php';
-require_once '../vendor/PHPExcel/Classes/PHPExcel.php';
+// require_once '../vendor/PHPExcel/Classes/PHPExcel.php';
+
+require '../vendor/autoload.php';
 
 if (isset($_POST["Guardar"])) {
 
@@ -131,30 +133,60 @@ if (isset($_POST["Guardar"])) {
     //ARCHIVOS DE EXCEL BATIMETRIA
     $batimetria = "";
 
+    //NO BORRAR ESTA ES CON VERSION PHPEXCEL
+
+    // if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
+    //     $inputFileType = PHPExcel_IOFactory::identify($archivo_batimetria);
+    //     $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+
+    //     $objPHPExcel = $objReader->load($archivo_batimetria);
+    //     $sheet = $objPHPExcel->getSheet(0);
+    //     $highestRow = $sheet->getHighestRow();
+    //     $highestColumn = $sheet->getHighestColumn();
+
+    //     $cota_embalse = array();
+    //     $cotas_embalse = array();
+    //     $num = 0;
+    //     for ($sht = 0; $sht < $objPHPExcel->getSheetCount(); $sht++) {
+    //         $sheet = $objPHPExcel->getSheet($sht);
+    //         $highestRow = $sheet->getHighestRow();
+    //         for ($row = 2; $row <= $highestRow; $row++) {
+    //             $num++;
+    //             $cota = number_format($sheet->getCell("A" . $row)->getValue(), 3, '.', '');
+    //             $area = $sheet->getCell("B" . $row)->getValue();
+    //             $capacidad = $sheet->getCell("C" . $row)->getValue();
+    //             $cota_embalse[$cota] = $area . "-" . $capacidad;
+    //         }
+    //         $cotas_embalse[$objPHPExcel->getSheetNames()[$sht]] = $cota_embalse;
+    //         $cota_embalse = array();
+    //     }
+    //     $batimetria = json_encode($cotas_embalse);
+    // }
+
     if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
-        $inputFileType = PHPExcel_IOFactory::identify($archivo_batimetria);
-        $objReader = PHPExcel_IOFactory::createReader($inputFileType);
 
-        $objPHPExcel = $objReader->load($archivo_batimetria);
-        $sheet = $objPHPExcel->getSheet(0);
-        $highestRow = $sheet->getHighestRow();
-        $highestColumn = $sheet->getHighestColumn();
+        $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
 
-        $cota_embalse = array();
         $cotas_embalse = array();
         $num = 0;
-        for ($sht = 0; $sht < $objPHPExcel->getSheetCount(); $sht++) {
-            $sheet = $objPHPExcel->getSheet($sht);
+
+        foreach ($spreadsheet->getSheetNames() as $sheetName) {
+            $sheet = $spreadsheet->getSheetByName($sheetName);
             $highestRow = $sheet->getHighestRow();
+
+            $cota_embalse = array();
+
             for ($row = 2; $row <= $highestRow; $row++) {
                 $num++;
-                $cota = number_format($sheet->getCell("A" . $row)->getValue(), 3, '.', '');
-                $area = $sheet->getCell("B" . $row)->getValue();
-                $capacidad = $sheet->getCell("C" . $row)->getValue();
+                $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
+                $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
+                $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
                 $cota_embalse[$cota] = $area . "-" . $capacidad;
             }
-            $cotas_embalse[$objPHPExcel->getSheetNames()[$sht]] = $cota_embalse;
+
+            $cotas_embalse[$sheetName] = $cota_embalse;
         }
+
         $batimetria = json_encode($cotas_embalse);
     }
 
@@ -271,6 +303,9 @@ if (isset($_POST["Update"])) {
     $pre_imagen_uno = $_POST["pre_imagen_uno"];
     $pre_imagen_dos = $_POST["pre_imagen_dos"];
 
+    $archivo_bat_name = $_FILES["batimetria"]['name'];
+    $archivo_batimetria = $_FILES["batimetria"]['tmp_name']; //Batimetria en excel";
+
     $aux_uno = $imagen_uno;
     $aux_dos = $imagen_dos;
 
@@ -313,6 +348,36 @@ if (isset($_POST["Update"])) {
         }
     }
 
+    $batimetria = "";
+
+    if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
+
+        $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
+
+        $cotas_embalse = array();
+        $num = 0;
+
+        foreach ($spreadsheet->getSheetNames() as $sheetName) {
+            $sheet = $spreadsheet->getSheetByName($sheetName);
+            $highestRow = $sheet->getHighestRow();
+
+            $cota_embalse = array();
+
+            for ($row = 2; $row <= $highestRow; $row++) {
+                $num++;
+                $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
+                $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
+                $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
+                $cota_embalse[$cota] = $area . "-" . $capacidad;
+            }
+
+            $cotas_embalse[$sheetName] = $cota_embalse;
+        }
+
+        $batimetria = json_encode($cotas_embalse);
+    }
+
+
     $consulta = "UPDATE embalses 
     SET nombre_embalse = '$nombre_embalse',
     nombre_presa = '$nombre_presa',
@@ -337,6 +402,7 @@ if (isset($_POST["Update"])) {
     duracion_de_construccion = '$duracion_construccion',
     inicio_de_operacion = '$inicio_operacion',
     monitoreo_del_embalse = '$monitoreo',
+    batimetria = '$batimetria',
     vida_util = '$vida_util',
     cota_min = '$cota_min',
     cota_nor = '$cota_nor',

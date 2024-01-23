@@ -35,6 +35,53 @@ date_default_timezone_set("America/Caracas");
       padding: 3rem;
     }
   }
+
+  #show-batimetria {
+    /* display: flex; */
+    text-align: center;
+  }
+
+  #modal-show {
+    max-width: 70%;
+    display: inline-block;
+    overflow-x: auto;
+    white-space: nowrap;
+
+  }
+
+  .tabla {
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+    margin: 0 25px;
+    text-align: center;
+  }
+
+  /* Opcional: Para darle estilo a las tablas dentro del modal */
+  .table-cota {
+    /* width: 100%; */
+    border: 1px solid #000000;
+  }
+
+  .tabla table {
+    width: 100%;
+    /* Ancho del 100% para ocupar todo el espacio disponible */
+    border-collapse: collapse;
+    /* Colapso de bordes para evitar espacios entre las celdas */
+  }
+
+  .tabla td,
+  .tabla th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+    /* Ajusta el relleno según sea necesario */
+  }
+
+  .no-visible {
+    display: none;
+  }
 </style>
 
 
@@ -186,7 +233,7 @@ date_default_timezone_set("America/Caracas");
                     <?php
                     while ($row1 = mysqli_fetch_array($queryResponsable)) {
                     ?>
-                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']." ".$row1['S_Nombre']." ".$row1['P_Apellido']." ".$row1['S_Apellido']; ?></option>
+                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre'] . " " . $row1['S_Nombre'] . " " . $row1['P_Apellido'] . " " . $row1['S_Apellido']; ?></option>
                     <?php
                     }
                     ?>
@@ -243,15 +290,15 @@ date_default_timezone_set("America/Caracas");
               <div class="col-md-4 col-sm-12">
                 <div class=" form-group">
                   <label for="norte">Norte</label>
-                  <input value="<?php echo $embalse["norte"]; ?>" type="number" step="0.001" class="form-control" id="norte" name="norte" placeholder="Ingrese los afluentes principales">
+                  <input value="<?php echo $embalse["norte"]; ?>" type="number" step="0.001" class="form-control" id="norte" name="norte" placeholder="Norte">
                 </div>
                 <div class=" form-group">
                   <label for="este">Este</label>
-                  <input value="<?php echo $embalse["este"]; ?>" type="number" step="0.001" class="form-control" id="este" name="este" placeholder="Ingrese el area de la cuenca en km2">
+                  <input value="<?php echo $embalse["este"]; ?>" type="number" step="0.001" class="form-control" id="este" name="este" placeholder="Este">
                 </div>
                 <div class=" form-group">
                   <label for="huso">Huso</label>
-                  <input value="<?php echo $embalse["huso"]; ?>" type="number" step="0.001" class="form-control" id="huso" name="huso" placeholder="Ingrese el escurrimiento medio en m3/s">
+                  <input value="<?php echo $embalse["huso"]; ?>" type="number" step="0.001" class="form-control" id="huso" name="huso" placeholder="Huso">
                 </div>
               </div>
             </div>
@@ -259,57 +306,62 @@ date_default_timezone_set("America/Caracas");
             <h3 class="pb-3 pt-3">Características de los embalses:</h3>
 
             <div class="row">
-              <div class="col-md-3 col-sm-12">
+              <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">
                 <div class="form-group">
                   <label for="batimetria">Batimetría</label>
-                  <input type="text" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
+                  <input type="file" accept=".xlsx, .xls" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
+                </div>
+                <div class="form-group d-flex justify-content-center">
+                  <a class="down-bat btn text-dark text-sm d-flex align-items-center "><i class="fa fa-download text-lg me-1"></i> Plant.</a>
+                  <div class="down-excel"><a class=" btn  text-dark text-sm d-flex align-items-center" data-id="<?php echo $embalse["id_embalse"]; ?>"><i class="fas fa-file-export text-lg me-1"></i> Exp.</a></div>
+                  <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn  text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
                 </div>
                 <div class="form-group">
                   <label for="vida_util">Vida útil</label>
-                  <input value="<?php echo $embalse["vida_util"]; ?>" type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida util en años">
+                  <input value="<?php echo $embalse["vida_util"]; ?>" type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
                 </div>
               </div>
 
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_min">Cota mínima</label>
-                  <input value="<?php echo $embalse["cota_min"]; ?>" type="number" step="0.001" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese los afluentes principales">
+                  <input value="<?php echo $embalse["cota_min"]; ?>" type="number" step="0.001" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_min">Volumen mínimo</label>
-                  <input value="<?php echo $embalse["vol_min"]; ?>" type="number" step="0.001" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el area de la cuenca en km2">
+                  <input value="<?php echo $embalse["vol_min"]; ?>" type="number" step="0.001" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_min">Superficie mínima</label>
-                  <input value="<?php echo $embalse["sup_min"]; ?>" type="number" step="0.001" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese el escurrimiento medio en m3/s">
+                  <input value="<?php echo $embalse["sup_min"]; ?>" type="number" step="0.001" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_nor">Cota normal</label>
-                  <input value="<?php echo $embalse["cota_nor"]; ?>" type="number" step="0.001" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese los afluentes principales">
+                  <input value="<?php echo $embalse["cota_nor"]; ?>" type="number" step="0.001" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                 </div>
                 <div class=" form-group">
                   <label for="vol_nor">Volumen normal</label>
-                  <input value="<?php echo $embalse["vol_nor"]; ?>" type="number" step="0.001" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el area de la cuenca en km2">
+                  <input value="<?php echo $embalse["vol_nor"]; ?>" type="number" step="0.001" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                 </div>
                 <div class=" form-group">
                   <label for="sup_nor">Superficie normal</label>
-                  <input value="<?php echo $embalse["sup_nor"]; ?>" type="number" step="0.001" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese el escurrimiento medio en m3/s">
+                  <input value="<?php echo $embalse["sup_nor"]; ?>" type="number" step="0.001" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_max">Cota máxima</label>
-                  <input value="<?php echo $embalse["cota_max"]; ?>" type="number" step="0.001" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese los afluentes principales">
+                  <input value="<?php echo $embalse["cota_max"]; ?>" type="number" step="0.001" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_max">Volumen máximo</label>
-                  <input value="<?php echo $embalse["vol_max"]; ?>" type="number" step="0.001" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el area de la cuenca en km2">
+                  <input value="<?php echo $embalse["vol_max"]; ?>" type="number" step="0.001" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_max">Superficie máxima</label>
-                  <input value="<?php echo $embalse["sup_max"]; ?>" type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese el escurrimiento medio en m3/s">
+                  <input value="<?php echo $embalse["sup_max"]; ?>" type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
                 </div>
               </div>
             </div>
@@ -327,11 +379,11 @@ date_default_timezone_set("America/Caracas");
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area">Área de la cuenca</label>
-                <input value="<?php echo $embalse["area_cuenca"]; ?>" type="number" step="0.001" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca en hm3">
+                <input value="<?php echo $embalse["area_cuenca"]; ?>" type="number" step="0.001" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="escurrimiento">Escurrimiento medio</label>
-                <input value="<?php echo $embalse["escurrimiento_medio"]; ?>" type="number" step="0.001" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio en m3/s">
+                <input value="<?php echo $embalse["escurrimiento_medio"]; ?>" type="number" step="0.001" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
               </div>
             </div>
 
@@ -373,11 +425,11 @@ date_default_timezone_set("America/Caracas");
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="inicio_construccion">Año de inicio de construccion</label>
-                <input value="<?php echo $embalse["inicio_construccion"]; ?>" type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construccion">
+                <input value="<?php echo $embalse["inicio_construccion"]; ?>" type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="duracion_construccion">Duración de construcción</label>
-                <input value="<?php echo $embalse["duracion_de_construccion"]; ?>" type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duracion de construccion en años">
+                <input value="<?php echo $embalse["duracion_de_construccion"]; ?>" type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duración de construcción en años">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="inicio_operacion">Inicio de operación</label>
@@ -394,7 +446,7 @@ date_default_timezone_set("America/Caracas");
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_presas">Número de presas</label>
-                <input value="<?php echo $embalse["numero_de_presas"]; ?>" type="number" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el numero de presas">
+                <input value="<?php echo $embalse["numero_de_presas"]; ?>" type="number" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el número de presas">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="tipo_presa">Tipo de presa</label>
@@ -406,11 +458,11 @@ date_default_timezone_set("America/Caracas");
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="talud_arriba">Talud aguas arriba</label>
-                <input value="<?php echo $embalse["talud_aguas_arriba"]; ?>" type="number" step="0.001" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba en grados">
+                <input value="<?php echo $embalse["talud_aguas_arriba"]; ?>" type="number" step="0.001" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="talud_abajo">Talud aguas abajo</label>
-                <input value="<?php echo $embalse["talud_aguas_abajo"]; ?>" type="number" step="0.001" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo en grados">
+                <input value="<?php echo $embalse["talud_aguas_abajo"]; ?>" type="number" step="0.001" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="longitud_cresta">Longitud de la cresta</label>
@@ -418,7 +470,7 @@ date_default_timezone_set("America/Caracas");
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="cota_cresta">Cota de la cresta</label>
-                <input value="<?php echo $embalse["cota_cresta"]; ?>" type="number" step="0.001" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros sobre el nivel del mar">
+                <input value="<?php echo $embalse["cota_cresta"]; ?>" type="number" step="0.001" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ancho_cresta">Ancho de la cresta</label>
@@ -426,11 +478,11 @@ date_default_timezone_set("America/Caracas");
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="volumen_terraplen">Volumen del terraplen</label>
-                <input value="<?php echo $embalse["volumen_terraplen"]; ?>" type="number" step="0.001" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen en m3">
+                <input value="<?php echo $embalse["volumen_terraplen"]; ?>" type="number" step="0.001" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ancho_base">Ancho maximo de base</label>
-                <input value="<?php echo $embalse["ancho_base"]; ?>" type="number" step="0.001" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho maximo de base en metros">
+                <input value="<?php echo $embalse["ancho_base"]; ?>" type="number" step="0.001" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
               </div>
             </div>
 
@@ -439,7 +491,7 @@ date_default_timezone_set("America/Caracas");
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ubicacion_aliviadero">Ubicacion del aliviadero</label>
-                <input value="<?php echo $embalse["ubicacion_aliviadero"]; ?>" type="text" class="form-control" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicacion del aliviadero">
+                <input value="<?php echo $embalse["ubicacion_aliviadero"]; ?>" type="text" class="form-control" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicación del aliviadero">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="tipo_aliviadero">Tipo de aliviadero</label>
@@ -447,15 +499,15 @@ date_default_timezone_set("America/Caracas");
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_compuertas_aliviadero">Numero de compuertas del aliviadero</label>
-                <input value="<?php echo $embalse["numero_compuertas_aliviadero"]; ?>" type="number" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el numero de compuertas del aliviadero">
+                <input value="<?php echo $embalse["numero_compuertas_aliviadero"]; ?>" type="number" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el número de compuertas del aliviadero">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="carga_aliviadero">Carga sobre el vertedero</label>
-                <input value="<?php echo $embalse["carga_vertedero"]; ?>" type="number" step="0.001" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero en metros">
+                <input value="<?php echo $embalse["carga_vertedero"]; ?>" type="number" step="0.001" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="descarga_aliviadero">Descarga maxima</label>
-                <input value="<?php echo $embalse["descarga_maxima"]; ?>" type="number" step="0.001" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga maxima en m3/s">
+                <input value="<?php echo $embalse["descarga_maxima"]; ?>" type="number" step="0.001" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="longitud_aliviadero">Longitud</label>
@@ -468,7 +520,7 @@ date_default_timezone_set("America/Caracas");
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ubicacion_toma">Ubicación de la obra de toma</label>
-                <input value="<?php echo $embalse["ubicacion_toma"]; ?>" type="text" class="form-control" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicacion de la obra de toma">
+                <input value="<?php echo $embalse["ubicacion_toma"]; ?>" type="text" class="form-control" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicación de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="tipo_toma">Tipo de obra de toma</label>
@@ -476,7 +528,7 @@ date_default_timezone_set("America/Caracas");
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_compuertas_toma">Numero de compuertas de la obra de toma</label>
-                <input value="<?php echo $embalse["numero_compuertas_toma"]; ?>" type="number" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el numero de compuertas de la obra de toma">
+                <input value="<?php echo $embalse["numero_compuertas_toma"]; ?>" type="number" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el número de compuertas de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
@@ -484,15 +536,15 @@ date_default_timezone_set("America/Caracas");
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="regulacion_toma">Mecanismos de regulacion de la obra de toma</label>
-                <input value="<?php echo $embalse["mecanismos_de_regulacion"]; ?>" type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulacion de la obra de toma">
+                <input value="<?php echo $embalse["mecanismos_de_regulacion"]; ?>" type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulación de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="gasto_toma">Gasto máximo de la obra de toma</label>
-                <input value="<?php echo $embalse["gasto_maximo"]; ?>" type="number" step="0.001" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto maximo de la obra de toma en m3/s">
+                <input value="<?php echo $embalse["gasto_maximo"]; ?>" type="number" step="0.001" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto máximo de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="descarga_fondo">Descarga de fondo</label>
-                <input value="<?php echo $embalse["descarga_de_fondo"]; ?>" type="text" class="form-control" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo en m3/s o N/A si no aplica">
+                <input value="<?php echo $embalse["descarga_de_fondo"]; ?>" type="text" class="form-control" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo o N/A si no aplica">
               </div>
             </div>
 
@@ -500,16 +552,16 @@ date_default_timezone_set("America/Caracas");
 
             <div class="row">
               <div class="col-xl-4 col-lg-6 form-group">
-                <label for="obra_conduccion">Posee obra de conduccion</label>
-                <input value="<?php echo $embalse["posee_obra"]; ?>" type="text" class="form-control" id="obra_conduccion" name="obra_conduccion" placeholder="Ingrese SI o NO si posee obra de conduccion">
+                <label for="obra_conduccion">Posee obra</label>
+                <input value="<?php echo $embalse["posee_obra"]; ?>" type="text" class="form-control" id="obra_conduccion" name="obra_conduccion" placeholder="Ingrese SI o NO si posee obra">
               </div>
               <div class="col-xl-4 col-lg-6 form-group">
-                <label for="tipo_conduccion">Tipo de obra de conduccion</label>
-                <input value="<?php echo $embalse["tipo_de_obra"]; ?>" type="text" class="form-control" id="tipo_conduccion" name="tipo_conduccion" placeholder="Ingrese el tipo de obra de conduccion o N/A si no aplica">
+                <label for="tipo_conduccion">Tipo de obra</label>
+                <input value="<?php echo $embalse["tipo_de_obra"]; ?>" type="text" class="form-control" id="tipo_conduccion" name="tipo_conduccion" placeholder="Ingrese el tipo de obra">
               </div>
               <div class="col-xl-4 col-lg-6 form-group">
-                <label for="accion_conduccion">Accion requerida de la obra de conduccion</label>
-                <input value="<?php echo $embalse["accion_requerida"]; ?>" type="text" class="form-control" id="accion_conduccion" name="accion_conduccion" placeholder="Ingrese la accion requerida de la obra de conduccion o N/A si no aplica">
+                <label for="accion_conduccion">Acción requerida de la obra</label>
+                <input value="<?php echo $embalse["accion_requerida"]; ?>" type="text" class="form-control" id="accion_conduccion" name="accion_conduccion" placeholder="Ingrese la acción requerida">
               </div>
             </div>
 
@@ -518,7 +570,7 @@ date_default_timezone_set("America/Caracas");
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="proposito">Propósito del embalse</label>
-                <input value="<?php echo $embalse["proposito"]; ?>" type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el proposito del embalse">
+                <input value="<?php echo $embalse["proposito"]; ?>" type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el propósito del embalse">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="uso">Uso actual del embalse</label>
@@ -530,7 +582,7 @@ date_default_timezone_set("America/Caracas");
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="poblacion">Población beneficiada</label>
-                <input value="<?php echo $embalse["poblacion_beneficiada"]; ?>" type="number" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la poblacion beneficiada en habitantes">
+                <input value="<?php echo $embalse["poblacion_beneficiada"]; ?>" type="number" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la población beneficiada en habitantes">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area_riego">Área de riego beneficiada</label>
@@ -543,27 +595,27 @@ date_default_timezone_set("America/Caracas");
             <div class="row">
               <div class="col-xl-4 col-lg-6 form-group">
                 <label for="f_cargo">Cargo</label>
-                <input value="<?php echo $embalse["f_cargo"]; ?>" type="text" class="form-control" id="f_cargo" name="f_cargo" placeholder="Ingrese el nomnbre del embalse">
+                <input value="<?php echo $embalse["f_cargo"]; ?>" type="text" class="form-control" id="f_cargo" name="f_cargo" placeholder="Ingrese el cargo">
               </div>
               <div class="col-xl-4 col-lg-6 form-group">
                 <label for="f_cedula">Cédula</label>
-                <input value="<?php echo $embalse["f_cedula"]; ?>" type="text" class="form-control" id="f_cedula" name="f_cedula" placeholder="Ingrese el nomnbre del embalse">
+                <input value="<?php echo $embalse["f_cedula"]; ?>" type="text" class="form-control" id="f_cedula" name="f_cedula" placeholder="Ingrese la cédula">
               </div>
               <div class="col-xl-4 col-lg-6 form-group">
                 <label for="f_nombres">Nombres</label>
-                <input value="<?php echo $embalse["f_nombres"]; ?>" type="text" class="form-control" id="f_nombres" name="f_nombres" placeholder="Ingrese el nomnbre del embalse">
+                <input value="<?php echo $embalse["f_nombres"]; ?>" type="text" class="form-control" id="f_nombres" name="f_nombres" placeholder="Ingrese los nombres">
               </div>
               <div class="col-xl-4 col-lg-6 form-group">
                 <label for="f_apellidos">Apellidos</label>
-                <input value="<?php echo $embalse["f_apellidos"]; ?>" type="text" class="form-control" id="f_apellidos" name="f_apellidos" placeholder="Ingrese el nomnbre del embalse">
+                <input value="<?php echo $embalse["f_apellidos"]; ?>" type="text" class="form-control" id="f_apellidos" name="f_apellidos" placeholder="Ingrese los apellidos">
               </div>
               <div class="col-xl-4 col-lg-6 form-group">
                 <label for="f_telefono">Teléfono</label>
-                <input value="<?php echo $embalse["f_telefono"]; ?>" type="text" class="form-control" id="f_telefono" name="f_telefono" placeholder="Ingrese el nomnbre del embalse">
+                <input value="<?php echo $embalse["f_telefono"]; ?>" type="text" class="form-control" id="f_telefono" name="f_telefono" placeholder="Ingrese el teléfono">
               </div>
               <div class="col-xl-4 col-lg-6 form-group">
                 <label for="f_correo">Correo</label>
-                <input value="<?php echo $embalse["f_correo"]; ?>" type="text" class="form-control" id="f_correo" name="f_correo" placeholder="Ingrese el nomnbre del embalse">
+                <input value="<?php echo $embalse["f_correo"]; ?>" type="text" class="form-control" id="f_correo" name="f_correo" placeholder="Ingrese el correo">
               </div>
             </div>
 
@@ -899,6 +951,30 @@ date_default_timezone_set("America/Caracas");
   </div>
 </div>
 
+<div class="modal fade" id="show-batimetria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div id="modal-show" class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">COTAS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="modal-body" class="modal-body">
+        <div id="table-container" class="table-container">
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn bg-gradient-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./assets/js/xlsx.full.min.js"></script>
 <script>
   function previewImage(id) {
     document.querySelector("#" + id).addEventListener("change", function(e) {
@@ -921,4 +997,186 @@ date_default_timezone_set("America/Caracas");
 
   previewImage("imagen_uno");
   previewImage("imagen_dos");
+
+
+  $(".down-bat").on("click", function() {
+
+    // var id = $(this).data("id");
+    // console.log(id)
+    var id = "";
+    window.location.href = "./php/download_excel_batimetria.php?type=plantilla&id=" + id;
+
+  });
+
+  $(".down-excel").on("click", function() {
+
+    var id = $(this).data("id");
+    // console.log(id)
+    window.location.href = "./php/download_excel_batimetria.php?type=excel&id=" + id;
+
+  });
+
+
+  var batimetria = document.getElementById('batimetria');
+  // console.log(batimetria.files[0] != null);
+
+  var cotasEmbalse = {};
+
+  batimetria.addEventListener('change', function(event) {
+
+    if (batimetria.files[0] != null) {
+      iniciar();
+    } else {
+      if (!$(".show-bat").hasClass("no-visible")) {
+        $(".show-bat").addClass("no-visible");
+      }
+      if ($(".down-excel").hasClass("no-visible")) {
+        $(".down-excel").removeClass("no-visible");
+      }
+      var modalBody = document.getElementById('modal-body');
+      modalBody.innerHTML = "";
+    }
+
+
+    // console.log(cotasEmbalse);
+    // agregarTablasAlModal(cotasEmbalse);
+
+  });
+
+  $(".down-bat").on("click", function() {
+
+    // var id = $(this).data("id");
+    // console.log(id)
+    window.location.href = "./php/download_excel_batimetria.php?type=plantilla";
+
+  });
+
+
+
+  function cargar_datos_asincrono() {
+    return new Promise(resolve => {
+      var batimetria = document.getElementById('batimetria'); // Reemplaza 'excelInput' con el ID real de tu input file
+      var archivo = batimetria.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var data = new Uint8Array(e.target.result);
+        var workbook = XLSX.read(data, {
+          type: 'array'
+        });
+
+        workbook.SheetNames.forEach(function(sheetName) {
+          var cotaEmbalse = {};
+          var worksheet = workbook.Sheets[sheetName];
+          var range = XLSX.utils.decode_range(worksheet['!ref']);
+
+          for (var row = 1; row <= range.e.r; row++) {
+            var cota = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 0
+            })].v.toFixed(3);
+            var area = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 1
+            })].v;
+            var capacidad = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 2
+            })].v;
+            cotaEmbalse[cota] = area + '-' + capacidad;
+          }
+
+          cotasEmbalse[sheetName] = cotaEmbalse;
+        });
+
+      };
+      reader.readAsArrayBuffer(archivo);
+      console.log('Inicio de la operación asincrónica');
+      setTimeout(() => {
+        console.log('Fin de la operación asincrónica');
+        resolve();
+      }, 1000);
+    });
+  }
+
+  async function cargarDatos() {
+    try {
+      console.log('Inicio de cargarDatos');
+      await cargar_datos_asincrono();
+      console.log('Después de await en cargarDatos');
+    } catch (error) {
+      console.error('Error al cargar datos:', error);
+    }
+  }
+
+  async function iniciar() {
+    console.log('Inicio del script');
+    await cargarDatos();
+    console.log('Fin del script');
+    console.log(cotasEmbalse['2001']);
+    agregarTablasAlModal(cotasEmbalse);
+    // console.log($(".show-bat").hasClass("no-visible"));
+
+    var batimetria = document.getElementById('batimetria');
+    // console.log(batimetria.files[0]);
+    // console.log(batimetria.files[0]!=null);
+
+
+    if (batimetria.files[0] != null) {
+      if ($(".show-bat").hasClass("no-visible")) {
+        $(".show-bat").removeClass("no-visible");
+      }
+    } else {
+      if (!$(".show-bat").hasClass("no-visible")) {
+        $(".show-bat").addClass("no-visible");
+      }
+    }
+
+    if (batimetria.files[0] != null) {
+      if ($(".show-bat").hasClass("no-visible")) {
+        $(".show-bat").removeClass("no-visible");
+      }
+      if (!$(".down-excel").hasClass("no-visible")) {
+        $(".down-excel").addClass("no-visible");
+      }
+    } else {
+      if (!$(".show-bat").hasClass("no-visible")) {
+        $(".show-bat").addClass("no-visible");
+      }
+      if ($(".down-excel").hasClass("no-visible")) {
+        $(".down-excel").removeClass("no-visible");
+      }
+    }
+
+    
+  }
+
+  function construirTabla(embalse, data) {
+    var tabla = '<table class="align-items-center mb-0 table-cota" border="1">';
+    tabla += '<tr><th>Cota</th><th>Área</th><th>Capacidad</th></tr>';
+
+    for (var cota in data) {
+      var partes = data[cota].split('-');
+      tabla += '<tr><td>' + cota + '</td><td>' + partes[0] + '</td><td>' + partes[1] + '</td></tr>';
+    }
+
+    tabla += '</table>';
+    return tabla;
+  }
+
+  function agregarTablasAlModal(cotasEmbalse) {
+    var modal_body = document.getElementById('modal-body');
+    modal_body.innerHTML = "";
+
+    for (var embalse in cotasEmbalse) {
+      var tablaHTML = construirTabla(embalse, cotasEmbalse[embalse]);
+
+      var tablaContainer = document.createElement('div');
+      tablaContainer.className = 'tabla'
+      tablaContainer.innerHTML = '<h3>' + embalse + '</h3>' + tablaHTML;
+
+      modal_body.appendChild(tablaContainer);
+      // modal_body.innerHTML += tablaHTML;
+    }
+  }
 </script>

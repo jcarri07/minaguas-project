@@ -1,5 +1,6 @@
 <?php
 require_once 'php/Conexion.php';
+require_once 'php/batimetria.php';
 
 $queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
@@ -22,6 +23,12 @@ while ($row = mysqli_fetch_array($queryUsers)) {
   $encargados[$id] = $nombre;
 }
 
+
+
+$embalseBat = new Batimetria('1', $conn);
+$prueba = $embalseBat->getByCota("2001", 210.210);
+
+// $prueba = $embalseBat->getCloseCota("2001","210.206");
 
 // Ahora puedes acceder a la capital de un estado específico
 // $capitalCarabobo = $estados["24"];
@@ -137,7 +144,7 @@ closeConection($conn);
         <div class="card-header pb-0">
           <!-- <div class="row"> -->
             <!-- <div class="col-6 d-flex align-items-center"> -->
-              <h6 class="">Embalses</h6>
+              <h6 class="">Embalses <?php echo $prueba; ?></h6>
             <!-- </div> -->
             <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
