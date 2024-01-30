@@ -327,6 +327,7 @@
             var i = 1;
             html2canvas(x<?php echo $t; ?>).then(function(canvas) { //PROBLEMAS
                 //$("#ca").append(canvas);
+                canvas.willReadFrequently = true,
                 dataURL = canvas.toDataURL("image/jpeg", 0.9);
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '../guardar-imagen.php', true);
@@ -346,6 +347,7 @@
             });
             html2canvas(y<?php echo $t; ?>).then(function(canvas) { //PROBLEMAS
                 //$("#ca").append(canvas);
+                canvas.willReadFrequently = true,
                 dataURL = canvas.toDataURL("image/jpeg", 0.9);
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '../guardar-imagen.php', true);
