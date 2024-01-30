@@ -1,4 +1,5 @@
 <?php
+require_once '../../php/Conexion.php';
 $fullPath = getcwd();
 $parts = explode(DIRECTORY_SEPARATOR, $fullPath);
 
@@ -8,6 +9,12 @@ if (count($parts) >= 4) {
 } else {
   echo "No se pudo obtener el nombre del proyecto desde la ruta.";
 }
+
+$sql = "SELECT * FROM embalses";
+$result = $conn->query($sql);
+
+$num_rows = $result->num_rows;
+
 $image_logo =  "/" . $projectName . "/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";
 $area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
@@ -129,87 +136,89 @@ $variacion_mensual = "OCTUBRE";
 </style>
 
 <body>
-  <?php for ($i = 0; $i < 5; $i++) { ?>
+  <?php if ($num_rows > 0) { ?>
     <?php if ($i > 0) { ?>
       <div style="height: 1000px;"></div>
     <?php } ?>
-    <div class="square">
-      1
-    </div>
-    <div class="code-container">
-      <h1 class="code">Código <?php echo $codigo ?></h1>
-    </div>
-    <div class="title-container">
-      <h1><?php echo $titulo ?></h1>
-    </div>
-    <img class="img-logo" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                      echo $image_logo ?>" />
-    <div style="position: absolute; top: 15px; left: 950px;">
-      <img class="img-letters" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                            echo $logo_letters ?>" />
-    </div>
-    <hr>
-    <div style="position: absolute; left: 650px; top: 120px;">
-      <h1 style="color: #2E86C1;"><?php echo $mes ?></h1>
-    </div>
-    <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 150px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                                                                                        echo $area ?>" />
-    <div style="position: absolute; width: 230px; left: 100px; top: 345px;">
-      <h5>Área de la Cuenca: <?php echo number_format($area_cuenta, 2, ',', '.') ?> Km2</h5>
-    </div>
+    <?php while ($row = $result->fetch_assoc()) { ?>
+      <div class="square">
+        1
+      </div>
+      <div class="code-container">
+        <h1 class="code">Código <?php echo $codigo ?></h1>
+      </div>
+      <div class="title-container">
+        <h1 style="text-align: center;"><?php echo $row['nombre_embalse'] ?></h1>
+      </div>
+      <img class="img-logo" src="http://<?php echo $_SERVER['HTTP_HOST'];
+                                        echo $image_logo ?>" />
+      <div style="position: absolute; top: 15px; left: 950px;">
+        <img class="img-letters" src="http://<?php echo $_SERVER['HTTP_HOST'];
+                                              echo $logo_letters ?>" />
+      </div>
+      <hr>
+      <div style="position: absolute; left: 650px; top: 120px;">
+        <h1 style="color: #2E86C1;"><?php echo $mes ?></h1>
+      </div>
+      <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 150px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
+                                                                                                          echo $area ?>" />
+      <div style="position: absolute; width: 230px; left: 100px; top: 345px;">
+        <h5>Área de la Cuenca: <?php echo number_format($row['area_cuenca'], 2, ',', '.') ?> Km2</h5>
+      </div>
 
-    <div style="position: absolute; height: 100px; width: 300px; left: 65px; top: 380px; border: gray 1px solid">
-    </div>
+      <div style="position: absolute; height: 100px; width: 300px; left: 65px; top: 380px; border: gray 1px solid">
+      </div>
 
-    <div style="position: absolute; height: 160px; width: 500px; left: 480px; top: 320px; border: gray 1px solid">
-    </div>
+      <div style="position: absolute; height: 160px; width: 500px; left: 480px; top: 320px; border: gray 1px solid">
+      </div>
 
-    <div style="position: absolute; left: 650px; top: 287px;">
-      <h5 style="color: #2E86C1;"><?php echo $variacion_semanal . ' ' . $fecha . ' al ' . $fecha2 ?></h5>
-    </div>
+      <div style="position: absolute; left: 650px; top: 287px;">
+        <h5 style="color: #2E86C1;"><?php echo $variacion_semanal . ' ' . $fecha . ' al ' . $fecha2 ?></h5>
+      </div>
 
-    <div style="position: absolute; left: 650px; top: 470px;">
-      <h5 style="color: #2E86C1;"><?php echo 'VARIACION MENSUAL' . $variacion_mensual ?></h5>
-    </div>
+      <div style="position: absolute; left: 650px; top: 470px;">
+        <h5 style="color: #2E86C1;"><?php echo 'VARIACION MENSUAL' . $variacion_mensual ?></h5>
+      </div>
 
-    <div style="position: absolute; height: 230px; width: 915px; left: 65px; top: 500px; border: gray 1px solid">
-    </div>
+      <div style="position: absolute; height: 230px; width: 915px; left: 65px; top: 500px; border: gray 1px solid">
+      </div>
 
-    <table style="position: absolute; top: 180px; left: 500px;">
-      <tr>
-        <th class="text-celd">DÍAS</th>
-        <th>02-nov</th>
-        <th>02-nov</th>
-        <th>02-nov</th>
-        <th>02-nov</th>
-        <th>02-nov</th>
-        <th>02-nov</th>
-        <th>02-nov</th>
-      </tr>
-      <tr>
-        <td class="text-celd">COTA 2023
-          (m.s.n.m.)</td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-      </tr>
-      <tr>
-        <td class="text-celd">VOLUMEN
-          (Hm3
-          )</td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-        <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-      </tr>
-    </table>
+      <table style="position: absolute; top: 180px; left: 500px;">
+        <tr>
+          <th class="text-celd">DÍAS</th>
+          <th>02-nov</th>
+          <th>02-nov</th>
+          <th>02-nov</th>
+          <th>02-nov</th>
+          <th>02-nov</th>
+          <th>02-nov</th>
+          <th>02-nov</th>
+        </tr>
+        <tr>
+          <td class="text-celd">COTA 2023
+            (m.s.n.m.)</td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+        </tr>
+        <tr>
+          <td class="text-celd">VOLUMEN
+            (Hm3
+            )</td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+        </tr>
+      </table>
+    <?php } ?>
   <?php } ?>
 </body>
 
