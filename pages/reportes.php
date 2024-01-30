@@ -72,18 +72,26 @@ date_default_timezone_set("America/Caracas");
                     <td class="align-middle text-center hide-cell">
                       <span class="text-secondary text-xs font-weight-bold"><?php echo $row['uso_actual'] ?></span>
                     </td>
-                    <td class="align-middle text-center">
+                    <td class="align-middle text-center align-center">
                       <a id="<?php echo $row['id_embalse']; ?>" onclick="getId(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        <div style="display: flex; flex-direction: column; justify-content: space-evenly; align-items:center;">
-                          <span class="hide-cell">Generar Ficha Técnica </span>
+                        <button type="button" class="py-1 px-2 btn btn-primary btn-block bg-danger" onclick="getId(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')">
+                          Ficha Tecnica &nbsp; &nbsp;
                           <i class="fas fa-file-pdf text-lg me-1 mt-1"></i>
-                        </div>
+                        </button>
                       </a>
                     </td>
                   </tr>
                 <?php } ?>
               </tbody>
             </table>
+            <div class="d-flex justify-content-end pt-4">
+              <a href="#">
+                <button type="button" class="btn btn-primary btn-block bg-danger" onclick="getIdPrioritarios()">
+                  Embalses Prioritarios &nbsp; &nbsp;
+                  <i class="fas fa-file-pdf text-lg me-1 mt-1"></i>
+                </button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -131,6 +139,10 @@ date_default_timezone_set("America/Caracas");
 
   function getId(id, name) {
     window.open('pages/reports/print_ficha_tecnica.php?id=' + id + "&name=" + name, '_blank');
+  }
+
+  function getIdPrioritarios() {
+    window.open('pages/reports/print_embalses_prioritarios.php?id=', '_blank');
   }
   // Función para manejar el evento de clic en el botón
   /*function toggleClass() {
