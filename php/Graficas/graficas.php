@@ -116,57 +116,51 @@
                 data: {
                     datasets: [
 
-                        <?php echo "{label:'" . $nom[0] . "',
-                                
-                                tension: 0.4,
-                                borderColor: '#36a1eb',
-                                backgroundColor: '#36a1eb',
-                                data: [";
+                        <?php echo "{label:'" . $nom[0] . "',tension: 0.4,                                borderColor: '#36a1eb',
+        backgroundColor: '#36a1eb',data: [";
                         $j = 0;
-                        $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
+                        $pivote = date("Y");
                         while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
 
                             if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
 
                                 echo "";
-                                break;
+                                $j++;
                             } else {
 
                                 $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                         ?> {
-                                    x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
+                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
                                     y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                 },
 
                         <?php
                                 $j++;
-                                if ($j >= count($datos_embalses)) {
-                                    break;
-                                }
                             }
-                        };echo "]},"; ?>
+                            if ($j >= count($datos_embalses)) {
+                                break;
+                            }
+                        };
+                        echo "]},"; ?>
 
-                        <?php echo "{label:'" . $nom[1] . "',
-                               tension: 0.4,
-                               borderColor: '#e4c482',
-                               backgroundColor: '#e4c482',
-                                data: [";
+                        <?php echo "{label:'" . $nom[1] . "',tension: 0.4,borderColor: '#e4c482',backgroundColor: '#e4c482',
+                        data: [";
                         $j = 0;
-                        $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1;
+                        $pivote = date("Y") - 1;
                         while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
 
                             if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
 
                                 echo "";
-                                break;
+                                $j++;
                             } else {
 
 
                                 $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                         ?> {
-                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1 . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) . '-' . date("d", strtotime($datos_embalses[$j]["fecha"])) . ' ' . $datos_embalses[$j]["hora"]); ?>',
+                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
                                     y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                 },
 
@@ -300,13 +294,13 @@
                         <?php echo "{label:'" . $nom[0] . "',tension: 0.4,                                borderColor: '#36a1eb',
                                 backgroundColor: '#36a1eb',data: [";
                         $j = 0;
-                        $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
+                        $pivote = date("Y");
                         while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
 
                             if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
 
                                 echo "";
-                                break;
+                                $j++;
                             } else {
 
                                 $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
@@ -318,22 +312,23 @@
 
                         <?php
                                 $j++;
-                                if ($j >= count($datos_embalses)) {
-                                    break;
-                                }
                             }
-                        }; echo "]},";?>
+                            if ($j >= count($datos_embalses)) {
+                                break;
+                            }
+                        };
+                        echo "]},"; ?>
 
                         <?php echo "{label:'" . $nom[1] . "',tension: 0.4,borderColor: '#e4c482',
                                 backgroundColor: '#e4c482',data: [";
                         $j = 0;
-                        $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
+                        $pivote = date("Y") - 1;
                         while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
 
                             if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
 
                                 echo "";
-                                break;
+                                $j++;
                             } else {
 
 
