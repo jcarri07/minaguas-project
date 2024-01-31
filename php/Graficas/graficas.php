@@ -71,7 +71,7 @@
                         ctx.moveTo(left, y.getPixelForValue(yvalue));
                         ctx.lineTo(right, y.getPixelForValue(yvalue));
                         ctx.strokeStyle = 'black'; // Cambiar color según tus preferencias
-                        ctx.fillText(cota + ": " + yvalue+" m.s.n.m.", right - 300, y.getPixelForValue(yvalue) + 25);
+                        ctx.fillText(cota + ": " + yvalue + " m.s.n.m.", right - 300, y.getPixelForValue(yvalue) + 25);
                         ctx.stroke();
                     }
                 }
@@ -128,14 +128,14 @@
 
                             if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
 
-                                echo "]},";
+                                echo "";
                                 break;
                             } else {
 
                                 $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                         ?> {
-                                    x: '<?php echo $datos_embalses[$j]["fecha"]." ".$datos_embalses[$j]["hora"];  ?>',
+                                    x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
                                     y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                 },
 
@@ -145,19 +145,20 @@
                                     break;
                                 }
                             }
-                        }; ?>
+                        };echo "]},"; ?>
 
                         <?php echo "{label:'" . $nom[1] . "',
                                tension: 0.4,
                                borderColor: '#e4c482',
                                backgroundColor: '#e4c482',
                                 data: [";
-                        $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
+                        $j = 0;
+                        $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1;
                         while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
 
                             if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
 
-                                echo "],";
+                                echo "";
                                 break;
                             } else {
 
@@ -165,7 +166,7 @@
                                 $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                         ?> {
-                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1 . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])).'-'.date("d", strtotime($datos_embalses[$j]["fecha"])) . ' '. $datos_embalses[$j]["hora"]); ?>',
+                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1 . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) . '-' . date("d", strtotime($datos_embalses[$j]["fecha"])) . ' ' . $datos_embalses[$j]["hora"]); ?>',
                                     y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                 },
 
@@ -184,10 +185,10 @@
 
                 options: {
                     animations: false,
-                    responsive:true,
+                    responsive: true,
                     interaction: {
                         intersect: false,
-                        axis:'x',
+                        axis: 'x',
                     },
                     plugins: {
                         legend: {
@@ -233,7 +234,7 @@
                                     //console.log(date);
                                     return new Intl.DateTimeFormat('es-ES', {
                                         month: 'short',
-                                        
+
                                     }).format(value);
                                 },
                                 font: {
@@ -283,7 +284,7 @@
                     },
                 },
                 plugins: [arbitra],
-                
+
             });
             let chartsM = new Chart(semana<?php echo $t; ?>, {
                 type: 'line',
@@ -304,7 +305,7 @@
 
                             if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
 
-                                echo "]},";
+                                echo "";
                                 break;
                             } else {
 
@@ -321,16 +322,17 @@
                                     break;
                                 }
                             }
-                        }; ?>
+                        }; echo "]},";?>
 
                         <?php echo "{label:'" . $nom[1] . "',tension: 0.4,borderColor: '#e4c482',
                                 backgroundColor: '#e4c482',data: [";
+                        $j = 0;
                         $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
                         while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
 
                             if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
 
-                                echo "],";
+                                echo "";
                                 break;
                             } else {
 
