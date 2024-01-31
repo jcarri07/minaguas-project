@@ -26,8 +26,8 @@
 
         for ($t = 0; $t <  count($embalses); $t++) {
         ?>
-            <canvas class="al" id="mes<?php echo $t; ?>"></canvas>
-            <canvas class="alM" id="semana<?php echo $t; ?>"></canvas>
+            <div style="width:1830px !important; height:460px"><canvas class="al" id="mes<?php echo $t; ?>"></canvas></div>
+            <div style="width:900px !important; height:300px"><canvas class="alM" id="semana<?php echo $t; ?>"></canvas></div>
 
         <?php
 
@@ -44,6 +44,7 @@
     $(document).ready(function() {
 
         <?php
+        
         for ($t = 0; $t <  count($embalses); $t++) {
         ?>
             const arbitra = {
@@ -67,11 +68,11 @@
                     function dr(yvalue, cota) {
 
                         ctx.beginPath();
-                        ctx.lineWidth = 2;
+                        ctx.lineWidth = 1;
                         ctx.moveTo(left, y.getPixelForValue(yvalue));
                         ctx.lineTo(right, y.getPixelForValue(yvalue));
                         ctx.strokeStyle = 'black'; // Cambiar color según tus preferencias
-                        ctx.fillText(cota + ": " + yvalue + " m.s.n.m.", right - 320, y.getPixelForValue(yvalue) + 25);
+                        ctx.fillText(cota + ": " + yvalue + " (m.s.n.m.)", right - 200, y.getPixelForValue(yvalue) + 15);
                         ctx.stroke();
                     }
                 }
@@ -189,17 +190,17 @@
                             labels: {
                                 // This more specific font property overrides the global property
                                 font: {
-                                    size: 35
+                                    size: 20
                                 },
 
                             }
                         },
                         title: {
-                            display: true,
-                            text: '<?php echo $embalses[$t]['nombre_embalse']; ?>',
+                            display: false,
+                            text: 'Embalse <?php echo $embalses[$t]['nombre_embalse']; ?>',
                             fullSize: true,
                             font: {
-                                size: 40
+                                size: 30
                             }
                         },
 
@@ -211,7 +212,7 @@
                                 display: true,
                                 text: 'Año <?php echo date('Y'); ?>',
                                 font: {
-                                    size: 28
+                                    size: 18
                                 },
                             },
                             type: 'time',
@@ -232,7 +233,7 @@
                                     }).format(value);
                                 },
                                 font: {
-                                    size: 28
+                                    size: 14
                                 },
                             },
                             grid: {
@@ -246,7 +247,7 @@
                                 display: true,
                                 text: 'Cota (m.s.n.m.)',
                                 font: {
-                                    size: 28
+                                    size: 20
                                 },
                             },
                             min: <?php echo round($embalses[$t]["cota_min"] - 30, 2); ?>,
@@ -256,7 +257,7 @@
                             },
                             ticks: {
                                 font: {
-                                    size: 28
+                                    size: 14
                                 },
                             },
                             /*grid: {
@@ -335,7 +336,7 @@
                                 $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                         ?> {
-                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . strftime('%B',  strtotime($datos_embalses[$j]["fecha"])) ?>',
                                     y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                 },
 
@@ -363,23 +364,30 @@
                             labels: {
                                 // This more specific font property overrides the global property
                                 font: {
-                                    size: 28
+                                    size: 16
                                 },
 
                             }
                         },
                         title: {
-                            display: true,
-                            text: '<?php echo $embalses[$t]['nombre_embalse']; ?>',
+                            display: false,
+                            text: 'Embalse <?php echo $embalses[$t]['nombre_embalse']; ?>',
                             fullSize: true,
                             font: {
-                                size: 28
+                                size: 30
                             }
                         },
                     },
                     scales: {
 
                         x: {
+                            title: {
+                                display: true,
+                                text: 'Semana <?php echo date("W", strtotime($fechasSemana[0]))." ".strftime('del mes de %B', DateTime::createFromFormat("Y-m-d", end($fechasSemana))->getTimestamp()); ?>',
+                                font: {
+                                    size: 16
+                                },
+                            },
                             label: 'Año',
                             type: 'time',
                             time: {
@@ -398,7 +406,7 @@
                                     }).format(value);
                                 },
                                 font: {
-                                    size: 28
+                                    size: 14
                                 },
                             },
                             grid: {
@@ -407,7 +415,13 @@
 
                         },
                         y: {
-                            label: 'Cota (m.s.n.m.)',
+                            title: {
+                                display: true,
+                                text: 'Cota (m.s.n.m.)',
+                                font: {
+                                    size: 16
+                                },
+                            },
                             min: <?php echo round($embalses[$t]["cota_min"] - 30, 2); ?>,
                             max: <?php echo round($embalses[$t]["cota_max"] + 20, 2); ?>,
                             border: {
@@ -415,7 +429,7 @@
                             },
                             ticks: {
                                 font: {
-                                    size: 28
+                                    size: 14
                                 },
                             },
                             /*grid: {
