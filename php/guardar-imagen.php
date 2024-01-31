@@ -2,15 +2,15 @@
 session_start();
 
 $data = $_POST['imagen'];
-$i = $_POST['numero'];
-    
+$i = $_POST['nombre'];
+$t = $_POST['numero'];    
 
 
 
     
     $aux = $data;
-    $nombre_archivo = "imagen-" . $i . "-" . $_SESSION['id_usuario'] . ".png"; //nombre del archivo
-    $ruta_archivo = "../../../img/temp/$nombre_archivo"; //ruta donde guardar el archivo
+    $nombre_archivo = "imagen-" . $i . "-".$t.".png"; //nombre del archivo
+    $ruta_archivo = "../assets/img/temp/$nombre_archivo"; //ruta donde guardar el archivo
     $aux = explode(";", $aux)[1];
     $aux = explode(",", $aux)[1];
     $aux = str_replace('data:image/png;base64,', '', $aux);
