@@ -71,7 +71,7 @@
                         ctx.moveTo(left, y.getPixelForValue(yvalue));
                         ctx.lineTo(right, y.getPixelForValue(yvalue));
                         ctx.strokeStyle = 'black'; // Cambiar color según tus preferencias
-                        ctx.fillText(cota + ": " + yvalue + " m.s.n.m.", right - 300, y.getPixelForValue(yvalue) + 25);
+                        ctx.fillText(cota + ": " + yvalue + " m.s.n.m.", right - 320, y.getPixelForValue(yvalue) + 25);
                         ctx.stroke();
                     }
                 }
