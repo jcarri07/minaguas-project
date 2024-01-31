@@ -10,8 +10,48 @@ if (count($parts) >= 4) {
   echo "No se pudo obtener el nombre del proyecto desde la ruta.";
 }
 
+function getMonthName()
+{
+  $fecha_actual = getdate();
+
+  $numero_mes = $fecha_actual['mon'];
+
+  $nombres_meses = array(
+    1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril",
+    5 => "Mayo", 6 => "Junio", 7 => "Julio", 8 => "Agosto",
+    9 => "Septiembre", 10 => "Octubre", 11 => "Noviembre", 12 => "Diciembre"
+  );
+
+  $nombre_mes = $nombres_meses[$numero_mes];
+
+  return  $nombre_mes;
+}
+
+function getShortName()
+{
+  $fecha_actual = getdate();
+
+  $numero_mes = $fecha_actual['mon'];
+
+  $nombres_meses_abreviados = array(
+    1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr",
+    5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Ago",
+    9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dic"
+  );
+
+  $nombre_mes_abreviado = $nombres_meses_abreviados[$numero_mes];
+
+  return $nombre_mes_abreviado;
+}
+
+
 $sql = "SELECT * FROM embalses";
 $result = $conn->query($sql);
+
+$mes_actual = date('m');
+$sqlMonths = "SELECT cota_actual, fecha FROM datos_embalse WHERE MONTH(fecha) = $mes_actual AND DAY(fecha) BETWEEN 2 AND 8";
+
+
 
 $num_rows = $result->num_rows;
 
@@ -26,7 +66,7 @@ $area_cuenta = 636.49;
 $variacion_semanal = "VARIACION SEMANAL";
 $fecha = "02";
 $fecha2 = "08";
-$variacion_mensual = "OCTUBRE";
+$variacion_mensual = getMonthName();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +124,7 @@ $variacion_mensual = "OCTUBRE";
 
   .title-container {
     margin-left: 260px;
-    width: 800px;
+    width: 700px;
     color: #2E86C1;
   }
 
@@ -148,7 +188,7 @@ $variacion_mensual = "OCTUBRE";
         <h1 class="code">Código <?php echo $codigo ?></h1>
       </div>
       <div class="title-container">
-        <h1 style="text-align: center;"><?php echo $row['nombre_embalse'] ?></h1>
+        <h1 style="text-align: center"><?php echo $row['nombre_embalse'] ?></h1>
       </div>
       <img class="img-logo" src="http://<?php echo $_SERVER['HTTP_HOST'];
                                         echo $image_logo ?>" />
@@ -157,8 +197,8 @@ $variacion_mensual = "OCTUBRE";
                                               echo $logo_letters ?>" />
       </div>
       <hr>
-      <div style="position: absolute; left: 650px; top: 120px;">
-        <h1 style="color: #2E86C1;"><?php echo $mes ?></h1>
+      <div style="position: absolute; left: 500px; top: 120px; width: 460px;">
+        <h1 style="text-align: center; color: #2E86C1;"><?php echo getMonthName() ?></h1>
       </div>
       <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 150px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
                                                                                                           echo $area ?>" />
@@ -166,10 +206,10 @@ $variacion_mensual = "OCTUBRE";
         <h5>Área de la Cuenca: <?php echo number_format($row['area_cuenca'], 2, ',', '.') ?> Km2</h5>
       </div>
 
-      <div style="position: absolute; height: 100px; width: 300px; left: 65px; top: 380px; border: gray 1px solid">
+      <div style="position: absolute; height: 100px; width: 300px; left: 65px; top: 380px; border: gray 1px solid; background-color: ">
       </div>
 
-      <div style="position: absolute; height: 160px; width: 500px; left: 480px; top: 320px; border: gray 1px solid">
+      <div style="position: absolute; height: 160px; width: 500px; left: 480px; top: 320px; border: gray 1px solid; background-color: blue;">
       </div>
 
       <div style="position: absolute; left: 650px; top: 287px;">
@@ -177,45 +217,50 @@ $variacion_mensual = "OCTUBRE";
       </div>
 
       <div style="position: absolute; left: 650px; top: 470px;">
-        <h5 style="color: #2E86C1;"><?php echo 'VARIACION MENSUAL' . $variacion_mensual ?></h5>
+        <h5 style="color: #2E86C1;"><?php echo 'VARIACION MENSUAL ' . strtoupper($variacion_mensual) ?></h5>
       </div>
 
-      <div style="position: absolute; height: 230px; width: 915px; left: 65px; top: 500px; border: gray 1px solid">
+      <div style="position: absolute; height: 230px; width: 915px; left: 65px; top: 500px; border: gray 1px solid; background-color: red;">
       </div>
 
       <table style="position: absolute; top: 180px; left: 500px;">
         <tr>
           <th class="text-celd">DÍAS</th>
-          <th>02-nov</th>
-          <th>02-nov</th>
-          <th>02-nov</th>
-          <th>02-nov</th>
-          <th>02-nov</th>
-          <th>02-nov</th>
-          <th>02-nov</th>
+          <?php for ($i = 0; $i < 7; $i++) {
+            $dia = $i + 2;
+            echo "<th>0$dia" . "-" . getShortName() . "</th>";
+          } ?>
         </tr>
         <tr>
           <td class="text-celd">COTA 2023
             (m.s.n.m.)</td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <?php
+          $resultado = $conn->query($sqlMonths);
+          $celdas_rellenadas = 0;
+
+          if ($resultado->num_rows > 0) {
+            while ($fila = $resultado->fetch_assoc()) {
+              if ($fila !== null || $fila !== "") {
+                echo "<td>" . $fila['cota_actual'] . "</td>";
+                $celdas_rellenadas++;
+              }
+            }
+          }
+
+          for ($i = $celdas_rellenadas; $i < 7; $i++) {
+            echo "<td>N/A</td>";
+          }
+          ?>
         </tr>
         <tr>
           <td class="text-celd">VOLUMEN
             (Hm3
             )</td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
-          <td><?php echo number_format($cota, 2, ',', '.') ?></td>
+          <?php
+          for ($i = 0; $i < 7; $i++) {
+            echo "<td>0</td>";
+          }
+          ?>
         </tr>
       </table>
     <?php } ?>
