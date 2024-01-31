@@ -16,7 +16,8 @@
 </head>
 
 <body>
-    <div style=" width: 1200px;">
+    <!--div style=" width: 1200px;"-->
+    <div>
         <?php
         $aux = $embalses[0]["id_embalse"];
         $j = 0;
@@ -45,7 +46,65 @@
         <?php
         for ($t = 0; $t <  count($embalses); $t++) {
         ?>
+            const arbitra = {
+                id: 'arbitra',
+                beforeDatasetsDraw(chart, args, plugins) {
+                    const {
+                        ctx,
+                        scales: {
+                            x,
+                            y
+                        },
+                        chartArea: {
+                            left,
+                            right
+                        }
+                    } = chart;
+                    ctx.save();
+                    dr(<?php echo $embalses[$t]["cota_min"]; ?>, 'Cota mínima');
+                    dr(<?php echo $embalses[$t]["cota_max"]; ?>, 'Cota máxima');
 
+                    function dr(yvalue, cota) {
+
+                        ctx.beginPath();
+                        ctx.lineWidth = 2;
+                        ctx.moveTo(left, y.getPixelForValue(yvalue));
+                        ctx.lineTo(right, y.getPixelForValue(yvalue));
+                        ctx.strokeStyle = 'black'; // Cambiar color según tus preferencias
+                        ctx.fillText(cota + ": " + yvalue+" m.s.n.m.", right - 300, y.getPixelForValue(yvalue) + 25);
+                        ctx.stroke();
+                    }
+                }
+            };
+            const dibu = {
+                id: 'dibu',
+                beforeDatasetsDraw(chart, args, plugins) {
+                    const {
+                        ctx,
+                        scales: {
+                            x,
+                            y
+                        },
+                        chartArea: {
+                            left,
+                            right
+                        }
+                    } = chart;
+                    ctx.save();
+
+                    ctx = chart.ctx;
+                    dataset = chart.data.datasets[0];
+                    meta = chart.getDatasetMeta(0);
+
+                    // Coordenadas del último punto
+                    lastPoint = meta.data[meta.data.length - 1];
+
+                    // Dibujar la etiqueta del último punto
+                    ctx.fillStyle = 'black'; // Cambiar color según tus preferencias
+                    ctx.font = 'bold 14px Arial';
+                    ctx.fillText(dataset.label + ': ' + lastPoint._model.y.toFixed(2), lastPoint._model.x + 10, lastPoint._model.y - 10);
+                }
+            };
             semana<?php echo $t; ?> = document.getElementById("semana<?php echo $t; ?>");
             mes<?php echo $t; ?> = document.getElementById("mes<?php echo $t; ?>");
 
@@ -60,6 +119,8 @@
                         <?php echo "{label:'" . $nom[0] . "',
                                 
                                 tension: 0.4,
+                                borderColor: '#36a1eb',
+                                backgroundColor: '#36a1eb',
                                 data: [";
                         $j = 0;
                         $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
@@ -88,6 +149,8 @@
 
                         <?php echo "{label:'" . $nom[1] . "',
                                tension: 0.4,
+                               borderColor: '#e4c482',
+                               backgroundColor: '#e4c482',
                                 data: [";
                         $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
                         while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
@@ -121,17 +184,15 @@
 
                 options: {
                     animations: false,
-                    locale: 'es',
                     interaction: {
                         intersect: false,
                     },
                     plugins: {
-
                         legend: {
                             labels: {
                                 // This more specific font property overrides the global property
                                 font: {
-                                    size: 28
+                                    size: 35
                                 },
 
                             }
@@ -141,20 +202,28 @@
                             text: '<?php echo $embalses[$t]['nombre_embalse']; ?>',
                             fullSize: true,
                             font: {
-                                size: 28
+                                size: 40
                             }
                         },
+
                     },
                     scales: {
 
                         x: {
-                            label: 'Año',
+                            title: {
+                                display: true,
+                                text: 'Año <?php echo date('Y'); ?>',
+                                font: {
+                                    size: 28
+                                },
+                            },
                             type: 'time',
                             time: {
                                 unit: 'month'
                             },
                             min: '2024-01',
                             max: '2024-12',
+
                             ticks: {
                                 callback: (value, index, ticks) => {
 
@@ -162,25 +231,58 @@
                                     //console.log(date);
                                     return new Intl.DateTimeFormat('es-ES', {
                                         month: 'short',
-                                        year: 'numeric'
+                                        
                                     }).format(value);
                                 },
+                                font: {
+                                    size: 28
+                                },
+                            },
+                            grid: {
+                                color: function(context) {},
                             },
 
-                        }
-                    },
+                        },
 
-                    y: {
-                        label: 'Cota (m.s.n.m.)',
-                        min: <?php echo round($embalses[$t]["cota_min"] - 30, 2);
-                                ?>,
-                        max: <?php echo round($embalses[$t]["cota_max"] + 20, 2); ?>,
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Cota (m.s.n.m.)',
+                                font: {
+                                    size: 28
+                                },
+                            },
+                            min: <?php echo round($embalses[$t]["cota_min"] - 30, 2); ?>,
+                            max: <?php echo round($embalses[$t]["cota_max"] + 20, 2); ?>,
+                            border: {
+                                display: false,
+                            },
+                            ticks: {
+                                font: {
+                                    size: 28
+                                },
+                            },
+                            /*grid: {
+                                color: function(context) {
+                                    if (context.tick.value > <?php echo round($embalses[$t]["cota_min"], 0); ?> && context.tick.value < <?php echo round($embalses[$t]["cota_max"], 0); ?>) {
+                                        return '#2ea043';
+                                    } else {}
+                                    if (context.tick.value < <?php echo round($embalses[$t]["cota_min"], 0); ?>) {
+                                        return '#f85149';
+                                    }
+                                    if (context.tick.value > <?php echo round($embalses[$t]["cota_max"], 0); ?>) {
+                                        return '#0a86da';
+                                    }
+                                },
+                            },*/
+                        },
 
 
                     },
                 },
+                plugins: [arbitra],
+                
             });
-
             let chartsM = new Chart(semana<?php echo $t; ?>, {
                 type: 'line',
                 labels: [<?php
@@ -192,7 +294,8 @@
                 data: {
                     datasets: [
 
-                        <?php echo "{label:'" . $nom[0] . "',tension: 0.4,data: [";
+                        <?php echo "{label:'" . $nom[0] . "',tension: 0.4,                                borderColor: '#36a1eb',
+                                backgroundColor: '#36a1eb',data: [";
                         $j = 0;
                         $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
                         while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
@@ -218,7 +321,8 @@
                             }
                         }; ?>
 
-                        <?php echo "{label:'" . $nom[1] . "',tension: 0.4,data: [";
+                        <?php echo "{label:'" . $nom[1] . "',tension: 0.4,borderColor: '#e4c482',
+                                backgroundColor: '#e4c482',data: [";
                         $pivote = date("Y", strtotime($datos_embalses[$j]["fecha"]));
                         while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
 
@@ -249,7 +353,7 @@
                     ],
                 },
                 options: {
-                    animations:false,
+                    animations: false,
                     locale: 'es',
                     interaction: {
                         intersect: false,
@@ -294,20 +398,46 @@
                                         month: 'short',
                                     }).format(value);
                                 },
+                                font: {
+                                    size: 28
+                                },
+                            },
+                            grid: {
+                                color: function(context) {},
                             },
 
-                        }
+                        },
+                        y: {
+                            label: 'Cota (m.s.n.m.)',
+                            min: <?php echo round($embalses[$t]["cota_min"] - 30, 2); ?>,
+                            max: <?php echo round($embalses[$t]["cota_max"] + 20, 2); ?>,
+                            border: {
+                                display: false,
+                            },
+                            ticks: {
+                                font: {
+                                    size: 28
+                                },
+                            },
+                            /*grid: {
+                                color: function(context) {
+                                    if (context.tick.value > <?php echo round($embalses[$t]["cota_min"], 0); ?> && context.tick.value < <?php echo round($embalses[$t]["cota_max"], 0); ?>) {
+                                        return '#2ea043';
+                                    } else {}
+                                    if (context.tick.value < <?php echo round($embalses[$t]["cota_min"], 0); ?>) {
+                                        return '#f85149';
+                                    }
+                                    if (context.tick.value > <?php echo round($embalses[$t]["cota_max"], 0); ?>) {
+                                        return '#0a86da';
+                                    }
+                                },
+                            },*/
+                        },
                     },
 
-                    y: {
-                        label: 'Cota (m.s.n.m.)',
-                        min: <?php echo round($embalses[$t]["cota_min"] - 30, 2);
-                                ?>,
-                        max: <?php echo round($embalses[$t]["cota_max"] + 20, 2); ?>,
 
-
-                    },
                 },
+                plugins: [arbitra],
             });
         <?php
         }
@@ -328,40 +458,35 @@
             html2canvas(x<?php echo $t; ?>).then(function(canvas) { //PROBLEMAS
                 //$("#ca").append(canvas);
                 canvas.willReadFrequently = true,
-                dataURL = canvas.toDataURL("image/jpeg", 0.9);
+                    dataURL = canvas.toDataURL("image/jpeg", 0.9);
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '../guardar-imagen.php', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.send('imagen=' + dataURL + '&nombre=<?php echo $embalses[$t]['nombre_embalse']; ?>&numero=' + 1);
+                xhr.send('imagen=' + dataURL + '&nombre=<?php echo $embalses[$t]['id_embalse']; ?>&numero=' + 1);
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.responseText);
+
                         console.log("listo");
-                        i++;
-                        //$("#can").remove();
-                        //window.close();
+
                     } else {
-                        console.log(this.responseText);
+                        console.log("fallo");
                     }
                 }
             });
-            html2canvas(y<?php echo $t; ?>).then(function(canvas) { //PROBLEMAS
+            html2canvas(y<?php echo $t; ?>).then(function(canva) { //PROBLEMAS
                 //$("#ca").append(canvas);
-                canvas.willReadFrequently = true,
-                dataURL = canvas.toDataURL("image/jpeg", 0.9);
+                canva.willReadFrequently = true,
+                    dataURL = canva.toDataURL("image/jpeg", 0.9);
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '../guardar-imagen.php', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.send('imagen=' + dataURL + '&nombre=<?php echo $embalses[$t]['nombre_embalse']; ?>&numero=' + 2);
+                xhr.send('imagen=' + dataURL + '&nombre=<?php echo $embalses[$t]['id_embalse']; ?>&numero=' + 2);
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.responseText);
                         console.log("listo");
-                        i++;
-                        //$("#can").remove();
-                        //window.close();
+
                     } else {
-                        console.log(this.responseText);
+                        console.log("fallo");
                     }
                 }
             });
