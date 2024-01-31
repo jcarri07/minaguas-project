@@ -1,6 +1,8 @@
 <?php
 
 include "../Conexion.php";
+date_default_timezone_set("America/Caracas");
+setlocale(LC_TIME, "spanish");
 $fecha_actual = date("Y");
 $f = $fecha_actual - 1;
 
