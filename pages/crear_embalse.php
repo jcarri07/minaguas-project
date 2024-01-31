@@ -33,6 +33,11 @@ date_default_timezone_set("America/Caracas");
 
   }
 
+  #modal-body {
+    overflow-x: auto;
+
+  }
+
   .tabla {
     display: inline-block;
     vertical-align: top;
@@ -294,50 +299,50 @@ date_default_timezone_set("America/Caracas");
                     <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn btn-link text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
                   </div>
                   <div class="form-group">
-                    <label for="vida_util">Vida útil</label>
+                    <label for="vida_util">Vida útil (años)</label>
                     <input type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
                   </div>
                 </div>
 
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
-                    <label for="cota_min">Cota mínima</label>
+                    <label for="cota_min">Cota mínima (m s.m.n.)</label>
                     <input type="number" step="0.001" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
                   </div>
                   <div class=" form-group">
-                    <label for="vol_min">Volumen mínimo</label>
+                    <label for="vol_min">Volumen mínimo (hm³)</label>
                     <input type="number" step="0.001" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                   </div>
                   <div class=" form-group">
-                    <label for="sup_min">Superficie mínima</label>
+                    <label for="sup_min">Superficie mínima (ha)</label>
                     <input type="number" step="0.001" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
-                    <label for="cota_nor">Cota normal</label>
+                    <label for="cota_nor">Cota normal (m s.m.n.)</label>
                     <input type="number" step="0.001" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                   </div>
                   <div class=" form-group">
-                    <label for="vol_nor">Volumen normal</label>
+                    <label for="vol_nor">Volumen normal (hm³)</label>
                     <input type="number" step="0.001" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                   </div>
                   <div class=" form-group">
-                    <label for="sup_nor">Superficie normal</label>
+                    <label for="sup_nor">Superficie normal (ha)</label>
                     <input type="number" step="0.001" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
-                    <label for="cota_max">Cota máxima</label>
+                    <label for="cota_max">Cota máxima (m s.m.n.)</label>
                     <input type="number" step="0.001" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                   </div>
                   <div class=" form-group">
-                    <label for="vol_max">Volumen máximo</label>
+                    <label for="vol_max">Volumen máximo (hm³)</label>
                     <input type="number" step="0.001" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                   </div>
                   <div class=" form-group">
-                    <label for="sup_max">Superficie máxima</label>
+                    <label for="sup_max">Superficie máxima (ha)</label>
                     <input type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
                   </div>
                 </div>
@@ -355,11 +360,11 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="afluentes" name="afluentes" placeholder="Ingrese los afluentes principales">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="area">Área de la cuenca</label>
+                  <label for="area">Área de la cuenca (ha)</label>
                   <input type="number" step="0.001" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="escurrimiento">Escurrimiento medio</label>
+                  <label for="escurrimiento">Escurrimiento medio (hm³)</label>
                   <input type="number" step="0.001" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
                 </div>
               </div>
@@ -405,11 +410,11 @@ date_default_timezone_set("America/Caracas");
                   <input type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="duracion_construccion">Duración de construcción</label>
+                  <label for="duracion_construccion">Duración de construcción (años)</label>
                   <input type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duracion de construcción en años">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="inicio_operacion">Inicio de operación</label>
+                  <label for="inicio_operacion">Inicio de operación (año)</label>
                   <input type="number" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operación">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -431,7 +436,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="tipo_presa" name="tipo_presa" placeholder="Ingrese el tipo de presa">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="altura">Altura</label>
+                  <label for="altura">Altura (m)</label>
                   <input type="number" step="0.001" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -443,19 +448,19 @@ date_default_timezone_set("America/Caracas");
                   <input type="number" step="0.001" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="longitud_cresta">Longitud de la cresta</label>
+                  <label for="longitud_cresta">Longitud de la cresta (m)</label>
                   <input type="number" step="0.001" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="cota_cresta">Cota de la cresta</label>
+                  <label for="cota_cresta">Cota de la cresta (m s.m.n.)</label>
                   <input type="number" step="0.001" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="ancho_cresta">Ancho de la cresta</label>
+                  <label for="ancho_cresta">Ancho de la cresta (m)</label>
                   <input type="number" step="0.001" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="volumen_terraplen">Volumen del terraplen</label>
+                  <label for="volumen_terraplen">Volumen del terraplen (m³)</label>
                   <input type="number" step="0.001" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -480,15 +485,15 @@ date_default_timezone_set("America/Caracas");
                   <input type="number" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el numero de compuertas del aliviadero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="carga_aliviadero">Carga sobre el vertedero</label>
+                  <label for="carga_aliviadero">Carga sobre el vertedero (m)</label>
                   <input type="number" step="0.001" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="descarga_aliviadero">Descarga maxima</label>
+                  <label for="descarga_aliviadero">Descarga maxima (m³/s)</label>
                   <input type="number" step="0.001" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="longitud_aliviadero">Longitud</label>
+                  <label for="longitud_aliviadero">Longitud (m)</label>
                   <input type="number" step="0.001" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud">
                 </div>
               </div>
@@ -517,7 +522,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulación de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="gasto_toma">Gasto máximo de la obra de toma</label>
+                  <label for="gasto_toma">Gasto máximo de la obra de toma (m³/s)</label>
                   <input type="number" step="0.001" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto máximo de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -559,11 +564,11 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="sectores" name="sectores" placeholder="Ingrese los sectores beneficiados">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="poblacion">Población beneficiada</label>
+                  <label for="poblacion">Población beneficiada (hab.)</label>
                   <input type="number" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la población beneficiada en habitantes">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="area_riego">Área de riego beneficiada</label>
+                  <label for="area_riego">Área de riego beneficiada (ha)</label>
                   <input type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada en km2">
                 </div>
               </div>
@@ -923,8 +928,8 @@ date_default_timezone_set("America/Caracas");
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">COTAS</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn btn-primary btn-rounded" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">X</span>
         </button>
       </div>
       <div id="modal-body" class="modal-body">
@@ -934,8 +939,7 @@ date_default_timezone_set("America/Caracas");
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn bg-gradient-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

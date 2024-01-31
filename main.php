@@ -190,7 +190,12 @@ date_default_timezone_set("America/Caracas");
             </li>
             <li class="nav-item px-3 d-flex align-items-center">
               <a href="?page=perfil" class="nav-link text-white p-0 text-lg">
-                <i class="fa fa-cog cursor-pointer"></i> <!--fixed-plugin-button-nav (esta clase despliega el menu de configuracion lateral)-->
+                <i class="fa fa-user cursor-pointer"></i> <!--fixed-plugin-button-nav (esta clase despliega el menu de configuracion lateral)-->
+              </a>
+            </li>
+            <li class="nav-item pe-3 d-flex align-items-center">
+              <a href="?page=configuraciones" class="nav-link text-white p-0 text-lg">
+                <i class="fa fa-cog cursor-pointer"></i>
               </a>
             </li>
             <li class="nav-item pe-3 d-flex align-items-center">

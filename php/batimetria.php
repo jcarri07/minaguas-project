@@ -18,7 +18,7 @@ class Batimetria
     {
 
         $id_embalse = mysqli_real_escape_string($this->conn, $this->id_embalse);
-        $query = "SELECT batimetria  FROM embalses WHERE id_embalse = $id_embalse";
+        $query = "SELECT batimetria FROM embalses WHERE id_embalse = $id_embalse";
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {

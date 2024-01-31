@@ -143,10 +143,10 @@ closeConection($conn);
       <div class="card h-100">
         <div class="card-header pb-0">
           <!-- <div class="row"> -->
-            <!-- <div class="col-6 d-flex align-items-center"> -->
-              <h6 class="">Embalses <?php echo $prueba[1]; ?></h6>
-            <!-- </div> -->
-            <!--<div class="col-6 text-end">
+          <!-- <div class="col-6 d-flex align-items-center"> -->
+          <h6 class="">Embalses <?php echo $prueba[1]; ?></h6>
+          <!-- </div> -->
+          <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
                 </div>-->
           <!-- </div> -->
@@ -230,23 +230,23 @@ closeConection($conn);
       </div>
     </div>
     <?php
-    if($numEliminados > 0){
-      ?>
-      
+    if ($numEliminados > 0) {
+    ?>
+
       <div class="col-lg-12 mt-5">
-      <div class="card h-100">
-        <div class="card-header pb-0">
-          <!-- <div class="row"> -->
+        <div class="card h-100">
+          <div class="card-header pb-0">
+            <!-- <div class="row"> -->
             <!-- <div class="col-6 d-flex align-items-center"> -->
-              <h6 class="">Embalses eliminados</h6>
+            <h6 class="">Embalses eliminados</h6>
             <!-- </div> -->
             <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
                 </div>-->
-          <!-- </div> -->
-        </div>
-        <div class="card-body p-3 pb-0">
-          <!-- <div class="text-center">
+            <!-- </div> -->
+          </div>
+          <div class="card-body p-3 pb-0">
+            <!-- <div class="text-center">
             <a href="?page=crear_embalse">
               <button type="button" class="btn btn-primary btn-block">
                 Nuevo
@@ -254,76 +254,76 @@ closeConection($conn);
             </a>
           </div> -->
 
-          <div class="dt-responsive table-responsive">
-            <?php
-            if (mysqli_num_rows($queryEmbalsesEliminados) > 0) {
-            ?>
-              <table id="table-embalses-eliminados" class="table table-striped table-bordered nowrap">
-                <thead>
-                  <tr>
-                    <th>Embalse</th>
-                    <th class="hide-cell">Volumen actual</th>
-                    <th style="text-align: center;" class="hide-cell">Encargado</th>
-                    <th style="text-align: center;">Acción</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  while ($row = mysqli_fetch_array($queryEmbalsesEliminados)) {
-                  ?>
+            <div class="dt-responsive table-responsive">
+              <?php
+              if (mysqli_num_rows($queryEmbalsesEliminados) > 0) {
+              ?>
+                <table id="table-embalses-eliminados" class="table table-striped table-bordered nowrap">
+                  <thead>
                     <tr>
-                      <td>
-                        <div class="d-flex flex-column px-3">
-                          <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
-                          <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
-                        </div>
-                      </td>
-                      <td class="hide-cell">
-                        <div class="d-flex flex-column px-3">
-                          <h6 class="mb-1 text-dark font-weight-bold text-sm">1.247,3 Hm3 (50%)</h6>
-                          <span class="text-xs">20/12/2023</span>
-                        </div>
-                      </td>
-                      <td style="vertical-align: middle;" class="hide-cell">
-                        <div class="d-flex justify-content-center">
-                          <div><?php
-                                if ($row['id_encargado'] == '0' || $row['id_encargado'] == null || $row['id_encargado'] == '') { ?>
-                              <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay personal encargado</h6>
-                            <?php
-                                } else {
-                            ?>
-                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
-                            <?php } ?>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center justify-content-center text-sm">
-                          <a data-id="<?php echo $row['id_embalse']; ?>" class="restaurar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-redo text-dark me-2" aria-hidden="true"></i><span class="hide-cell">Restaurar</span></a>
-                          <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
-                        </div>
-                      </td>
+                      <th>Embalse</th>
+                      <th class="hide-cell">Volumen actual</th>
+                      <th style="text-align: center;" class="hide-cell">Encargado</th>
+                      <th style="text-align: center;">Acción</th>
                     </tr>
-                  <?php
-                  }
-                  ?>
-                </tbody>
-              </table>
-            <?php
-            } else {
-            ?>
-              <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No existen embalses cargados</h2>
-            <?php
-            }
-            ?>
-          </div>
-          <br><br><br>
+                  </thead>
+                  <tbody>
+                    <?php
+                    while ($row = mysqli_fetch_array($queryEmbalsesEliminados)) {
+                    ?>
+                      <tr>
+                        <td>
+                          <div class="d-flex flex-column px-3">
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
+                            <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
+                          </div>
+                        </td>
+                        <td class="hide-cell">
+                          <div class="d-flex flex-column px-3">
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm">1.247,3 Hm3 (50%)</h6>
+                            <span class="text-xs">20/12/2023</span>
+                          </div>
+                        </td>
+                        <td style="vertical-align: middle;" class="hide-cell">
+                          <div class="d-flex justify-content-center">
+                            <div><?php
+                                  if ($row['id_encargado'] == '0' || $row['id_encargado'] == null || $row['id_encargado'] == '') { ?>
+                                <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay personal encargado</h6>
+                              <?php
+                                  } else {
+                              ?>
+                                <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
+                              <?php } ?>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center justify-content-center text-sm">
+                            <a data-id="<?php echo $row['id_embalse']; ?>" class="restaurar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-redo text-dark me-2" aria-hidden="true"></i><span class="hide-cell">Restaurar</span></a>
+                            <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
+                          </div>
+                        </td>
+                      </tr>
+                    <?php
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              <?php
+              } else {
+              ?>
+                <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No existen embalses cargados</h2>
+              <?php
+              }
+              ?>
+            </div>
+            <br><br><br>
 
+          </div>
         </div>
       </div>
-    </div>
 
-      <?php
+    <?php
     }
     ?>
   </div>
@@ -518,8 +518,11 @@ closeConection($conn);
   }
 
   iniciarTabla('table-embalses');
-  if($("#table-embalses-eliminados")){iniciarTabla('table-embalses-eliminados');}
+  if ($("#table-embalses-eliminados")) {
+    iniciarTabla('table-embalses-eliminados');
+  }
   // $('#table-embalses').DataTable({
+  //   dom: "<'top'<'d-flex align-items-center justify-content-between'lf>>rt<'bottom'<'d-flex flex-column align-items-center'ip>><'clear'>",
   //   language: {
   //     "decimal": "",
   //     "emptyTable": "No hay información",
@@ -536,8 +539,8 @@ closeConection($conn);
   //     "paginate": {
   //       "first": "Primero",
   //       "last": "Ultimo",
-  //       "next": ">",
-  //       "previous": "<"
+  //       "next": "Siguiente",
+  //       "previous": "Anterior"
   //     }
   //   },
   // });
@@ -580,7 +583,7 @@ closeConection($conn);
         success: function(data) {
           // Mostrar el resultado en la modal
           console.log(data)
-          $("#embalseTitulo").text("Eliminar embalse")
+          $("#embalseTitulo").text("¿Eliminar embalse?")
           $("#embalseNombre").text(data);
           $("#embalseIdInput")[0].value = id_embalse;
           $("#buttom-form")[0].name = "eliminar";
@@ -608,7 +611,7 @@ closeConection($conn);
         success: function(data) {
           // Mostrar el resultado en la modal
           console.log(data)
-          $("#embalseTitulo").text("Restaurar embalse")
+          $("#embalseTitulo").text("¿Restaurar embalse?")
           $("#embalseNombre").text(data);
           $("#embalseIdInput")[0].value = id_embalse;
           $("#buttom-form")[0].name = "restaurar";
@@ -629,22 +632,23 @@ closeConection($conn);
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
+        <button type="button" class="btn btn-secondary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
         <div class="card card-plain">
 
           <div class="card-body">
 
             <div class="">
-              <h6 style="text-align:center;" id="embalseTitulo" class="mb-0"></h6>
-              <h3 style="text-align:center;" id="embalseNombre" class=""></h3>
+              <h5 style="text-align:center;" id="embalseTitulo" class="mb-0"></h5>
+              <h3 style="text-align:center;" id="embalseNombre" class="mt-3"></h3>
             </div>
             <form method="POST" action="php/proces_embalse.php" enctype="multipart/form-data">
 
-              <div class="input-group mb-3">
+              <div class="input-group mb-2">
                 <input style="display: none;" id="embalseIdInput" type="text" class="form-control" name="id_embalse" value="">
               </div>
 
-              <div class="text-center">
-                <button type="submit" id="buttom-form" name="delete" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Confirmar</button>
+              <div class="text-center d-flex flex-col-6 justify-content-center">
+                <button type="submit" id="buttom-form" name="delete" class="btn btn-round btn-primary btn-lg  mt-3 mb-0">Confirmar</button>
               </div>
             </form>
           </div>

@@ -1670,6 +1670,31 @@ CREATE TABLE detalles_extraccion (
   FOREIGN KEY (id_registro) REFERENCES datos_embalse (id_registro)
 );
 
+CREATE TABLE configuraciones (
+  id_config INT AUTO_INCREMENT PRIMARY KEY,
+  nombre_config VARCHAR(50),
+  configuracion TEXT
+);
+
+CREATE TABLE propositos (
+  id_proposito INT AUTO_INCREMENT PRIMARY KEY,
+  proposito VARCHAR(50),
+  estatus varchar(20) NOT NULL
+);
+
+-- data de propositos
+insert into `propositos`(`id_proposito`,`proposito`,`estatus`) values 
+(1,'Consumo Humano','activo'),
+(2,'Riego','activo'),
+(3,'Control de Inundaciones','activo'),
+(4,'Recreación','activo'),
+(5,'Hidroelectricidad','activo'),
+(6,'Agricultura','activo');
+
+-- data de configuración
+-- insert into `configuraciones`(`id_config`,`nombre_config`,`configuracion`) values 
+-- (1,'propositos','Admin');
+
 -- data para usuarios
 insert  into `usuarios`(`Id_usuario`,`Contrasena`,`P_Nombre`,`S_Nombre`,`P_Apellido`,`S_Apellido`,`Cedula`,`Correo`,`Telefono`,`Tipo`,`estatus`) values 
 (1,'1234','Admin','Admin','Admin','Admin','00000000','admin@gmail.com','00000000000','Admin','activo'),
