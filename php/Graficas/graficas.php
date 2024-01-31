@@ -135,7 +135,7 @@
                                 $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                         ?> {
-                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                    x: '<?php echo $datos_embalses[$j]["fecha"]." ".$datos_embalses[$j]["hora"];  ?>',
                                     y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                 },
 
@@ -165,7 +165,7 @@
                                 $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                         ?> {
-                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1 . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])).'-'.date("d", strtotime($datos_embalses[$j]["fecha"])) . ' '. $datos_embalses[$j]["hora"]); ?>',
                                     y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                 },
 
@@ -184,8 +184,10 @@
 
                 options: {
                     animations: false,
+                    responsive:true,
                     interaction: {
                         intersect: false,
+                        axis:'x',
                     },
                     plugins: {
                         legend: {
