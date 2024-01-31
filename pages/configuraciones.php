@@ -5,7 +5,7 @@ $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus =
 $queryPropositosInactivos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'inactivo';");
 $queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 
-$stringPrioritarios = "";
+$stringPrioritarios = "0";
 $prioritarios = [];
 $queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios';");
 if (mysqli_num_rows($queryPrioritarios) > 0) {
