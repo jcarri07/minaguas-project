@@ -1632,7 +1632,7 @@ CREATE TABLE embalses (
   uso_actual VARCHAR(255),
   sectores_beneficiados VARCHAR(255),
   poblacion_beneficiada VARCHAR(255),
-  area_de_riego_beneficiada FLOAT,
+  area_de_riego_beneficiada VARCHAR(10),
   f_cargo VARCHAR(100),
   f_cedula VARCHAR(100),
   f_nombres VARCHAR(100),
