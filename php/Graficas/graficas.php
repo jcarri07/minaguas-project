@@ -93,8 +93,9 @@ closeConection($conn); ?>
 
         for ($t = 0; $t <  count($embalses); $t++) {
         ?>
-            <div style="width:1830px !important; height:460px"><canvas class="al" id="mes<?php echo $t; ?>"></canvas></div>
-            <div style="width:900px !important; height:300px"><canvas class="alM" id="semana<?php echo $t; ?>"></canvas></div>
+            <div style="width:1830px !important; height:600px"><canvas class="alA" id="ano<?php echo $t; ?>"></canvas></div>
+            <div style="width:1830px !important; height:460px"><canvas class="alM" id="mes<?php echo $t; ?>"></canvas></div>
+            <div style="width:900px !important; height:300px"><canvas class="alS" id="semana<?php echo $t; ?>"></canvas></div>
 
         <?php
 
@@ -190,12 +191,13 @@ closeConection($conn); ?>
 
         for ($t = 0; $t <  count($embalses); $t++) {
         ?>
-
-            semana<?php echo $t; ?> = document.getElementById("semana<?php echo $t; ?>");
+            año<?php echo $t; ?> = document.getElementById("ano<?php echo $t; ?>");
             mes<?php echo $t; ?> = document.getElementById("mes<?php echo $t; ?>");
+            semana<?php echo $t; ?> = document.getElementById("semana<?php echo $t; ?>");
 
 
-            let chart<?php echo $t; ?> = new Chart(mes<?php echo $t; ?>, {
+
+            let chartA<?php echo $t; ?> = new Chart(ano<?php echo $t; ?>, {
                 type: 'line',
                 title: 'grafica',
                 //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
@@ -385,7 +387,198 @@ closeConection($conn); ?>
                 plugins: [arbitra],
 
             });
-            let chartsM<?php echo $t; ?> = new Chart(semana<?php echo $t; ?>, {
+            let chartM<?php echo $t; ?> = new Chart(mes<?php echo $t; ?>, {
+                type: 'line',
+                title: 'grafica',
+                //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
+                data: {
+                    datasets: [
+
+                        <?php echo "{label:'" . $nom[0] . "',tension: 0.4,                                borderColor: '#36a1eb',
+        backgroundColor: '#36a1eb',data: [";
+                        $j = 0;
+                        $pivote = date("Y");
+                        while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
+
+                            if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
+
+                                echo "";
+                                $j++;
+                            } else {
+
+                                $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
+
+                        ?> {
+                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                },
+
+                        <?php
+                                $j++;
+                            }
+                            if ($j >= count($datos_embalses)) {
+                                break;
+                            }
+                        };
+                        echo "]},"; ?>
+
+                        <?php echo "{label:'" . $nom[1] . "',tension: 0.4,borderColor: '#e4c482',backgroundColor: '#e4c482',
+                        data: [";
+                        $j = 0;
+                        $pivote = date("Y") - 1;
+                        while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
+
+                            if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
+
+                                echo "";
+                                $j++;
+                            } else {
+
+
+                                $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
+
+                        ?> {
+                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                },
+
+                        <?php
+                                $j++;
+                            }
+                            if ($j >= count($datos_embalses)) {
+                                break;
+                            }
+                        }
+                        echo "]},"; ?>
+
+
+                    ],
+                },
+
+                options: {
+                    animations: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        axis: 'x',
+                    },
+                    plugins: {
+                        arbitra: {
+
+
+                            lines: [{
+                                    yvalue: <?php echo round($embalses[$t]["cota_min"], 2); ?>,
+                                    cota: "Cota minima",
+                                    color: 'black'
+                                },
+                                {
+                                    yvalue: <?php echo round($embalses[$t]["cota_max"], 2); ?>,
+                                    cota: "Cota maxima",
+                                    color: 'black'
+                                }
+                                // Agrega más líneas según sea necesario
+                            ]
+                        },
+                        legend: {
+                            display: false,
+                            labels: {
+
+                                // This more specific font property overrides the global property
+                                font: {
+                                    size: 20
+                                },
+
+                            }
+                        },
+                        title: {
+                            display: false,
+                            text: 'Embalse <?php echo $embalses[$t]['nombre_embalse']; ?>',
+                            fullSize: true,
+                            font: {
+                                size: 30
+                            }
+                        },
+
+                    },
+                    scales: {
+
+                        x: {
+                            title: {
+                                display: true,
+                                text: ' <?php echo date('M Y'); ?>',
+                                font: {
+                                    size: 18
+                                },
+                            },
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            min: '2024-<?php echo date('m').'-'.date('d')?>',
+                            max: '2024-<?php echo date('m').'-'.date('t')?>',
+
+                            ticks: {
+                                callback: (value, index, ticks) => {
+
+                                    const date = new Date(value);
+                                    //console.log(date);
+                                    return new Intl.DateTimeFormat('es-ES', {
+                                        month:'short',
+                                        day: 'numeric',
+
+                                    }).format(value);
+                                },
+                                font: {
+                                    size: 18
+                                },
+                            },
+                            grid: {
+                                color: function(context) {},
+                            },
+
+                        },
+
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Cota (m.s.n.m.)',
+                                font: {
+                                    size: 20
+                                },
+                            },
+                            min: <?php echo round($embalses[$t]["cota_min"] - 30, 2); ?>,
+                            max: <?php echo round($embalses[$t]["cota_max"] + 20, 2); ?>,
+                            border: {
+                                display: false,
+                            },
+                            ticks: {
+                                font: {
+                                    size: 14
+                                },
+                            },
+                            /*grid: {
+                                color: function(context) {
+                                    if (context.tick.value > <?php echo round($embalses[$t]["cota_min"], 0); ?> && context.tick.value < <?php echo round($embalses[$t]["cota_max"], 0); ?>) {
+                                        return '#2ea043';
+                                    } else {}
+                                    if (context.tick.value < <?php echo round($embalses[$t]["cota_min"], 0); ?>) {
+                                        return '#f85149';
+                                    }
+                                    if (context.tick.value > <?php echo round($embalses[$t]["cota_max"], 0); ?>) {
+                                        return '#0a86da';
+                                    }
+                                },
+                            },*/
+                        },
+
+
+                    },
+                },
+                plugins: [arbitra],
+
+            });
+            let chartS<?php echo $t; ?> = new Chart(semana<?php echo $t; ?>, {
                 type: 'line',
                 labels: [<?php
                             foreach ($fechasSemana as $dia) {
@@ -586,8 +779,9 @@ closeConection($conn); ?>
 
         for ($t = 0; $t <  count($embalses); $t++) {
         ?>
-            const x<?php echo $t; ?> = document.querySelector("#mes<?php echo $t; ?>");
-            const y<?php echo $t; ?> = document.querySelector("#semana<?php echo $t; ?>");
+            const x<?php echo $t; ?> = document.querySelector("#ano<?php echo $t; ?>");
+            const y<?php echo $t; ?> = document.querySelector("#mes<?php echo $t; ?>");
+            const z<?php echo $t; ?> = document.querySelector("#semana<?php echo $t; ?>");
             var i = 1;
             html2canvas(x<?php echo $t; ?>).then(function(canvas) { //PROBLEMAS
                 //$("#ca").append(canvas);
@@ -603,7 +797,7 @@ closeConection($conn); ?>
                         console.log("listo");
 
                     } else {
-                        console.log("fallo");
+                        
                     }
                 }
             });
@@ -620,7 +814,25 @@ closeConection($conn); ?>
                         console.log("listo");
 
                     } else {
-                        console.log("fallo");
+                        
+                    }
+                }
+            });
+            html2canvas(y<?php echo $t; ?>).then(function(canva) { //PROBLEMAS
+                //$("#ca").append(canvas);
+                canva.willReadFrequently = true,
+                    dataURL = canva.toDataURL("image/jpeg", 0.9);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '../guardar-imagen.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send('imagen=' + dataURL + '&nombre=<?php echo $embalses[$t]['id_embalse']; ?>&numero=' + 3);
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log("listo");
+                        <?php if($t ==(count($embalses)-1)) echo "console.log('ultimo');";?>//AQUI CARRIZALES
+
+                    } else {
+                        
                     }
                 }
             });
