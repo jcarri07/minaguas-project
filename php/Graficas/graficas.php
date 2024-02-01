@@ -21,7 +21,7 @@
         <?php
         $aux = $embalses[0]["id_embalse"];
         $j = 0;
-        $nom = array("Cota " . date("Y"), "Cota " . date("Y") - 1);
+        $nom = array("Cota " . date("Y"), "Cota " . (date("Y") - 1));
         $pivote = 0;
 
         for ($t = 0; $t <  count($embalses); $t++) {
