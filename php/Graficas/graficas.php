@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php 
+<?php
 include "../Conexion.php";
 date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
@@ -110,74 +110,92 @@ closeConection($conn); ?>
 <script>
     $(document).ready(function() {
 
+
+
+        const arbitra = {
+            id: 'arbitra',
+            dr: function(lines, ctx, left, right, y) {
+                ctx.save();
+
+                lines.forEach(line => {
+                    const {
+                        yvalue,
+                        cota,
+                        color
+                    } = line;
+
+                    ctx.beginPath();
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(left, y.getPixelForValue(yvalue));
+                    ctx.lineTo(right, y.getPixelForValue(yvalue));
+                    ctx.strokeStyle = color; // Cambiar color según tus preferencias
+                    ctx.fillText(cota + ": " + yvalue + " (m.s.n.m.)", right - 200, y.getPixelForValue(yvalue) + 15);
+                    ctx.stroke();
+                });
+
+                ctx.restore();
+            },
+            beforeDatasetsDraw: function(chart, args, plugins) {
+                const {
+                    ctx,
+                    scales: {
+                        x,
+                        y
+                    },
+                    chartArea: {
+                        left,
+                        right
+                    }
+                } = chart;
+
+                // Obtener las líneas específicas para este gráfico
+                const lines = chart.options.plugins.arbitra.lines;
+
+                // Llamada a la función dr() dentro del contexto del plugin con las líneas específicas
+                this.dr(lines, ctx, left, right, y);
+
+                // Resto del código del plugin
+            }
+        };
+        const dibu = {
+            id: 'dibu',
+            beforeDatasetsDraw(chart, args, plugins) {
+                const {
+                    ctx,
+                    scales: {
+                        x,
+                        y
+                    },
+                    chartArea: {
+                        left,
+                        right
+                    }
+                } = chart;
+                ctx.save();
+
+                ctx = chart.ctx;
+                dataset = chart.data.datasets[0];
+                meta = chart.getDatasetMeta(0);
+
+                // Coordenadas del último punto
+                lastPoint = meta.data[meta.data.length - 1];
+
+                // Dibujar la etiqueta del último punto
+                ctx.fillStyle = 'black'; // Cambiar color según tus preferencias
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText(dataset.label + ': ' + lastPoint._model.y.toFixed(2), lastPoint._model.x + 10, lastPoint._model.y - 10);
+            }
+        };
         <?php
 
         for ($t = 0; $t <  count($embalses); $t++) {
         ?>
-            const arbitra = {
-                id: 'arbitra',
-                beforeDatasetsDraw(chart, args, plugins) {
-                    const {
-                        ctx,
-                        scales: {
-                            x,
-                            y
-                        },
-                        chartArea: {
-                            left,
-                            right
-                        }
-                    } = chart;
-                    ctx.save();
-                    dr(<?php echo $embalses[$t]["cota_min"]; ?>, 'Cota mínima');
-                    dr(<?php echo $embalses[$t]["cota_max"]; ?>, 'Cota máxima');
 
-                    function dr(yvalue, cota) {
-
-                        ctx.beginPath();
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(left, y.getPixelForValue(yvalue));
-                        ctx.lineTo(right, y.getPixelForValue(yvalue));
-                        ctx.strokeStyle = 'black'; // Cambiar color según tus preferencias
-                        ctx.fillText(cota + ": " + yvalue + " (m.s.n.m.)", right - 200, y.getPixelForValue(yvalue) + 15);
-                        ctx.stroke();
-                    }
-                }
-            };
-            const dibu = {
-                id: 'dibu',
-                beforeDatasetsDraw(chart, args, plugins) {
-                    const {
-                        ctx,
-                        scales: {
-                            x,
-                            y
-                        },
-                        chartArea: {
-                            left,
-                            right
-                        }
-                    } = chart;
-                    ctx.save();
-
-                    ctx = chart.ctx;
-                    dataset = chart.data.datasets[0];
-                    meta = chart.getDatasetMeta(0);
-
-                    // Coordenadas del último punto
-                    lastPoint = meta.data[meta.data.length - 1];
-
-                    // Dibujar la etiqueta del último punto
-                    ctx.fillStyle = 'black'; // Cambiar color según tus preferencias
-                    ctx.font = 'bold 14px Arial';
-                    ctx.fillText(dataset.label + ': ' + lastPoint._model.y.toFixed(2), lastPoint._model.x + 10, lastPoint._model.y - 10);
-                }
-            };
             semana<?php echo $t; ?> = document.getElementById("semana<?php echo $t; ?>");
             mes<?php echo $t; ?> = document.getElementById("mes<?php echo $t; ?>");
 
 
-            let chart = new Chart(mes<?php echo $t; ?>, {
+            let chart<?php echo $t; ?> = new Chart(mes<?php echo $t; ?>, {
                 type: 'line',
                 title: 'grafica',
                 //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
@@ -234,7 +252,6 @@ closeConection($conn); ?>
 
                         <?php
                                 $j++;
-
                             }
                             if ($j >= count($datos_embalses)) {
                                 break;
@@ -249,11 +266,28 @@ closeConection($conn); ?>
                 options: {
                     animations: false,
                     responsive: true,
+                    maintainAspectRatio: false,
                     interaction: {
                         intersect: false,
                         axis: 'x',
                     },
                     plugins: {
+                        arbitra: {
+
+
+                            lines: [{
+                                    yvalue: <?php echo round($embalses[$t]["cota_min"], 2); ?>,
+                                    cota: "Cota minima",
+                                    color: 'black'
+                                },
+                                {
+                                    yvalue: <?php echo round($embalses[$t]["cota_max"], 2); ?>,
+                                    cota: "Cota maxima",
+                                    color: 'black'
+                                }
+                                // Agrega más líneas según sea necesario
+                            ]
+                        },
                         legend: {
                             display: false,
                             labels: {
@@ -303,7 +337,7 @@ closeConection($conn); ?>
                                     }).format(value);
                                 },
                                 font: {
-                                    size: 14
+                                    size: 18
                                 },
                             },
                             grid: {
@@ -351,7 +385,7 @@ closeConection($conn); ?>
                 plugins: [arbitra],
 
             });
-            let chartsM = new Chart(semana<?php echo $t; ?>, {
+            let chartsM<?php echo $t; ?> = new Chart(semana<?php echo $t; ?>, {
                 type: 'line',
                 labels: [<?php
                             foreach ($fechasSemana as $dia) {
@@ -412,7 +446,6 @@ closeConection($conn); ?>
 
                         <?php
                                 $j++;
-
                             }
                             if ($j >= count($datos_embalses)) {
                                 break;
@@ -425,12 +458,28 @@ closeConection($conn); ?>
                 },
                 options: {
                     animations: false,
+                    maintainAspectRatio: false,
                     locale: 'es',
                     interaction: {
                         intersect: false,
                     },
                     plugins: {
+                        arbitra: {
 
+
+                            lines: [{
+                                    yvalue: <?php echo round($embalses[$t]["cota_min"], 2); ?>,
+                                    cota: "Cota minima",
+                                    color: 'black'
+                                },
+                                {
+                                    yvalue: <?php echo round($embalses[$t]["cota_max"], 2); ?>,
+                                    cota: "Cota maxima",
+                                    color: 'black'
+                                }
+                                // Agrega más líneas según sea necesario
+                            ]
+                        },
                         legend: {
                             display: false,
                             labels: {
