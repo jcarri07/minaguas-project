@@ -167,9 +167,10 @@
 
                         <?php
                                 $j++;
-                                if ($j >= count($datos_embalses)) {
-                                    break;
-                                }
+
+                            }
+                            if ($j >= count($datos_embalses)) {
+                                break;
                             }
                         }
                         echo "]},"; ?>
@@ -344,9 +345,10 @@
 
                         <?php
                                 $j++;
-                                if ($j >= count($datos_embalses)) {
-                                    break;
-                                }
+
+                            }
+                            if ($j >= count($datos_embalses)) {
+                                break;
                             }
                         }
                         echo "]},"; ?>
