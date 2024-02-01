@@ -44,14 +44,19 @@ function getShortName()
   return $nombre_mes_abreviado;
 }
 
+function getYear()
+{
+  $fecha_actual = getdate();
+
+  $year = $fecha_actual['year'];
+
+  return $year;
+}
 
 $sql = "SELECT * FROM embalses";
 $result = $conn->query($sql);
 
 $mes_actual = date('m');
-$sqlMonths = "SELECT cota_actual, fecha FROM datos_embalse WHERE MONTH(fecha) = $mes_actual AND DAY(fecha) BETWEEN 2 AND 8";
-
-
 
 $num_rows = $result->num_rows;
 
@@ -177,10 +182,10 @@ $variacion_mensual = getMonthName();
 
 <body>
   <?php if ($num_rows > 0) { ?>
-    <?php if ($i > 0) { ?>
-      <div style="height: 1000px;"></div>
-    <?php } ?>
-    <?php while ($row = $result->fetch_assoc()) { ?>
+    <?php while ($row = $result->fetch_assoc()) {
+      $id = $row['id_embalse'];
+      $sqlMonths = "SELECT cota_actual, fecha, id_embalse FROM datos_embalse WHERE MONTH(fecha) = $mes_actual AND DAY(fecha) BETWEEN 2 AND 8 AND id_embalse = '$id'";
+    ?>
       <div class="square">
         1
       </div>
@@ -232,7 +237,7 @@ $variacion_mensual = getMonthName();
           } ?>
         </tr>
         <tr>
-          <td class="text-celd">COTA 2023
+          <td class="text-celd">COTA <?php getYear(); ?>
             (m.s.n.m.)</td>
           <?php
           $resultado = $conn->query($sqlMonths);
@@ -260,11 +265,18 @@ $variacion_mensual = getMonthName();
           for ($i = 0; $i < 7; $i++) {
             echo "<td>0</td>";
           }
+          $indice++;
           ?>
         </tr>
       </table>
-    <?php } ?>
-  <?php } ?>
+      <?php if ($indice > 0 && $indice !== $num_rows) { ?>
+        <div style="height: 1000px;"></div>
+      <?php
+      } ?>
+    <?php }
+    ?>
+  <?php
+  } ?>
 </body>
 
 </html>
