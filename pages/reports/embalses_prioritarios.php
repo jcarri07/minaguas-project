@@ -203,7 +203,7 @@ $variacion_mensual = getMonthName();
       <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 150px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
                                                                                                           echo $area ?>" />
       <div style="position: absolute; width: 230px; left: 100px; top: 345px;">
-        <h5>Área de la Cuenca: <?php echo number_format($row['area_cuenca'], 2, ',', '.') ?> Km2</h5>
+        <h5>Área de la Cuenca: <?php echo number_format(floatVal($row['area_cuenca'], 2, ',', '.')); ?> Km2</h5>
       </div>
 
       <div style="position: absolute; height: 100px; width: 300px; left: 65px; top: 380px; border: gray 1px solid; background-color: ">
