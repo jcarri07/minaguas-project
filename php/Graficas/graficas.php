@@ -818,7 +818,7 @@ closeConection($conn); ?>
                     }
                 }
             });
-            html2canvas(y<?php echo $t; ?>).then(function(canva) { //PROBLEMAS
+            html2canvas(z<?php echo $t; ?>).then(function(canva) { //PROBLEMAS
                 //$("#ca").append(canvas);
                 canva.willReadFrequently = true,
                     dataURL = canva.toDataURL("image/jpeg", 0.9);
