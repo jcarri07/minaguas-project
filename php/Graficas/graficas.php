@@ -44,7 +44,7 @@
     $(document).ready(function() {
 
         <?php
-        
+
         for ($t = 0; $t <  count($embalses); $t++) {
         ?>
             const arbitra = {
@@ -187,7 +187,7 @@
                     },
                     plugins: {
                         legend: {
-                            display:false,
+                            display: false,
                             labels: {
 
                                 // This more specific font property overrides the global property
@@ -363,7 +363,7 @@
                     plugins: {
 
                         legend: {
-                            display:false,
+                            display: false,
                             labels: {
                                 // This more specific font property overrides the global property
                                 font: {
@@ -386,7 +386,7 @@
                         x: {
                             title: {
                                 display: true,
-                                text: 'Semana <?php echo date("W", strtotime($fechasSemana[0]))." ".strftime('del mes de %B', DateTime::createFromFormat("Y-m-d", end($fechasSemana))->getTimestamp()); ?>',
+                                text: 'Semana <?php echo date("W", strtotime($fechasSemana[0])) . " " . strftime('del mes de %B', DateTime::createFromFormat("Y-m-d", end($fechasSemana))->getTimestamp()); ?>',
                                 font: {
                                     size: 16
                                 },
