@@ -1,3 +1,15 @@
+<?php
+// print "<script>window.location='nance.php';</script>";
+if (!isset($_SESSION)) {
+  session_start();
+};
+if (isset($_SESSION["Id_usuario"])) {
+
+  print "<script>window.location='main.php';</script>";
+}
+
+date_default_timezone_set("America/Caracas");
+?>
 <!--
 =========================================================
 * Argon Dashboard 2 - v2.0.4
@@ -12,17 +24,10 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
+
 <!DOCTYPE html>
 <html lang="en">
-<?php
-  session_start();
-  if(isset($_SESSION["Id_usuario"])){
-    
-    print "<script>window.location='main.php';</script>";
-  }
 
-  date_default_timezone_set("America/Caracas");
-?>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -133,12 +138,12 @@
                       </div>
                     </form>
                   </div>
-                  <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                  <!--div class="card-footer text-center pt-0 px-lg-2 px-1">
                     <p class="mb-4 text-sm mx-auto">
                       Usuario nuevo?
                       <a href="./pages/sign-up.php" class="text-primary text-gradient font-weight-bold">Nuevo Usuario</a>
                     </p>
-                  </div>
+                  </div-->
                 </div>
               </div>
             </div>
@@ -204,7 +209,7 @@
           <p class="mb-0" style="color: white;">
             Copyright © <script>
               document.write(new Date().getFullYear())
-            </script> Desarrolládo por la Dirección de Investigación eh Innovación Espacia - ABAE.
+            </script> Desarrollado por la Dirección de Investigación e Innovación Espacial - ABAE.
           </p>
         </div>
       </div>
@@ -229,55 +234,55 @@
   </script-->
   <script>
     $(document).ready(function() {
-          $("#form").submit(function(e) {
-            e.preventDefault();
-            var values = new FormData();
+      $("#form").submit(function(e) {
+        e.preventDefault();
+        var values = new FormData();
 
-            values.append("email", $("#email").val());
-            values.append("pass", $("#pass").val());
+        values.append("email", $("#email").val());
+        values.append("pass", $("#pass").val());
 
-            $.ajax({
-              url: 'php/login/comp-usuario.php',
-              type: 'POST',
-              data: values,
-              cache: false,
-              contentType: false,
-              processData: false,
-              success: function(response) {
-                switch (response) {
-                  case "si":
-                    Swal.fire({
-                      icon: 'success',
-                      title: 'Sesión Iniciada',
-                      showConfirmButton: false,
-                      timer: 1500
-                    }); //CUANDO INICIA SESION
-                    setTimeout(function() {
-                      window.location = "index.php";
-                    }, 1500);
-                    break;
-                  case "no":
-                    Swal.fire({
-                      icon: 'warning',
-                      title: 'Error en verificación',
-                      text: 'Nombre de usuario o contraseña incorrecto',
-                      confirmButtonText: 'Aceptar',
-                      confirmButtonColor: '#01a9ac',
-                    }); //CONTRASEÑA O USUARIO INCORRECTOS
-                    break;
-                  default:
-                    console.log(response);
-                    break;
-                }
+        $.ajax({
+          url: 'php/login/comp-usuario.php',
+          type: 'POST',
+          data: values,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            switch (response) {
+              case "si":
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Sesión Iniciada',
+                  showConfirmButton: false,
+                  timer: 1500
+                }); //CUANDO INICIA SESION
+                setTimeout(function() {
+                  window.location = "index.php";
+                }, 1500);
+                break;
+              case "no":
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Error en verificación',
+                  text: 'Nombre de usuario o contraseña incorrecto',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //CONTRASEÑA O USUARIO INCORRECTOS
+                break;
+              default:
+                console.log(response);
+                break;
+            }
 
-              },
-              error: function(response) {
+          },
+          error: function(response) {
 
-              }
-            });
-
-          });
+          }
         });
+
+      });
+    });
   </script>
   <!-- Github buttons >
   <script async defer src="https://buttons.github.io/buttons.js"></script-->

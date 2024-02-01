@@ -2490,10 +2490,10 @@ progress {
 .table>thead {
   vertical-align: bottom;
 }
-
+/*
 .table-group-divider {
   border-top: calc(2 * $table-border-width) solid currentColor;
-}
+}*/
 
 .caption-top {
   caption-side: top;
@@ -5161,6 +5161,8 @@ fieldset:disabled .btn {
   background-clip: border-box;
   border: var(--bs-card-border-width) solid var(--bs-card-border-color);
   border-radius: var(--bs-card-border-radius);
+
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4) !important;
 }
 
 .card>hr {
@@ -5593,10 +5595,10 @@ fieldset:disabled .btn {
   background-color: var(--bs-pagination-disabled-bg);
   border-color: var(--bs-pagination-disabled-border-color);
 }
-
+/*
 .page-item:not(:first-child) .page-link {
   margin-left: calc($pagination-border-width * -1);
-}
+}*/
 
 .page-item:first-child .page-link {
   border-top-left-radius: var(--bs-pagination-border-radius);
@@ -6533,6 +6535,14 @@ fieldset:disabled .btn {
 
 .modal-footer>* {
   margin: calc(var(--bs-modal-footer-gap) * .5);
+}
+
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 5;
 }
 
 @media (min-width: 576px) {
@@ -22621,12 +22631,12 @@ hr.horizontal.gray-light {
   padding-right: 1rem;
   border-radius: 0.25rem;
 }
-
+/*
 .navbar-vertical.navbar-expand-xs .navbar-nav .nav .nav-link {
   padding-top: calc($navbar-vertical-nav-link-padding-y / 1.5);
   padding-bottom: calc($navbar-vertical-nav-link-padding-y / 1.5);
   padding-left: 15px;
-}
+}*/
 
 .navbar-vertical.navbar-expand-xs .navbar-nav .nav .nav-link>span.sidenav-normal {
   transition: all 0.1s ease 0s;
@@ -22722,11 +22732,11 @@ hr.horizontal.gray-light {
     border-radius: 0.25rem;
   }
 
-  .navbar-vertical.navbar-expand-sm .navbar-nav .nav .nav-link {
+  /*.navbar-vertical.navbar-expand-sm .navbar-nav .nav .nav-link {
     padding-top: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-bottom: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-left: 15px;
-  }
+  }*/
 
   .navbar-vertical.navbar-expand-sm .navbar-nav .nav .nav-link>span.sidenav-normal {
     transition: all 0.1s ease 0s;
@@ -22823,11 +22833,11 @@ hr.horizontal.gray-light {
     border-radius: 0.25rem;
   }
 
-  .navbar-vertical.navbar-expand-md .navbar-nav .nav .nav-link {
+  /*.navbar-vertical.navbar-expand-md .navbar-nav .nav .nav-link {
     padding-top: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-bottom: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-left: 15px;
-  }
+  }*/
 
   .navbar-vertical.navbar-expand-md .navbar-nav .nav .nav-link>span.sidenav-normal {
     transition: all 0.1s ease 0s;
@@ -22924,11 +22934,11 @@ hr.horizontal.gray-light {
     border-radius: 0.25rem;
   }
 
-  .navbar-vertical.navbar-expand-lg .navbar-nav .nav .nav-link {
+  /*.navbar-vertical.navbar-expand-lg .navbar-nav .nav .nav-link {
     padding-top: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-bottom: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-left: 15px;
-  }
+  }*/
 
   .navbar-vertical.navbar-expand-lg .navbar-nav .nav .nav-link>span.sidenav-normal {
     transition: all 0.1s ease 0s;
@@ -23025,11 +23035,11 @@ hr.horizontal.gray-light {
     border-radius: 0.25rem;
   }
 
-  .navbar-vertical.navbar-expand-xl .navbar-nav .nav .nav-link {
+  /*.navbar-vertical.navbar-expand-xl .navbar-nav .nav .nav-link {
     padding-top: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-bottom: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-left: 15px;
-  }
+  }*/
 
   .navbar-vertical.navbar-expand-xl .navbar-nav .nav .nav-link>span.sidenav-normal {
     transition: all 0.1s ease 0s;
@@ -23126,11 +23136,11 @@ hr.horizontal.gray-light {
     border-radius: 0.25rem;
   }
 
-  .navbar-vertical.navbar-expand-xxl .navbar-nav .nav .nav-link {
+  /*.navbar-vertical.navbar-expand-xxl .navbar-nav .nav .nav-link {
     padding-top: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-bottom: calc($navbar-vertical-nav-link-padding-y / 1.5);
     padding-left: 15px;
-  }
+  }*/
 
   .navbar-vertical.navbar-expand-xxl .navbar-nav .nav .nav-link>span.sidenav-normal {
     transition: all 0.1s ease 0s;
@@ -24588,6 +24598,22 @@ hr.horizontal.gray-light {
   border-bottom: 1px solid #e9ecef;
 }
 
+.table-sm thead th{
+  padding: 0.3rem 1.5rem;
+}
+
+.table-sm thead th:first-child{
+  border-top-left-radius: 10px;
+}
+
+.table-sm thead th:last-child{
+  border-top-right-radius: 10px;
+}
+
+.table.text-center thead th{
+  text-align: center;
+}
+
 .table th {
   font-weight: 600;
 }
@@ -25375,6 +25401,25 @@ p {
 .dark-version .dropdown .dropdown-menu .dropdown-item i,
 .dark-version .dropdown .dropdown-menu .dropdown-item .material-icons {
   color: #fff;
+}
+
+.dataTables_length select{
+  width: 65px !important;
+}
+
+.pagination .paginate_button.page-item .page-link{
+  border-radius: 5px !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 5px 10px;
+}
+
+.pagination .paginate_button.page-item{
+  margin: 4px;
+}
+
+.text-red{
+  color: var(--bs-red);
 }
 
 body.dark-version {
@@ -26944,3 +26989,56 @@ pre[class*="language-"] {
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
+
+.loader{
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #5e72e4;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  float:left;
+  margin-right: 7px;
+}
+.loaderParent{
+  display:none;
+}
+@keyframes spin{
+  0%{ transform: rotate(0deg);}
+  100%{ transform: rotate(360deg);}
+}
+
+.text-green{
+  color: #2dce89;
+}
+
+table td, table div, table th {
+  white-space: normal !important;
+}
+
+@media (max-width: 575.98px) {
+  table td, table div, table th, table .text-sm, table a{
+    font-size: 12px !important;
+  }
+
+  table .hide-cell{
+    visibility: collapse;
+    display: none;
+  }
+
+  table a i{
+    font-size: 24px;
+  }
+}
+
+.navbar .sidenav-toggler-inner .sidenav-toggler-line:not(:last-child) {
+  margin-bottom: 0px !important;
+}
+
+.navbar .sidenav-toggler-inner .sidenav-toggler-line {
+  height: 3.2px;
+}
+
+.navbar .sidenav-toggler-inner {
+  width: 22px;
+}

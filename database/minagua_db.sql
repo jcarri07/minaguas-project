@@ -3,7 +3,7 @@ CREATE DATABASE minagua_db;
 USE minagua_db;
 
 CREATE TABLE `usuarios` (
-  Id_usuario int(11) PRIMARY KEY NOT NULL,
+  Id_usuario int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   Contrasena varchar(255) DEFAULT NULL,
   P_Nombre varchar(255) DEFAULT NULL,
   S_Nombre varchar(255) DEFAULT NULL,
@@ -12,9 +12,12 @@ CREATE TABLE `usuarios` (
   Cedula varchar(255) DEFAULT NULL,
   Correo varchar(255) DEFAULT NULL,
   Telefono varchar(255) DEFAULT NULL,
-  Tipo enum('Admin','User') DEFAULT NULL
+  Tipo enum('Admin','User') DEFAULT NULL,
+  estatus enum('activo','inactivo') DEFAULT NULL
 );
 
+-- INSERT INTO `usuarios` (`Contrasena`, `P_Nombre`,`S_Nombre`, `P_Apellido`, `S_Apellido`,`Cedula`, `Correo`, `Telefono`, `Tipo`) VALUES
+-- ( '1234', 'Admin','Admin', 'Admin','Admin', '00000000', 'admin@gmail.com','00000000000', 'Admin');
 --
 -- Estructura de tabla para la tabla `estados`
 --
@@ -1167,7 +1170,7 @@ INSERT INTO `parroquias` (`id_parroquia`, `id_municipio`, `parroquia`) VALUES
 (742, 289, 'Ramón Peraza'),
 (743, 290, 'Papelón'),
 (744, 290, 'Caño Delgadito'),
-(745, 291, 'San Genaro de Boconoito'),
+(745, 291, 'San Genaro de Boconoíto'),
 (746, 291, 'Antolín Tovar'),
 (747, 292, 'San Rafael de Onoto'),
 (748, 292, 'Santa Fe'),
@@ -1564,95 +1567,158 @@ INSERT INTO `parroquias` (`id_parroquia`, `id_municipio`, `parroquia`) VALUES
 
 
 CREATE TABLE embalses (
-  Id_embalse INT AUTO_INCREMENT PRIMARY KEY,
-  Nombre_embalse VARCHAR(255),
-  Nombre_presa VARCHAR(255),
-  Id_estado INT(11) NOT NULL,
-  Id_municipio INT(11) NOT NULL,
-  Id_parroquia INT(11) NOT NULL,
-  Este VARCHAR(255),
-  Norte VARCHAR(255),
-  Huso VARCHAR(255),
-  Cuenca_Principal VARCHAR(255),
-  Afluentes_Principales VARCHAR(255),
-  Area_cuenca FLOAT,
-  Escurrimiento_medio FLOAT,
-  Ubicacion_embalse TEXT,
-  Organo_Rector VARCHAR(255),
-  Personal_Encargado VARCHAR(255),
-  Operador VARCHAR(255),
-  Autoridad_responsable VARCHAR(255),
-  Proyectista VARCHAR(255),
-  Constructor VARCHAR(255),
-  Inicio_construccion INT, 
-  Duracion_de_construccion INT,
-  Inicio_de_Operacion INT,
-  Monitoreo_del_embalse VARCHAR(255),
-  Batimetria TEXT,
-  Vida_util INT,
-  Cota_min VARCHAR(255),
-  Cota_nor VARCHAR(255),
-  Cota_max VARCHAR(255),
-  Vol_min VARCHAR(255),
-  Vol_nor VARCHAR(255),
-  Vol_max VARCHAR(255),
-  Sup_min VARCHAR(255),
-  Sup_nor VARCHAR(255),
-  Sup_max VARCHAR(255),
-  Numero_de_presas INT,
+  id_embalse INT AUTO_INCREMENT PRIMARY KEY,
+  nombre_embalse VARCHAR(255),
+  nombre_presa VARCHAR(255),
+  id_estado INT(11) NOT NULL,
+  id_municipio INT(11) NOT NULL,
+  id_parroquia INT(11) NOT NULL,
+  este VARCHAR(30),
+  norte VARCHAR(30),
+  huso VARCHAR(30),
+  cuenca_principal VARCHAR(255),
+  afluentes_principales VARCHAR(255),
+  area_cuenca VARCHAR(100),
+  escurrimiento_medio VARCHAR(100),
+  ubicacion_embalse TEXT,
+  organo_rector VARCHAR(255),
+  personal_encargado VARCHAR(255),
+  operador VARCHAR(255),
+  autoridad_responsable VARCHAR(255),
+  proyectista VARCHAR(255),
+  constructor VARCHAR(255),
+  inicio_construccion VARCHAR(10), 
+  duracion_de_construccion VARCHAR(10),
+  inicio_de_operacion VARCHAR(10),
+  monitoreo_del_embalse VARCHAR(255),
+  batimetria TEXT,
+  vida_util VARCHAR(10),
+  cota_min VARCHAR(20),
+  cota_nor VARCHAR(20),
+  cota_max VARCHAR(20),
+  vol_min VARCHAR(20),
+  vol_nor VARCHAR(20),
+  vol_max VARCHAR(20),
+  sup_min VARCHAR(20),
+  sup_nor VARCHAR(20),
+  sup_max VARCHAR(20),
+  numero_de_presas VARCHAR(10),
   tipo_de_presa VARCHAR(255),
-  Altura FLOAT,
-  talud_aguas_arriba FLOAT,
-  talud_aguas_abajo FLOAT,
-  Longitud_cresta FLOAT,
-  Cota_cresta FLOAT,
-  Ancho_cresta FLOAT,
-  Volumen_terraplen FLOAT,
-  Ancho_base FLOAT,
-  Ubicacion_aliviadero VARCHAR(255),
-  Tipo_aliviadero VARCHAR(255),
-  Numero_compuertas_aliviadero FLOAT,
-  Carga_vertedero FLOAT,
-  Descarga_Maxima FLOAT,
-  Longitud_Aliviadero FLOAT,
-  Ubicacion_toma VARCHAR(255),
-  Tipo_toma VARCHAR(255),
-  Numero_compuertas_toma FLOAT,
-  Mecanismos_de_emergencia VARCHAR(255),
+  altura VARCHAR(20),
+  talud_aguas_arriba VARCHAR(50),
+  talud_aguas_abajo VARCHAR(50),
+  longitud_cresta VARCHAR(50),
+  cota_cresta VARCHAR(20),
+  ancho_cresta VARCHAR(50),
+  volumen_terraplen VARCHAR(50),
+  ancho_base VARCHAR(50),
+  ubicacion_aliviadero VARCHAR(255),
+  tipo_aliviadero VARCHAR(255),
+  numero_compuertas_aliviadero VARCHAR(50),
+  carga_vertedero VARCHAR(50),
+  descarga_maxima VARCHAR(50),
+  longitud_aliviadero VARCHAR(50),
+  ubicacion_toma VARCHAR(255),
+  tipo_toma VARCHAR(255),
+  numero_compuertas_toma VARCHAR(50),
+  mecanismos_de_emergencia VARCHAR(255),
   mecanismos_de_regulacion VARCHAR(255),
-  Gasto_maximo FLOAT,
-  Descarga_de_fondo FLOAT,
-  Posee_obra VARCHAR(255),
-  Tipo_de_obra VARCHAR(255),
-  Accion_requerida VARCHAR(255),
-  Proposito VARCHAR(255),
+  gasto_maximo VARCHAR(50),
+  descarga_de_fondo VARCHAR(50),
+  posee_obra VARCHAR(255),
+  tipo_de_obra VARCHAR(255),
+  accion_requerida VARCHAR(255),
+  proposito VARCHAR(255),
   uso_actual VARCHAR(255),
-  Sectores_beneficiados VARCHAR(255),
-  Poblacion_beneficiada DOUBLE,
-  Area_de_riego_beneficiada FLOAT,
-  F_cargo VARCHAR(255),
-  F_cedula VARCHAR(255),
-  F_nombres VARCHAR(255),
-  F_apellidos VARCHAR(255),
-  F_telefono VARCHAR(255),
-  F_correo VARCHAR(255),
-  Imagen_uno TEXT,
-  Imagen_dos TEXT,
-  Id_encargado INT(11) DEFAULT NULL,
-  FOREIGN KEY (Id_estado) REFERENCES estados (id_estado),
-  FOREIGN KEY (Id_municipio) REFERENCES municipios (id_municipio),
-  FOREIGN KEY (Id_parroquia) REFERENCES parroquias (id_parroquia)
+  sectores_beneficiados VARCHAR(255),
+  poblacion_beneficiada VARCHAR(255),
+  area_de_riego_beneficiada VARCHAR(10),
+  f_cargo VARCHAR(100),
+  f_cedula VARCHAR(100),
+  f_nombres VARCHAR(100),
+  f_apellidos VARCHAR(100),
+  f_telefono VARCHAR(100),
+  f_correo VARCHAR(100),
+  imagen_uno TEXT,
+  imagen_dos TEXT,
+  id_encargado VARCHAR(11),
+  estatus enum('activo','inactivo') DEFAULT NULL,
+  FOREIGN KEY (id_estado) REFERENCES estados (id_estado),
+  FOREIGN KEY (id_municipio) REFERENCES municipios (id_municipio),
+  FOREIGN KEY (id_parroquia) REFERENCES parroquias (id_parroquia)
 );
 
+
 CREATE TABLE datos_embalse (
-  Id_registro INT AUTO_INCREMENT PRIMARY KEY,
-  Id_embalse INT,
-  Fecha DATE,
-  Hora DATE,
-  Cota_actual FLOAT,
-  Extraccion FLOAT,
-  Tipo_de_extraccion VARCHAR(255),
-  Id_encargado INT(11) NOT NULL,
-  FOREIGN KEY (Id_embalse) REFERENCES embalses (Id_embalse),
-  FOREIGN KEY (Id_encargado) REFERENCES usuarios (Id_usuario)
+  id_registro INT AUTO_INCREMENT PRIMARY KEY,
+  id_embalse INT,
+  fecha DATE,
+  hora TIME,
+  cota_actual FLOAT,
+  id_encargado INT(11) NOT NULL,
+  estatus VARCHAR(20) NOT NULL,
+  FOREIGN KEY (id_embalse) REFERENCES embalses (id_embalse),
+  FOREIGN KEY (id_encargado) REFERENCES usuarios (Id_usuario)
 );
+
+CREATE TABLE detalles_extraccion (
+  id_detalles_extraccion INT AUTO_INCREMENT PRIMARY KEY,
+  tipo_extraccion VARCHAR(50),
+  extraccion FLOAT,
+  id_registro INT,
+  estatus VARCHAR(20) NOT NULL,
+  FOREIGN KEY (id_registro) REFERENCES datos_embalse (id_registro)
+);
+
+CREATE TABLE configuraciones (
+  id_config INT AUTO_INCREMENT PRIMARY KEY,
+  nombre_config VARCHAR(50),
+  configuracion TEXT
+);
+
+CREATE TABLE propositos (
+  id_proposito INT AUTO_INCREMENT PRIMARY KEY,
+  proposito VARCHAR(50),
+  estatus varchar(20) NOT NULL
+);
+
+-- data de propositos
+insert into `propositos`(`id_proposito`,`proposito`,`estatus`) values 
+(1,'Consumo Humano','activo'),
+(2,'Riego','activo'),
+(3,'Control de Inundaciones','activo'),
+(4,'Recreación','activo'),
+(5,'Hidroelectricidad','activo'),
+(6,'Agricultura','activo');
+
+-- data de configuración
+-- insert into `configuraciones`(`id_config`,`nombre_config`,`configuracion`) values 
+-- (1,'propositos','Admin');
+
+-- data para usuarios
+insert  into `usuarios`(`Id_usuario`,`Contrasena`,`P_Nombre`,`S_Nombre`,`P_Apellido`,`S_Apellido`,`Cedula`,`Correo`,`Telefono`,`Tipo`,`estatus`) values 
+(1,'1234','Admin','Admin','Admin','Admin','00000000','admin@gmail.com','00000000000','Admin','activo'),
+(2,'1234','Pedro','Antonio','Rodrigues','Vargas','12345678','pedro@gmail.com','04121234567','User','activo');
+
+-- data para embalses
+insert  into `embalses`(`id_embalse`,`nombre_embalse`,`nombre_presa`,`id_estado`,`id_municipio`,`id_parroquia`,`este`,`norte`,`huso`,`cuenca_principal`,`afluentes_principales`,`area_cuenca`,`escurrimiento_medio`,`ubicacion_embalse`,`organo_rector`,`personal_encargado`,`operador`,`autoridad_responsable`,`proyectista`,`constructor`,`inicio_construccion`,`duracion_de_construccion`,`inicio_de_operacion`,`monitoreo_del_embalse`,`batimetria`,`vida_util`,`cota_min`,`cota_nor`,`cota_max`,`vol_min`,`vol_nor`,`vol_max`,`sup_min`,`sup_nor`,`sup_max`,`numero_de_presas`,`tipo_de_presa`,`altura`,`talud_aguas_arriba`,`talud_aguas_abajo`,`longitud_cresta`,`cota_cresta`,`ancho_cresta`,`volumen_terraplen`,`ancho_base`,`ubicacion_aliviadero`,`tipo_aliviadero`,`numero_compuertas_aliviadero`,`carga_vertedero`,`descarga_maxima`,`longitud_aliviadero`,`ubicacion_toma`,`tipo_toma`,`numero_compuertas_toma`,`mecanismos_de_emergencia`,`mecanismos_de_regulacion`,`gasto_maximo`,`descarga_de_fondo`,`posee_obra`,`tipo_de_obra`,`accion_requerida`,`proposito`,`uso_actual`,`sectores_beneficiados`,`poblacion_beneficiada`,`area_de_riego_beneficiada`,`f_cargo`,`f_cedula`,`f_nombres`,`f_apellidos`,`f_telefono`,`f_correo`,`imagen_uno`,`imagen_dos`,`id_encargado`,`estatus`) values 
+(1,'Bocono','Ing. Jose Ortega Martinez',17,291,745,'385.441','983.161','19','Rio Bocono','Río Bocono',1367.91,2620,'Constituido por dos (2) embalses: uno sobre el río Boconó y el otro sobre el río Tucupido, que a determinada cota forman uno solo (Boconó-Tucupido), debido a que están comunicados por medio de un canal excavado en la fila que los separa. A 50 km del sur-oeste de Guanare','Ministerio del Poder Popular de Atención de las Aguas','Dirección General de Manejo de Embalses  (Telf. 0212 - 5649428)','HIDROSPORTUGUESA - CORPOELEC - UTAA PORTUGUESA','Ing. Naika Nadedja (Telf. 04245729126)','COMISION BOCONO-TUCUPIDO; MOP (DGRH)','VINCCLER (Boconó); BARSANTI (Tucupido)',1974,13,1988,'Lectura de manera convenional mediante la observación de las regletas limnimétricas (miras)','{\"2001\":{\"210.006\":\"1286.95-53.88\",\"210.010\":\"1288.602-54.0316\",\"210.020\":\"1290.254-54.1832\",\"210.030\":\"1291.906-54.3348\",\"210.040\":\"1293.559-54.4864\",\"210.050\":\"1295.211-54.638\",\"210.060\":\"1296.863-54.7896\",\"210.070\":\"1298.515-54.9412\",\"210.080\":\"1300.168-55.0928\",\"210.090\":\"1301.82-55.2444\",\"210.100\":\"1303.472-55.396\",\"210.110\":\"1305.124-55.5476\",\"210.120\":\"1306.776-55.6992\",\"210.130\":\"1308.429-55.8508\",\"210.140\":\"1310.081-56.0024\",\"210.150\":\"1311.733-56.154\",\"210.160\":\"1313.385-56.3056\",\"210.170\":\"1315.037-56.4572\",\"210.180\":\"1316.69-56.6088\",\"210.190\":\"1318.342-56.7604\",\"210.200\":\"1319.994-56.912\",\"210.210\":\"1321.646-57.0636\",\"210.220\":\"1323.298-57.2152\",\"210.230\":\"1324.951-57.3668\",\"210.240\":\"1326.603-57.5184\",\"210.250\":\"1328.255-57.67\",\"210.260\":\"1329.907-57.8216\",\"210.270\":\"1331.559-57.9732\",\"210.280\":\"1333.212-58.1248\",\"210.290\":\"1334.864-58.2764\"},\"2012\":{\"210.300\":\"1336.516-58.428\",\"210.310\":\"1338.168-58.5796\",\"210.320\":\"1339.82-58.7312\",\"210.330\":\"1341.473-58.8828\",\"210.340\":\"1343.125-59.0344\",\"210.350\":\"1344.777-59.186\",\"210.360\":\"1346.429-59.3376\",\"210.370\":\"1348.081-59.4892\",\"210.380\":\"1349.734-59.6408\",\"210.390\":\"1351.386-59.7924\",\"210.400\":\"1353.038-59.944\",\"210.410\":\"1354.69-60.0956\",\"210.420\":\"1356.342-60.2472\",\"210.430\":\"1357.995-60.3988\",\"210.440\":\"1359.647-60.5504\",\"210.450\":\"1361.299-60.702\",\"210.460\":\"1362.951-60.8536\",\"210.470\":\"1364.603-61.0052\",\"210.480\":\"1366.256-61.1568\",\"210.490\":\"1367.908-61.3084\"}}',100,'237.000','267.000','269.000','889.830','3484.910','3734.04','5483.000','12465.51','12948.27',2,'Presa Boconó ubicada a 7 km. aguas arriba del puente Páez sobre la carretera Guanare-Barinas. Es de tierra, zonificada,',80,2.5,2,395,272,10,6004000,400,'En el estribo izquierdo','De entrada frontal controlado por compuerta radial de (10 x 11,5) m',1,13,950,10,'En el estribo derecho','Torre-toma de 50 m de altura con compuertas',0,'Dos (2) válvulas mariposa, ø = 3,20 m, de protección','Dos (2) válvulas Howell Bunger, ø = 2,80 m, de regulación.',320,0,'S/I','S/I','S/I','Riego, hidroelectricidad, consumo humano, control de inundaciones, recreación. ','Riego, hidroelectricidad, consumo humano, control de inundaciones, recreación. ','Mun. San Genaro de Boconoito, Mun. Guanare','211466',2000,'Apoyo Tecnico','17049840','Hector','Ledezma','0414-5221503','hector8@hotmail.com','3-Area_cuenca.png','3-Imagens_map_report.png',2,'activo');
+
+-- data para datos_embalse
+insert  into `datos_embalse`(`id_registro`,`id_embalse`,`fecha`,`hora`,`cota_actual`,`id_encargado`,`estatus`) values 
+(1,1,'2024-01-08','17:07:00',210.03,1,'activo'),
+(2,1,'2024-01-08','17:08:00',210.12,1,'activo'),
+(3,1,'2024-01-08','17:09:00',210.36,1,'activo'),
+(4,1,'2024-01-08','17:09:00',210.1,1,'activo');
+
+-- data para detalles_extraccion
+insert  into `detalles_extraccion`(`id_detalles_extraccion`,`tipo_extraccion`,`extraccion`,`id_registro`,`estatus`) values 
+(1,'Riego',30,1,'activo'),
+(2,'Hidroelectricidad',40,1,'activo'),
+(3,'Consumo Humano',60,1,'activo'),
+(4,'Control de Inundaciones (Aliviadero)',80,2,'activo'),
+(5,'Hidroelectricidad',80,2,'activo'),
+(6,'Consumo Humano',100,3,'activo'),
+(7,'Riego',10,3,'activo'),
+(8,'Hidroelectricidad',40,3,'activo'),
+(9,'Consumo Humano',300,4,'activo');

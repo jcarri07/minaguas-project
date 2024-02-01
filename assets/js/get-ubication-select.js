@@ -26,7 +26,7 @@ $(document).on('change', "#estado, #municipio, #parroquia", function() {
         }
 
         $.ajax({
-            url: '../php/get-ubication-select.php',
+            url: 'php/get-ubication-select.php',
             type: 'POST',
             data: {
                 cat: this.id,

@@ -8,12 +8,25 @@ $cedula = $_POST["cedula"];
 $telefono = $_POST["telefono"];
 $email = $_POST["email"];
 
+$apellido2 = "";
+$nombre2 = "";
+
 $nombres = explode(" ", $nombre);
-$nombre1 = $nombres[0];
-$nombre2 = $nombres[1];
+if (count($nombres) > 1) {
+    $nombre1 = $nombres[0];
+    $nombre2 = $nombres[1];
+} else {
+    $nombre1 = $nombre;
+};
+
 $apellidos = explode(" ", $apellido);
-$apellido1 = $apellidos[0];
-$apellido2 = $apellidos[1];
+if (count($apellidos) > 1) {
+    $apellido1 = $apellidos[0];
+    $apellido2 = $apellidos[1];
+} else {
+    $apellido1 = $apellido;
+};
+
 
 $res = mysqli_query($conn, "SELECT Cedula FROM usuarios WHERE Cedula = '$cedula';");
 $num_r = mysqli_num_rows($res);
@@ -28,7 +41,7 @@ if ($num_r >= 1) {
         return;
     } else {
 
-        $res = mysqli_query($conn, "INSERT INTO usuarios (P_Nombre,S_Nombre, P_Apellido,S_Apellido, Cedula,Telefono, Contrasena,Tipo,Correo) VALUES ('$nombre1','$nombre2', '$apellido1','$apellido2','$cedula','$telefono','$contra','User','$email');");
+        $res = mysqli_query($conn, "INSERT INTO usuarios (P_Nombre,S_Nombre, P_Apellido,S_Apellido, Cedula,Telefono, Contrasena,Tipo,Correo, estatus) VALUES ('$nombre1','$nombre2', '$apellido1','$apellido2','$cedula','$telefono','$contra','User','$email','activo');");
 
         if ($res) {
             echo "si";
@@ -36,5 +49,6 @@ if ($num_r >= 1) {
             echo "no";
         };
     }
-    closeConection($conn);
+    
 }
+closeConection($conn);

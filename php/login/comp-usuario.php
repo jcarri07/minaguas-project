@@ -9,7 +9,7 @@ $contra = $_POST["pass"];
 
 $res = mysqli_query($conn, "SELECT * 
                            FROM usuarios 
-                           WHERE Correo='$user' AND Contrasena='$contra';");
+                           WHERE Correo='$user' AND Contrasena='$contra' AND estatus = 'activo';");
 $num_r = mysqli_num_rows($res);
 
 
@@ -21,6 +21,8 @@ if ($num_r >= 1) {
     $_SESSION["P_Apellido"] = $obj->P_Apellido;
     $_SESSION["S_Apellido"] = $obj->S_Apellido;
     $_SESSION["Cedula"] = $obj->Cedula;
+    $_SESSION["Correo"] = $obj->Correo;
+    $_SESSION["Telefono"] = $obj->Telefono;
     $_SESSION["Tipo"] = $obj->Tipo;
     
     echo "si";

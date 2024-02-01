@@ -1,27 +1,11 @@
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
-
 <?php
-include '../php/Conexion.php';
+include 'php/Conexion.php';
 
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+
 <?php
 if (!isset($_SESSION)) {
   session_start();
@@ -33,64 +17,85 @@ if (!isset($_SESSION["Id_usuario"])) {
 
 date_default_timezone_set("America/Caracas");
 ?>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/logos/cropped-mminaguas.webp">
-  <title>
-    Minaguas
-  </title>
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="../assets/js/fontawesome/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
 
-<body class="g-sidenav-show   bg-gray-100">
-  <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
-    <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Argon Dashboard 2</span>
-      </a>
-    </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-      <!-- SIDEBAR -->
-      <?php include './sidebar.php'; ?>
-    </div>
-    <div class="sidenav-footer mx-3 ">
-      <div class="card card-plain shadow-none" id="sidenavCard">
-        <img class="w-50 mx-auto" src="../assets/img/illustrations/icon-documentation.svg" alt="sidebar_illustration">
-        <div class="card-body text-center p-3 w-100 pt-0">
-          <div class="docs-info">
-            <h6 class="mb-0">Need help?</h6>
-            <p class="text-xs font-weight-bold mb-0">Please check our docs</p>
-          </div>
-        </div>
-      </div>
-      <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
-      <a class="btn btn-primary btn-sm mb-0 w-100" href="https://www.creative-tim.com/product/argon-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
-    </div>
-  </aside>
-  <main class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+
+<style>
+  #show-batimetria {
+    /* display: flex; */
+    text-align: center;
+  }
+
+  #modal-show {
+    max-width: 70%;
+    display: inline-block;
+    overflow-x: auto;
+    white-space: nowrap;
+
+  }
+
+  #modal-body {
+    overflow-x: auto;
+
+  }
+
+  .tabla {
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+    margin: 0 25px;
+    text-align: center;
+  }
+
+  /* Opcional: Para darle estilo a las tablas dentro del modal */
+  .table-cota {
+    /* width: 100%; */
+    border: 1px solid #000000;
+  }
+
+  .tabla table {
+    width: 100%;
+    /* Ancho del 100% para ocupar todo el espacio disponible */
+    border-collapse: collapse;
+    /* Colapso de bordes para evitar espacios entre las celdas */
+  }
+
+  .tabla td,
+  .tabla th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+    /* Ajusta el relleno según sea necesario */
+  }
+
+  .no-visible {
+    display: none;
+  }
+
+  /* th,
+  td {
+    width: 33%;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #000;
+  } */
+
+  @media (min-width: 1000px) {
+    .p-5-lg {
+      padding: 3rem;
+    }
+  }
+</style>
+
+
+
+<!-- Navbar -->
+<!--<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Embalses</a></li>
-            <!--<li class="breadcrumb-item text-sm text-white active" aria-current="page">Billing</li>-->
+
           </ol>
           <h6 class="font-weight-bolder text-white mb-0">Fichas Técnicas de los Embalses</h6>
         </nav>
@@ -101,108 +106,14 @@ date_default_timezone_set("America/Caracas");
               <input type="text" class="form-control" placeholder="Type here...">
             </div>
           </div>
-          <!--<ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
-              </a>
-            </li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                </div>
-              </a>
-            </li>
-            <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0">
-                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
-              </a>
-              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New message</span> from Laur
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          13 minutes ago
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New album</span> by Travis Scott
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          1 day
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                          <title>credit-card</title>
-                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                              <g transform="translate(1716.000000, 291.000000)">
-                                <g transform="translate(453.000000, 454.000000)">
-                                  <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                                  <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                                </g>
-                              </g>
-                            </g>
-                          </g>
-                        </svg>
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          Payment successfully completed
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          2 days
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>-->
+        
         </div>
       </div>
-    </nav>
-    <!-- End Navbar -->
-    <div class="container-fluid py-4">
-      <div class="row">
-        <!--<div class="col-lg-8">
+    </nav>-->
+<!-- End Navbar -->
+<div class="container-fluid py-4">
+  <div class="row">
+    <!--<div class="col-lg-8">
           <div class="row">
             <div class="col-xl-6 mb-xl-0 mb-4">
               <div class="card bg-transparent shadow-xl">
@@ -298,422 +209,458 @@ date_default_timezone_set("America/Caracas");
             </div>
           </div>
         </div>-->
-        <div class="col-lg-12">
-          <div class="card h-100">
-            <!-- inicio -->
+    <div class="col-lg-12">
+      <div class="card h-100">
+        <!-- inicio -->
+        <div id="form-contenedor">
+          <form id="form-embalse" method="POST" action="php/proces_embalse.php" enctype="multipart/form-data">
+            <div class="p-5-lg m-5">
 
-            <form method="POST" action="../php/proces_embalse.php" enctype="multipart/form-data">
-              <div class="p-5 m-5">
+              <h3 class="pb-3">Información principal:</h3>
 
-                <h3 class="pb-3">Información principal:</h3>
-
-                <div class="row">
-                  <div class="col-md-4 col-sm-12">
-                    <div class="form-group">
-                      <label for="embalse_nombre">Nombre del embalse</label>
-                      <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nomnbre del embalse">
-                    </div>
-                    <div class="form-group">
-                      <label for="presa_nombre">Nombre de la presa</label>
-                      <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nomnbre de la presa">
-                    </div>
+              <div class="row">
+                <div class="col-md-4 col-sm-12">
+                  <div class="form-group">
+                    <label for="embalse_nombre">Nombre del embalse</label>
+                    <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nomnbre del embalse" required>
                   </div>
-                  <div class="col-md-4 col-sm-12">
-                    <div class="form-group">
-                      <label for="estado">Estado</label>
-                      <select class="form-control" id="estado" name="estado">
-                        <option value=""></option>
-                        <?php
-                        while ($row = mysqli_fetch_array($queryEstados)) {
-                        ?>
-                          <option value="<?php echo $row['id_estado']; ?>"><?php echo $row['estado']; ?></option>
-                        <?php
-                        }
-                        ?>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="municipio">Municipio</label>
-                      <select class="form-control" id="municipio" name="municipio">
-                        <option value=""></option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="parroquia">Parroquia</label>
-                      <select class="form-control" id="parroquia" name="parroquia">
-                        <option value=""></option>
-                      </select>
-                    </div>
+                  <div class="form-group">
+                    <label for="presa_nombre">Nombre de la presa</label>
+                    <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nomnbre de la presa">
                   </div>
-                  <div class="col-md-4 col-sm-12">
-                    <div class=" form-group">
-                      <label for="norte">Norte</label>
-                      <input type="text" class="form-control" id="norte" name="norte" placeholder="Ingrese los afluentes principales">
-                    </div>
-                    <div class=" form-group">
-                      <label for="este">Este</label>
-                      <input type="number" class="form-control" id="este" name="este" placeholder="Ingrese el area de la cuenca en km2">
-                    </div>
-                    <div class=" form-group">
-                      <label for="huso">Huso</label>
-                      <input type="number" class="form-control" id="huso" name="huso" placeholder="Ingrese el escurrimiento medio en m3/s">
-                    </div>
-                  </div>
-                </div>
-
-                <h3 class="pb-3">Información de la cuenca:</h3>
-
-                <div class="row">
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="cuenca">Cuenca principal</label>
-                    <input type="text" class="form-control" id="cuenca" name="cuenca" placeholder="Ingrese la cuenca principal">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="afluentes">Afluentes principales</label>
-                    <input type="text" class="form-control" id="afluentes" name="afluentes" placeholder="Ingrese los afluentes principales">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="area">Área de la cuenca</label>
-                    <input type="number" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca en km2">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="escurrimiento">Escurrimiento medio</label>
-                    <input type="number" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio en m3/s">
-                  </div>
-                </div>
-
-                <h3 class="pb-3 pt-3">Información de los embalses:</h3>
-
-                <div class="row">
-                  <div class="col-md-6 col-sm-12 form-group">
-                    <label for="ubicacion_embalse">Ubicación del embalse</label>
-                    <textarea class="form-control" id="ubicacion_embalse" name="ubicacion_embalse" rows="5" placeholder="Ingrese la ubicacion del embalse"></textarea>
-                  </div>
-                  <div class="col-md-6 col-sm-12">
-                    <div class="form-group">
-                      <label for="organo">Órgano rector</label>
-                      <input type="text" class="form-control" id="organo" name="organo" placeholder="Ingrese el organo rector">
-                    </div>
-                    <div class="form-group">
-                      <label for="personal">Personal encargado a nivel central</label>
-                      <input type="text" class="form-control" id="personal" name="personal" placeholder="Personal encargado a nivel central">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="operador">Operador</label>
-                    <input type="text" class="form-control" id="operador" name="operador" placeholder="Ingrese el operador">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="autoridad">Autoridad responsable del embalse</label>
-                    <input type="text" class="form-control" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="proyectista">Proyectista</label>
-                    <input type="text" class="form-control" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="constructor">Constructor</label>
-                    <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Ingrese el constructor">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="inicio_construccion">Año de inicio de construccion</label>
-                    <input type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construccion">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="duracion_construccion">Duración de construcción</label>
-                    <input type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duracion de construccion en años">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="inicio_operacion">Inicio de operación</label>
-                    <input type="number" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operacion">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="monitoreo">Monitoreo de niveles del embalse</label>
-                    <input type="text" class="form-control" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
-                  </div>
-                </div>
-
-                <h3 class="pb-3 pt-3">Características de los embalses:</h3>
-
-                <div class="row">
-                  <div class="col-md-3 col-sm-12">
-                    <div class="form-group">
-                      <label for="batimetria">Batimetría</label>
-                      <input type="text" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
-                    </div>
-                    <div class="form-group">
-                      <label for="vida_util">Vida útil</label>
-                      <input type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida util en años">
-                    </div>
-                  </div>
-
-                  <div class="col-md-3 col-sm-12">
-                    <div class=" form-group">
-                      <label for="cota_min">Cota mínima</label>
-                      <input type="text" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese los afluentes principales">
-                    </div>
-                    <div class=" form-group">
-                      <label for="vol_min">Volumen mínimo</label>
-                      <input type="number" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el area de la cuenca en km2">
-                    </div>
-                    <div class=" form-group">
-                      <label for="sup_min">Superficie mínima</label>
-                      <input type="number" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese el escurrimiento medio en m3/s">
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12">
-                    <div class=" form-group">
-                      <label for="cota_nor">Cota normal</label>
-                      <input type="text" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese los afluentes principales">
-                    </div>
-                    <div class=" form-group">
-                      <label for="vol_nor">Volumen normal</label>
-                      <input type="number" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el area de la cuenca en km2">
-                    </div>
-                    <div class=" form-group">
-                      <label for="sup_nor">Superficie normal</label>
-                      <input type="number" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese el escurrimiento medio en m3/s">
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12">
-                    <div class=" form-group">
-                      <label for="cota_max">Cota máxima</label>
-                      <input type="text" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese los afluentes principales">
-                    </div>
-                    <div class=" form-group">
-                      <label for="vol_max">Volumen máximo</label>
-                      <input type="number" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el area de la cuenca en km2">
-                    </div>
-                    <div class=" form-group">
-                      <label for="sup_max">Superficie máxima</label>
-                      <input type="number" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese el escurrimiento medio en m3/s">
-                    </div>
-                  </div>
-                </div>
-
-                <h3 class="pb-3 pt-3">Presa:</h3>
-
-                <div class="row">
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="numero_presas">Número de presas</label>
-                    <input type="number" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el numero de presas">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="tipo_presa">Tipo de presa</label>
-                    <input type="text" class="form-control" id="tipo_presa" name="tipo_presa" placeholder="Ingrese el tipo de presa">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="altura">Altura</label>
-                    <input type="number" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="talud_arriba">Talud aguas arriba</label>
-                    <input type="number" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba en grados">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="talud_abajo">Talud aguas abajo</label>
-                    <input type="number" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo en grados">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="longitud_cresta">Longitud de la cresta</label>
-                    <input type="number" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="cota_cresta">Cota de la cresta</label>
-                    <input type="number" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros sobre el nivel del mar">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="ancho_cresta">Ancho de la cresta</label>
-                    <input type="number" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="volumen_terraplen">Volumen del terraplen</label>
-                    <input type="number" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen en m3">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="ancho_base">Ancho maximo de base</label>
-                    <input type="number" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho maximo de base en metros">
-                  </div>
-                </div>
-
-                <h3 class="pb-3 pt-3">Aliviadero:</h3>
-
-                <div class="row">
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="ubicacion_aliviadero">Ubicacion del aliviadero</label>
-                    <input type="text" class="form-control" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicacion del aliviadero">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="tipo_aliviadero">Tipo de aliviadero</label>
-                    <input type="text" class="form-control" id="tipo_aliviadero" name="tipo_aliviadero" placeholder="Ingrese el tipo de aliviadero">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="numero_compuertas_aliviadero">Numero de compuertas del aliviadero</label>
-                    <input type="number" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el numero de compuertas del aliviadero">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="carga_aliviadero">Carga sobre el vertedero</label>
-                    <input type="number" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero en metros">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="descarga_aliviadero">Descarga maxima</label>
-                    <input type="number" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga maxima en m3/s">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="longitud_aliviadero">Longitud</label>
-                    <input type="number" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud en metros">
-                  </div>
-                </div>
-
-                <h3 class="pb-3 pt-3">Obra de toma:</h3>
-
-                <div class="row">
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="ubicacion_toma">Ubicación de la obra de toma</label>
-                    <input type="text" class="form-control" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicacion de la obra de toma">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="tipo_toma">Tipo de obra de toma</label>
-                    <input type="text" class="form-control" id="tipo_toma" name="tipo_toma" placeholder="Ingrese el tipo de obra de toma">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="numero_compuertas_toma">Numero de compuertas de la obra de toma</label>
-                    <input type="number" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el numero de compuertas de la obra de toma">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
-                    <input type="text" class="form-control" id="emergencia_toma" name="emergencia_toma" placeholder="Ingrese los mecanismos de emergencia de la obra de toma">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="regulacion_toma">Mecanismos de regulacion de la obra de toma</label>
-                    <input type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulacion de la obra de toma">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="gasto_toma">Gasto máximo de la obra de toma</label>
-                    <input type="number" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto maximo de la obra de toma en m3/s">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="descarga_fondo">Descarga de fondo</label>
-                    <input type="text" class="form-control" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo en m3/s o N/A si no aplica">
-                  </div>
-                </div>
-
-                <h3 class="pb-3 pt-3">Obra hidraulica:</h3>
-
-                <div class="row">
-                  <div class="col-xl-4 col-lg-6 form-group">
-                    <label for="obra_conduccion">Posee obra de conduccion</label>
-                    <input type="text" class="form-control" id="obra_conduccion" name="obra_conduccion" placeholder="Ingrese SI o NO si posee obra de conduccion">
-                  </div>
-                  <div class="col-xl-4 col-lg-6 form-group">
-                    <label for="tipo_conduccion">Tipo de obra de conduccion</label>
-                    <input type="text" class="form-control" id="tipo_conduccion" name="tipo_conduccion" placeholder="Ingrese el tipo de obra de conduccion o N/A si no aplica">
-                  </div>
-                  <div class="col-xl-4 col-lg-6 form-group">
-                    <label for="accion_conduccion">Accion requerida de la obra de conduccion</label>
-                    <input type="text" class="form-control" id="accion_conduccion" name="accion_conduccion" placeholder="Ingrese la accion requerida de la obra de conduccion o N/A si no aplica">
-                  </div>
-                </div>
-
-                <h3 class="pb-3 pt-3">Beneficios:</h3>
-
-                <div class="row">
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="proposito">Propósito del embalse</label>
-                    <input type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el proposito del embalse">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="uso">Uso actual del embalse</label>
-                    <input type="text" class="form-control" id="uso" name="uso" placeholder="Ingrese el uso actual del embalse">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="sectores">Sectores beneficiados</label>
-                    <input type="text" class="form-control" id="sectores" name="sectores" placeholder="Ingrese los sectores beneficiados">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="poblacion">Población beneficiada</label>
-                    <input type="number" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la poblacion beneficiada en habitantes">
-                  </div>
-                  <div class="col-xl-3 col-lg-6 form-group">
-                    <label for="area_riego">Área de riego beneficiada</label>
-                    <input type="number" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada en km2">
-                  </div>
-                </div>
-
-                <h3 class="pb-3 pt-3">Responsable:</h3>
-
-                <div class="row">
-                  <div class="col-xl-4 col-lg-6 form-group">
-                    <label for="f_cargo">Cargo</label>
-                    <input type="text" class="form-control" id="f_cargo" name="f_cargo" placeholder="Ingrese el nomnbre del embalse">
-                  </div>
-                  <div class="col-xl-4 col-lg-6 form-group">
-                    <label for="f_cedula">Cédula</label>
-                    <input type="text" class="form-control" id="f_cedula" name="f_cedula" placeholder="Ingrese el nomnbre del embalse">
-                  </div>
-                  <div class="col-xl-4 col-lg-6 form-group">
-                    <label for="f_nombres">Nombres</label>
-                    <input type="text" class="form-control" id="f_nombres" name="f_nombres" placeholder="Ingrese el nomnbre del embalse">
-                  </div>
-                  <div class="col-xl-4 col-lg-6 form-group">
-                    <label for="f_apellidos">Apellidos</label>
-                    <input type="text" class="form-control" id="f_apellidos" name="f_apellidos" placeholder="Ingrese el nomnbre del embalse">
-                  </div>
-                  <div class="col-xl-4 col-lg-6 form-group">
-                    <label for="f_telefono">Teléfono</label>
-                    <input type="text" class="form-control" id="f_telefono" name="f_telefono" placeholder="Ingrese el nomnbre del embalse">
-                  </div>
-                  <div class="col-xl-4 col-lg-6 form-group">
-                    <label for="f_correo">Correo</label>
-                    <input type="text" class="form-control" id="f_correo" name="f_correo" placeholder="Ingrese el nomnbre del embalse">
-                  </div>
-                </div>
-
-                <h3 class="pb-3 pt-3">Carga de imágenes:</h3>
-
-                <div class="row">
-                  <div class="col-xl-6 col-lg-12 form-group">
-                    <label for="imagen_uno">Ubicación relativa Estado/Municipio/Región hidrográfica</label>
-                    <input type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_uno" name="imagen_uno" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
-                  </div>
-                  <div class="col-xl-6 col-lg-12 form-group">
-                    <label for="imagen_dos">Ubicación relativa de los componentes del embalse</label>
-                    <input type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_dos" name="imagen_dos" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
-                  </div>
-                </div>
-
-                <div class="row justify-content-center mt-5">
-                  <button type="submit" class="col-2 btn btn-primary" name="Guardar">Guardar embalse</button>
-                </div>
-
-                <h3 class="pb-3 pt-3">Responsable del embalse:</h3>
-
-                <div class="row">
-                  <div class="form-group col-xl-6 col-lg-12">
-                    <label for="responsable">Responsable</label>
-                    <select class="form-control" id="responsable" name="responsable">
+                  <div class="form-group">
+                    <label for="responsable">Responsable de la carga de datos</label>
+                    <select class="form-select" id="responsable" name="responsable">
                       <option value=""></option>
                       <?php
                       while ($row1 = mysqli_fetch_array($queryResponsable)) {
                       ?>
-                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre']; ?></option>
+                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre'] . " " . $row1['S_Nombre'] . " " . $row1['P_Apellido'] . " " . $row1['S_Apellido']; ?></option>
                       <?php
                       }
                       ?>
                     </select>
                   </div>
                 </div>
+                <div class="col-md-4 col-sm-12">
+                  <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select class="form-select" id="estado" name="estado" required>
+                      <option value=""></option>
+                      <?php
+                      while ($row = mysqli_fetch_array($queryEstados)) {
+                      ?>
+                        <option value="<?php echo $row['id_estado']; ?>"><?php echo $row['estado']; ?></option>
+                      <?php
+                      }
+                      ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="municipio">Municipio</label>
+                    <select class="form-select" id="municipio" name="municipio" required>
+                      <option value=""></option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="parroquia">Parroquia</label>
+                    <select class="form-select" id="parroquia" name="parroquia" required>
+                      <option value=""></option>
+                    </select>
+                  </div>
+                </div>
 
-            </form>
+                <div class="col-md-4 col-sm-12">
+                  <div class=" form-group">
+                    <label for="norte">Norte</label>
+                    <input type="number" step="0.001" class="form-control" id="norte" name="norte" placeholder="Norte">
+                  </div>
+                  <div class=" form-group">
+                    <label for="este">Este</label>
+                    <input type="number" step="0.001" class="form-control" id="este" name="este" placeholder="Este">
+                  </div>
+                  <div class=" form-group">
+                    <label for="huso">Huso</label>
+                    <input type="number" step="0.001" class="form-control" id="huso" name="huso" placeholder="Huso">
+                  </div>
+                </div>
+              </div>
 
-            <!-- fin -->
-          </div>
+              <h3 class="pb-3 pt-3">Características del embase:</h3>
+
+              <div class="row">
+                <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">
+                  <div class="form-group">
+                    <label for="batimetria">Batimetría</label>
+                    <input type="file" accept=".xlsx, .xls" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
+                  </div>
+                  <div class="form-group d-flex justify-content-center">
+                    <a class="down-bat visible btn btn-link text-dark text-sm d-flex align-items-center"><i class="fa fa-download text-lg me-1"></i> Plantilla</a>
+                    <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn btn-link text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="vida_util">Vida útil (años)</label>
+                    <input type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-12">
+                  <div class=" form-group">
+                    <label for="cota_min">Cota mínima (m s.m.n.)</label>
+                    <input type="number" step="0.001" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
+                  </div>
+                  <div class=" form-group">
+                    <label for="vol_min">Volumen mínimo (hm³)</label>
+                    <input type="number" step="0.001" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
+                  </div>
+                  <div class=" form-group">
+                    <label for="sup_min">Superficie mínima (ha)</label>
+                    <input type="number" step="0.001" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                  <div class=" form-group">
+                    <label for="cota_nor">Cota normal (m s.m.n.)</label>
+                    <input type="number" step="0.001" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
+                  </div>
+                  <div class=" form-group">
+                    <label for="vol_nor">Volumen normal (hm³)</label>
+                    <input type="number" step="0.001" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
+                  </div>
+                  <div class=" form-group">
+                    <label for="sup_nor">Superficie normal (ha)</label>
+                    <input type="number" step="0.001" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                  <div class=" form-group">
+                    <label for="cota_max">Cota máxima (m s.m.n.)</label>
+                    <input type="number" step="0.001" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
+                  </div>
+                  <div class=" form-group">
+                    <label for="vol_max">Volumen máximo (hm³)</label>
+                    <input type="number" step="0.001" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
+                  </div>
+                  <div class=" form-group">
+                    <label for="sup_max">Superficie máxima (ha)</label>
+                    <input type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="pb-3 pt-5">Información de la cuenca:</h3>
+
+              <div class="row">
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="cuenca">Cuenca principal</label>
+                  <input type="text" class="form-control" id="cuenca" name="cuenca" placeholder="Ingrese la cuenca principal">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="afluentes">Afluentes principales</label>
+                  <input type="text" class="form-control" id="afluentes" name="afluentes" placeholder="Ingrese los afluentes principales">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area">Área de la cuenca (ha)</label>
+                  <input type="number" step="0.001" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="escurrimiento">Escurrimiento medio (hm³)</label>
+                  <input type="number" step="0.001" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
+                </div>
+              </div>
+
+              <h3 class="pb-3 pt-3">Información de los embalses:</h3>
+
+              <div class="row">
+                <div class="col-md-6 col-sm-12 form-group">
+                  <label for="ubicacion_embalse">Ubicación del embalse</label>
+                  <textarea class="form-control" id="ubicacion_embalse" name="ubicacion_embalse" rows="5" placeholder="Ingrese la ubicación del embalse"></textarea>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label for="organo">Órgano rector</label>
+                    <input type="text" class="form-control" id="organo" name="organo" placeholder="Ingrese el órgano rector">
+                  </div>
+                  <div class="form-group">
+                    <label for="personal">Personal encargado a nivel central</label>
+                    <input type="text" class="form-control" id="personal" name="personal" placeholder="Personal encargado a nivel central">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="operador">Operador</label>
+                  <input type="text" class="form-control" id="operador" name="operador" placeholder="Ingrese el operador">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="autoridad">Autoridad responsable del embalse</label>
+                  <input type="text" class="form-control" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="proyectista">Proyectista</label>
+                  <input type="text" class="form-control" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="constructor">Constructor</label>
+                  <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Ingrese el constructor">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="inicio_construccion">Año de inicio de construccion</label>
+                  <input type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="duracion_construccion">Duración de construcción (años)</label>
+                  <input type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duracion de construcción en años">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="inicio_operacion">Inicio de operación (año)</label>
+                  <input type="number" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operación">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="monitoreo">Monitoreo de niveles del embalse</label>
+                  <input type="text" class="form-control" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
+                </div>
+              </div>
+
+
+              <h3 class="pb-3 pt-3">Presa:</h3>
+
+              <div class="row">
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="numero_presas">Número de presas</label>
+                  <input type="number" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el número de presas">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="tipo_presa">Tipo de presa</label>
+                  <input type="text" class="form-control" id="tipo_presa" name="tipo_presa" placeholder="Ingrese el tipo de presa">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="altura">Altura (m)</label>
+                  <input type="number" step="0.001" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="talud_arriba">Talud aguas arriba</label>
+                  <input type="number" step="0.001" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="talud_abajo">Talud aguas abajo</label>
+                  <input type="number" step="0.001" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="longitud_cresta">Longitud de la cresta (m)</label>
+                  <input type="number" step="0.001" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="cota_cresta">Cota de la cresta (m s.m.n.)</label>
+                  <input type="number" step="0.001" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="ancho_cresta">Ancho de la cresta (m)</label>
+                  <input type="number" step="0.001" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="volumen_terraplen">Volumen del terraplen (m³)</label>
+                  <input type="number" step="0.001" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="ancho_base">Ancho maximo de base</label>
+                  <input type="number" step="0.001" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
+                </div>
+              </div>
+
+              <h3 class="pb-3 pt-3">Aliviadero:</h3>
+
+              <div class="row">
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="ubicacion_aliviadero">Ubicacion del aliviadero</label>
+                  <input type="text" class="form-control" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicación del aliviadero">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="tipo_aliviadero">Tipo de aliviadero</label>
+                  <input type="text" class="form-control" id="tipo_aliviadero" name="tipo_aliviadero" placeholder="Ingrese el tipo de aliviadero">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="numero_compuertas_aliviadero">Numero de compuertas del aliviadero</label>
+                  <input type="number" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el numero de compuertas del aliviadero">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="carga_aliviadero">Carga sobre el vertedero (m)</label>
+                  <input type="number" step="0.001" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="descarga_aliviadero">Descarga maxima (m³/s)</label>
+                  <input type="number" step="0.001" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="longitud_aliviadero">Longitud (m)</label>
+                  <input type="number" step="0.001" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud">
+                </div>
+              </div>
+
+              <h3 class="pb-3 pt-3">Obra de toma:</h3>
+
+              <div class="row">
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="ubicacion_toma">Ubicación de la obra de toma</label>
+                  <input type="text" class="form-control" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicación de la obra de toma">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="tipo_toma">Tipo de obra de toma</label>
+                  <input type="text" class="form-control" id="tipo_toma" name="tipo_toma" placeholder="Ingrese el tipo de obra de toma">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="numero_compuertas_toma">Numero de compuertas de la obra de toma</label>
+                  <input type="number" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el número de compuertas de la obra de toma">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
+                  <input type="text" class="form-control" id="emergencia_toma" name="emergencia_toma" placeholder="Ingrese los mecanismos de emergencia de la obra de toma">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="regulacion_toma">Mecanismos de regulacion de la obra de toma</label>
+                  <input type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulación de la obra de toma">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="gasto_toma">Gasto máximo de la obra de toma (m³/s)</label>
+                  <input type="number" step="0.001" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto máximo de la obra de toma">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="descarga_fondo">Descarga de fondo</label>
+                  <input type="text" class="form-control" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo o N/A si no aplica">
+                </div>
+              </div>
+
+              <h3 class="pb-3 pt-3">Obra hidraulica:</h3>
+
+              <div class="row">
+                <div class="col-xl-4 col-lg-6 form-group">
+                  <label for="obra_conduccion">Posee obra</label>
+                  <input type="text" class="form-control" id="obra_conduccion" name="obra_conduccion" placeholder="Ingrese SI o NO si posee obra">
+                </div>
+                <div class="col-xl-4 col-lg-6 form-group">
+                  <label for="tipo_conduccion">Tipo de obra</label>
+                  <input type="text" class="form-control" id="tipo_conduccion" name="tipo_conduccion" placeholder="Ingrese el tipo de obra">
+                </div>
+                <div class="col-xl-4 col-lg-6 form-group">
+                  <label for="accion_conduccion">Accion requerida</label>
+                  <input type="text" class="form-control" id="accion_conduccion" name="accion_conduccion" placeholder="Ingrese la accion requerida">
+                </div>
+              </div>
+
+              <h3 class="pb-3 pt-3">Beneficios:</h3>
+
+              <div class="row">
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="proposito">Propósito del embalse</label>
+                  <input type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el propósito del embalse">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="uso">Uso actual del embalse</label>
+                  <input type="text" class="form-control" id="uso" name="uso" placeholder="Ingrese el uso actual del embalse">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="sectores">Sectores beneficiados</label>
+                  <input type="text" class="form-control" id="sectores" name="sectores" placeholder="Ingrese los sectores beneficiados">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="poblacion">Población beneficiada (hab.)</label>
+                  <input type="number" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la población beneficiada en habitantes">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">Área de riego beneficiada (ha)</label>
+                  <input type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada en km2">
+                </div>
+              </div>
+
+              <h3 class="pb-3 pt-3">Responsable:</h3>
+
+              <div class="row">
+                <div class="col-xl-4 col-lg-6 form-group">
+                  <label for="f_cargo">Cargo</label>
+                  <input type="text" class="form-control" id="f_cargo" name="f_cargo" placeholder="Ingrese el cargo">
+                </div>
+                <div class="col-xl-4 col-lg-6 form-group">
+                  <label for="f_cedula">Cédula</label>
+                  <input type="text" class="form-control" id="f_cedula" name="f_cedula" placeholder="Ingrese la cédula">
+                </div>
+                <div class="col-xl-4 col-lg-6 form-group">
+                  <label for="f_nombres">Nombres</label>
+                  <input type="text" class="form-control" id="f_nombres" name="f_nombres" placeholder="Ingrese los nombres ">
+                </div>
+                <div class="col-xl-4 col-lg-6 form-group">
+                  <label for="f_apellidos">Apellidos</label>
+                  <input type="text" class="form-control" id="f_apellidos" name="f_apellidos" placeholder="Ingrese los apellidos ">
+                </div>
+                <div class="col-xl-4 col-lg-6 form-group">
+                  <label for="f_telefono">Teléfono</label>
+                  <input type="text" class="form-control" id="f_telefono" name="f_telefono" placeholder="Ingrese el telefono">
+                </div>
+                <div class="col-xl-4 col-lg-6 form-group">
+                  <label for="f_correo">Correo</label>
+                  <input type="text" class="form-control" id="f_correo" name="f_correo" placeholder="Ingrese el correo">
+                </div>
+              </div>
+
+              <h3 class="pb-3 pt-3">Carga de imágenes:</h3>
+
+              <div class="row">
+                <div class="col-xl-6 col-lg-12 form-group">
+                  <label style="width: 100%;" for="imagen_uno">Ubicación relativa Estado/Municipio/Región hidrográfica<br>
+                    <div style="width:100%; display:flex; justify-content:center;">
+                      <div style="height: 250px; width:300px;" class="my-3"><img src="./assets/img/default-img.png" id="imagen_uno-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
+                    </div>
+                    <div style="display: flex; justify-content:center;">
+                      <span class="mx-2"><a class="btn btn-primary">Subir archivo</a></span> <span><a id="imagen_uno-remove" class="btn btn-primary"><i class="fas fa-backspace text-lg me-1"></i></a></span>
+                    </div>
+                  </label>
+                  <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_uno" name="imagen_uno" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
+                </div>
+                <div class="col-xl-6 col-lg-12 form-group">
+                  <label style="width: 100%;" for="imagen_dos">Ubicación relativa de los componentes del embalse<br>
+                    <div style="width:100%; display:flex; justify-content:center;">
+                      <div style="height: 250px; width:300px;" class="my-3"><img src="./assets/img/default-img.png" id="imagen_dos-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
+                    </div>
+                    <div style="display: flex; justify-content:center;">
+                      <span class="mx-2"><a class="btn btn-primary">Subir archivo</a></span> <span><a id="imagen_dos-remove" class="btn btn-primary"><i class="fas fa-backspace text-lg me-1"></i></a></span>
+                    </div>
+                  </label>
+                  <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_dos" name="imagen_dos" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
+                </div>
+              </div>
+
+              <!-- 
+              <h3 class="pb-3 pt-3">Responsable del embalse:</h3>
+
+              <div class="row">
+                <div class="form-group col-xl-6 col-lg-12">
+                  <label for="responsable">Responsable</label>
+                  <select class="form-select" id="responsable" name="responsable">
+                    <option value=""></option>
+                    <?php
+                    //while ($row1 = mysqli_fetch_array($queryResponsable)) {
+                    ?>
+                      <option value="<?php //echo $row1['Id_usuario']; 
+                                      ?>"><?php //echo $row1['P_Nombre']; 
+                                          ?></option>
+                    <?php
+                    //}
+                    ?>
+                  </select>
+                </div>
+              </div> -->
+
+              <div class="text-center mt-5" style="margin: 0 auto;">
+                <button id="submitFornBtn" type="submit" class="btn btn-primary" name="Guardar">Guardar embalse</button>
+              </div>
+          </form>
         </div>
+
+        <!-- fin -->
       </div>
-      <!--<div class="row">
+    </div>
+  </div>
+  <!--<div class="row">
         <div class="col-md-7 mt-4">
           <div class="card">
             <div class="card-header pb-0 px-3">
@@ -857,63 +804,52 @@ date_default_timezone_set("America/Caracas");
           </div>
         </div>
       </div>-->
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                desarrollado por
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Dirección de Investigación e Innovación - ABAE
-                </a>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                </li>
-              </ul>
-            </div>
+  <!--<footer class="footer pt-3  ">
+    <div class="container-fluid">
+      <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6 mb-lg-0 mb-4">
+          <div class="copyright text-center text-sm text-muted text-lg-start">
+            © <script>
+              document.write(new Date().getFullYear())
+            </script>,
+            desarrollado por
+            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Dirección de Investigación e Innovación - ABAE
+            </a>
           </div>
         </div>
-      </footer>
+        <div class="col-lg-6">
+          <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </main>
+  </footer>-->
+</div>
 
-  <!--   Core JS Files   -->
-  <script src="../assets/js/get-ubication-select.js"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+
+<script src="assets/js/get-ubication-select.js"></script>
+<script>
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
     }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
-</body>
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
+</script>
 
-</html>
 
 
 <!-- Modal -->
@@ -986,3 +922,191 @@ date_default_timezone_set("America/Caracas");
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="show-batimetria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div id="modal-show" class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">COTAS</h5>
+        <button type="button" class="btn btn-primary btn-rounded" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">X</span>
+        </button>
+      </div>
+      <div id="modal-body" class="modal-body">
+        <div id="table-container" class="table-container">
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="./assets/js/xlsx.full.min.js"></script>
+<script>
+  var batimetria = document.getElementById('batimetria');
+  // console.log(batimetria.files[0] != null);
+
+  var cotasEmbalse = {};
+
+  batimetria.addEventListener('change', function(event) {
+
+    if (batimetria.files[0] != null) {
+      iniciar();
+    } else {
+      if (!$(".show-bat").hasClass("no-visible")) {
+        $(".show-bat").addClass("no-visible");
+      }
+      var modalBody = document.getElementById('modal-body');
+      modalBody.innerHTML = "";
+    }
+
+
+    // console.log(cotasEmbalse);
+    // agregarTablasAlModal(cotasEmbalse);
+
+  });
+
+  $(".down-bat").on("click", function() {
+
+    // var id = $(this).data("id");
+    // console.log(id)
+    window.location.href = "./php/download_excel_batimetria.php?type=plantilla";
+
+  });
+
+
+
+  function cargar_datos_asincrono() {
+    return new Promise(resolve => {
+      var batimetria = document.getElementById('batimetria'); // Reemplaza 'excelInput' con el ID real de tu input file
+      var archivo = batimetria.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var data = new Uint8Array(e.target.result);
+        var workbook = XLSX.read(data, {
+          type: 'array'
+        });
+
+        workbook.SheetNames.forEach(function(sheetName) {
+          var cotaEmbalse = {};
+          var worksheet = workbook.Sheets[sheetName];
+          var range = XLSX.utils.decode_range(worksheet['!ref']);
+
+          for (var row = 1; row <= range.e.r; row++) {
+            var cota = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 0
+            })].v.toFixed(3);
+            var area = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 1
+            })].v;
+            var capacidad = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 2
+            })].v;
+            cotaEmbalse[cota] = area + '-' + capacidad;
+          }
+
+          cotasEmbalse[sheetName] = cotaEmbalse;
+        });
+
+      };
+      reader.readAsArrayBuffer(archivo);
+      console.log('Inicio de la operación asincrónica');
+      setTimeout(() => {
+        console.log('Fin de la operación asincrónica');
+        resolve();
+      }, 1000);
+    });
+  }
+
+  async function cargarDatos() {
+    try {
+      console.log('Inicio de cargarDatos');
+      await cargar_datos_asincrono();
+      console.log('Después de await en cargarDatos');
+    } catch (error) {
+      console.error('Error al cargar datos:', error);
+    }
+  }
+
+  async function iniciar() {
+    console.log('Inicio del script');
+    await cargarDatos();
+    console.log('Fin del script');
+    console.log(cotasEmbalse['2001']);
+    agregarTablasAlModal(cotasEmbalse);
+    // console.log($(".show-bat").hasClass("no-visible"));
+
+    var batimetria = document.getElementById('batimetria');
+    // console.log(batimetria.files[0]);
+    // console.log(batimetria.files[0]!=null);
+
+
+    if (batimetria.files[0] != null) {
+      if ($(".show-bat").hasClass("no-visible")) {
+        $(".show-bat").removeClass("no-visible");
+      }
+    } else {
+      if (!$(".show-bat").hasClass("no-visible")) {
+        $(".show-bat").addClass("no-visible");
+      }
+    }
+  }
+
+  function construirTabla(embalse, data) {
+    var tabla = '<table class="align-items-center mb-0 table-cota" border="1">';
+    tabla += '<tr><th>Cota</th><th>Área</th><th>Capacidad</th></tr>';
+
+    for (var cota in data) {
+      var partes = data[cota].split('-');
+      tabla += '<tr><td>' + cota + '</td><td>' + partes[0] + '</td><td>' + partes[1] + '</td></tr>';
+    }
+
+    tabla += '</table>';
+    return tabla;
+  }
+
+  function agregarTablasAlModal(cotasEmbalse) {
+    var modal_body = document.getElementById('modal-body');
+    modal_body.innerHTML = "";
+
+    for (var embalse in cotasEmbalse) {
+      var tablaHTML = construirTabla(embalse, cotasEmbalse[embalse]);
+
+      var tablaContainer = document.createElement('div');
+      tablaContainer.className = 'tabla'
+      tablaContainer.innerHTML = '<h3>' + embalse + '</h3>' + tablaHTML;
+
+      modal_body.appendChild(tablaContainer);
+      // modal_body.innerHTML += tablaHTML;
+    }
+  }
+
+  function previewImage(id) {
+    document.querySelector("#" + id).addEventListener("change", function(e) {
+      if (e.target.files.length == 0) {
+        document.querySelector("#" + id + "-preview").src = "./assets/img/default-img.png";
+        return;
+      }
+      let file = e.target.files[0];
+      let url = URL.createObjectURL(file);
+      document.querySelector("#" + id + "-preview").src = url;
+    });
+
+    document.querySelector("#" + id + "-remove").addEventListener("click", function(e) {
+      e.preventDefault();
+      document.querySelector("#" + id + "-preview").src = "./assets/img/default-img.png";
+    });
+  }
+
+  previewImage("imagen_uno");
+  previewImage("imagen_dos");
+</script>

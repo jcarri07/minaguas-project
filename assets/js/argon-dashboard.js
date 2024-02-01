@@ -14,10 +14,11 @@
       var ps1 = new PerfectScrollbar(sidebar);
     };
 
-    if (document.getElementsByClassName('navbar-collapse')[0]) {
+    /*if (document.getElementsByClassName('navbar-collapse')[0]) {
       var fixedplugin = document.querySelector('.navbar:not(.navbar-expand-lg) .navbar-collapse');
-      var ps2 = new PerfectScrollbar(fixedplugin);
-    };
+      console.log(fixedPlugin);
+      //var ps2 = new PerfectScrollbar(fixedplugin);
+    };*/
 
     if (document.getElementsByClassName('fixed-plugin')[0]) {
       var fixedplugin = document.querySelector('.fixed-plugin');
@@ -382,7 +383,7 @@ if (iconSidenav) {
 }
 
 function toggleSidenav() {
-  if (body.classList.contains(className)) {
+  if (body.classList.contains(className)) { 
     body.classList.remove(className);
     setTimeout(function() {
       sidenav.classList.remove('bg-white');
