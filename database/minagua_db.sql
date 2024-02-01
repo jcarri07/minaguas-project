@@ -1641,7 +1641,7 @@ CREATE TABLE embalses (
   f_correo VARCHAR(100),
   imagen_uno TEXT,
   imagen_dos TEXT,
-  id_encargado INT(11) DEFAULT NULL,
+  id_encargado VARCHAR(11),
   estatus enum('activo','inactivo') DEFAULT NULL,
   FOREIGN KEY (id_estado) REFERENCES estados (id_estado),
   FOREIGN KEY (id_municipio) REFERENCES municipios (id_municipio),
