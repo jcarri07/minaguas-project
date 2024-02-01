@@ -1,5 +1,6 @@
 <?php
 require_once '../../php/Conexion.php';
+// require '../../php/Graficas/graficas.php';
 $fullPath = getcwd();
 $parts = explode(DIRECTORY_SEPARATOR, $fullPath);
 date_default_timezone_set('America/Caracas');
@@ -204,26 +205,30 @@ $variacion_mensual = getMonthName();
       <div class="title-container">
         <h1 style="text-align: center"><?php echo $row['nombre_embalse'] ?></h1>
       </div>
-      <img class="img-logo" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                        echo $image_logo ?>" />
+      <!-- <img class="img-logo" src="http://<?php //echo $_SERVER['HTTP_HOST'];
+                                              //echo $image_logo 
+                                              ?>" />
       <div style="position: absolute; top: 15px; left: 950px;">
-        <img class="img-letters" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                              echo $logo_letters ?>" />
-      </div>
+        <img class="img-letters" src="http://<?php //echo $_SERVER['HTTP_HOST'];
+                                              //echo $logo_letters 
+                                              ?>" />
+      </div> -->
       <hr>
       <div style="position: absolute; left: 500px; top: 120px; width: 460px;">
         <h1 style="text-align: center; color: #2E86C1;"><?php echo getMonthName() ?></h1>
       </div>
-      <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 150px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                                                                                          echo $area ?>" />
+      <!-- <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 150px;" src="http://<?php //echo $_SERVER['HTTP_HOST'];
+                                                                                                              //echo $area 
+                                                                                                              ?>" /> -->
       <div style="position: absolute; width: 230px; left: 100px; top: 345px;">
         <h5>Área de la Cuenca: <?php echo number_format(floatVal($row['area_cuenca']), 2, ',', '.'); ?> Km2</h5>
       </div>
 
-      <div style="position: absolute; height: 100px; width: 300px; left: 65px; top: 380px; border: gray 1px solid; background-color: ">
+      <div style="position: absolute; height: 100px; width: 300px; left: 65px; top: 380px; border: gray 1px solid; background-color: black">
       </div>
 
-      <div style="position: absolute; height: 160px; width: 500px; left: 480px; top: 320px; border: gray 1px solid; background-color: blue;">
+      <div style="position: absolute; height: 160px; width: 500px; left: 480px; top: 320px; border: gray 1px solid;">
+        <img style="width: 100%; height: 100%; object-fit: contain;" src=<?php echo "../../assets/img/temp/imagen-$id-2.png" ?>>
       </div>
 
       <div style="position: absolute; left: 650px; top: 287px;">
@@ -234,7 +239,8 @@ $variacion_mensual = getMonthName();
         <h5 style="color: #2E86C1;"><?php echo 'VARIACION MENSUAL ' . strtoupper($variacion_mensual) ?></h5>
       </div>
 
-      <div style="position: absolute; height: 230px; width: 915px; left: 65px; top: 500px; border: gray 1px solid; background-color: red;">
+      <div style="position: absolute; height: 230px; width: 915px; left: 65px; top: 500px; border: gray 1px solid;">
+        <img style="width: 100%; height: 100%; object-fit: fill;" src=<?php echo "../../assets/img/temp/imagen-$id-1.png" ?>>
       </div>
 
       <table style="position: absolute; top: 180px; left: 500px;">

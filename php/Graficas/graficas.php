@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php 
+<?php
 include "../Conexion.php";
 date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
@@ -234,7 +234,6 @@ closeConection($conn); ?>
 
                         <?php
                                 $j++;
-
                             }
                             if ($j >= count($datos_embalses)) {
                                 break;
@@ -412,7 +411,6 @@ closeConection($conn); ?>
 
                         <?php
                                 $j++;
-
                             }
                             if ($j >= count($datos_embalses)) {
                                 break;
@@ -581,10 +579,6 @@ closeConection($conn); ?>
 
         }
         ?>
-
-
-
-
 
     });
 </script>
