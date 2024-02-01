@@ -2,6 +2,8 @@
 require_once '../../php/Conexion.php';
 $fullPath = getcwd();
 $parts = explode(DIRECTORY_SEPARATOR, $fullPath);
+date_default_timezone_set('America/Caracas');
+require_once '../../php/batimetria.php';
 
 if (count($parts) >= 4) {
   $projectName = $parts[3];
@@ -53,8 +55,13 @@ function getYear()
   return $year;
 }
 
-$sql = "SELECT * FROM embalses";
-$result = $conn->query($sql);
+$stringPrioritarios = "0";
+$queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios'");
+if (mysqli_num_rows($queryPrioritarios) > 0) {
+  $stringPrioritarios = mysqli_fetch_assoc($queryPrioritarios)['configuracion'];
+}
+
+$result = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse IN ($stringPrioritarios)");
 
 $mes_actual = date('m');
 
@@ -181,18 +188,18 @@ $variacion_mensual = getMonthName();
 </style>
 
 <body>
-  <?php if ($num_rows > 0) { 
+  <?php if ($num_rows > 0) {
     $indice = 0;
-    ?>
+  ?>
     <?php while ($row = $result->fetch_assoc()) {
       $id = $row['id_embalse'];
-      $sqlMonths = "SELECT cota_actual, fecha, id_embalse FROM datos_embalse WHERE MONTH(fecha) = $mes_actual AND DAY(fecha) BETWEEN 2 AND 8 AND id_embalse = '$id'";
+      $sqlMonths = "SELECT cota_actual, fecha, id_embalse FROM datos_embalse WHERE MONTH(fecha) = 1 AND DAY(fecha) BETWEEN 2 AND 8 AND id_embalse = '$id' GROUP BY (fecha);";
     ?>
       <div class="square">
-        1
+        <?php echo $indice + 1; ?>
       </div>
       <div class="code-container">
-        <h1 class="code">Código <?php echo $codigo ?></h1>
+        <h1 class="code">Código <?php echo $stringPrioritarios ?></h1>
       </div>
       <div class="title-container">
         <h1 style="text-align: center"><?php echo $row['nombre_embalse'] ?></h1>
@@ -244,19 +251,23 @@ $variacion_mensual = getMonthName();
           <?php
           $resultado = $conn->query($sqlMonths);
           $celdas_rellenadas = 0;
-
+          $cotas = array();
           if ($resultado->num_rows > 0) {
             while ($fila = $resultado->fetch_assoc()) {
-              if ($fila !== null || $fila !== "") {
-                echo "<td>" . $fila['cota_actual'] . "</td>";
-                $celdas_rellenadas++;
-              }
+              $cota = $fila['cota_actual'];
+              $fecha = date("j", strtotime($fila["fecha"]));
+              $cotas[$fecha] = $cota . "-" . date("y", strtotime($fila["fecha"]));
             }
           }
 
-          for ($i = $celdas_rellenadas; $i < 7; $i++) {
-            echo "<td>N/A</td>";
+          for ($i = 2; $i < 9; $i++) {
+            if (array_key_exists((string)$i, $cotas)) {
+              echo "<td>" . explode("-", $cotas[$i])[0] . "</td>";
+            } else {
+              echo "<td>N/A</td>";
+            }
           }
+
           ?>
         </tr>
         <tr>
@@ -264,9 +275,16 @@ $variacion_mensual = getMonthName();
             (Hm3
             )</td>
           <?php
-          for ($i = 0; $i < 7; $i++) {
-            echo "<td>0</td>";
+          $batimetria = new Batimetria($id, $conn);
+          for ($i = 2; $i < 9; $i++) {
+            if (array_key_exists((string)$i, $cotas)) {
+              //explode("-", $cotas[$i])[0]
+              echo "<td>" . $batimetria->getByCota('2012', explode("-", $cotas[$i])[0])[1] . "</td>";
+            } else {
+              echo "<td>N/A</td>";
+            }
           }
+          $cotas = [];
           $indice++;
           ?>
         </tr>
