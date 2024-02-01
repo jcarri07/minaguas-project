@@ -631,10 +631,6 @@ closeConection($conn); ?>
         }
         ?>
 
-
-
-
-
     });
 </script>
 
