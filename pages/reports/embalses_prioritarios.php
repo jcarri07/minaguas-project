@@ -1,6 +1,5 @@
 <?php
 require_once '../../php/Conexion.php';
-// require '../../php/Graficas/graficas.php';
 $fullPath = getcwd();
 $parts = explode(DIRECTORY_SEPARATOR, $fullPath);
 date_default_timezone_set('America/Caracas');
@@ -194,41 +193,39 @@ $variacion_mensual = getMonthName();
   ?>
     <?php while ($row = $result->fetch_assoc()) {
       $id = $row['id_embalse'];
-      $sqlMonths = "SELECT cota_actual, fecha, id_embalse FROM datos_embalse WHERE MONTH(fecha) = 1 AND DAY(fecha) BETWEEN 2 AND 8 AND id_embalse = '$id' GROUP BY (fecha);";
+      $sqlMonths = "SELECT cota_actual, fecha, id_embalse FROM datos_embalse WHERE MONTH(fecha) = $mes_actual AND DAY(fecha) BETWEEN 2 AND 8 AND id_embalse = '$id' GROUP BY (fecha);";
     ?>
       <div class="square">
         <?php echo $indice + 1; ?>
       </div>
       <div class="code-container">
-        <h1 class="code">Código <?php echo $stringPrioritarios ?></h1>
+        <h1 class="code">Código <?php echo $codigo ?></h1>
       </div>
       <div class="title-container">
         <h1 style="text-align: center"><?php echo $row['nombre_embalse'] ?></h1>
       </div>
-      <!-- <img class="img-logo" src="http://<?php //echo $_SERVER['HTTP_HOST'];
-                                              //echo $image_logo 
-                                              ?>" />
+      <img class="img-logo" src="http://<?php echo $_SERVER['HTTP_HOST'];
+                                        echo $image_logo ?>" />
       <div style="position: absolute; top: 15px; left: 950px;">
-        <img class="img-letters" src="http://<?php //echo $_SERVER['HTTP_HOST'];
-                                              //echo $logo_letters 
-                                              ?>" />
-      </div> -->
+        <img class="img-letters" src="http://<?php echo $_SERVER['HTTP_HOST'];
+                                              echo $logo_letters ?>" />
+      </div>
       <hr>
       <div style="position: absolute; left: 500px; top: 120px; width: 460px;">
         <h1 style="text-align: center; color: #2E86C1;"><?php echo getMonthName() ?></h1>
       </div>
-      <!-- <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 150px;" src="http://<?php //echo $_SERVER['HTTP_HOST'];
-                                                                                                              //echo $area 
-                                                                                                              ?>" /> -->
+      <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 150px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
+                                                                                                          echo $area ?>" />
       <div style="position: absolute; width: 230px; left: 100px; top: 345px;">
         <h5>Área de la Cuenca: <?php echo number_format(floatVal($row['area_cuenca']), 2, ',', '.'); ?> Km2</h5>
       </div>
 
       <div style="position: absolute; height: 100px; width: 300px; left: 65px; top: 380px; border: gray 1px solid; background-color: black">
+
       </div>
 
       <div style="position: absolute; height: 160px; width: 500px; left: 480px; top: 320px; border: gray 1px solid;">
-        <img style="width: 100%; height: 100%; object-fit: contain;" src=<?php echo "../../assets/img/temp/imagen-$id-2.png" ?>>
+        <img style="height: 100%; width: 100%;" src="<?php echo "../../assets/img/temp/imagen-$id-3.png" ?>">
       </div>
 
       <div style="position: absolute; left: 650px; top: 287px;">
@@ -236,11 +233,11 @@ $variacion_mensual = getMonthName();
       </div>
 
       <div style="position: absolute; left: 650px; top: 470px;">
-        <h5 style="color: #2E86C1;"><?php echo 'VARIACION MENSUAL ' . strtoupper($variacion_mensual) ?></h5>
+        <h5 style="color: #2E86C1;"><?php echo 'VARIACION MENSUAL' . strtoupper($variacion_mensual) ?></h5>
       </div>
 
       <div style="position: absolute; height: 230px; width: 915px; left: 65px; top: 500px; border: gray 1px solid;">
-        <img style="width: 100%; height: 100%; object-fit: fill;" src=<?php echo "../../assets/img/temp/imagen-$id-1.png" ?>>
+        <img style="height: 100%; width: 100%;" src="<?php echo "../../assets/img/temp/imagen-$id-2.png" ?>">
       </div>
 
       <table style="position: absolute; top: 180px; left: 500px;">

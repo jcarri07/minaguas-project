@@ -1722,3 +1722,5 @@ insert  into `detalles_extraccion`(`id_detalles_extraccion`,`tipo_extraccion`,`e
 (7,'Riego',10,3,'activo'),
 (8,'Hidroelectricidad',40,3,'activo'),
 (9,'Consumo Humano',300,4,'activo');
+
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));

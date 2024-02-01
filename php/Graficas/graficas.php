@@ -515,8 +515,8 @@ closeConection($conn); ?>
                             time: {
                                 unit: 'day'
                             },
-                            min: '2024-<?php echo date('m').'-'.date('d')?>',
-                            max: '2024-<?php echo date('m').'-'.date('t')?>',
+                            min: '2024-<?php echo date('m') . '-' . date('d') ?>',
+                            max: '2024-<?php echo date('m') . '-' . date('t') ?>',
 
                             ticks: {
                                 callback: (value, index, ticks) => {
@@ -524,7 +524,7 @@ closeConection($conn); ?>
                                     const date = new Date(value);
                                     //console.log(date);
                                     return new Intl.DateTimeFormat('es-ES', {
-                                        month:'short',
+                                        month: 'short',
                                         day: 'numeric',
 
                                     }).format(value);
@@ -797,7 +797,7 @@ closeConection($conn); ?>
                         console.log("listo");
 
                     } else {
-                        
+
                     }
                 }
             });
@@ -814,7 +814,7 @@ closeConection($conn); ?>
                         console.log("listo");
 
                     } else {
-                        
+
                     }
                 }
             });
@@ -829,10 +829,11 @@ closeConection($conn); ?>
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         console.log("listo");
-                        <?php if($t ==(count($embalses)-1)) echo "console.log('ultimo');";?>//AQUI CARRIZALES
+                        <?php if ($t == (count($embalses) - 1)) echo "console.log('ultimo');"; ?> //AQUI CARRIZALES
+                        location.href = '../../pages/reports/print_embalses_prioritarios.php';
 
                     } else {
-                        
+                        console.log('error al generar graficas')
                     }
                 }
             });

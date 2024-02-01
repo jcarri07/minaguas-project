@@ -142,7 +142,7 @@ date_default_timezone_set("America/Caracas");
   }
 
   function getIdPrioritarios() {
-    window.open('pages/reports/print_embalses_prioritarios.php?id=', '_blank');
+    window.open('php/Graficas/graficas.php', '_blank');
   }
   // Función para manejar el evento de clic en el botón
   /*function toggleClass() {
