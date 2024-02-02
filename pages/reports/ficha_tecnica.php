@@ -437,9 +437,9 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">1.3.- Área de la cuenca (ha)</td>
-      <td class="value"><?php echo number_format(floatVal($AREA_CUENCA), 2, ',', '.'); ?></td>
+      <td class="value"><?php echo number_format($AREA_CUENCA, 2, ',', '.'); ?></td>
       <td class="subtitle">1.4.- Escurrimiento medio (hm³)</td>
-      <td class="value"><?php echo number_format(floatVal($ESCURRIMIENTO), 2, ',', '.'); ?></td>
+      <td class="value"><?php echo number_format($ESCURRIMIENTO, 2, ',', '.'); ?></td>
     </tr>
   </table>
   <table style="padding-top: 10px;">
@@ -664,7 +664,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.2.3.- N° de compuertas</td>
-      <td><?php echo number_format(floatVal($COMPUERTAS_ALIVIADERO), 2, ',', '.'); ?></td>
+      <td><?php echo number_format($COMPUERTAS_ALIVIADERO, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.4.- Carga Sobre el Vertedero (m)</td>
@@ -676,7 +676,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.2.6.- Longitud (m)</td>
-      <td><?php echo number_format(floatVal($LONGITUD_ALIVIADERO), 2, ',', '.'); ?></td>
+      <td><?php echo number_format($LONGITUD_ALIVIADERO, 2, ',', '.'); ?></td>
     </tr>
   </table>
   <table>
@@ -696,7 +696,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.3.3.- N° de compuertas</td>
-      <td><?php echo number_format(floatVal($NUMERO_COMPUERTAS_OBRA), 2, ',', '.'); ?></td>
+      <td><?php echo number_format($NUMERO_COMPUERTAS_OBRA, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.3.4.- Mecanismos de emergencia</td>
@@ -708,7 +708,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.3.6.- Gasto máximo (m3/s)</td>
-      <td><?php echo number_format(floatVal($GASTO_MAXIMO), 2, ',', '.'); ?></td>
+      <td><?php echo number_format($GASTO_MAXIMO, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.3.7.- Descarga de fondo</td>
@@ -795,11 +795,10 @@ foreach ($data as $row) {
       <td>
         <?php if ($srcMapReport != "" &&  $srcMapReport != null) { ?>
           <img style="width: 280px; height: 200px;" src="<?php echo $srcMapReport; ?>" />
-          <?php } ?>-->
+        <?php } ?>
       </td>
     </tr>
   </table>
-  <img style="float: right; padding-top: 10px; width: 280px; height: 30px;" src="<?php echo $srcFooter ?>" />
 </body>
 
 </html>
