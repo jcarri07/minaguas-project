@@ -830,8 +830,8 @@ closeConection($conn); ?>
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         console.log("listo");
-                        <?php if ($t == (count($embalses) - 1)) echo "console.log('ultimo');"; ?> //AQUI CARRIZALES
-                        //location.href = '../../pages/reports/print_embalses_prioritarios.php';
+                        <?php if ($t == (count($embalses) - 1)) echo "location.href = '../../pages/reports/print_embalses_prioritarios.php';"; ?> //AQUI CARRIZALES
+                        
                     } else {
                         console.log('error al generar graficas');
                     }
