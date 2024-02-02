@@ -86,7 +86,7 @@ $variacion_mensual = getMonthName();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Embalses Priorizados</title>
 </head>
 <style>
   hr {
