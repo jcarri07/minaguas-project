@@ -333,7 +333,7 @@ $variacion_mensual = getMonthName();
           <?php echo $indice + 1; ?>
         </div>
         <h3 style="position: absolute; top: 75px; color: #2E86C1">Código <?php echo $codigo ?></h3>
-        <h1 style="position: absolute; text-align: center; color:#2E86C1"><?php echo $row['nombre_embalse'] ?></h1>
+        <h1 style="position: absolute; text-align: center; color:#2E86C1; top: 20px;"><?php echo $row['nombre_embalse'] ?></h1>
         <img style="position: absolute; width: 50px; height: 50px; float: right; top: 20px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
                                                                                                           echo $image_logo ?>" />
         <div style="position: absolute; top: 15px; left: 950px; top: 20px;">
