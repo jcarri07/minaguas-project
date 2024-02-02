@@ -142,7 +142,7 @@ date_default_timezone_set("America/Caracas");
   }
 
   function getIdPrioritarios() {
-    window.open('php/Graficas/graficas.php', '_blank');
+    window.open('php/Graficas/graficas.php?pri=1', '_blank');
   }
   // Función para manejar el evento de clic en el botón
   /*function toggleClass() {
