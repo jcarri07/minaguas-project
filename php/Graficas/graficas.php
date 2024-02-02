@@ -78,11 +78,12 @@ closeConection($conn); ?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../../assets/js/html2canvas.min.js"></script>
+    <link  href="../../assets/css/style-spinner.css" rel="stylesheet" />
 
     <title>Document</title>
 </head>
 
-<body>
+<body style="height:800px">
     <!--div style=" width: 1200px;"-->
     <div>
         <?php
@@ -93,9 +94,9 @@ closeConection($conn); ?>
 
         for ($t = 0; $t <  count($embalses); $t++) {
         ?>
-            <div style="width:1830px !important; height:600px"><canvas class="alA" id="ano<?php echo $t; ?>"></canvas></div>
-            <div style="width:1830px !important; height:460px"><canvas class="alM" id="mes<?php echo $t; ?>"></canvas></div>
-            <div style="width:900px !important; height:300px"><canvas class="alS" id="semana<?php echo $t; ?>"></canvas></div>
+            <div style="width:1830px !important; height:600px; position:absolute; top:-100%;"><canvas class="alA" id="ano<?php echo $t; ?>"></canvas></div>
+            <div style="width:1830px !important; height:460px; position:absolute; top:-100%;"><canvas class="alM" id="mes<?php echo $t; ?>"></canvas></div>
+            <div style="width:900px !important; height:300px; position:absolute; top:-100%;"><canvas class="alS" id="semana<?php echo $t; ?>"></canvas></div>
 
         <?php
 
@@ -515,8 +516,8 @@ closeConection($conn); ?>
                             time: {
                                 unit: 'day'
                             },
-                            min: '2024-<?php echo date('m') . '-' . date('d') ?>',
-                            max: '2024-<?php echo date('m') . '-' . date('t') ?>',
+                            min: '2024-<?php echo date('m').'-'.date('d')?>',
+                            max: '2024-<?php echo date('m').'-'.date('t')?>',
 
                             ticks: {
                                 callback: (value, index, ticks) => {
@@ -524,7 +525,7 @@ closeConection($conn); ?>
                                     const date = new Date(value);
                                     //console.log(date);
                                     return new Intl.DateTimeFormat('es-ES', {
-                                        month: 'short',
+                                        month:'short',
                                         day: 'numeric',
 
                                     }).format(value);
@@ -797,7 +798,7 @@ closeConection($conn); ?>
                         console.log("listo");
 
                     } else {
-
+                        
                     }
                 }
             });
@@ -814,7 +815,7 @@ closeConection($conn); ?>
                         console.log("listo");
 
                     } else {
-
+                        
                     }
                 }
             });
@@ -829,11 +830,10 @@ closeConection($conn); ?>
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         console.log("listo");
-                        <?php if ($t == (count($embalses) - 1)) echo "console.log('ultimo');"; ?> //AQUI CARRIZALES
-                        location.href = '../../pages/reports/print_embalses_prioritarios.php';
-
+                        <?php if ($t == (count($embalses) - 1)) echo "location.href = '../../pages/reports/print_embalses_prioritarios.php';"; ?> //AQUI CARRIZALES
+                        
                     } else {
-                        console.log('error al generar graficas')
+                        console.log('error al generar graficas');
                     }
                 }
             });
