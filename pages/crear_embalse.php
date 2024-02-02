@@ -85,6 +85,22 @@ date_default_timezone_set("America/Caracas");
       padding: 3rem;
     }
   }
+
+  .padre-relative {
+    position: relative;
+  }
+
+  .modal-absolute {
+    position: absolute;
+    bottom: 1;
+    left: 1;
+    margin-top: 8px;
+    display: none;
+  }
+
+  .desplegar{
+    display: block;
+  }
 </style>
 
 
@@ -551,9 +567,17 @@ date_default_timezone_set("America/Caracas");
               <h3 class="pb-3 pt-3">Beneficios:</h3>
 
               <div class="row">
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 form-group padre-relative">
                   <label for="proposito">Propósito del embalse</label>
-                  <input type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el propósito del embalse">
+                  <input readonly type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el propósito del embalse">
+                  <div id="modal-proposito" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+                    <div class="form-check"><input type="checkbox" name="" id="1" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="1">Hola</label></div>
+                    <div class="form-check"><input type="checkbox" name="" id="2" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="2">Hola</label></div>
+                    <div class="form-check"><input type="checkbox" name="" id="3" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="3">Hola</label></div>
+                    <div class="form-check"><input type="checkbox" name="" id="4" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="4">Hola</label></div>
+                    <div class="form-check"><input type="checkbox" name="" id="5" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="5">Hola</label></div>
+
+                  </div>
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="uso">Uso actual del embalse</label>
@@ -1109,4 +1133,8 @@ date_default_timezone_set("America/Caracas");
 
   previewImage("imagen_uno");
   previewImage("imagen_dos");
+
+  $("#proposito").on("click", function() {
+    $("#modal-proposito").toggleClass('desplegar');
+  });
 </script>

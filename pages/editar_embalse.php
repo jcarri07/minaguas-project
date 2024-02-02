@@ -290,15 +290,15 @@ date_default_timezone_set("America/Caracas");
               <div class="col-md-4 col-sm-12">
                 <div class=" form-group">
                   <label for="norte">Norte</label>
-                  <input value="<?php echo $embalse["norte"]; ?>" type="number" step="0.001" class="form-control" id="norte" name="norte" placeholder="Norte">
+                  <input value="<?php echo $embalse["norte"]; ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="norte" name="norte" placeholder="Norte">
                 </div>
                 <div class=" form-group">
                   <label for="este">Este</label>
-                  <input value="<?php echo $embalse["este"]; ?>" type="number" step="0.001" class="form-control" id="este" name="este" placeholder="Este">
+                  <input value="<?php echo $embalse["este"]; ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="este" name="este" placeholder="Este">
                 </div>
                 <div class=" form-group">
                   <label for="huso">Huso</label>
-                  <input value="<?php echo $embalse["huso"]; ?>" type="number" step="0.001" class="form-control" id="huso" name="huso" placeholder="Huso">
+                  <input value="<?php echo $embalse["huso"]; ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="huso" name="huso" placeholder="Huso">
                 </div>
               </div>
             </div>
@@ -1148,7 +1148,7 @@ date_default_timezone_set("America/Caracas");
       }
     }
 
-    
+
   }
 
   function construirTabla(embalse, data) {
@@ -1178,5 +1178,45 @@ date_default_timezone_set("America/Caracas");
       modal_body.appendChild(tablaContainer);
       // modal_body.innerHTML += tablaHTML;
     }
+
+
   }
+
+  // type="text" pattern="[0-9]+([,.][0-9]{0,2})?"
+
+  var input = $(".numero");
+
+  for (let i = 0; i < input.length; i++) {
+    // formatoNumero(input[i]);
+  }
+
+  function formatoNumero(input) {
+    // Obtener el valor actual del campo
+    let valor = input.value;
+
+    // Verificar si el valor es undefined o nulo
+    if (valor === undefined || valor === null) {
+      return;
+    }
+
+    // Remover cualquier caracter que no sea dígito o punto
+    // valor = valor.replace(/[^\d.]/g, '');
+
+    // Dividir la parte entera y la parte decimal
+    let partes = valor.split(',');
+    let parteEntera = partes[0];
+    let parteDecimal = partes[1] || '';
+
+    console.log(parteEntera + " - " + parteDecimal)
+    // Agregar puntos como separadores de miles a la parte entera
+    parteEntera = parteEntera.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    console.log(parteEntera + " - " + parteDecimal)
+    // Formatear el resultado con coma como separador decimal y siempre tres decimales
+    let resultado = parteEntera + (parteDecimal !== '' ? ',' + parteDecimal.slice(0, 3).padEnd(3, '0') : ',000');
+
+    // Mostrar el resultado en el campo
+    input.value = resultado;
+  }
+
+  console.log(input);
 </script>

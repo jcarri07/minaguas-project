@@ -10,6 +10,7 @@ $prioritarios = [];
 $queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios';");
 if (mysqli_num_rows($queryPrioritarios) > 0) {
   $stringPrioritarios = mysqli_fetch_assoc($queryPrioritarios)['configuracion'];
+  var_dump($stringPrioritarios);
   $prioritarios = explode(",", $stringPrioritarios);
 }
 

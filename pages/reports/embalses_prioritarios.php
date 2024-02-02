@@ -186,7 +186,7 @@ $variacion_mensual = getMonthName();
     ?>
     <?php while ($row = $result->fetch_assoc()) {
       $id = $row['id_embalse'];
-      $sqlMonths = "SELECT cota_actual, fecha, id_embalse FROM datos_embalse WHERE MONTH(fecha) = $mes_actual AND DAY(fecha) BETWEEN 2 AND 8 AND id_embalse = '$id'";
+      $sqlMonths = "SELECT cota_actual, fecha, id_embalse FROM datos_embalse WHERE MONTH(fecha) = '$mes_actual' AND DAY(fecha) BETWEEN 2 AND 8 AND id_embalse = '$id' GROUP BY (fecha)";
     ?>
       <div class="square">
         1
