@@ -6,21 +6,28 @@ date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
 $fecha_actual = date("Y");
 $f = $fecha_actual - 1;
-
-
+$pri = $_GET['pri'];
+$text = "";
+if ($pri) {
+    $stringPrioritarios = "0";
+    $queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios'");
+    if (mysqli_num_rows($queryPrioritarios) > 0) {
+        $stringPrioritarios = mysqli_fetch_assoc($queryPrioritarios)['configuracion'];
+    }
+    $text = "AND id_embalse IN ($stringPrioritarios)";
+}
 
 $re = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($re);
 if ($count >= 1) {
 
-    $res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND (YEAR(fecha) = '$fecha_actual' OR YEAR(fecha) = '$f') GROUP BY fecha DESC;");
+    $res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND (YEAR(fecha) = '$fecha_actual' OR YEAR(fecha) = '$f') $text GROUP BY fecha DESC;");
     $count = mysqli_num_rows($res);
     if ($count >= 1) {
 
         $embalses = mysqli_fetch_all($re, MYSQLI_ASSOC);
         $datos_embalses = mysqli_fetch_all($res, MYSQLI_ASSOC);
-    }
-}
+
 
 
 
@@ -78,7 +85,7 @@ closeConection($conn); ?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../../assets/js/html2canvas.min.js"></script>
-    <link  href="../../assets/css/style-spinner.css" rel="stylesheet" />
+    <link href="../../assets/css/style-spinner.css" rel="stylesheet" />
 
     <title>Document</title>
 </head>
@@ -516,8 +523,8 @@ closeConection($conn); ?>
                             time: {
                                 unit: 'day'
                             },
-                            min: '2024-<?php echo date('m').'-'.date('d')?>',
-                            max: '2024-<?php echo date('m').'-'.date('t')?>',
+                            min: '2024-<?php echo date('m') . '-' . date('d') ?>',
+                            max: '2024-<?php echo date('m') . '-' . date('t') ?>',
 
                             ticks: {
                                 callback: (value, index, ticks) => {
@@ -525,7 +532,7 @@ closeConection($conn); ?>
                                     const date = new Date(value);
                                     //console.log(date);
                                     return new Intl.DateTimeFormat('es-ES', {
-                                        month:'short',
+                                        month: 'short',
                                         day: 'numeric',
 
                                     }).format(value);
@@ -798,7 +805,7 @@ closeConection($conn); ?>
                         console.log("listo");
 
                     } else {
-                        
+
                     }
                 }
             });
@@ -815,7 +822,7 @@ closeConection($conn); ?>
                         console.log("listo");
 
                     } else {
-                        
+
                     }
                 }
             });
@@ -830,8 +837,8 @@ closeConection($conn); ?>
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         console.log("listo");
-                        <?php if ($t == (count($embalses) - 1)) echo "location.href = '../../pages/reports/print_embalses_prioritarios.php';"; ?> //AQUI CARRIZALES
-                        
+                        <?php if ($t == (count($embalses) - 1)) echo "location.href = '../../pages/reports/print_embalses_prioritarios.php?pri=".$pri."';"; ?> //AQUI CARRIZALES
+
                     } else {
                         console.log('error al generar graficas');
                     }
@@ -846,5 +853,12 @@ closeConection($conn); ?>
 
     });
 </script>
+<?php 
+    }else{
+        echo "<p>No existen Embalses</p></body>";
+    }
+}else{ echo "<p>No existen Embalses</p></body>";
 
+}
+?>
 </html>
