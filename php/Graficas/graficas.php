@@ -11,7 +11,7 @@ $text = "";
 
 if ($pri) {
     $stringPrioritarios = "0";
-    $queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios'");
+    $queryPrioritarios = mysqli_query($conn, "SELECT configuracion FROM configuraciones WHERE nombre_config = 'prioritarios'");
     if (mysqli_num_rows($queryPrioritarios) > 0) {
         $stringPrioritarios = mysqli_fetch_assoc($queryPrioritarios)['configuracion'];
     }
@@ -196,6 +196,7 @@ if ($count >= 1) {
                         ctx.fillText(dataset.label + ': ' + lastPoint._model.y.toFixed(2), lastPoint._model.x + 10, lastPoint._model.y - 10);
                     }
                 };
+                console.log(<?php echo count($datos_embalses)?>);
                 <?php
                 $min = 0;
                 $max = 0;
@@ -219,33 +220,27 @@ if ($count >= 1) {
         backgroundColor: '#36a1eb',data: [";
                                 $j = 0;
                                 $pivote = date("Y");
-                                while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
+                                while ($j < count($datos_embalses)) {
 
-                                    if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
-
-                                        echo "";
-                                        $j++;
-                                    } else {
+                                    if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                ?> {
-                                            x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
-                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                        },
-                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                            $max = $datos_embalses[$j]["cota_actual"];
-                                        }
-                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                            $min = $datos_embalses[$j]["cota_actual"];
-                                        } ?>
-
-                                <?php
-                                        $j++;
-                                    }
-                                    if ($j >= count($datos_embalses)) {
-                                        break;
-                                    }
+                                        ?> {
+                                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                                },
+                                                <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                                    $max = $datos_embalses[$j]["cota_actual"];
+                                                }
+                                                if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                                    $min = $datos_embalses[$j]["cota_actual"];
+                                                } ?>
+        
+                                        <?php
+                                        
+                                    };
+                                    $j++;
                                 };
                                 echo "]},"; ?>
 
@@ -253,28 +248,21 @@ if ($count >= 1) {
                         data: [";
                                 $j = 0;
                                 $pivote = date("Y") - 1;
-                                while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
-
-                                    if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
-
-                                        echo "";
-                                        $j++;
-                                    } else {
-
+                                while ($j < count($datos_embalses)) {
+                                    
+                                    if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                ?> {
-                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
-                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                        },
-
-                                <?php
-                                        $j++;
-                                    }
-                                    if ($j >= count($datos_embalses)) {
-                                        break;
-                                    }
+                                        ?> {
+                                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                                },
+        
+                                        <?php
+                                        
+                                    };
+                                    $j++;
                                 }
                                 echo "]},"; ?>
 
@@ -423,33 +411,27 @@ if ($count >= 1) {
         backgroundColor: '#36a1eb',data: [";
                                 $j = 0;
                                 $pivote = date("Y");
-                                while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
+                                while ($j < count($datos_embalses)) {
 
-                                    if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
-
-                                        echo "";
-                                        $j++;
-                                    } else {
+                                    if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                ?> {
-                                            x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
-                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                        },
-                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                            $max = $datos_embalses[$j]["cota_actual"];
-                                        }
-                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                            $min = $datos_embalses[$j]["cota_actual"];
-                                        } ?>
-
-                                <?php
-                                        $j++;
-                                    }
-                                    if ($j >= count($datos_embalses)) {
-                                        break;
-                                    }
+                                        ?> {
+                                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                                },
+                                                <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                                    $max = $datos_embalses[$j]["cota_actual"];
+                                                }
+                                                if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                                    $min = $datos_embalses[$j]["cota_actual"];
+                                                } ?>
+        
+                                        <?php
+                                        
+                                    };
+                                    $j++;
                                 };
                                 echo "]},"; ?>
 
@@ -457,28 +439,21 @@ if ($count >= 1) {
                         data: [";
                                 $j = 0;
                                 $pivote = date("Y") - 1;
-                                while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
+                                while ($j < count($datos_embalses)) {
 
-                                    if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
-
-                                        echo "";
-                                        $j++;
-                                    } else {
-
+                                    if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                ?> {
-                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
-                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                        },
-
-                                <?php
-                                        $j++;
-                                    }
-                                    if ($j >= count($datos_embalses)) {
-                                        break;
-                                    }
+                                        ?> {
+                                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                                },
+        
+                                        <?php
+                                        
+                                    };
+                                    $j++;
                                 }
                                 echo "]},"; ?>
 
@@ -632,33 +607,27 @@ if ($count >= 1) {
                                 backgroundColor: '#36a1eb',data: [";
                                 $j = 0;
                                 $pivote = date("Y");
-                                while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
+                                while ($j < count($datos_embalses)) {
 
-                                    if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
-
-                                        echo "";
-                                        $j++;
-                                    } else {
+                                    if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                ?> {
-                                            x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
-                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                        },
-                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                            $max = $datos_embalses[$j]["cota_actual"];
-                                        }
-                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                            $min = $datos_embalses[$j]["cota_actual"];
-                                        } ?>
-
-                                <?php
-                                        $j++;
-                                    }
-                                    if ($j >= count($datos_embalses)) {
-                                        break;
-                                    }
+                                        ?> {
+                                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                                },
+                                                <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                                    $max = $datos_embalses[$j]["cota_actual"];
+                                                }
+                                                if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                                    $min = $datos_embalses[$j]["cota_actual"];
+                                                } ?>
+        
+                                        <?php
+                                        
+                                    };
+                                    $j++;
                                 };
                                 echo "]},"; ?>
 
@@ -666,28 +635,21 @@ if ($count >= 1) {
                                 backgroundColor: '#e4c482',data: [";
                                 $j = 0;
                                 $pivote = date("Y") - 1;
-                                while ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) {
+                                while ($j < count($datos_embalses)) {
 
-                                    if (date("Y", strtotime($datos_embalses[$j]["fecha"])) != $pivote) {
-
-                                        echo "";
-                                        $j++;
-                                    } else {
-
+                                    if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                ?> {
-                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . strftime('%B',  strtotime($datos_embalses[$j]["fecha"])) ?>',
-                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                        },
-
-                                <?php
-                                        $j++;
-                                    }
-                                    if ($j >= count($datos_embalses)) {
-                                        break;
-                                    }
+                                        ?> {
+                                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . strftime('%B',  strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                                },
+        
+                                        <?php
+                                        
+                                    };
+                                    $j++;
                                 }
                                 echo "]},"; ?>
 
