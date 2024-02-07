@@ -513,7 +513,7 @@ if (isset($_POST["Update"])) {
                     if ($row <= $highestRow) {
                         $row++;
                     }
-                }
+            }
 
                 $cotas_embalse[$sheetName] = $cota_embalse;
             }
