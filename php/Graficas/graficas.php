@@ -22,7 +22,7 @@ $re = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($re);
 if ($count >= 1) {
 
-    $res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND (YEAR(fecha) = '$fecha_actual' OR YEAR(fecha) = '$f') $text ORDER BY fecha DESC;");
+    $res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND (YEAR(fecha) = '$fecha_actual' OR YEAR(fecha) = '$f') $text ORDER BY fecha,hora ASC;");
     $count = mysqli_num_rows($res);
     if ($count >= 1) {
 
@@ -216,7 +216,7 @@ if ($count >= 1) {
                         data: {
                             datasets: [
 
-                                <?php echo "{label:'" . $nom[0] . "',tension: 0.4,                                borderColor: '#36a1eb',
+                                <?php echo "{label:'" . $nom[0] . "',                                borderColor: '#36a1eb',
         backgroundColor: '#36a1eb',data: [";
                                 $j = 0;
                                 $pivote = date("Y");
@@ -227,7 +227,7 @@ if ($count >= 1) {
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                                 ?> {
-                                            x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                            x: '<?php echo $datos_embalses[$j]["fecha"]." ".$datos_embalses[$j]["hora"];  ?>',
                                             y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                         },
                                         <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
@@ -244,7 +244,7 @@ if ($count >= 1) {
                                 };
                                 echo "]},"; ?>
 
-                                <?php echo "{label:'" . $nom[1] . "',tension: 0.4,borderColor: '#e4c482',backgroundColor: '#e4c482',
+                                <?php echo "{label:'" . $nom[1] . "',borderColor: '#e4c482',backgroundColor: '#e4c482',
                         data: [";
                                 $j = 0;
                                 $pivote = date("Y") - 1;
@@ -255,7 +255,7 @@ if ($count >= 1) {
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                                 ?> {
-                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m-d", strtotime($datos_embalses[$j]["fecha"]))." ".$datos_embalses[$j]["hora"] ?>',
                                             y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                         },
 
@@ -407,7 +407,7 @@ if ($count >= 1) {
                         data: {
                             datasets: [
 
-                                <?php echo "{label:'" . $nom[0] . "',tension: 0.4,                                borderColor: '#36a1eb',
+                                <?php echo "{label:'" . $nom[0] . "',                                borderColor: '#36a1eb',
         backgroundColor: '#36a1eb',data: [";
                                 $j = 0;
                                 $pivote = date("Y");
@@ -418,7 +418,7 @@ if ($count >= 1) {
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                                 ?> {
-                                            x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                            x: '<?php echo $datos_embalses[$j]["fecha"]." ".$datos_embalses[$j]["hora"];  ?>',
                                             y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                         },
                                         <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
@@ -435,7 +435,7 @@ if ($count >= 1) {
                                 };
                                 echo "]},"; ?>
 
-                                <?php echo "{label:'" . $nom[1] . "',tension: 0.4,borderColor: '#e4c482',backgroundColor: '#e4c482',
+                                <?php echo "{label:'" . $nom[1] . "',borderColor: '#e4c482',backgroundColor: '#e4c482',
                         data: [";
                                 $j = 0;
                                 $pivote = date("Y") - 1;
@@ -446,7 +446,7 @@ if ($count >= 1) {
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                                 ?> {
-                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m-d", strtotime($datos_embalses[$j]["fecha"]))." ".$datos_embalses[$j]["hora"] ?>',
                                             y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                         },
 
@@ -603,7 +603,7 @@ if ($count >= 1) {
                         data: {
                             datasets: [
 
-                                <?php echo "{label:'" . $nom[0] . "',tension: 0.4,                                borderColor: '#36a1eb',
+                                <?php echo "{label:'" . $nom[0] . "',                                borderColor: '#36a1eb',
                                 backgroundColor: '#36a1eb',data: [";
                                 $j = 0;
                                 $pivote = date("Y");
@@ -614,7 +614,7 @@ if ($count >= 1) {
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                                 ?> {
-                                            x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                            x: '<?php echo $datos_embalses[$j]["fecha"]." ".$datos_embalses[$j]["hora"];  ?>',
                                             y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                         },
                                         <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
@@ -631,7 +631,7 @@ if ($count >= 1) {
                                 };
                                 echo "]},"; ?>
 
-                                <?php echo "{label:'" . $nom[1] . "',tension: 0.4,borderColor: '#e4c482',
+                                <?php echo "{label:'" . $nom[1] . "',borderColor: '#e4c482',
                                 backgroundColor: '#e4c482',data: [";
                                 $j = 0;
                                 $pivote = date("Y") - 1;
@@ -642,7 +642,7 @@ if ($count >= 1) {
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                                 ?> {
-                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . strftime('%B',  strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . strftime('%B',  strtotime($datos_embalses[$j]["fecha"])).'-'.date("d", strtotime($datos_embalses[$j]["fecha"]))." ".$datos_embalses[$j]["hora"] ?>',
                                             y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                         },
 
