@@ -188,7 +188,7 @@ $variacion_mensual = getMonthName();
   <div style="height: 900px; ">
     <h1 style="position: absolute; top: 350px; text-align: center; text-justify: center; color:#2E86C1">REPORTE DE VARIACIÓN DE NIVELES Y VOLÚMENES
       EN EMBALSES PRIORIZADOS</h1>
-    <h4 style="position: absolute; top: 650px; text-align: center; text-justify: center;"><?php echo "$dia_actual de " . getMonthName() . " 20$año_actual" ?></h4>
+    <h4 style="position: absolute; top: 650px; text-align: center; text-justify: center;"><?php echo "$dia_actual de " . getMonthName() . " $año_actual" ?></h4>
   </div>
 
   <?php if ($num_rows > 0) {
