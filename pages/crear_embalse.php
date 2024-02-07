@@ -3,6 +3,7 @@ include 'php/Conexion.php';
 
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
+$queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
 ?>
 
 
@@ -98,8 +99,20 @@ date_default_timezone_set("America/Caracas");
     display: none;
   }
 
-  .desplegar{
+  .desplegar {
     display: block;
+  }
+
+  #proposito,
+  #uso,
+  #cap-util {
+    background: white;
+  }
+
+
+  textarea {
+    resize: none;
+    overflow: auto;
   }
 </style>
 
@@ -311,8 +324,8 @@ date_default_timezone_set("America/Caracas");
                     <input type="file" accept=".xlsx, .xls" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
                   </div>
                   <div class="form-group d-flex justify-content-center">
-                    <a class="down-bat visible btn btn-link text-dark text-sm d-flex align-items-center"><i class="fa fa-download text-lg me-1"></i> Plantilla</a>
-                    <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn btn-link text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
+                    <a class="down-bat visible btn text-dark text-sm d-flex align-items-center"><i class="fa fa-download text-lg me-1"></i> Plantilla</a>
+                    <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
                   </div>
                   <div class="form-group">
                     <label for="vida_util">Vida útil (años)</label>
@@ -360,6 +373,15 @@ date_default_timezone_set("America/Caracas");
                   <div class=" form-group">
                     <label for="sup_max">Superficie máxima (ha)</label>
                     <input type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-md-3 col-sm-12">
+                  <div class=" form-group">
+                    <label for="cap-util">Capacidad útil (hm³)</label>
+                    <input readonly type="number" step="0.001" class="form-control" id="cap-util" value="0">
                   </div>
                 </div>
               </div>
@@ -480,7 +502,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="number" step="0.001" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="ancho_base">Ancho maximo de base</label>
+                  <label for="ancho_base">Ancho maximo de base (m)</label>
                   <input type="number" step="0.001" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
                 </div>
               </div>
@@ -569,19 +591,35 @@ date_default_timezone_set("America/Caracas");
               <div class="row">
                 <div class="col-xl-3 col-lg-6 form-group padre-relative">
                   <label for="proposito">Propósito del embalse</label>
-                  <input readonly type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el propósito del embalse">
+                  <textarea readonly class="form-control" name="" id="proposito" cols="30" rows="2" placeholder="Seleccione los propósitos del embalse"></textarea>
+                  <input readonly hidden type="text" class="form-control" id="proposito-input" name="proposito" placeholder="Seleccione los propósitos del embalse">
                   <div id="modal-proposito" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
-                    <div class="form-check"><input type="checkbox" name="" id="1" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="1">Hola</label></div>
-                    <div class="form-check"><input type="checkbox" name="" id="2" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="2">Hola</label></div>
-                    <div class="form-check"><input type="checkbox" name="" id="3" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="3">Hola</label></div>
-                    <div class="form-check"><input type="checkbox" name="" id="4" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="4">Hola</label></div>
-                    <div class="form-check"><input type="checkbox" name="" id="5" class="prop-opcion form-check-input"><label class="text-sm cursor-pointer" for="5">Hola</label></div>
+
+                    <?php
+                    while ($proposito = mysqli_fetch_array($queryPropositos)) {
+                    ?>
+                      <div class="form-check opcion"><input type="checkbox" name="" id="<?php echo $proposito['id_proposito'] ?>-prop" class="prop-opcion form-check-input opcion"><label class="text-sm cursor-pointer opcion-<?php echo $proposito['id_proposito'] ?>-prop opcion" for="<?php echo $proposito['id_proposito'] ?>-prop"><?php echo $proposito['proposito'] ?></label></div>
+                    <?php
+                    }
+                    $queryPropositos->data_seek(0);
+                    ?>
 
                   </div>
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 form-group padre-relative">
                   <label for="uso">Uso actual del embalse</label>
-                  <input type="text" class="form-control" id="uso" name="uso" placeholder="Ingrese el uso actual del embalse">
+                  <textarea readonly class="form-control" name="" id="uso" cols="30" rows="2" placeholder="Seleccione los usos del embalse"></textarea>
+                  <input readonly hidden type="text" class="form-control" id="uso-input" name="uso" placeholder="Seleccione los usos actuales del embalse">
+                  <div id="modal-uso" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+
+                    <?php
+                    while ($proposito = mysqli_fetch_array($queryPropositos)) {
+                    ?>
+                      <div class="form-check opcion"><input type="checkbox" name="" id="<?php echo $proposito['id_proposito'] ?>-uso" class="prop-uso form-check-input opcion"><label class="text-sm cursor-pointer opcion-<?php echo $proposito['id_proposito'] ?>-uso opcion" for="<?php echo $proposito['id_proposito'] ?>-uso"><?php echo $proposito['proposito'] ?></label></div>
+                    <?php
+                    }
+                    ?>
+                  </div>
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="sectores">Sectores beneficiados</label>
@@ -593,7 +631,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="area_riego">Área de riego beneficiada (ha)</label>
-                  <input type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada en km2">
+                  <input type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
                 </div>
               </div>
 
@@ -872,6 +910,19 @@ date_default_timezone_set("America/Caracas");
     }
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
+
+  // form-embalse
+  const form = document.getElementById('form-embalse');
+
+  form.querySelectorAll('input').forEach(function(input, index, inputs) {
+    input.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const nextIndex = index < inputs.length - 1 ? index + 1 : 0;
+        inputs[nextIndex].focus();
+      }
+    });
+  });
 </script>
 
 
@@ -1137,4 +1188,84 @@ date_default_timezone_set("America/Caracas");
   $("#proposito").on("click", function() {
     $("#modal-proposito").toggleClass('desplegar');
   });
+
+  var propositos = [];
+  var id_propositos = [];
+
+  $(".prop-opcion").on("change", function() {
+    if ($(this).is(':checked')) {
+      propositos.push($(".opcion-" + this.id)[0].innerText)
+      id_propositos.push(this.id.split("-")[0]);
+    } else {
+      propositos = propositos.filter((proposito) => {
+        return proposito != $(".opcion-" + this.id)[0].innerText
+      })
+
+      id_propositos = id_propositos.filter((id) => {
+        return id != this.id.split("-")[0]
+      })
+    }
+    $("#proposito")[0].value = propositos.join(" - ");
+    $("#proposito-input")[0].value = id_propositos.join(" - ");
+  })
+
+
+  $("#uso").on("click", function() {
+    $("#modal-uso").toggleClass('desplegar');
+  });
+
+  var usos = [];
+  var id_usos = [];
+
+  $(".prop-uso").on("change", function() {
+    if ($(this).is(':checked')) {
+      usos.push($(".opcion-" + this.id)[0].innerText);
+      id_usos.push(this.id.split("-")[0]);
+    } else {
+      usos = usos.filter((uso) => {
+        return uso != $(".opcion-" + this.id)[0].innerText
+      })
+      id_usos = id_usos.filter((id) => {
+        return id != this.id.split("-")[0]
+      })
+    }
+    $("#uso")[0].value = usos.join(" - ");
+    $("#uso-input")[0].value = id_usos.join("-");
+  });
+
+  document.documentElement.addEventListener('click', function(e) {
+    const excepciones = ["proposito", "modal-proposito", "uso", "modal-uso"];
+    if (!excepciones.includes(e.target.id) && !$(e.target).hasClass("opcion")) {
+      removerClase($("#modal-proposito"), "desplegar");
+      removerClase($("#modal-uso"), "desplegar");
+    }
+  });
+
+  function agregarClase(elemento, clase) {
+    if (!elemento.hasClass(clase)) {
+      elemento.addClass(clase);
+    }
+  }
+
+  function removerClase(elemento, clase) {
+    if (elemento.hasClass(clase)) {
+      elemento.removeClass(clase);
+    }
+  }
+
+  $("#vol_nor").on("change", capacidadUtil);
+  $("#vol_min").on("change", capacidadUtil);
+
+  function capacidadUtil() {
+    let vol_nor = $("#vol_nor").val();
+    let vol_min = $("#vol_min").val();
+
+    if (vol_min != "" && vol_nor != "") {
+      let capacidad = vol_nor - vol_min;
+      $("#cap-util")[0].value = capacidad;
+    } else {
+      $("#cap-util")[0].value = 0;
+    }
+
+  }
 </script>

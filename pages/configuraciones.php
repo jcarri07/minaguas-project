@@ -176,7 +176,7 @@ closeConection($conn);
 
             <!-- configuraciones de embalses prioritarios -->
             <div class="">
-              <h3 class="mb-4 text-center">Embalses Prioritarios:</h3>
+              <h3 class="mb-4 text-center">Embalses Priorizados:</h3>
               <div class="config-container-prioritarios">
 
                 <?php

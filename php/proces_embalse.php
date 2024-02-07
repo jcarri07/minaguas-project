@@ -306,6 +306,8 @@ if (isset($_POST["Update"])) {
     $archivo_bat_name = $_FILES["batimetria"]['name'];
     $archivo_batimetria = $_FILES["batimetria"]['tmp_name']; //Batimetria en excel";
 
+    $pre_batimeria = $_POST["pre_batimetria"];
+
     $aux_uno = $imagen_uno;
     $aux_dos = $imagen_dos;
 
@@ -375,6 +377,12 @@ if (isset($_POST["Update"])) {
         }
 
         $batimetria = json_encode($cotas_embalse);
+    }else {
+        if ($pre_batimeria == "") {
+            $batimetria = "";
+        } else {
+            $batimetria = $embalse["batimetria"];
+        }
     }
 
 
