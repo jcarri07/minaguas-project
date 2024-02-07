@@ -196,13 +196,13 @@ if ($count >= 1) {
                         ctx.fillText(dataset.label + ': ' + lastPoint._model.y.toFixed(2), lastPoint._model.x + 10, lastPoint._model.y - 10);
                     }
                 };
-                console.log(<?php echo count($datos_embalses)?>);
+                
                 <?php
                 $min = 0;
                 $max = 0;
                 for ($t = 0; $t <  count($embalses); $t++) {
                     $min = $embalses[$t]["cota_min"];
-                    $max = $embalses[$t]["cota_max"];?>
+                    $max = $embalses[$t]["cota_max"]; ?>
                     año<?php echo $t; ?> = document.getElementById("ano<?php echo $t; ?>");
                     mes<?php echo $t; ?> = document.getElementById("mes<?php echo $t; ?>");
                     semana<?php echo $t; ?> = document.getElementById("semana<?php echo $t; ?>");
@@ -226,19 +226,19 @@ if ($count >= 1) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                        ?> {
-                                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
-                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                                },
-                                                <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                                    $max = $datos_embalses[$j]["cota_actual"];
-                                                }
-                                                if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                                    $min = $datos_embalses[$j]["cota_actual"];
-                                                } ?>
-        
-                                        <?php
-                                        
+                                ?> {
+                                            x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                        },
+                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                            $max = $datos_embalses[$j]["cota_actual"];
+                                        }
+                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                            $min = $datos_embalses[$j]["cota_actual"];
+                                        } ?>
+
+                                <?php
+
                                     };
                                     $j++;
                                 };
@@ -249,18 +249,18 @@ if ($count >= 1) {
                                 $j = 0;
                                 $pivote = date("Y") - 1;
                                 while ($j < count($datos_embalses)) {
-                                    
+
                                     if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                        ?> {
-                                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
-                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                                },
-        
-                                        <?php
-                                        
+                                ?> {
+                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                        },
+
+                                <?php
+
                                     };
                                     $j++;
                                 }
@@ -417,19 +417,19 @@ if ($count >= 1) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                        ?> {
-                                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
-                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                                },
-                                                <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                                    $max = $datos_embalses[$j]["cota_actual"];
-                                                }
-                                                if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                                    $min = $datos_embalses[$j]["cota_actual"];
-                                                } ?>
-        
-                                        <?php
-                                        
+                                ?> {
+                                            x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                        },
+                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                            $max = $datos_embalses[$j]["cota_actual"];
+                                        }
+                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                            $min = $datos_embalses[$j]["cota_actual"];
+                                        } ?>
+
+                                <?php
+
                                     };
                                     $j++;
                                 };
@@ -445,13 +445,13 @@ if ($count >= 1) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                        ?> {
-                                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
-                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                                },
-        
-                                        <?php
-                                        
+                                ?> {
+                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                        },
+
+                                <?php
+
                                     };
                                     $j++;
                                 }
@@ -613,19 +613,19 @@ if ($count >= 1) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                        ?> {
-                                                    x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
-                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                                },
-                                                <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                                    $max = $datos_embalses[$j]["cota_actual"];
-                                                }
-                                                if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                                    $min = $datos_embalses[$j]["cota_actual"];
-                                                } ?>
-        
-                                        <?php
-                                        
+                                ?> {
+                                            x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                        },
+                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                            $max = $datos_embalses[$j]["cota_actual"];
+                                        }
+                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                            $min = $datos_embalses[$j]["cota_actual"];
+                                        } ?>
+
+                                <?php
+
                                     };
                                     $j++;
                                 };
@@ -641,13 +641,13 @@ if ($count >= 1) {
 
                                         $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                        ?> {
-                                                    x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . strftime('%B',  strtotime($datos_embalses[$j]["fecha"])) ?>',
-                                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                                },
-        
-                                        <?php
-                                        
+                                ?> {
+                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . strftime('%B',  strtotime($datos_embalses[$j]["fecha"])) ?>',
+                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                        },
+
+                                <?php
+
                                     };
                                     $j++;
                                 }
@@ -714,8 +714,17 @@ if ($count >= 1) {
                                     time: {
                                         unit: 'day'
                                     },
-                                    min: '<?php echo $fechasSemana[0]; ?>',
-                                    max: '<?php echo end($fechasSemana); ?>',
+                                    min: '<?php $dateString = date('Y-m-d');
+
+                                            // Convertir la cadena de fecha a un objeto DateTime
+                                            $date = new DateTime($dateString);
+
+                                            // Restar 6 días al objeto DateTime
+                                            $date->sub(new DateInterval('P6D'));
+
+                                            // Imprimir la fecha resultante
+                                            echo $date->format('Y-m-d'); ?>',
+                                    max: '<?php echo date('Y-m-d'); ?>',
                                     ticks: {
                                         callback: (value, index, ticks) => {
 
