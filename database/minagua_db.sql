@@ -1591,7 +1591,7 @@ CREATE TABLE embalses (
   duracion_de_construccion VARCHAR(10),
   inicio_de_operacion VARCHAR(10),
   monitoreo_del_embalse VARCHAR(255),
-  batimetria TEXT,
+  batimetria MEDIUMTEXT,
   vida_util VARCHAR(10),
   cota_min VARCHAR(20),
   cota_nor VARCHAR(20),
