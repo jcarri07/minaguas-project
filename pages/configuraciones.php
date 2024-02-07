@@ -10,6 +10,7 @@ $prioritarios = [];
 $queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios';");
 if (mysqli_num_rows($queryPrioritarios) > 0) {
   $stringPrioritarios = mysqli_fetch_assoc($queryPrioritarios)['configuracion'];
+  var_dump($stringPrioritarios);
   $prioritarios = explode(",", $stringPrioritarios);
 }
 
@@ -175,7 +176,7 @@ closeConection($conn);
 
             <!-- configuraciones de embalses prioritarios -->
             <div class="">
-              <h3 class="mb-4 text-center">Embalses Prioritarios:</h3>
+              <h3 class="mb-4 text-center">Embalses Priorizados:</h3>
               <div class="config-container-prioritarios">
 
                 <?php

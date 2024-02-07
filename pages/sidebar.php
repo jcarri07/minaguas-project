@@ -81,6 +81,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         <hr class="horizontal dark mt-0">
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Cuenta</h6>
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-8"><?php echo $_SESSION["Correo"];?></h6>
         </li>
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'perfil') ? "active" : ''; ?>" href="?page=perfil">
@@ -90,6 +91,21 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             <span class="nav-link-text ms-1">Editar Perfil</span>
           </a>
         </li>
+
+        <?php
+        if ($_SESSION["Tipo"] == "Admin") {
+        ?>
+          <li class="nav-item">
+            <a class="nav-link <?php echo ($page == 'configuraciones') ? "active" : ''; ?>" href="?page=configuraciones">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fa fa-cog text-dark text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Configuraciones</span>
+            </a>
+          </li>
+        <?php
+        }
+        ?>
 
         <li class="nav-item">
           <a class="nav-link off <?php echo ($page == 'logout') ? "active" : ''; ?>" href="?page=cerrar_sesion">
