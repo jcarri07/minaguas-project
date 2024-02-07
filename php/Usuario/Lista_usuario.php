@@ -80,7 +80,10 @@ if ($count >= 1) {
 
                       </td>
                       <td class="align-middle text-center justify-content-center d-flex">
-
+                      <a type='button' onclick="openModalHistory('<?php echo $val['Id_usuario']; ?>')" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
+                      <i class="fa-brands fa-wpforms text-dark me-1" aria-hidden="true"></i>
+                          Historial
+                        </a>
                         <a type='button' onclick="Modaledit('<?php echo $val['P_Nombre']; ?>','<?php echo $val['S_Nombre']; ?>','<?php echo $val['P_Apellido']; ?>','<?php echo $val['S_Apellido']; ?>','<?php echo $val['Contrasena']; ?>','<?php echo $val['Cedula']; ?>','<?php echo $val['Correo']; ?>','<?php echo $val['Telefono'] ?>')" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
                           <i class="fas fa-pencil-alt text-dark me-1" aria-hidden="true"></i>
                           Editar

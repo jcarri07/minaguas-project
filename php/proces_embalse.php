@@ -400,9 +400,9 @@ if (isset($_POST["Update"])) {
                             break; // Si superamos el máximo de filas, salimos del bucle
                         }
                         $num++;
-                        $cota = number_format($sheet->getCellByColumnAndRow(2, $row)->getValue(), 3, '.', '');
-                        $area = $sheet->getCellByColumnAndRow(3, $row)->getValue();
-                        $capacidad = $sheet->getCellByColumnAndRow(4, $row)->getValue();
+                        $cota = number_format($sheet->getCell('B' . $row)->getValue(), 3, '.', '');
+                        $area = $sheet->getCell('C' . $row)->getValue();
+                        $capacidad = $sheet->getCell('D' . $row)->getValue();
                         $cota_embalse[$cota] = $area . "-" . $capacidad;
 
                         $row++;
@@ -413,9 +413,9 @@ if (isset($_POST["Update"])) {
                             break; // Si superamos el máximo de filas, salimos del bucle
                         }
                         $num++;
-                        $cota = number_format($sheet->getCellByColumnAndRow(6, $row)->getValue(), 3, '.', '');
-                        $area = $sheet->getCellByColumnAndRow(7, $row)->getValue();
-                        $capacidad = $sheet->getCellByColumnAndRow(8, $row)->getValue();
+                        $cota = number_format($sheet->getCell('F' . $row)->getValue(), 3, '.', '');
+                        $area = $sheet->getCell('G' . $row)->getValue();
+                        $capacidad = $sheet->getCell('H' . $row)->getValue();
                         $cota_embalse[$cota] = $area . "-" . $capacidad;
 
                         $row++;
@@ -425,7 +425,7 @@ if (isset($_POST["Update"])) {
                     if ($row <= $highestRow) {
                         $row++;
                     }
-                }
+            }
 
                 $cotas_embalse[$sheetName] = $cota_embalse;
             }
