@@ -165,30 +165,6 @@ if (isset($_POST["Guardar"])) {
 
     if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
 
-        if (false) {
-            $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
-
-            $cotas_embalse = array();
-            $num = 0;
-
-            foreach ($spreadsheet->getSheetNames() as $sheetName) {
-                $sheet = $spreadsheet->getSheetByName($sheetName);
-                $highestRow = $sheet->getHighestRow();
-
-                $cota_embalse = array();
-
-                for ($row = 2; $row <= $highestRow; $row++) {
-                    $num++;
-                    $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
-                    $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
-                    $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
-                    $cota_embalse[$cota] = $area . "-" . $capacidad;
-                }
-
-                $cotas_embalse[$sheetName] = $cota_embalse;
-            }
-        }
-
         if (true) {
             $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
 
@@ -409,31 +385,6 @@ if (isset($_POST["Update"])) {
 
     if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
 
-        if (false) {
-            $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
-
-            $cotas_embalse = array();
-            $num = 0;
-
-            foreach ($spreadsheet->getSheetNames() as $sheetName) {
-                $sheet = $spreadsheet->getSheetByName($sheetName);
-                $highestRow = $sheet->getHighestRow();
-
-                $cota_embalse = array();
-
-                for ($row = 2; $row <= $highestRow; $row++) {
-                    $num++;
-                    $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
-                    $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
-                    $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
-                    $cota_embalse[$cota] = $area . "-" . $capacidad;
-                }
-
-                $cotas_embalse[$sheetName] = $cota_embalse;
-            }
-
-            $batimetria = json_encode($cotas_embalse);
-        }
 
         if (true) {
             $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
