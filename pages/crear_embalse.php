@@ -898,23 +898,73 @@ date_default_timezone_set("America/Caracas");
           var worksheet = workbook.Sheets[sheetName];
           var range = XLSX.utils.decode_range(worksheet['!ref']);
 
-          var count = 0;
-          for (var row = 1; row <= range.e.r; row++) {
-            var cota = worksheet[XLSX.utils.encode_cell({
-              r: row,
-              c: 1
-            })].v.toFixed(3);
-            var area = worksheet[XLSX.utils.encode_cell({
-              r: row,
-              c: 2
-            })].v;
-            var capacidad = worksheet[XLSX.utils.encode_cell({
-              r: row,
-              c: 3
-            })].v;
-            cotaEmbalse[cota] = area + '-' + capacidad;
-            count++
-            if(count == 50) {row++; count = 0;}
+          // var count = 0;
+          // for (var row = 1; row <= range.e.r; row++) {
+          //   var cota = worksheet[XLSX.utils.encode_cell({
+          //     r: row,
+          //     c: 1
+          //   })].v.toFixed(3);
+          //   var area = worksheet[XLSX.utils.encode_cell({
+          //     r: row,
+          //     c: 2
+          //   })].v;
+          //   var capacidad = worksheet[XLSX.utils.encode_cell({
+          //     r: row,
+          //     c: 3
+          //   })].v;
+          //   cotaEmbalse[cota] = area + '-' + capacidad;
+          //   count++
+          //   if(count == 50) {row++; count = 0;}
+          // }
+
+          let row = 1;
+          let count = 0;
+
+          while (row <= range.e.r) {
+            // console.log(row);
+            for (let i = 0; i < 50; i++) {
+              if (row > range.e.r) {
+                break;
+              }
+              var cota = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 1
+              })].v.toFixed(3);
+              var area = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 2
+              })].v;
+              var capacidad = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 3
+              })].v;
+              cotaEmbalse[cota] = area + '-' + capacidad;
+              row++;
+            }
+            row = row - 50;
+            for (let i = 0; i < 50; i++) {
+              if (row > range.e.r) {
+                break;
+              }
+              var cota = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 5
+              })].v.toFixed(3);
+              var area = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 6
+              })].v;
+              var capacidad = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 7
+              })].v;
+              cotaEmbalse[cota] = area + '-' + capacidad;
+              row++;
+            }
+
+            if (row <= range.e.r) {
+              row++;
+            }
           }
 
           cotasEmbalse[sheetName] = cotaEmbalse;
