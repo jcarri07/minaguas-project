@@ -1,4 +1,11 @@
-<?php include "php/Usuario/Lista_usuario.php"; ?>
+<?php include "php/Usuario/Lista_usuario.php"; 
+  $options_extraccion = '<option value="">Seleccione</option>';
+  $options_extraccion .='<option value="Riego">Riego</option>';
+  $options_extraccion .='<option value="Hidroelectricidad">Hidroelectricidad</option>';
+  $options_extraccion .='<option value="Consumo Humano">Consumo Humano</option>';
+  $options_extraccion .='<option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>';
+  $options_extraccion .='<option value="Recreación">Recreación</option>';
+?>
 
 
 
@@ -481,6 +488,30 @@
       $('#add').modal('show');
 
     }
+
+    var count = 1;
+    $(document).on('click', '#addRows', function() { 
+      count++;
+      var htmlRows = '';
+      htmlRows += '<div class="row">';
+      htmlRows += '   <div class="col">';
+      htmlRows += '       <label>Tipo</label>';
+      htmlRows += '       <div class="input-group mb-3">';
+      htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" required>';
+      htmlRows += '               <?php echo $options_extraccion;?>';
+      htmlRows += '           </select>';
+      htmlRows += '       </div>';
+      htmlRows += '   </div>';
+      htmlRows += '   <div class="col">';
+      htmlRows += '       <label>Valor</label>';
+      htmlRows += '       <div class="input-group mb-3">';
+      htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor de la Extracción" required>';
+      htmlRows += '       </div>';
+      htmlRows += '   </div>';
+      htmlRows += '</div>';
+
+      $('#box-extraccion').append(htmlRows);
+    });
 
   $(document).ready(function() {
 
