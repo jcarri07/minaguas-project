@@ -31,4 +31,7 @@ if (!isset($_GET['page']) || $_GET['page'] == "") {
     if ($_GET['page'] == "cerrar_sesion") {
         include "php/login/logout.php";
     }
+    if ($_GET['page'] == "grafica_embalse") {
+        include "php/Graficas/grafica_embalse.php";
+    }
 }

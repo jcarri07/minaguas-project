@@ -165,26 +165,57 @@ if (isset($_POST["Guardar"])) {
 
     if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
 
-        $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
+        if (true) {
+            $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
 
-        $cotas_embalse = array();
-        $num = 0;
+            $cotas_embalse = array();
+            $num = 0;
 
-        foreach ($spreadsheet->getSheetNames() as $sheetName) {
-            $sheet = $spreadsheet->getSheetByName($sheetName);
-            $highestRow = $sheet->getHighestRow();
+            foreach ($spreadsheet->getSheetNames() as $sheetName) {
+                $sheet = $spreadsheet->getSheetByName($sheetName);
+                $highestRow = $sheet->getHighestRow();
 
-            $cota_embalse = array();
+                $cota_embalse = array();
 
-            for ($row = 2; $row <= $highestRow; $row++) {
-                $num++;
-                $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
-                $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
-                $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
-                $cota_embalse[$cota] = $area . "-" . $capacidad;
+                $row = 2; // Iniciamos en la fila 2
+
+                while ($row <= $highestRow) {
+                    for ($i = 0; $i < 50; $i++) {
+                        if ($row > $highestRow) {
+                            break; // Si superamos el máximo de filas, salimos del bucle
+                        }
+                        $num++;
+                        $cota = number_format($sheet->getCell('B' . $row)->getValue(), 3, '.', '');
+                        $area = $sheet->getCell('C' . $row)->getValue();
+                        $capacidad = $sheet->getCell('D' . $row)->getValue();
+                        $cota_embalse[$cota] = $area . "-" . $capacidad;
+
+                        $row++;
+                    }
+                    $row = $row - 50;
+                    for ($i = 0; $i < 50; $i++) {
+                        if ($row > $highestRow) {
+                            break; // Si superamos el máximo de filas, salimos del bucle
+                        }
+                        $num++;
+                        $cota = number_format($sheet->getCell('F' . $row)->getValue(), 3, '.', '');
+                        $area = $sheet->getCell('G' . $row)->getValue();
+                        $capacidad = $sheet->getCell('H' . $row)->getValue();
+                        $cota_embalse[$cota] = $area . "-" . $capacidad;
+
+                        $row++;
+                    }
+
+                    // Saltamos una fila si no hemos llegado al final
+                    if ($row <= $highestRow) {
+                        $row++;
+                    }
+                }
+
+                $cotas_embalse[$sheetName] = $cota_embalse;
             }
-
-            $cotas_embalse[$sheetName] = $cota_embalse;
+            $batimetria = json_encode($cotas_embalse);
+            // var_dump($batimetria);
         }
 
         $batimetria = json_encode($cotas_embalse);
@@ -354,30 +385,93 @@ if (isset($_POST["Update"])) {
 
     if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
 
-        $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
 
-        $cotas_embalse = array();
-        $num = 0;
+        if (true) {
+            $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
 
-        foreach ($spreadsheet->getSheetNames() as $sheetName) {
-            $sheet = $spreadsheet->getSheetByName($sheetName);
-            $highestRow = $sheet->getHighestRow();
+            $cotas_embalse = array();
+            $num = 0;
 
-            $cota_embalse = array();
+            foreach ($spreadsheet->getSheetNames() as $sheetName) {
+                $sheet = $spreadsheet->getSheetByName($sheetName);
+                $highestRow = $sheet->getHighestRow();
 
-            for ($row = 2; $row <= $highestRow; $row++) {
-                $num++;
-                $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
-                $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
-                $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
-                $cota_embalse[$cota] = $area . "-" . $capacidad;
+                $cota_embalse = array();
+
+                $row = 2; // Iniciamos en la fila 2
+
+                // while ($row <= $highestRow) {
+                //     for ($i = 0; $i < 50; $i++) {
+                //         if ($row > $highestRow) {
+                //             break; // Si superamos el máximo de filas, salimos del bucle
+                //         }
+                //         $num++;
+                //         $cota = number_format($sheet->getCellByColumnAndRow(2, $row)->getValue(), 3, '.', '');
+                //         $area = $sheet->getCellByColumnAndRow(3, $row)->getValue();
+                //         $capacidad = $sheet->getCellByColumnAndRow(4, $row)->getValue();
+                //         $cota_embalse[$cota] = $area . "-" . $capacidad;
+
+                //         $row++;
+                //     }
+                //     $row = $row - 50;
+                //     for ($i = 0; $i < 50; $i++) {
+                //         if ($row > $highestRow) {
+                //             break; // Si superamos el máximo de filas, salimos del bucle
+                //         }
+                //         $num++;
+                //         $cota = number_format($sheet->getCellByColumnAndRow(6, $row)->getValue(), 3, '.', '');
+                //         $area = $sheet->getCellByColumnAndRow(7, $row)->getValue();
+                //         $capacidad = $sheet->getCellByColumnAndRow(8, $row)->getValue();
+                //         $cota_embalse[$cota] = $area . "-" . $capacidad;
+
+                //         $row++;
+                //     }
+
+                //     // Saltamos una fila si no hemos llegado al final
+                //     if ($row <= $highestRow) {
+                //         $row++;
+                //     }
+                // }
+
+                while ($row <= $highestRow) {
+                    for ($i = 0; $i < 50; $i++) {
+                        if ($row > $highestRow) {
+                            break; // Si superamos el máximo de filas, salimos del bucle
+                        }
+                        $num++;
+                        $cota = number_format($sheet->getCell('B' . $row)->getValue(), 3, '.', '');
+                        $area = $sheet->getCell('C' . $row)->getValue();
+                        $capacidad = $sheet->getCell('D' . $row)->getValue();
+                        $cota_embalse[$cota] = $area . "-" . $capacidad;
+
+                        $row++;
+                    }
+                    $row = $row - 50;
+                    for ($i = 0; $i < 50; $i++) {
+                        if ($row > $highestRow) {
+                            break; // Si superamos el máximo de filas, salimos del bucle
+                        }
+                        $num++;
+                        $cota = number_format($sheet->getCell('F' . $row)->getValue(), 3, '.', '');
+                        $area = $sheet->getCell('G' . $row)->getValue();
+                        $capacidad = $sheet->getCell('H' . $row)->getValue();
+                        $cota_embalse[$cota] = $area . "-" . $capacidad;
+
+                        $row++;
+                    }
+
+                    // Saltamos una fila si no hemos llegado al final
+                    if ($row <= $highestRow) {
+                        $row++;
+                    }
             }
 
-            $cotas_embalse[$sheetName] = $cota_embalse;
+                $cotas_embalse[$sheetName] = $cota_embalse;
+            }
+            $batimetria = json_encode($cotas_embalse);
+            // var_dump($batimetria);
         }
-
-        $batimetria = json_encode($cotas_embalse);
-    }else {
+    } else {
         if ($pre_batimeria == "") {
             $batimetria = "";
         } else {
