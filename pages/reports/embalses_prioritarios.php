@@ -74,6 +74,11 @@ $num_rows = $result->num_rows;
 $image_logo =  "/" . $projectName . "/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";
 $area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
+
+$image_logo_web = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
+$logo_letters_web =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
+$area_web =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
+
 $codigo = "08RHL0101";
 $titulo = "EMBALSE CAMATAGUA - ESTADO ARAGUA";
 $cota = 289.87;
