@@ -427,7 +427,7 @@
       datos.append('id_encargado', id_usuario);
 
       $.ajax({
-        url: 			'php/usuario/historial.php',
+        url: 			'php/Usuario/historial.php',
         type:			'POST',
         data:			datos,
         cache:          false,
