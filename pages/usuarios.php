@@ -1,10 +1,10 @@
-<?php include "php/Usuario/Lista_usuario.php"; 
-  $options_extraccion = '<option value="">Seleccione</option>';
-  $options_extraccion .='<option value="Riego">Riego</option>';
-  $options_extraccion .='<option value="Hidroelectricidad">Hidroelectricidad</option>';
-  $options_extraccion .='<option value="Consumo Humano">Consumo Humano</option>';
-  $options_extraccion .='<option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>';
-  $options_extraccion .='<option value="Recreación">Recreación</option>';
+<?php include "php/Usuario/Lista_usuario.php";
+$options_extraccion = '<option value="">Seleccione</option>';
+$options_extraccion .= '<option value="Riego">Riego</option>';
+$options_extraccion .= '<option value="Hidroelectricidad">Hidroelectricidad</option>';
+$options_extraccion .= '<option value="Consumo Humano">Consumo Humano</option>';
+$options_extraccion .= '<option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>';
+$options_extraccion .= '<option value="Recreación">Recreación</option>';
 ?>
 
 
@@ -154,127 +154,127 @@
 </div>
 <!-- Modal-historial -->
 <div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-body p-0">
-            <div class="card card-plain">
-              <div class="card-header pb-0 text-left">
-                <h3 class="font-weight-bolder text-primary text-gradient">Historial de Reportes</h3>
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
-              </div>
-              <div class="card-body pb-3" id="body-details">
-                
-              </div>
-              <div class="card-footer text-center pt-0 px-sm-4 px-1">
-                <!--<p class="mb-4 mx-auto">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+          <div class="card-header pb-0 text-left">
+            <h3 class="font-weight-bolder text-primary text-gradient">Historial de Reportes</h3>
+            <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+          </div>
+          <div class="card-body pb-3" id="body-details">
+
+          </div>
+          <div class="card-footer text-center pt-0 px-sm-4 px-1">
+            <!--<p class="mb-4 mx-auto">
                   Already have an account?
                   <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
                 </p>--->
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Modal-historial-detalles -->
-    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
-      <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-          <div class="modal-body p-0">
-            <div class="card card-plain">
-              <div class="card-header pb-0 text-left">
-                <h3 class="font-weight-bolder text-primary text-gradient title"></h3>
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
-                <!--<p class="mb-0">Enter your email and password to register</p>-->
+  </div>
+</div>
+<!-- Modal-historial-detalles -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+          <div class="card-header pb-0 text-left">
+            <h3 class="font-weight-bolder text-primary text-gradient title"></h3>
+            <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+            <!--<p class="mb-0">Enter your email and password to register</p>-->
+          </div>
+          <div class="card-body pb-3">
+            <form role="form text-left" id="form3">
+              <?php
+              if (date("H:i") . ":00" > "10:00:00") {
+              ?>
+                <h6 class="text-red text-center text-retraso">Estás retrasado al enviar el reporte</h6>
+              <?php
+              }
+              ?>
+              <div class="row">
+                <div class="col">
+                  <label>Fecha</label>
+                  <div class="input-group mb-3">
+                    <input type="date" class="form-control" name="fecha" id="fecha" value="<?php echo date("Y-m-d"); ?>" disabled required>
+                  </div>
+                </div>
               </div>
-              <div class="card-body pb-3">
-                <form role="form text-left" id="form3">
-    <?php
-                if(date("H:i") . ":00" > "10:00:00"){
-    ?>
-                  <h6 class="text-red text-center text-retraso">Estás retrasado al enviar el reporte</h6>
-    <?php
-                }
-    ?>
-                  <div class="row">
-                    <div class="col">
-                      <label>Fecha</label>
-                      <div class="input-group mb-3">
-                        <input type="date" class="form-control" name="fecha" id="fecha" value="<?php echo date("Y-m-d");?>" disabled required>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col">
-                      <label>Hora</label>
-                      <div class="input-group mb-3">
-                        <input type="time" class="form-control" name="hora" id="hora" value="<?php echo date("H:i") . ":00";?>" disabled required>
-                      </div>
-                    </div>
+              <div class="row">
+                <div class="col">
+                  <label>Hora</label>
+                  <div class="input-group mb-3">
+                    <input type="time" class="form-control" name="hora" id="hora" value="<?php echo date("H:i") . ":00"; ?>" disabled required>
                   </div>
-
-                  <div class="row">
-                    <div class="col">
-                      <label>Cota</label>
-                      <div class="input-group mb-3">
-                        <input type="number" step="0.00001" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
-                      </div>
-                    </div>
-                  </div>
-
-                  <h6 class="mt-2">Extracción</h6>
-                  <div id="box-extraccion">
-                    <div class="row">
-                      <div class="col">
-                        <label>Tipo</label>
-                        <div class="input-group mb-3">
-                          <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_1" required>
-                            <?php echo $options_extraccion;?>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <label>Valor</label>
-                        <div class="input-group mb-3">
-                          <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor de la Extracción" required>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-12 text-center" style="margin-top: 12px;">
-                        <button class="btn btn-success btn-add-extraccion" id="addRows" type="button">Añadir Otra Extracción</button>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-12 loaderParent">
-                      <div class="loader">
-                      </div>
-                      Por favor, espere
-                    </div>
-                  </div>
-
-                  <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0 btn-submit">Guardar</button>
-                    <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal" style="display: none;">Cerrar</button>
-                    <!--<button type="button" class="btn bg-gradient-primary btn-rounded mt-4 mb-0 btn-edit" style="display: none;">Editar</button>-->
-                  </div>
-                </form>
+                </div>
               </div>
-              <div class="card-footer text-center pt-0 px-sm-4 px-1">
-                <!--<p class="mb-4 mx-auto">
+
+              <div class="row">
+                <div class="col">
+                  <label>Cota</label>
+                  <div class="input-group mb-3">
+                    <input type="number" step="0.00001" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
+                  </div>
+                </div>
+              </div>
+
+              <h6 class="mt-2">Extracción</h6>
+              <div id="box-extraccion">
+                <div class="row">
+                  <div class="col">
+                    <label>Tipo</label>
+                    <div class="input-group mb-3">
+                      <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_1" required>
+                        <?php echo $options_extraccion; ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label>Valor</label>
+                    <div class="input-group mb-3">
+                      <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor de la Extracción" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 text-center" style="margin-top: 12px;">
+                  <button class="btn btn-success btn-add-extraccion" id="addRows" type="button">Añadir Otra Extracción</button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 loaderParent">
+                  <div class="loader">
+                  </div>
+                  Por favor, espere
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0 btn-submit">Guardar</button>
+                <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal" style="display: none;">Cerrar</button>
+                <!--<button type="button" class="btn bg-gradient-primary btn-rounded mt-4 mb-0 btn-edit" style="display: none;">Editar</button>-->
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-center pt-0 px-sm-4 px-1">
+            <!--<p class="mb-4 mx-auto">
                   Already have an account?
                   <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
                 </p>--->
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
 <script>
   $(document).ready(function() {
@@ -330,7 +330,7 @@
       if (result.isConfirmed) {
         var values = new FormData();
         values.append("id", id);
-        values.append("ident",'borrar');
+        values.append("ident", 'borrar');
 
         $.ajax({
           url: 'php/Usuario/editar_usuario.php',
@@ -417,101 +417,100 @@
     });
 
   };
-  function openModalHistory(id_usuario){
-      $("#id_embalse_aux").text(id_usuario);
 
-      $("#body-details").html("<h3 class='text-center'>Cargando...</h3>");
-      $("#modal-details").modal("show");
+  function openModalHistory(id_usuario) {
+    $("#id_embalse_aux").text(id_usuario);
 
-      var datos = new FormData();
-      datos.append('id_encargado', id_usuario);
+    $("#body-details").html("<h3 class='text-center'>Cargando...</h3>");
+    $("#modal-details").modal("show");
 
-      $.ajax({
-        url: 			'php/usuario/historial.php',
-        type:			'POST',
-        data:			datos,
-        cache:          false,
-        contentType:    false,
-        processData:    false,
-        success: function(response){
-          $("#body-details").html(response);
-          iniciarTabla('table-history');
-        }
-        ,
-        error: function(response){
-        }
-      });
-    }
+    var datos = new FormData();
+    datos.append('id_encargado', id_usuario);
 
-    function openModalDetalles(id_registro, fecha, hora, cota, extraccion){
-      $("#id_aux").text(id_registro);
-      //$("#opc_aux").text("edit");
-
-      $("#add .title").text("Detalles del Reporte");
-      $(".removeRow").each(function( index ) {
-        $(this).trigger("click");
-      });
-
-      $("#fecha").val(fecha);
-      $("#hora").val(hora);
-      $("#valor_cota").val(cota);
-      var extraccion_array = extraccion.split(";");
-      if(extraccion_array.length > 1){
-        for(var i = 0 ; i < extraccion_array.length - 1 ; i++){
-          $("#addRows").trigger("click");
-        }
-      }
-
-      $(".removeRow").attr("disabled", true);
-
-      //var ids_rows_extracciones = [];
-      $("select[name='tipo_extraccion[]']").each(function(i) {
-        var extraccion_aux = extraccion_array[i].split("&");
-
-        this.value = extraccion_aux[0];
-        var row = this.id.replace("tipo_extraccion_", "");
-        $("#valor_extraccion_" + row).val(extraccion_aux[1]);
-
-        $(this).attr("disabled", true);
-        $("#valor_extraccion_" + row).attr("disabled", true);
-
-        //En este atributo se guarda el id del detalle de la extraccion en caso de editar
-        //$(this).attr("id_detalle_edit", extraccion_aux[2]);
-      });
-
-      $("#valor_cota").attr("disabled", true);
-
-      $("#add .text-retraso").hide();
-      $("#add .btn-submit").hide();
-      $("#add .btn-add-extraccion").hide();
-      $("#add .btn-edit").show();
-      $('#add').modal('show');
-
-    }
-
-    var count = 1;
-    $(document).on('click', '#addRows', function() { 
-      count++;
-      var htmlRows = '';
-      htmlRows += '<div class="row">';
-      htmlRows += '   <div class="col">';
-      htmlRows += '       <label>Tipo</label>';
-      htmlRows += '       <div class="input-group mb-3">';
-      htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" required>';
-      htmlRows += '               <?php echo $options_extraccion;?>';
-      htmlRows += '           </select>';
-      htmlRows += '       </div>';
-      htmlRows += '   </div>';
-      htmlRows += '   <div class="col">';
-      htmlRows += '       <label>Valor</label>';
-      htmlRows += '       <div class="input-group mb-3">';
-      htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor de la Extracción" required>';
-      htmlRows += '       </div>';
-      htmlRows += '   </div>';
-      htmlRows += '</div>';
-
-      $('#box-extraccion').append(htmlRows);
+    $.ajax({
+      url: 'php/Usuario/historial.php',
+      type: 'POST',
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        $("#body-details").html(response);
+        iniciarTabla('table-history');
+      },
+      error: function(response) {}
     });
+  }
+
+  function openModalDetalles(id_registro, fecha, hora, cota, extraccion) {
+    $("#id_aux").text(id_registro);
+    //$("#opc_aux").text("edit");
+
+    $("#add .title").text("Detalles del Reporte");
+    $(".removeRow").each(function(index) {
+      $(this).trigger("click");
+    });
+
+    $("#fecha").val(fecha);
+    $("#hora").val(hora);
+    $("#valor_cota").val(cota);
+    var extraccion_array = extraccion.split(";");
+    if (extraccion_array.length > 1) {
+      for (var i = 0; i < extraccion_array.length - 1; i++) {
+        $("#addRows").trigger("click");
+      }
+    }
+
+    $(".removeRow").attr("disabled", true);
+
+    //var ids_rows_extracciones = [];
+    $("select[name='tipo_extraccion[]']").each(function(i) {
+      var extraccion_aux = extraccion_array[i].split("&");
+
+      this.value = extraccion_aux[0];
+      var row = this.id.replace("tipo_extraccion_", "");
+      $("#valor_extraccion_" + row).val(extraccion_aux[1]);
+
+      $(this).attr("disabled", true);
+      $("#valor_extraccion_" + row).attr("disabled", true);
+
+      //En este atributo se guarda el id del detalle de la extraccion en caso de editar
+      //$(this).attr("id_detalle_edit", extraccion_aux[2]);
+    });
+
+    $("#valor_cota").attr("disabled", true);
+
+    $("#add .text-retraso").hide();
+    $("#add .btn-submit").hide();
+    $("#add .btn-add-extraccion").hide();
+    $("#add .btn-edit").show();
+    $('#add').modal('show');
+
+  }
+
+  var count = 1;
+  $(document).on('click', '#addRows', function() {
+    count++;
+    var htmlRows = '';
+    htmlRows += '<div class="row">';
+    htmlRows += '   <div class="col">';
+    htmlRows += '       <label>Tipo</label>';
+    htmlRows += '       <div class="input-group mb-3">';
+    htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" required>';
+    htmlRows += '               <?php echo $options_extraccion; ?>';
+    htmlRows += '           </select>';
+    htmlRows += '       </div>';
+    htmlRows += '   </div>';
+    htmlRows += '   <div class="col">';
+    htmlRows += '       <label>Valor</label>';
+    htmlRows += '       <div class="input-group mb-3">';
+    htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor de la Extracción" required>';
+    htmlRows += '       </div>';
+    htmlRows += '   </div>';
+    htmlRows += '</div>';
+
+    $('#box-extraccion').append(htmlRows);
+  });
 
   $(document).ready(function() {
 
