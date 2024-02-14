@@ -521,7 +521,7 @@ if ($count >= 1) {
                                     time: {
                                         unit: 'day'
                                     },
-                                    min: '2024-<?php echo date('m') . '-' . date('d') ?>',
+                                    min: '2024-<?php echo date('m') . '-01' ?>',
                                     max: '2024-<?php echo date('m') . '-' . date('t') ?>',
 
                                     ticks: {
