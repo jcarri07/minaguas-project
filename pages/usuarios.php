@@ -424,9 +424,6 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
     $("#body-details").html("<h3 class='text-center'>Cargando...</h3>");
     $("#modal-details").modal("show");
 
-    var datos = new FormData();
-    datos.append('id_encargado', id_usuario);
-
     $.ajax({
       url: 'php/Usuario/historial.php',
       type: 'POST',
@@ -440,6 +437,21 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
       },
       error: function(response) {}
     });
+  }
+
+  $.ajax({
+    url: 'php/Usuario/historial.php',
+    type: 'POST',
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function(response) {
+      $("#body-details").html(response);
+      iniciarTabla('table-history');
+    },
+    error: function(response) {}
+  });
   }
 
   function openModalDetalles(id_registro, fecha, hora, cota, extraccion) {
