@@ -131,7 +131,8 @@ if ($count >= 1) {
                             const {
                                 yvalue,
                                 cota,
-                                color
+                                color,
+                                h
                             } = line;
 
                             ctx.beginPath();
@@ -139,7 +140,7 @@ if ($count >= 1) {
                             ctx.moveTo(left, y.getPixelForValue(yvalue));
                             ctx.lineTo(right, y.getPixelForValue(yvalue));
                             ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                            ctx.fillText(cota + ": " + yvalue + " (m.s.n.m.)", right - 200, y.getPixelForValue(yvalue) + 15);
+                            ctx.fillText(cota + ": " + yvalue + " (m.s.n.m.)", right - 200, y.getPixelForValue(yvalue) + h);
                             ctx.stroke();
                         });
 
@@ -285,12 +286,20 @@ if ($count >= 1) {
                                     lines: [{
                                             yvalue: <?php echo round($embalses[$t]["cota_min"], 2); ?>,
                                             cota: "Cota minima",
-                                            color: 'black'
+                                            color: 'black',
+                                            h: 15,
+                                        },
+                                        {
+                                            yvalue: <?php echo round($embalses[$t]["cota_nor"], 2); ?>,
+                                            cota: "Cota normal",
+                                            color: 'black',
+                                            h:15,
                                         },
                                         {
                                             yvalue: <?php echo round($embalses[$t]["cota_max"], 2); ?>,
                                             cota: "Cota maxima",
-                                            color: 'black'
+                                            color: 'black',
+                                            h:-15,
                                         }
                                         // Agrega más líneas según sea necesario
                                     ]
@@ -476,12 +485,20 @@ if ($count >= 1) {
                                     lines: [{
                                             yvalue: <?php echo round($embalses[$t]["cota_min"], 2); ?>,
                                             cota: "Cota minima",
-                                            color: 'black'
+                                            color: 'black',
+                                            h: 15,
+                                        },
+                                        {
+                                            yvalue: <?php echo round($embalses[$t]["cota_nor"], 2); ?>,
+                                            cota: "Cota normal",
+                                            color: 'black',
+                                            h:15,
                                         },
                                         {
                                             yvalue: <?php echo round($embalses[$t]["cota_max"], 2); ?>,
                                             cota: "Cota maxima",
-                                            color: 'black'
+                                            color: 'black',
+                                            h:-15,
                                         }
                                         // Agrega más líneas según sea necesario
                                     ]
@@ -521,8 +538,8 @@ if ($count >= 1) {
                                     time: {
                                         unit: 'day'
                                     },
-                                    min: '2024-<?php echo date('m') . '-01' ?>',
-                                    max: '2024-<?php echo date('m') . '-' . date('t') ?>',
+                                    min: '<?php echo date('Y-m') . '-01';  ?>',
+                                    max: '<?php echo date('Y-m') . '-' . date('t') ?>',
 
                                     ticks: {
                                         callback: (value, index, ticks) => {
@@ -670,12 +687,20 @@ if ($count >= 1) {
                                     lines: [{
                                             yvalue: <?php echo round($embalses[$t]["cota_min"], 2); ?>,
                                             cota: "Cota minima",
-                                            color: 'black'
+                                            color: 'black',
+                                            h: 15,
+                                        },
+                                        {
+                                            yvalue: <?php echo round($embalses[$t]["cota_nor"], 2); ?>,
+                                            cota: "Cota normal",
+                                            color: 'black',
+                                            h:15,
                                         },
                                         {
                                             yvalue: <?php echo round($embalses[$t]["cota_max"], 2); ?>,
                                             cota: "Cota maxima",
-                                            color: 'black'
+                                            color: 'black',
+                                            h:-15,
                                         }
                                         // Agrega más líneas según sea necesario
                                     ]
@@ -714,7 +739,7 @@ if ($count >= 1) {
                                     time: {
                                         unit: 'day'
                                     },
-                                    min: '<?php $dateString = date('Y-m-d');
+                                    min: '<?php /*$dateString = date('Y-m-d');
 
                                             // Convertir la cadena de fecha a un objeto DateTime
                                             $date = new DateTime($dateString);
@@ -723,8 +748,8 @@ if ($count >= 1) {
                                             $date->sub(new DateInterval('P6D'));
 
                                             // Imprimir la fecha resultante
-                                            echo $date->format('Y-m-d'); ?>',
-                                    max: '<?php echo date('Y-m-d'); ?>',
+                                            echo $date->format('Y-m-d');*/ echo date('Y-m') . '-02';  ?>',
+                                    max: '<?php echo date('Y-m') . '-08'; ?>',
                                     ticks: {
                                         callback: (value, index, ticks) => {
 
