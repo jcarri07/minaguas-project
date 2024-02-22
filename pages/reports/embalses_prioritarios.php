@@ -267,7 +267,7 @@ $variacion_mensual = getMonthName();
       </div>
 
       <div style="position: absolute; left: 650px; top: 260px;">
-        <h5 style="color: #2E86C1;"><?php echo $variacion_semanal . ' ' . $fecha . ' al ' . $fecha2 ?></h5>
+        <h5 style="color: #2E86C1;"><?php echo $variacion_semanal . '02' . ' al ' . '08' ?></h5>
       </div>
 
       <div style="position: absolute; left: 650px; top: 460px;">
