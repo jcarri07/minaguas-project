@@ -200,7 +200,7 @@ $variacion_mensual = getMonthName();
         <?php echo $indice + 1; ?>
       </div>
       <div class="code-container">
-        <h1 class="code">Código <?php echo $stringPrioritarios ?></h1>
+        <h1 class="code">Código <?php echo $codigo ?></h1>
       </div>
       <div class="title-container">
         <h1 style="text-align: center"><?php echo $row['nombre_embalse'] ?></h1>

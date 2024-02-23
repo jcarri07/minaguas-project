@@ -163,4 +163,5 @@ date_default_timezone_set("America/Caracas");
     }
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
+  <?php require_once "../php/Graficas/graficas.php" ?>
 </script>
