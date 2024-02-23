@@ -186,20 +186,20 @@ closeConection($conn);*/
   <div class="container-fluid py-5">
     <div class="row justify-content-center">
       <!-- ... (tu código HTML) ... -->
-      <div class="col-lg-12 col-md-4 mt-4 mb-3" style="padding-left:20px;">
+      <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;">
         <div class="card h-100">
           <div class="card-header">
             <h6 class="mb-0">Embalses</h6>
             <p class="text-sm">Monitoreo del volumen actual de los embalses registrados</p>
           </div>
           <hr class="dark horizontal">
-          <div class="card-body col-12 h-100" id="contenedor" style="height:600px !important;">
+          <div class="card-body col-12 h-100" id="contenedor" style="height:350px !important;">
 
             <?php include "php/Graficas/grafica_volumen_actual.php" ?>
           </div>
         </div>
       </div>
-      <div class="col-lg-12 col-md-4 mt-4 mb-3" style="padding-left:20px;">
+      <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;">
         <div class="card z-index-2">
           <div class="card-header">
             <h6 class="mb-0">Registro de Reportes</h6>
@@ -220,7 +220,7 @@ closeConection($conn);*/
           </div>
           <div class="card-body p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
             <div class="bg-white border shadow-dark border-radius-lg py-3 pe-1">
-              <div class="chart mb-1" style="height:600px !important;">
+              <div class="chart mb-1" style="height:350px !important;">
                 <canvas id="myChart" width="400" height="200"></canvas>
               </div>
             </div>
