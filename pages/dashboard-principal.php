@@ -191,7 +191,7 @@ closeConection($conn);*/
           <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;">
               <div class="card z-index-2">
                   <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                      <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+                      <div class="bg-white border shadow-dark border-radius-lg py-3 pe-1">
                           <div class="chart">
                               <canvas id="myChart" width="400" height="200"></canvas>
                           </div>
@@ -203,8 +203,8 @@ closeConection($conn);*/
                       <hr class="dark horizontal">
                       <div class="d-flex">
                           <label for="embalseSelect" class="text-sm my-auto me-1">Selecciona un embalse:</label>
-                            <select id="embalseSelect" onchange="cargarGrafico()">
-                            <option></option>
+                            <select style="width: 180px;"class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
+                            <option style="display:none" >Seleccione...</option>
                                 <?php
                                 while ($row_embalse = $result_embalses->fetch_assoc()) {
                                     echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
@@ -451,7 +451,7 @@ closeConection($conn);*/
       </footer>-->
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.0.4"></script>
   <script src="../assets/js/core/popper.min.js"></script>
@@ -459,63 +459,145 @@ closeConection($conn);*/
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/chartjs.min.js"></script>
-      
-      
-<script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-function cargarGrafico() {
-    var embalseSelect = document.getElementById('embalseSelect');
-    var embalseId = embalseSelect.value;
-    console.log('Hola', embalseId);
-    
-    // Realiza una solicitud al servidor para obtener datos del embalse seleccionado
-        fetch('php/obtener_datos_embalses.php?id=' + embalseId)
-        .then(response => response.json())
-        .then(datos => {
-            // Limpia el gráfico existente
-            if (window.myChart) {
-                window.myChart.destroy();
-            }  
-            // Construye el nuevo gráfico con los datos obtenidos
-            var datasets = [];
-            var data = [];
-            for (var mes = 1; mes <= 12; mes++) {
-                data.push(Math.round(datos[mes] || 0));
-            }
-            datasets.push({
-                label: embalseSelect.options[embalseSelect.selectedIndex].text,
-                data: data,
-                backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.2)',
-                borderColor: 'white',
-                borderWidth: 1
-            });
-            var config = {
-                type: 'bar',
-                data: {
-                    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                    datasets: datasets
-                },
-                options: {
-                    scales: {
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Cantidad de Reportes'
-                            },
-                            beginAtZero: true,
-                            precision: 0 // Para mostrar valores enteros en el eje Y
+<script>
+  
+var config = {
+                    type: 'bar',
+                    data: {
+                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        datasets: []
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Cantidad de Reportes'
+                                },
+                                beginAtZero: true,
+                                precision: 0
+                            }
                         }
                     }
+                };
+  var ctx = document.getElementById('myChart').getContext('2d');
+                window.myChart = new Chart(ctx, config);
+$(document).ready(function() {
+    cargarGrafico();
+
+    $.ajax({
+            url: './php/obtener_datos_embalses.php?id=inicial',
+            type: 'GET',
+            dataType: 'json',
+            success: function(datos) {
+                datos_inicial = datos[0];
+                if (window.myChart) {
+                    window.myChart.destroy();
                 }
-            };
-            // Obtén el contexto del canvas y crea el nuevo gráfico
-            var ctx = document.getElementById('myChart').getContext('2d');
-            window.myChart = new Chart(ctx, config);
-        })
-        .catch(error => console.error('Error:', error));
+                
+                var datasets = [];
+                var data = [];
+                console.log('Los datos:', datos_inicial);
+                for (var mes = 1; mes <= 12; mes++) {
+                    data.push(Math.round(datos_inicial[mes] || 0));
+                }
+                datasets.push({
+                    label: datos[1],
+                    data: data,
+                    backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)',
+                    borderColor: 'white',
+                    borderWidth: 1
+                });
+                var config = {
+                    type: 'bar',
+                    data: {
+                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        datasets: datasets
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Cantidad de Reportes'
+                                },
+                                beginAtZero: true,
+                                precision: 0
+                            }
+                        }
+                    }
+                };
+                
+                var ctx = document.getElementById('myChart').getContext('2d');
+                window.myChart = new Chart(ctx, config);
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+
+});
+
+function cargarGrafico() {
+  
+
+    $('#embalseSelect').change(function() {
+        var embalseId = $(this).val();
+        console.log('Hola embalse', embalseId);
+        
+        $.ajax({
+            url: './php/obtener_datos_embalses.php?id=' + embalseId,
+            type: 'GET',
+            dataType: 'json',
+            success: function(datos) {
+              datos_inicial = datos[0];
+                if (window.myChart) {
+                    window.myChart.destroy();
+                }
+                
+                var datasets = [];
+                var data = [];
+                console.log('Los datos:', datos_inicial);
+                for (var mes = 1; mes <= 12; mes++) {
+                    data.push(Math.round(datos_inicial[mes] || 0));
+                }
+                datasets.push({
+                    label: $('#embalseSelect option:selected').text(),
+                    data: data,
+                    backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)',
+                    borderColor: 'white',
+                    borderWidth: 3
+                });
+                console.log(datasets);
+                var config = {
+                    type: 'bar',
+                    data: {
+                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        datasets: datasets
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Cantidad de Reportes'
+                                },
+                                beginAtZero: true,
+                                precision: 0
+                            }
+                        }
+                    }
+                };
+                
+                var ctx = document.getElementById('myChart').getContext('2d');
+                window.myChart = new Chart(ctx, config);
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+    });
 }
-
-// Llama a cargarGrafico al cargar la página para mostrar un gráfico inicial
-cargarGrafico();
-
 </script>
