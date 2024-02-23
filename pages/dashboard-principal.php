@@ -9,7 +9,56 @@
     transform: scale(1.2);
     /* Escala el tamaño del icono al 120% */
   }
+  
+  .rrss-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 50px;
+     
+  }
+  .icon-center{
+    
+  }
+
+
+  @media (max-width: 1100px) {
+    .rrss-item {
+      flex: 1 0 100%; 
+      max-width: 100px; 
+  
+  }
+}
+
 </style>
+
+<?php
+require_once 'php/Conexion.php';
+
+// Obtén la lista de embalses para el menú desplegable
+$sql_embalses = "SELECT id_embalse, nombre_embalse FROM embalses";
+$result_embalses = $conn->query($sql_embalses);
+
+// Procesar los resultados de la consulta
+
+/*
+while ($row = $result->fetch_assoc()) {
+   $embalse = $row["id_embalse"];
+    $mes = $row["mes"];
+    $cantidad = $row["cantidad"];
+
+    // Almacena los datos en un formato adecuado para el gráfico
+    $datos[$embalse][$mes] = $cantidad;
+}
+
+
+$sql1 = "SELECT nombre_embalse FROM embalses WHERE id_embalse ='$embalse'";
+$result1 = $conn->query($sql1);
+$row1 = $result1->fetch_assoc();
+$nombreEmbalse = $row1['nombre_embalse'];
+
+closeConection($conn);*/
+?>
 
 <div class="container-fluid py-5">
   <div class="row justify-content-center">
@@ -131,8 +180,46 @@
     <?php }  ?>
   </div>
 
+<?php
 
-  <div class="row mt-6">
+?>
+
+  <!--grafica -->
+  <div class="container-fluid py-5">
+      <div class="row justify-content-center">
+          <!-- ... (tu código HTML) ... -->
+          <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;">
+              <div class="card z-index-2">
+                  <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                      <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+                          <div class="chart">
+                              <canvas id="myChart" width="400" height="200"></canvas>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      <h6 class="mb-0">Registro de Reportes</h6>
+                      <p class="text-sm">Cantidad de reportes realizados al mes</p>
+                      <hr class="dark horizontal">
+                      <div class="d-flex">
+                          <label for="embalseSelect" class="text-sm my-auto me-1">Selecciona un embalse:</label>
+                            <select id="embalseSelect" onchange="cargarGrafico()">
+                            <option></option>
+                                <?php
+                                while ($row_embalse = $result_embalses->fetch_assoc()) {
+                                    echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
+                                }
+                                ?>
+                            </select>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+   
+  <div class="row mt-1">
     <div class="col-lg-9 mb-lg-0 mb-1">
       <div class="card user-card-full">
         <div class="row m-l-0 m-r-0">
@@ -159,19 +246,6 @@
 
                     Venezuela es hoy en día el país latinoamericano con un Ministerio dedicado exclusivamente a la Gestión Integral del Recurso Hídrico entendida como la atención a todos los usos y aprovechamiento de las aguas en fuentes (ríos, lagos, mares, acuíferos) en calidad y cantidad de aguas superficiales y subterráneas. Lo que atiende directamente la condición estratégica de nuestro territorio al ser la 4ta reserva de agua dulce en América Latina y el 11vo en el Mundo.
 
-                    <!--“Ejercer como Autoridad Nacional una gestión integral de las aguas, 
-                                                                    elemento indispensable para la vida, el bienestar humano y el desarrollo sustentable del país,
-                                                                      basada en la administración sostenible de las regiones hidrográficas e hidrogeológicas,
-                                                                      brindar un acceso justo y equitativo al servicio de agua potable, el saneamiento y sus otros usos.”
-                                                                      <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Visión:</h6>
-
-                                                                      <p class="m-b-10">  “Ser el órgano del Ejecutivo Nacional que garantice la soberanía del Estado Venezolano 
-                                                                      en materia de aprovechamiento responsable del recurso hídrico y la prestación de servicios de agua potable
-                                                                      y saneamiento para los ciudadanos y ciudadanas, aplicando un nuevo modelo de gestión integrador, efectivo y revolucionario,
-                                                                        con la participación protagónica del Gobierno Popular en el marco de un aprovechamiento responsable, óptimo y sostenible 
-                                                                        en todos los usos del agua, mediante la utilización de tecnología de vanguardia, liderado por servidores públicos conscientes,
-                                                                        capacitados y comprometidos en contribuir con el bienestar de la población venezolana”
--->
                   <h6 class="text-muted f-w-400"><a href="..\..\..\cdn-cgi\l\email-protection.htm" class="__cf_email__" data-cfemail="3a505f54437a5d575b535614595557"></a></h6>
                 </div>
                 <!-- <div class="col-sm-6">
@@ -230,7 +304,7 @@
                    capacitados y comprometidos en contribuir con el bienestar de la población venezolana”
               </p>
             </div>
-</div>
+    div>
             <div class="card-body p-3">
               <div class="chart">
                 <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
@@ -273,17 +347,17 @@
         </div>
       </div>
     </div>
-  </div>
+   </div>
 
-  <!--RRSS-->
+   <!--RRSS-->
 
-  <div class="container-fluid py-5">
-    <div class="row justify-content-center" style="gap: 50px;">
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
-        <div class="card">
+   <div class="container-fluid py-5">
+    <div class="row justify-content-center rrss-container">
+      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+        <div class="card" >
           <div class="card-body p-3">
-            <div class="row">
-              <div class="col-3 text-end" style="padding-left: 25px;">
+            <div class="row rrss-item">
+              <div class="col-1 text-end icon-center">
                 <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                   <a href="https://www.facebook.com/MinAguasVzla/" target="_blank"><i class="fa fa-facebook text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
                 </div>
@@ -292,11 +366,11 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
         <div class="card">
           <div class="card-body p-3">
             <div class="row">
-              <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="col-2 text-end" >
                 <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                   <a href="https://twitter.com/minaguasoficial" class="download-icon" target="_blank"><i class="fa fa-twitter text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
                 </div>
@@ -305,11 +379,11 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
         <div class="card">
           <div class="card-body p-3">
             <div class="row">
-              <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="col-2 text-end" >
                 <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                   <a href="https://www.instagram.com/mppaaguas/" class="download-icon" target="_blank"><i class="fa fa-instagram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
                 </div>
@@ -318,11 +392,11 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
         <div class="card">
           <div class="card-body p-3">
             <div class="row">
-              <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="col-2 text-end" >
                 <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                   <a href="https://t.me/minaguas/55" class="download-icon" target="_blank"><i class="fab fa-telegram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
                 </div>
@@ -331,11 +405,11 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
         <div class="card">
           <div class="card-body p-3">
             <div class="row">
-              <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="col-2 text-end" >
                 <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                   <a href="https://www.youtube.com/channel/UCMpEiajv0YEBTIr0nlA---g" class="download-icon" target="_blank"><i class="fa fa-youtube-play text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
                 </div>
@@ -344,11 +418,11 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4">
+      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
         <div class="card">
           <div class="card-body p-3">
             <div class="row">
-              <div class="col-2 text-end" style="padding-left: 25px;">
+              <div class="col-2 text-end" >
                 <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                   <a href="https://www.tiktok.com/@minaguasven" class="download-icon" target="_blank"><i class="fab fa-tiktok text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
                 </div>
@@ -375,3 +449,73 @@
           </div>
         </div>
       </footer>-->
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/material-dashboard.min.js?v=3.0.4"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/chartjs.min.js"></script>
+      
+      
+<script>
+
+function cargarGrafico() {
+    var embalseSelect = document.getElementById('embalseSelect');
+    var embalseId = embalseSelect.value;
+    console.log('Hola', embalseId);
+    
+    // Realiza una solicitud al servidor para obtener datos del embalse seleccionado
+        fetch('php/obtener_datos_embalses.php?id=' + embalseId)
+        .then(response => response.json())
+        .then(datos => {
+            // Limpia el gráfico existente
+            if (window.myChart) {
+                window.myChart.destroy();
+            }  
+            // Construye el nuevo gráfico con los datos obtenidos
+            var datasets = [];
+            var data = [];
+            for (var mes = 1; mes <= 12; mes++) {
+                data.push(Math.round(datos[mes] || 0));
+            }
+            datasets.push({
+                label: embalseSelect.options[embalseSelect.selectedIndex].text,
+                data: data,
+                backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.2)',
+                borderColor: 'white',
+                borderWidth: 1
+            });
+            var config = {
+                type: 'bar',
+                data: {
+                    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Cantidad de Reportes'
+                            },
+                            beginAtZero: true,
+                            precision: 0 // Para mostrar valores enteros en el eje Y
+                        }
+                    }
+                }
+            };
+            // Obtén el contexto del canvas y crea el nuevo gráfico
+            var ctx = document.getElementById('myChart').getContext('2d');
+            window.myChart = new Chart(ctx, config);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// Llama a cargarGrafico al cargar la página para mostrar un gráfico inicial
+cargarGrafico();
+
+</script>
