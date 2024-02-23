@@ -3,6 +3,7 @@ include 'php/Conexion.php';
 
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
+$queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
 ?>
 
 
@@ -84,6 +85,34 @@ date_default_timezone_set("America/Caracas");
     .p-5-lg {
       padding: 3rem;
     }
+  }
+
+  .padre-relative {
+    position: relative;
+  }
+
+  .modal-absolute {
+    position: absolute;
+    bottom: 1;
+    left: 1;
+    margin-top: 8px;
+    display: none;
+  }
+
+  .desplegar {
+    display: block;
+  }
+
+  #proposito,
+  #uso,
+  #cap-util {
+    background: white;
+  }
+
+
+  textarea {
+    resize: none;
+    overflow: auto;
   }
 </style>
 
@@ -295,8 +324,8 @@ date_default_timezone_set("America/Caracas");
                     <input type="file" accept=".xlsx, .xls" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
                   </div>
                   <div class="form-group d-flex justify-content-center">
-                    <a class="down-bat visible btn btn-link text-dark text-sm d-flex align-items-center"><i class="fa fa-download text-lg me-1"></i> Plantilla</a>
-                    <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn btn-link text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
+                    <a class="down-bat visible btn text-dark text-sm d-flex align-items-center"><i class="fa fa-download text-lg me-1"></i> Plantilla</a>
+                    <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
                   </div>
                   <div class="form-group">
                     <label for="vida_util">Vida útil (años)</label>
@@ -344,6 +373,15 @@ date_default_timezone_set("America/Caracas");
                   <div class=" form-group">
                     <label for="sup_max">Superficie máxima (ha)</label>
                     <input type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-md-3 col-sm-12">
+                  <div class=" form-group">
+                    <label for="cap-util">Capacidad útil (hm³)</label>
+                    <input readonly type="number" step="0.001" class="form-control" id="cap-util" value="0">
                   </div>
                 </div>
               </div>
@@ -464,7 +502,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="number" step="0.001" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="ancho_base">Ancho maximo de base</label>
+                  <label for="ancho_base">Ancho maximo de base (m)</label>
                   <input type="number" step="0.001" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
                 </div>
               </div>
@@ -551,13 +589,37 @@ date_default_timezone_set("America/Caracas");
               <h3 class="pb-3 pt-3">Beneficios:</h3>
 
               <div class="row">
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 form-group padre-relative">
                   <label for="proposito">Propósito del embalse</label>
-                  <input type="text" class="form-control" id="proposito" name="proposito" placeholder="Ingrese el propósito del embalse">
+                  <textarea readonly class="form-control" name="" id="proposito" cols="30" rows="2" placeholder="Seleccione los propósitos del embalse"></textarea>
+                  <input readonly hidden type="text" class="form-control" id="proposito-input" name="proposito" placeholder="Seleccione los propósitos del embalse">
+                  <div id="modal-proposito" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+
+                    <?php
+                    while ($proposito = mysqli_fetch_array($queryPropositos)) {
+                    ?>
+                      <div class="form-check opcion"><input type="checkbox" name="" id="<?php echo $proposito['id_proposito'] ?>-prop" class="prop-opcion form-check-input opcion"><label class="text-sm cursor-pointer opcion-<?php echo $proposito['id_proposito'] ?>-prop opcion" for="<?php echo $proposito['id_proposito'] ?>-prop"><?php echo $proposito['proposito'] ?></label></div>
+                    <?php
+                    }
+                    $queryPropositos->data_seek(0);
+                    ?>
+
+                  </div>
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 form-group padre-relative">
                   <label for="uso">Uso actual del embalse</label>
-                  <input type="text" class="form-control" id="uso" name="uso" placeholder="Ingrese el uso actual del embalse">
+                  <textarea readonly class="form-control" name="" id="uso" cols="30" rows="2" placeholder="Seleccione los usos del embalse"></textarea>
+                  <input readonly hidden type="text" class="form-control" id="uso-input" name="uso" placeholder="Seleccione los usos actuales del embalse">
+                  <div id="modal-uso" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+
+                    <?php
+                    while ($proposito = mysqli_fetch_array($queryPropositos)) {
+                    ?>
+                      <div class="form-check opcion"><input type="checkbox" name="" id="<?php echo $proposito['id_proposito'] ?>-uso" class="prop-uso form-check-input opcion"><label class="text-sm cursor-pointer opcion-<?php echo $proposito['id_proposito'] ?>-uso opcion" for="<?php echo $proposito['id_proposito'] ?>-uso"><?php echo $proposito['proposito'] ?></label></div>
+                    <?php
+                    }
+                    ?>
+                  </div>
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="sectores">Sectores beneficiados</label>
@@ -569,7 +631,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="area_riego">Área de riego beneficiada (ha)</label>
-                  <input type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada en km2">
+                  <input type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
                 </div>
               </div>
 
@@ -660,182 +722,7 @@ date_default_timezone_set("America/Caracas");
       </div>
     </div>
   </div>
-  <!--<div class="row">
-        <div class="col-md-7 mt-4">
-          <div class="card">
-            <div class="card-header pb-0 px-3">
-              <h6 class="mb-0">Billing Information</h6>
-            </div>
-            <div class="card-body pt-4 p-3">
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm">Oliver Liam</h6>
-                    <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Viking Burrito</span></span>
-                    <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">oliver@burrito.com</span></span>
-                    <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                  </div>
-                  <div class="ms-auto text-end">
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm">Lucas Harper</h6>
-                    <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Stone Tech Zone</span></span>
-                    <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">lucas@stone-tech.com</span></span>
-                    <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                  </div>
-                  <div class="ms-auto text-end">
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm">Ethan James</h6>
-                    <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Fiber Notion</span></span>
-                    <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">ethan@fiber.com</span></span>
-                    <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                  </div>
-                  <div class="ms-auto text-end">
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-5 mt-4">
-          <div class="card h-100 mb-4">
-            <div class="card-header pb-0 px-3">
-              <div class="row">
-                <div class="col-md-6">
-                  <h6 class="mb-0">Your Transaction's</h6>
-                </div>
-                <div class="col-md-6 d-flex justify-content-end align-items-center">
-                  <i class="far fa-calendar-alt me-2"></i>
-                  <small>23 - 30 March 2020</small>
-                </div>
-              </div>
-            </div>
-            <div class="card-body pt-4 p-3">
-              <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Newest</h6>
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-down"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Netflix</h6>
-                      <span class="text-xs">27 March 2020, at 12:30 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
-                    - $ 2,500
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Apple</h6>
-                      <span class="text-xs">27 March 2020, at 04:30 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 2,000
-                  </div>
-                </li>
-              </ul>
-              <h6 class="text-uppercase text-body text-xs font-weight-bolder my-3">Yesterday</h6>
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Stripe</h6>
-                      <span class="text-xs">26 March 2020, at 13:45 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 750
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">HubSpot</h6>
-                      <span class="text-xs">26 March 2020, at 12:30 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 1,000
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Creative Tim</h6>
-                      <span class="text-xs">26 March 2020, at 08:30 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 2,500
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-exclamation"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Webflow</h6>
-                      <span class="text-xs">26 March 2020, at 05:00 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-dark text-sm font-weight-bold">
-                    Pending
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>-->
-  <!--<footer class="footer pt-3  ">
-    <div class="container-fluid">
-      <div class="row align-items-center justify-content-lg-between">
-        <div class="col-lg-6 mb-lg-0 mb-4">
-          <div class="copyright text-center text-sm text-muted text-lg-start">
-            © <script>
-              document.write(new Date().getFullYear())
-            </script>,
-            desarrollado por
-            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Dirección de Investigación e Innovación - ABAE
-            </a>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>-->
+  
 </div>
 
 
@@ -848,6 +735,19 @@ date_default_timezone_set("America/Caracas");
     }
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
+
+  // form-embalse
+  const form = document.getElementById('form-embalse');
+
+  form.querySelectorAll('input').forEach(function(input, index, inputs) {
+    input.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const nextIndex = index < inputs.length - 1 ? index + 1 : 0;
+        inputs[nextIndex].focus();
+      }
+    });
+  });
 </script>
 
 
@@ -998,20 +898,73 @@ date_default_timezone_set("America/Caracas");
           var worksheet = workbook.Sheets[sheetName];
           var range = XLSX.utils.decode_range(worksheet['!ref']);
 
-          for (var row = 1; row <= range.e.r; row++) {
-            var cota = worksheet[XLSX.utils.encode_cell({
-              r: row,
-              c: 0
-            })].v.toFixed(3);
-            var area = worksheet[XLSX.utils.encode_cell({
-              r: row,
-              c: 1
-            })].v;
-            var capacidad = worksheet[XLSX.utils.encode_cell({
-              r: row,
-              c: 2
-            })].v;
-            cotaEmbalse[cota] = area + '-' + capacidad;
+          // var count = 0;
+          // for (var row = 1; row <= range.e.r; row++) {
+          //   var cota = worksheet[XLSX.utils.encode_cell({
+          //     r: row,
+          //     c: 1
+          //   })].v.toFixed(3);
+          //   var area = worksheet[XLSX.utils.encode_cell({
+          //     r: row,
+          //     c: 2
+          //   })].v;
+          //   var capacidad = worksheet[XLSX.utils.encode_cell({
+          //     r: row,
+          //     c: 3
+          //   })].v;
+          //   cotaEmbalse[cota] = area + '-' + capacidad;
+          //   count++
+          //   if(count == 50) {row++; count = 0;}
+          // }
+
+          let row = 1;
+          let count = 0;
+
+          while (row <= range.e.r) {
+            // console.log(row);
+            for (let i = 0; i < 50; i++) {
+              if (row > range.e.r) {
+                break;
+              }
+              var cota = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 1
+              })].v.toFixed(3);
+              var area = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 2
+              })].v;
+              var capacidad = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 3
+              })].v;
+              cotaEmbalse[cota] = area + '-' + capacidad;
+              row++;
+            }
+            row = row - 50;
+            for (let i = 0; i < 50; i++) {
+              if (row > range.e.r) {
+                break;
+              }
+              var cota = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 5
+              })].v.toFixed(3);
+              var area = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 6
+              })].v;
+              var capacidad = worksheet[XLSX.utils.encode_cell({
+                r: row,
+                c: 7
+              })].v;
+              cotaEmbalse[cota] = area + '-' + capacidad;
+              row++;
+            }
+
+            if (row <= range.e.r) {
+              row++;
+            }
           }
 
           cotasEmbalse[sheetName] = cotaEmbalse;
@@ -1109,4 +1062,88 @@ date_default_timezone_set("America/Caracas");
 
   previewImage("imagen_uno");
   previewImage("imagen_dos");
+
+  $("#proposito").on("click", function() {
+    $("#modal-proposito").toggleClass('desplegar');
+  });
+
+  var propositos = [];
+  var id_propositos = [];
+
+  $(".prop-opcion").on("change", function() {
+    if ($(this).is(':checked')) {
+      propositos.push($(".opcion-" + this.id)[0].innerText)
+      id_propositos.push(this.id.split("-")[0]);
+    } else {
+      propositos = propositos.filter((proposito) => {
+        return proposito != $(".opcion-" + this.id)[0].innerText
+      })
+
+      id_propositos = id_propositos.filter((id) => {
+        return id != this.id.split("-")[0]
+      })
+    }
+    $("#proposito")[0].value = propositos.join(" - ");
+    $("#proposito-input")[0].value = id_propositos.join(" - ");
+  })
+
+
+  $("#uso").on("click", function() {
+    $("#modal-uso").toggleClass('desplegar');
+  });
+
+  var usos = [];
+  var id_usos = [];
+
+  $(".prop-uso").on("change", function() {
+    if ($(this).is(':checked')) {
+      usos.push($(".opcion-" + this.id)[0].innerText);
+      id_usos.push(this.id.split("-")[0]);
+    } else {
+      usos = usos.filter((uso) => {
+        return uso != $(".opcion-" + this.id)[0].innerText
+      })
+      id_usos = id_usos.filter((id) => {
+        return id != this.id.split("-")[0]
+      })
+    }
+    $("#uso")[0].value = usos.join(" - ");
+    $("#uso-input")[0].value = id_usos.join("-");
+  });
+
+  document.documentElement.addEventListener('click', function(e) {
+    const excepciones = ["proposito", "modal-proposito", "uso", "modal-uso"];
+    if (!excepciones.includes(e.target.id) && !$(e.target).hasClass("opcion")) {
+      removerClase($("#modal-proposito"), "desplegar");
+      removerClase($("#modal-uso"), "desplegar");
+    }
+  });
+
+  function agregarClase(elemento, clase) {
+    if (!elemento.hasClass(clase)) {
+      elemento.addClass(clase);
+    }
+  }
+
+  function removerClase(elemento, clase) {
+    if (elemento.hasClass(clase)) {
+      elemento.removeClass(clase);
+    }
+  }
+
+  $("#vol_nor").on("change", capacidadUtil);
+  $("#vol_min").on("change", capacidadUtil);
+
+  function capacidadUtil() {
+    let vol_nor = $("#vol_nor").val();
+    let vol_min = $("#vol_min").val();
+
+    if (vol_min != "" && vol_nor != "") {
+      let capacidad = vol_nor - vol_min;
+      $("#cap-util")[0].value = capacidad;
+    } else {
+      $("#cap-util")[0].value = 0;
+    }
+
+  }
 </script>

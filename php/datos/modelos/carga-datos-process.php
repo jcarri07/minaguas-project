@@ -13,8 +13,14 @@
         $tipo_extraccion = json_decode($_POST['tipo_extraccion']);
         $valor_extraccion = json_decode($_POST['valor_extraccion']);
 
-        $fecha = date("Y-m-d");
-        $hora = date("H:i") . ":00";
+        if($_SESSION["Tipo"] == "Admin"){
+            $fecha = $_POST["fecha"];
+            $hora = $_POST["hora"];
+        }
+        else{
+            $fecha = date("Y-m-d");
+            $hora = date("H:i") . ":00";
+        }
 
         $res = mysqli_query($conn, "INSERT INTO datos_embalse (id_embalse, fecha, hora, cota_actual, id_encargado, estatus) VALUES ('$id_embalse', '$fecha', '$hora', '$cota', '$id_encargado', 'activo');");
         sleep(0.3);

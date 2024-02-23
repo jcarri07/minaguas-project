@@ -25,8 +25,10 @@ while ($row = mysqli_fetch_array($queryUsers)) {
 
 
 
-$embalseBat = new Batimetria('1', $conn);
-$prueba = $embalseBat->getByCota("2001", 210.209);
+// $embalseBat = new Batimetria('1', $conn);
+// $cota = $embalseBat->getByCota("2015","267.50");
+// $year = $embalseBat->getCloseYear("2015");
+// $prueba = $embalseBat->getByCota("2001", 210.209);
 
 // $prueba = $embalseBat->getCloseCota("2001","210.206");
 
@@ -144,7 +146,7 @@ closeConection($conn);
         <div class="card-header pb-0">
           <!-- <div class="row"> -->
           <!-- <div class="col-6 d-flex align-items-center"> -->
-          <h6 class="">Embalses <?php echo $prueba[1]; ?></h6>
+          <h6 class="">Embalses</h6>
           <!-- </div> -->
           <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>

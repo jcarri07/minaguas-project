@@ -193,11 +193,17 @@ date_default_timezone_set("America/Caracas");
                 <i class="fa fa-user cursor-pointer"></i> <!--fixed-plugin-button-nav (esta clase despliega el menu de configuracion lateral)-->
               </a>
             </li>
-            <li class="nav-item pe-3 d-flex align-items-center">
-              <a href="?page=configuraciones" class="nav-link text-white p-0 text-lg">
-                <i class="fa fa-cog cursor-pointer"></i>
-              </a>
-            </li>
+            <?php
+            if ($_SESSION["Tipo"] == "Admin") {
+            ?>
+              <li class="nav-item pe-3 d-flex align-items-center">
+                <a href="?page=configuraciones" class="nav-link text-white p-0 text-lg">
+                  <i class="fa fa-cog cursor-pointer"></i>
+                </a>
+              </li>
+            <?php
+            }
+            ?>
             <li class="nav-item pe-3 d-flex align-items-center">
               <a href="?page=cerrar_sesion" class="nav-link text-white p-0 text-lg off">
                 <i class="fa fa-power-off cursor-pointer"></i>
@@ -291,7 +297,7 @@ date_default_timezone_set("America/Caracas");
       <div class="container-fluid">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6 mb-lg-0 mb-4">
-          <div class="copyright text-center text-sm text-muted text-lg-start">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
               © <script>
                 document.write(new Date().getFullYear())
               </script>,
@@ -307,7 +313,7 @@ date_default_timezone_set("America/Caracas");
 
   </main>
 
-  
+
 
 
 
@@ -487,22 +493,22 @@ date_default_timezone_set("America/Caracas");
     });*/
   </script>
   <script>
-    $(document).ready(function(){
-      $('.off').on('click', function(e){
+    $(document).ready(function() {
+      $('.off').on('click', function(e) {
         e.preventDefault();
         Swal.fire({
-      title: "Cerrar sesion?",
-      icon: "warning",
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonColor: "#5e72e4",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location='./php/login/logout.php';
-      }
-    });
+          title: "Cerrar sesion?",
+          icon: "warning",
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonColor: "#5e72e4",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Cancelar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location = './php/login/logout.php';
+          }
+        });
       });
     });
     var win = navigator.platform.indexOf('Win') > -1;

@@ -73,10 +73,14 @@ date_default_timezone_set("America/Caracas");
                       <span class="text-secondary text-xs font-weight-bold"><?php echo $row['uso_actual'] ?></span>
                     </td>
                     <td class="align-middle text-center align-center">
+                      <a id="<?php echo $row['id_embalse']; ?>" onclick="getIdMonitoreo(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <button type="button" class="p-1 py-1 btn btn-primary btn-block bg-danger" onclick="getIdMonitoreo(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')">
+                          Monitoreo <i class="fas fa-file-pdf text-lg me-1 mt-1"></i>
+                        </button>
+                      </a>
                       <a id="<?php echo $row['id_embalse']; ?>" onclick="getId(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        <button type="button" class="py-1 px-2 btn btn-primary btn-block bg-danger" onclick="getId(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')">
-                          Ficha Tecnica &nbsp; &nbsp;
-                          <i class="fas fa-file-pdf text-lg me-1 mt-1"></i>
+                        <button type="button" class="p-1 py-1 btn btn-primary btn-block bg-danger" onclick="getId(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')">
+                          Ficha Tecnica <i class="fas fa-file-pdf text-lg me-1 mt-1"></i>
                         </button>
                       </a>
                     </td>
@@ -137,12 +141,16 @@ date_default_timezone_set("America/Caracas");
 <script>
   iniciarTabla('table-report');
 
+  function getIdMonitoreo(id, name) {
+    window.open('pages/reports/print_monitoreo.php?id=' + id + "&name=" + name, '_blank');
+  }
+
   function getId(id, name) {
     window.open('pages/reports/print_ficha_tecnica.php?id=' + id + "&name=" + name, '_blank');
   }
 
   function getIdPrioritarios() {
-    window.open('pages/reports/print_embalses_prioritarios.php?id=', '_blank');
+    window.open('php/Graficas/graficas.php?pri=1', '_blank');
   }
   // Función para manejar el evento de clic en el botón
   /*function toggleClass() {
