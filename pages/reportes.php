@@ -73,8 +73,13 @@ date_default_timezone_set("America/Caracas");
                       <span class="text-secondary text-xs font-weight-bold"><?php echo $row['uso_actual'] ?></span>
                     </td>
                     <td class="align-middle text-center align-center">
-                      <a id="<?php echo $row['id_embalse']; ?>" onclick="getIdMonitoreo(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                      <!-- <a id="<?php echo $row['id_embalse']; ?>" onclick="getIdMonitoreo(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                         <button type="button" class="p-1 py-1 btn btn-primary btn-block bg-danger" onclick="getIdMonitoreo(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')">
+                          Monitoreo <i class="fas fa-file-pdf text-lg me-1 mt-1"></i>
+                        </button>
+                      </a> -->
+                      <a id="openModal" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <button type="button" class="p-1 py-1 btn btn-primary btn-block bg-danger">
                           Monitoreo <i class="fas fa-file-pdf text-lg me-1 mt-1"></i>
                         </button>
                       </a>
@@ -136,9 +141,108 @@ date_default_timezone_set("America/Caracas");
       </footer> -->
 </div>
 
+<!-- <button id="openModal">Abrir Modal</button> -->
 
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Contenido del modal...</p>
+  </div>
+</div>
+
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    /* Porcentaje del ancho de la pantalla */
+    max-width: 400px;
+    /* Ancho máximo del modal */
+    height: 300px;
+    /* Altura del modal */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: zoomIn 0.3s ease;
+  }
+
+  .close {
+    display: flex;
+    justify-content: end;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes zoomIn {
+    from {
+      transform: scale(0);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* Media Query para dispositivos de escritorio */
+  @media only screen and (min-width: 768px) {
+    .modal-content {
+      width: 50%;
+      /* Porcentaje del ancho de la pantalla */
+      height: 500px;
+      max-width: 1000px;
+    }
+  }
+</style>
 <!--   Core JS Files   -->
 <script>
+  document.getElementById('openModal').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'block';
+  });
+
+  document.querySelector('.close').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'none';
+  });
+
+  window.addEventListener('click', function(event) {
+    var modal = document.getElementById('modal');
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+
   iniciarTabla('table-report');
 
   function getIdMonitoreo(id, name) {
