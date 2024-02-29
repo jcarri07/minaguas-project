@@ -210,6 +210,6 @@ $count = mysqli_num_rows($re);
 
 
         };
-
+        setInterval(ajax, 60000);
     });
 </script>
