@@ -9,27 +9,25 @@
     transform: scale(1.2);
     /* Escala el tamaño del icono al 120% */
   }
-  
+
   .rrss-container {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 50px;
-     
+
   }
-  .icon-center{
-    
-  }
+
+  .icon-center {}
 
 
   @media (max-width: 1100px) {
     .rrss-item {
-      flex: 1 0 100%; 
-      max-width: 100px; 
-  
-  }
-}
+      flex: 1 0 100%;
+      max-width: 100px;
 
+    }
+  }
 </style>
 
 <?php
@@ -180,45 +178,59 @@ closeConection($conn);*/
     <?php }  ?>
   </div>
 
-<?php
+  <?php
 
-?>
+  ?>
 
   <!--grafica -->
   <div class="container-fluid py-5">
-      <div class="row justify-content-center">
-          <!-- ... (tu código HTML) ... -->
-          <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;">
-              <div class="card z-index-2">
-                  <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                      <div class="bg-white border shadow-dark border-radius-lg py-3 pe-1">
-                          <div class="chart">
-                              <canvas id="myChart" width="400" height="200"></canvas>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="card-body">
-                      <h6 class="mb-0">Registro de Reportes</h6>
-                      <p class="text-sm">Cantidad de reportes realizados al mes</p>
-                      <hr class="dark horizontal">
-                      <div class="d-flex">
-                          <label for="embalseSelect" class="text-sm my-auto me-1">Selecciona un embalse:</label>
-                            <select style="width: 180px;"class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
-                            <option style="display:none" >Seleccione...</option>
-                                <?php
-                                while ($row_embalse = $result_embalses->fetch_assoc()) {
-                                    echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
-                                }
-                                ?>
-                            </select>
-
-                      </div>
-                  </div>
-              </div>
+    <div class="row justify-content-center">
+      <!-- ... (tu código HTML) ... -->
+      <div class="col-lg-12 col-md-4 mt-4 mb-3" style="padding-left:20px;">
+        <div class="card h-100">
+          <div class="card-header">
+            <h6 class="mb-0">Embalses</h6>
+            <p class="text-sm">Monitoreo del volumen actual de los embalses registrados</p>
           </div>
+          <hr class="dark horizontal">
+          <div class="card-body col-12 h-100" id="contenedor" style="height:600px !important;">
+
+            <?php include "php/Graficas/grafica_volumen_actual.php" ?>
+          </div>
+        </div>
       </div>
+      <div class="col-lg-12 col-md-4 mt-4 mb-3" style="padding-left:20px;">
+        <div class="card z-index-2">
+          <div class="card-header">
+            <h6 class="mb-0">Registro de Reportes</h6>
+            <p class="text-sm">Cantidad de reportes realizados al mes</p>
+            <hr class="dark horizontal">
+            <div class="d-flex mb-3">
+              <label for="embalseSelect" class="text-sm my-auto me-1">Selecciona un embalse:</label>
+              <select style="width: 180px;" class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
+                <option style="display:none">Seleccione...</option>
+                <?php
+                while ($row_embalse = $result_embalses->fetch_assoc()) {
+                  echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
+                }
+                ?>
+              </select>
+
+            </div>
+          </div>
+          <div class="card-body p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+            <div class="bg-white border shadow-dark border-radius-lg py-3 pe-1">
+              <div class="chart mb-1" style="height:600px !important;">
+                <canvas id="myChart" width="400" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
-   
+
   <div class="row mt-1">
     <div class="col-lg-9 mb-lg-0 mb-1">
       <div class="card user-card-full">
@@ -334,98 +346,97 @@ closeConection($conn);*/
 
             </div>
 
+          </div>
+        </div>
+        <button style="display: flex; margin-left:10px;" class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="fa fa-chevron-left arrow-color" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="fa fa-chevron-right arrow-color" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--RRSS-->
+
+<div class="container-fluid py-5">
+  <div class="row justify-content-center rrss-container">
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row rrss-item">
+            <div class="col-1 text-end icon-center">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+                <a href="https://www.facebook.com/MinAguasVzla/" target="_blank"><i class="fa fa-facebook text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
+              </div>
             </div>
           </div>
-          <button  style="display: flex; margin-left:10px;" class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-            <span class="fa fa-chevron-left arrow-color" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-            <span class="fa fa-chevron-right arrow-color" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
         </div>
       </div>
     </div>
-   </div>
-
-   <!--RRSS-->
-
-   <div class="container-fluid py-5">
-    <div class="row justify-content-center rrss-container">
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
-        <div class="card" >
-          <div class="card-body p-3">
-            <div class="row rrss-item">
-              <div class="col-1 text-end icon-center">
-                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
-                  <a href="https://www.facebook.com/MinAguasVzla/" target="_blank"><i class="fa fa-facebook text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
-                </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+                <a href="https://twitter.com/minaguasoficial" class="download-icon" target="_blank"><i class="fa fa-twitter text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
-        <div class="card">
-          <div class="card-body p-3">
-            <div class="row">
-              <div class="col-2 text-end" >
-                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
-                  <a href="https://twitter.com/minaguasoficial" class="download-icon" target="_blank"><i class="fa fa-twitter text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
-                </div>
+    </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+                <a href="https://www.instagram.com/mppaaguas/" class="download-icon" target="_blank"><i class="fa fa-instagram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
-        <div class="card">
-          <div class="card-body p-3">
-            <div class="row">
-              <div class="col-2 text-end" >
-                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
-                  <a href="https://www.instagram.com/mppaaguas/" class="download-icon" target="_blank"><i class="fa fa-instagram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
-                </div>
+    </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+                <a href="https://t.me/minaguas/55" class="download-icon" target="_blank"><i class="fab fa-telegram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
-        <div class="card">
-          <div class="card-body p-3">
-            <div class="row">
-              <div class="col-2 text-end" >
-                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
-                  <a href="https://t.me/minaguas/55" class="download-icon" target="_blank"><i class="fab fa-telegram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
-                </div>
+    </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+                <a href="https://www.youtube.com/channel/UCMpEiajv0YEBTIr0nlA---g" class="download-icon" target="_blank"><i class="fa fa-youtube-play text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
-        <div class="card">
-          <div class="card-body p-3">
-            <div class="row">
-              <div class="col-2 text-end" >
-                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
-                  <a href="https://www.youtube.com/channel/UCMpEiajv0YEBTIr0nlA---g" class="download-icon" target="_blank"><i class="fa fa-youtube-play text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
-        <div class="card">
-          <div class="card-body p-3">
-            <div class="row">
-              <div class="col-2 text-end" >
-                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
-                  <a href="https://www.tiktok.com/@minaguasven" class="download-icon" target="_blank"><i class="fab fa-tiktok text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
-                </div>
+    </div>
+    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-2 text-end">
+              <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
+                <a href="https://www.tiktok.com/@minaguasven" class="download-icon" target="_blank"><i class="fab fa-tiktok text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
@@ -433,7 +444,8 @@ closeConection($conn);*/
       </div>
     </div>
   </div>
-  <!--<footer class="footer pt-3  ">
+</div>
+<!--<footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
@@ -450,154 +462,154 @@ closeConection($conn);*/
         </div>
       </footer>-->
 
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/material-dashboard.min.js?v=3.0.4"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<!--script src="./assets/js/material-dashboard.min.js?v=3.0.4"></script-->
+<script src="./assets/js/core/popper.min.js"></script>
+<script src="./assets/js/core/bootstrap.min.js"></script>
+<script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="./assets/js/plugins/chartjs.min.js"></script>
+<script src="./assets/js/jquery/jquery.min.js"></script>
 
 <script>
-  
-var config = {
-                    type: 'bar',
-                    data: {
-                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                        datasets: []
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Cantidad de Reportes'
-                                },
-                                beginAtZero: true,
-                                precision: 0
-                            }
-                        }
-                    }
-                };
+  var config = {
+    type: 'bar',
+    data: {
+      labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      datasets: []
+    },
+    options: {
+      scales: {
+        y: {
+          title: {
+            display: true,
+            text: 'Cantidad de Reportes'
+          },
+          beginAtZero: true,
+          precision: 0
+        }
+      }
+    }
+  };
   var ctx = document.getElementById('myChart').getContext('2d');
-                window.myChart = new Chart(ctx, config);
-$(document).ready(function() {
+  window.myChart = new Chart(ctx, config);
+  $(document).ready(function() {
     cargarGrafico();
 
     $.ajax({
-            url: './php/obtener_datos_embalses.php?id=inicial',
-            type: 'GET',
-            dataType: 'json',
-            success: function(datos) {
-                datos_inicial = datos[0];
-                if (window.myChart) {
-                    window.myChart.destroy();
-                }
-                
-                var datasets = [];
-                var data = [];
-                console.log('Los datos:', datos_inicial);
-                for (var mes = 1; mes <= 12; mes++) {
-                    data.push(Math.round(datos_inicial[mes] || 0));
-                }
-                datasets.push({
-                    label: datos[1],
-                    data: data,
-                    backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)',
-                    borderColor: 'white',
-                    borderWidth: 1
-                });
-                var config = {
-                    type: 'bar',
-                    data: {
-                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                        datasets: datasets
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Cantidad de Reportes'
-                                },
-                                beginAtZero: true,
-                                precision: 0
-                            }
-                        }
-                    }
-                };
-                
-                var ctx = document.getElementById('myChart').getContext('2d');
-                window.myChart = new Chart(ctx, config);
-            },
-            error: function(error) {
-                console.error('Error:', error);
-            }
+      url: './php/obtener_datos_embalses.php?id=inicial',
+      type: 'GET',
+      dataType: 'json',
+      success: function(datos) {
+        datos_inicial = datos[0];
+        if (window.myChart) {
+          window.myChart.destroy();
+        }
+
+        var datasets = [];
+        var data = [];
+        console.log('Los datos:', datos_inicial);
+        for (var mes = 1; mes <= 12; mes++) {
+          data.push(Math.round(datos_inicial[mes] || 0));
+        }
+        datasets.push({
+          label: datos[1],
+          data: data,
+          backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)',
+          borderColor: 'white',
+          borderWidth: 1
         });
+        var config = {
+          type: 'bar',
+          data: {
+            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            datasets: datasets
+          },
+          options: {
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                title: {
+                  display: true,
+                  text: 'Cantidad de Reportes'
+                },
+                beginAtZero: true,
+                precision: 0
+              }
+            }
+          }
+        };
 
-});
+        var ctx = document.getElementById('myChart').getContext('2d');
+        window.myChart = new Chart(ctx, config);
+      },
+      error: function(error) {
+        console.error('Error:', error);
+      }
+    });
 
-function cargarGrafico() {
-  
+  });
+
+  function cargarGrafico() {
+
 
     $('#embalseSelect').change(function() {
-        var embalseId = $(this).val();
-        console.log('Hola embalse', embalseId);
-        
-        $.ajax({
-            url: './php/obtener_datos_embalses.php?id=' + embalseId,
-            type: 'GET',
-            dataType: 'json',
-            success: function(datos) {
-              datos_inicial = datos[0];
-                if (window.myChart) {
-                    window.myChart.destroy();
-                }
-                
-                var datasets = [];
-                var data = [];
-                console.log('Los datos:', datos_inicial);
-                for (var mes = 1; mes <= 12; mes++) {
-                    data.push(Math.round(datos_inicial[mes] || 0));
-                }
-                datasets.push({
-                    label: $('#embalseSelect option:selected').text(),
-                    data: data,
-                    backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)',
-                    borderColor: 'white',
-                    borderWidth: 3
-                });
-                console.log(datasets);
-                var config = {
-                    type: 'bar',
-                    data: {
-                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                        datasets: datasets
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Cantidad de Reportes'
-                                },
-                                beginAtZero: true,
-                                precision: 0
-                            }
-                        }
-                    }
-                };
-                
-                var ctx = document.getElementById('myChart').getContext('2d');
-                window.myChart = new Chart(ctx, config);
+      var embalseId = $(this).val();
+      console.log('Hola embalse', embalseId);
+
+      $.ajax({
+        url: './php/obtener_datos_embalses.php?id=' + embalseId,
+        type: 'GET',
+        dataType: 'json',
+        success: function(datos) {
+          datos_inicial = datos[0];
+          if (window.myChart) {
+            window.myChart.destroy();
+          }
+
+          var datasets = [];
+          var data = [];
+          console.log('Los datos:', datos_inicial);
+          for (var mes = 1; mes <= 12; mes++) {
+            data.push(Math.round(datos_inicial[mes] || 0));
+          }
+          datasets.push({
+            label: $('#embalseSelect option:selected').text(),
+            data: data,
+            backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)',
+            borderColor: 'white',
+            borderWidth: 3
+          });
+          console.log(datasets);
+          var config = {
+            type: 'bar',
+            data: {
+              labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+              datasets: datasets
             },
-            error: function(error) {
-                console.error('Error:', error);
+            options: {
+              scales: {
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Cantidad de Reportes'
+                  },
+                  beginAtZero: true,
+                  precision: 0
+                }
+              }
             }
-        });
+          };
+
+          var ctx = document.getElementById('myChart').getContext('2d');
+          window.myChart = new Chart(ctx, config);
+        },
+        error: function(error) {
+          console.error('Error:', error);
+        }
+      });
     });
-}
+  }
 </script>
