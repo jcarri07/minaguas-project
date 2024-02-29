@@ -233,7 +233,7 @@ $variacion_mensual = getMonthName();
         <p style="position: absolute; top: 20px;
         text-align: left; padding-left: 40px;">
         <div style="position: absolute; left: 20px; top: 2px; background-color: red;
-         border-radius: 5; height: 10px; width: 10px;"></div>Cota del dia</p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Ultimo Reporte</p>
         <p style="position: absolute; top: 20px;
         text-align: center; text-justify: left;">N. Cresta:</p>
         <p style="position: absolute; top: 20px;
