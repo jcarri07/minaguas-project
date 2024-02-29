@@ -529,6 +529,17 @@ closeConection($conn);*/
           },
           options: {
             maintainAspectRatio: false,
+            plugins:{
+                legend: {                  
+                                    labels: {
+
+                                        // This more specific font property overrides the global property
+                                        font: {
+                                            size: 20
+                                        },
+
+                                    }
+                                },},
             scales: {
               y: {
                 title: {
@@ -590,6 +601,18 @@ closeConection($conn);*/
               datasets: datasets
             },
             options: {
+              maintainAspectRatio: false,
+              plugins:{
+                legend: {                  
+                                    labels: {
+
+                                        // This more specific font property overrides the global property
+                                        font: {
+                                            size: 20
+                                        },
+
+                                    }
+                                },},
               scales: {
                 y: {
                   title: {
