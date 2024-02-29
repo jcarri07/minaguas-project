@@ -365,11 +365,11 @@ closeConection($conn);*/
 
 <div class="container-fluid py-5">
   <div class="row justify-content-center rrss-container">
-    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+    <div class="col-xl-1 col-sm-2 mb-xl-0 mb-4 rrss-item">
       <div class="card">
         <div class="card-body p-3">
-          <div class="row rrss-item">
-            <div class="col-1 text-end icon-center">
+          <div class="row justify-content-center rrss-item">
+            <div class="col-12 text-center">
               <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                 <a href="https://www.facebook.com/MinAguasVzla/" target="_blank"><i class="fa fa-facebook text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
@@ -378,11 +378,11 @@ closeConection($conn);*/
         </div>
       </div>
     </div>
-    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+    <div class="col-xl-1 col-sm-2 mb-xl-0 mb-4 rrss-item">
       <div class="card">
         <div class="card-body p-3">
-          <div class="row">
-            <div class="col-2 text-end">
+          <div class="row justify-content-center">
+            <div class="col-12 text-center">
               <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                 <a href="https://twitter.com/minaguasoficial" class="download-icon" target="_blank"><i class="fa fa-twitter text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
@@ -391,11 +391,11 @@ closeConection($conn);*/
         </div>
       </div>
     </div>
-    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+    <div class="col-xl-1 col-sm-2 mb-xl-0 mb-4 rrss-item">
       <div class="card">
         <div class="card-body p-3">
-          <div class="row">
-            <div class="col-2 text-end">
+          <div class="row justify-content-center">
+            <div class="col-12 text-center">
               <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                 <a href="https://www.instagram.com/mppaaguas/" class="download-icon" target="_blank"><i class="fa fa-instagram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
@@ -404,11 +404,11 @@ closeConection($conn);*/
         </div>
       </div>
     </div>
-    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+    <div class="col-xl-1 col-sm-2 mb-xl-0 mb-4 rrss-item">
       <div class="card">
         <div class="card-body p-3">
-          <div class="row">
-            <div class="col-2 text-end">
+          <div class="row justify-content-center">
+            <div class="col-12 text-center">
               <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                 <a href="https://t.me/minaguas/55" class="download-icon" target="_blank"><i class="fab fa-telegram text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
@@ -417,11 +417,11 @@ closeConection($conn);*/
         </div>
       </div>
     </div>
-    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+    <div class="col-xl-1 col-sm-2 mb-xl-0 mb-4 rrss-item">
       <div class="card">
         <div class="card-body p-3">
-          <div class="row">
-            <div class="col-2 text-end">
+          <div class="row justify-content-center">
+            <div class="col-12 text-center">
               <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                 <a href="https://www.youtube.com/channel/UCMpEiajv0YEBTIr0nlA---g" class="download-icon" target="_blank"><i class="fa fa-youtube-play text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
@@ -430,11 +430,11 @@ closeConection($conn);*/
         </div>
       </div>
     </div>
-    <div class="col-xl-1 col-sm-6 mb-xl-0 mb-4 rrss-item">
+    <div class="col-xl-1 col-sm-2 mb-xl-0 mb-4 rrss-item">
       <div class="card">
         <div class="card-body p-3">
-          <div class="row">
-            <div class="col-2 text-end">
+          <div class="row justify-content-center">
+            <div class="col-12 text-center">
               <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle icon-g">
                 <a href="https://www.tiktok.com/@minaguasven" class="download-icon" target="_blank"><i class="fab fa-tiktok text-lg opacity-10 icon-g" aria-hidden="true"></i></a>
               </div>
