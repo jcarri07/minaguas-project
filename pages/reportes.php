@@ -122,7 +122,7 @@ date_default_timezone_set("America/Caracas");
         const embalseNombre = this.getAttribute('data-nombre');
 
         //INICIALIZAR FECHA
-        const inputFecha = document.getElementById('date2');
+        /*const inputFecha = document.getElementById('date2');
         const fechaActual = new Date();
         const fechaISO = fechaActual.toISOString().split('T')[0];
 
@@ -149,7 +149,7 @@ date_default_timezone_set("America/Caracas");
 
         inputFecha2.value = fechaISO2;
 
-        inputFecha.value = fechaISO;
+        inputFecha.value = fechaISO;*/
 
         document.getElementById('modal').style.display = 'block';
       });
@@ -180,7 +180,7 @@ date_default_timezone_set("America/Caracas");
       <div class="d-flex flex-row col-9 gap-4">
         <div class="col-4">
           <div class="input-group date" id="datepicker">
-            <input type="date" class="form-control" id="date" />
+            <input type="date" class="form-control" id="date" value="<?php echo date('Y-m-d',strtotime('-1 months',strtotime(date('Y-m-d'))));?>" max="<?php echo date('Y-m-d')?>"/>
             <span class="input-group-append">
               <span class="ml-2 input-group-text bg-light d-block">
                 <i class="fa fa-calendar"></i>
@@ -190,7 +190,7 @@ date_default_timezone_set("America/Caracas");
         </div>
         <div class="col-4">
           <div class="input-group date" id="datepicker">
-            <input type="date" class="form-control" id="date2" />
+            <input type="date" class="form-control" id="date2" value="<?php echo date('Y-m-d')?>" max="<?php echo date('Y-m-d')?>"/>
             <span class="ml-2 input-group-append">
               <span class="input-group-text bg-light d-block">
                 <i class="fa fa-calendar"></i>
