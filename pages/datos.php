@@ -306,6 +306,10 @@
                     </div>
                   </div>
 
+                  <div class="row" id="box-area-volumen-by-cota">
+
+                  </div>
+
                   <h6 class="mt-2">Extracción</h6>
                   <div id="box-extraccion">
                     <div class="row">
@@ -318,7 +322,7 @@
                         </div>
                       </div>
                       <div class="col">
-                        <label>Valor</label>
+                        <label>Valor (Hm<sup>3</sup>)</label>
                         <div class="input-group mb-3">
                           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor de la Extracción" required>
                         </div>
@@ -379,11 +383,16 @@
 
   <script>
     iniciarTabla('table');
-    /*$( document ).ready(function() {
-      $("#modal-generic .message").text("Registro exitoso");
-      $("#modal-generic").modal("show");
-    });*/
-    
+
+    $( document ).ready(function() {
+      /*$("#modal-generic .message").text("Registro exitoso");
+      $("#modal-generic").modal("show");*/
+
+      if("<?php echo $_SESSION["Tipo"];?>" == "Admin"){
+        $("#fecha").attr("disabled", false);
+        $("#hora").attr("disabled", false);
+      }
+    });
 
 
     var count = 1;
@@ -400,7 +409,7 @@
       htmlRows += '       </div>';
       htmlRows += '   </div>';
       htmlRows += '   <div class="col">';
-      htmlRows += '       <label>Valor</label>';
+      htmlRows += '       <label>Valor (Hm<sup>3</sup>)</label>';
       htmlRows += '       <div class="input-group mb-3">';
       htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor de la Extracción" required>';
       htmlRows += '       </div>';
@@ -466,6 +475,10 @@
       datos.append('cota', this.valor_cota.value);
       datos.append('tipo_extraccion', tipo_extraccion);
       datos.append('valor_extraccion', valor_extraccion);
+      if("<?php echo $_SESSION["Tipo"];?>" == "Admin"){
+        datos.append('fecha', $("#fecha").val());
+        datos.append('hora', $("#hora").val());
+      }
 
       $('.loaderParent').show();
 
@@ -502,6 +515,36 @@
         }
       });
 
+    });
+
+
+    $("#valor_cota").on("blur", function() { 
+      var datos = new FormData();
+      datos.append('id', $("#id_embalse_aux").text());
+      datos.append('valor', this.value);
+      datos.append('anio', "2001");
+
+      $.ajax({
+        url: 			'php/datos/modelos/get-batimetria.php',
+        type:			'POST',
+        data:			datos,
+        cache:          false,
+        contentType:    false,
+        processData:    false,
+        dataType: 'json',
+        success: function(response){ //console.log(response);
+          var string =  '<div class="col" style="font-size: 0.75em;">';
+          string +=       '<span>Área o Superficie: <b>' + response[0] + ' hm<sup>2</sup></b></span>';
+          string +=     '</div>';
+          string +=     '<div class="col small" style="font-size: 0.75em;">';
+          string +=       '<span>Capacidad o Volumen: <b>' + response[1] + ' hm<sup>3</sup></b></span>';
+          string +=     '</col>';
+          $("#box-area-volumen-by-cota").html(string);
+        }
+        ,
+        error: function(response){
+        }
+      });
     });
   </script>
 
@@ -632,6 +675,7 @@
         }
       });
     }
+    
   </script>
 
 <?php
@@ -641,7 +685,7 @@
 
 
 
-
+<!--
     <div class="modal fade" id="datos" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
       <div class="modal-dialog modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -649,7 +693,6 @@
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
                   <h3 class="font-weight-bolder text-primary text-gradient">Datos</h3>
-                  <!--<p class="mb-0">Enter your email and password to register</p>-->
               </div>
               <div class="card-body pb-3">
                 <form role="form text-left">
@@ -720,23 +763,18 @@
 
                     </div>
                   </div>
-                  <!--<div class="text-center">
-                    <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0">Guardar</button>
-                  </div>-->
+
                 </form>
               </div>
               <div class="card-footer text-center pt-0 px-sm-4 px-1">
-                <!--<p class="mb-4 mx-auto">
-                  Already have an account?
-                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
-                </p>--->
+
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
+-->
 
     <div class="modal fade" id="modal-action" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
       <div class="modal-dialog modal-dialog modal-sm" role="document">

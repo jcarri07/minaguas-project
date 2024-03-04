@@ -8,17 +8,22 @@ function contiene_subcadena($cadena, $subcadena)
 
 $fullPath = getcwd();
 
-if (contiene_subcadena($fullPath, "C:")) {
-    $host = "localhost";
-    $user = "root";
-    $pass = "";
-    $dbname = "minagua_db";
-} else {
-    $host = "localhost";
-    $user = "id21716991_jcarri07";
-    $pass = "Negro0414*";
-    $dbname = "id21716991_minagua_db";
-}
+$host = "localhost";
+$user = "root";
+$pass = "";
+$dbname = "minagua_db";
+
+// if (contiene_subcadena($fullPath, "C:")) {
+//     $host = "localhost";
+//     $user = "root";
+//     $pass = "";
+//     $dbname = "minagua_db";
+// } else {
+//     $host = "localhost";
+//     $user = "id21716991_jcarri07";
+//     $pass = "Negro0414*";
+//     $dbname = "id21716991_minagua_db";
+// }
 
 // Crear conexión
 $conn = mysqli_connect($host, $user, $pass, $dbname);

@@ -74,6 +74,11 @@ $num_rows = $result->num_rows;
 $image_logo =  "/" . $projectName . "/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";
 $area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
+
+$image_logo_web = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
+$logo_letters_web =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
+$area_web =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
+
 $codigo = "08RHL0101";
 $titulo = "EMBALSE CAMATAGUA - ESTADO ARAGUA";
 $cota = 289.87;
@@ -228,7 +233,7 @@ $variacion_mensual = getMonthName();
         <p style="position: absolute; top: 20px;
         text-align: left; padding-left: 40px;">
         <div style="position: absolute; left: 20px; top: 2px; background-color: red;
-         border-radius: 5; height: 10px; width: 10px;"></div>Cota del dia</p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Ultimo Reporte</p>
         <p style="position: absolute; top: 20px;
         text-align: center; text-justify: left;">N. Cresta:</p>
         <p style="position: absolute; top: 20px;
@@ -262,7 +267,7 @@ $variacion_mensual = getMonthName();
       </div>
 
       <div style="position: absolute; left: 650px; top: 260px;">
-        <h5 style="color: #2E86C1;"><?php echo $variacion_semanal . ' ' . $fecha . ' al ' . $fecha2 ?></h5>
+        <h5 style="color: #2E86C1;"><?php echo $variacion_semanal . '02' . ' al ' . '08' ?></h5>
       </div>
 
       <div style="position: absolute; left: 650px; top: 460px;">

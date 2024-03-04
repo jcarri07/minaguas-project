@@ -72,9 +72,19 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
             </a>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link <?php echo ($page == 'grafica_embalse') ? "active" : ''; ?>" href="?page=grafica_embalse">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fas fa-chart-bar text-info text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Graficas</span>
+            </a>
+          </li>
+
         <?php
         }
         ?>
+
       </div>
 
       <div class="d-flex flex-column col-12" style="position: absolute; bottom: 0;">
