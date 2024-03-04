@@ -24,13 +24,39 @@ $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus =
 $embalse = mysqli_fetch_assoc($queryEmbalse);
 $idE = $embalse['id_estado'];
 $idM = $embalse['id_municipio'];
-$queryMunicipio = mysqli_query($conn, "SELECT * FROM municipios WHERE id_estado = $idE");
-$queryParroquia = mysqli_query($conn, "SELECT * FROM parroquias WHERE id_municipio = $idM");
+// $queryMunicipio = mysqli_query($conn, "SELECT * FROM municipios WHERE id_estado = $idE");
+// $queryParroquia = mysqli_query($conn, "SELECT * FROM parroquias WHERE id_municipio = $idM");
+
+$queryMunicipio = mysqli_query($conn, "SELECT * FROM municipios WHERE id_estado IN ($idE)");
+$queryParroquia = mysqli_query($conn, "SELECT * FROM parroquias WHERE id_municipio IN ($idM)");
+
+
+$estados = explode(",", $embalse["id_estado"]);
+$municipios = explode(",", $embalse["id_municipio"]);
+$parroquias = explode(",", $embalse["id_parroquia"]);
+
 
 date_default_timezone_set("America/Caracas");
+
+function formatoNumero($valor)
+{
+  if ($valor === null || $valor === '') {
+    return '';
+  }
+
+  $partes = explode(',', $valor);
+  $parteEntera = $partes[0];
+  $parteDecimal = isset($partes[1]) ? $partes[1] : '';
+
+  $parteEntera = preg_replace('/\B(?=(\d{3})+(?!\d))/', '.', $parteEntera);
+
+  $resultado = $parteEntera . ($parteDecimal !== '' ? ',' . substr(str_pad($parteDecimal, 3, '0'), 0, 3) : ',000');
+
+  return $resultado;
+}
 ?>
 
-
+<link rel="stylesheet" href="./assets/css/nice-select2.css">
 <style>
   @media (min-width: 1000px) {
     .p-5-lg {
@@ -122,6 +148,18 @@ date_default_timezone_set("America/Caracas");
   #show-pre-bat:hover,
   #change-bat:hover {
     background: #c4c4c4;
+  }
+
+  .group-estados, .group-municipios, .group-parroquias{
+    position: relative;
+  }
+
+  .label-estados, .label-municipios, .label-parroquias{
+    position: absolute;
+    right: 5px;
+    bottom: -25px;
+    color: gray;
+    font-weight: normal;
   }
 </style>
 
@@ -261,11 +299,11 @@ date_default_timezone_set("America/Caracas");
               <div class="col-md-4 col-sm-12">
                 <div class="form-group">
                   <label for="embalse_nombre">Nombre del embalse</label>
-                  <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nomnbre del embalse" value="<?php echo $embalse["nombre_embalse"]; ?>">
+                  <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nombre del embalse" value="<?php echo $embalse["nombre_embalse"]; ?>">
                 </div>
                 <div class="form-group">
                   <label for="presa_nombre">Nombre de la presa</label>
-                  <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nomnbre de la presa" value="<?php echo $embalse["nombre_presa"]; ?>">
+                  <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nombre de la presa" value="<?php echo $embalse["nombre_presa"]; ?>">
                 </div>
                 <div class="form-group">
                   <label for="responsable">Responsable de la carga de datos</label>
@@ -281,61 +319,70 @@ date_default_timezone_set("America/Caracas");
                   </select>
                 </div>
               </div>
-              <div class="col-md-4 col-sm-12">
-                <div class="form-group">
-                  <label for="estado">Estado</label>
-                  <select class="form-select" id="estado" name="estado">
-                    <option value=""></option>
+              <div class="d-flex flex-column justify-content-between col-md-4 col-sm-12">
+                <div class="form-group group-estados">
+                  <label for="estado">Estados</label>
+                  <select multiple class="border wide" id="estado" name="estado[]">
+                    <!-- <option value=""></option> -->
                     <?php
+                    $cadena = [];
                     while ($row = mysqli_fetch_array($queryEstados)) {
                     ?>
-                      <option <?php if ($row['id_estado'] == $embalse['id_estado']) {
+                      <option <?php if (in_array($row["id_estado"], $estados)) {
                                 echo "selected";
+                                array_push($cadena, $row["estado"]);
                               } ?> value="<?php echo $row['id_estado']; ?>"><?php echo $row['estado']; ?> </option>
                     <?php
                     }
                     ?>
                   </select>
+                  <label class="label-estados"><?php echo implode(", ", $cadena)?></label>
                 </div>
-                <div class="form-group">
-                  <label for="municipio">Municipio</label>
-                  <select class="form-select" id="municipio" name="municipio">
-                    <option value=""></option>
+                <div class="form-group group-municipios">
+                  <label for="municipio">Municipios</label>
+                  <select multiple class="border wide" id="municipio" name="municipio[]">
+                    <!-- <option value=""></option> -->
                     <?php
+                    $cadena = [];
                     while ($row = mysqli_fetch_array($queryMunicipio)) {
                     ?>
-                      <option <?php if ($row['id_municipio'] == $embalse['id_municipio']) {
+                      <option <?php if (in_array($row["id_municipio"], $municipios)) {
                                 echo "selected";
+                                array_push($cadena, $row["municipio"]);
                               } ?> value="<?php echo $row['id_municipio']; ?>"><?php echo $row['municipio']; ?> </option>
                     <?php
                     }
                     ?>
                   </select>
+                  <label class="label-municipios"><?php echo implode(", ", $cadena)?></label>
                 </div>
-                <div class="form-group">
-                  <label for="parroquia">Parroquia</label>
-                  <select class="form-select" id="parroquia" name="parroquia">
-                    <option value=""></option>
+                <div class="form-group group-parroquias">
+                  <label for="parroquia">Parroquias</label>
+                  <select multiple class="border wide" id="parroquia" name="parroquia[]">
+                    <!-- <option value=""></option> -->
                     <?php
+                    $cadena = [];
                     while ($row = mysqli_fetch_array($queryParroquia)) {
                     ?>
-                      <option <?php if ($row['id_parroquia'] == $embalse['id_parroquia']) {
+                      <option <?php if (in_array($row['id_parroquia'], $parroquias)) {
                                 echo "selected";
+                                array_push($cadena, $row["parroquia"]);
                               } ?> value="<?php echo $row['id_parroquia']; ?>"><?php echo $row['parroquia']; ?> </option>
                     <?php
                     }
                     ?>
                   </select>
+                  <label class="label-parroquias"><?php echo implode(", ", $cadena)?></label>
                 </div>
               </div>
               <div class="col-md-4 col-sm-12">
                 <div class=" form-group">
                   <label for="norte">Norte</label>
-                  <input value="<?php echo $embalse["norte"]; ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="norte" name="norte" placeholder="Norte">
+                  <input value="<?php echo number_format(floatval($embalse["norte"]), 2, ',', '.'); ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="norte" name="norte" placeholder="Norte">
                 </div>
                 <div class=" form-group">
                   <label for="este">Este</label>
-                  <input value="<?php echo $embalse["este"]; ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="este" name="este" placeholder="Este">
+                  <input value="<?php echo number_format(floatval($embalse["este"]), 2, ',', '.'); ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="este" name="este" placeholder="Este">
                 </div>
                 <div class=" form-group">
                   <label for="huso">Huso</label>
@@ -348,22 +395,34 @@ date_default_timezone_set("America/Caracas");
 
             <div class="row">
               <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">
-                <div class="form-group">
-                  <label for="batimetria">Batimetría</label>
-                  <div id="pre-bat" class="input-group">
-                    <input type="text" class="form-control" id="" name="" placeholder="" value="<?php echo $embalse["nombre_embalse"] ?> :[ año - año ]"> <!--el que muestra la batimetria de la base de datos. -->
-                    <span id="show-pre-bat" class="input-group-text  cursor-pointer text-bold"><i class="fas fa-eye text-sm "></i></span>
-                    <span id="change-bat" class="input-group-text  cursor-pointer text-bold"><i class="fas fa-trash text-sm me-1"></i></span>
+                <?php if ($embalse["batimetria"] != "") { ?>
+                  <div class="form-group">
+                    <label for="batimetria">Batimetría</label>
+                    <div id="pre-bat" class="input-group">
+                      <input type="text" class="form-control" id="" name="" placeholder="" value="<?php echo $embalse["nombre_embalse"] ?> :[ año - año ]"> <!--el que muestra la batimetria de la base de datos. -->
+                      <span id="show-pre-bat" class="input-group-text  cursor-pointer text-bold"><i class="fas fa-eye text-sm "></i></span>
+                      <span id="change-bat" class="input-group-text  cursor-pointer text-bold"><i class="fas fa-trash text-sm me-1"></i></span>
+                    </div>
+                    <input hidden type="file" accept=".xlsx, .xls" class="form-control" id="batimetria" name="batimetria" placeholder=""> <!--el normal, el que carga la batimetria nueva. -->
+                    <input style="display: none;" value="precargada" type="text" class="form-control" id="batimetria-pre" name="pre_batimetria" placeholder=""> <!--guarda si hubo precargado o se elimina. -->
                   </div>
-                  <input hidden type="file" accept=".xlsx, .xls" class="form-control" id="batimetria" name="batimetria" placeholder=""> <!--el normal, el que carga la batimetria nueva. -->
-                  <input style="display: none;" value="precargada" type="text" class="form-control" id="batimetria-pre" name="pre_batimetria" placeholder=""> <!--guarda si hubo precargado o se elimina. -->
-                </div>
-                <div class="form-group d-flex justify-content-center">
-                  <a class="down-bat btn text-dark text-sm d-flex align-items-center "><i class="fa fa-download text-lg me-1"></i> Plant.</a>
-                  <div class="down-excel" data-id="<?php echo $embalse["id_embalse"]; ?>"><a class=" btn  text-dark text-sm d-flex align-items-center" data-id="<?php echo $embalse["id_embalse"]; ?>"><i class="fas fa-file-export text-lg me-1"></i> Exp.</a></div>
-                  <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn  text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
-                  <div hidden class="change-redo" id="change-redo"><a class=" btn text-dark text-sm d-flex align-items-center" data-id=""><i class="fas fa-redo text-lg me-1"></i>.</a></div>
-                </div>
+                  <div class="form-group d-flex justify-content-center">
+                    <a class="down-bat btn text-dark text-sm d-flex align-items-center "><i class="fa fa-download text-lg me-1"></i> Plant.</a>
+                    <div class="down-excel" data-id="<?php echo $embalse["id_embalse"]; ?>"><a class=" btn  text-dark text-sm d-flex align-items-center" data-id="<?php echo $embalse["id_embalse"]; ?>"><i class="fas fa-file-export text-lg me-1"></i> Exp.</a></div>
+                    <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn  text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
+                    <div hidden class="change-redo" id="change-redo"><a class=" btn text-dark text-sm d-flex align-items-center" data-id=""><i class="fas fa-redo text-lg me-1"></i>.</a></div>
+                  </div>
+                <?php } else { ?>
+                  <div class="form-group">
+                    <label for="batimetria">Batimetría</label>
+                    <input type="file" accept=".xlsx, .xls" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
+                  </div>
+                  <div class="form-group d-flex justify-content-center">
+                    <a class="down-bat visible btn text-dark text-sm d-flex align-items-center"><i class="fa fa-download text-lg me-1"></i> Plantilla</a>
+                    <div class="show-bat no-visible"><a onclick="$('#show-batimetria').modal('show');" class="d-flex align-items-center btn text-dark text-sm"><i class="fas fa-eye text-lg me-1"></i> Ver</a></div>
+                  </div>
+                <?php } ?>
+
                 <div class="form-group">
                   <label for="vida_util">Vida útil (años)</label>
                   <input value="<?php echo $embalse["vida_util"]; ?>" type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
@@ -671,6 +730,18 @@ date_default_timezone_set("America/Caracas");
                 <label for="area_riego">Área de riego beneficiada (ha)</label>
                 <input value="<?php echo $embalse["area_de_riego_beneficiada"]; ?>" type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
               </div>
+              <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">Área protegida (ha)</label>
+                  <input value="<?php echo $embalse["area_protegida"]; ?>" type="number" step="0.001" class="form-control" id="area_protegida" name="area_protegida" placeholder="Ingrese el area pretegida">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">Población protegida (hab.)</label>
+                  <input value="<?php echo $embalse["poblacion_protegida"]; ?>" type="number" step="0.001" class="form-control" id="poblacion_prote" name="poblacion_prote" placeholder="Ingrese la población protegida">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">producción hidroeléctreica (MW)</label>
+                  <input value="<?php echo $embalse["produccion_hidro"]; ?>" type="number" step="0.001" class="form-control" id="produccion_hidro" name="produccion_hidro" placeholder="Ingrese la producción hifroelectrica">
+                </div>
             </div>
 
             <h3 class="pb-3 pt-3">Responsable:</h3>
@@ -951,7 +1022,30 @@ date_default_timezone_set("America/Caracas");
 
 
 <script src="assets/js/get-ubication-select.js"></script>
+<script src="./assets/js/nice-select2.js"></script>
 <script>
+  var optionsEstados = {
+    searchable: true,
+    placeholder: 'Seleccionar estados',
+    searchtext: 'buscar',
+    selectedtext: 'estados seleccionados'
+  };
+  var optionsMuni = {
+    searchable: true,
+    placeholder: 'Seleccionar municipios',
+    searchtext: 'buscar',
+    selectedtext: 'municipios seleccionados'
+  };
+  var optionsParro = {
+    searchable: true,
+    placeholder: 'Seleccionar parroquias',
+    searchtext: 'buscar',
+    selectedtext: 'parroquias seleccionadas'
+  };
+  EstadoSelect = NiceSelect.bind(document.getElementById("estado"), optionsEstados);
+  MunicipioSelect = NiceSelect.bind(document.getElementById("municipio"), optionsMuni);
+  ParroquiaSelect = NiceSelect.bind(document.getElementById("parroquia"), optionsParro);
+
   var win = navigator.platform.indexOf('Win') > -1;
   if (win && document.querySelector('#sidenav-scrollbar')) {
     var options = {
@@ -1461,14 +1555,17 @@ date_default_timezone_set("America/Caracas");
 
   // type="text" pattern="[0-9]+([,.][0-9]{0,2})?"
 
-  // var inputs = $(".numero");
+  var inputs = $(".numero");
 
-  // for (let i = 0; i < inputs.length; i++) {
-  //   inputs[i].addEventListener("keydown", function(event) {
-  //     validarNumero(event, inputs[i]);
-  //   });
-  //   // formatoNumero(inputs[i]);
-  // }
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("keydown", function(event) {
+      validarNumero(event, inputs[i]);
+    });
+    inputs[i].addEventListener("change", function(event) {
+      formatoNumero(inputs[i]);
+    });
+    // formatoNumero(inputs[i]);
+  }
 
   function validarNumero(event, input) {
     let valorInput = input.value;
@@ -1505,7 +1602,9 @@ date_default_timezone_set("America/Caracas");
     input.value = numeroFormateado;
   }
 
-  function formatoNumero(input) { //esta es la buena
+  //esta es la buena
+
+  function formatoNumero(input) {
 
     let valor = input.value;
 
@@ -1539,6 +1638,40 @@ date_default_timezone_set("America/Caracas");
     input.value = numeroFormateado;
   }
 
+  // document.getElementById("norte").addEventListener("input", function(event) {
+  //   let input = event.target;
+  //   let cursorPos = input.selectionStart;
+  //   let isBackspace = event.inputType === 'deleteContentBackward';
 
+  //   // Elimina caracteres no numéricos del valor del input
+  //   let newValue = input.value.replace(/[^\d\,]/g, '');
+
+  //   // Divide el valor en parte entera y parte decimal
+  //   let partes = newValue.split(",");
+  //   let parteEntera = partes[0];
+  //   let parteDecimal = partes.length > 1 ? partes[1] : "";
+
+  //   // Aplica formato a la parte entera
+  //   parteEntera = parteEntera.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  //   // Limita la parte decimal a dos dígitos
+  //   parteDecimal = parteDecimal.slice(0, 2);
+
+  //   // Si se está intentando borrar la coma y el cursor está a la derecha de la coma
+  //   if (isBackspace && cursorPos > parteEntera.length) {
+  //     // Mueve el cursor a la izquierda de la coma
+  //     cursorPos = parteEntera.length + 1;
+  //   }
+
+  //   // Actualiza el valor del input con el formato deseado
+  //   input.value = parteEntera + (parteDecimal ? "," + parteDecimal : ",00");
+
+  //   // Restaura la posición del cursor
+  //   input.setSelectionRange(cursorPos, cursorPos);
+  // });
+
+  // if (input.value.length > newValue.length && input.value[cursorPos - 1] === ",") {
+  //   cursorPos--;
+  // }
   // console.log(input);
 </script>

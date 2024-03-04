@@ -183,7 +183,7 @@ closeConection($conn);
                       <td>
                         <div class="d-flex flex-column px-3">
                           <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
-                          <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
+                          <!-- <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span> -->
                         </div>
                       </td>
                       <td class="hide-cell">

@@ -19,7 +19,7 @@ if (!isset($_SESSION["Id_usuario"])) {
 date_default_timezone_set("America/Caracas");
 ?>
 
-
+<link rel="stylesheet" href="./assets/css/nice-select2.css">
 <style>
   #show-batimetria {
     /* display: flex; */
@@ -113,6 +113,18 @@ date_default_timezone_set("America/Caracas");
   textarea {
     resize: none;
     overflow: auto;
+  }
+
+  .group-estados, .group-municipios, .group-parroquias{
+    position: relative;
+  }
+
+  .label-estados, .label-municipios, .label-parroquias{
+    position: absolute;
+    right: 5px;
+    bottom: -25px;
+    color: gray;
+    font-weight: normal;
   }
 </style>
 
@@ -251,11 +263,11 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-4 col-sm-12">
                   <div class="form-group">
                     <label for="embalse_nombre">Nombre del embalse</label>
-                    <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nomnbre del embalse" required>
+                    <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nombre del embalse" required>
                   </div>
                   <div class="form-group">
                     <label for="presa_nombre">Nombre de la presa</label>
-                    <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nomnbre de la presa">
+                    <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nombre de la presa">
                   </div>
                   <div class="form-group">
                     <label for="responsable">Responsable de la carga de datos</label>
@@ -271,10 +283,10 @@ date_default_timezone_set("America/Caracas");
                     </select>
                   </div>
                 </div>
-                <div class="col-md-4 col-sm-12">
-                  <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <select class="form-select" id="estado" name="estado" required>
+                <div class=" d-flex flex-column justify-content-between col-md-4 col-sm-12 ">
+                  <div class="form-group group-estados">
+                    <label for="estado">Estados</label>
+                    <select multiple class="border wide" id="estado" name="estado[]">
                       <option value=""></option>
                       <?php
                       while ($row = mysqli_fetch_array($queryEstados)) {
@@ -284,18 +296,21 @@ date_default_timezone_set("America/Caracas");
                       }
                       ?>
                     </select>
+                    <label class="label-estados"></label>
                   </div>
-                  <div class="form-group">
-                    <label for="municipio">Municipio</label>
-                    <select class="form-select" id="municipio" name="municipio" required>
+                  <div class="form-group group-municipios">
+                    <label for="municipio">Municipios</label>
+                    <select multiple class="border wide" id="municipio" name="municipio[]">
                       <option value=""></option>
                     </select>
+                    <label class="label-municipios"></label>
                   </div>
-                  <div class="form-group">
-                    <label for="parroquia">Parroquia</label>
-                    <select class="form-select" id="parroquia" name="parroquia" required>
+                  <div class="form-group group-parroquias">
+                    <label for="parroquia">Parroquias</label>
+                    <select multiple class="border wide" id="parroquia" name="parroquia[]">
                       <option value=""></option>
                     </select>
+                    <label class="label-parroquias"></label>
                   </div>
                 </div>
 
@@ -427,35 +442,35 @@ date_default_timezone_set("America/Caracas");
               </div>
 
               <div class="row">
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="operador">Operador</label>
                   <input type="text" class="form-control" id="operador" name="operador" placeholder="Ingrese el operador">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="autoridad">Autoridad responsable del embalse</label>
                   <input type="text" class="form-control" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="proyectista">Proyectista</label>
                   <input type="text" class="form-control" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="constructor">Constructor</label>
                   <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Ingrese el constructor">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="inicio_construccion">Año de inicio de construccion</label>
                   <input type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="duracion_construccion">Duración de construcción (años)</label>
                   <input type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duracion de construcción en años">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="inicio_operacion">Inicio de operación (año)</label>
                   <input type="number" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operación">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="monitoreo">Monitoreo de niveles del embalse</label>
                   <input type="text" class="form-control" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
                 </div>
@@ -633,6 +648,18 @@ date_default_timezone_set("America/Caracas");
                   <label for="area_riego">Área de riego beneficiada (ha)</label>
                   <input type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
                 </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">Área protegida (ha)</label>
+                  <input type="number" step="0.001" class="form-control" id="area_protegida" name="area_protegida" placeholder="Ingrese el area pretegida">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">Población protegida (hab.)</label>
+                  <input type="number" step="0.001" class="form-control" id="poblacion_prote" name="poblacion_prote" placeholder="Ingrese la población protegida">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">producción hidroeléctreica (MW)</label>
+                  <input type="number" step="0.001" class="form-control" id="produccion_hidro" name="produccion_hidro" placeholder="Ingrese la producción hifroelectrica">
+                </div>
               </div>
 
               <h3 class="pb-3 pt-3">Responsable:</h3>
@@ -722,12 +749,43 @@ date_default_timezone_set("America/Caracas");
       </div>
     </div>
   </div>
-  
+
 </div>
 
 
 <script src="assets/js/get-ubication-select.js"></script>
+<script src="./assets/js/nice-select2.js"></script>
+
 <script>
+  // var options = {
+  //   searchable: true
+  // };
+  // NiceSelect.bind(document.getElementById("estado"), options);
+  // NiceSelect.bind(document.getElementById("estado"));
+
+  var optionsEstados = {
+    searchable: true,
+    placeholder: 'Seleccionar estados',
+    searchtext: 'buscar',
+    selectedtext: 'estados seleccionados'
+  };
+  var optionsMuni = {
+    searchable: true,
+    placeholder: 'Seleccionar municipios',
+    searchtext: 'buscar',
+    selectedtext: 'municipios seleccionados'
+  };
+  var optionsParro = {
+    searchable: true,
+    placeholder: 'Seleccionar parroquias',
+    searchtext: 'buscar',
+    selectedtext: 'parroquias seleccionadas'
+  };
+  EstadoSelect = NiceSelect.bind(document.getElementById("estado"), optionsEstados);
+  MunicipioSelect = NiceSelect.bind(document.getElementById("municipio"), optionsMuni);
+  ParroquiaSelect = NiceSelect.bind(document.getElementById("parroquia"), optionsParro);
+
+
   var win = navigator.platform.indexOf('Win') > -1;
   if (win && document.querySelector('#sidenav-scrollbar')) {
     var options = {

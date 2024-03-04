@@ -18,9 +18,9 @@ if (isset($_POST["Guardar"])) {
     // Obtener los datos del formulario
     $nombre_embalse = $_POST["embalse_nombre"];
     $nombre_presa = $_POST["presa_nombre"];
-    $estado = $_POST["estado"];
-    $municipio = $_POST["municipio"];
-    $parroquia = $_POST["parroquia"];
+    $estado = implode(",", $_POST["estado"]);
+    $municipio = implode(",", $_POST["municipio"]);
+    $parroquia = implode(",", $_POST["parroquia"]);
     $norte = $_POST["norte"];
     $este = $_POST["este"];
     $huso = $_POST["huso"];
@@ -81,6 +81,9 @@ if (isset($_POST["Guardar"])) {
     $sectores = $_POST["sectores"];
     $poblacion = $_POST["poblacion"];
     $area_riego = $_POST["area_riego"];
+    $area_protegida = $_POST["area_protegida"];
+    $poblacion_protegida = $_POST["poblacion_prote"];
+    $produccion_hidro = $_POST["produccion_hidro"];
     $f_cargo = $_POST["f_cargo"];
     $f_cedula = $_POST["f_cedula"];
     $f_nombres = $_POST["f_nombres"];
@@ -165,6 +168,30 @@ if (isset($_POST["Guardar"])) {
 
     if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
 
+        // if (false) {
+        //     $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
+
+        //     $cotas_embalse = array();
+        //     $num = 0;
+
+        //     foreach ($spreadsheet->getSheetNames() as $sheetName) {
+        //         $sheet = $spreadsheet->getSheetByName($sheetName);
+        //         $highestRow = $sheet->getHighestRow();
+
+        //         $cota_embalse = array();
+
+        //         for ($row = 2; $row <= $highestRow; $row++) {
+        //             $num++;
+        //             $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
+        //             $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
+        //             $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
+        //             $cota_embalse[$cota] = $area . "-" . $capacidad;
+        //         }
+
+        //         $cotas_embalse[$sheetName] = $cota_embalse;
+        //     }
+        // }
+
         if (true) {
             $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
 
@@ -221,11 +248,11 @@ if (isset($_POST["Guardar"])) {
         $batimetria = json_encode($cotas_embalse);
     }
 
-    // Insertar los datos en la tabla embalse
-    $consulta = "INSERT INTO embalses (nombre_embalse, nombre_presa, id_estado, id_municipio, id_parroquia, este, norte, huso, cuenca_principal, afluentes_principales, area_cuenca, escurrimiento_medio, ubicacion_embalse, organo_rector, personal_encargado, operador, autoridad_responsable, proyectista, constructor, inicio_construccion, duracion_de_construccion, inicio_de_operacion, monitoreo_del_embalse, batimetria, vida_util, cota_min, cota_nor, cota_max, vol_min, vol_nor, vol_max, sup_min, sup_nor, sup_max, numero_de_presas, tipo_de_presa, altura, talud_aguas_arriba, talud_aguas_abajo, longitud_cresta, cota_cresta, ancho_cresta, volumen_terraplen, ancho_base, ubicacion_aliviadero, tipo_aliviadero, numero_compuertas_aliviadero, carga_vertedero, descarga_maxima, longitud_aliviadero, ubicacion_toma, tipo_toma, numero_compuertas_toma, mecanismos_de_emergencia, mecanismos_de_regulacion, gasto_maximo, descarga_de_fondo, posee_obra, tipo_de_obra, accion_requerida, proposito, uso_actual, sectores_beneficiados, poblacion_beneficiada, area_de_riego_beneficiada, f_cargo, f_cedula, f_nombres, f_apellidos, f_telefono, f_correo, imagen_uno, imagen_dos, id_encargado, estatus) 
-            VALUES ('$nombre_embalse', '$nombre_presa' ,'$estado', '$municipio' ,'$parroquia' ,'$este' ,'$norte' ,'$huso' ,'$cuenca', '$afluentes', '$area', '$escurrimiento', '$ubicacion_embalse', '$organo', '$personal', '$operador', '$autoridad', '$proyectista', '$constructor', '$inicio_construccion', '$duracion_construccion', '$inicio_operacion', '$monitoreo', '$batimetria', '$vida_util', '$cota_min', '$cota_nor', '$cota_max', '$volumen_min', '$volumen_nor', '$volumen_max', '$superficie_min', '$superficie_nor', '$superficie_max', '$numero_presas', '$tipo_presa', '$altura', '$talud_arriba', '$talud_abajo', '$longitud_cresta', '$cota_cresta', '$ancho_cresta', '$volumen_terraplen', '$ancho_base', '$ubicacion_aliviadero', '$tipo_aliviadero', '$numero_compuertas_aliviadero', '$carga_aliviadero', '$descarga_aliviadero', '$longitud_aliviadero', '$ubicacion_toma', '$tipo_toma', '$numero_compuertas_toma', '$emergencia_toma', '$regulacion_toma', '$gasto_toma', '$descarga_fondo', '$obra_conduccion', '$tipo_conduccion', '$accion_conduccion', '$proposito', '$uso', '$sectores', '$poblacion', '$area_riego', '$f_cargo', '$f_cedula', '$f_nombres', '$f_apellidos', '$f_telefono', '$f_correo', '$imagen_uno', '$imagen_dos', '$responsable', 'activo')";
+    
+    // ejecucion de la consulta
+    $consulta = "INSERT INTO embalses (nombre_embalse, nombre_presa, id_estado, id_municipio, id_parroquia, este, norte, huso, cuenca_principal, afluentes_principales, area_cuenca, escurrimiento_medio, ubicacion_embalse, organo_rector, personal_encargado, operador, autoridad_responsable, proyectista, constructor, inicio_construccion, duracion_de_construccion, inicio_de_operacion, monitoreo_del_embalse, batimetria, vida_util, cota_min, cota_nor, cota_max, vol_min, vol_nor, vol_max, sup_min, sup_nor, sup_max, numero_de_presas, tipo_de_presa, altura, talud_aguas_arriba, talud_aguas_abajo, longitud_cresta, cota_cresta, ancho_cresta, volumen_terraplen, ancho_base, ubicacion_aliviadero, tipo_aliviadero, numero_compuertas_aliviadero, carga_vertedero, descarga_maxima, longitud_aliviadero, ubicacion_toma, tipo_toma, numero_compuertas_toma, mecanismos_de_emergencia, mecanismos_de_regulacion, gasto_maximo, descarga_de_fondo, posee_obra, tipo_de_obra, accion_requerida, proposito, uso_actual, sectores_beneficiados, poblacion_beneficiada, area_de_riego_beneficiada, area_pretegida, poblacion_protegida, produccion_hidro f_cargo, f_cedula, f_nombres, f_apellidos, f_telefono, f_correo, imagen_uno, imagen_dos, id_encargado, estatus) 
+            VALUES ('$nombre_embalse', '$nombre_presa' ,'$estado', '$municipio' ,'$parroquia' ,'$este' ,'$norte' ,'$huso' ,'$cuenca', '$afluentes', '$area', '$escurrimiento', '$ubicacion_embalse', '$organo', '$personal', '$operador', '$autoridad', '$proyectista', '$constructor', '$inicio_construccion', '$duracion_construccion', '$inicio_operacion', '$monitoreo', '$batimetria', '$vida_util', '$cota_min', '$cota_nor', '$cota_max', '$volumen_min', '$volumen_nor', '$volumen_max', '$superficie_min', '$superficie_nor', '$superficie_max', '$numero_presas', '$tipo_presa', '$altura', '$talud_arriba', '$talud_abajo', '$longitud_cresta', '$cota_cresta', '$ancho_cresta', '$volumen_terraplen', '$ancho_base', '$ubicacion_aliviadero', '$tipo_aliviadero', '$numero_compuertas_aliviadero', '$carga_aliviadero', '$descarga_aliviadero', '$longitud_aliviadero', '$ubicacion_toma', '$tipo_toma', '$numero_compuertas_toma', '$emergencia_toma', '$regulacion_toma', '$gasto_toma', '$descarga_fondo', '$obra_conduccion', '$tipo_conduccion', '$accion_conduccion', '$proposito', '$uso', '$sectores', '$poblacion', '$area_riego', '$area_protegida', '$poblacion_protegida', '$produccion_hidro', '$f_cargo', '$f_cedula', '$f_nombres', '$f_apellidos', '$f_telefono', '$f_correo', '$imagen_uno', '$imagen_dos', '$responsable', 'activo')";
 
-    // Ejecutar la consulta y verificar si se realizó correctamente
     $resultado = mysqli_query($conn, $consulta);
     if ($resultado) {
 
@@ -254,9 +281,9 @@ if (isset($_POST["Update"])) {
     // Obtener los datos del formulario de edicion
     $nombre_embalse = $_POST["embalse_nombre"];
     $nombre_presa = $_POST["presa_nombre"];
-    $estado = $_POST["estado"];
-    $municipio = $_POST["municipio"];
-    $parroquia = $_POST["parroquia"];
+    $estado = implode(",", $_POST["estado"]);
+    $municipio = implode(",", $_POST["municipio"]);
+    $parroquia = implode(",", $_POST["parroquia"]);
     $norte = $_POST["norte"];
     $este = $_POST["este"];
     $huso = $_POST["huso"];
@@ -317,6 +344,9 @@ if (isset($_POST["Update"])) {
     $sectores = $_POST["sectores"];
     $poblacion = $_POST["poblacion"];
     $area_riego = $_POST["area_riego"];
+    $area_protegida = $_POST["area_protegida"];
+    $poblacion_protegida = $_POST["poblacion_prote"];
+    $produccion_hidro = $_POST["produccion_hidro"];
     $f_cargo = $_POST["f_cargo"];
     $f_cedula = $_POST["f_cedula"];
     $f_nombres = $_POST["f_nombres"];
@@ -385,6 +415,31 @@ if (isset($_POST["Update"])) {
 
     if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
 
+        // if (false) {
+        //     $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
+
+        //     $cotas_embalse = array();
+        //     $num = 0;
+
+        //     foreach ($spreadsheet->getSheetNames() as $sheetName) {
+        //         $sheet = $spreadsheet->getSheetByName($sheetName);
+        //         $highestRow = $sheet->getHighestRow();
+
+        //         $cota_embalse = array();
+
+        //         for ($row = 2; $row <= $highestRow; $row++) {
+        //             $num++;
+        //             $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
+        //             $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
+        //             $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
+        //             $cota_embalse[$cota] = $area . "-" . $capacidad;
+        //         }
+
+        //         $cotas_embalse[$sheetName] = $cota_embalse;
+        //     }
+
+        //     $batimetria = json_encode($cotas_embalse);
+        // }
 
         if (true) {
             $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
@@ -546,6 +601,9 @@ if (isset($_POST["Update"])) {
     sectores_beneficiados = '$sectores',
     poblacion_beneficiada = '$poblacion',
     area_de_riego_beneficiada = '$area_riego',
+    area_protegida = '$area_protegida',
+    poblacion_protegida = '$poblacion_protegida',
+    produccion_hidro = '$produccion_hidro',
     f_cargo = '$f_cargo',
     f_cedula = '$f_cedula',
     f_nombres = '$f_nombres',
