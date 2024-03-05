@@ -128,7 +128,7 @@ $count = mysqli_num_rows($re);
                 case "Grafica_mes.php":
                     var fechaActual = new Date();
                     //console.log(fechaActual);
-                    $("#formato").html('<div class="col-md-6"><input type="Month" id="mes" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div>');
+                    $("#formato").html('<div class="col-md-6"><input type="Month" id="mes" min="1988-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div>');
 
                     // Obtener el año y mes actual como cadenas de texto
                     var anioActual = fechaActual.getFullYear().toString();
@@ -152,7 +152,7 @@ $count = mysqli_num_rows($re);
                 case "Grafica_perso.php":
                     var fechaActual = new Date();
 
-                    $("#formato").html('<div class="col-md-6"><input type="date" id="fecha1" value="<?php echo date('Y-m-d',strtotime('-1 months',strtotime(date('Y-m-d'))));?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><input type="date" id="fecha2" value="<?php echo date('Y-m-d') ?>" max="<?php echo date('Y-m-d') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div>');
+                    $("#formato").html('<div class="col-md-6"><input type="date" id="fecha1" value="<?php echo date('Y-m-d',strtotime('-1 months',strtotime(date('Y-m-d'))));?>" min="1988-01-01" max="<?php echo date('Y-m-d') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><input type="date" id="fecha2" value="<?php echo date('Y-m-d') ?>" min="1988-01-01" max="<?php echo date('Y-m-d') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div>');
 
 
                     //var anioActual = fechaActual.getFullYear().toString();
