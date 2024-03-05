@@ -59,7 +59,7 @@ if ($count >= 1) {
                     },
 
                     options: {
-                        animations: true,
+                        
                         responsive: true,
                         maintainAspectRatio: false,
 
