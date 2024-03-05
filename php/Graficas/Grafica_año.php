@@ -238,7 +238,7 @@ if ($tipo == "bar") {
                                         <?php $j = 0;
                                         $pivote = $y;
                                         while ($j < (24)) {
-                                            if ($j % 2 == 0 && $j < count($datos_embalses)) {
+                                            if ($j % 2 == 0 && $j < count($datos_embalses) && count($datos_embalses) % 2 == 0) {
                                                 if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
 
                                                     $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
@@ -264,7 +264,7 @@ if ($tipo == "bar") {
                                         <?php $j = 0;
                                         $pivote = $y;
                                         while ($j < (24)) {
-                                            if ($j % 2 == 0 && $j < count($datos_embalses)) {
+                                            if ($j % 2 == 0 && $j < count($datos_embalses) && count($datos_embalses) % 2 == 0) {
                                                 if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
 
                                                     $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
@@ -293,7 +293,8 @@ if ($tipo == "bar") {
                                     min: <?php if ($min < $embalses[0]["cota_min"]) {
                                                 echo 0;
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;
+                                                if($bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200 < 0){echo 0;}else{
+                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;}
                                             }; ?>,
                                     max: <?php if ($max > $embalses[0]["cota_max"]) {
                                                 echo $bati->getByCota($año, $max)[1] + 200;
