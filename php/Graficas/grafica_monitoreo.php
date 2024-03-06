@@ -4,7 +4,7 @@ require_once '../Conexion.php';
 require_once '../batimetria.php';
 
 date_default_timezone_set("America/Caracas");
-setlocale(LC_TIME, 'es_ES.utf8');
+setlocale(LC_TIME, "spanish");
 
 $fecha1 = date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d'))));
 $fecha2 = date('Y');
@@ -15,6 +15,7 @@ $name = $_GET['name'];
 
 
 $numeroSemana = strftime('%W', strtotime($fecha1));
+$ex = strftime('%W', strtotime($fecha1));
 function calcularSemanas($fecha, $fecha2)
 {
     // Obtener la fecha actual y la fecha proporcionada
@@ -38,13 +39,15 @@ function calcularSemanas($fecha, $fecha2)
 $semanas = calcularSemanas($fecha1, $fecha2) + $numeroSemana;
 $j = 0;
 $i = 0;
-$r = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,WEEK(fecha) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
+$l = 1;
+$t = mysqli_query($conn, "SET time_zone = '-4:30'");
+$r = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
 FROM  datos_embalse d
 RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
 WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 2 OR ( fecha = '$fecha1' AND DAYOFWEEK('$fecha1') != 2))
 GROUP BY fecha ORDER BY fecha;");
 
-$res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,WEEK(fecha) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
+$res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
 FROM  datos_embalse d
 RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
 WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 1 OR ( fecha = '$fecha2' AND DAYOFWEEK('$fecha2') != 1))
@@ -61,13 +64,14 @@ $datos_json2 = json_encode($datos2);
     console.log('<?php echo $numeroSemana; ?>');
 </script>
 <?php
-
+echo "id embalse:".$id."<br><br>";
 while ($numeroSemana <= $semanas) {
-
+    if($numeroSemana == $ex){echo "<br>grafica numero:".$l;$l++;}
+    if($numeroSemana % 9 == 0){echo "<br>grafica numero:".$l;$l++;}
     echo '<br>Semana '.$numeroSemana.':<br>';
 
     if (isset($datos1[$i]['semana'])) {
-        if ($numeroSemana == ($datos1[$i]['semana']+1)) {
+        if ($numeroSemana == ($datos1[$i]['semana'])) {
             echo 'lunes:' . $datos1[$i]['fecha'] . '<br>';
             $i++;
         } else {
