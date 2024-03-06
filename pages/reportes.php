@@ -306,7 +306,7 @@ date_default_timezone_set("America/Caracas");
   iniciarTabla('table-report');
 
   function getIdMonitoreo(id, name) {
-    window.open('pages/reports/print_monitoreo.php?id=' + id + "&name=" + name, '_blank');
+    window.open('php/Graficas/grafica_monitoreo.php?fecha1='+$("#date").val()+'&fecha2='+$("#date2").val()+'&id=' + id + '&name=' + name, '_blank');
   }
 
   function getId(id, name) {
