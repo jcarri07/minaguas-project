@@ -218,10 +218,9 @@ if ($count >= 1) {
                         data: {
                             datasets: [
 
-                                <?php echo "{label:'" . $nom[0] . "',
+                                {label:'<?php echo $nom[0]?>',
                                 borderColor: '#36a1eb',
-                                backgroundColor: '#36a1eb',pointRadius: 5,
-                                data: [";
+                                backgroundColor: '#36a1eb',pointRadius: 5,data: [<?php 
                                 $j = 0;
                                 $pivote = date("Y");
                                 $min = $embalses[$t]["cota_min"];
@@ -248,18 +247,19 @@ if ($count >= 1) {
                                     };
                                     $j++;
                                 };
-                                echo "],";?>
+                                ?>],
                                 pointBackgroundColor: function(context) {
                                     var index = context.dataIndex;
                                     var value = context.dataset.data[index];
                                     return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                                   },<?php
-                                echo "},"; ?>
+                                ?>},
 
-                                <?php echo "{label:'" . $nom[1] . "',
+                                {label:'<?php echo $nom[1]?>',
                                 borderColor: '#e4c482',
                                 backgroundColor: '#e4c482',
-                                data: [";
+                                data: [
+                                    <?php
                                 $j = 0;
                                 $pivote = date("Y") - 1;
                                 while ($j < count($datos_embalses)) {
@@ -284,13 +284,13 @@ if ($count >= 1) {
                                     };
                                     $j++;
                                 }
-                                echo "],";?>
+                                ?>],
                                 pointBackgroundColor: function(context) {
                                     var index = context.dataIndex;
                                     var value = context.dataset.data[index];
                                     return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                                   },<?php
-                                echo "},"; ?>
+                                ?>},
 
 
                             ],
@@ -426,9 +426,9 @@ if ($count >= 1) {
                         data: {
                             datasets: [
 
-                                <?php echo "{label:'" . $nom[0] . "',
+                                {label:'<?php echo $nom[0]?>',
                                 borderColor: '#36a1eb',
-                                backgroundColor: '#36a1eb',pointRadius: 5,data: [";
+                                backgroundColor: '#36a1eb',pointRadius: 5,data: [<?php 
                                 $j = 0;
                                 $pivote = date("Y");
                                 $min = $embalses[$t]["cota_min"];
@@ -455,18 +455,19 @@ if ($count >= 1) {
                                     };
                                     $j++;
                                 };
-                                echo "],";?>
+                                ?>],
                                 pointBackgroundColor: function(context) {
                                     var index = context.dataIndex;
                                     var value = context.dataset.data[index];
                                     return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                                  },<?php
-                                echo "},";
-                                
-                                echo "{label:'" . $nom[1] . "',
+                                  },
+                                  },
+                                  
+                                {label:'<?php echo $nom[1]?>',
                                 borderColor: '#e4c482',
                                 backgroundColor: '#e4c482',
-                                data: [";
+                                data: [
+                                    <?php                              
                                 $j = 0;
                                 $pivote = date("Y") - 1;
                                 while ($j < count($datos_embalses)) {
@@ -485,13 +486,13 @@ if ($count >= 1) {
                                     };
                                     $j++;
                                 }
-                                echo "],";?>
+                                ?>],
                                 pointBackgroundColor: function(context) {
                                     var index = context.dataIndex;
                                     var value = context.dataset.data[index];
                                     return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                                   },<?php
-                                echo "},"; ?>
+                                 ?>},
 
 
                             ],
@@ -632,10 +633,10 @@ if ($count >= 1) {
                         data: {
                             datasets: [
 
-                                <?php echo "{label:'" . $nom[0] . "',
+                                {label:'<?php echo $nom[0];?>',
                                 borderColor: '#36a1eb',
                                 backgroundColor: '#36a1eb',pointRadius: 5,
-                                data: [";
+                                data: [<?php
                                 $j = 0;
                                 $pivote = date("Y");
                                 $min = $embalses[$t]["cota_min"];
@@ -662,18 +663,17 @@ if ($count >= 1) {
                                     };
                                     $j++;
                                 };
-                                echo "],";?>
+                                ?>],
                                 pointBackgroundColor: function(context) {
                                     var index = context.dataIndex;
                                     var value = context.dataset.data[index];
                                     return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                                  },<?php
-                                echo "},";
-
-                                echo "{label:'" . $nom[1] . "',
+                                  },
+                                },
+                                {label:'<?php echo $nom[1]?>',
                                     borderColor: '#e4c482',
                                     backgroundColor: '#e4c482',
-                                    data: [";
+                                    data: [<?php
                                 $j = 0;
                                 $pivote = date("Y") - 1;
                                 while ($j < count($datos_embalses)) {
@@ -692,13 +692,13 @@ if ($count >= 1) {
                                     };
                                     $j++;
                                 }
-                                echo "],";?>
+                                ?>],
                                 pointBackgroundColor: function(context) {
                                     var index = context.dataIndex;
                                     var value = context.dataset.data[index];
                                     return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                                  },<?php
-                                echo "},"; ?>
+                                  },
+                                },
 
 
                             ],
