@@ -16,7 +16,7 @@ $count = mysqli_num_rows($re);
                     <div class="row">
                         <div class="col-6" style="padding: 0px auto;margin-bottom:5px;">
                             <label class="form-label">Embalse</label>
-                            <select name=0 id="embalses" class="form-control" required>
+                            <select name=0 id="embalses" class="form-select" required>
                                 <!--option value="0">Todas los Embalses</option-->
                                 <?php
                                 while ($row = mysqli_fetch_array($re)) {
@@ -30,7 +30,7 @@ $count = mysqli_num_rows($re);
 
                         <div class="col-6" style="padding: 0px auto;margin-bottom:5px;">
                             <label id="lab" class="form-label">Tipo de Grafica</label>
-                            <select id="tipo" class="form-control" required>
+                            <select id="tipo" class="form-select" required>
                                 <option value="bar">Barra</option>
                                 <option value="line">Linea</option>
                             </select>
@@ -41,7 +41,7 @@ $count = mysqli_num_rows($re);
                 <div class="col-12">
                     <div id="" class="row">
                         <div class="col-md-4">
-                            <select id="fe" class="form-control " style="padding: 0px auto; margin-bottom:5px;">
+                            <select id="fe" class="form-select " style="padding: 0px auto; margin-bottom:5px;">
                                 <option value="Grafica_año.php">Año</option>
                                 <option value="Grafica_mes.php">Mes</option>
                                 <option Value="Grafica_perso.php">Personalizado</option>
@@ -49,7 +49,7 @@ $count = mysqli_num_rows($re);
                         </div>
                         <div id="formato" class="row col-md-8" style="padding: 0px; margin-left: 0px;">
                             <div class="col-md-6">
-                                <select id="anio" class="form-control " style="padding: 0px auto; margin-bottom:5px;">
+                                <select id="anio" class="form-select " style="padding: 0px auto; margin-bottom:5px;">
                                     <?php
                                     for ($i = 1980; $i <= date('Y'); $i++) {
                                         echo '<option value="' . $i . '"';
@@ -152,7 +152,7 @@ $count = mysqli_num_rows($re);
                 case "Grafica_perso.php":
                     var fechaActual = new Date();
 
-                    $("#formato").html('<div class="col-md-6"><input type="date" id="fecha1" value="<?php echo date('Y-m-d',strtotime('-1 months',strtotime(date('Y-m-d'))));?>" min="1988-01-01" max="<?php echo date('Y-m-d') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><input type="date" id="fecha2" value="<?php echo date('Y-m-d') ?>" min="1988-01-01" max="<?php echo date('Y-m-d') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div>');
+                    $("#formato").html('<div class="col-md-6"><input type="date" id="fecha1" value="<?php echo date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d')))); ?>" min="1988-01-01" max="<?php echo date('Y-m-d') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><input type="date" id="fecha2" value="<?php echo date('Y-m-d') ?>" min="1988-01-01" max="<?php echo date('Y-m-d') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div>');
 
 
                     //var anioActual = fechaActual.getFullYear().toString();

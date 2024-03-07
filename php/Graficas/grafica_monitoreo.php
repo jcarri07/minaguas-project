@@ -83,7 +83,7 @@ if ($nse < $sem) {
 if ($nse % 9 == 0) {
     $Nsemanas = ($nse / 9);
 } else {
-    $Nsemanas = ($nse / 9) + 1;
+    $Nsemanas = floor($nse / 9) + 1;
 }
 
 
@@ -130,9 +130,10 @@ $datos_json2 = json_encode($datos2);
 ?>
 
 <script>
-    console.log('<?php echo $datos_json1; ?>');
+    //console.log('<?php echo $datos_json1; ?>');
 
-    console.log('<?php echo $datos_json2; ?>');
+    //console.log('<?php echo $datos_json2; ?>');
+    console.log('<?php echo round(($nse / 9), 0, PHP_ROUND_HALF_DOWN); ?>');
 </script><?php
             for ($k = $numeroSemana; $k < $semanas; $k++) {
                 if (isset($datos1[$i]['semana'])) {
@@ -659,6 +660,7 @@ $datos_json2 = json_encode($datos2);
                         return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                     },
                     <?php
+                    
                     ?>
                 }
             ],
@@ -847,7 +849,7 @@ $datos_json2 = json_encode($datos2);
             if (this.readyState == 4 && this.status == 200) {
 
                 console.log("listo");
-                location.href = "../../pages/reports/print_monitoreo.php?id=" + <?php echo $id; ?> + "&name=<?php echo $embalse[0]['nombre_embalse']; ?>";
+                location.href = "../../pages/reports/print_monitoreo.php?id=" + <?php echo $id; ?> + "&name=<?php echo $embalse[0]['nombre_embalse']; ?>&index=<?php echo $Nsemanas; ?>&semanas=<?php echo $nse; ?>";
 
             } else {
 
