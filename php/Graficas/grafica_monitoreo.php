@@ -847,7 +847,7 @@ $datos_json2 = json_encode($datos2);
                 if (this.readyState == 4 && this.status == 200) {
 
                     console.log("listo");
-                    location.href = "../../pages/reports/print_monitoreo.php?id="+<?php echo $id;?>+"&name='<?php echo $embalse[0]['nombre_embalse'];?>'";
+                    location.href = "../../pages/reports/print_monitoreo.php?id="+<?php echo $id;?>+"&name=<?php echo $embalse[0]['nombre_embalse'];?>";
 
                 } else {
 
