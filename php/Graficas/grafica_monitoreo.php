@@ -483,8 +483,6 @@ $datos_json2 = json_encode($datos2);
                         var value = context.dataset.data[index];
                         return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                     },
-                    <?php
-                    ?>
                 }
             ],
         },
@@ -660,7 +658,7 @@ $datos_json2 = json_encode($datos2);
                         return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                     },
                     <?php
-                    
+
                     ?>
                 }
             ],
