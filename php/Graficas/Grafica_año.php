@@ -248,9 +248,9 @@ if ($tipo == "bar") {
                                                         };
                                                     } else {
                                                             ?>null, <?php
-                                                            };
-                                                            $j = $j + 2;
-                                                        }; ?>
+                                                                };
+                                                                $j = $j + 2;
+                                                            }; ?>
                                         ],
                                 },
                                 x3: {
@@ -275,9 +275,9 @@ if ($tipo == "bar") {
 
                                                         };
                                                     } else { ?>null, <?php };
-                                                                $j = $j + 2;
-                                                            };
-                                                                    ?>
+                                                                    $j = $j + 2;
+                                                                };
+                                                                        ?>
                                         ],
 
                                 },
@@ -291,10 +291,9 @@ if ($tipo == "bar") {
                                         },
                                     },
                                     min: <?php if ($min < $embalses[0]["cota_min"]) {
-                                                echo 0;
+                                                echo $bati->getByCota($año, $min)[1];
                                             } else {
-                                                if($bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200 < 0){echo 0;}else{
-                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;}
+                                                    echo $bati->getByCota($año, $embalses[0]["cota_min"])[1];
                                             }; ?>,
                                     max: <?php if ($max > $embalses[0]["cota_max"]) {
                                                 echo $bati->getByCota($año, $max)[1] + 200;
