@@ -178,7 +178,7 @@ date_default_timezone_set("America/Caracas");
       <div class="row">
         <div class="col-6 mb-4">
           <div class="input-group date" id="datepicker">
-            <input type="date" class="form-control" id="date" value="<?php echo date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d')))); ?>" max="<?php echo date('Y-m-d') ?>" />
+            <input type="date" class="form-control" id="date" value="<?php echo date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d')))); ?>" max="<?php echo date('Y-m-d', strtotime('-1 day', strtotime(date('Y-m-d')))) ?>" />
             <span class="input-group-append">
               <span class="ml-2 input-group-text bg-light d-block">
                 <i class="fa fa-calendar"></i>
