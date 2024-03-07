@@ -27042,3 +27042,36 @@ table td, table div, table th {
 .navbar .sidenav-toggler-inner {
   width: 22px;
 }
+
+
+
+
+/*New*/
+.form-group input[type="file"].input_file_oculto { 
+  position:absolute;
+  z-index: 1; 
+  opacity: 0; 
+  width: 96%;
+  -moz-opacity: 0; 
+  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0) 
+}
+.form-group input[type="file"].input_file_oculto ~ div.button_fantasma{ 
+  position:relative;
+  z-index: 2; 
+  cursor: pointer;
+}
+.button_fantasma{ 
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  padding: 0;
+}
+.button_fantasma button{ 
+  float: right;
+  margin: 0;
+  /*position: absolute;*/
+  /*right: 0;
+  top: -1px;*/
+}

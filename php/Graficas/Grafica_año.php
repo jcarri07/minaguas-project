@@ -293,7 +293,7 @@ if ($tipo == "bar") {
                                     min: <?php if ($min < $embalses[0]["cota_min"]) {
                                                 echo $bati->getByCota($año, $min)[1];
                                             } else {
-                                                    echo $bati->getByCota($año, $embalses[0]["cota_min"])[1];
+                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1];
                                             }; ?>,
                                     max: <?php if ($max > $embalses[0]["cota_max"]) {
                                                 echo $bati->getByCota($año, $max)[1] + 200;
@@ -322,7 +322,11 @@ if ($tipo == "bar") {
         <?php
         } else {
 
-            echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">ningun dato en el Año seleccionado</h5></div></div>';
+            echo '<div class="row justify-content-center align-items-center h-100">
+                    <div class="col-6 text-center">
+                        <h5 class="font-weight-bolder">Ningún Dato Seleccionado</h5>
+                    </div>
+                  </div>';
         }
     } else {
         echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">Error:Embalse inactivo o inexistente</h5></div></div>';
@@ -560,7 +564,11 @@ if ($tipo == "line") {
 <?php
         } else {
 
-            echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">ningun dato en el Año seleccionado</h5></div></div>';
+            echo '<div class="row justify-content-center">
+                    <div class="col-6 text-center">
+                        <h5 class="font-weight-bolder">ningun dato en el Año seleccionados</h5>
+                    </div>
+                  </div>';
         }
     } else {
         echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">Error:Embalse inactivo o inexistente</h5></div></div>';

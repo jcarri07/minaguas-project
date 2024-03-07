@@ -803,7 +803,7 @@ $datos_json2 = json_encode($datos2);
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '../guardar-imagen.php', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'monitoreo'.$t; ?>&numero=' + 1);
+            xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'monitoreo' . $t; ?>&numero=' + 1);
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
 
@@ -817,43 +817,43 @@ $datos_json2 = json_encode($datos2);
     <?php }; ?>
     const x = document.querySelector("#anio");
     html2canvas(x).then(function(canvas) { //PROBLEMAS
-            //$("#ca").append(canvas);
-            canvas.willReadFrequently = true,
-                dataURL = canvas.toDataURL("image/jpeg", 0.9);
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '../guardar-imagen.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'monitoreo-anio'; ?>&numero=' + 1);
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
+        //$("#ca").append(canvas);
+        canvas.willReadFrequently = true,
+            dataURL = canvas.toDataURL("image/jpeg", 0.9);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../guardar-imagen.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'monitoreo-anio'; ?>&numero=' + 1);
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
 
-                    console.log("listo");
+                console.log("listo");
 
-                } else {
+            } else {
 
-                }
             }
-        });
+        }
+    });
     const z = document.querySelector("#semana");
     html2canvas(z).then(function(canvas) { //PROBLEMAS
-            //$("#ca").append(canvas);
-            canvas.willReadFrequently = true,
-                dataURL = canvas.toDataURL("image/jpeg", 0.9);
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '../guardar-imagen.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'monitoreo-semana'; ?>&numero=' + 1);
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
+        //$("#ca").append(canvas);
+        canvas.willReadFrequently = true,
+            dataURL = canvas.toDataURL("image/jpeg", 0.9);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../guardar-imagen.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'monitoreo-semana'; ?>&numero=' + 1);
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
 
-                    console.log("listo");
-                    location.href = "../../pages/reports/print_monitoreo.php?id="+<?php echo $id;?>+"&name=<?php echo $embalse[0]['nombre_embalse'];?>";
+                console.log("listo");
+                location.href = "../../pages/reports/print_monitoreo.php?id=" + <?php echo $id; ?> + "&name=<?php echo $embalse[0]['nombre_embalse']; ?>";
 
-                } else {
+            } else {
 
-                }
             }
-        });
+        }
+    });
 </script>
 
 </html>
