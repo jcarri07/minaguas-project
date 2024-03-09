@@ -25426,6 +25426,28 @@ body.dark-version {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 
+
+.modal div:has(>.dataTables_paginate), div:has(>.dataTables_info) {
+  width: 100%;
+  text-align: center;
+}
+
+.modal .pagination .paginate_button.page-item{
+  margin: 2px;
+}
+
+@media (max-width: 575.98px) {
+  .modal .pagination .paginate_button.page-item{
+    padding: 2px;
+  }
+
+  .modal .pagination .paginate_button.page-item .page-link{
+    padding: 2px 4px;
+  }
+}
+
+
+
 .flatpickr-calendar {
   background: transparent;
   opacity: 0;
@@ -27071,7 +27093,12 @@ table td, table div, table th {
 .button_fantasma button{ 
   float: right;
   margin: 0;
-  /*position: absolute;*/
+
   /*right: 0;
   top: -1px;*/
+}
+
+.button_fantasma span{
+  display: inline-block;
+  margin-top: 8px;
 }

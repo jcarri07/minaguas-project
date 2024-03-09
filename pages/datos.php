@@ -276,7 +276,7 @@
     ?>
                 <div class="row">
                   <div class="col-md-12 text-center">
-                      <button class="btn btn-success" onclick="$('#add-data-old').modal('show');" type="button">Adjuntar Historial de Reportes</button>
+                      <button class="btn btn-success" data-bs-dismiss="modal" onclick="$('#add-data-old').modal('show');" type="button">Adjuntar Historial de Reportes</button>
                   </div>
                 </div>
     <?php
@@ -382,7 +382,7 @@
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#add').modal('show');">X</button>
                 <h3 class="font-weight-bolder text-primary text-gradient mt-5 text-center">Adjuntar Excel de Reportes</h3>
               </div>
               <div class="card-body pb-3">
@@ -397,20 +397,22 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="$('#add').modal('show');">Atrás</button>
                     <button type="submit" class="btn bg-gradient-primary btn-rounded mt-4 mb-0 btn-submit">Examinar</button>
                   </div>
                 </form>
 
-                <div class="row">
+                <!--<div class="row">
                   <div class="col-md-12 loaderParent">
                     <div class="loader">
                     </div>
                     Por favor, espere
                   </div>
-                </div>
+                </div>-->
 
-                <div id="hojas-excel"></div>
+                <div id="hojas-excel">
+                  
+                </div>
 
               </div>
               <div class="card-footer text-center pt-0 px-sm-4 px-1">
@@ -431,6 +433,7 @@
     <div id="id_embalse_aux" style="display: none;"></div>
     <div id="id_aux" style="display: none;"></div>
     <div id="opc_aux" style="display: none;"></div>
+    <div id="nombre_hoja_aux" style="display: none;"></div>
 
 
   <script>
@@ -758,12 +761,36 @@
     $("#form-add-data-old").on("submit",function(event){
     	event.preventDefault();
 
+      var ext = $('#file')[0].files[0].name.split('.').pop();
+      
+      if(ext !== "xlsx" && ext !== "xls") {
+        $("#modal-generic .message").text("Adjunte un archivo .xls o .xlsx");
+        $("#modal-generic").modal("show");
+        return false;
+      }
+
+      var wait = '<div class="row mt-5">';
+      wait += '     <div class="col-md-12 loaderParent">';
+      wait += '       <div class="loader">';
+      wait += '       </div>';
+      wait += '       Cargando...';
+      wait += '     </div>';
+      wait += '   </div>';
+
       var datos = new FormData();
-      datos.append('file', $('#file')[0].files[0]);
-      //datos.append('opc', $("#opc_aux").text());
-      //datos.append('id_embalse', $("#id_embalse_aux").text());
+
+      if($("#opc_aux").text() == "importar_data") {
+        datos.append('opc', $("#opc_aux").text());
+        datos.append('id_embalse', $("#id_embalse_aux").text());
+        datos.append('hoja', $("#nombre_hoja_aux").text());
+        datos.append('nombre_archivo', $('#file')[0].files[0].name);
+      }
+      else {
+        datos.append('file', $('#file')[0].files[0]);
+      }
 
 
+      $("#hojas-excel").html(wait);
       $('#add-data-old .loaderParent').show();
 
       $.ajax({
@@ -773,8 +800,14 @@
         cache:          false,
         contentType:    false,
         processData:    false,
-        success: function(response){ //console.log(response);
+        success: function(response){
           $('#add-data-old .loaderParent').hide();
+
+          $("#opc_aux").text("");
+          $("#nombre_hoja_aux").text("");
+
+          $("#hojas-excel").html(response);
+          iniciarTabla("hojas-excel-table");
           /*if(response == 'si'){
             $("#modal-generic .message").text("Registro exitoso");
             $("#modal-generic .card-footer .btn-action").attr("onclick", "window.location.reload();");
@@ -791,7 +824,7 @@
             } 
           }*/
 
-          console.log(response);
+          //console.log(response);
         }
         ,
         error: function(response){
@@ -802,6 +835,12 @@
       });
 
     });
+
+    function importarData(hoja) {
+      $("#opc_aux").text("importar_data");
+      $("#nombre_hoja_aux").text(hoja);
+      $("#form-add-data-old").trigger("submit");
+    }
     
   </script>
 
