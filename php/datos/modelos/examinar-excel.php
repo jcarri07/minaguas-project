@@ -1,5 +1,11 @@
 <?php
-    require_once '../../../vendor/PHPExcel/Classes/PHPExcel.php';
+    //require_once '../../../vendor/PHPExcel/Classes/PHPExcel.php';
+
+    require_once '../../../vendor/autoload.php';
+
+    //use PhpOffice\PhpSpreadsheet\Spreadsheet;
+    //use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+    use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
     if(isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
@@ -7,9 +13,14 @@
         $id_embalse = $_POST['id_embalse'];
         $nombre_archivo = $_POST['nombre_archivo'];
 
-        $excel = PHPExcel_IOFactory::load("temp/" . $nombre_archivo);
+        $spreadsheet = IOFactory::load("temp/" . $nombre_archivo);
+        $spreadsheet->setActiveSheetIndexByName($hoja);
 
-        $excel->setActiveSheetIndexByName($hoja);
+        echo $contenido_celda = $spreadsheet->getActiveSheet()->getCell('C9')->getValue();
+
+        /*$excel = PHPExcel_IOFactory::load("temp/" . $nombre_archivo);
+
+        $excel->setActiveSheetIndexByName($hoja);*/
 
         //echo $contenido_celda = $excel->getActiveSheet()->getCell('C9')->getValue();
 
@@ -28,16 +39,14 @@
             $ubicacion = 'temp/' . $name;
             move_uploaded_file($nombre_temporal, $ubicacion);
 
-            $excel = PHPExcel_IOFactory::load($ubicacion);
+
+            $spreadsheet = IOFactory::load($ubicacion);
+            $hojas = $spreadsheet->getSheetNames();
+
+            //$excel = PHPExcel_IOFactory::load($ubicacion);
         
             // Hojas del archivo
-            $hojas = $excel->getSheetNames();
-        
-            // Listar las hojas
-            /*echo "Hojas en el archivo $name:\n";
-            foreach ($hojas as $hoja) {
-                echo "- $hoja\n";
-            }*/
+            //$hojas = $excel->getSheetNames();
 
 
 ?>
