@@ -2,6 +2,8 @@
 require_once '../../php/Conexion.php';
 
 $id = $_GET['id'];
+$index = $_GET['index'];
+$semanas = $_GET['semanas'];
 
 $sql = "SELECT * FROM embalses WHERE id_embalse = $id";
 
@@ -40,12 +42,13 @@ $COTA_INICIAL = " 303,55 m s.n.m. (185,15 hm3)";
 $FECHA_MONITOREO = "15/05/2023";
 $VOLUMEN_NIVEL_NORMAL = "462,41 hm3 (Cota 328,80 m s.n.m.)";
 $VOLUMEN_NIVEL_MINIMO = "76,28 hm3 (Cota 285,00 m s.n.m.)";
-$TITULO = "Gráfico 1. Monitoreo por semana 1-9.";
+$titulo_reporte = "Gráfico";
+$TITULO = "Gráfico 1";
 $TITULO2 = "Gráfico 2. Monitoreo por semana 9-17.";
 $TITULO3 = "Gráfico 3. Monitoreo por semana 17-25.";
 $TITULO4 = "Gráfico 4. Monitoreo diario desde el 30/10 al 07/11.";
-$TITULO5 = "Gráfico 5. Movimiento Turimiquire.";
-$TITULO6 = "Gráfico 6. Monitoreo diario.";
+$TITULO5 = "Gráfico 5";
+$TITULO6 = "Gráfico 6";
 
 ?>
 <!DOCTYPE html>
@@ -177,10 +180,37 @@ $TITULO6 = "Gráfico 6. Monitoreo diario.";
         <p style="position: absolute; text-align: center; top: 250px; width: 1050px;"><?php echo $TITULO ?></p>
     </div>
     <div style="position: absolute; top: 270px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+        <img src="../../assets/img/temp/imagen-monitoreo1-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
     </div>
 
-    <div style="height: 400px;"></div>
+    <?php
+    for ($i = 2; $i <= $index; $i++) {
+        $imagen = "../../assets/img/temp/imagen-monitoreo" . $i . "-1.png";
+        echo
+        '<div style="height: 400px;"></div>
+        <div>
+            <div>
+                <img class="img-logo-letters" src=" ' . $srcLogoLetters . '" />
+                <img class="img-logo" src="' . $srcLogo . '" />
+            </div>
+            <p style="position: absolute; text-align: center; text-justify: center; top: 15px;">
+                VICEMINISTERIO DE ADMINISTRACIÓN DE CUENCAS HIDROGRÁFICAS<br>
+                DIRECCIÓN GENERAL DE MANEJO DE EMBALSES<br>
+                DIRECCIÓN DE OPERACIÓN Y MANTENIMIENTO DE EMBALSES</p>
+            <div style="position: absolute; left: 1000px; width: 70px; top: 20px;">
+                <p style="font-weight: 900;">' . $fecha_hora . '</p>
+            </div>
+        </div>
+        <div style=" position: absolute; width: 1080px;">
+            <p style="position: absolute; text-align: center; top:80px; width: 1050px;">' . $titulo_reporte . ' ' . $i . '</p>
+        </div>
+        <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
+            <img src="' . $imagen . '" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px; object-fit: cover;">
+        </div>';
+    }
+    ?>
+
+    <!-- <div style="height: 400px;"></div>
     <div>
         <div>
             <img class="img-logo-letters" src="<?php echo $srcLogoLetters; ?>" />
@@ -241,7 +271,7 @@ $TITULO6 = "Gráfico 6. Monitoreo diario.";
     </div>
     <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
         <img src="../../assets/img/report-prueba-monitoreo-4.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
-    </div>
+    </div> -->
 
     <div style="height: 400px;"></div>
     <div>
@@ -261,7 +291,7 @@ $TITULO6 = "Gráfico 6. Monitoreo diario.";
         <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO5 ?></p>
     </div>
     <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-5.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+        <img src="../../assets/img/temp/imagen-monitoreo-anio-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
     </div>
 
     <div style="height: 400px;"></div>
@@ -282,7 +312,7 @@ $TITULO6 = "Gráfico 6. Monitoreo diario.";
         <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO6 ?></p>
     </div>
     <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-6.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+        <img src="../../assets/img/temp/imagen-monitoreo-semana-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
     </div>
 </body>
 
