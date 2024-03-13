@@ -179,8 +179,8 @@ $TITULO6 = "Gráfico 6";
     <div style="width: 1050px;">
         <p style="position: absolute; text-align: center; top: 250px; width: 1050px;"><?php echo $TITULO ?></p>
     </div>
-    <div style="position: absolute; top: 270px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/temp/imagen-monitoreo1-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+    <div style="position: absolute; top: 270px; width: 1030px; height: 455px; border-color: grey;border-width: 1px;border-style: solid;margin-left: 20px;">
+        <img src="../../assets/img/temp/imagen-monitoreo1-1.png" alt="monitoreo" style="width: 1030px; height: 450px;margin-left: 10px; margin-top: 2px">
     </div>
 
     <?php
@@ -290,8 +290,8 @@ $TITULO6 = "Gráfico 6";
     <div style=" position: absolute; width: 1080px;">
         <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO5 ?></p>
     </div>
-    <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/temp/imagen-monitoreo-anio-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+    <div style="position: absolute; top: 140px; width: 1030px; height: 485px; border-color: grey;border-width: 1px;border-style: solid; margin-left: 20px">
+        <img src="../../assets/img/temp/imagen-monitoreo-anio-1.png" alt="monitoreo" style="width: 1000px; height: 480px; margin-left: 10px;margin-top: 2px">
     </div>
 
     <div style="height: 400px;"></div>
@@ -311,8 +311,8 @@ $TITULO6 = "Gráfico 6";
     <div style=" position: absolute; width: 1080px;">
         <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO6 ?></p>
     </div>
-    <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/temp/imagen-monitoreo-semana-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+    <div style="position: absolute; top: 140px; width: 1030px; height: 480px; border-color: grey;border-width: 1px;border-style: solid; margin-left: 20px">
+        <img src="../../assets/img/temp/imagen-monitoreo-semana-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 10px;margin-top: 2px">
     </div>
 </body>
 
