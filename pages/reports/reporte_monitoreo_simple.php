@@ -172,7 +172,7 @@ $TITULO = "Gráfico de Monitoreo.";
         <p style="position: absolute; text-align: center; top: 250px; width: 1050px;"><?php echo $TITULO ?></p>
     </div>
     <div style="position: absolute; top: 270px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+        <img src="../../assets/img/temp/imagen-grafica-0.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
     </div>
 </body>
 
