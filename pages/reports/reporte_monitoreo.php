@@ -179,8 +179,8 @@ $TITULO6 = "Gráfico 6";
     <div style="width: 1050px;">
         <p style="position: absolute; text-align: center; top: 250px; width: 1050px;"><?php echo $TITULO ?></p>
     </div>
-    <div style="position: absolute; top: 270px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/temp/imagen-monitoreo1-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+    <div style="position: absolute; top: 270px; width: 1100px; height: 480px; ">
+        <img src="../../assets/img/temp/imagen-monitoreo1-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 30px;">
     </div>
 
     <?php
@@ -205,7 +205,7 @@ $TITULO6 = "Gráfico 6";
             <p style="position: absolute; text-align: center; top:80px; width: 1050px;">' . $titulo_reporte . ' ' . $i . '</p>
         </div>
         <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-            <img src="' . $imagen . '" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px; object-fit: cover;">
+            <img src="' . $imagen . '" alt="monitoreo" style="width: 1000px; height: 480px; margin-left: 45px; object-fit: cover;">
         </div>';
     }
     ?>
