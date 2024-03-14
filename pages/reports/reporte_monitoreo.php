@@ -4,7 +4,7 @@ require_once '../../php/Conexion.php';
 $id = $_GET['id'];
 $index = $_GET['index'];
 $semanas = $_GET['semanas'];
-
+$fecha_inicio = $_GET['fecha'];
 $sql = "SELECT * FROM embalses WHERE id_embalse = $id";
 
 $res = mysqli_query($conn, $sql);
@@ -174,18 +174,13 @@ $TITULO6 = "Gráfico 6";
         <h4 style="text-align: center; font-weight: bold; width: 1080px;"><?php echo $NOMBRE_EMBALSE; ?></h4>
     </div>
     <div style="height: 50px; top: 130px; position:absolute; left: 45px;">
-        <p style="font-size: 14px;">Cota inicial de Monitoreo: <?php echo $COTA_INICIAL; ?><br> Fecha: <?php echo $FECHA_MONITOREO ?><br> Volumen Nivel Normal: <?php echo $VOLUMEN_NIVEL_NORMAL ?><br> Volumen Nivel Minimo: <?php echo $VOLUMEN_NIVEL_MINIMO ?></p>
+        <p style="font-size: 14px;">Cota inicial de Monitoreo: <?php echo $COTA_INICIAL; ?><br> Fecha: <?php echo $fecha_inicio ?><br> Volumen Nivel Normal: <?php echo $VOLUMEN_NIVEL_NORMAL ?><br> Volumen Nivel Minimo: <?php echo $VOLUMEN_NIVEL_MINIMO ?></p>
     </div>
     <div style="width: 1050px;">
         <p style="position: absolute; text-align: center; top: 250px; width: 1050px;"><?php echo $TITULO ?></p>
     </div>
-<<<<<<< HEAD
-    <div style="position: absolute; top: 270px; width: 1100px; height: 480px; ">
-        <img src="../../assets/img/temp/imagen-monitoreo1-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 30px;">
-=======
     <div style="position: absolute; top: 270px; width: 1030px; height: 455px; border-color: grey;border-width: 1px;border-style: solid;margin-left: 20px;">
         <img src="../../assets/img/temp/imagen-monitoreo1-1.png" alt="monitoreo" style="width: 1030px; height: 450px;margin-left: 10px; margin-top: 2px">
->>>>>>> 364642f5b57d8255db341dc6768c4b20998673cf
     </div>
 
     <?php
@@ -206,11 +201,11 @@ $TITULO6 = "Gráfico 6";
                 <p style="font-weight: 900;">' . $fecha_hora . '</p>
             </div>
         </div>
-        <div style=" position: absolute; width: 1080px;">
+        <div style="position: absolute; width: 1030px; height: 500px; ">
             <p style="position: absolute; text-align: center; top:80px; width: 1050px;">' . $titulo_reporte . ' ' . $i . '</p>
         </div>
-        <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-            <img src="' . $imagen . '" alt="monitoreo" style="width: 1000px; height: 480px; margin-left: 45px; object-fit: cover;">
+        <div style="position: absolute; top: 140px; width: 1085px; height: 480px; border-color: grey; border-width: 1px;border-style: solid;">
+            <img src="' . $imagen . '" alt="monitoreo" style="width: 1000px; height: 480px; margin-left: 45px; margin-top: 10px;">
         </div>';
     }
     ?>
