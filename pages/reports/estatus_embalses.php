@@ -5,6 +5,14 @@ $parts = explode(DIRECTORY_SEPARATOR, $fullPath);
 date_default_timezone_set('America/Caracas');
 require_once '../../php/batimetria.php';
 
+//Consultar los embalses.
+//por cada embalse se llama a NewBatimetria en cada objeto (array de objetos)
+//por cada objeto se consulta su ultima medicion, y se llama al metodo getByCota con el año y la cota de esa medicion.
+//A su vez necesitas la cota minima de ese objeto
+        //Eso te va a dar volumen actual [1] y el volumen  minimo [1]
+        //Luego se restan y se obtiene el didponible
+
+
 
 function getMonthName()
 {
@@ -49,13 +57,13 @@ function getYear()
     return $year;
 }
 
-$stringPrioritarios = "0";
-$queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios'");
-if (mysqli_num_rows($queryPrioritarios) > 0) {
-    $stringPrioritarios = mysqli_fetch_assoc($queryPrioritarios)['configuracion'];
-}
+// $stringPrioritarios = "0";
+// $queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios'");
+// if (mysqli_num_rows($queryPrioritarios) > 0) {
+//     $stringPrioritarios = mysqli_fetch_assoc($queryPrioritarios)['configuracion'];
+// }
 
-$result = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse IN ($stringPrioritarios)");
+$result = mysqli_query($conn, "SELECT nombre_embalse, operador FROM embalses");
 
 $mes_actual = date('m');
 $dia_actual = date('d');
@@ -63,27 +71,26 @@ $dia_actual = date('d');
 $año_actual = date('Y');
 $año_pasado = date('Y', strtotime('-1 year'));
 
-$num_rows = $result->num_rows;
-
 /*$image_logo =  "/" . $projectName . "/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";*/
-$area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
+// $area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
 
 $image_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
 $area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
 $logo_combinado = "../../assets/img/logos/logo_combinado.jpg";
+$mapa = "../../assets/img/estatus_embalses.png";
 
 
-$codigo = "08RHL0101";
-$titulo = "EMBALSE CAMATAGUA - ESTADO ARAGUA";
-$cota = 289.87;
-$mes = "Noviembre";
-$area_cuenta = 636.49;
-$variacion_semanal = "VARIACION SEMANAL";
-$fecha = "02";
-$fecha2 = "08";
-$variacion_mensual = getMonthName();
+// $codigo = "08RHL0101";
+// $titulo = "EMBALSE CAMATAGUA - ESTADO ARAGUA";
+// $cota = 289.87;
+// $mes = "Noviembre";
+// $area_cuenta = 636.49;
+// $variacion_semanal = "VARIACION SEMANAL";
+// $fecha = "02";
+// $fecha2 = "08";
+// $variacion_mensual = getMonthName();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,6 +100,7 @@ $variacion_mensual = getMonthName();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estatus Embalses</title>
 </head>
+
 <style>
     hr {
         background-color: #2E86C1;
@@ -166,18 +174,27 @@ $variacion_mensual = getMonthName();
     td {
         text-align: center;
         padding: 5px;
-        border: 1px solid #dddddd;
+        border: 1px solid #707273;
         width: fit-content;
+        font-size: 10px;
     }
 
     th {
         text-align: center;
-        background-color: #f2f2f2;
+        background-color: #0070C0;
+        color: #FFFFFF;
     }
 
     .text-celd {
-        width: 60px;
+        width: 150px;
         text-align: center;
+        font-size: 16px;
+       
+    }
+    .total{
+
+        font-size: 16px; 
+        background-color: #DAE3F3
     }
 
     .header {
@@ -204,44 +221,100 @@ $variacion_mensual = getMonthName();
         <h1 style="position: absolute; top: 70px; left: 50px; text-align:center; text-justify:; color:#2E86C1; font-size: 23px;">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
         <h2 style="position: absolute; top: 100px; text-align: center; text-justify: center; color:#021568">Estatus de Fuentes Hídricas para Consumo Humano</h2>
         <div style="width: 1000px; height: 480px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
-        <!-- Mapa -->
+        <!-- Mapa --> <img style="width:1000px ; height: 480px;" src="<?php echo $mapa ?>" />
         </div>
-        <div style="position: absolute; height: 130px; width: 350px; left: 65px; top: 350px; border: gray 1px solid;">
+        <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 485px; border: gray 1px solid; background-color: #FFFFFF">
         <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
-        <p style="position: absolute; top: 20px;
-        text-align: left; padding-left: 40px;">
+        <p style="position: absolute; top: 25px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
         <div style="position: absolute; left: 20px; top: 2px; background-color: red;
-         border-radius: 5; height: 10px; width: 10px;"></div>Ultimo Reporte</p>
-        <p style="position: absolute; top: 20px;
-        text-align: center; text-justify: left;">N. Cresta:</p>
-       
-        <p style="position: absolute; top: 50px;
-        text-align: left; padding-left: 40px;">
-        <div style="position: absolute; left: 5px; top: 2px; background-color: orange;
-          height: 3px; width: 30px;"></div>Cota <?php echo $año_pasado ?></p>
-        <p style="position: absolute; top: 40px;
-        text-align: center; text-justify: left;">N. Maximo:</p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición baja (< 30%) <b> # Embalses</b></p>
     
 
-        <p style="position: absolute; top: 80px;
-        text-align: left; padding-left: 40px;">
-        <div style="position: absolute; left: 5px; top: 2px; background-color: #2E86C1;
-          height: 3px; width: 30px;"></div>Cota <?php echo $año_actual ?></p>
-        <p style="position: absolute; top: 70px;
-        text-align: center; text-justify: left;">N. Normal:</p>
-        <p style="position: absolute; top: 90px;
-        text-align: center; text-justify: left;">N. Minimo:</p>
+        <p style="position: absolute; top: 45px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: #44BEF0;
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Bajo (30% < A > 60%) <b> # Embalses</b></p>
+
+         
+        <p style="position: absolute; top: 65px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Alto (60% < A > 90%) <b> # Embalses</b></p>
+
+         
+        <p style="position: absolute; top: 85px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: green;
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición Buena (> 90%) <b> # Embalses</b></p>
+
+         
+        <p style="position: absolute; top: 105px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: #58F558;
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición de Alivio <b> # Embalses</b></p>
+
+         
+        <p style="position: absolute; top: 125px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+        <div style="position: absolute; left: 20px; top: 2px; width: 0; height: 0;
+        border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 10px solid black;"></div> EDC (Embalse de Compensación)</p>
+       
       </div>
 
         <h4 style="position: absolute; top: 720px; text-align: center; text-justify: center;"><?php echo "$dia_actual de " . getMonthName() . " $año_actual" ?></h4>
     </div>
 
-    <div class="header" style="">
+    <div class="header" >    
         <hr style="top: 55px; color:#1B569D">
         <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
         <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
         <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
     </div>
+    
+    <div style="position: absolute; top: 70px; left: 20px; font-size: 18px; color:#000000;"><b>Bajo (< 30 %)</b>
+
+    <table>
+        <tr>
+          <th class="text-celd">EMBALSE</th>
+          <th class="text-celd">VOL. DISP. (HM3)</th>
+          <th class="text-celd">HIDROLÓGICA</th>
+        </tr>
+       
+        <tr>
+          <?php while ($row = mysqli_fetch_array($result)) { ?>
+             <td class="text-celd" style="font-size: 12px;"><?php echo $row['nombre_embalse']; ?> </td>
+             <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+             <td class="text-celd" style="font-size: 12px;"><?php echo $row['operador']; ?> </td>
+        <?php } ?>
+        </tr>
+        <tr>
+        <td class="text-celd total" ><b> TOTAL </b></td>
+        <td class="text-celd total" colspan="2"><b></b> Embalses</td>
+        </tr>
+      </table>
+      
+
+      <div style="font-size: 18px; color:#000000;  margin-top: 40px;"><b>Normal Bajo (30 % <  A  < 60%)</b></div>
+
+      <table>
+        <tr>
+          <th class="text-celd">EMBALSE</th>
+          <th class="text-celd">VOL. DISP. (HM3)</th>
+          <th class="text-celd">HIDROLÓGICA</th>
+        </tr>
+        <tr>
+          <?php while ($row = mysqli_fetch_array($result)) { ?>
+             <td class="text-celd" style="font-size: 12px;"><?php echo $row['nombre_embalse']; ?> </td>
+             <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+             <td class="text-celd" style="font-size: 12px;"><?php echo $row['operador']; ?> </td>
+        <?php } ?>
+        </tr>
+        <tr>
+        <td class="text-celd total" ><b> TOTAL </b></td>
+        <td class="text-celd total" colspan="2"><b></b> Embalses</td>
+        </tr>
+      </table></div>
 
 </body>
 
