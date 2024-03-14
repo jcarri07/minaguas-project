@@ -189,16 +189,16 @@ $datos_json2 = json_encode($datos2);
 
         for ($t = 1; $t <=  $Nsemanas; $t++) {
         ?>
-            <div style="width:1830px !important; height:600px; <?php echo 'position:absolute; top:-100%;';
+            <div style="width:1030px !important; height:450px; <?php echo 'position:absolute; top:-100%;';
                                                                 ?>"><canvas class="ch" id="cha<?php echo $t; ?>"></canvas></div>
 
         <?php
 
         }
         ?>
-        <div style="width:1830px !important; height:600px; <?php echo 'position:absolute; top:-100%;';
+        <div style="width:1030px !important; height:480px; <?php echo 'position:absolute; top:-100%;';
                                                             ?>"><canvas class="ch" id="anio"></canvas></div>
-        <div style="width:1830px !important; height:600px; <?php echo 'position:absolute; top:-100%;';
+        <div style="width:1030px !important; height:480px; <?php echo 'position:absolute; top:-100%;';
                                                             ?>"><canvas class="ch" id="semana"></canvas></div>
 
     </div>
@@ -207,6 +207,7 @@ $datos_json2 = json_encode($datos2);
     </div>
 </body>
 <script>
+    $(document).ready(function() {
     <?php
     for ($t = 1; $t <=  $Nsemanas; $t++) {
         $min = $embalse[0]["cota_min"];
@@ -387,55 +388,55 @@ $datos_json2 = json_encode($datos2);
     $fechaFormateada2 = $dia . " de " . ucwords($mes);
 
 
-    closeConection($conn);
+    
     $t = 0;
     ?>
     const arbitra = {
-        id: 'arbitra',
-        dr: function(lines, ctx, left, right, y) {
-            ctx.save();
+                    id: 'arbitra',
+                    dr: function(lines, ctx, left, right, y) {
+                        ctx.save();
 
-            lines.forEach(line => {
-                const {
-                    yvalue,
-                    cota,
-                    color,
-                    h
-                } = line;
+                        lines.forEach(line => {
+                            const {
+                                yvalue,
+                                cota,
+                                color,
+                                h
+                            } = line;
 
-                ctx.beginPath();
-                ctx.lineWidth = 1;
-                ctx.moveTo(left, y.getPixelForValue(yvalue));
-                ctx.lineTo(right, y.getPixelForValue(yvalue));
-                ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                ctx.fillText(cota + ": " + yvalue + " (Hm³)", right - 200, y.getPixelForValue(yvalue) + h);
-                ctx.stroke();
-            });
+                            ctx.beginPath();
+                            ctx.lineWidth = 1;
+                            ctx.moveTo(left, y.getPixelForValue(yvalue));
+                            ctx.lineTo(right, y.getPixelForValue(yvalue));
+                            ctx.strokeStyle = color; // Cambiar color según tus preferencias
+                            ctx.fillText(cota + ": " + yvalue + " (Hm³)", right - 200, y.getPixelForValue(yvalue) + h);
+                            ctx.stroke();
+                        });
 
-            ctx.restore();
-        },
-        beforedatasetsDraw: function(chart, args, plugins) {
-            const {
-                ctx,
-                scales: {
-                    x,
-                    y
-                },
-                chartArea: {
-                    left,
-                    right
-                }
-            } = chart;
+                        ctx.restore();
+                    },
+                    beforeDatasetsDraw: function(chart, args, plugins) {
+                        const {
+                            ctx,
+                            scales: {
+                                x,
+                                y
+                            },
+                            chartArea: {
+                                left,
+                                right
+                            }
+                        } = chart;
 
-            // Obtener las líneas específicas para este gráfico
-            const lines = chart.options.plugins.arbitra.lines;
+                        // Obtener las líneas específicas para este gráfico
+                        const lines = chart.options.plugins.arbitra.lines;
 
-            // Llamada a la función dr() dentro del contexto del plugin con las líneas específicas
-            this.dr(lines, ctx, left, right, y);
+                        // Llamada a la función dr() dentro del contexto del plugin con las líneas específicas
+                        this.dr(lines, ctx, left, right, y);
 
-            // Resto del código del plugin
-        }
-    };
+                        // Resto del código del plugin
+                    }
+                };
     //grafica anual
     let chartA = new Chart(anio, {
         type: 'line',
@@ -589,7 +590,7 @@ $datos_json2 = json_encode($datos2);
                     min: <?php if ($min < $embalse[$t]["cota_min"]) {
                                 echo $bati->getByCota($año, $min)[1];
                             } else {
-                                echo $bati->getByCota($año, $embalse[0]["cota_min"])[1] - 200;
+                                echo $bati->getByCota($año, $embalse[0]["cota_min"])[1];
                             }; ?>,
                     max: <?php if ($max > $embalse[$t]["cota_max"]) {
                                 echo $bati->getByCota($año, $max)[1] + 200;
@@ -768,7 +769,7 @@ $datos_json2 = json_encode($datos2);
                     min: <?php if ($min < $embalse[$t]["cota_min"]) {
                                 echo $bati->getByCota($año, $min)[1];
                             } else {
-                                echo $bati->getByCota($año, $embalse[0]["cota_min"])[1] - 200;
+                                echo $bati->getByCota($año, $embalse[0]["cota_min"])[1];
                             }; ?>,
                     max: <?php if ($max > $embalse[$t]["cota_max"]) {
                                 echo $bati->getByCota($año, $max)[1] + 200;
@@ -790,6 +791,7 @@ $datos_json2 = json_encode($datos2);
 
     });
     <?php
+    closeConection($conn);
     for ($t = 1; $t <=  $Nsemanas; $t++) {
     ?>
 
@@ -847,13 +849,14 @@ $datos_json2 = json_encode($datos2);
             if (this.readyState == 4 && this.status == 200) {
 
                 console.log("listo");
-                location.href = "../../pages/reports/print_monitoreo.php?id=" + <?php echo $id; ?> + "&name=<?php echo $embalse[0]['nombre_embalse']; ?>&index=<?php echo $Nsemanas; ?>&semanas=<?php echo $nse; ?>";
+                location.href = "../../pages/reports/print_monitoreo.php?id=" + <?php echo $id; ?> + "&name=<?php echo $embalse[0]['nombre_embalse']; ?>&index=<?php echo $Nsemanas; ?>&semanas=<?php echo $nse; ?>&fecha=<?php echo $fecha1;?>";
 
             } else {
 
             }
         }
     });
+});
 </script>
 
 </html>

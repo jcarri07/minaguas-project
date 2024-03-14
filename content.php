@@ -20,7 +20,6 @@ if (!isset($_GET['page']) || $_GET['page'] == "") {
     if ($_GET['page'] == "reportes") {
         include "pages/reportes.php";
     }
-
     if ($_GET['page'] == "perfil") {
         include "pages/perfil.php";
     }
