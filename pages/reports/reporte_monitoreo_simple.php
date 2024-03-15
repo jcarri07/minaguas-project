@@ -165,14 +165,14 @@ $TITULO = "Gráfico de Monitoreo.";
     <div style=" position: absolute;top: 80px; width: 1080px;">
         <h4 style="text-align: center; font-weight: bold; width: 1080px;"><?php echo $NOMBRE_EMBALSE; ?></h4>
     </div>
-    <div style="height: 50px; top: 130px; position:absolute; left: 45px;">
+    <div style="height: 50px; top:xº 130px; position:absolute; left: 45px;">
         <p style="font-size: 14px;"><br> Desde: <?php echo $FECHA_MONITOREO ?><br> <br> Hasta: <?php echo $FECHA_MONITOREO ?><br></p>
     </div>
     <div style="width: 1050px;">
         <p style="position: absolute; text-align: center; top: 250px; width: 1050px;"><?php echo $TITULO ?></p>
     </div>
-    <div style="position: absolute; top: 270px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+    <div style="position: absolute; top: 290px; width: 1085px; height: 480px; ">
+        <img src="../../assets/img/temp/imagen-grafica-0.png" alt="monitoreo" style="width: 1000px; height: 450px; margin-left: 45px">
     </div>
 </body>
 

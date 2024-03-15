@@ -2,7 +2,9 @@
 require_once '../../php/Conexion.php';
 
 $id = $_GET['id'];
-
+$index = $_GET['index'];
+$semanas = $_GET['semanas'];
+$fecha_inicio = $_GET['fecha'];
 $sql = "SELECT * FROM embalses WHERE id_embalse = $id";
 
 $res = mysqli_query($conn, $sql);
@@ -40,12 +42,13 @@ $COTA_INICIAL = " 303,55 m s.n.m. (185,15 hm3)";
 $FECHA_MONITOREO = "15/05/2023";
 $VOLUMEN_NIVEL_NORMAL = "462,41 hm3 (Cota 328,80 m s.n.m.)";
 $VOLUMEN_NIVEL_MINIMO = "76,28 hm3 (Cota 285,00 m s.n.m.)";
-$TITULO = "Gráfico 1. Monitoreo por semana 1-9.";
+$titulo_reporte = "Gráfico";
+$TITULO = "Gráfico 1";
 $TITULO2 = "Gráfico 2. Monitoreo por semana 9-17.";
 $TITULO3 = "Gráfico 3. Monitoreo por semana 17-25.";
 $TITULO4 = "Gráfico 4. Monitoreo diario desde el 30/10 al 07/11.";
-$TITULO5 = "Gráfico 5. Movimiento Turimiquire.";
-$TITULO6 = "Gráfico 6. Monitoreo diario.";
+$TITULO5 = "Gráfico 5";
+$TITULO6 = "Gráfico 6";
 
 ?>
 <!DOCTYPE html>
@@ -170,78 +173,59 @@ $TITULO6 = "Gráfico 6. Monitoreo diario.";
     <div style=" position: absolute;top: 80px; width: 1080px;">
         <h4 style="text-align: center; font-weight: bold; width: 1080px;"><?php echo $NOMBRE_EMBALSE; ?></h4>
     </div>
-    <div style="height: 50px; top: 130px; position:absolute; left: 45px;">
-        <p style="font-size: 14px;">Cota inicial de Monitoreo: <?php echo $COTA_INICIAL; ?><br> Fecha: <?php echo $FECHA_MONITOREO ?><br> Volumen Nivel Normal: <?php echo $VOLUMEN_NIVEL_NORMAL ?><br> Volumen Nivel Minimo: <?php echo $VOLUMEN_NIVEL_MINIMO ?></p>
-    </div>
     <div style="width: 1050px;">
+        <table style="position: absolute; top: 160px;">
+            <tbody>
+                <tr>
+                    <th style="text-align: left;">Cota inicial de Monitoreo:</th>
+                    <td style="text-align: right;"><?php echo $COTA_INICIAL ?></td>
+                </tr>
+                <tr>
+                    <th style="text-align: left;">Fecha:</th>
+                    <td style="text-align: right;"><?php echo $fecha_inicio ?></td>
+                </tr>
+                <tr>
+                    <th style="text-align: left;">Volumen Nivel Normal:</th>
+                    <td style="text-align: right;"><?php echo $VOLUMEN_NIVEL_NORMAL ?></td>
+                </tr>
+                <tr>
+                    <th style="text-align: left;">Volumen Nivel Minimo:</th>
+                    <td style="text-align: right;"><?php echo $VOLUMEN_NIVEL_MINIMO ?></td>
+                </tr>
+            </tbody>
+        </table>
         <p style="position: absolute; text-align: center; top: 250px; width: 1050px;"><?php echo $TITULO ?></p>
     </div>
-    <div style="position: absolute; top: 270px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+    <div style="position: absolute; top: 270px; width: 1030px; height: 455px; border-color: grey;border-width: 2px;border-style: solid; border-radius: 10px;">
+        <img src="../../assets/img/temp/imagen-monitoreo1-1.png" alt="monitoreo" style="width: 1000px; height: 450px; margin-top: 2px; margin-left: 20px;">
     </div>
 
-    <div style="height: 400px;"></div>
-    <div>
+    <?php
+    for ($i = 2; $i <= $index; $i++) {
+        $imagen = "../../assets/img/temp/imagen-monitoreo" . $i . "-1.png";
+        echo
+        '<div style="height: 400px;"></div>
         <div>
-            <img class="img-logo-letters" src="<?php echo $srcLogoLetters; ?>" />
-            <img class="img-logo" src="<?php echo $srcLogo; ?>" />
+            <div>
+                <img class="img-logo-letters" src=" ' . $srcLogoLetters . '" />
+                <img class="img-logo" src="' . $srcLogo . '" />
+            </div>
+            <p style="position: absolute; text-align: center; text-justify: center; top: 15px;">
+                VICEMINISTERIO DE ADMINISTRACIÓN DE CUENCAS HIDROGRÁFICAS<br>
+                DIRECCIÓN GENERAL DE MANEJO DE EMBALSES<br>
+                DIRECCIÓN DE OPERACIÓN Y MANTENIMIENTO DE EMBALSES</p>
+            <div style="position: absolute; left: 1000px; width: 70px; top: 20px;">
+                <p style="font-weight: 900;">' . $fecha_hora . '</p>
+            </div>
         </div>
-        <p style="position: absolute; text-align: center; text-justify: center; top: 15px;">
-            VICEMINISTERIO DE ADMINISTRACIÓN DE CUENCAS HIDROGRÁFICAS<br>
-            DIRECCIÓN GENERAL DE MANEJO DE EMBALSES<br>
-            DIRECCIÓN DE OPERACIÓN Y MANTENIMIENTO DE EMBALSES</p>
-        <div style="position: absolute; left: 1000px; width: 70px; top: 20px;">
-            <p style="font-weight: 900;"><?php echo $fecha_hora; ?></p>
+        <div style="position: absolute; width: 1030px; height: 500px; ">
+            <p style="position: absolute; text-align: center; top:80px; width: 1050px;">' . $titulo_reporte . ' ' . $i . '</p>
         </div>
-    </div>
-    <div style=" position: absolute; width: 1080px;">
-        <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO2 ?></p>
-    </div>
-    <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-2.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
-    </div>
-
-    <div style="height: 400px;"></div>
-    <div>
-        <div>
-            <img class="img-logo-letters" src="<?php echo $srcLogoLetters; ?>" />
-            <img class="img-logo" src="<?php echo $srcLogo; ?>" />
-        </div>
-        <p style="position: absolute; text-align: center; text-justify: center; top: 15px;">
-            VICEMINISTERIO DE ADMINISTRACIÓN DE CUENCAS HIDROGRÁFICAS<br>
-            DIRECCIÓN GENERAL DE MANEJO DE EMBALSES<br>
-            DIRECCIÓN DE OPERACIÓN Y MANTENIMIENTO DE EMBALSES</p>
-        <div style="position: absolute; left: 1000px; width: 70px; top: 20px;">
-            <p style="font-weight: 900;"><?php echo $fecha_hora; ?></p>
-        </div>
-    </div>
-    <div style=" position: absolute; width: 1080px;">
-        <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO3 ?></p>
-    </div>
-    <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-3.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
-    </div>
-
-    <div style="height: 400px;"></div>
-    <div>
-        <div>
-            <img class="img-logo-letters" src="<?php echo $srcLogoLetters; ?>" />
-            <img class="img-logo" src="<?php echo $srcLogo; ?>" />
-        </div>
-        <p style="position: absolute; text-align: center; text-justify: center; top: 15px;">
-            VICEMINISTERIO DE ADMINISTRACIÓN DE CUENCAS HIDROGRÁFICAS<br>
-            DIRECCIÓN GENERAL DE MANEJO DE EMBALSES<br>
-            DIRECCIÓN DE OPERACIÓN Y MANTENIMIENTO DE EMBALSES</p>
-        <div style="position: absolute; left: 1000px; width: 70px; top: 20px;">
-            <p style="font-weight: 900;"><?php echo $fecha_hora; ?></p>
-        </div>
-    </div>
-    <div style=" position: absolute; width: 1080px;">
-        <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO4 ?></p>
-    </div>
-    <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-4.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
-    </div>
+        <div style="position: absolute; top: 140px; width: 1085px; height: 480px; border-color: grey; border-width: 2px;border-style: solid; border-radius: 10px;">
+            <img src="' . $imagen . '" alt="monitoreo" style="width: 1000px; height: 480px; margin-left: 45px; margin-top: 10px;">
+        </div>';
+    }
+    ?>
 
     <div style="height: 400px;"></div>
     <div>
@@ -260,8 +244,8 @@ $TITULO6 = "Gráfico 6. Monitoreo diario.";
     <div style=" position: absolute; width: 1080px;">
         <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO5 ?></p>
     </div>
-    <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-5.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+    <div style="position: absolute; top: 140px; width: 1030px; height: 485px; border-color: grey;border-width: 2px; border-style: solid; margin-left: 20px; border-radius: 10px;">
+        <img src="../../assets/img/temp/imagen-monitoreo-anio-1.png" alt="monitoreo" style="width: 1000px; height: 480px; margin-left: 10px;margin-top: 2px">
     </div>
 
     <div style="height: 400px;"></div>
@@ -281,8 +265,8 @@ $TITULO6 = "Gráfico 6. Monitoreo diario.";
     <div style=" position: absolute; width: 1080px;">
         <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO6 ?></p>
     </div>
-    <div style="position: absolute; top: 140px; width: 1085px; height: 480px; ">
-        <img src="../../assets/img/report-prueba-monitoreo-6.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 45px">
+    <div style="position: absolute; top: 140px; width: 1030px; height: 480px; border-color: grey;border-width: 2px; border-style: solid; margin-left: 20px; border-radius: 10px;">
+        <img src="../../assets/img/temp/imagen-monitoreo-semana-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 10px;margin-top: 2px">
     </div>
 </body>
 
