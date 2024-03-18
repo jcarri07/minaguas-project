@@ -1,4 +1,4 @@
-<?php
+  <?php
 require_once 'php/Conexion.php';
 require_once 'php/batimetria.php';
 

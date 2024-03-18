@@ -271,6 +271,18 @@
                 <!--<p class="mb-0">Enter your email and password to register</p>-->
               </div>
               <div class="card-body pb-3">
+    <?php
+              if($_SESSION["Tipo"] == "Admin"){
+    ?>
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                      <button class="btn btn-success" data-bs-dismiss="modal" onclick="$('#add-data-old').modal('show');" type="button">Adjuntar Historial de Reportes</button>
+                  </div>
+                </div>
+    <?php
+              }
+    ?>
+
                 <form role="form text-left" id="form">
     <?php
                 if(date("H:i") . ":00" > "10:00:00"){
@@ -363,12 +375,65 @@
       </div>
     </div>
 
+
+    <div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#add').modal('show');">X</button>
+                <h3 class="font-weight-bolder text-primary text-gradient mt-5 text-center">Adjuntar Excel de Reportes</h3>
+              </div>
+              <div class="card-body pb-3">
+
+                <form id="form-add-data-old">
+                  <div class="form-group col-sm-12">
+                    <span style="color: red; margin: 0 2px 0 -5px;">*</span><label for="file" class="form-label">Archivo</label>
+                    <input type="file" id="file" accept=".xlsx, .xls"  class="form-control input_file_oculto" oninvalid="setCustomValidity('Debe cargar un archivo')">
+                    <div class="form-control button_fantasma">
+                      <span></span>
+                      <button type="button" class="btn btn-primary">Cargar Archivo</button>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="$('#add').modal('show');">Atrás</button>
+                    <button type="submit" class="btn bg-gradient-primary btn-rounded mt-4 mb-0 btn-submit">Examinar</button>
+                  </div>
+                </form>
+
+                <!--<div class="row">
+                  <div class="col-md-12 loaderParent">
+                    <div class="loader">
+                    </div>
+                    Por favor, espere
+                  </div>
+                </div>-->
+
+                <div id="hojas-excel">
+                  
+                </div>
+
+              </div>
+              <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   
 
 
     <div id="id_embalse_aux" style="display: none;"></div>
     <div id="id_aux" style="display: none;"></div>
     <div id="opc_aux" style="display: none;"></div>
+    <div id="nombre_hoja_aux" style="display: none;"></div>
 
 
   <script>
@@ -379,6 +444,22 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }*/
+
+    $(".button_fantasma").click(function(e) {
+      e.preventDefault();
+      $(this).prev().click();
+      
+    });
+    $(".input_file_oculto").change(function() {
+      var string_nombre = "";
+      for(var i = 0 ; i < $(this)[0].files.length ; i++){
+          string_nombre += $(this)[0].files[i].name;
+          if(i + 1 != $(this)[0].files.length)
+              string_nombre += ", "
+      }    
+      //$(this).next(".button_fantasma span").text(string_nombre);       
+      $(this).next(".button_fantasma").find("span").text(string_nombre);
+    });
   </script>
 
   <script>
@@ -674,6 +755,91 @@
           $("#modal-generic").modal("show");
         }
       });
+    }
+
+
+    $("#form-add-data-old").on("submit",function(event){
+    	event.preventDefault();
+
+      var ext = $('#file')[0].files[0].name.split('.').pop();
+      
+      if(ext !== "xlsx" && ext !== "xls") {
+        $("#modal-generic .message").text("Adjunte un archivo .xls o .xlsx");
+        $("#modal-generic").modal("show");
+        return false;
+      }
+
+      var wait = '<div class="row mt-5">';
+      wait += '     <div class="col-md-12 loaderParent">';
+      wait += '       <div class="loader">';
+      wait += '       </div>';
+      wait += '       Cargando...';
+      wait += '     </div>';
+      wait += '   </div>';
+
+      var datos = new FormData();
+
+      if($("#opc_aux").text() == "importar_data") {
+        datos.append('opc', $("#opc_aux").text());
+        datos.append('id_embalse', $("#id_embalse_aux").text());
+        datos.append('hoja', $("#nombre_hoja_aux").text());
+        datos.append('nombre_archivo', $('#file')[0].files[0].name);
+      }
+      else {
+        datos.append('file', $('#file')[0].files[0]);
+      }
+
+
+      $("#hojas-excel").html(wait);
+      $('#add-data-old .loaderParent').show();
+
+      $.ajax({
+        url: 			'php/datos/modelos/examinar-excel.php',
+        type:			'POST',
+        data:			datos,
+        cache:          false,
+        contentType:    false,
+        processData:    false,
+        success: function(response){
+          $('#add-data-old .loaderParent').hide();
+
+          $("#opc_aux").text("");
+          $("#nombre_hoja_aux").text("");
+
+          $("#hojas-excel").html(response);
+          iniciarTabla("hojas-excel-table");
+          /*if(response == 'si'){
+            $("#modal-generic .message").text("Registro exitoso");
+            $("#modal-generic .card-footer .btn-action").attr("onclick", "window.location.reload();");
+            $("#modal-generic").modal("show");
+          }
+          else{
+            if(response == "vacio"){
+              //alertify.warning("Datos vacíos o sin modificación.");
+                
+            }
+            else{
+              $("#modal-generic .message").text("Error al registrar");
+              $("#modal-generic").modal("show");
+            } 
+          }*/
+
+          //console.log(response);
+        }
+        ,
+        error: function(response){
+          $('#add-data-old .loaderParent').hide();
+          $("#modal-generic .message").text("Error al examinar");
+          $("#modal-generic").modal("show");
+        }
+      });
+
+    });
+
+    function importarData(hoja) {
+      $("#opc_aux").text("importar_data");
+      $("#nombre_hoja_aux").text(hoja);
+      $("#form-add-data-old").trigger("submit");
     }
     
   </script>
