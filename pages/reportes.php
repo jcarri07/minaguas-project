@@ -233,7 +233,7 @@ date_default_timezone_set("America/Caracas");
     /* Porcentaje del ancho de la pantalla */
     max-width: 500px;
     /* Ancho máximo del modal */
-    height: 500px;
+    height: 700px;
     /* Altura del modal */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -278,9 +278,9 @@ date_default_timezone_set("America/Caracas");
   /* Media Query para dispositivos de escritorio */
   @media only screen and (min-width: 768px) {
     .modal-content {
-      width: 60%;
+      width: 65%;
       /* Porcentaje del ancho de la pantalla */
-      height: 700px;
+      height: 70%;
       max-width: 1400px;
     }
   }
