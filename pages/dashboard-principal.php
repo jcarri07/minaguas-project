@@ -511,6 +511,8 @@ closeConection($conn);*/
         var datasets = [];
         var data = [];
         console.log('Los datos:', datos_inicial);
+        $("#embalseSelect").val(datos[2]);
+
         for (var mes = 1; mes <= 12; mes++) {
           data.push(Math.round(datos_inicial[mes] || 0));
         }
@@ -575,6 +577,7 @@ closeConection($conn);*/
         type: 'GET',
         dataType: 'json',
         success: function(datos) {
+
           datos_inicial = datos[0];
           if (window.myChart) {
             window.myChart.destroy();
@@ -582,7 +585,8 @@ closeConection($conn);*/
 
           var datasets = [];
           var data = [];
-          console.log('Los datos:', datos_inicial);
+          //console.log('Los datos:', datos_inicial);
+
           for (var mes = 1; mes <= 12; mes++) {
             data.push(Math.round(datos_inicial[mes] || 0));
           }
