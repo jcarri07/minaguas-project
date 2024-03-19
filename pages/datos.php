@@ -20,14 +20,32 @@
 
   $query = mysqli_query($conn, $sql);
 
+
+  $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, concepto, uso, ce.id AS 'id_codigo_extraccion', IF(leyenda_sistema <> '', leyenda_sistema, concepto) AS 'name'
+          FROM tipo_codigo_extraccion tce, codigo_extraccion ce
+          WHERE tce.id = ce.id_tipo_codigo_extraccion AND 
+            ce.estatus = 'activo' AND 
+            tce.estatus = 'activo' AND 
+            tce.id <> '6' AND 
+            tce.id <> '7' AND
+            ce.concepto <> 'Subtotal'
+          ORDER BY codigo ASC";
+  $query_codigos = mysqli_query($conn, $sql);
+
   closeConection($conn);
 
-  $options_extraccion = '<option value="">Seleccione</option>';
+  /*$options_extraccion = '<option value="">Seleccione</option>';
   $options_extraccion .='<option value="Riego">Riego</option>';
   $options_extraccion .='<option value="Hidroelectricidad">Hidroelectricidad</option>';
   $options_extraccion .='<option value="Consumo Humano">Consumo Humano</option>';
   $options_extraccion .='<option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>';
-  $options_extraccion .='<option value="Recreación">Recreación</option>';
+  $options_extraccion .='<option value="Recreación">Recreación</option>';*/
+
+  $options_extraccion = "<option value=''>Seleccione</option>";
+
+  while($row = mysqli_fetch_array($query_codigos)){
+    $options_extraccion .= "<option value='$row[id_codigo_extraccion]'>$row[name] ($row[codigo])</option>";
+  }
 ?>
 
 
@@ -326,7 +344,7 @@
                   <div id="box-extraccion">
                     <div class="row">
                       <div class="col">
-                        <label>Tipo</label>
+                        <label>Código</label>
                         <div class="input-group mb-3">
                           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_1" required>
                             <?php echo $options_extraccion;?>
@@ -479,13 +497,13 @@
     var count = 1;
     $(document).on('click', '#addRows', function() { 
       count++;
-      var htmlRows = '';
+      var htmlRows = "";
       htmlRows += '<div class="row">';
       htmlRows += '   <div class="col">';
       htmlRows += '       <label>Tipo</label>';
       htmlRows += '       <div class="input-group mb-3">';
       htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" required>';
-      htmlRows += '               <?php echo $options_extraccion;?>';
+      htmlRows += "               <?php echo $options_extraccion;?>";
       htmlRows += '           </select>';
       htmlRows += '       </div>';
       htmlRows += '   </div>';
@@ -527,6 +545,8 @@
       $("#valor_cota").attr("disabled", false);
       $("#tipo_extraccion_1").attr("disabled", false);
       $("#valor_extraccion_1").attr("disabled", false);
+
+      $("#box-area-volumen-by-cota").empty();
 
       $("#add .text-retraso").show();
       $("#add .btn-submit").show();
@@ -570,7 +590,7 @@
         cache:          false,
         contentType:    false,
         processData:    false,
-        success: function(response){ //console.log(response);
+        success: function(response){ console.log(response);
           $('.loaderParent').hide();
           if(response == 'si'){
             $("#modal-generic .message").text("Registro exitoso");
@@ -614,11 +634,12 @@
         processData:    false,
         dataType: 'json',
         success: function(response){ //console.log(response);
+          console.log(response);
           var string =  '<div class="col" style="font-size: 0.75em;">';
-          string +=       '<span>Área o Superficie: <b>' + response[0] + ' hm<sup>2</sup></b></span>';
+          string +=       '<span>Capacidad o Volumen (02): <b>' + response[1] + ' hm<sup>3</sup></b></span>';
           string +=     '</div>';
           string +=     '<div class="col small" style="font-size: 0.75em;">';
-          string +=       '<span>Capacidad o Volumen: <b>' + response[1] + ' hm<sup>3</sup></b></span>';
+          string +=       '<span>Área o Superficie (03): <b>' + response[0] + ' hm<sup>2</sup></b></span>';
           string +=     '</col>';
           $("#box-area-volumen-by-cota").html(string);
         }
@@ -664,6 +685,8 @@
     function openModalDetalles(id_registro, fecha, hora, cota, extraccion){
       $("#id_aux").text(id_registro);
       //$("#opc_aux").text("edit");
+
+      $(".removeRow").attr("disabled", false);
 
       $("#add .title").text("Detalles del Reporte");
       $(".removeRow").each(function( index ) {

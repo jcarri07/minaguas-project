@@ -1655,6 +1655,25 @@ CREATE TABLE embalses (
 );
 
 
+
+CREATE TABLE IF NOT EXISTS `tipo_codigo_extraccion`(
+	id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	nombre VARCHAR(255) NULL,
+	cantidad_primaria INT NOT NULL,
+	unidad VARCHAR(100) NOT NULL,
+	estatus ENUM('activo','inactivo') DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `codigo_extraccion`(
+	id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	codigo VARCHAR(20) NOT NULL UNIQUE,
+	leyenda_sistema VARCHAR(255) NOT NULL,
+	concepto VARCHAR(100) NOT NULL,
+	uso VARCHAR(1000) NOT NULL,
+	id_tipo_codigo_extraccion INT,
+	estatus ENUM('activo','inactivo') DEFAULT NULL
+);
+
 CREATE TABLE datos_embalse (
   id_registro INT AUTO_INCREMENT PRIMARY KEY,
   id_embalse INT,
@@ -1669,7 +1688,8 @@ CREATE TABLE datos_embalse (
 
 CREATE TABLE detalles_extraccion (
   id_detalles_extraccion INT AUTO_INCREMENT PRIMARY KEY,
-  tipo_extraccion VARCHAR(50),
+  /*tipo_extraccion VARCHAR(50),*/
+  id_codigo_extraccion INT(11) NOT NULL,
   extraccion FLOAT,
   id_registro INT,
   estatus VARCHAR(20) NOT NULL,
