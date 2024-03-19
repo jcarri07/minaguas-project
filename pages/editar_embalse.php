@@ -212,6 +212,30 @@ function formatoNumero($valor)
     z-index: 9999;
   }
 
+  #mapa {
+    height: 400px;
+    width: 80%;
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+    z-index: 9999999;
+  }
+
+  #map {
+    height: 400px;
+    width: 100%;
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    z-index: 99999;
+  }
+
+  .map-no-visible {
+    top: -100%;
+    left: -100%;
+  }
+
   .map-visible {
     top: 50%;
     left: 50%;

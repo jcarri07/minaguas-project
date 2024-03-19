@@ -58,7 +58,6 @@ date_default_timezone_set("America/Caracas");
 
 <style>
   #mapa {
-    background: red;
     height: 400px;
     width: 80%;
     position: absolute;
@@ -78,8 +77,8 @@ date_default_timezone_set("America/Caracas");
   }
 
   .map-no-visible {
-    top: -50%;
-    left: -50%;
+    top: -100%;
+    left: -100%;
   }
 </style>
 

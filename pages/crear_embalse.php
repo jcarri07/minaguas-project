@@ -166,7 +166,6 @@ date_default_timezone_set("America/Caracas");
 
 
   #mapa{
-    background: red;
     height: 400px;
     width: 80%;
     position: absolute;
