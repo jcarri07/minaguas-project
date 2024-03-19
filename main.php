@@ -56,7 +56,6 @@ date_default_timezone_set("America/Caracas");
   <script src="vendor/datatables/js/datatable-basic.init.js"></script>
 </head>
 
-<<<<<<< HEAD
 <style>
   #mapa {
     background: red;
@@ -91,9 +90,6 @@ date_default_timezone_set("America/Caracas");
       <a href="" id="close-map"><i style="font-size: 40px; color:black;" class="fa fa-window-close"></i></a>
   </div>
 
-=======
-<body class="g-sidenav-show   bg-gray-100 h-100">
->>>>>>> 16c3a7c4de28e9d3ec51fc863a6621d89e97a588
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
   <?php include './pages/sidebar.php'; ?>
   <!-- <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
