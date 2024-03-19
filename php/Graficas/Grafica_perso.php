@@ -24,11 +24,10 @@ $batimetria = $bati->getBatimetria();
 
 $res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND id_embalse = '$id' AND (fecha BETWEEN '$fecha1' AND '$fecha2') GROUP BY fecha ORDER BY fecha ASC;");
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
-$count = mysqli_num_rows($res);
+$count = mysqli_num_rows($r);
 if ($count >= 1) {
 
-    $count = mysqli_num_rows($r);
-    if ($count >= 1) {
+
         $datos_embalses = mysqli_fetch_all($res, MYSQLI_ASSOC);
         $embalses = mysqli_fetch_all($r, MYSQLI_ASSOC);
 
@@ -229,7 +228,8 @@ if ($count >= 1) {
                                 min: <?php if ($min < $embalses[0]["cota_min"]) {
                                             echo 0;
                                         } else {
-                                            echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;
+                                            if($bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200 < 0){echo 0;}else{
+                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;}
                                         }; ?>,
                                 max: <?php if ($max > $embalses[0]["cota_max"]) {
                                             echo $bati->getByCota($año, $max)[1] + 200;
@@ -256,9 +256,7 @@ if ($count >= 1) {
             })
         </script>
 <?php
-    } else {
-        echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">ningun dato en el Año seleccionado</h5></div></div>';
-    }
+
 } else {
     echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">Error:Embalse inactivo o inexistente</h5></div></div>';
 }

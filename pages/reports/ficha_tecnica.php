@@ -520,19 +520,19 @@ foreach ($data as $row) {
       <td><?php echo $BATIMETRIA ?></td>
     </tr>
     <tr>
-      <td class="subtitle" rowspan="3" style="text-align: center;">3.2.1.- Mínimo</td>
-      <td class="subtitle" class="subtitle">3.2.1.1.- Cota (m s.n.m.)</td>
-      <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA), 2, ',', '.'); ?></td>
+      <td class="subtitle" rowspan="3" style="text-align: center;">3.2.3.- Máximo</td>
+      <td class="subtitle">3.2.3.1.- Cota (m s.n.m.)</td>
+      <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA3), 2, ',', '.'); ?></td>
     </tr>
     <tr>
-      <td class="subtitle">3.2.1.2.- Volumen (hm³)</td>
-      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN), 2, ',', '.'); ?></td>
-      <td><?php echo number_format($SECOND_VOLUMEN, 2, ',', '.'); ?></td>
+      <td class="subtitle">3.2.3.2.- Volumen (hm³)</td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN3), 2, ',', '.'); ?></td>
+      <td><?php echo number_format($SECOND_VOLUMEN3, 2, ',', '.'); ?></td>
     </tr>
     <tr>
-      <td class="subtitle">3.2.1.3.- Superficie (ha)</td>
-      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_SUPERFICIE), 2, ',', '.'); ?></td>
-      <td><?php echo number_format($SECOND_SUPERFICIE, 2, ',', '.'); ?></td>
+      <td class="subtitle">3.2.3.3.- Superficie (ha)</td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_SUPERFICIE3), 2, ',', '.'); ?></td>
+      <td><?php echo number_format($SECOND_SUPERFICIE3, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle" rowspan="3" style="text-align: center;">3.2.2.- Normal</td>
@@ -550,19 +550,19 @@ foreach ($data as $row) {
       <td><?php echo number_format($SECOND_SUPERFICIE2, 2, ',', '.'); ?></td>
     </tr>
     <tr>
-      <td class="subtitle" rowspan="3" style="text-align: center;">3.2.3.- Máximo</td>
-      <td class="subtitle">3.2.3.1.- Cota (m s.n.m.)</td>
-      <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA3), 2, ',', '.'); ?></td>
+      <td class="subtitle" rowspan="3" style="text-align: center;">3.2.1.- Mínimo</td>
+      <td class="subtitle" class="subtitle">3.2.1.1.- Cota (m s.n.m.)</td>
+      <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA), 2, ',', '.'); ?></td>
     </tr>
     <tr>
-      <td class="subtitle">3.2.3.2.- Volumen (hm³)</td>
-      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN3), 2, ',', '.'); ?></td>
-      <td><?php echo number_format($SECOND_VOLUMEN3, 2, ',', '.'); ?></td>
+      <td class="subtitle">3.2.1.2.- Volumen (hm³)</td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN), 2, ',', '.'); ?></td>
+      <td><?php echo number_format($SECOND_VOLUMEN, 2, ',', '.'); ?></td>
     </tr>
     <tr>
-      <td class="subtitle">3.2.3.3.- Superficie (ha)</td>
-      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_SUPERFICIE3), 2, ',', '.'); ?></td>
-      <td><?php echo number_format($SECOND_SUPERFICIE3, 2, ',', '.'); ?></td>
+      <td class="subtitle">3.2.1.3.- Superficie (ha)</td>
+      <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_SUPERFICIE), 2, ',', '.'); ?></td>
+      <td><?php echo number_format($SECOND_SUPERFICIE, 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">3.2.4.- Capacidad Útil (hm³)</td>

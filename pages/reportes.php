@@ -67,7 +67,7 @@ date_default_timezone_set("America/Caracas");
                     <td class="align-middle text-center w-20">
                       <span class="text-secondary text-sm font-weight-bolder"><?php echo $row['uso_actual'] ?></span>
                     </td>
-                    <td class="d-flex justify-content-center align-items-center" style="height: 80px;">
+                    <td class=" justify-content-center align-items-center" style="height: 80px;">
                       <div class="d-flex flex-column h-100">
                         <div class="d-flex flex-row w-100">
                           <a id="openModal" class="text-secondary font-weight-bold text-xs w-100" data-toggle="tooltip" data-original-title="Edit user">
@@ -80,7 +80,7 @@ date_default_timezone_set("America/Caracas");
                         </div>
                         <div class="d-flex flex-row justify-content-around w-100">
                           <a class="text-secondary font-weight-bold text-xs w-100" id="<?php echo $row['id_embalse']; ?>" onclick="getId(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')" data-toggle="tooltip" data-original-title="Edit user">
-                            <button type="button" title="Generar pdf de ficha técnica de este embalse" class="py-1 btn btn-outline-secondary btn-block border-2 w-100" onclick="getId(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')">
+                            <button type="button" title="Generar pdf de ficha técnica de este embalse" class="py-1 btn btn-outline-secondary btn-block border-2 w-100">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                                 <path fill="#d42b34" d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z" />
                               </svg>&nbsp;&nbsp;Ficha
@@ -93,13 +93,19 @@ date_default_timezone_set("America/Caracas");
                 <?php } ?>
               </tbody>
             </table>
-            <div class="d-flex justify-content-end align-items-end w-100 pt-4 px-4">
+            <div class="d-flex justify-content-end align-items-end w-100 pt-4 px-4 gap-2">
               <a href=" #">
                 <button type="button" title="Generar pdf de embalses priorizados" class=" btn btn-outline-secondary btn-block border-2 py-2" onclick="getIdPrioritarios()">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                     <path fill="#d42b34" d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z" />
                   </svg>&nbsp;&nbsp;Prioritarios
                 </button>
+                <a type="button" title="Generar pdf de estatus embalses priorizados" class=" btn btn-outline-secondary btn-block border-2 py-2" onclick="getIdEstatus()">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <path fill="#d42b34" d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z" />
+                  </svg>&nbsp;&nbsp;Estatus
+                </a>
+
               </a>
             </div>
           </div>
@@ -121,36 +127,6 @@ date_default_timezone_set("America/Caracas");
         id.innerHTML = `${embalseId}`;
         const embalseNombre = this.getAttribute('data-nombre');
 
-        //INICIALIZAR FECHA
-        /*const inputFecha = document.getElementById('date2');
-        const fechaActual = new Date();
-        const fechaISO = fechaActual.toISOString().split('T')[0];
-
-        var inputFecha2 = document.getElementById('date');
-
-        // Crear una nueva instancia de fecha para obtener la fecha actual
-        var fechaActual2 = new Date();
-
-        // Obtener el año y el mes actual
-        var ano = fechaActual2.getFullYear();
-        var mes = fechaActual2.getMonth();
-
-        // Calcular el mes anterior
-        if (mes === 0) {
-          mes = 11;
-          ano = ano - 1;
-        } else {
-          mes = mes - 1;
-        }
-
-        var fechaMesAnterior = new Date(ano, mes);
-
-        var fechaISO2 = fechaMesAnterior.toISOString().split('T')[0];
-
-        inputFecha2.value = fechaISO2;
-
-        inputFecha.value = fechaISO;*/
-
         document.getElementById('modal').style.display = 'block';
       });
     });
@@ -166,21 +142,19 @@ date_default_timezone_set("America/Caracas");
   <div class="d-flex modal-content">
     <div class="d-flex flex-row justify-content-between">
       <h4>Generar Monitoreo</h4>
-      <p id="embalse_id"></p>
+      <p id="embalse_id" style="display:none;"></p>
       <span class="d-flex align-items-start close">&times;</span>
-    </div>
-    <div class="d-flex w-100 h-100 border border-secondary border-2 rounded p-2">
     </div>
     <div class="pt-4">
       <label for="range1" class="form-label">
-        <h5>Filtrar reporte por fecha</h5>
+        <h5>Seleccione fecha</h5>
       </label>
     </div>
-    <div class="d-flex justify-content-between pb-0">
-      <div class="d-flex flex-row col-9 gap-4">
-        <div class="col-4">
+    <div class="d-flex pb-0 h-100 align-items-end">
+      <div class="row">
+        <div class="col-6 mb-4">
           <div class="input-group date" id="datepicker">
-            <input type="date" class="form-control" id="date" value="<?php echo date('Y-m-d',strtotime('-1 months',strtotime(date('Y-m-d'))));?>" max="<?php echo date('Y-m-d')?>"/>
+            <input type="date" class="form-control" id="date" value="<?php echo date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d')))); ?>" max="<?php echo date('Y-m-d', strtotime('-1 day', strtotime(date('Y-m-d')))) ?>" />
             <span class="input-group-append">
               <span class="ml-2 input-group-text bg-light d-block">
                 <i class="fa fa-calendar"></i>
@@ -188,9 +162,9 @@ date_default_timezone_set("America/Caracas");
             </span>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-6 mb-4">
           <div class="input-group date" id="datepicker">
-            <input type="date" class="form-control" id="date2" value="<?php echo date('Y-m-d')?>" max="<?php echo date('Y-m-d')?>"/>
+            <input type="date" class="form-control" id="date2" value="<?php echo date('Y-m-d') ?>" max="<?php echo date('Y-m-d') ?>" />
             <span class="ml-2 input-group-append">
               <span class="input-group-text bg-light d-block">
                 <i class="fa fa-calendar"></i>
@@ -198,14 +172,16 @@ date_default_timezone_set("America/Caracas");
             </span>
           </div>
         </div>
+        <div class="col-12 text-center">
+          <a id="<?php echo $row['id_embalse']; ?>" onclick="getIdMonitoreo('0', '<?php echo addslashes($row['nombre_embalse']); ?>')">
+            <button type="button" title="Generar pdf de embalses priorizados" class="btn btn-outline-secondary btn-block border-2 mb-0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                <path fill="#d42b34" d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z" />
+              </svg>&nbsp;&nbsp;Imprimir Reporte
+            </button>
+          </a>
+        </div>
       </div>
-      <a id="<?php echo $row['id_embalse']; ?>" onclick="getIdMonitoreo(<?php echo $row['id_embalse']; ?>, '<?php echo addslashes($row['nombre_embalse']); ?>')">
-        <button type="button" title="Generar pdf de embalses priorizados" class="btn btn-outline-secondary btn-block border-2 py-2">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-            <path fill="#d42b34" d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z" />
-          </svg>&nbsp;&nbsp;Imprimir Reporte
-        </button>
-      </a>
     </div>
   </div>
 </div>
@@ -278,9 +254,9 @@ date_default_timezone_set("America/Caracas");
   /* Media Query para dispositivos de escritorio */
   @media only screen and (min-width: 768px) {
     .modal-content {
-      width: 60%;
+      width: 30%;
       /* Porcentaje del ancho de la pantalla */
-      height: 700px;
+      height: 300px;
       max-width: 1400px;
     }
   }
@@ -306,7 +282,7 @@ date_default_timezone_set("America/Caracas");
   iniciarTabla('table-report');
 
   function getIdMonitoreo(id, name) {
-    window.open('pages/reports/print_monitoreo.php?id=' + id + "&name=" + name, '_blank');
+    window.open('php/Graficas/grafica_monitoreo.php?fecha1=' + $("#date").val() + '&fecha2=' + $("#date2").val() + '&id=' + $("#embalse_id").html() + '&name=' + name, '_blank');
   }
 
   function getId(id, name) {
@@ -315,6 +291,10 @@ date_default_timezone_set("America/Caracas");
 
   function getIdPrioritarios() {
     window.open('php/Graficas/graficas.php?pri=1', '_blank');
+  }
+
+  function getIdEstatus() {
+    window.open('pages/reports/print_estatus_embalses.php', '_blank');
   }
   // Función para manejar el evento de clic en el botón
   /*function toggleClass() {

@@ -238,7 +238,7 @@ if ($tipo == "bar") {
                                         <?php $j = 0;
                                         $pivote = $y;
                                         while ($j < (24)) {
-                                            if ($j % 2 == 0 && $j < count($datos_embalses)) {
+                                            if ($j % 2 == 0 && $j < count($datos_embalses) && count($datos_embalses) % 2 == 0) {
                                                 if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
 
                                                     $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
@@ -248,9 +248,9 @@ if ($tipo == "bar") {
                                                         };
                                                     } else {
                                                             ?>null, <?php
-                                                            };
-                                                            $j = $j + 2;
-                                                        }; ?>
+                                                                };
+                                                                $j = $j + 2;
+                                                            }; ?>
                                         ],
                                 },
                                 x3: {
@@ -264,7 +264,7 @@ if ($tipo == "bar") {
                                         <?php $j = 0;
                                         $pivote = $y;
                                         while ($j < (24)) {
-                                            if ($j % 2 == 0 && $j < count($datos_embalses)) {
+                                            if ($j % 2 == 0 && $j < count($datos_embalses) && count($datos_embalses) % 2 == 0) {
                                                 if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
 
                                                     $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
@@ -275,9 +275,9 @@ if ($tipo == "bar") {
 
                                                         };
                                                     } else { ?>null, <?php };
-                                                                $j = $j + 2;
-                                                            };
-                                                                    ?>
+                                                                    $j = $j + 2;
+                                                                };
+                                                                        ?>
                                         ],
 
                                 },
@@ -291,9 +291,9 @@ if ($tipo == "bar") {
                                         },
                                     },
                                     min: <?php if ($min < $embalses[0]["cota_min"]) {
-                                                echo 0;
+                                                echo $bati->getByCota($año, $min)[1];
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;
+                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1];
                                             }; ?>,
                                     max: <?php if ($max > $embalses[0]["cota_max"]) {
                                                 echo $bati->getByCota($año, $max)[1] + 200;
@@ -322,7 +322,11 @@ if ($tipo == "bar") {
         <?php
         } else {
 
-            echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">ningun dato en el Año seleccionado</h5></div></div>';
+            echo '<div class="row justify-content-center align-items-center h-100">
+                    <div class="col-6 text-center">
+                        <h5 class="font-weight-bolder">Ningún Dato Seleccionado</h5>
+                    </div>
+                  </div>';
         }
     } else {
         echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">Error:Embalse inactivo o inexistente</h5></div></div>';
@@ -560,7 +564,11 @@ if ($tipo == "line") {
 <?php
         } else {
 
-            echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">ningun dato en el Año seleccionado</h5></div></div>';
+            echo '<div class="row justify-content-center">
+                    <div class="col-6 text-center">
+                        <h5 class="font-weight-bolder">ningun dato en el Año seleccionados</h5>
+                    </div>
+                  </div>';
         }
     } else {
         echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">Error:Embalse inactivo o inexistente</h5></div></div>';

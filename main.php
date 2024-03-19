@@ -37,7 +37,7 @@ date_default_timezone_set("America/Caracas");
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <!--link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"-->
   <!-- Nucleo Icons -->
   <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -56,6 +56,7 @@ date_default_timezone_set("America/Caracas");
   <script src="vendor/datatables/js/datatable-basic.init.js"></script>
 </head>
 
+<<<<<<< HEAD
 <style>
   #mapa {
     background: red;
@@ -90,6 +91,9 @@ date_default_timezone_set("America/Caracas");
       <a href="" id="close-map"><i style="font-size: 40px; color:black;" class="fa fa-window-close"></i></a>
   </div>
 
+=======
+<body class="g-sidenav-show   bg-gray-100 h-100">
+>>>>>>> 16c3a7c4de28e9d3ec51fc863a6621d89e97a588
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
   <?php include './pages/sidebar.php'; ?>
   <!-- <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
@@ -186,7 +190,7 @@ date_default_timezone_set("America/Caracas");
       <a class="btn btn-primary btn-sm mb-0 w-100" href="https://www.creative-tim.com/product/argon-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
     </div>
   </aside> -->
-  <main class="main-content position-relative border-radius-lg ">
+  <main class="main-content position-relative border-radius-lg h-100">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
       <div class="container-fluid py-1 px-0">
@@ -325,9 +329,11 @@ date_default_timezone_set("America/Caracas");
     <?php
     require "content.php";
     ?>
-
-
-    <footer class="footer pt-2 pb-4">
+    <div class=""></div>
+    <footer class="footer pt-2 pb-4" style=" flex-shrink: none;
+        position: sticky;
+        bottom: 0;
+        width: 100%;">
       <div class="container-fluid">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6 mb-lg-0 mb-4">
@@ -343,11 +349,7 @@ date_default_timezone_set("America/Caracas");
         </div>
       </div>
     </footer>
-
-
   </main>
-
-
 
 
 
