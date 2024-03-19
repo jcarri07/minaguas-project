@@ -733,7 +733,7 @@ foreach ($data as $row) {
     </tr>
   </table>
   <table style="padding-top: 10px;">
-    <tr>
+    <!-- <tr>
       <td class="subtitle" style="width: 25%;" rowspan="3">4.4.- Obra hidráulica aguas arriba del embalse</td>
       <td class="subtitle">4.4.1.- Posee obra</td>
       <td style="width: 16%;"><?php echo $POSEE_OBRA ?></td>
@@ -793,7 +793,7 @@ foreach ($data as $row) {
     <tr>
       <td class="subtitle">6.6.- Correo electrónico</td>
       <td><?php echo $CORREO_FUNCIONARIO ?></td>
-    </tr>
+    </tr> -->
   </table>
   <table style="padding-top: 10px;">
     <tr>

@@ -75,6 +75,8 @@ $image_logo =  "/" . $projectName . "/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";
 $area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
 
+$area_cuenca = "/" . $projectName . "/pages/reports_images/";
+
 $image_logo_web = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters_web =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
 $area_web =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
@@ -206,11 +208,20 @@ $variacion_mensual = getMonthName();
       $maximo = number_format(floatVal($row['cota_max']), 2, ',', '.');
       $cresta = number_format(floatVal($row['cota_cresta']), 2, ',', '.');
       $sqlMonths = "SELECT cota_actual, fecha, id_embalse FROM datos_embalse WHERE MONTH(fecha) = $mes_actual AND DAY(fecha) BETWEEN 2 AND 8 AND id_embalse = '$id' GROUP BY (fecha);";
+      $area2 = "/" . $projectName . "/pages/reports_images/" . $row['imagen_tres'];
+
     ?>
       <div class="square">
-        <?php echo $indice + 1; ?>
+        <?php echo $indice + 1;
+        $imagen_tres = $row['imagen_tres'];
+        if (empty($imagen_tres) || is_null($imagen_tres)) {
+          $area = "/minaguas-project/pages/reports_images/broken_image.png";
+        } else {
+          $area = "/minaguas-project/pages/reports_images/" . $imagen_tres;
+        }
+
+        ?>
       </div>
-      <h3 style="position: absolute; top: 55px; color: #2E86C1">Código <?php echo $codigo ?></h3>
       <h1 style="position: absolute; text-align: center; color:#2E86C1"><?php echo $row['nombre_embalse'] ?></h1>
       <img style="position: absolute; width: 50px; height: 50px; float: right;" src="http://<?php echo $_SERVER['HTTP_HOST'];
                                                                                             echo $image_logo ?>" />
@@ -337,7 +348,6 @@ $variacion_mensual = getMonthName();
         <div class="square">
           <?php echo $indice + 1; ?>
         </div>
-        <h3 style="position: absolute; top: 75px; color: #2E86C1">Código <?php echo $codigo ?></h3>
         <h1 style="position: absolute; text-align: center; color:#2E86C1; top: 20px;"><?php echo $row['nombre_embalse'] ?></h1>
         <img style="position: absolute; width: 50px; height: 50px; float: right; top: 20px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
                                                                                                           echo $image_logo ?>" />
@@ -349,8 +359,8 @@ $variacion_mensual = getMonthName();
         <div style="position: absolute; left: 500px; top: 80px; width: 460px;">
           <h1 style="text-align: center; color: #2E86C1;"><?php echo getMonthName() ?></h1>
         </div>
-        <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 120px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
-                                                                                                            echo $area ?>" />
+        <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 120px; border: gray 1px solid; border-radius: 10px;" src="http://<?php echo $_SERVER['HTTP_HOST'];
+                                                                                                                                                        echo $area ?>" />
         <div style="position: absolute; width: 230px; left: 100px; top: 320px;">
           <h5 style="text-align: center;">Área de la Cuenca: <?php echo number_format(floatVal($row['area_cuenca']), 2, ',', '.'); ?> Km2</h5>
         </div>

@@ -26,8 +26,7 @@ $count = mysqli_num_rows($re);
 if ($count >= 1) {
 
     $res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND (YEAR(fecha) = '$fecha_actual' OR YEAR(fecha) = '$f') $text ORDER BY fecha,hora ASC;");
-    $count = mysqli_num_rows($res);
-    if ($count >= 1) {
+
 
         $embalses = mysqli_fetch_all($re, MYSQLI_ASSOC);
         $datos_embalses = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -906,9 +905,7 @@ const arbitra = {
             });
         </script>
 <?php
-    } else {
-        echo "<p>No existen Embalses</p></body>";
-    }
+
 } else {
     echo "<p>No existen Embalses</p></body>";
 }

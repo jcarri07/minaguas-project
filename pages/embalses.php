@@ -25,8 +25,12 @@ while ($row = mysqli_fetch_array($queryUsers)) {
 
 
 
-// $embalseBat = new Batimetria('1', $conn);
-// $cota = $embalseBat->getByCota("2015","210.455");
+$embalseBat = new Batimetria('1', $conn);
+$cota = implode("-",$embalseBat->getByCota("2024","268.455"));
+$minima = $embalseBat->cotaMinima();
+$año = implode("-", $embalseBat->getYears());
+$closeYear = $embalseBat->getCloseYear();
+$volMin = $embalseBat->volumenDisponible();
 // $year = $embalseBat->getCloseYear("2015");
 // $prueba = $embalseBat->getByCota("2001", 210.209);
 
@@ -146,7 +150,7 @@ closeConection($conn);
         <div class="card-header pb-0">
           <!-- <div class="row"> -->
           <!-- <div class="col-6 d-flex align-items-center"> -->
-          <h6 class="">Embalses</h6>
+          <h6 class="">Embalses <?php echo $cota."  --  ".$minima."  --  ".$año."  --  ".$closeYear."  --  ".$volMin?></h6>
           <!-- </div> -->
           <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>

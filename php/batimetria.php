@@ -6,6 +6,11 @@ class Batimetria
     private $conn;
     private $batimetria;
     private $años;
+    private $cota_min;
+    private $cota_nor;
+    private $cota_max;
+    private $cota_last;
+    
 
     public function __construct($id_embalse, $conn)
     {
@@ -19,17 +24,35 @@ class Batimetria
     {
 
         $id_embalse = mysqli_real_escape_string($this->conn, $this->id_embalse);
-        $query = "SELECT batimetria FROM embalses WHERE id_embalse = $id_embalse";
+        $query = "SELECT * FROM embalses WHERE id_embalse = $id_embalse";
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {
             die("Error en la consulta: " . mysqli_error($this->conn));
         }
 
-        $batimetria = mysqli_fetch_assoc($result);
+        $embalse = mysqli_fetch_assoc($result);
         mysqli_free_result($result);
 
-        $this->batimetria = json_decode($batimetria['batimetria'], true);
+        $this->batimetria = json_decode($embalse['batimetria'], true);
+        $this->cota_min = $embalse['cota_min'];
+        $this->cota_nor = $embalse['cota_nor'];
+        $this->cota_max = $embalse['cota_max'];
+
+        $query = "SELECT * FROM datos_embalse WHERE id_embalse = $id_embalse ORDER BY fecha LIMIT 1";
+        $result = mysqli_query($this->conn, $query);
+
+        if (!$result) {
+            die("Error en la consulta: " . mysqli_error($this->conn));
+        }
+
+        $datos = mysqli_fetch_assoc($result);
+        if( mysqli_num_rows($result) < 1 ){
+            $this->cota_last = "";
+        }else{
+            $this->cota_last = $datos['cota_actual'];
+        }
+        mysqli_free_result($result);
 
         $array = array();
         foreach ($this->batimetria as $key => $value) {
@@ -68,18 +91,21 @@ class Batimetria
         }
     }
 
-    public function getCloseYear($año_recibido)
+    public function getCloseYear($año_recibido = null)
     {
+
+        if($año_recibido == null){
+            return reset($this->años);
+        }
+
         $año_recibido = intval($año_recibido);
-        // Iterar sobre el vector de años
+
         foreach ($this->años as $año) {
-            // Si el año actual es menor o igual al año recibido, lo retornamos
             if ($año <= $año_recibido) {
                 return $año;
             }
         }
 
-        // Si el año recibido es menor que todos los años en el vector, retornar el menor año
         return $this->años[count($this->años) - 1];
     }
 
@@ -127,18 +153,15 @@ class Batimetria
     }
 
     public function interpolacionLineal($x, $tabla) {
-        // Convertir las claves del array a un array numérico y ordenarlas
         $x_values = array_keys($tabla);
         sort($x_values);
     
-        // Comprobar si el valor de x está fuera del rango de la tabla
         if ($x < min($x_values)) {
-            return reset($tabla); // Devolver el valor más bajo
+            return explode("-",reset($tabla)); 
         } elseif ($x > max($x_values)) {
-            return end($tabla); // Devolver el valor más alto
+            return explode("-",end($tabla)); 
         }
     
-        // Buscar los puntos más cercanos en la tabla
         $puntoAnterior = null;
         $puntoSiguiente = null;
         foreach ($x_values as $x_value) {
@@ -162,6 +185,43 @@ class Batimetria
         return array($Sup,$Vol);
     }
 
+    public function cotaMinima(){
+        return number_format(floatval($this->cota_min), 3, ".", "");;
+    }
+    public function cotaNormal(){
+        return number_format(floatval($this->cota_nor), 3, ".", "");;
+    }
+    public function cotaMaxima(){
+        return number_format(floatval($this->cota_max), 3, ".", "");;
+    }
+
+    public function superficieMinima(){
+        return $this->getByCota($this->getCloseYear(), $this->cotaMinima())[0];
+    }
+    public function superficieNormal(){
+        return $this->getByCota($this->getCloseYear(), $this->cotaNormal())[0];
+    }
+    public function superficieMaxima(){
+        return $this->getByCota($this->getCloseYear(), $this->cotaMaxima())[0];
+    }
+
+    public function volumenMinimo(){
+        return $this->getByCota($this->getCloseYear(), $this->cotaMinima())[1];
+    }
+    public function volumenNormal(){
+        return $this->getByCota($this->getCloseYear(), $this->cotaNormal())[1];
+    }
+    public function volumenMaximo(){
+        return $this->getByCota($this->getCloseYear(), $this->cotaMaxima())[1];
+    }
+
+    public function volumenDisponible(){
+        return $this->cota_last;
+    }
+
+    public function volumenDisponiblee(){
+        
+    }
 
     // public function AuxGetCloseCota($año, $cota)
     // {
