@@ -5,7 +5,7 @@
 
     $id_embalse = $_POST['id_embalse'];
 
-    $sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, GROUP_CONCAT(tipo_extraccion, '&', extraccion, '&', id_detalles_extraccion SEPARATOR ';') AS 'extraccion', (SELECT CONCAT(P_Nombre, ' ', P_Apellido) FROM usuarios u WHERE u.id_usuario = de.id_encargado) AS 'encargado'
+    $sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, GROUP_CONCAT(id_codigo_extraccion, '&', extraccion, '&', id_detalles_extraccion SEPARATOR ';') AS 'extraccion', (SELECT CONCAT(P_Nombre, ' ', P_Apellido) FROM usuarios u WHERE u.id_usuario = de.id_encargado) AS 'encargado'
             FROM datos_embalse de, detalles_extraccion dex
             WHERE de.id_registro = dex.id_registro AND id_embalse = '$id_embalse' AND de.estatus = 'activo'
             GROUP BY de.id_registro
@@ -22,9 +22,9 @@
                             <thead class="table-primary">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">#</th>
-                                    <th scope="col" class="sort" data-sort="name">Fecha y Hora</th>
-                                    <th scope="col" class="sort" data-sort="budget">Cota</th>
-                                    <th scope="col" class="sort" data-sort="budget">Extraccion (Hm<sup>3</sup>)</th>
+                                    <th scope="col" class="sort" data-sort="name">Fecha y Hora (00)</th>
+                                    <th scope="col" class="sort" data-sort="budget">Cota (01)</th>
+                                    <th scope="col" class="sort" data-sort="budget">Extraccion (Hm<sup>3</sup>) (23)</th>
                                     <th scope="col" class="sort" data-sort="budget">Cargado por</th>
                                     <th scope="col" style="min-width: 60px;"></th>
                                 </tr>

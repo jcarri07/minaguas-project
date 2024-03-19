@@ -18,13 +18,12 @@ $año = $y;
 $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
 if ($tipo == "bar") {
-    $res = mysqli_query($conn, "SELECT * FROM datos_embalse d, embalses e WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id' AND (DAY(d.fecha) = 1 OR DATE_FORMAT(d.fecha, '%Y-%m-%d') = DATE_FORMAT(LAST_DAY(fecha), '%Y-%m-%d')) GROUP BY d.fecha ORDER BY d.fecha ASC;");
+    $res = mysqli_query($conn, "SELECT * FROM datos_embalse d, embalses e WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id'  GROUP BY d.fecha ORDER BY d.fecha ASC;");
     $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
     $count = mysqli_num_rows($r);
     if ($count >= 1) {
 
-        $count = mysqli_num_rows($res);
-        if ($count >= 1) {
+
             function obtenerEtiquetas($y)
             {
 
@@ -100,75 +99,43 @@ if ($tipo == "bar") {
                     let cha = new Chart(chart, {
                         type: 'bar',
                         title: 'grafica',
-
-                        labels: label,
+                        //labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                         data: {
                             datasets: [
 
-                                {
-                                    label: 'Volumen inicio de mes',
-                                    tension: 0.4,
-                                    borderColor: '#4472c4',
-                                    backgroundColor: '#4472c4',
-                                    data: [
-                                        <?php
-                                        $min = $embalses[0]["cota_min"];
-                                        $max = $embalses[0]["cota_max"];
-                                        $j = 0;
-                                        $pivote = $y;
-                                        while ($j < (count($datos_embalses))) {
+                                <?php echo "{label:'Volumen del mes',data: [";
+                                $min = $embalses[0]["cota_min"];
+                                $max = $embalses[0]["cota_max"];
+                                $j = 0;
+                                $pivote = $y;
+                                while ($j < count($datos_embalses)) {
 
-                                            if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && $j % 2 == 0) {
+                                ?> {
+                                        x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                        y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                    },
+                                    <?php
+                                    if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                        $max = $datos_embalses[$j]["cota_actual"];
+                                    }
+                                    if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                        $min = $datos_embalses[$j]["cota_actual"];
+                                    } ?>
 
-                                                $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
+                                <?php
 
-                                                echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1]; ?>, <?php
 
-                                                                                                                        if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                                                                                                            $max = $datos_embalses[$j]["cota_actual"];
-                                                                                                                        }
-                                                                                                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                                                                                                            $min = $datos_embalses[$j]["cota_actual"];
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                    $j++;
-                                                                                                                };
-                                                                                                                        ?>
-                                    ],
+                                    $j++;
+                                };
+                                echo "]},";
+                                ?>
 
-                                }, {
-                                    label: 'Volumen fin de mes',
-                                    tension: 0.4,
-                                    borderColor: '#ed7d31',
-                                    backgroundColor: '#ed7d31',
-                                    data: [
-                                        <?php
-                                        $min = $embalses[0]["cota_min"];
-                                        $max = $embalses[0]["cota_max"];
-                                        $j = 0;
-                                        $pivote = $y;
-                                        while ($j < (count($datos_embalses))) {
 
-                                            if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && $j % 2 != 0) {
 
-                                                $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
-                                                echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1]; ?>, <?php
-
-                                                                                                                        if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                                                                                                            $max = $datos_embalses[$j]["cota_actual"];
-                                                                                                                        }
-                                                                                                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                                                                                                            $min = $datos_embalses[$j]["cota_actual"];
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                    $j++;
-                                                                                                                };
-                                                                                                                        ?>
-                                    ],
-                                },
                             ],
                         },
+
                         options: {
                             animations: true,
                             responsive: true,
@@ -179,19 +146,20 @@ if ($tipo == "bar") {
 
 
                                     lines: [{
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[0]["cota_min"])[1]; ?>,
+                                            yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_min"])[1], 2); ?>,
                                             cota: "Volumen minimo",
                                             color: 'black',
-                                            h: 15,
+                                            h: -15,
                                         },
                                         {
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[0]["cota_nor"])[1]; ?>,
+                                            yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_nor"])[1], 2); ?>,
                                             cota: "Volumen normal",
                                             color: 'black',
                                             h: 15,
+
                                         },
                                         {
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[0]["cota_max"])[1]; ?>,
+                                            yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_max"])[1], 2); ?>,
                                             cota: "Volumen maximo",
                                             color: 'black',
                                             h: -15,
@@ -213,7 +181,7 @@ if ($tipo == "bar") {
                                 },
                                 title: {
                                     display: false,
-                                    text: 'Embalse <?php echo $embalses[0]['nombre_embalse']; ?>',
+                                    text: 'Embalse',
                                     fullSize: true,
                                     font: {
                                         size: 30
@@ -224,61 +192,37 @@ if ($tipo == "bar") {
                             scales: {
 
                                 x: {
-                                    labels: label,
+                                    title: {
+                                        display: true,
+                                        text: 'Año <?php echo date('Y'); ?>',
+                                        font: {
+                                            size: 18
+                                        },
+                                    },
+                                    type: 'time',
+                                    time: {
+                                        unit: 'month'
+                                    },
+                                    min: '<?php echo $año; ?>-01',
+                                    max: '<?php echo $año; ?>-12',
 
-                                },
-                                x2: {
-                                    border: {
-                                        display: false,
+                                    ticks: {
+                                        callback: (value, index, ticks) => {
+
+                                            const date = new Date(value);
+                                            //console.log(date);
+                                            return new Intl.DateTimeFormat('es-ES', {
+                                                month: 'short',
+
+                                            }).format(value);
+                                        },
+                                        font: {
+                                            size: 18
+                                        },
                                     },
                                     grid: {
-                                        display: false,
+                                        color: function(context) {},
                                     },
-                                    labels: [
-                                        <?php $j = 0;
-                                        $pivote = $y;
-                                        while ($j < (24)) {
-                                            if ($j % 2 == 0 && $j < count($datos_embalses) && count($datos_embalses) % 2 == 0) {
-                                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
-
-                                                    $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
-                                                    if ($datos_embalses[$j + 1]["cota_actual"] != null && $datos_embalses[$j]["cota_actual"] != null) {
-                                                        echo "'Variacion:'";
-                                                    }; ?>, <?php
-                                                        };
-                                                    } else {
-                                                            ?>null, <?php
-                                                                };
-                                                                $j = $j + 2;
-                                                            }; ?>
-                                        ],
-                                },
-                                x3: {
-                                    border: {
-                                        display: false,
-                                    },
-                                    grid: {
-                                        display: false,
-                                    },
-                                    labels: [
-                                        <?php $j = 0;
-                                        $pivote = $y;
-                                        while ($j < (24)) {
-                                            if ($j % 2 == 0 && $j < count($datos_embalses) && count($datos_embalses) % 2 == 0) {
-                                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
-
-                                                    $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
-                                                    if ($datos_embalses[$j + 1]["cota_actual"] != null && $datos_embalses[$j]["cota_actual"] != null) {
-                                                        echo "'" . round($bati->getByCota($año, $datos_embalses[$j + 1]["cota_actual"])[1] - $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1], 2) . "Hm³'";
-                                                    }; ?>, <?php
-
-
-                                                        };
-                                                    } else { ?>null, <?php };
-                                                                    $j = $j + 2;
-                                                                };
-                                                                        ?>
-                                        ],
 
                                 },
 
@@ -291,14 +235,15 @@ if ($tipo == "bar") {
                                         },
                                     },
                                     min: <?php if ($min < $embalses[0]["cota_min"]) {
-                                                echo $bati->getByCota($año, $min)[1];
+                                                echo 0;
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1];
+                                                if($bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200 < 0){echo 0;}else{
+                                                    echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;}
                                             }; ?>,
                                     max: <?php if ($max > $embalses[0]["cota_max"]) {
                                                 echo $bati->getByCota($año, $max)[1] + 200;
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_max"])[1] + 200;
+                                                echo $bati->getByCota($año, $embalses[0]["cota_max"])[1] + 50;
                                             }; ?>,
                                     border: {
                                         display: false,
@@ -320,14 +265,7 @@ if ($tipo == "bar") {
                 });
             </script>
         <?php
-        } else {
 
-            echo '<div class="row justify-content-center align-items-center h-100">
-                    <div class="col-6 text-center">
-                        <h5 class="font-weight-bolder">Ningún Dato Seleccionado</h5>
-                    </div>
-                  </div>';
-        }
     } else {
         echo '<div class="row justify-content-center"><div class="col-6 text-center"><h5 class="font-weight-bolder">Error:Embalse inactivo o inexistente</h5></div></div>';
     }
@@ -447,7 +385,7 @@ if ($tipo == "line") {
                                             yvalue: <?php echo $bati->getByCota($año, $embalses[0]["cota_min"])[1]; ?>,
                                             cota: "Volumen minimo",
                                             color: 'black',
-                                            h: 15,
+                                            h: -15,
                                         },
                                         {
                                             yvalue: <?php echo $bati->getByCota($año, $embalses[0]["cota_nor"])[1]; ?>,
@@ -535,12 +473,12 @@ if ($tipo == "line") {
                                     min: <?php if ($min < $embalses[0]["cota_min"]) {
                                                 echo 0;
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;
+                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1];
                                             }; ?>,
                                     max: <?php if ($max > $embalses[0]["cota_max"]) {
                                                 echo $bati->getByCota($año, $max)[1] + 200;
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_max"])[1] + 200;
+                                                echo $bati->getByCota($año, $embalses[0]["cota_max"])[1] + 50;
                                             }; ?>,
                                     border: {
                                         display: false,

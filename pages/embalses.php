@@ -26,7 +26,7 @@ while ($row = mysqli_fetch_array($queryUsers)) {
 
 
 // $embalseBat = new Batimetria('1', $conn);
-// $cota = $embalseBat->getByCota("2015","267.50");
+// $cota = $embalseBat->getByCota("2015","210.455");
 // $year = $embalseBat->getCloseYear("2015");
 // $prueba = $embalseBat->getByCota("2001", 210.209);
 
@@ -183,7 +183,7 @@ closeConection($conn);
                       <td>
                         <div class="d-flex flex-column px-3">
                           <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
-                          <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
+                          <!-- <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span> -->
                         </div>
                       </td>
                       <td class="hide-cell">
@@ -277,7 +277,7 @@ closeConection($conn);
                         <td>
                           <div class="d-flex flex-column px-3">
                             <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
-                            <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span>
+                            <!-- <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span> -->
                           </div>
                         </td>
                         <td class="hide-cell">
@@ -519,10 +519,12 @@ closeConection($conn);
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
 
-  iniciarTabla('table-embalses');
-  if ($("#table-embalses-eliminados")) {
-    iniciarTabla('table-embalses-eliminados');
-  }
+  // iniciarTabla('table-embalses');
+  // if ($("#table-embalses-eliminados")) {
+  //   iniciarTabla('table-embalses-eliminados');
+  // }
+
+
   // $('#table-embalses').DataTable({
   //   dom: "<'top'<'d-flex align-items-center justify-content-between'lf>>rt<'bottom'<'d-flex flex-column align-items-center'ip>><'clear'>",
   //   language: {
@@ -554,7 +556,7 @@ closeConection($conn);
 
       // Obtener el valor del atributo data-id
       var id = $(this).data("id");
-      console.log(id)
+      // console.log(id)
       $.ajax({
         type: "POST",
         url: "pages/session_variable.php",
@@ -624,6 +626,11 @@ closeConection($conn);
         }
       });
     });
+
+    iniciarTabla('table-embalses');
+    if ($("#table-embalses-eliminados")) {
+      iniciarTabla('table-embalses-eliminados');
+    }
 
   });
 </script>

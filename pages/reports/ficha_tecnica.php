@@ -44,6 +44,23 @@ if (count($parts) >= 4) {
   echo "No se pudo obtener el nombre del proyecto desde la ruta.";
 }
 
+function formatoNumero($valor)
+{
+  if ($valor === null || $valor === '') {
+    return '';
+  }
+
+  $partes = explode(',', $valor);
+  $parteEntera = $partes[0];
+  $parteDecimal = isset($partes[1]) ? $partes[1] : '';
+
+  $parteEntera = preg_replace('/\B(?=(\d{3})+(?!\d))/', '.', $parteEntera);
+
+  $resultado = $parteEntera . ($parteDecimal !== '' ? ',' . substr(str_pad($parteDecimal, 3, '0'), 0, 3) : ',000');
+
+  return $resultado;
+}
+
 $srcLogo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
 $srcLogoLetters = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
 

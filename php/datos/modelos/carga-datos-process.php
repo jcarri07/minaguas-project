@@ -34,7 +34,7 @@
                 $tipo_extraccion_aux = $tipo_extraccion[$i];
                 $valor_extraccion_aux = $valor_extraccion[$i];
 
-                $sql = "INSERT INTO detalles_extraccion (tipo_extraccion, extraccion, id_registro, estatus) VALUES ('$tipo_extraccion_aux', '$valor_extraccion_aux', '$id_registro', 'activo');";
+                $sql = "INSERT INTO detalles_extraccion (id_codigo_extraccion, extraccion, id_registro, estatus) VALUES ('$tipo_extraccion_aux', '$valor_extraccion_aux', '$id_registro', 'activo');";
 
                 mysqli_query($conn, $sql);
             }
