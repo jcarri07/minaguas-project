@@ -304,17 +304,86 @@ $mapa = "../../assets/img/estatus_embalses.png";
           <th class="text-celd">HIDROLÓGICA</th>
         </tr>
         <tr>
-          <?php while ($row = mysqli_fetch_array($result)) { ?>
-             <td class="text-celd" style="font-size: 12px;"><?php echo $row['nombre_embalse']; ?> </td>
-             <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-             <td class="text-celd" style="font-size: 12px;"><?php echo $row['operador']; ?> </td>
-        <?php } ?>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
         </tr>
         <tr>
         <td class="text-celd total" ><b> TOTAL </b></td>
         <td class="text-celd total" colspan="2"><b></b> Embalses</td>
         </tr>
-      </table></div>
+      </table>
+    </div>
+
+     <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 560px;"><b>Normal Alto (60 % <  A  < 90 %) </b>
+
+      <table>
+        <tr>
+          <th class="text-celd">EMBALSE</th>
+          <th class="text-celd">VOL. DISP. (HM3)</th>
+          <th class="text-celd">HIDROLÓGICA</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd total" ><b> TOTAL </b></td>
+        <td class="text-celd total" colspan="2"><b></b> Embalses</td>
+        </tr>
+      </table>
+      </div>
+
+      <div style="page-break-before: always;"></div>
+      <div class="header" >    
+        <hr style="top: 55px; color:#1B569D">
+        <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+    </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 20px;"><b>Buena ( 90 % <  A  < 100 %) </b>
+
+        <table>
+        <tr>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">HIDROLÓGICA</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd total" ><b> TOTAL </b></td>
+        <td class="text-celd total" colspan="2"><b></b> Embalses</td>
+        </tr>
+        </table>
+        </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 560px;"><b>Condición de Alivio </b>
+
+        <table>
+        <tr>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">HIDROLÓGICA</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd total" ><b> TOTAL </b></td>
+        <td class="text-celd total" colspan="2"><b></b> Embalses</td>
+        </tr>
+        </table>
+        </div>
+
+
 
 </body>
 
