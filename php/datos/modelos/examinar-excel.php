@@ -6,6 +6,7 @@ require_once '../../../vendor/autoload.php';
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 
 if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
@@ -16,7 +17,66 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     $spreadsheet = IOFactory::load("temp/" . $nombre_archivo);
     $spreadsheet->setActiveSheetIndexByName($hoja);
 
-    echo $contenido_celda = $spreadsheet->getActiveSheet()->getCell('C9')->getValue();
+
+
+    $columna_inicio = "E";
+    $index_columna_inicio = Coordinate::columnIndexFromString($columna_inicio);
+    $columna_final = null;
+
+    $col =  $index_columna_inicio + 1;
+
+    while($col){
+        $letraColumna = Coordinate::stringFromColumnIndex($col);
+
+        if ($spreadsheet->getActiveSheet()->getCell($letraColumna . "8")->getValue() === null) {
+            //Se reduce el numero de la columna ya que cuando encuentra la columna vacia la ultima columna es la anterior a la vacia
+            //Ademas las otras dos son el nombre y fecha de quien reporto (por eso de reduce en 3)
+            $col = $col - 3;
+            break;
+        }
+        $col++;
+    }
+    $columna_final = Coordinate::stringFromColumnIndex($col);
+    $index_columna_final = Coordinate::columnIndexFromString($columna_final);
+
+    for($i = $index_columna_inicio; $i <= $index_columna_final ; $i++){
+        $letraColumna = Coordinate::stringFromColumnIndex($i);
+        //$celda_codigo = $spreadsheet->getActiveSheet()->getCell('J8')->getValue();
+        $celda_codigo = $spreadsheet->getActiveSheet()->getCell($letraColumna . '8')->getValue();
+
+        if(strpos($celda_codigo, "=") !== false) { 
+            $string = str_replace('=','', $celda_codigo);
+            $string = str_replace(' ', '', $string);
+            $array = explode('"', $string);
+
+
+            $array_codigo = $array[1];
+            $codigo = explode("(", $array_codigo);
+
+        }
+        else{
+            $array_codigo = explode("(", $celda_codigo);
+
+            $codigo = array();
+            array_push($codigo, "");
+            array_push($codigo, str_replace(')','', end($array_codigo)));
+            array_push($codigo, "");
+            
+            for($j = 0 ; $j < count($array_codigo) - 1 ; $j++){
+                $codigo[0] .= $array_codigo[$j];
+
+                if($j + 1 < count($array_codigo) - 1)
+                    $codigo[0] .= "(";
+            }
+        }
+
+        echo "columna: " . $letraColumna;
+        echo ", numero: " . str_replace(')','', $codigo[1]);
+        echo ", nombre codigo: " . $codigo[0];
+        echo "<br>";
+    }
+
+
 
     /*$excel = PHPExcel_IOFactory::load("temp/" . $nombre_archivo);
 
@@ -37,7 +97,7 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
         $ubicacion = 'temp/' . $name;
         move_uploaded_file($nombre_temporal, $ubicacion);
 
-        $excel = PHPExcel_IOFactory::load($ubicacion);
+        //$excel = PHPExcel_IOFactory::load($ubicacion);
 
 
         $spreadsheet = IOFactory::load($ubicacion);
