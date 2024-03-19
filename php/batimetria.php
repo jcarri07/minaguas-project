@@ -39,7 +39,7 @@ class Batimetria
         $this->cota_nor = $embalse['cota_nor'];
         $this->cota_max = $embalse['cota_max'];
 
-        $query = "SELECT * FROM datos_embalse WHERE id_embalse = $id_embalse ORDER BY fecha LIMIT 1";
+        $query = "SELECT fecha, hora, cota_actual FROM datos_embalse WHERE id_embalse = 1 ORDER BY fecha DESC, hora DESC LIMIT 1";
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {
