@@ -733,7 +733,6 @@
     function openModalAction(id_registro, action){
       $("#id_aux").text(id_registro);
       $("#opc_aux").text(action);
-
       $("#modal-action .message").html("<h4 class='text-center'>¿Desea Eliminar?</h4>");
       $("#modal-action").modal("show");
     }
