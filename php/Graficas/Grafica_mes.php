@@ -20,7 +20,16 @@ $año = $anio;
 
 $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
-$res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND id_embalse = '$id' AND YEAR(fecha) = '$y' GROUP BY fecha ORDER BY fecha ASC;");
+$res = mysqli_query($conn, "SELECT id_registro, d.fecha AS 'fecha', hora, cota_actual
+FROM datos_embalse d
+INNER JOIN (
+    SELECT fecha, MAX(hora) AS maxHora
+    FROM datos_embalse
+    WHERE estatus = 'activo' AND id_embalse = '$id'
+    GROUP BY fecha
+) AS grupo ON d.fecha = grupo.fecha AND d.hora = grupo.maxHora
+WHERE estatus = 'activo' AND id_embalse = '$id' AND YEAR(dfecha) = '$y' 
+ORDER BY d.fecha, d.hora DESC;");
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {

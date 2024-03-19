@@ -103,13 +103,13 @@ $i = 0; //indice arreglo de domingo
 $l = 0;
 $aux = 0;
 
-$r = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
+$r = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT cota_actual FROM datos_embalse WHERE id_embalse = e.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
 FROM  datos_embalse d
 RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
 WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 2 OR ( fecha = '$fecha1' AND DAYOFWEEK('$fecha1') != 2))
 GROUP BY fecha ORDER BY fecha;");
 
-$res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
+$res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT cota_actual FROM datos_embalse WHERE id_embalse = e.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
 FROM  datos_embalse d
 RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
 WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 1 OR ( fecha = '$fecha2' AND DAYOFWEEK('$fecha2') != 1))
