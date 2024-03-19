@@ -18,9 +18,9 @@ if (isset($_POST["Guardar"])) {
     // Obtener los datos del formulario
     $nombre_embalse = $_POST["embalse_nombre"];
     $nombre_presa = $_POST["presa_nombre"];
-    $estado = implode(",", $_POST["estado"]);
-    $municipio = implode(",", $_POST["municipio"]);
-    $parroquia = implode(",", $_POST["parroquia"]);
+    $estado = isset($_POST["estado"]) && !empty($_POST["estado"]) ? implode(",", $_POST["estado"]) : "";
+    $municipio = isset($_POST["municipio"]) && !empty($_POST["municipio"]) ? implode(",", $_POST["municipio"]) : "";
+    $parroquia = isset($_POST["parroquia"]) && !empty($_POST["parroquia"]) ? implode(",", $_POST["parroquia"]) : "";
     $norte = $_POST["norte"];
     $este = $_POST["este"];
     $huso = $_POST["huso"];
@@ -78,7 +78,10 @@ if (isset($_POST["Guardar"])) {
     $accion_conduccion = $_POST["accion_conduccion"];
     $proposito = $_POST["proposito"];
     $uso = $_POST["uso"];
-    $sectores = $_POST["sectores"];
+    // $sectores = $_POST["sectores"];
+    $sectores_estado = isset($_POST["sectoresEstado"]) && !empty($_POST["sectoresEstado"]) ? implode(",", $_POST["sectoresEstado"]) : "";
+    $sectores_municipio = isset($_POST["sectoresMunicipio"]) && !empty($_POST["sectoresMunicipio"]) ? implode(",", $_POST["sectoresMunicipio"]) : "";
+    $sectores_parroquia = isset($_POST["sectoresParroquia"]) && !empty($_POST["sectoresParroquia"]) ? implode(",", $_POST["sectoresParroquia"]) : "";
     $poblacion = $_POST["poblacion"];
     $area_riego = $_POST["area_riego"];
     $area_protegida = $_POST["area_protegida"];
@@ -97,6 +100,8 @@ if (isset($_POST["Guardar"])) {
     $imagen_uno_tmp = $_FILES["imagen_uno"]['tmp_name'];
     $imagen_dos = $_FILES["imagen_dos"]['name'];
     $imagen_dos_tmp = $_FILES["imagen_dos"]['tmp_name'];
+    $imagen_tres = $_FILES["imagen_tres"]['name'];
+    $imagen_tres_tmp = $_FILES["imagen_tres"]['tmp_name'];
 
     $archivo_bat_name = $_FILES["batimetria"]['name'];
     $archivo_batimetria = $_FILES["batimetria"]['tmp_name']; //Batimetria en excel";
@@ -104,6 +109,7 @@ if (isset($_POST["Guardar"])) {
     //ARCHIVOS DE IMAGEN
     $aux_uno = $imagen_uno;
     $aux_dos = $imagen_dos;
+    $aux_tres = $imagen_tres;
 
     if (!empty($imagen_uno) && count($_FILES["imagen_uno"]) > 0) {
         $i = 1;
@@ -131,6 +137,20 @@ if (isset($_POST["Guardar"])) {
         }
     } else {
         $imagen_dos = "";
+    }
+
+    if (!empty($imagen_tres) && count($_FILES["imagen_tres"]) > 0) {
+        $i = 1;
+        while (1) {
+            if (file_exists('../pages/reports_images/' . $imagen_tres)) {
+                $imagen_tres = $i . '-' . $aux_tres;
+                $i++;
+            } else {
+                break;
+            }
+        }
+    } else {
+        $imagen_tres = "";
     }
 
     //ARCHIVOS DE EXCEL BATIMETRIA
@@ -168,31 +188,31 @@ if (isset($_POST["Guardar"])) {
 
     if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
 
-        // if (false) {
-        //     $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
-
-        //     $cotas_embalse = array();
-        //     $num = 0;
-
-        //     foreach ($spreadsheet->getSheetNames() as $sheetName) {
-        //         $sheet = $spreadsheet->getSheetByName($sheetName);
-        //         $highestRow = $sheet->getHighestRow();
-
-        //         $cota_embalse = array();
-
-        //         for ($row = 2; $row <= $highestRow; $row++) {
-        //             $num++;
-        //             $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
-        //             $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
-        //             $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
-        //             $cota_embalse[$cota] = $area . "-" . $capacidad;
-        //         }
-
-        //         $cotas_embalse[$sheetName] = $cota_embalse;
-        //     }
-        // }
-
         if (true) {
+            $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
+
+            $cotas_embalse = array();
+            $num = 0;
+
+            foreach ($spreadsheet->getSheetNames() as $sheetName) {
+                $sheet = $spreadsheet->getSheetByName($sheetName);
+                $highestRow = $sheet->getHighestRow();
+
+                $cota_embalse = array();
+
+                for ($row = 2; $row <= $highestRow; $row++) {
+                    $num++;
+                    $cota = number_format($sheet->getCell('A'.$row)->getValue(), 3, '.', '');
+                    $area = $sheet->getCell('B'.$row)->getValue();
+                    $capacidad = $sheet->getCell('C'.$row)->getValue();
+                    $cota_embalse[$cota] = $area . "-" . $capacidad;
+                }
+
+                $cotas_embalse[$sheetName] = $cota_embalse;
+            }
+        }
+
+        if (false) {
             $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
 
             $cotas_embalse = array();
@@ -248,10 +268,10 @@ if (isset($_POST["Guardar"])) {
         $batimetria = json_encode($cotas_embalse);
     }
 
-    
+
     // ejecucion de la consulta
-    $consulta = "INSERT INTO embalses (nombre_embalse, nombre_presa, id_estado, id_municipio, id_parroquia, este, norte, huso, cuenca_principal, afluentes_principales, area_cuenca, escurrimiento_medio, ubicacion_embalse, organo_rector, personal_encargado, operador, autoridad_responsable, proyectista, constructor, inicio_construccion, duracion_de_construccion, inicio_de_operacion, monitoreo_del_embalse, batimetria, vida_util, cota_min, cota_nor, cota_max, vol_min, vol_nor, vol_max, sup_min, sup_nor, sup_max, numero_de_presas, tipo_de_presa, altura, talud_aguas_arriba, talud_aguas_abajo, longitud_cresta, cota_cresta, ancho_cresta, volumen_terraplen, ancho_base, ubicacion_aliviadero, tipo_aliviadero, numero_compuertas_aliviadero, carga_vertedero, descarga_maxima, longitud_aliviadero, ubicacion_toma, tipo_toma, numero_compuertas_toma, mecanismos_de_emergencia, mecanismos_de_regulacion, gasto_maximo, descarga_de_fondo, posee_obra, tipo_de_obra, accion_requerida, proposito, uso_actual, sectores_beneficiados, poblacion_beneficiada, area_de_riego_beneficiada, area_pretegida, poblacion_protegida, produccion_hidro f_cargo, f_cedula, f_nombres, f_apellidos, f_telefono, f_correo, imagen_uno, imagen_dos, id_encargado, estatus) 
-            VALUES ('$nombre_embalse', '$nombre_presa' ,'$estado', '$municipio' ,'$parroquia' ,'$este' ,'$norte' ,'$huso' ,'$cuenca', '$afluentes', '$area', '$escurrimiento', '$ubicacion_embalse', '$organo', '$personal', '$operador', '$autoridad', '$proyectista', '$constructor', '$inicio_construccion', '$duracion_construccion', '$inicio_operacion', '$monitoreo', '$batimetria', '$vida_util', '$cota_min', '$cota_nor', '$cota_max', '$volumen_min', '$volumen_nor', '$volumen_max', '$superficie_min', '$superficie_nor', '$superficie_max', '$numero_presas', '$tipo_presa', '$altura', '$talud_arriba', '$talud_abajo', '$longitud_cresta', '$cota_cresta', '$ancho_cresta', '$volumen_terraplen', '$ancho_base', '$ubicacion_aliviadero', '$tipo_aliviadero', '$numero_compuertas_aliviadero', '$carga_aliviadero', '$descarga_aliviadero', '$longitud_aliviadero', '$ubicacion_toma', '$tipo_toma', '$numero_compuertas_toma', '$emergencia_toma', '$regulacion_toma', '$gasto_toma', '$descarga_fondo', '$obra_conduccion', '$tipo_conduccion', '$accion_conduccion', '$proposito', '$uso', '$sectores', '$poblacion', '$area_riego', '$area_protegida', '$poblacion_protegida', '$produccion_hidro', '$f_cargo', '$f_cedula', '$f_nombres', '$f_apellidos', '$f_telefono', '$f_correo', '$imagen_uno', '$imagen_dos', '$responsable', 'activo')";
+    $consulta = "INSERT INTO embalses (nombre_embalse, nombre_presa, id_estado, id_municipio, id_parroquia, este, norte, huso, cuenca_principal, afluentes_principales, area_cuenca, escurrimiento_medio, ubicacion_embalse, organo_rector, personal_encargado, operador, autoridad_responsable, proyectista, constructor, inicio_construccion, duracion_de_construccion, inicio_de_operacion, monitoreo_del_embalse, batimetria, vida_util, cota_min, cota_nor, cota_max, vol_min, vol_nor, vol_max, sup_min, sup_nor, sup_max, numero_de_presas, tipo_de_presa, altura, talud_aguas_arriba, talud_aguas_abajo, longitud_cresta, cota_cresta, ancho_cresta, volumen_terraplen, ancho_base, ubicacion_aliviadero, tipo_aliviadero, numero_compuertas_aliviadero, carga_vertedero, descarga_maxima, longitud_aliviadero, ubicacion_toma, tipo_toma, numero_compuertas_toma, mecanismos_de_emergencia, mecanismos_de_regulacion, gasto_maximo, descarga_de_fondo, posee_obra, tipo_de_obra, accion_requerida, proposito, uso_actual, sectores_estado, sectores_municipio, sectores_parroquia, poblacion_beneficiada, area_de_riego_beneficiada, area_protegida, poblacion_protegida, produccion_hidro, f_cargo, f_cedula, f_nombres, f_apellidos, f_telefono, f_correo, imagen_uno, imagen_dos, imagen_tres, id_encargado, estatus) 
+            VALUES ('$nombre_embalse', '$nombre_presa' ,'$estado', '$municipio' ,'$parroquia' ,'$este' ,'$norte' ,'$huso' ,'$cuenca', '$afluentes', '$area', '$escurrimiento', '$ubicacion_embalse', '$organo', '$personal', '$operador', '$autoridad', '$proyectista', '$constructor', '$inicio_construccion', '$duracion_construccion', '$inicio_operacion', '$monitoreo', '$batimetria', '$vida_util', '$cota_min', '$cota_nor', '$cota_max', '$volumen_min', '$volumen_nor', '$volumen_max', '$superficie_min', '$superficie_nor', '$superficie_max', '$numero_presas', '$tipo_presa', '$altura', '$talud_arriba', '$talud_abajo', '$longitud_cresta', '$cota_cresta', '$ancho_cresta', '$volumen_terraplen', '$ancho_base', '$ubicacion_aliviadero', '$tipo_aliviadero', '$numero_compuertas_aliviadero', '$carga_aliviadero', '$descarga_aliviadero', '$longitud_aliviadero', '$ubicacion_toma', '$tipo_toma', '$numero_compuertas_toma', '$emergencia_toma', '$regulacion_toma', '$gasto_toma', '$descarga_fondo', '$obra_conduccion', '$tipo_conduccion', '$accion_conduccion', '$proposito', '$uso', '$sectores_estado', '$sectores_municipio', '$sectores_parroquia', '$poblacion', '$area_riego', '$area_protegida', '$poblacion_protegida', '$produccion_hidro', '$f_cargo', '$f_cedula', '$f_nombres', '$f_apellidos', '$f_telefono', '$f_correo', '$imagen_uno', '$imagen_dos', '$imagen_tres', '$responsable', 'activo')";
 
     $resultado = mysqli_query($conn, $consulta);
     if ($resultado) {
@@ -264,6 +284,10 @@ if (isset($_POST["Guardar"])) {
         if (!empty($imagen_dos) && count($_FILES["imagen_dos"]) > 0) {
 
             move_uploaded_file($imagen_dos_tmp, '../pages/reports_images/' . $imagen_dos);
+        }
+        if (!empty($imagen_tres) && count($_FILES["imagen_tres"]) > 0) {
+
+            move_uploaded_file($imagen_tres_tmp, '../pages/reports_images/' . $imagen_tres);
         }
 
 
@@ -281,9 +305,9 @@ if (isset($_POST["Update"])) {
     // Obtener los datos del formulario de edicion
     $nombre_embalse = $_POST["embalse_nombre"];
     $nombre_presa = $_POST["presa_nombre"];
-    $estado = implode(",", $_POST["estado"]);
-    $municipio = implode(",", $_POST["municipio"]);
-    $parroquia = implode(",", $_POST["parroquia"]);
+    $estado = isset($_POST["estado"]) && !empty($_POST["estado"]) ? implode(",", $_POST["estado"]) : "";
+    $municipio = isset($_POST["municipio"]) && !empty($_POST["municipio"]) ? implode(",", $_POST["municipio"]) : "";
+    $parroquia = isset($_POST["parroquia"]) && !empty($_POST["parroquia"]) ? implode(",", $_POST["parroquia"]) : "";
     $norte = $_POST["norte"];
     $este = $_POST["este"];
     $huso = $_POST["huso"];
@@ -341,7 +365,10 @@ if (isset($_POST["Update"])) {
     $accion_conduccion = $_POST["accion_conduccion"];
     $proposito = $_POST["proposito"];
     $uso = $_POST["uso"];
-    $sectores = $_POST["sectores"];
+    // $sectores = $_POST["sectores"];
+    $sectores_estado = isset($_POST["sectoresEstado"]) && !empty($_POST["sectoresEstado"]) ? implode(",", $_POST["sectoresEstado"]) : "";
+    $sectores_municipio = isset($_POST["sectoresMunicipio"]) && !empty($_POST["sectoresMunicipio"]) ? implode(",", $_POST["sectoresMunicipio"]) : "";
+    $sectores_parroquia = isset($_POST["sectoresParroquia"]) && !empty($_POST["sectoresParroquia"]) ? implode(",", $_POST["sectoresParroquia"]) : "";
     $poblacion = $_POST["poblacion"];
     $area_riego = $_POST["area_riego"];
     $area_protegida = $_POST["area_protegida"];
@@ -360,9 +387,12 @@ if (isset($_POST["Update"])) {
     $imagen_uno_tmp = $_FILES["imagen_uno"]['tmp_name'];
     $imagen_dos = $_FILES["imagen_dos"]['name'];
     $imagen_dos_tmp = $_FILES["imagen_dos"]['tmp_name'];
+    $imagen_tres = $_FILES["imagen_tres"]['name'];
+    $imagen_tres_tmp = $_FILES["imagen_tres"]['tmp_name'];
 
     $pre_imagen_uno = $_POST["pre_imagen_uno"];
     $pre_imagen_dos = $_POST["pre_imagen_dos"];
+    $pre_imagen_tres = $_POST["pre_imagen_tres"];
 
     $archivo_bat_name = $_FILES["batimetria"]['name'];
     $archivo_batimetria = $_FILES["batimetria"]['tmp_name']; //Batimetria en excel";
@@ -371,6 +401,7 @@ if (isset($_POST["Update"])) {
 
     $aux_uno = $imagen_uno;
     $aux_dos = $imagen_dos;
+    $aux_tres = $imagen_tres;
 
     $queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = $id_embalse");
     $embalse = mysqli_fetch_assoc($queryEmbalse);
@@ -411,37 +442,55 @@ if (isset($_POST["Update"])) {
         }
     }
 
+    if (!empty($imagen_tres) && count($_FILES["imagen_tres"]) > 0) {
+        $i = 1;
+        while (1) {
+            if (file_exists('../pages/reports_images/' . $imagen_tres)) {
+                $imagen_tres = $i . '-' . $aux_tres;
+                $i++;
+            } else {
+                break;
+            }
+        }
+    } else {
+        if ($pre_imagen_tres == "") {
+            $imagen_tres = "";
+        } else {
+            $imagen_tres = $embalse["imagen_tres"];
+        }
+    }
+
     $batimetria = "";
 
     if (!empty($archivo_bat_name) && count($_FILES["batimetria"]) > 0) {
 
-        // if (false) {
-        //     $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
-
-        //     $cotas_embalse = array();
-        //     $num = 0;
-
-        //     foreach ($spreadsheet->getSheetNames() as $sheetName) {
-        //         $sheet = $spreadsheet->getSheetByName($sheetName);
-        //         $highestRow = $sheet->getHighestRow();
-
-        //         $cota_embalse = array();
-
-        //         for ($row = 2; $row <= $highestRow; $row++) {
-        //             $num++;
-        //             $cota = number_format($sheet->getCellByColumnAndRow(1, $row)->getValue(), 3, '.', '');
-        //             $area = $sheet->getCellByColumnAndRow(2, $row)->getValue();
-        //             $capacidad = $sheet->getCellByColumnAndRow(3, $row)->getValue();
-        //             $cota_embalse[$cota] = $area . "-" . $capacidad;
-        //         }
-
-        //         $cotas_embalse[$sheetName] = $cota_embalse;
-        //     }
-
-        //     $batimetria = json_encode($cotas_embalse);
-        // }
-
         if (true) {
+            $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
+
+            $cotas_embalse = array();
+            $num = 0;
+
+            foreach ($spreadsheet->getSheetNames() as $sheetName) {
+                $sheet = $spreadsheet->getSheetByName($sheetName);
+                $highestRow = $sheet->getHighestRow();
+
+                $cota_embalse = array();
+
+                for ($row = 2; $row <= $highestRow; $row++) {
+                    $num++;
+                    $cota = number_format($sheet->getCell("A".$row)->getValue(), 3, '.', '');
+                    $area = $sheet->getCell("B".$row)->getValue();
+                    $capacidad = $sheet->getCell("C".$row)->getValue();
+                    $cota_embalse[$cota] = $area . "-" . $capacidad;
+                }
+
+                $cotas_embalse[$sheetName] = $cota_embalse;
+            }
+
+            $batimetria = json_encode($cotas_embalse);
+        }
+
+        if (false) {
             $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($archivo_batimetria);
 
             $cotas_embalse = array();
@@ -519,7 +568,7 @@ if (isset($_POST["Update"])) {
                     if ($row <= $highestRow) {
                         $row++;
                     }
-            }
+                }
 
                 $cotas_embalse[$sheetName] = $cota_embalse;
             }
@@ -598,7 +647,9 @@ if (isset($_POST["Update"])) {
     accion_requerida = '$accion_conduccion',
     proposito = '$proposito',
     uso_actual = '$uso',
-    sectores_beneficiados = '$sectores',
+    sectores_estado = '$sectores_estado',
+    sectores_municipio = '$sectores_municipio',
+    sectores_parroquia = '$sectores_parroquia',
     poblacion_beneficiada = '$poblacion',
     area_de_riego_beneficiada = '$area_riego',
     area_protegida = '$area_protegida',
@@ -612,6 +663,7 @@ if (isset($_POST["Update"])) {
     f_correo = '$f_correo',
     imagen_uno = '$imagen_uno',
     imagen_dos = '$imagen_dos',
+    imagen_tres = '$imagen_tres',
     id_encargado = '$responsable'
     WHERE id_embalse = '$id_embalse'";
 
@@ -625,6 +677,10 @@ if (isset($_POST["Update"])) {
         if (!empty($imagen_dos) && count($_FILES["imagen_dos"]) > 0) {
 
             move_uploaded_file($imagen_dos_tmp, '../pages/reports_images/' . $imagen_dos);
+        }
+        if (!empty($imagen_tres) && count($_FILES["imagen_tres"]) > 0) {
+
+            move_uploaded_file($imagen_tres_tmp, '../pages/reports_images/' . $imagen_tres);
         }
 
         echo "Los datos se actualizaron correctamente en la base de datos.";

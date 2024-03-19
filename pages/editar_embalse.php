@@ -14,7 +14,7 @@ if (isset($_SESSION['id_embalse'])) {
   $id_embalse = $_SESSION['id_embalse'];
   echo $id_embalse;
 }
-
+// var_dump($id_embalse);
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
 $queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = $id_embalse");
@@ -24,16 +24,37 @@ $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus =
 $embalse = mysqli_fetch_assoc($queryEmbalse);
 $idE = $embalse['id_estado'];
 $idM = $embalse['id_municipio'];
+$SeE = $embalse['sectores_estado'];
+$SeM = $embalse['sectores_municipio'];
 // $queryMunicipio = mysqli_query($conn, "SELECT * FROM municipios WHERE id_estado = $idE");
 // $queryParroquia = mysqli_query($conn, "SELECT * FROM parroquias WHERE id_municipio = $idM");
-
+if ($idE == "") {
+  $idE = 0;
+}
+if ($idM == "") {
+  $idM = 0;
+}
+if ($SeE == "") {
+  $SeE = 0;
+}
+if ($SeM == "") {
+  $SeM = 0;
+}
 $queryMunicipio = mysqli_query($conn, "SELECT * FROM municipios WHERE id_estado IN ($idE)");
 $queryParroquia = mysqli_query($conn, "SELECT * FROM parroquias WHERE id_municipio IN ($idM)");
+
+$querySectoresMunicipio = mysqli_query($conn, "SELECT * FROM municipios WHERE id_estado IN ($SeE)");
+$querySectoresParroquia = mysqli_query($conn, "SELECT * FROM parroquias WHERE id_municipio IN ($SeM)");
 
 
 $estados = explode(",", $embalse["id_estado"]);
 $municipios = explode(",", $embalse["id_municipio"]);
 $parroquias = explode(",", $embalse["id_parroquia"]);
+
+$sectores_estados = explode(",", $embalse["sectores_estado"]);
+$sectores_municipios = explode(",", $embalse["sectores_municipio"]);
+$sectores_parroquias = explode(",", $embalse["sectores_parroquia"]);
+// var_dump($sectores_parroquias);
 
 
 date_default_timezone_set("America/Caracas");
@@ -57,6 +78,10 @@ function formatoNumero($valor)
 ?>
 
 <link rel="stylesheet" href="./assets/css/nice-select2.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
+
 <style>
   @media (min-width: 1000px) {
     .p-5-lg {
@@ -64,9 +89,14 @@ function formatoNumero($valor)
     }
   }
 
-  #show-batimetria {
+  #show-batimetria,
+  #show-pre-batimetria {
     /* display: flex; */
     text-align: center;
+  }
+
+  #modal-body {
+    overflow-x: auto;
   }
 
   #modal-show {
@@ -150,16 +180,74 @@ function formatoNumero($valor)
     background: #c4c4c4;
   }
 
-  .group-estados, .group-municipios, .group-parroquias{
+  /* .group-estados,
+  .group-municipios,
+  .group-parroquias {
     position: relative;
   }
 
-  .label-estados, .label-municipios, .label-parroquias{
+  .label-estados,
+  .label-municipios,
+  .label-parroquias {
     position: absolute;
     right: 5px;
     bottom: -25px;
     color: gray;
     font-weight: normal;
+  } */
+
+  .label-estados,
+  .label-municipios,
+  .label-parroquias,
+  .label-estados-sectores,
+  .label-municipios-sectores,
+  .label-parroquias-sectores {
+    text-align: right;
+    color: gray;
+    font-weight: normal;
+  }
+
+  #modal-proposito,
+  #modal-uso {
+    z-index: 9999;
+  }
+
+  .map-visible {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #show-map {
+    background: lightgray;
+    transition-duration: .5s;
+    transition-property: background;
+  }
+
+  #close-map {
+    position: absolute;
+    top: -50px;
+    right: 20px;
+    /* transform: translate(-50%, -50%); */
+    z-index: 99999999;
+  }
+
+  #show-map:hover {
+    background: #c4c4c4;
+  }
+
+  .fade-in-image {
+    animation: fadeIn .8s;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
 </style>
 
@@ -307,7 +395,7 @@ function formatoNumero($valor)
                 </div>
                 <div class="form-group">
                   <label for="responsable">Responsable de la carga de datos</label>
-                  <select class="form-select" id="responsable" name="responsable">
+                  <select class="wide" id="responsable" name="responsable">
                     <option value=""></option>
                     <?php
                     while ($row1 = mysqli_fetch_array($queryResponsable)) {
@@ -319,8 +407,28 @@ function formatoNumero($valor)
                   </select>
                 </div>
               </div>
+
+              <div class="col-md-4 col-sm-12">
+                <div class=" form-group">
+                  <label for="norte">Norte</label>
+                  <div class="input-group">
+                    <!-- echo number_format(floatval($embalse["norte"]), 2, ',', '.'); -->
+                    <input value="<?php echo $embalse["norte"] ?>" type="text" class="form-control" id="norte" name="norte" placeholder="Norte">
+                    <span id="show-map" class="input-group-text  cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
+                  </div>
+                </div>
+                <div class=" form-group">
+                  <label for="este">Este</label>
+                  <input value="<?php echo $embalse["este"]; ?>" type="text" class="form-control" id="este" name="este" placeholder="Este">
+                </div>
+                <div class=" form-group">
+                  <label for="huso">Huso</label>
+                  <input value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control" id="huso" name="huso" placeholder="Huso">
+                </div>
+              </div>
+
               <div class="d-flex flex-column justify-content-between col-md-4 col-sm-12">
-                <div class="form-group group-estados">
+                <div class="form-group group-estados d-flex flex-column">
                   <label for="estado">Estados</label>
                   <select multiple class="border wide" id="estado" name="estado[]">
                     <!-- <option value=""></option> -->
@@ -336,9 +444,9 @@ function formatoNumero($valor)
                     }
                     ?>
                   </select>
-                  <label class="label-estados"><?php echo implode(", ", $cadena)?></label>
+                  <label class="label-estados"><?php echo implode(", ", $cadena) ?></label>
                 </div>
-                <div class="form-group group-municipios">
+                <div class="form-group group-municipios d-flex flex-column">
                   <label for="municipio">Municipios</label>
                   <select multiple class="border wide" id="municipio" name="municipio[]">
                     <!-- <option value=""></option> -->
@@ -354,9 +462,9 @@ function formatoNumero($valor)
                     }
                     ?>
                   </select>
-                  <label class="label-municipios"><?php echo implode(", ", $cadena)?></label>
+                  <label class="label-municipios"><?php echo implode(", ", $cadena) ?></label>
                 </div>
-                <div class="form-group group-parroquias">
+                <div class="form-group group-parroquias d-flex flex-column">
                   <label for="parroquia">Parroquias</label>
                   <select multiple class="border wide" id="parroquia" name="parroquia[]">
                     <!-- <option value=""></option> -->
@@ -372,21 +480,7 @@ function formatoNumero($valor)
                     }
                     ?>
                   </select>
-                  <label class="label-parroquias"><?php echo implode(", ", $cadena)?></label>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-12">
-                <div class=" form-group">
-                  <label for="norte">Norte</label>
-                  <input value="<?php echo number_format(floatval($embalse["norte"]), 2, ',', '.'); ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="norte" name="norte" placeholder="Norte">
-                </div>
-                <div class=" form-group">
-                  <label for="este">Este</label>
-                  <input value="<?php echo number_format(floatval($embalse["este"]), 2, ',', '.'); ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="este" name="este" placeholder="Este">
-                </div>
-                <div class=" form-group">
-                  <label for="huso">Huso</label>
-                  <input value="<?php echo $embalse["huso"]; ?>" type="text" pattern="[0-9.,]+" class="form-control numero" id="huso" name="huso" placeholder="Huso">
+                  <label class="label-parroquias"><?php echo implode(", ", $cadena) ?></label>
                 </div>
               </div>
             </div>
@@ -400,7 +494,7 @@ function formatoNumero($valor)
                     <label for="batimetria">Batimetría</label>
                     <div id="pre-bat" class="input-group">
                       <input type="text" class="form-control" id="" name="" placeholder="" value="<?php echo $embalse["nombre_embalse"] ?> :[ año - año ]"> <!--el que muestra la batimetria de la base de datos. -->
-                      <span id="show-pre-bat" class="input-group-text  cursor-pointer text-bold"><i class="fas fa-eye text-sm "></i></span>
+                      <span onclick="$('#show-pre-batimetria').modal('show');" id="show-pre-bat" class="input-group-text  cursor-pointer text-bold"><i class="fas fa-eye text-sm "></i></span>
                       <span id="change-bat" class="input-group-text  cursor-pointer text-bold"><i class="fas fa-trash text-sm me-1"></i></span>
                     </div>
                     <input hidden type="file" accept=".xlsx, .xls" class="form-control" id="batimetria" name="batimetria" placeholder=""> <!--el normal, el que carga la batimetria nueva. -->
@@ -425,50 +519,50 @@ function formatoNumero($valor)
 
                 <div class="form-group">
                   <label for="vida_util">Vida útil (años)</label>
-                  <input value="<?php echo $embalse["vida_util"]; ?>" type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
+                  <input value="<?php echo $embalse["vida_util"]; ?>" type="text" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
                 </div>
               </div>
 
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_min">Cota mínima (m s.m.n.)</label>
-                  <input value="<?php echo $embalse["cota_min"]; ?>" type="number" step="0.001" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
+                  <input value="<?php echo $embalse["cota_min"]; ?>" type="text" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_min">Volumen mínimo (hm³)</label>
-                  <input value="<?php echo $embalse["vol_min"]; ?>" type="number" step="0.001" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
+                  <input value="<?php echo $embalse["vol_min"]; ?>" type="text" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_min">Superficie mínima (ha)</label>
-                  <input value="<?php echo $embalse["sup_min"]; ?>" type="number" step="0.001" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
+                  <input value="<?php echo $embalse["sup_min"]; ?>" type="text" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_nor">Cota normal (m s.m.n.)</label>
-                  <input value="<?php echo $embalse["cota_nor"]; ?>" type="number" step="0.001" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
+                  <input value="<?php echo $embalse["cota_nor"]; ?>" type="text" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                 </div>
                 <div class=" form-group">
                   <label for="vol_nor">Volumen normal (hm³)</label>
-                  <input value="<?php echo $embalse["vol_nor"]; ?>" type="number" step="0.001" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
+                  <input value="<?php echo $embalse["vol_nor"]; ?>" type="text" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                 </div>
                 <div class=" form-group">
                   <label for="sup_nor">Superficie normal (ha)</label>
-                  <input value="<?php echo $embalse["sup_nor"]; ?>" type="number" step="0.001" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
+                  <input value="<?php echo $embalse["sup_nor"]; ?>" type="text" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_max">Cota máxima (m s.m.n.)</label>
-                  <input value="<?php echo $embalse["cota_max"]; ?>" type="number" step="0.001" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
+                  <input value="<?php echo $embalse["cota_max"]; ?>" type="text" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_max">Volumen máximo (hm³)</label>
-                  <input value="<?php echo $embalse["vol_max"]; ?>" type="number" step="0.001" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
+                  <input value="<?php echo $embalse["vol_max"]; ?>" type="text" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_max">Superficie máxima (ha)</label>
-                  <input value="<?php echo $embalse["sup_max"]; ?>" type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
+                  <input value="<?php echo $embalse["sup_max"]; ?>" type="text" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
                 </div>
               </div>
             </div>
@@ -477,7 +571,7 @@ function formatoNumero($valor)
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cap-util">Capacidad útil (hm³)</label>
-                  <input readonly type="number" step="0.001" class="form-control" id="cap-util" value="0">
+                  <input readonly type="text" class="form-control" id="cap-util" value="0">
                 </div>
               </div>
             </div>
@@ -495,11 +589,11 @@ function formatoNumero($valor)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area">Área de la cuenca (ha)</label>
-                <input value="<?php echo $embalse["area_cuenca"]; ?>" type="number" step="0.001" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
+                <input value="<?php echo $embalse["area_cuenca"]; ?>" type="text" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="escurrimiento">Escurrimiento medio (hm³)</label>
-                <input value="<?php echo $embalse["escurrimiento_medio"]; ?>" type="number" step="0.001" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
+                <input value="<?php echo $embalse["escurrimiento_medio"]; ?>" type="text" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
               </div>
             </div>
 
@@ -541,15 +635,15 @@ function formatoNumero($valor)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="inicio_construccion">Año de inicio de construccion</label>
-                <input value="<?php echo $embalse["inicio_construccion"]; ?>" type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
+                <input value="<?php echo $embalse["inicio_construccion"]; ?>" type="text" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="duracion_construccion">Duración de construcción (años)</label>
-                <input value="<?php echo $embalse["duracion_de_construccion"]; ?>" type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duración de construcción en años">
+                <input value="<?php echo $embalse["duracion_de_construccion"]; ?>" type="text" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duración de construcción en años">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="inicio_operacion">Inicio de operación (año)</label>
-                <input value="<?php echo $embalse["inicio_de_operacion"]; ?>" type="number" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operacion">
+                <input value="<?php echo $embalse["inicio_de_operacion"]; ?>" type="text" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operacion">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="monitoreo">Monitoreo de niveles del embalse</label>
@@ -562,7 +656,7 @@ function formatoNumero($valor)
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_presas">Número de presas</label>
-                <input value="<?php echo $embalse["numero_de_presas"]; ?>" type="number" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el número de presas">
+                <input value="<?php echo $embalse["numero_de_presas"]; ?>" type="text" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el número de presas">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="tipo_presa">Tipo de presa</label>
@@ -570,35 +664,35 @@ function formatoNumero($valor)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="altura">Altura (m)</label>
-                <input value="<?php echo $embalse["altura"]; ?>" type="number" step="0.001" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
+                <input value="<?php echo $embalse["altura"]; ?>" type="text" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="talud_arriba">Talud aguas arriba</label>
-                <input value="<?php echo $embalse["talud_aguas_arriba"]; ?>" type="number" step="0.001" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba">
+                <input value="<?php echo $embalse["talud_aguas_arriba"]; ?>" type="text" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="talud_abajo">Talud aguas abajo</label>
-                <input value="<?php echo $embalse["talud_aguas_abajo"]; ?>" type="number" step="0.001" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo">
+                <input value="<?php echo $embalse["talud_aguas_abajo"]; ?>" type="text" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="longitud_cresta">Longitud de la cresta (m)</label>
-                <input value="<?php echo $embalse["longitud_cresta"]; ?>" type="number" step="0.001" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
+                <input value="<?php echo $embalse["longitud_cresta"]; ?>" type="text" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="cota_cresta">Cota de la cresta (m s.m.n.)</label>
-                <input value="<?php echo $embalse["cota_cresta"]; ?>" type="number" step="0.001" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros">
+                <input value="<?php echo $embalse["cota_cresta"]; ?>" type="text" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ancho_cresta">Ancho de la cresta (m)</label>
-                <input value="<?php echo $embalse["ancho_cresta"]; ?>" type="number" step="0.001" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
+                <input value="<?php echo $embalse["ancho_cresta"]; ?>" type="text" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="volumen_terraplen">Volumen del terraplen (m³)</label>
-                <input value="<?php echo $embalse["volumen_terraplen"]; ?>" type="number" step="0.001" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
+                <input value="<?php echo $embalse["volumen_terraplen"]; ?>" type="text" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ancho_base">Ancho maximo de base (m)</label>
-                <input value="<?php echo $embalse["ancho_base"]; ?>" type="number" step="0.001" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
+                <input value="<?php echo $embalse["ancho_base"]; ?>" type="text" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
               </div>
             </div>
 
@@ -615,19 +709,19 @@ function formatoNumero($valor)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_compuertas_aliviadero">Numero de compuertas del aliviadero</label>
-                <input value="<?php echo $embalse["numero_compuertas_aliviadero"]; ?>" type="number" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el número de compuertas del aliviadero">
+                <input value="<?php echo $embalse["numero_compuertas_aliviadero"]; ?>" type="text" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el número de compuertas del aliviadero">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="carga_aliviadero">Carga sobre el vertedero (m)</label>
-                <input value="<?php echo $embalse["carga_vertedero"]; ?>" type="number" step="0.001" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
+                <input value="<?php echo $embalse["carga_vertedero"]; ?>" type="text" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="descarga_aliviadero">Descarga maxima (m³/s)</label>
-                <input value="<?php echo $embalse["descarga_maxima"]; ?>" type="number" step="0.001" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
+                <input value="<?php echo $embalse["descarga_maxima"]; ?>" type="text" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="longitud_aliviadero">Longitud (m)</label>
-                <input value="<?php echo $embalse["longitud_aliviadero"]; ?>" type="number" step="0.001" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud en metros">
+                <input value="<?php echo $embalse["longitud_aliviadero"]; ?>" type="text" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud en metros">
               </div>
             </div>
 
@@ -644,7 +738,7 @@ function formatoNumero($valor)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_compuertas_toma">Numero de compuertas de la obra de toma</label>
-                <input value="<?php echo $embalse["numero_compuertas_toma"]; ?>" type="number" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el número de compuertas de la obra de toma">
+                <input value="<?php echo $embalse["numero_compuertas_toma"]; ?>" type="text" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el número de compuertas de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
@@ -656,7 +750,7 @@ function formatoNumero($valor)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="gasto_toma">Gasto máximo de la obra de toma (m³/s)</label>
-                <input value="<?php echo $embalse["gasto_maximo"]; ?>" type="number" step="0.001" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto máximo de la obra de toma">
+                <input value="<?php echo $embalse["gasto_maximo"]; ?>" type="text" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto máximo de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="descarga_fondo">Descarga de fondo</label>
@@ -718,30 +812,85 @@ function formatoNumero($valor)
                   ?>
                 </div>
               </div>
-              <div class="col-xl-3 col-lg-6 form-group">
-                <label for="sectores">Sectores beneficiados</label>
-                <input value="<?php echo $embalse["sectores_beneficiados"]; ?>" type="text" class="form-control" id="sectores" name="sectores" placeholder="Ingrese los sectores beneficiados">
-              </div>
+
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="poblacion">Población beneficiada (hab.)</label>
-                <input value="<?php echo $embalse["poblacion_beneficiada"]; ?>" type="number" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la población beneficiada en habitantes">
+                <input value="<?php echo $embalse["poblacion_beneficiada"]; ?>" type="text" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la población beneficiada en habitantes">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area_riego">Área de riego beneficiada (ha)</label>
-                <input value="<?php echo $embalse["area_de_riego_beneficiada"]; ?>" type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
+                <input value="<?php echo $embalse["area_de_riego_beneficiada"]; ?>" type="text" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="area_riego">Área protegida (ha)</label>
-                  <input value="<?php echo $embalse["area_protegida"]; ?>" type="number" step="0.001" class="form-control" id="area_protegida" name="area_protegida" placeholder="Ingrese el area pretegida">
+                <label for="area_riego">Área protegida (ha)</label>
+                <input value="<?php echo $embalse["area_protegida"]; ?>" type="text" class="form-control" id="area_protegida" name="area_protegida" placeholder="Ingrese el area pretegida">
+              </div>
+              <div class="col-xl-3 col-lg-6 form-group">
+                <label for="area_riego">Población protegida (hab.)</label>
+                <input value="<?php echo $embalse["poblacion_protegida"]; ?>" type="text" class="form-control" id="poblacion_prote" name="poblacion_prote" placeholder="Ingrese la población protegida">
+              </div>
+              <div class="col-xl-3 col-lg-6 form-group">
+                <label for="area_riego">producción hidroeléctreica (MW)</label>
+                <input value="<?php echo $embalse["produccion_hidro"]; ?>" type="text" class="form-control" id="produccion_hidro" name="produccion_hidro" placeholder="Ingrese la producción hifroelectrica">
+              </div>
+              <div class="col-xl-9 col-lg-6 form-group">
+                <label class="" for="">Sectores beneficiados</label>
+                <div class="row">
+                  <div class="col-xl-4 col-md-6 d-flex flex-column" id="sectoresEstados">
+                    <select multiple class="border sectores-select" id="SectoresEstado" name="sectoresEstado[]">
+                      <?php
+                      $queryEstados->data_seek(0);
+                      $cadena = [];
+                      while ($row = mysqli_fetch_array($queryEstados)) {
+                      ?>
+                        <option <?php if (in_array($row["id_estado"], $sectores_estados)) {
+                                  echo "selected";
+                                  array_push($cadena, $row["estado"]);
+                                } ?> value="<?php echo $row['id_estado']; ?>"><?php echo $row['estado']; ?> </option>
+                      <?php
+                      }
+                      ?>
+                    </select>
+                    <label class="label-estados-sectores ml-auto"><?php echo implode(", ", $cadena) ?></label>
+                  </div>
+                  <div class="col-xl-4 col-md-6 d-flex flex-column" id="sectoresMunicipios">
+
+                    <select multiple class="border sectores-select" id="SectoresMunicipio" name="sectoresMunicipio[]">
+                      <?php
+                      $cadena = [];
+                      while ($row = mysqli_fetch_array($querySectoresMunicipio)) {
+                        var_dump(in_array($row["id_municipio"], $sectores_municipios));
+                      ?>
+                        <option <?php if (in_array($row["id_municipio"], $sectores_municipios)) {
+                                  echo "selected";
+                                  array_push($cadena, $row["municipio"]);
+                                } ?> value="<?php echo $row['id_municipio']; ?>"><?php echo $row['municipio']; ?> </option>
+                      <?php
+                      }
+                      ?>
+                    </select>
+                    <label class="label-municipios-sectores"><?php echo implode(", ", $cadena) ?></label>
+                  </div>
+                  <div class="col-xl-4 col-md-6 d-flex flex-column" id="sectoresParroquias">
+
+                    <select multiple class="border sectores-select" id="SectoresParroquia" name="sectoresParroquia[]">
+                      <?php
+                      $cadena = [];
+                      while ($row = mysqli_fetch_array($querySectoresParroquia)) {
+                        var_dump(in_array($row['id_parroquia'], $sectores_parroquias));
+                      ?>
+                        <option <?php if (in_array($row['id_parroquia'], $sectores_parroquias)) {
+                                  echo "selected";
+                                  array_push($cadena, $row["parroquia"]);
+                                } ?> value="<?php echo $row['id_parroquia']; ?>"><?php echo $row['parroquia']; ?> </option>
+                      <?php
+                      }
+                      ?>
+                    </select>
+                    <label class="label-parroquias-sectores"><?php echo implode(", ", $cadena) ?></label>
+                  </div>
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="area_riego">Población protegida (hab.)</label>
-                  <input value="<?php echo $embalse["poblacion_protegida"]; ?>" type="number" step="0.001" class="form-control" id="poblacion_prote" name="poblacion_prote" placeholder="Ingrese la población protegida">
-                </div>
-                <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="area_riego">producción hidroeléctreica (MW)</label>
-                  <input value="<?php echo $embalse["produccion_hidro"]; ?>" type="number" step="0.001" class="form-control" id="produccion_hidro" name="produccion_hidro" placeholder="Ingrese la producción hifroelectrica">
-                </div>
+              </div>
             </div>
 
             <h3 class="pb-3 pt-3">Responsable:</h3>
@@ -778,10 +927,12 @@ function formatoNumero($valor)
             <?php
             $url_uno = ($embalse["imagen_uno"] != null && $embalse["imagen_uno"] != "") ? "./pages/reports_images/" . $embalse["imagen_uno"] : "./assets/img/default-img.png";
             $url_dos = ($embalse["imagen_dos"] != null && $embalse["imagen_dos"] != "") ? "./pages/reports_images/" . $embalse["imagen_dos"] : "./assets/img/default-img.png";
+            $url_tres = ($embalse["imagen_tres"] != null && $embalse["imagen_tres"] != "") ? "./pages/reports_images/" . $embalse["imagen_tres"] : "./assets/img/default-img.png";
             ?>
 
             <input style="display: none;" value="<?php echo $embalse["imagen_uno"] ?>" type="text" class="form-control" id="imagen_uno-pre" name="pre_imagen_uno" placeholder="">
             <input style="display: none;" value="<?php echo $embalse["imagen_dos"] ?>" type="text" class="form-control" id="imagen_dos-pre" name="pre_imagen_dos" placeholder="">
+            <input style="display: none;" value="<?php echo $embalse["imagen_tres"] ?>" type="text" class="form-control" id="imagen_tres-pre" name="pre_imagen_tres" placeholder="">
 
 
             <div class="row">
@@ -806,6 +957,17 @@ function formatoNumero($valor)
                   </div>
                 </label>
                 <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_dos" name="imagen_dos" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
+              </div>
+              <div class="col-xl-6 col-lg-12 form-group">
+                <label style="width: 100%;" for="imagen_tres">Ubicación relativa de los componentes del embalse<br>
+                  <div style="width:100%; display:flex; justify-content:center;">
+                    <div style="height: 250px; width:300px;" class="my-3"><img src="<?php echo $url_tres ?>" id="imagen_tres-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
+                  </div>
+                  <div style="display: flex; justify-content:center;">
+                    <span class="mx-2"><a class="btn btn-primary">Subir archivo</a></span> <span><a id="imagen_tres-remove" class="btn btn-primary"><i class="fas fa-backspace text-lg me-1"></i></a></span>
+                  </div>
+                </label>
+                <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_tres" name="imagen_tres" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
               </div>
             </div>
 
@@ -1042,9 +1204,20 @@ function formatoNumero($valor)
     searchtext: 'buscar',
     selectedtext: 'parroquias seleccionadas'
   };
+  var optionsResponsable = {
+    searchable: true,
+    placeholder: 'Seleccionar responsable',
+    searchtext: 'buscar',
+    selectedtext: 'Responsable Seleccionado'
+  };
   EstadoSelect = NiceSelect.bind(document.getElementById("estado"), optionsEstados);
   MunicipioSelect = NiceSelect.bind(document.getElementById("municipio"), optionsMuni);
   ParroquiaSelect = NiceSelect.bind(document.getElementById("parroquia"), optionsParro);
+  ResponsableSelect = NiceSelect.bind(document.getElementById("responsable"), optionsResponsable);
+
+  SectoresEstado = NiceSelect.bind(document.getElementById("SectoresEstado"), optionsEstados);
+  SectoresMunicipio = NiceSelect.bind(document.getElementById("SectoresMunicipio"), optionsMuni);
+  SectoresParroquia = NiceSelect.bind(document.getElementById("SectoresParroquia"), optionsParro);
 
   var win = navigator.platform.indexOf('Win') > -1;
   if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -1152,8 +1325,60 @@ function formatoNumero($valor)
       </div>
       <div id="modal-body" class="modal-body">
         <div id="table-container" class="table-container">
-
         </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn bg-gradient-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="show-pre-batimetria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div id="modal-show" class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">COTAS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="modal-pre-body" class="modal-pre-body">
+        <div id="table-container" class="table-container">
+        </div>
+
+        <?php if ($embalse["batimetria"] != "") {
+          $pre_batimetria = json_decode($embalse["batimetria"], true);
+          // var_dump($pre_batimetria);
+          foreach ($pre_batimetria as $key => $anio) {
+
+
+        ?>
+            <div class="tabla">
+              <h3> <?php echo $key ?> </h3>
+              <table class="align-items-center mb-0 table-cota" border="1">
+                <tr>
+                  <th>Cota</th>
+                  <th>Área</th>
+                  <th>Capacidad</th>
+                </tr>
+                <?php
+                foreach ($anio as $key => $value) {
+                  $partes = explode("-", $value);
+                ?>
+                  <tr>
+                    <td><?php echo $key ?></td>
+                    <td><?php echo $partes[0] ?></td>
+                    <td><?php echo $partes[1] ?></td>
+                  </tr>
+                <?php }
+                ?>
+              </table>
+            </div>
+        <?php }
+        } ?>
 
       </div>
       <div class="modal-footer">
@@ -1187,6 +1412,7 @@ function formatoNumero($valor)
 
   previewImage("imagen_uno");
   previewImage("imagen_dos");
+  previewImage("imagen_tres");
 
 
   $(".down-bat").on("click", function() {
@@ -1275,8 +1501,8 @@ function formatoNumero($valor)
           //     c: 3
           //   })].v;
           //   cotaEmbalse[cota] = area + '-' + capacidad;
-          //   count++
-          //   if(count == 50) {row++; count = 0;}
+          //   // count++
+          //   // if(count == 50) {row++; count = 0;}
           // }
 
           let row = 1;
@@ -1284,45 +1510,45 @@ function formatoNumero($valor)
 
           while (row <= range.e.r) {
             // console.log(row);
-            for (let i = 0; i < 50; i++) {
-              if (row > range.e.r) {
-                break;
-              }
-              var cota = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 1
-              })].v.toFixed(3);
-              var area = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 2
-              })].v;
-              var capacidad = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 3
-              })].v;
-              cotaEmbalse[cota] = area + '-' + capacidad;
-              row++;
-            }
-            row = row - 50;
-            for (let i = 0; i < 50; i++) {
-              if (row > range.e.r) {
-                break;
-              }
-              var cota = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 5
-              })].v.toFixed(3);
-              var area = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 6
-              })].v;
-              var capacidad = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 7
-              })].v;
-              cotaEmbalse[cota] = area + '-' + capacidad;
-              row++;
-            }
+            // for (let i = 0; i < 50; i++) {
+            //   if (row > range.e.r) {
+            //     break;
+            //   }
+            var cota = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 0
+            })].v.toFixed(3);
+            var area = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 1
+            })].v;
+            var capacidad = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 2
+            })].v;
+            cotaEmbalse[cota] = area + '-' + capacidad;
+            row++;
+            // }
+            // row = row - 50;
+            // for (let i = 0; i < 50; i++) {
+            //   if (row > range.e.r) {
+            //     break;
+            //   }
+            //   var cota = worksheet[XLSX.utils.encode_cell({
+            //     r: row,
+            //     c: 5
+            //   })].v.toFixed(3);
+            //   var area = worksheet[XLSX.utils.encode_cell({
+            //     r: row,
+            //     c: 6
+            //   })].v;
+            //   var capacidad = worksheet[XLSX.utils.encode_cell({
+            //     r: row,
+            //     c: 7
+            //   })].v;
+            //   cotaEmbalse[cota] = area + '-' + capacidad;
+            //   row++;
+            // }
 
             if (row <= range.e.r) {
               row++;
@@ -1674,4 +1900,102 @@ function formatoNumero($valor)
   //   cursorPos--;
   // }
   // console.log(input);
+
+
+  // MAPA PARA EXTRAER EL NORTE, ESTE, HUSO
+  var map = L.map('map').setView([8, -66], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  var marker;
+
+  if ($("#norte").val() != "" && $("#este").val() != "" && $("#huso").val() != "") {
+    console.log("Hay coordenadas")
+    if (marker) {
+      // map.removeLayer(marker);
+    }
+
+    var norte = parseInt($("#norte").val(), 10)
+    var este = parseInt($("#este").val(), 10)
+    var huso = parseInt($("#huso").val(), 10)
+
+    var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
+    var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+    var latlng = proj4(utm, wgs84, [este, norte]);
+    var latitud = latlng[1];
+    var longitud = latlng[0];
+
+    marker = new L.marker([latitud, longitud]).addTo(map);
+  }
+
+  map.on('click', function(e) {
+
+    var latlng = e.latlng;
+    var latitud = latlng.lat;
+    var longitud = latlng.lng;
+
+    if (marker) {
+      // map.removeLayer(marker);
+      marker.remove()
+    }
+
+    marker = L.marker([latitud, longitud]).addTo(map);
+
+    console.log("Latitud: " + latitud + ", Longitud: " + longitud);
+
+    // Conversion de Coordenadas normales a UTM
+    var utmCoords = proj4(proj4.defs('EPSG:4326'), proj4.defs('EPSG:32600'), [longitud, latitud]);
+    var norte = utmCoords[1];
+    var este = utmCoords[0];
+    var huso = Math.floor((longitud + 180) / 6) + 1;
+
+    // Conversion de Coordenadas UTM a Normales
+    // var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
+    // var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+    // var latlng = proj4(utm, wgs84, [este, norte]);
+    // var latitud = latlng[1];
+    // var longitud = latlng[0];
+
+
+    // $("#norte").val(norte);
+    // $("#este").val(este);
+    // $("#huso").val(huso);
+
+    // console.log("Norte: " + norte + ", Este: " + este + ", Huso: " + huso);
+
+  });
+
+  $("#show-map").on('click', function() {
+    // $("#modal-map").modal('show');
+    removerClase($("#mapa"), "map-no-visible")
+    agregarClase($("#mapa"), "map-visible")
+    agregarClase($("#mapa"), "fade-in-image")
+
+    if (marker) {
+      // map.removeLayer(marker);
+      // marker.remove()
+    }
+
+    var norte = parseInt($("#norte").val(), 10)
+    var este = parseInt($("#este").val(), 10)
+    var huso = parseInt($("#huso").val(), 10)
+
+    var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
+    var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+    var latlng = proj4(utm, wgs84, [este, norte]);
+    var latitud = latlng[1];
+    var longitud = latlng[0];
+
+    // marker = L.marker([latitud, longitud]).addTo(map);
+    console.log("marcador agregado")
+  });
+
+  $("#close-map").on('click', function(e) {
+    e.preventDefault();
+    removerClase($("#mapa"), "map-visible")
+    removerClase($("#mapa"), "fade-in-image")
+    agregarClase($("#mapa"), "map-no-visible")
+  });
 </script>
