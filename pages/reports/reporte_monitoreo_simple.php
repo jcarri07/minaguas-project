@@ -166,7 +166,18 @@ $TITULO = "Gráfico de Monitoreo.";
         <h4 style="text-align: center; font-weight: bold; width: 1080px;"><?php echo $NOMBRE_EMBALSE; ?></h4>
     </div>
     <div style="height: 50px; top:xº 130px; position:absolute; left: 45px;">
-        <p style="font-size: 14px;"><br> Desde: <?php echo $FECHA_MONITOREO ?><br> <br> Hasta: <?php echo $FECHA_MONITOREO ?><br></p>
+        <table style="position: absolute; top: 160px;">
+            <tbody>
+                <tr>
+                    <th style="text-align: left;">Desde:</th>
+                    <td style="text-align: right;"><?php echo $FECHA_MONITOREO ?></td>
+                </tr>
+                <tr>
+                    <th style="text-align: left;">Hasta:</th>
+                    <td style="text-align: right;"><?php echo $FECHA_MONITOREO ?></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div style="width: 1050px;">
         <p style="position: absolute; text-align: center; top: 250px; width: 1050px;"><?php echo $TITULO ?></p>

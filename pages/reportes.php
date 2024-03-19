@@ -48,7 +48,7 @@ date_default_timezone_set("America/Caracas");
                   <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">NOMBRE DEL EMBALSE</th>
                   <th class="text-center text-secondary text-sm font-weight-bolder opacity-7 ps-2 hide-cell">AFLUENTES PRINCIPALES</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">FUNCIONARIO RESPONSABLE</th>
-                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7 hide-cell">USO ACTUAL</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7 hide-cell">RESPONSABLE</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">REPORTES</th>
                 </tr>
               </thead>
@@ -65,7 +65,7 @@ date_default_timezone_set("America/Caracas");
                       <span class="mb-0 text-sm font-weight-bolder"><?php echo $row['nombre_presa'] ?></span>
                     </td>
                     <td class="align-middle text-center w-20">
-                      <span class="text-secondary text-sm font-weight-bolder"><?php echo $row['uso_actual'] ?></span>
+                      <span class="text-secondary text-sm font-weight-bolder"><?php echo $row['autoridad_responsable'] ?></span>
                     </td>
                     <td class=" justify-content-center align-items-center" style="height: 80px;">
                       <div class="d-flex flex-column h-100">
