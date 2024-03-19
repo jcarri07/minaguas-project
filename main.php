@@ -56,7 +56,40 @@ date_default_timezone_set("America/Caracas");
   <script src="vendor/datatables/js/datatable-basic.init.js"></script>
 </head>
 
-<body class="g-sidenav-show   bg-gray-100 h-100">
+<style>
+  #mapa {
+    background: red;
+    height: 400px;
+    width: 80%;
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+    z-index: 9999999;
+  }
+
+  #map {
+    height: 400px;
+    width: 100%;
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    z-index: 99999;
+  }
+
+  .map-no-visible {
+    top: -50%;
+    left: -50%;
+  }
+</style>
+
+<body class="g-sidenav-show   bg-gray-100">
+  <div class="map-no-visible" id="mapa">
+    <div class="relative" id="map">
+      </div>
+      <a href="" id="close-map"><i style="font-size: 40px; color:black;" class="fa fa-window-close"></i></a>
+  </div>
+
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
   <?php include './pages/sidebar.php'; ?>
   <!-- <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">

@@ -19,7 +19,10 @@ if (!isset($_SESSION["Id_usuario"])) {
 date_default_timezone_set("America/Caracas");
 ?>
 
-
+<link rel="stylesheet" href="./assets/css/nice-select2.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
 <style>
   #show-batimetria {
     /* display: flex; */
@@ -114,6 +117,116 @@ date_default_timezone_set("America/Caracas");
     resize: none;
     overflow: auto;
   }
+
+  /* .group-estados,
+  .group-municipios,
+  .group-parroquias {
+    position: relative;
+  }
+
+  .label-estados,
+  .label-municipios,
+  .label-parroquias {
+    position: absolute;
+    right: 5px;
+    bottom: -25px;
+    color: gray;
+    font-weight: normal;
+  } */
+
+  .label-estados,
+  .label-municipios,
+  .label-parroquias,
+  .label-estados-sectores,
+  .label-municipios-sectores,
+  .label-parroquias-sectores {
+    text-align: right;
+    color: gray;
+    font-weight: normal;
+  }
+
+  .nice-select {
+    margin-top: 0px;
+    padding-top: 0px;
+    width: 100%;
+  }
+
+  .sectores-select {
+    /* width: 100%; */
+  }
+
+  select>.sectores-select {
+    /* width: 0%; */
+  }
+
+  #modal-proposito,
+  #modal-uso {
+    z-index: 9999;
+  }
+
+
+  #mapa{
+    background: red;
+    height: 400px;
+    width: 80%;
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+    z-index: 9999999;
+  }
+
+  #map {
+    height: 400px;
+    width: 100%;
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    z-index: 99999;
+  }
+
+  .map-no-visible {
+    top: -50%;
+    left: -50%;
+  }
+
+  .map-visible {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #show-map {
+    background: lightgray;
+    transition-duration: .5s;
+    transition-property: background;
+  }
+
+  #close-map {
+    position: absolute;
+    top: -50px;
+    right: 20px;
+    /* transform: translate(-50%, -50%); */
+    z-index: 99999999;
+  }
+
+  #show-map:hover {
+    background: #c4c4c4;
+  }
+
+  .fade-in-image {
+    animation: fadeIn .8s;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
 </style>
 
 
@@ -141,7 +254,7 @@ date_default_timezone_set("America/Caracas");
     </nav>-->
 <!-- End Navbar -->
 <div class="container-fluid py-4">
-  <div class="row">
+  <div class="">
     <!--<div class="col-lg-8">
           <div class="row">
             <div class="col-xl-6 mb-xl-0 mb-4">
@@ -238,7 +351,7 @@ date_default_timezone_set("America/Caracas");
             </div>
           </div>
         </div>-->
-    <div class="col-lg-12">
+    <div class="">
       <div class="card h-100">
         <!-- inicio -->
         <div id="form-contenedor">
@@ -247,19 +360,22 @@ date_default_timezone_set("America/Caracas");
 
               <h3 class="pb-3">Información principal:</h3>
 
+
+
               <div class="row">
+
                 <div class="col-md-4 col-sm-12">
                   <div class="form-group">
                     <label for="embalse_nombre">Nombre del embalse</label>
-                    <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nomnbre del embalse" required>
+                    <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nombre del embalse" required>
                   </div>
                   <div class="form-group">
                     <label for="presa_nombre">Nombre de la presa</label>
-                    <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nomnbre de la presa">
+                    <input type="text" class="form-control" id="presa_nombre" name="presa_nombre" placeholder="Ingrese el nombre de la presa">
                   </div>
                   <div class="form-group">
                     <label for="responsable">Responsable de la carga de datos</label>
-                    <select class="form-select" id="responsable" name="responsable">
+                    <select class="wide" id="responsable" name="responsable">
                       <option value=""></option>
                       <?php
                       while ($row1 = mysqli_fetch_array($queryResponsable)) {
@@ -271,10 +387,29 @@ date_default_timezone_set("America/Caracas");
                     </select>
                   </div>
                 </div>
+
                 <div class="col-md-4 col-sm-12">
-                  <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <select class="form-select" id="estado" name="estado" required>
+                  <div class=" form-group">
+                    <label for="norte">Norte</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="norte" name="norte" placeholder="Norte">
+                      <span id="show-map" class="input-group-text  cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
+                    </div>
+                  </div>
+                  <div class=" form-group">
+                    <label for="este">Este</label>
+                    <input type="text" class="form-control" id="este" name="este" placeholder="Este">
+                  </div>
+                  <div class=" form-group">
+                    <label for="huso">Huso</label>
+                    <input type="text" class="form-control" id="huso" name="huso" placeholder="Huso">
+                  </div>
+                </div>
+
+                <div class=" d-flex flex-column justify-content-between col-md-4 col-sm-12 ">
+                  <div class="form-group group-estados d-flex flex-column">
+                    <label for="estado">Estados</label>
+                    <select multiple class="border wide" id="estado" name="estado[]">
                       <option value=""></option>
                       <?php
                       while ($row = mysqli_fetch_array($queryEstados)) {
@@ -284,36 +419,26 @@ date_default_timezone_set("America/Caracas");
                       }
                       ?>
                     </select>
+                    <label class="label-estados"></label>
                   </div>
-                  <div class="form-group">
-                    <label for="municipio">Municipio</label>
-                    <select class="form-select" id="municipio" name="municipio" required>
+                  <div class="form-group group-municipios d-flex flex-column">
+                    <label for="municipio">Municipios</label>
+                    <select multiple class="border wide" id="municipio" name="municipio[]">
                       <option value=""></option>
                     </select>
+                    <label class="label-municipios"></label>
                   </div>
-                  <div class="form-group">
-                    <label for="parroquia">Parroquia</label>
-                    <select class="form-select" id="parroquia" name="parroquia" required>
+                  <div class="form-group group-parroquias d-flex flex-column">
+                    <label for="parroquia">Parroquias</label>
+                    <select multiple class="border wide" id="parroquia" name="parroquia[]">
                       <option value=""></option>
                     </select>
+                    <label class="label-parroquias"></label>
                   </div>
                 </div>
 
-                <div class="col-md-4 col-sm-12">
-                  <div class=" form-group">
-                    <label for="norte">Norte</label>
-                    <input type="number" step="0.001" class="form-control" id="norte" name="norte" placeholder="Norte">
-                  </div>
-                  <div class=" form-group">
-                    <label for="este">Este</label>
-                    <input type="number" step="0.001" class="form-control" id="este" name="este" placeholder="Este">
-                  </div>
-                  <div class=" form-group">
-                    <label for="huso">Huso</label>
-                    <input type="number" step="0.001" class="form-control" id="huso" name="huso" placeholder="Huso">
-                  </div>
-                </div>
               </div>
+
 
               <h3 class="pb-3 pt-3">Características del embase:</h3>
 
@@ -336,43 +461,43 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cota_min">Cota mínima (m s.m.n.)</label>
-                    <input type="number" step="0.001" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
+                    <input type="text" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
                   </div>
                   <div class=" form-group">
                     <label for="vol_min">Volumen mínimo (hm³)</label>
-                    <input type="number" step="0.001" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
+                    <input type="text" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                   </div>
                   <div class=" form-group">
                     <label for="sup_min">Superficie mínima (ha)</label>
-                    <input type="number" step="0.001" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
+                    <input type="text" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cota_nor">Cota normal (m s.m.n.)</label>
-                    <input type="number" step="0.001" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
+                    <input type="text" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                   </div>
                   <div class=" form-group">
                     <label for="vol_nor">Volumen normal (hm³)</label>
-                    <input type="number" step="0.001" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
+                    <input type="text" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                   </div>
                   <div class=" form-group">
                     <label for="sup_nor">Superficie normal (ha)</label>
-                    <input type="number" step="0.001" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
+                    <input type="text" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cota_max">Cota máxima (m s.m.n.)</label>
-                    <input type="number" step="0.001" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
+                    <input type="text" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                   </div>
                   <div class=" form-group">
                     <label for="vol_max">Volumen máximo (hm³)</label>
-                    <input type="number" step="0.001" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
+                    <input type="text" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                   </div>
                   <div class=" form-group">
                     <label for="sup_max">Superficie máxima (ha)</label>
-                    <input type="number" step="0.001" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
+                    <input type="text" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
                   </div>
                 </div>
               </div>
@@ -381,7 +506,7 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cap-util">Capacidad útil (hm³)</label>
-                    <input readonly type="number" step="0.001" class="form-control" id="cap-util" value="0">
+                    <input readonly type="text" class="form-control" id="cap-util" value="0">
                   </div>
                 </div>
               </div>
@@ -399,11 +524,11 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="area">Área de la cuenca (ha)</label>
-                  <input type="number" step="0.001" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
+                  <input type="text" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="escurrimiento">Escurrimiento medio (hm³)</label>
-                  <input type="number" step="0.001" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
+                  <input type="text" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
                 </div>
               </div>
 
@@ -427,35 +552,35 @@ date_default_timezone_set("America/Caracas");
               </div>
 
               <div class="row">
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="operador">Operador</label>
                   <input type="text" class="form-control" id="operador" name="operador" placeholder="Ingrese el operador">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="autoridad">Autoridad responsable del embalse</label>
                   <input type="text" class="form-control" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="proyectista">Proyectista</label>
                   <input type="text" class="form-control" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="constructor">Constructor</label>
                   <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Ingrese el constructor">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="inicio_construccion">Año de inicio de construccion</label>
-                  <input type="number" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
+                  <input type="text" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="duracion_construccion">Duración de construcción (años)</label>
-                  <input type="number" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duracion de construcción en años">
+                  <input type="text" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duracion de construcción en años">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="inicio_operacion">Inicio de operación (año)</label>
-                  <input type="number" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operación">
+                  <input type="text" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operación">
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
+                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="monitoreo">Monitoreo de niveles del embalse</label>
                   <input type="text" class="form-control" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
                 </div>
@@ -467,7 +592,7 @@ date_default_timezone_set("America/Caracas");
               <div class="row">
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="numero_presas">Número de presas</label>
-                  <input type="number" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el número de presas">
+                  <input type="text" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el número de presas">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="tipo_presa">Tipo de presa</label>
@@ -475,35 +600,35 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="altura">Altura (m)</label>
-                  <input type="number" step="0.001" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
+                  <input type="text" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="talud_arriba">Talud aguas arriba</label>
-                  <input type="number" step="0.001" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba">
+                  <input type="text" class="form-control" id="talud_arriba" name="talud_arriba" placeholder="Ingrese el talud aguas arriba">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="talud_abajo">Talud aguas abajo</label>
-                  <input type="number" step="0.001" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo">
+                  <input type="texto" class="form-control" id="talud_abajo" name="talud_abajo" placeholder="Ingrese el talud aguas abajo">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="longitud_cresta">Longitud de la cresta (m)</label>
-                  <input type="number" step="0.001" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
+                  <input type="text" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="cota_cresta">Cota de la cresta (m s.m.n.)</label>
-                  <input type="number" step="0.001" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros">
+                  <input type="text" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="ancho_cresta">Ancho de la cresta (m)</label>
-                  <input type="number" step="0.001" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
+                  <input type="text" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="volumen_terraplen">Volumen del terraplen (m³)</label>
-                  <input type="number" step="0.001" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
+                  <input type="text" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="ancho_base">Ancho maximo de base (m)</label>
-                  <input type="number" step="0.001" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
+                  <input type="text" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
                 </div>
               </div>
 
@@ -520,19 +645,19 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="numero_compuertas_aliviadero">Numero de compuertas del aliviadero</label>
-                  <input type="number" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el numero de compuertas del aliviadero">
+                  <input type="text" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el numero de compuertas del aliviadero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="carga_aliviadero">Carga sobre el vertedero (m)</label>
-                  <input type="number" step="0.001" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
+                  <input type="text" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="descarga_aliviadero">Descarga maxima (m³/s)</label>
-                  <input type="number" step="0.001" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
+                  <input type="text" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="longitud_aliviadero">Longitud (m)</label>
-                  <input type="number" step="0.001" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud">
+                  <input type="text" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud">
                 </div>
               </div>
 
@@ -549,7 +674,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="numero_compuertas_toma">Numero de compuertas de la obra de toma</label>
-                  <input type="number" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el número de compuertas de la obra de toma">
+                  <input type="text" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el número de compuertas de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
@@ -561,7 +686,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="gasto_toma">Gasto máximo de la obra de toma (m³/s)</label>
-                  <input type="number" step="0.001" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto máximo de la obra de toma">
+                  <input type="text" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto máximo de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="descarga_fondo">Descarga de fondo</label>
@@ -621,17 +746,62 @@ date_default_timezone_set("America/Caracas");
                     ?>
                   </div>
                 </div>
-                <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="sectores">Sectores beneficiados</label>
-                  <input type="text" class="form-control" id="sectores" name="sectores" placeholder="Ingrese los sectores beneficiados">
-                </div>
+
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="poblacion">Población beneficiada (hab.)</label>
-                  <input type="number" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la población beneficiada en habitantes">
+                  <input type="text" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la población beneficiada en habitantes">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="area_riego">Área de riego beneficiada (ha)</label>
-                  <input type="number" step="0.001" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
+                  <input type="text" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">Área protegida (ha)</label>
+                  <input type="text" class="form-control" id="area_protegida" name="area_protegida" placeholder="Ingrese el area pretegida">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">Población protegida (hab.)</label>
+                  <input type="text" class="form-control" id="poblacion_prote" name="poblacion_prote" placeholder="Ingrese la población protegida">
+                </div>
+                <div class="col-xl-3 col-lg-6 form-group">
+                  <label for="area_riego">producción hidroeléctreica (MW)</label>
+                  <input type="text" class="form-control" id="produccion_hidro" name="produccion_hidro" placeholder="Ingrese la producción hifroelectrica">
+                </div>
+                <?php
+                $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
+                ?>
+                <div class="col-xl-9 col-lg-6 form-group">
+                  <label class="" for="">Sectores beneficiados</label>
+                  <div class="row">
+                    <div class="col-xl-4 col-md-6 d-flex flex-column" id="sectoresEstados">
+                      <select multiple class="border sectores-select" id="SectoresEstado" name="sectoresEstado[]">
+                        <option value=""></option>
+                        <?php
+
+                        while ($row = mysqli_fetch_array($queryEstados)) {
+                        ?>
+                          <option value="<?php echo $row['id_estado']; ?>"><?php echo $row['estado']; ?></option>
+                        <?php
+                        }
+                        ?>
+                      </select>
+                      <label class="label-estados-sectores ml-auto"></label>
+                    </div>
+                    <div class="col-xl-4 col-md-6 d-flex flex-column" id="sectoresMunicipios">
+
+                      <select multiple class="border sectores-select" id="SectoresMunicipio" name="sectoresMunicipio[]">
+                        <option value=""></option>
+                      </select>
+                      <label class="label-municipios-sectores"></label>
+                    </div>
+                    <div class="col-xl-4 col-md-6 d-flex flex-column" id="sectoresParroquias">
+
+                      <select multiple class="border sectores-select" id="SectoresParroquia" name="sectoresParroquia[]">
+                        <option value=""></option>
+                      </select>
+                      <label class="label-parroquias-sectores"></label>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -667,8 +837,8 @@ date_default_timezone_set("America/Caracas");
               <h3 class="pb-3 pt-3">Carga de imágenes:</h3>
 
               <div class="row">
-                <div class="col-xl-6 col-lg-12 form-group">
-                  <label style="width: 100%;" for="imagen_uno">Ubicación relativa Estado/Municipio/Región hidrográfica<br>
+                <div class="col-xl-4 col-md-6 col-lg-12 form-group">
+                  <label style="width: 100%;" for="imagen_uno" class="text-center">Ubicación relativa Estado/Municipio/Región hidrográfica<br>
                     <div style="width:100%; display:flex; justify-content:center;">
                       <div style="height: 250px; width:300px;" class="my-3"><img src="./assets/img/default-img.png" id="imagen_uno-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
                     </div>
@@ -678,8 +848,8 @@ date_default_timezone_set("America/Caracas");
                   </label>
                   <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_uno" name="imagen_uno" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
                 </div>
-                <div class="col-xl-6 col-lg-12 form-group">
-                  <label style="width: 100%;" for="imagen_dos">Ubicación relativa de los componentes del embalse<br>
+                <div class="col-xl-4 col-md-6 col-lg-12 form-group">
+                  <label style="width: 100%;" for="imagen_dos" class="text-center">Ubicación relativa de los componentes del embalse<br>
                     <div style="width:100%; display:flex; justify-content:center;">
                       <div style="height: 250px; width:300px;" class="my-3"><img src="./assets/img/default-img.png" id="imagen_dos-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
                     </div>
@@ -688,6 +858,17 @@ date_default_timezone_set("America/Caracas");
                     </div>
                   </label>
                   <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_dos" name="imagen_dos" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
+                </div>
+                <div class="col-xl-4 col-md-6 col-lg-12 form-group">
+                  <label style="width: 100%;" for="imagen_tres" class="text-center">Area de la cuenca<br>
+                    <div style="width:100%; display:flex; justify-content:center;">
+                      <div style="height: 250px; width:300px;" class="my-3"><img src="./assets/img/default-img.png" id="imagen_tres-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
+                    </div>
+                    <div style="display: flex; justify-content:center;">
+                      <span class="mx-2"><a class="btn btn-primary">Subir archivo</a></span> <span><a id="imagen_tres-remove" class="btn btn-primary"><i class="fas fa-backspace text-lg me-1"></i></a></span>
+                    </div>
+                  </label>
+                  <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_tres" name="imagen_tres" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
                 </div>
               </div>
 
@@ -722,12 +903,54 @@ date_default_timezone_set("America/Caracas");
       </div>
     </div>
   </div>
-  
+
 </div>
 
 
 <script src="assets/js/get-ubication-select.js"></script>
+<script src="./assets/js/nice-select2.js"></script>
+
 <script>
+  // var options = {
+  //   searchable: true
+  // };
+  // NiceSelect.bind(document.getElementById("estado"), options);
+  // NiceSelect.bind(document.getElementById("estado"));
+
+  var optionsEstados = {
+    searchable: true,
+    placeholder: 'Seleccionar estados',
+    searchtext: 'buscar',
+    selectedtext: 'estados seleccionados'
+  };
+  var optionsMuni = {
+    searchable: true,
+    placeholder: 'Seleccionar municipios',
+    searchtext: 'buscar',
+    selectedtext: 'municipios seleccionados'
+  };
+  var optionsParro = {
+    searchable: true,
+    placeholder: 'Seleccionar parroquias',
+    searchtext: 'buscar',
+    selectedtext: 'parroquias seleccionadas'
+  };
+  var optionsResponsable = {
+    searchable: true,
+    placeholder: 'Seleccionar responsable',
+    searchtext: 'buscar',
+    selectedtext: 'Responsable Seleccionado'
+  };
+  EstadoSelect = NiceSelect.bind(document.getElementById("estado"), optionsEstados);
+  MunicipioSelect = NiceSelect.bind(document.getElementById("municipio"), optionsMuni);
+  ParroquiaSelect = NiceSelect.bind(document.getElementById("parroquia"), optionsParro);
+  ResponsableSelect = NiceSelect.bind(document.getElementById("responsable"), optionsResponsable);
+
+  SectoresEstado = NiceSelect.bind(document.getElementById("SectoresEstado"), optionsEstados);
+  SectoresMunicipio = NiceSelect.bind(document.getElementById("SectoresMunicipio"), optionsMuni);
+  SectoresParroquia = NiceSelect.bind(document.getElementById("SectoresParroquia"), optionsParro);
+
+
   var win = navigator.platform.indexOf('Win') > -1;
   if (win && document.querySelector('#sidenav-scrollbar')) {
     var options = {
@@ -846,6 +1069,28 @@ date_default_timezone_set("America/Caracas");
 </div>
 </div>
 
+<!-- //modal mapa
+  <div class="modal fade" id="modal-map" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="map"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+</div>
+
+
 <script src="./assets/js/xlsx.full.min.js"></script>
 <script>
   var batimetria = document.getElementById('batimetria');
@@ -922,45 +1167,45 @@ date_default_timezone_set("America/Caracas");
 
           while (row <= range.e.r) {
             // console.log(row);
-            for (let i = 0; i < 50; i++) {
-              if (row > range.e.r) {
-                break;
-              }
-              var cota = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 1
-              })].v.toFixed(3);
-              var area = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 2
-              })].v;
-              var capacidad = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 3
-              })].v;
-              cotaEmbalse[cota] = area + '-' + capacidad;
-              row++;
-            }
-            row = row - 50;
-            for (let i = 0; i < 50; i++) {
-              if (row > range.e.r) {
-                break;
-              }
-              var cota = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 5
-              })].v.toFixed(3);
-              var area = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 6
-              })].v;
-              var capacidad = worksheet[XLSX.utils.encode_cell({
-                r: row,
-                c: 7
-              })].v;
-              cotaEmbalse[cota] = area + '-' + capacidad;
-              row++;
-            }
+            // for (let i = 0; i < 50; i++) {
+            //   if (row > range.e.r) {
+            //     break;
+            //   }
+            var cota = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 0
+            })].v.toFixed(3);
+            var area = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 1
+            })].v;
+            var capacidad = worksheet[XLSX.utils.encode_cell({
+              r: row,
+              c: 2
+            })].v;
+            cotaEmbalse[cota] = area + '-' + capacidad;
+            // row++;
+            // }
+            // row = row - 50;
+            // for (let i = 0; i < 50; i++) {
+            //   if (row > range.e.r) {
+            //     break;
+            //   }
+            //   var cota = worksheet[XLSX.utils.encode_cell({
+            //     r: row,
+            //     c: 5
+            //   })].v.toFixed(3);
+            //   var area = worksheet[XLSX.utils.encode_cell({
+            //     r: row,
+            //     c: 6
+            //   })].v;
+            //   var capacidad = worksheet[XLSX.utils.encode_cell({
+            //     r: row,
+            //     c: 7
+            //   })].v;
+            //   cotaEmbalse[cota] = area + '-' + capacidad;
+            //   row++;
+            // }
 
             if (row <= range.e.r) {
               row++;
@@ -1062,6 +1307,7 @@ date_default_timezone_set("America/Caracas");
 
   previewImage("imagen_uno");
   previewImage("imagen_dos");
+  previewImage("imagen_tres");
 
   $("#proposito").on("click", function() {
     $("#modal-proposito").toggleClass('desplegar');
@@ -1146,4 +1392,63 @@ date_default_timezone_set("America/Caracas");
     }
 
   }
+
+  // MAPA PARA EXTRAER EL NORTE, ESTE, HUSO
+  var map = L.map('map').setView([8, -66], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  var marker;
+
+  map.on('click', function(e) {
+
+    var latlng = e.latlng;
+    var latitud = latlng.lat;
+    var longitud = latlng.lng;
+
+    if (marker) {
+      map.removeLayer(marker);
+    }
+
+    marker = L.marker([latitud, longitud]).addTo(map);
+
+    console.log("Latitud: " + latitud + ", Longitud: " + longitud);
+
+    // Conversion de Coordenadas normales a UTM
+    var utmCoords = proj4(proj4.defs('EPSG:4326'), proj4.defs('EPSG:32600'), [longitud, latitud]);
+    var norte = utmCoords[1];
+    var este = utmCoords[0];
+    var huso = Math.floor((longitud + 180) / 6) + 1;
+
+    // Conversion de Coordenadas UTM a Normales
+    var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
+    var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+    var latlng = proj4(utm, wgs84, [este, norte]);
+    var latitud = latlng[1];
+    var longitud = latlng[0];
+
+
+    $("#norte").val(norte);
+    $("#este").val(este);
+    $("#huso").val(huso);
+
+    console.log("Norte: " + norte + ", Este: " + este + ", Huso: " + huso);
+
+  });
+
+  $("#show-map").on('click', function() {
+    // $("#modal-map").modal('show');
+    removerClase($("#mapa"), "map-no-visible")
+    agregarClase($("#mapa"), "map-visible")
+    agregarClase($("#mapa"), "fade-in-image")
+  });
+
+  $("#close-map").on('click', function(e) {
+    e.preventDefault();
+    removerClase($("#mapa"), "map-visible")
+    removerClase($("#mapa"), "fade-in-image")
+    agregarClase($("#mapa"), "map-no-visible")
+  });
 </script>
