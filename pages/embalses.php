@@ -26,7 +26,7 @@ while ($row = mysqli_fetch_array($queryUsers)) {
 
 
 // $embalseBat = new Batimetria('1', $conn);
-// $cota = $embalseBat->getByCota("2015","210.455");
+// $cota = $embalseBat->getByCota("2024","210.455");
 // $year = $embalseBat->getCloseYear("2015");
 // $prueba = $embalseBat->getByCota("2001", 210.209);
 

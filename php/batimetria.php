@@ -133,9 +133,9 @@ class Batimetria
     
         // Comprobar si el valor de x está fuera del rango de la tabla
         if ($x < min($x_values)) {
-            return reset($tabla); // Devolver el valor más bajo
+            return explode("-",reset($tabla)); // Devolver el valor más bajo
         } elseif ($x > max($x_values)) {
-            return end($tabla); // Devolver el valor más alto
+            return explode("-",end($tabla)); // Devolver el valor más alto
         }
     
         // Buscar los puntos más cercanos en la tabla
