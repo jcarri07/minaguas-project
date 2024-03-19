@@ -1975,17 +1975,17 @@ function formatoNumero($valor)
     var este = utmCoords[0];
     var huso = Math.floor((longitud + 180) / 6) + 1;
 
-    // Conversion de Coordenadas UTM a Normales
-    // var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
-    // var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
-    // var latlng = proj4(utm, wgs84, [este, norte]);
-    // var latitud = latlng[1];
-    // var longitud = latlng[0];
+    //Conversion de Coordenadas UTM a Normales
+    var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
+    var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+    var latlng = proj4(utm, wgs84, [este, norte]);
+    var latitud = latlng[1];
+    var longitud = latlng[0];
 
 
-    // $("#norte").val(norte);
-    // $("#este").val(este);
-    // $("#huso").val(huso);
+    $("#norte").val(norte);
+    $("#este").val(este);
+    $("#huso").val(huso);
 
     // console.log("Norte: " + norte + ", Este: " + este + ", Huso: " + huso);
 
