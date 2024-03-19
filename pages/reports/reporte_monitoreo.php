@@ -1,5 +1,6 @@
 <?php
 require_once '../../php/Conexion.php';
+require_once '../../php/batimetria.php';
 
 $id = $_GET['id'];
 $index = $_GET['index'];
@@ -186,11 +187,12 @@ $TITULO6 = "Gráfico 6";
                 </tr>
                 <tr>
                     <th style="text-align: left;">Volumen Nivel Normal:</th>
-                    <td style="text-align: right;"><?php echo $VOLUMEN_NIVEL_NORMAL ?></td>
+                    <?php $batimetria = new Batimetria($id, $conn); ?>
+                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenNormal(), 2, ".", "") . " hm3 (Cota " . $batimetria->cotaNormal() . " m s.n.m)" ?></td>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Volumen Nivel Minimo:</th>
-                    <td style="text-align: right;"><?php echo $VOLUMEN_NIVEL_MINIMO ?></td>
+                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenMinimo(), 2, ".", "") . " hm3 (Cota " . $batimetria->cotaMinima() . " m s.n.m)" ?></td>
                 </tr>
             </tbody>
         </table>
