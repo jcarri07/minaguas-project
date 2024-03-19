@@ -135,20 +135,20 @@ if ($count >= 1) {
 
 
                                 lines: [{
-                                        yvalue: <?php echo $bati->getByCota($año, $embalses[0]["cota_min"])[1]; ?>,
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_min"])[1],2); ?>,
                                         cota: "Volumen minimo",
                                         color: 'black',
-                                        h: 15,
+                                        h: -15,
                                     },
                                     {
-                                        yvalue: <?php echo $bati->getByCota($año, $embalses[0]["cota_nor"])[1]; ?>,
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_nor"])[1],2); ?>,
                                         cota: "Volumen normal",
                                         color: 'black',
                                         h: 15,
 
                                     },
                                     {
-                                        yvalue: <?php echo $bati->getByCota($año, $embalses[0]["cota_max"])[1]; ?>,
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_max"])[1],2); ?>,
                                         cota: "Volumen maximo",
                                         color: 'black',
                                         h: -15,
@@ -234,7 +234,7 @@ if ($count >= 1) {
                                 max: <?php if ($max > $embalses[0]["cota_max"]) {
                                             echo $bati->getByCota($año, $max)[1] + 200;
                                         } else {
-                                            echo $bati->getByCota($año, $embalses[0]["cota_max"])[1] + 200;
+                                            echo $bati->getByCota($año, $embalses[0]["cota_max"])[1] + 50;
                                         }; ?>,
                                 border: {
                                     display: false,
