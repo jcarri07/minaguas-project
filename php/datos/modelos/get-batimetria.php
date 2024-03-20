@@ -10,5 +10,10 @@
 
     closeConection($conn);
 
-    echo json_encode($embalse->getByCota($anio, $valor));
+    $array = array();
+    array_push($array, $embalse->getByCota($anio, $valor));
+    array_push($array, $embalse->cotaMinima());
+    array_push($array, $embalse->cotaMaxima());
+
+    echo json_encode($array);
 ?>

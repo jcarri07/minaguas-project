@@ -294,7 +294,7 @@
     ?>
                 <div class="row">
                   <div class="col-md-12 text-center">
-                      <button class="btn btn-success" data-bs-dismiss="modal" onclick="$('#add-data-old').modal('show');" type="button">Adjuntar Historial de Reportes</button>
+                      <button class="btn btn-success" data-bs-dismiss="modal" id="btn-open-modal-import-data" onclick="$('#add-data-old').modal('show');" type="button">Adjuntar Historial de Reportes</button>
                   </div>
                 </div>
     <?php
@@ -329,7 +329,7 @@
 
                   <div class="row">
                     <div class="col">
-                      <label>Cota</label>
+                      <label>Cota (01)</label>
                       <div class="input-group mb-3">
                         <input type="number" step="0.00001" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
                       </div>
@@ -372,6 +372,10 @@
                       </div>
                       Por favor, espere
                     </div>
+                  </div>
+
+                  <div class="row" id="msg-error">
+
                   </div>
 
                   <div class="text-center">
@@ -532,6 +536,8 @@
       $("#opc_aux").text("add");
 
       $("#add .title").text("Añadir Reporte");
+      $("#btn-open-modal-import-data").show();
+
       $(".removeRow").attr("disabled", false);
       $(".removeRow").each(function( index ) {
         $(this).trigger("click");
@@ -623,8 +629,9 @@
       var datos = new FormData();
       datos.append('id', $("#id_embalse_aux").text());
       datos.append('valor', this.value);
-      datos.append('anio', "2001");
+      datos.append('anio', "<?php echo date("Y");?>");
 
+      var valor = this.value;
       $.ajax({
         url: 			'php/datos/modelos/get-batimetria.php',
         type:			'POST',
@@ -634,14 +641,46 @@
         processData:    false,
         dataType: 'json',
         success: function(response){ //console.log(response);
-          console.log(response);
-          var string =  '<div class="col" style="font-size: 0.75em;">';
-          string +=       '<span>Capacidad o Volumen (02): <b>' + response[1] + ' hm<sup>3</sup></b></span>';
-          string +=     '</div>';
-          string +=     '<div class="col small" style="font-size: 0.75em;">';
-          string +=       '<span>Área o Superficie (03): <b>' + response[0] + ' hm<sup>2</sup></b></span>';
-          string +=     '</col>';
+          var string_error =  '<div class="col text-center" style="font-size: 0.8em; color: red;">';
+          string_error +=       '<span>Ingrese la cota correcta</span>';
+          string_error +=     '</div>';
+          $("#msg-error").html("");
+          
+          //Cota minima
+          if(parseFloat(valor) < parseFloat(response[1])){
+            $("#msg-error").html(string_error);
+
+            var string =  '<div class="col" style="font-size: 1em; color: red;">';
+            string +=       '<span><b>Error:</b> la cota ingresada es inferior a la mínima <b>(' + parseFloat(response[1]).toFixed(3) + ')</b></span>';
+            string +=     '</div>';
+
+            $("#add .btn-submit").attr("disabled", true);
+          }
+          else{
+
+            if(parseFloat(valor) > parseFloat(response[2])){
+              $("#msg-error").html(string_error);
+
+              var string =  '<div class="col" style="font-size: 1em; color: red;">';
+              string +=       '<span><b>Error:</b> la cota ingresada es mayor a la máxima <b>(' + parseFloat(response[2]).toFixed(3) + ')</b></span>';
+              string +=     '</div>';
+
+              $("#add .btn-submit").attr("disabled", true);
+            }
+            else{
+              var string =  '<div class="col" style="font-size: 0.75em;">';
+              string +=       '<span>Capacidad o Volumen (02): <b>' + response[0][1] + ' hm<sup>3</sup></b></span>';
+              string +=     '</div>';
+              string +=     '<div class="col small" style="font-size: 0.75em;">';
+              string +=       '<span>Área o Superficie (03): <b>' + response[0][0] + ' hm<sup>2</sup></b></span>';
+              string +=     '</div>';
+              
+              $("#add .btn-submit").attr("disabled", false);
+            }
+          }
+
           $("#box-area-volumen-by-cota").html(string);
+          
         }
         ,
         error: function(response){
@@ -687,6 +726,7 @@
       //$("#opc_aux").text("edit");
 
       $(".removeRow").attr("disabled", false);
+      $("#btn-open-modal-import-data").hide();
 
       $("#add .title").text("Detalles del Reporte");
       $(".removeRow").each(function( index ) {
