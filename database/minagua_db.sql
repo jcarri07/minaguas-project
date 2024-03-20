@@ -1681,6 +1681,8 @@ CREATE TABLE datos_embalse (
   hora TIME,
   cota_actual FLOAT,
   id_encargado INT(11) NOT NULL,
+  archivo_importacion VARCHAR(1000) NOT NULL,
+  fecha_importacion DATE,
   estatus VARCHAR(20) NOT NULL,
   FOREIGN KEY (id_embalse) REFERENCES embalses (id_embalse),
   FOREIGN KEY (id_encargado) REFERENCES usuarios (Id_usuario)

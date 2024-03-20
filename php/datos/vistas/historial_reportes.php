@@ -5,9 +5,19 @@
 
     $id_embalse = $_POST['id_embalse'];
 
-    $sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, GROUP_CONCAT(id_codigo_extraccion, '&', extraccion, '&', id_detalles_extraccion SEPARATOR ';') AS 'extraccion', (SELECT CONCAT(P_Nombre, ' ', P_Apellido) FROM usuarios u WHERE u.id_usuario = de.id_encargado) AS 'encargado'
-            FROM datos_embalse de, detalles_extraccion dex
-            WHERE de.id_registro = dex.id_registro AND id_embalse = '$id_embalse' AND de.estatus = 'activo'
+    $sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, 
+                (
+                    SELECT GROUP_CONCAT(id_codigo_extraccion, '&', extraccion, '&', id_detalles_extraccion SEPARATOR ';')
+                    FROM detalles_extraccion dex
+                    WHERE de.id_registro = dex.id_registro
+                ) AS 'extraccion', 
+                (
+                    SELECT CONCAT(P_Nombre, ' ', P_Apellido) 
+                    FROM usuarios u 
+                    WHERE u.id_usuario = de.id_encargado
+                ) AS 'encargado'
+            FROM datos_embalse de
+            WHERE id_embalse = '$id_embalse' AND de.estatus = 'activo'
             GROUP BY de.id_registro
             ORDER BY fecha DESC, id_registro DESC;";
     $query = mysqli_query($conn, $sql);
@@ -41,9 +51,11 @@
 
                     $extraccion = 0;
                     $extraccion_array = explode(";", $row['extraccion']);
-                    for($j = 0 ; $j < count($extraccion_array) ; $j++){
-                        $fila = explode("&", $extraccion_array[$j]);
-                        $extraccion += $fila[1];
+                    for($j = 0 ; $j < count($extraccion_array) ; $j++) {
+                        if($extraccion_array[$j] !== "") {
+                            $fila = explode("&", $extraccion_array[$j]);
+                            $extraccion += $fila[1];
+                        }
                     }
 ?>
 

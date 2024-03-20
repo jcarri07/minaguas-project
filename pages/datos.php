@@ -846,6 +846,7 @@
         datos.append('id_embalse', $("#id_embalse_aux").text());
         datos.append('hoja', $("#nombre_hoja_aux").text());
         datos.append('nombre_archivo', $('#file')[0].files[0].name);
+        datos.append('id_usuario', '<?php echo $_SESSION['Id_usuario'];?>');
       }
       else {
         datos.append('file', $('#file')[0].files[0]);

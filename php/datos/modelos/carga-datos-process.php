@@ -22,7 +22,7 @@
             $hora = date("H:i") . ":00";
         }
 
-        $res = mysqli_query($conn, "INSERT INTO datos_embalse (id_embalse, fecha, hora, cota_actual, id_encargado, estatus) VALUES ('$id_embalse', '$fecha', '$hora', '$cota', '$id_encargado', 'activo');");
+        $res = mysqli_query($conn, "INSERT INTO datos_embalse (id_embalse, fecha, hora, cota_actual, id_encargado, archivo_importacion, fecha_importacion, estatus) VALUES ('$id_embalse', '$fecha', '$hora', '$cota', '$id_encargado', '', '', 'activo');");
         sleep(0.3);
 
         if($res == 1){
