@@ -18,7 +18,13 @@ $año = $y;
 $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
 if ($tipo == "bar") {
-    $res = mysqli_query($conn, "SELECT * FROM datos_embalse d, embalses e WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id'  GROUP BY d.fecha ORDER BY d.fecha ASC;");
+    $res = mysqli_query($conn, "SELECT id_registro, d.fecha, MAX(d.hora), (SELECT MAX(cota_actual) 
+                                                                        FROM datos_embalse 
+                                                                        WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual
+                                FROM datos_embalse d, embalses e 
+                                WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id'  
+                                GROUP BY d.fecha 
+                                ORDER BY d.fecha ASC;");
     $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
     $count = mysqli_num_rows($r);
     if ($count >= 1) {
