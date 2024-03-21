@@ -146,14 +146,13 @@ $count = mysqli_num_rows($re);
 
                 case "Grafica_anio.php":
                     var fechaActual = new Date();
-                    $("#formato").html('<div class="col-md-4"><label class="form-label">Año</label><select id="anio" class="form-control " style="padding: 0px auto; margin-bottom:5px;"><?php
-                                                                                                                                                                                            for ($i = 1980; $i <= date('Y'); $i++) {
-                                                                                                                                                                                                echo '<option value="' . $i . '"';
-                                                                                                                                                                                                if ($i == date('Y')) {
-                                                                                                                                                                                                    echo 'selected';
-                                                                                                                                                                                                }
-                                                                                                                                                                                                echo '>' . $i . '</option>';
-                                                                                                                                                                                            } ?></select></div></div>');
+                    $("#formato").html('<div class="col-md-4"><label class="form-label">Año</label><select id="anio" class="form-control " style="padding: 0px auto; margin-bottom:5px;"><?php for ($i = 1980; $i <= date('Y'); $i++) {
+                    echo '<option value="' . $i . '"';
+                    if ($i == date('Y')) {
+                        echo 'selected';
+                    };
+                    echo '>' . $i . '</option>';
+                    };?></select></div></div>');
                     $("#anio").change(function() {
 
                         ajax();
