@@ -1,9 +1,12 @@
 <?php
 include '../../php/Conexion.php';
+require_once '../../php/batimetria.php';
 
 $id = $_GET['id'];
 
 $sql = "SELECT * FROM embalses WHERE id_embalse = $id";
+
+$embalse = new Batimetria($id, $conn);
 
 $res = mysqli_query($conn, $sql);
 $data = array();
@@ -227,21 +230,29 @@ foreach ($data as $row) {
   $COTA2 = $row['cota_nor'];
   $COTA3 = $row['cota_max'];
   $FIRTS_VOLUMEN = $row['vol_min'];
-  $SECOND_VOLUMEN = 8798;
+  $SECOND_VOLUMEN = $embalse->volumenMinimo();
   $FIRTS_SUPERFICIE = $row['sup_min'];
-  $SECOND_SUPERFICIE = 569794;
+  $SECOND_SUPERFICIE = $embalse->superficieMinima();
   $FIRTS_VOLUMEN2 = $row['vol_nor'];
-  $SECOND_VOLUMEN2 = 8798;
+  $SECOND_VOLUMEN2 = $embalse->volumenNormal();
   $FIRTS_SUPERFICIE2 = $row['sup_nor'];
-  $SECOND_SUPERFICIE2 = 569794;
+  $SECOND_SUPERFICIE2 = $embalse->superficieNormal();
   $FIRTS_VOLUMEN3 = $row['vol_max'];
-  $SECOND_VOLUMEN3 = 8798;
+  $SECOND_VOLUMEN3 = $embalse->volumenMaximo();
   $FIRTS_SUPERFICIE3 = $row['sup_max'];
-  $SECOND_SUPERFICIE3 = 569794;
-  $CAPACIDAD_UTIL = 2595;
-  $CAPACIDAD_UTIL2 = 2052;
+  $SECOND_SUPERFICIE3 = $embalse->superficieMaxima();
+  $CAPACIDAD_UTIL = $embalse->volumenDisponibleOriginal();
+  $CAPACIDAD_UTIL2 = $embalse->volumenDisponible();
   $VIDA_UTIL = $row['vida_util'];
-  $VIDA_UTIL_RESTANTE = 65;
+  //calculo de vida_util restante
+  if($row['inicio_de_operacion'] != ""){
+  $fecha_inicio = new DateTime($row['inicio_de_operacion']);
+  $hoy = new DateTime();
+  $restante = $hoy->diff($fecha_inicio);
+  $VIDA_UTIL_RESTANTE = $restante->y;
+}else{
+  $VIDA_UTIL_RESTANTE = "";
+}
   //COMPONENTES EMBALSE
   $NUMERO_PRESAS = $row['numero_de_presas'];
   $TIPO = $row['tipo_de_presa'];
@@ -456,7 +467,7 @@ foreach ($data as $row) {
       <td class="subtitle">1.3.- Área de la cuenca (ha)</td>
       <td class="value"><?php echo number_format($AREA_CUENCA, 2, ',', '.'); ?></td>
       <td class="subtitle">1.4.- Escurrimiento medio (hm³)</td>
-      <td class="value"><?php echo number_format($ESCURRIMIENTO, 2, ',', '.'); ?></td>
+      <td class="value"><?php echo number_format(floatval($ESCURRIMIENTO), 2, ',', '.'); ?></td>
     </tr>
   </table>
   <table style="padding-top: 10px;">
@@ -681,7 +692,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.2.3.- N° de compuertas</td>
-      <td><?php echo number_format($COMPUERTAS_ALIVIADERO, 2, ',', '.'); ?></td>
+      <td><?php echo number_format(floatval($COMPUERTAS_ALIVIADERO), 2, ',', '.'); ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.4.- Carga Sobre el Vertedero (m)</td>

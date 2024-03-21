@@ -278,6 +278,16 @@ class Batimetria
         }
     }
 
+    public function volumenDisponibleOriginal()
+    {
+
+            if ($this->vol_nor == "" || $this->vol_min == "") {
+                return "";
+            }else{
+                return $this->vol_nor - $this->vol_min;
+            }
+    }
+
     public function volumenDisponibleByCota($año, $cota)
     {
         if ($this->batimetria != "") {
