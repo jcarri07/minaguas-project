@@ -16,7 +16,14 @@ $año = date('Y');
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
-    $res = mysqli_query($conn, "SELECT d.id_embalse, MAX(d.cota_actual) AS cota_actual, e.nombre_embalse FROM datos_embalse d, embalses e WHERE d.estatus = 'activo' AND e.estatus = 'activo' AND d.id_embalse = e.id_embalse GROUP BY id_embalse ORDER BY e.nombre_embalse ASC;");
+    $res = mysqli_query($conn, "SELECT d.id_embalse, MAX(d.fecha),(select MAX(hora) from datos_embalse                                                                                                                                                            where fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora,
+    e.nombre_embalse, (SELECT MAX(cota_actual) 
+                       FROM datos_embalse h 
+                       WHERE h.id_embalse = d.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = hora) AS cota_actual
+FROM datos_embalse d, embalses e 
+WHERE d.estatus = 'activo' AND e.estatus = 'activo' AND d.id_embalse = e.id_embalse 
+GROUP BY id_embalse 
+ORDER BY d.fecha DESC;");
     $count = mysqli_num_rows($res);
     if ($count >= 1) {
         $datos_embalses = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -26,40 +33,66 @@ if ($count >= 1) {
         <canvas id="chart"></canvas>
         <script>
             $(document).ready(function() {
-                
+
                 let cha = new Chart(chart, {
                     type: 'bar',
                     title: 'grafica',
-                    
+
                     //labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen actual',
-                            backgroundColor: '#25d366',
-                            data: [";
+                            <?php
+
                             $j = 0;
 
                             while ($j < count($datos_embalses)) {
+
                                 $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+                                echo "{label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . "',
+                                    backgroundColor: '";
+                                $x = $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];
+                                $min = $bati->volumenMinimo();
+                                $max = $bati->volumenMaximo();
+                                $nor = $bati->volumenNormal();
+                                if ($x == 0 || $x < $min) {
+                                    echo "#b50301',";
+                                }; //rojo
+                                if ($x < ($nor / 2) && $x >= $min) {
+                                    echo "#ff5733',";
+                                }; //anaranjado
+                                if ($x >= ($nor / 2) && $x < $nor) {
+                                    echo "#f1d710',";
+                                }; //amarillo
+                                if ($x >= $nor && $x < $max) {
+                                    echo "#25d366',";
+                                }; //verde
+                                if ($x == $max) {
+                                    echo "#0078d4',";
+                                }; //azul
+                                if ($x > $max) {
+                                    echo "#b50301',";
+                                };
+                                echo "data: [";
                                 $batimetria = $bati->getBatimetria();
                             ?> {
-                                    x: '<?php echo $datos_embalses[$j]["nombre_embalse"];  ?>',
-                                    y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                    x: '<?php echo 'embalse';//$datos_embalses[$j]["nombre_embalse"];  ?>',
+                                    y: <?php echo $x;  ?>
                                 },
 
                             <?php
 
 
                                 $j++;
+                                echo "]},";
                             };
-                            echo "]},";
+
                             ?>
                         ],
                     },
 
                     options: {
-                        
+
                         responsive: true,
                         maintainAspectRatio: false,
 
@@ -72,7 +105,7 @@ if ($count >= 1) {
 
                                     // This more specific font property overrides the global property
                                     font: {
-                                        size: 18
+                                        size: 12
                                     },
 
                                 }
@@ -97,7 +130,7 @@ if ($count >= 1) {
                                         size: 16
                                     },
                                 },
-                               
+
                                 border: {
                                     display: false,
                                 },
