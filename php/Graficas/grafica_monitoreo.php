@@ -6,14 +6,14 @@ require_once '../batimetria.php';
 date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
 
-$fecha1 = date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d'))));
-$fecha2 = date('Y');
+//$fecha1 = date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d'))));
+//$fecha2 = date('Y');
 $fecha1 = $_GET['fecha1'];
 $fecha2 = $_GET['fecha2'];
 $id = $_GET['id'];
 $name = $_GET['name'];
 $año = date('Y', strtotime($fecha2));
-
+$volumen;
 $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
 
@@ -44,35 +44,50 @@ function calcularSemanas($fecha, $fecha2)
     return $semanas;
 }
 
-function obtenerFechasSemanas($fechaInicial, $numeroSemanas)
+function obtenerFechasSemanas($fechaInicial, $fechaFinal)
 {
     $fechasSemanas = array();
 
-    // Convertir la fecha inicial a objeto DateTime
-    $fecha = new DateTime($fechaInicial);
+    // Convertir las fechas a objetos DateTime
+    $fechaInicio = new DateTime($fechaInicial);
+    $fechaFin = new DateTime($fechaFinal);
+
+    // Calcular la diferencia en semanas
+    $interval = $fechaInicio->diff($fechaFin);
+    $numeroSemanas = floor($interval->days / 7) + 1;
 
     // Iterar para obtener las fechas de las semanas
     for ($i = 0; $i < $numeroSemanas; $i++) {
         // Obtener el primer día de la semana (lunes)
-        $inicioSemana = clone $fecha;
+        $inicioSemana = clone $fechaInicio;
         $inicioSemana->modify('this week');
 
         // Obtener el último día de la semana (domingo)
-        $finSemana = clone $fecha;
+        $finSemana = clone $fechaInicio;
         $finSemana->modify('this week');
         $finSemana->modify('next sunday');
+
+        // Verificar si la semana termina después de la fecha final
+        if ($finSemana > $fechaFin) {
+            $finSemana = $fechaFin;
+        }
 
         // Agregar al array en el formato deseado (dd/mm-dd/mm)
         $fechasSemanas[] = $inicioSemana->format('d/m') . '-' . $finSemana->format('d/m');
 
         // Mover la fecha al inicio de la siguiente semana
-        $fecha->modify('next monday');
+        $fechaInicio->modify('next monday');
+
+        // Detener el bucle si alcanzamos la fecha final
+        if ($inicioSemana >= $fechaFin) {
+            break;
+        }
     }
 
     return $fechasSemanas;
 }
 
-$fsemanas = obtenerFechasSemanas($fecha1, calcularSemanas($fecha1, $fecha2)); //array de labels
+$fsemanas = obtenerFechasSemanas($fecha1, $fecha2); //array de labels
 $nse = calcularSemanas($fecha1, $fecha2); //pivote de numero de semanas
 
 $sem = 9;
@@ -103,17 +118,23 @@ $i = 0; //indice arreglo de domingo
 $l = 0;
 $aux = 0;
 
-$r = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT cota_actual FROM datos_embalse WHERE id_embalse = e.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
-FROM  datos_embalse d
-RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
-WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 2 OR ( fecha = '$fecha1' AND DAYOFWEEK('$fecha1') != 2))
-GROUP BY fecha ORDER BY fecha;");
+$r = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT MAX(cota_actual) 
+                                                                FROM datos_embalse 
+                                                                WHERE id_embalse = e.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
+                          FROM  datos_embalse d
+                          RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
+                          WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 2 OR ( fecha = '$fecha1' AND DAYOFWEEK('$fecha1') != 2))
+                          GROUP BY fecha 
+                          ORDER BY fecha;");
 
-$res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT cota_actual FROM datos_embalse WHERE id_embalse = e.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
-FROM  datos_embalse d
-RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
-WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 1 OR ( fecha = '$fecha2' AND DAYOFWEEK('$fecha2') != 1))
-GROUP BY fecha ORDER BY fecha;");
+$res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT MAX(cota_actual) 
+                                                                  FROM datos_embalse 
+                                                                  WHERE id_embalse = e.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
+                            FROM  datos_embalse d
+                            RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
+                            WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 1 OR ( fecha = '$fecha2' AND DAYOFWEEK('$fecha2') != 1))
+                            GROUP BY fecha 
+                            ORDER BY fecha;");
 
 $emb = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id';");
 
@@ -123,17 +144,12 @@ $datos1 = mysqli_fetch_all($r, MYSQLI_ASSOC);
 $datos2 = mysqli_fetch_all($res, MYSQLI_ASSOC);
 $embalse = mysqli_fetch_all($emb, MYSQLI_ASSOC);
 $datos_embalses = mysqli_fetch_all($anio, MYSQLI_ASSOC);
-$datos_json1 = json_encode($datos1);
-
-$datos_json2 = json_encode($datos2);
+$volumen = $bati->getByCota($año, $datos1[0]["cota_actual"])[1];;
 
 ?>
 
 <script>
-    //console.log('<?php echo $datos_json1; ?>');
 
-    //console.log('<?php echo $datos_json2; ?>');
-    console.log('<?php echo round(($nse / 9), 0, PHP_ROUND_HALF_DOWN); ?>');
 </script><?php
             for ($k = $numeroSemana; $k < $semanas; $k++) {
                 if (isset($datos1[$i]['semana'])) {
@@ -658,9 +674,7 @@ $datos_json2 = json_encode($datos2);
                         var value = context.dataset.data[index];
                         return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                     },
-                    <?php
 
-                    ?>
                 }
             ],
         },
@@ -849,7 +863,7 @@ $datos_json2 = json_encode($datos2);
             if (this.readyState == 4 && this.status == 200) {
 
                 console.log("listo");
-                location.href = "../../pages/reports/print_monitoreo.php?id=" + <?php echo $id; ?> + "&name=<?php echo $embalse[0]['nombre_embalse']; ?>&index=<?php echo $Nsemanas; ?>&semanas=<?php echo $nse; ?>&fecha=<?php echo $fecha1;?>";
+                location.href = "../../pages/reports/print_monitoreo.php?id=" + <?php echo $id; ?> + "&volumen=<?php echo $volumen;?>&cota=<?php echo $datos1[0]["cota_actual"];?>&name=<?php echo $embalse[0]['nombre_embalse']; ?>&index=<?php echo $Nsemanas; ?>&semanas=<?php echo $nse; ?>&fecha=<?php echo $fecha1;?>";
 
             } else {
 
