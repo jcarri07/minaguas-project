@@ -245,14 +245,14 @@ foreach ($data as $row) {
   $CAPACIDAD_UTIL2 = $embalse->volumenDisponible();
   $VIDA_UTIL = $row['vida_util'];
   //calculo de vida_util restante
-  if($row['inicio_de_operacion'] != ""){
-  $fecha_inicio = new DateTime($row['inicio_de_operacion']);
-  $hoy = new DateTime();
-  $restante = $hoy->diff($fecha_inicio);
-  $VIDA_UTIL_RESTANTE = $restante->y;
-}else{
-  $VIDA_UTIL_RESTANTE = "";
-}
+  if ($row['inicio_de_operacion'] != "") {
+    $fecha_inicio = new DateTime($row['inicio_de_operacion']);
+    $hoy = new DateTime();
+    $restante = $hoy->diff($fecha_inicio);
+    $VIDA_UTIL_RESTANTE = $restante->y;
+  } else {
+    $VIDA_UTIL_RESTANTE = "";
+  }
   //COMPONENTES EMBALSE
   $NUMERO_PRESAS = $row['numero_de_presas'];
   $TIPO = $row['tipo_de_presa'];
