@@ -22,7 +22,9 @@ $año = $anio;
 $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
 
-$res = mysqli_query($conn, "SELECT id_registro, d.fecha AS 'fecha', hora, cota_actual
+$res = mysqli_query($conn, "SELECT id_registro, d.fecha AS 'fecha', d.hora, (SELECT MAX(cota_actual) 
+                                                                            FROM datos_embalse 
+                                                                            WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual
 FROM datos_embalse d
 INNER JOIN (
     SELECT fecha, MAX(hora) AS maxHora
