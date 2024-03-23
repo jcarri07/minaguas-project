@@ -226,24 +226,24 @@ closeConection($conn);*/
               <!-- Ejemplo de leyenda -->
               <div class="row justify-content-center">
                 <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #b50301;"></div>
-                  <span class="smalll col-9 ps-1">(>0%)-(<=15%)</span>
+                  <div class="col-3 cuadro-color" style="background-color: #fd0200;"></div>
+                  <span class="smalll col-9 ps-1">(>0%)-(<=30%)</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #ff5733;"></div>
-                  <span class="smalll col-9 ps-1">(>15%)-(<=35%)</span>
+                  <div class="col-3 cuadro-color" style="background-color: #72dffd;"></div>
+                  <span class="smalll col-9 ps-1">(>30%)-(<=60%)</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #f1d710;"></div>
-                  <span class="smalll col-9 ps-1">(>35%)-(<=45%)</span>
+                  <div class="col-3 cuadro-color" style="background-color: #0066eb;"></div>
+                  <span class="smalll col-9 ps-1">(>60%)-(<=90%)</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #25d366;"></div>
-                  <span class="smalll col-9 ps-1">(>45%)-(<=90%)</span>
-                </div>
-                <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #0078d4;"></div>
+                  <div class="col-3 cuadro-color" style="background-color: #3ba500;"></div>
                   <span class="smalll col-9 ps-1">(>90%)-(<=100%)</span>
+                </div>
+                <div class="etiqueta col-2 px-0">
+                  <div class="col-3 cuadro-color" style="background-color: #55fe01;"></div>
+                  <span class="smalll col-9 ps-1">(>100%)</span>
                 </div>
               </div>
             </div>
