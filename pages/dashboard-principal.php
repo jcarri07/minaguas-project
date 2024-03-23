@@ -255,7 +255,7 @@ closeConection($conn);*/
       </div>
       <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;">
         <div class="card z-index-2">
-          <div class="card-header">
+          <div class="card-header pb-3">
             <h6 class="mb-0">Registro de Reportes</h6>
             <p class="text-sm">Cantidad de reportes realizados al mes</p>
             <hr class="dark horizontal">
@@ -273,8 +273,8 @@ closeConection($conn);*/
             </div>
           </div>
           <div class="card-body p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-            <div class="bg-white border shadow-dark border-radius-lg py-3 pe-1">
-              <div class="chart mb-1" style="height:350px !important;">
+            <div class="bg-white  shadow-dark  py-3 pe-1">
+              <div class="chart mb-1 border border-radius-lg" style="height:350px !important;">
                 <canvas id="myChart" width="400" height="200"></canvas>
               </div>
             </div>
