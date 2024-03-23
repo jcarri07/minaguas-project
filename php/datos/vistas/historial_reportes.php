@@ -127,7 +127,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <?php echo $row['cota_actual'];?>
+                                        <?php echo number_format($row['cota_actual'], 3, '.' , '');?>
                                     </td>
                                     <td> 
                                         <?php echo $extraccion; ?>
@@ -136,7 +136,7 @@
                                         <?php echo ($row['encargado'] != "" && $row['encargado'] != NULL) ? $row['encargado'] : "-";?>
                                     </td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm px-3 mb-0" href="javascript:;" onclick="openModalDetalles('<?php echo $row['id_registro'];?>', '<?php echo $row['fecha'];?>', '<?php echo $row['hora'];?>', '<?php echo $row['cota_actual'];?>', '<?php echo $row['extraccion'];?>');">
+                                        <a class="btn btn-primary btn-sm px-3 mb-0" href="javascript:;" data-bs-dismiss="modal" onclick="openModalDetalles('<?php echo $row['id_registro'];?>', '<?php echo $row['fecha'];?>', '<?php echo $row['hora'];?>', '<?php echo $row['cota_actual'];?>', '<?php echo $row['extraccion'];?>');">
                                             <i class="fas fa-list" title="Detalles" aria-hidden="true"></i>
                                         </a>
                                         <a class="btn btn-danger btn-sm px-3 mb-0" href="javascript:;" onclick="openModalAction('<?php echo $row['id_registro'];?>', 'delete');">

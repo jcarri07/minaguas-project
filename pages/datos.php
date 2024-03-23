@@ -252,7 +252,7 @@
 
 
     <div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-body p-0">
             <div class="card card-plain">
@@ -558,6 +558,8 @@
       $("#add .btn-submit").show();
       $("#add .btn-add-extraccion").show();
       $("#add .btn-edit").hide();
+      $("#add .btn-edit").attr("onclick", "");
+      $("#add .btn-edit").text("Cerrar");
       $('#add').modal('show');
     }
 
@@ -768,6 +770,8 @@
       $("#add .btn-submit").hide();
       $("#add .btn-add-extraccion").hide();
       $("#add .btn-edit").show();
+      $("#add .btn-edit").attr("onclick", "$('#modal-details').modal('show')");
+      $("#add .btn-edit").text("Atrás");
       $('#add').modal('show');
 
     }
