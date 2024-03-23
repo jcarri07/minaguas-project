@@ -72,7 +72,7 @@ ORDER BY d.fecha DESC;");
                                 }; //azul
                                 if ((abs(($x - $min)) * (100 / ($max - $min))) > 100) {
                                     echo "#b50301',";
-                                };
+                                }; //rojo
                                 echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] ." (".round((abs(($x - $min)) * (100 / ($max - $min))),0)."%)',
                                     data: [";
                                 $batimetria = $bati->getBatimetria();
@@ -107,7 +107,7 @@ ORDER BY d.fecha DESC;");
 
                                     // This more specific font property overrides the global property
                                     font: {
-                                        size: 12
+                                        size: 10
                                     },
 
                                 }
