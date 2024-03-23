@@ -19,10 +19,26 @@ $me = $array_aux["1"];
 $y = $anio;
 $año = $anio;
 
+if ($tipo == "bar") {
+    $aux = "SELECT id_registro, d.fecha, MAX(d.hora) AS hora, (SELECT MAX(cota_actual) 
+                                                                FROM datos_embalse 
+                                                                WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual
+            FROM datos_embalse d
+            WHERE d.estatus = 'activo' AND d.id_embalse = '$id' AND (d.fecha BETWEEN '$fecha1' AND '$fecha2')
+            GROUP BY d.fecha
+            ORDER BY d.fecha, d.hora DESC;";
+}
+if ($tipo == "line") {
+    $aux = "SELECT * 
+            FROM datos_embalse 
+            WHERE estatus = 'activo' AND id_embalse = '$id' AND (fecha BETWEEN '$fecha1' AND '$fecha2') 
+            ORDER BY fecha ASC;";
+}
+
 $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
 
-$res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND id_embalse = '$id' AND (fecha BETWEEN '$fecha1' AND '$fecha2') GROUP BY fecha ORDER BY fecha ASC;");
+$res = mysqli_query($conn, $aux);
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
@@ -100,7 +116,7 @@ if ($count >= 1) {
                                     $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
 
                             ?> {
-                                        x: '<?php echo $datos_embalses[$j]["fecha"];  ?>',
+                                        x: '<?php echo $datos_embalses[$j]["fecha"]. " " . $datos_embalses[$j]["hora"];  ?>',
                                         y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
                                     },
                                     <?php

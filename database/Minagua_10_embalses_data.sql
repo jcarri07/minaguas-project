@@ -1562,6 +1562,51 @@ insert  into `propositos`(`id_proposito`,`proposito`,`estatus`) values
 (7,'Industrial','activo');
 
 
+INSERT INTO `tipo_codigo_extraccion` (`id`, `nombre`, `cantidad_primaria`, `unidad`, `estatus`) 
+VALUES ('1', 'Descarga por Aliviadero', 1000, 'm3', 'activo'),
+	('2', 'Descarga por Connducto de Toma', 1000, 'm3', 'activo'),
+	('3', 'Entrega Individualizada', 1000, 'm3', 'activo'),
+	('4', 'Descarga No Controlada', 1000, 'm3', 'activo'),
+	('5', 'Abertura de Valvula o Compuerta', 0, '', 'activo'),
+	('6', 'Climatología', 0, '', 'activo'),
+	('7', 'Caudal Afluente', 0, '', 'activo');
+
+INSERT INTO `codigo_extraccion` (`id`, `codigo`, `leyenda_sistema`, `concepto`, `uso`, `id_tipo_codigo_extraccion`, `estatus`) 
+VALUES ('1', '00', '', 'Día', 'Día del cual se transmite la información', 0, 'activo'),
+	('2', '01', '', 'Cota', 'Cota o nivel del embalse en metros sobre el nivel de mar, leída a las 8:00 am para el día indicado en la columna 00', 0, 'activo'),
+	('3', '02', 'Volumen', 'Volumen', 'Volumen en hectómetros cúbicos almacenado en el embalse correspondiente a la cota indicada en la columna 01. Se obtiene de la Tabla Área-Capacidad del embalse', 0, 'activo'),
+	('4', '03', 'Area', 'Área', 'Area o superficie del vaso del embalse en hectáreas que corresponde a la cota indicada en la columna 01. Se obtiene de la Tabla Area- Capacidad del embalse.', 0, 'activo'),
+	('5', '04', 'ARiego', 'Riego', 'Descargas controladas por el aliviadero específicamente para el riego.', 1, 'activo'),
+	('6', '05', 'ARio', 'Río', 'Descargas controladas por el aliviadero para el uso de ribereños.', 1, 'activo'),
+	('7', '06', 'AControl', 'Control de Inundaciones', 'Descargas controladas efectuadas por el aliviadero con el propósito de controlar crecientes. ', 1, 'activo'),
+	('8', '07', 'AOtros', 'Otros', 'Se refiere a aquellas descargas por el aliviadero para otros usos no incluidos en lo códigos 04,05 y 06, como por ejemplo: fugas a través de las compuertas de aliviadero, descargas al cauce con fines recreacionales, etc.', 1, 'activo'),
+	('9', '08', '', 'Subtotal', 'Suma de los códigos 04, 05, 06, y 07', 1, 'activo'),
+	('10', '09', 'TRiego', 'Riego', 'Descargas controladas por conducto de toma con fines de riego. Incluye sistemas de riego y ribereños', 2, 'activo'),
+	('11', '10', 'TRio', 'Río', 'Descarga única y exclusivamente para gasto ecológico efectuadas por el conducto de toma.', 2, 'activo'),
+	('12', '11', 'TControl', 'Control de Inundaciones', 'Descargas controladas por conducto de toma para controlar crecientes.', 2, 'activo'),
+	('13', '12', 'TOtros', 'Otros', 'Incluye cualquier descarga diferente a la de los códigos 09,10 y 11, ejemplo: descargas de sedimentos, fugas por válvulas, compuertas u otros mecanismos, descargas al cauce para consumo humano, descarga al cauce con fines recreacionales, descargas para evitar daños en las obras inconclusas o que presenten alguna condición especial que no permita que el embalse alcance ciertos niveles o alivie.', 2, 'activo'),
+	('14', '13', '', 'Subtotal', 'Suma de los códigos 09, 10, 11 y 12', 2, 'activo'),
+	('15', '14', 'EAcueducto', 'Consumo Humano', 'Entregas efectuadas por tomas individualizadas única y exclusivamente para abastecimiento de poblaciones.', 3, 'activo'),
+	('16', '15', 'ERiego', 'Riego', 'Entregas efectuadas por tomas individualizadas específicamente para sistemas de riego.', 3, 'activo'),
+	('17', '16', 'EIndustria', 'Industria', 'Entregas por tomas individualizadas a diferentes industrias: CADAFE, Centros Agroindustriales, etc.', 3, 'activo'),
+	('18', '17', 'EOtros', 'Otros', 'Incluye cualquier otra entrega que cumpla con algún objetivo diferente al de los códigos 14,15, y 16; ejemplo: toma dentro del embalse para actividad "No tipificada o regularizada".', 3, 'activo'),
+	('19', '18', '', 'Subtotal', 'Suma de los códigos 14, 15, 16, y 17.', 3, 'activo'),
+	('20', '19', 'Aliviadero', 'Aliviadero', 'Descarga libre por el aliviadero de los volúmenes excedentes en el embalse. Esta descarga se efectúa a partir del nivel normal. Cuando el embalse está aliviando, los códigos 09 y 10 no deben transmitirse porque en la mayoría de los casos el caudal aliviado es suficiente para satisfacer estos dos códigos.', 4, 'activo'),
+	('21', '20', 'Conductos', 'Conductos', 'Descargas no controladas generalmente a través de sifones.', 4, 'activo'),
+	('22', '21', 'Otros', 'Otros', 'Otras salidas diferentes a las de los códigos 19 y 20', 4, 'activo'),
+	('23', '22', '', 'Subtotal', 'Suma de los códigos 19, 20 y 21.', 4, 'activo'),
+	('24', '23', '', 'Total Descargas', 'Suma de los subtotales correspondientes a los códigos 08, 13, 18, y 22.', 0, 'activo'),
+	('25', '24', '', 'Lluvia', 'Lluvia en mm caída sobre el espejo de agua del vaso y medida en la estación climatológica.', 6, 'activo'),
+	('26', '25', '', 'Evaporación', 'Evaporación en mm medida en la estación climatológica.', 6, 'activo'),
+	('27', '26', '', 'Q m3/seg', 'Aporte tomado en el afluente del embalse en m3/seg medido en la estación fluviométrica (limnígrafo o mira).', 7, 'activo'),
+	('28', '27', '', 'Volumen Total', 'Volumen correspondiente al caudal indicado en el código 26.', 7, 'activo'),
+	('29', '28', '', 'Observaciones', 'Observaciones varias relacionadas con abertura de válvulas, hectáreas regadas y/o cualquier novedad.', 7, 'activo'),
+	('30', '29', '', 'Abertura de Válvula o Compuerta (cm)', 'En este código se indica la abertura en cms de la(s) válvula(s) o compuerta(s) que este en ese momento en operación', 5, 'activo'),
+	('31', '30', '', 'Caudal (m3/s)', 'Se refiere al caudal que corresponde a la abertura indicada en el código 29.', 5, 'activo'),
+	('32', '31', '', 'Hectáreas Regadas', 'Se refiere al área bajo riego expresada en hectáreas cubierta por el volumen acusado en los códigos 04, 09 y 15 definidos anteriormente, es importante el conocimiento de esta información la cual puede provenir de los funcionamientos de los sistemas de riego del MPC o cualquier otro organismo o en su defecto en forma estimativa por el funcionario encargado de la operación del embalse.', 0, 'activo');
+
+
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

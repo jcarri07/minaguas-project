@@ -1,11 +1,14 @@
 <?php
 require_once '../../php/Conexion.php';
+require_once '../../php/batimetria.php';
 
 $id = $_GET['id'];
 $index = $_GET['index'];
 $semanas = $_GET['semanas'];
 $fecha_inicio = $_GET['fecha'];
 $sql = "SELECT * FROM embalses WHERE id_embalse = $id";
+$volumen_inicial = $_GET['volumen'];
+$cota_inicial = $_GET['cota'];
 
 $res = mysqli_query($conn, $sql);
 $data = array();
@@ -178,7 +181,7 @@ $TITULO6 = "Gráfico 6";
             <tbody>
                 <tr>
                     <th style="text-align: left;">Cota inicial de Monitoreo:</th>
-                    <td style="text-align: right;"><?php echo $COTA_INICIAL ?></td>
+                    <td style="text-align: right;"><?php echo number_format($cota_inicial, 2, ".", "") . " m s.n.m (" . $volumen_inicial . " hm3)" ?></td>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Fecha:</th>
@@ -186,11 +189,12 @@ $TITULO6 = "Gráfico 6";
                 </tr>
                 <tr>
                     <th style="text-align: left;">Volumen Nivel Normal:</th>
-                    <td style="text-align: right;"><?php echo $VOLUMEN_NIVEL_NORMAL ?></td>
+                    <?php $batimetria = new Batimetria($id, $conn); ?>
+                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenNormal(), 4, ".", "") . " hm3 (Cota " . $batimetria->cotaNormal() . " m s.n.m)" ?></td>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Volumen Nivel Minimo:</th>
-                    <td style="text-align: right;"><?php echo $VOLUMEN_NIVEL_MINIMO ?></td>
+                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenMinimo(), 4, ".", "") . " hm3 (Cota " . $batimetria->cotaMinima() . " m s.n.m)" ?></td>
                 </tr>
             </tbody>
         </table>

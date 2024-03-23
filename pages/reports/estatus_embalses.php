@@ -281,19 +281,21 @@ $mapa = "../../assets/img/estatus_embalses.png";
           <th class="text-celd">HIDROLÓGICA</th>
         </tr>
        
-        <tr>
+        
           <?php while ($row = mysqli_fetch_array($result)) { ?>
+            <tr>
              <td class="text-celd" style="font-size: 12px;"><?php echo $row['nombre_embalse']; ?> </td>
              <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
              <td class="text-celd" style="font-size: 12px;"><?php echo $row['operador']; ?> </td>
+            </tr>
         <?php } ?>
-        </tr>
+      
         <tr>
         <td class="text-celd total" ><b> TOTAL </b></td>
         <td class="text-celd total" colspan="2"><b></b> Embalses</td>
         </tr>
       </table>
-      
+        
 
       <div style="font-size: 18px; color:#000000;  margin-top: 40px;"><b>Normal Bajo (30 % <  A  < 60%)</b></div>
 
@@ -381,7 +383,7 @@ $mapa = "../../assets/img/estatus_embalses.png";
         <td class="text-celd total" colspan="2"><b></b> Embalses</td>
         </tr>
         </table>
-        </div>
+        </div> 
 
 
 

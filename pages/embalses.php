@@ -25,8 +25,17 @@ while ($row = mysqli_fetch_array($queryUsers)) {
 
 
 
-// $embalseBat = new Batimetria('1', $conn);
-// $cota = $embalseBat->getByCota("2015","210.455");
+// $embalseBat = new Batimetria(10, $conn);
+// $volumen_normal = $embalseBat->volumenNormal();
+// $volumen_minimo = $embalseBat->volumenMinimo();
+// $volumen_cota = $embalseBat->volumenDisponibleByCota("2024", "33.40");
+
+// $cota = implode("-",$embalseBat->getByCota("2024","268.455"));
+// $minima = $embalseBat->cotaMinima();
+// $año = implode("-", $embalseBat->getYears());
+// $closeYear = $embalseBat->getCloseYear();
+// $volMin = $embalseBat->volumenDisponible();
+// $ultima = $embalseBat->volumenActualDisponible();
 // $year = $embalseBat->getCloseYear("2015");
 // $prueba = $embalseBat->getByCota("2001", 210.209);
 
