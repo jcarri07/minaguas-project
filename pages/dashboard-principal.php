@@ -221,7 +221,8 @@ closeConection($conn);*/
             <p class="text-sm">Monitoreo del volumen actual de los embalses registrados</p>
           </div>
           <hr class="dark horizontal">
-          <div class="card-body col-12 h-100" id="contenedor" style="height:350px !important;">
+          <div class="card-body col-12 h-100 " id="contenedor" style="height:350px !important;">
+          <div class="border border-radius-lg h-100">
             <div class="col-12 pb-2">
               <!-- Ejemplo de leyenda -->
               <div class="row justify-content-center">
@@ -247,8 +248,8 @@ closeConection($conn);*/
                 </div>
               </div>
             </div>
-            <div class="col-12 h-90"><?php include "php/Graficas/grafica_volumen_actual.php" ?></div>
-
+            <div class="col-12 h-90 "><?php include "php/Graficas/grafica_volumen_actual.php" ?></div>
+            </div>
           </div>
         </div>
       </div>
