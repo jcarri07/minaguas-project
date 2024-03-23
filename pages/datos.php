@@ -127,7 +127,7 @@
 
                 if($_SESSION["Tipo"] == "Admin"){
 ?>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse'];?>');">
+                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse'];?>', '', '');">
                       <i class="fas fa-history text-dark me-2" aria-hidden="true"></i>
                       <span class="hide-cell">Historial de Reportes</span>
                     </a>
@@ -695,7 +695,7 @@
 ?>
 
   <script>
-    function openModalHistory(id_embalse){
+    function openModalHistory(id_embalse, anio, mes){
       $("#id_embalse_aux").text(id_embalse);
 
       $("#body-details").html("<h3 class='text-center'>Cargando...</h3>");
@@ -703,6 +703,8 @@
 
       var datos = new FormData();
       datos.append('id_embalse', id_embalse);
+      datos.append('anio', anio);
+      datos.append('mes', mes);
 
       $.ajax({
         url: 			'php/datos/vistas/historial_reportes.php',
@@ -796,7 +798,13 @@
             $("#modal-generic .message").text("Eliminado exitosamente");
             $("#modal-generic").modal("show");
 
-            openModalHistory($("#id_embalse_aux").text());
+            var anio = '', mes = '';
+            if($("#body-details #anio").length > 0)
+              anio = $("#body-details #anio").val();
+            if($("#body-details #mes").length > 0)
+              mes = $("#body-details #mes").val();
+
+            openModalHistory($("#id_embalse_aux").text(), anio, mes);
           }
           else{
             if(response == "vacio"){

@@ -4,6 +4,24 @@
     setlocale(LC_TIME, "spanish");
 
     $id_embalse = $_POST['id_embalse'];
+    $anio = $_POST['anio'];
+    $mes = $_POST['mes'];
+
+    $sql = "SELECT DISTINCT YEAR(fecha) AS 'anio'
+            FROM datos_embalse
+            ORDER BY anio DESC;";
+    $query_anios = mysqli_query($conn, $sql);
+
+    if($mes != "" && $anio == ''){
+        $anio = mysqli_fetch_array($query_anios)['anio'];
+        $query_anios = mysqli_query($conn, $sql);
+    }
+
+    $add_where = "";
+    if($anio != '')
+        $add_where .= " AND YEAR(fecha) = '$anio' ";
+    if($mes != '')
+        $add_where .= " AND MONTH(fecha) = '$mes' ";
 
     $sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, 
                 (
@@ -17,7 +35,7 @@
                     WHERE u.id_usuario = de.id_encargado
                 ) AS 'encargado'
             FROM datos_embalse de
-            WHERE id_embalse = '$id_embalse' AND de.estatus = 'activo'
+            WHERE id_embalse = '$id_embalse' AND de.estatus = 'activo' $add_where
             GROUP BY de.id_registro
             ORDER BY fecha DESC, id_registro DESC;";
     $query = mysqli_query($conn, $sql);
@@ -26,6 +44,43 @@
 <?php
             if(mysqli_num_rows($query) > 0){
 ?>
+                <div class="row">
+                    <div class="col">
+                        <label>Año</label>
+                        <div class="input-group mb-3">
+                            <select class="form-select" name="anio" id="anio">
+                                <option value=''>Todos</option>
+<?php
+                            while($row = mysqli_fetch_array($query_anios)){
+?>
+                                <option value='<?php echo $row['anio'];?>' <?php echo ($anio == $row['anio']) ? 'selected' : '';?>><?php echo $row['anio'];?></option>
+<?php
+                            }
+?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label>Mes</label>
+                        <select class="form-select" name="mes" id="mes">
+                            <option value=''>Todos</option>
+                            <option value='01'>Enero</option>
+                            <option value='02'>Febrero</option>
+                            <option value='03'>Marzo</option>
+                            <option value='04'>Abril</option>
+                            <option value='05'>Mayo</option>
+                            <option value='06'>Junio</option>
+                            <option value='07'>Julio</option>
+                            <option value='08'>Agosto</option>
+                            <option value='09'>Septiembre</option>
+                            <option value='10'>Octubre</option>
+                            <option value='11'>Noviembre</option>
+                            <option value='12'>Diciembre</option>
+                        </select>
+                    </div>
+                </div>
+
+
                 <div class="table-responsive">
                     <div class="mb-3">
                         <table class="table align-items-center text-sm text-center table-sm" id="table-history">
@@ -107,3 +162,14 @@
 <?php                  
             }
 ?>
+
+<script>
+    $("#mes").val("<?php echo $mes;?>");
+
+    $("#anio, #mes").off("change");
+    //function sinDecimales(){}
+
+    $("#anio, #mes").change(function(){
+        openModalHistory($("#id_embalse_aux").text(), $("#anio").val(), $("#mes").val());
+    })
+</script>
