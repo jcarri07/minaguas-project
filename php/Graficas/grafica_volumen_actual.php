@@ -16,7 +16,7 @@ $año = date('Y');
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
-    $res = mysqli_query($conn, "SELECT d.id_embalse, MAX(d.fecha),(select MAX(hora) from datos_embalse                                                                                                                                                            where fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora,
+    $res = mysqli_query($conn, "SELECT d.id_embalse, MAX(d.fecha),MAX(d.hora),(select MAX(hora) from datos_embalse                                                                                                                                                            where fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora,
     e.nombre_embalse, (SELECT MAX(cota_actual) 
                        FROM datos_embalse h 
                        WHERE h.id_embalse = d.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = hora) AS cota_actual
@@ -38,7 +38,7 @@ ORDER BY d.fecha DESC;");
                     type: 'bar',
                     title: 'grafica',
 
-                    //labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    labels: ['<35', '<45', '<90', '<100', '>100'],
                     data: {
                         datasets: [
 
@@ -49,34 +49,36 @@ ORDER BY d.fecha DESC;");
                             while ($j < count($datos_embalses)) {
 
                                 $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
-                                echo "{label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . "',
-                                    backgroundColor: '";
+                                echo "{backgroundColor: '";
                                 $x = $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];
                                 $min = $bati->volumenMinimo();
                                 $max = $bati->volumenMaximo();
                                 $nor = $bati->volumenNormal();
-                                if ($x == 0 || $x < $min) {
+
+                                if ($x == 0 || ((abs(($x - $min)) * (100 / ($max - $min))) >= 0 && (abs(($x - $min)) * (100 / ($max - $min))) <= 15)) {
                                     echo "#b50301',";
                                 }; //rojo
-                                if ($x < ($nor / 2) && $x >= $min) {
+                                if ((abs(($x - $min)) * (100 / ($max - $min))) > 15 && (abs(($x - $min)) * (100 / ($max - $min))) <= 35) {
                                     echo "#ff5733',";
                                 }; //anaranjado
-                                if ($x >= ($nor / 2) && $x < $nor) {
+                                if ((abs(($x - $min)) * (100 / ($max - $min))) > 35 && (abs(($x - $min)) * (100 / ($max - $min))) <= 45) {
                                     echo "#f1d710',";
                                 }; //amarillo
-                                if ($x >= $nor && $x < $max) {
+                                if ((abs(($x - $min)) * (100 / ($max - $min))) > 45 && (abs(($x - $min)) * (100 / ($max - $min))) <= 90) {
                                     echo "#25d366',";
                                 }; //verde
-                                if ($x == $max) {
+                                if ((abs(($x - $min)) * (100 / ($max - $min))) > 90 && (abs(($x - $min)) * (100 / ($max - $min))) <= 100) {
                                     echo "#0078d4',";
                                 }; //azul
-                                if ($x > $max) {
+                                if ((abs(($x - $min)) * (100 / ($max - $min))) > 100) {
                                     echo "#b50301',";
                                 };
-                                echo "data: [";
+                                echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] ." (".round((abs(($x - $min)) * (100 / ($max - $min))),0)."%)',
+                                    data: [";
                                 $batimetria = $bati->getBatimetria();
                             ?> {
-                                    x: '<?php echo 'embalse';//$datos_embalses[$j]["nombre_embalse"];  ?>',
+                                    x: '<?php echo 'embalse'; //$datos_embalses[$j]["nombre_embalse"];  
+                                        ?>',
                                     y: <?php echo $x;  ?>
                                 },
 
