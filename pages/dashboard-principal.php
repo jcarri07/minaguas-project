@@ -28,7 +28,35 @@
 
     }
   }
+
+  /* Estilos personalizados */
+  .leyenda {
+    max-width: 573px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .etiqueta {
+    display: flex;
+    align-items: center;
+  }
+
+  .cuadro-color {
+
+    height: 10px;
+
+  }
+
+  .smalll {
+    font-size: 0.675em;
+  }
+
+  .h-90 {
+    height: 90% !important;
+  }
 </style>
+
 
 <?php
 require_once 'php/Conexion.php';
@@ -194,8 +222,33 @@ closeConection($conn);*/
           </div>
           <hr class="dark horizontal">
           <div class="card-body col-12 h-100" id="contenedor" style="height:350px !important;">
+            <div class="col-12 pb-2">
+              <!-- Ejemplo de leyenda -->
+              <div class="row justify-content-center">
+                <div class="etiqueta col-2 px-0">
+                  <div class="col-3 cuadro-color" style="background-color: #b50301;"></div>
+                  <span class="smalll col-9 ps-1">(>0%)-(<=15%)</span>
+                </div>
+                <div class="etiqueta col-2 px-0">
+                  <div class="col-3 cuadro-color" style="background-color: #ff5733;"></div>
+                  <span class="smalll col-9 ps-1">(>15%)-(<=35%)</span>
+                </div>
+                <div class="etiqueta col-2 px-0">
+                  <div class="col-3 cuadro-color" style="background-color: #f1d710;"></div>
+                  <span class="smalll col-9 ps-1">(>35%)-(<=45%)</span>
+                </div>
+                <div class="etiqueta col-2 px-0">
+                  <div class="col-3 cuadro-color" style="background-color: #25d366;"></div>
+                  <span class="smalll col-9 ps-1">(>45%)-(<=90%)</span>
+                </div>
+                <div class="etiqueta col-2 px-0">
+                  <div class="col-3 cuadro-color" style="background-color: #0078d4;"></div>
+                  <span class="smalll col-9 ps-1">(>90%)-(<=100%)</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 h-90"><?php include "php/Graficas/grafica_volumen_actual.php" ?></div>
 
-            <?php include "php/Graficas/grafica_volumen_actual.php" ?>
           </div>
         </div>
       </div>
@@ -531,17 +584,18 @@ closeConection($conn);*/
           },
           options: {
             maintainAspectRatio: false,
-            plugins:{
-                legend: {                  
-                                    labels: {
+            plugins: {
+              legend: {
+                labels: {
 
-                                        // This more specific font property overrides the global property
-                                        font: {
-                                            size: 20
-                                        },
+                  // This more specific font property overrides the global property
+                  font: {
+                    size: 20
+                  },
 
-                                    }
-                                },},
+                }
+              },
+            },
             scales: {
               y: {
                 title: {
@@ -606,17 +660,18 @@ closeConection($conn);*/
             },
             options: {
               maintainAspectRatio: false,
-              plugins:{
-                legend: {                  
-                                    labels: {
+              plugins: {
+                legend: {
+                  labels: {
 
-                                        // This more specific font property overrides the global property
-                                        font: {
-                                            size: 20
-                                        },
+                    // This more specific font property overrides the global property
+                    font: {
+                      size: 20
+                    },
 
-                                    }
-                                },},
+                  }
+                },
+              },
               scales: {
                 y: {
                   title: {
