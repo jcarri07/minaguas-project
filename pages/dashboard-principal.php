@@ -221,40 +221,41 @@ closeConection($conn);*/
             <p class="text-sm">Monitoreo del volumen actual de los embalses registrados</p>
           </div>
           <hr class="dark horizontal">
-          <div class="card-body col-12 h-100" id="contenedor" style="height:350px !important;">
+          <div class="card-body col-12 h-100 " id="contenedor" style="height:350px !important;">
+          <div class="border border-radius-lg h-100">
             <div class="col-12 pb-2">
               <!-- Ejemplo de leyenda -->
               <div class="row justify-content-center">
                 <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #b50301;"></div>
-                  <span class="smalll col-9 ps-1">(>0%)-(<=15%)</span>
+                  <div class="col-3 cuadro-color" style="background-color: #fd0200;"></div>
+                  <span class="smalll col-9 ps-1">(>0%)-(<=30%)</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #ff5733;"></div>
-                  <span class="smalll col-9 ps-1">(>15%)-(<=35%)</span>
+                  <div class="col-3 cuadro-color" style="background-color: #72dffd;"></div>
+                  <span class="smalll col-9 ps-1">(>30%)-(<=60%)</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #f1d710;"></div>
-                  <span class="smalll col-9 ps-1">(>35%)-(<=45%)</span>
+                  <div class="col-3 cuadro-color" style="background-color: #0066eb;"></div>
+                  <span class="smalll col-9 ps-1">(>60%)-(<=90%)</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #25d366;"></div>
-                  <span class="smalll col-9 ps-1">(>45%)-(<=90%)</span>
-                </div>
-                <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #0078d4;"></div>
+                  <div class="col-3 cuadro-color" style="background-color: #3ba500;"></div>
                   <span class="smalll col-9 ps-1">(>90%)-(<=100%)</span>
+                </div>
+                <div class="etiqueta col-2 px-0">
+                  <div class="col-3 cuadro-color" style="background-color: #55fe01;"></div>
+                  <span class="smalll col-9 ps-1">(>100%)</span>
                 </div>
               </div>
             </div>
-            <div class="col-12 h-90"><?php include "php/Graficas/grafica_volumen_actual.php" ?></div>
-
+            <div class="col-12 h-90 "><?php include "php/Graficas/grafica_volumen_actual.php" ?></div>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;">
         <div class="card z-index-2">
-          <div class="card-header">
+          <div class="card-header pb-3">
             <h6 class="mb-0">Registro de Reportes</h6>
             <p class="text-sm">Cantidad de reportes realizados al mes</p>
             <hr class="dark horizontal">
@@ -272,8 +273,8 @@ closeConection($conn);*/
             </div>
           </div>
           <div class="card-body p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-            <div class="bg-white border shadow-dark border-radius-lg py-3 pe-1">
-              <div class="chart mb-1" style="height:350px !important;">
+            <div class="bg-white  shadow-dark  py-3 pe-1">
+              <div class="chart mb-1 border border-radius-lg" style="height:350px !important;">
                 <canvas id="myChart" width="400" height="200"></canvas>
               </div>
             </div>
