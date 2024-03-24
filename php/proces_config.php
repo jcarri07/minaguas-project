@@ -87,3 +87,49 @@ if (isset($_POST['editar'])) {
         echo "Ocurrió un error al actualizar los datos: " . mysqli_error($conn);
     }
 }
+
+
+if (isset($_POST['fecha_inameh'])) {
+
+    $inicio_periodo = $_POST["fecha_inameh"];
+
+
+    $fecha = "UPDATE configuraciones 
+    SET fecha_inameh = '$inicio_periodo'";
+
+    $resultado = mysqli_query($conn, $fecha);
+    if ($resultado) {
+
+        // echo "Los datos se actualizaron correctamente en la base de datos.";
+        // header("Location: ../main.php?page=embalses");
+        echo "<script>window.location='../main.php?page=configuraciones';</script>";
+    } else {
+        echo "Ocurrió un error al actualizar los datos: " . mysqli_error($conn);
+    }
+}
+
+
+
+if (isset($_POST["fecha_seca"]) && isset($_POST["fecha_lluvia"])) {
+    $nueva_fecha_seca = $_POST["fecha_seca"];
+    $nueva_fecha_lluvia = $_POST["fecha_lluvia"];
+
+    $nueva_fecha_seca = date("Y-m-d", strtotime($nueva_fecha_seca));
+    $nueva_fecha_lluvia = date("Y-m-d", strtotime($nueva_fecha_lluvia));
+
+    $consulta_sql = "UPDATE configuraciones 
+                     SET fecha_sequia = '$nueva_fecha_seca', fecha_lluvia = '$nueva_fecha_lluvia'";
+    
+    $resultado = mysqli_query($conn, $consulta_sql);
+    
+
+    if ($resultado) {
+       // header("Location: ../main.php?page=configuraciones");
+        echo "<script>window.location='../main.php?page=embalses';</script>";
+
+    } else {
+        echo "Error al actualizar las fechas en la base de datos.";
+    }
+} 
+
+?>

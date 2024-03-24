@@ -228,23 +228,23 @@ closeConection($conn);*/
               <div class="row justify-content-center">
                 <div class="etiqueta col-2 px-0">
                   <div class="col-3 cuadro-color" style="background-color: #fd0200;"></div>
-                  <span class="smalll col-9 ps-1">(>0%)-(<=30%)</span>
+                  <span class="smalll col-9 ps-1">( < = 30% )</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
                   <div class="col-3 cuadro-color" style="background-color: #72dffd;"></div>
-                  <span class="smalll col-9 ps-1">(>30%)-(<=60%)</span>
+                  <span class="smalll col-9 ps-1">( > 30% <= 60% )</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
                   <div class="col-3 cuadro-color" style="background-color: #0066eb;"></div>
-                  <span class="smalll col-9 ps-1">(>60%)-(<=90%)</span>
+                  <span class="smalll col-9 ps-1">( >60% <= 90% )</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
                   <div class="col-3 cuadro-color" style="background-color: #3ba500;"></div>
-                  <span class="smalll col-9 ps-1">(>90%)-(<=100%)</span>
+                  <span class="smalll col-9 ps-1">( >90% <= 100% )</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
                   <div class="col-3 cuadro-color" style="background-color: #55fe01;"></div>
-                  <span class="smalll col-9 ps-1">(>100%)</span>
+                  <span class="smalll col-9 ps-1">( > 100% )</span>
                 </div>
               </div>
             </div>

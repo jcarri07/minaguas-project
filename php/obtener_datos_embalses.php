@@ -10,12 +10,22 @@ if (isset($_GET['id'])) {
     $sql = "";
     if($_GET['id'] == "inicial"){
         $embalseId = "";
-        $sql = "SELECT MONTH(fecha) as mes, COUNT(*) as cantidad, id_embalse FROM datos_embalse GROUP BY MONTH(fecha) LIMIT 1";
+     $sql = "SELECT MONTH(fecha) as mes, COUNT(*) as cantidad, id_embalse FROM datos_embalse GROUP BY MONTH(fecha) LIMIT 1";
+        // $sql = "SELECT MONTH(fecha) as mes, COUNT(*) as cantidad, id_embalse 
+        // FROM datos_embalse 
+        // WHERE YEAR(fecha) = YEAR(CURDATE()) 
+        // GROUP BY MONTH(fecha) 
+        // LIMIT 1";
         // echo('Hola embalse', $embalseId);
 
     }else{
         $embalseId = $_GET['id'];
-        $sql = "SELECT MONTH(fecha) as mes, COUNT(*) as cantidad, id_embalse FROM datos_embalse WHERE id_embalse = '$embalseId' GROUP BY MONTH(fecha)";
+        // $sql = "SELECT MONTH(fecha) as mes, COUNT(*) as cantidad, id_embalse FROM datos_embalse WHERE id_embalse = '$embalseId' GROUP BY MONTH(fecha)";
+        $sql = "SELECT MONTH(fecha) as mes, COUNT(*) as cantidad, id_embalse 
+        FROM datos_embalse 
+        WHERE id_embalse = '$embalseId' 
+        AND YEAR(fecha) = YEAR(CURDATE()) 
+        GROUP BY MONTH(fecha)";
     }
 
     // echo '<script>';

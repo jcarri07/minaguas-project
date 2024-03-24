@@ -4,7 +4,6 @@ require_once 'php/Conexion.php';
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo';");
 $queryPropositosInactivos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'inactivo';");
 $queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
-
 $stringPrioritarios = "0";
 $prioritarios = [];
 $queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios';");
@@ -15,6 +14,10 @@ if (mysqli_num_rows($queryPrioritarios) > 0) {
 }
 
 $embalsesPriotitarios = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse IN ($stringPrioritarios);");
+
+$queryInameh = mysqli_query($conn, "SELECT fecha_sequia, fecha_lluvia FROM configuraciones"); 
+$resultado = mysqli_fetch_assoc($queryInameh);
+
 
 closeConection($conn);
 ?>
@@ -176,7 +179,8 @@ closeConection($conn);
 
             <!-- configuraciones de embalses prioritarios -->
             <div class="">
-              <h3 class="mb-4 text-center">Embalses Priorizados:</h3>
+              <div>
+              <h3 class="mb-2 text-center">Embalses Priorizados:</h3>
               <div class="config-container-prioritarios">
 
                 <?php
@@ -195,7 +199,33 @@ closeConection($conn);
                 ?>
               </div>
               <div class="text-center mt-3"><button id="save-prioritarios" class="btn btn-primary">Guardar</button></div>
-            </div>
+              </div>
+
+            <!-- configuraciones fecha inameh -->   
+            
+
+            <h3 class="mb-2 text-center" style="padding-top: 50px;">Inicio de Temporadas (Según INAMEH):</h3>
+
+            <div style="display: flex; flex-direction: row; justify-content: center; padding-top: 10px;">
+                <div style="text-align: center;">
+                    <h5 class="mb-2">Fecha inicio época Seca:</h5>
+                    <label>Fecha actual:</label>
+                    <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($resultado['fecha_sequia'])); ?>" id="fecha_actual_sequia" readonly> 
+                    <label>Nueva fecha: </label>
+                    <input type="date" class="form-control" style="width: 100%;" id="fecha_inameh_seca">
+                </div>
+                
+                    <div style="text-align: center; margin-left: 80px; ">
+                        <h5 class="mb-2">Fecha inicio época Lluvia:</h5>
+                        <label>Fecha actual:</label>
+                        <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($resultado['fecha_lluvia'])); ?>" id="fecha_actual_lluvia" readonly>
+                        <label>Nueva fecha: </label>
+                        <input type="date" class="form-control" style="width: 100%;" id="fecha_inameh_lluvia">
+                    </div>
+                </div>
+              <div class="text-center mt-3"><button id="periodo" class="btn btn-primary">Guardar</button></div>
+              </div>
+              </div> 
 
           </div>
           <br><br><br>
@@ -391,7 +421,27 @@ closeConection($conn);
         }
       });
     });
-  </script>
+
+    $("#periodo").on("click", function(e) {
+    var fecha_seca = $('#fecha_inameh_seca').val(); 
+    var fecha_lluvia = $('#fecha_inameh_lluvia').val();  
+
+    $.ajax({
+        type: "POST",
+        url: "php/proces_config.php",
+        data: { fecha_seca: fecha_seca, 
+                fecha_lluvia: fecha_lluvia }, 
+                
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+ });
+
+</script>
 
 
 

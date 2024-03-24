@@ -188,11 +188,13 @@ CREATE TABLE detalles_extraccion (
   /*FOREIGN KEY (id_codigo_extraccion) REFERENCES codigo_extraccion (id)*/
 );
 
-CREATE TABLE configuraciones (
-  id_config INT AUTO_INCREMENT PRIMARY KEY,
-  nombre_config VARCHAR(50),
-  configuracion TEXT
-);
+CREATE TABLE `configuraciones` (
+  `id_config` int(11) NOT NULL,
+  `nombre_config` varchar(50) DEFAULT NULL,
+  `configuracion` text,
+  `fecha_sequia` date NOT NULL DEFAULT '2024-01-01',
+  `fecha_lluvia` date NOT NULL DEFAULT '2024-06-01'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE propositos (
   id_proposito INT AUTO_INCREMENT PRIMARY KEY,
