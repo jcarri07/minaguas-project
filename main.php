@@ -82,7 +82,7 @@ date_default_timezone_set("America/Caracas");
   }
 </style>
 
-<body class="g-sidenav-show   bg-gray-100">
+<body class="g-sidenav-show body-show bg-gray-100">
   <div class="map-no-visible" id="mapa">
     <div class="relative" id="map">
       </div>

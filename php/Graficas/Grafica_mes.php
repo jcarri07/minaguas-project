@@ -137,7 +137,10 @@ if ($count >= 1) {
                     animations: true,
                     responsive: true,
                     maintainAspectRatio: false,
-
+                    interaction: {
+                                intersect: false,
+                                axis: 'x',
+                            },
                     plugins: {
                         arbitra: {
 
