@@ -259,6 +259,11 @@
               <div class="card-header pb-0 text-left">
                 <h3 class="font-weight-bolder text-primary text-gradient">Historial de Reportes</h3>
                 <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+              
+                <div class="text-center">
+                  <button type="button" class="btn btn-success mt-4 mb-0" title="Historial de Todas la importaciones Datos de Excel (Parte Base)" data-bs-dismiss="modal" onclick="openModalHistoryAdjunciones($('#id_embalse_aux').text());">Historial de Adjunciones</button>
+                </div>
+
               </div>
               <div class="card-body pb-3" id="body-details">
                 
@@ -274,6 +279,7 @@
         </div>
       </div>
     </div>
+
 
 
 
@@ -379,9 +385,9 @@
                   </div>
 
                   <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0 btn-submit">Guardar</button>
-                    <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal" style="display: none;">Cerrar</button>
-                    <!--<button type="button" class="btn bg-gradient-primary btn-rounded mt-4 mb-0 btn-edit" style="display: none;">Editar</button>-->
+                    <button type="submit" class="btn bg-gradient-primary btn-lg w-100 mt-4 mb-0 btn-submit">Guardar</button>
+                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" style="display: none;">Cerrar</button>
+                    <!--<button type="button" class="btn bg-gradient-primary mt-4 mb-0 btn-edit" style="display: none;">Editar</button>-->
                   </div>
                 </form>
               </div>
@@ -419,8 +425,8 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="$('#add').modal('show');">Atrás</button>
-                    <button type="submit" class="btn bg-gradient-primary btn-rounded mt-4 mb-0 btn-submit">Examinar</button>
+                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="$('#add').modal('show');">Atrás</button>
+                    <button type="submit" class="btn bg-gradient-primary mt-4 mb-0 btn-submit">Examinar</button>
                   </div>
                 </form>
 
@@ -449,6 +455,35 @@
       </div>
     </div>
 
+
+
+
+    <div class="modal fade" id="modal-history-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-primary text-gradient">Historial de Adjunciones del Embalse</h3>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#modal-details').modal('show');">X</button>
+              </div>
+              <div class="card-body pb-3" id="body-history-excel">
+                
+              </div>
+              <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
   
 
 
@@ -456,6 +491,9 @@
     <div id="id_aux" style="display: none;"></div>
     <div id="opc_aux" style="display: none;"></div>
     <div id="nombre_hoja_aux" style="display: none;"></div>
+
+    <div id="archivo_excel_aux" style="display: none;"></div>
+    <div id="fecha_excel_aux" style="display: none;"></div>
 
 
   <script>
@@ -598,7 +636,7 @@
         cache:          false,
         contentType:    false,
         processData:    false,
-        success: function(response){ console.log(response);
+        success: function(response){ //console.log(response);
           $('.loaderParent').hide();
           if(response == 'si'){
             $("#modal-generic .message").text("Registro exitoso");
@@ -788,8 +826,17 @@
       datos.append('id_registro', $("#id_aux").text());
       datos.append('opc', $("#opc_aux").text());
 
+      var url = 'php/datos/modelos/carga-datos-process.php';
+
+      if($("#opc_aux").text() == "delete_data_excel"){
+        url = 'php/datos/modelos/data-excel-process.php';
+
+        datos.append('archivo_excel', $("#archivo_excel_aux").text());
+        datos.append('fecha_excel', $("#fecha_excel_aux").text());
+      }
+
       $.ajax({
-        url: 			'php/datos/modelos/carga-datos-process.php',
+        url: 			url,
         type:			'POST',
         data:			datos,
         cache:          false,
@@ -802,13 +849,18 @@
             $("#modal-generic .message").text("Eliminado exitosamente");
             $("#modal-generic").modal("show");
 
-            var anio = '', mes = '';
-            if($("#body-details #anio").length > 0)
-              anio = $("#body-details #anio").val();
-            if($("#body-details #mes").length > 0)
-              mes = $("#body-details #mes").val();
+            if($("#opc_aux").text() != "delete_data_excel"){
+              var anio = '', mes = '';
+              if($("#body-details #anio").length > 0)
+                anio = $("#body-details #anio").val();
+              if($("#body-details #mes").length > 0)
+                mes = $("#body-details #mes").val();
 
-            openModalHistory($("#id_embalse_aux").text(), anio, mes);
+              openModalHistory($("#id_embalse_aux").text(), anio, mes);
+            }
+            else{
+              openModalHistoryAdjunciones($("#id_embalse_aux").text());
+            }
           }
           else{
             if(response == "vacio"){
@@ -915,6 +967,41 @@
       $("#opc_aux").text("importar_data");
       $("#nombre_hoja_aux").text(hoja);
       $("#form-add-data-old").trigger("submit");
+    }
+
+    function openModalHistoryAdjunciones(id_embalse){
+
+      $("#body-history-excel").html("<h3 class='text-center'>Cargando...</h3>");
+      $("#modal-history-excel").modal("show");
+
+      var datos = new FormData();
+      datos.append('id_embalse', id_embalse);
+
+      $.ajax({
+        url: 			'php/datos/vistas/historial-adjunciones-excel.php',
+        type:			'POST',
+        data:			datos,
+        cache:          false,
+        contentType:    false,
+        processData:    false,
+        success: function(response){
+          $("#body-history-excel").html(response);
+          iniciarTabla('table-history-excel');
+        }
+        ,
+        error: function(response){
+        }
+      });
+    }
+
+
+    function openModalDeleteHistoryExcel(id_embalse, nombre_embalse, archivo, fecha_excel, action){
+      $("#id_aux").text(id_embalse);
+      $("#opc_aux").text(action);
+      $("#archivo_excel_aux").text(archivo);
+      $("#fecha_excel_aux").text(fecha_excel);
+      $("#modal-action .message").html("<h4 class='text-center'>¿Desea Eliminar el conjunto de datos adjuntados del archivo " + archivo + " al embalse de " + nombre_embalse + "?</h4>");
+      $("#modal-action").modal("show");
     }
     
   </script>

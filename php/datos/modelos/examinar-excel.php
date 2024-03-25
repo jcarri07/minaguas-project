@@ -121,7 +121,7 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
 
             //Ciclo para almacenar extracciones
 
-            echo 'si';
+            
         }
         
 
@@ -131,6 +131,8 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
 
         $fila++;
     }
+
+    echo 'si';
 
 
     /*$excel = PHPExcel_IOFactory::load("temp/" . $nombre_archivo);
