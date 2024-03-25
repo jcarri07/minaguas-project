@@ -43,8 +43,7 @@ ORDER BY id_embalse ASC;");
                 let cha = new Chart(chart, {
                     type: 'bar',
                     title: 'grafica',
-
-                    labels: ['<35', '<45', '<90', '<100', '>100'],
+                    label:'Embalses',
                     data: {
                         datasets: [
 
@@ -84,7 +83,7 @@ ORDER BY id_embalse ASC;");
                                         data: [";
                                     
                             ?>      {
-                                        x: '<?php echo 'embalse'; //$datos_embalses[$j]["nombre_embalse"];  
+                                        x: '<?php echo 'Embalses'; //$datos_embalses[$j]["nombre_embalse"];  
                                             ?>',
                                         y: <?php echo $x;  ?>
                                     },
@@ -96,7 +95,7 @@ ORDER BY id_embalse ASC;");
                                 } else {
                                     echo "{backgroundColor: '#fd0200',";
                                     echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (0%)',
-                                    data: [{x: 'embalse',y:0,}]},";
+                                    data: [{x: 'Embalses',y:0,}]},";
                                     $j++;
                                 }
                             };
@@ -109,13 +108,16 @@ ORDER BY id_embalse ASC;");
 
                         responsive: true,
                         maintainAspectRatio: false,
-
+                        interaction: {
+                                intersect: false,
+                                axis: 'x',
+                            },
                         plugins: {
 
                             legend: {
                                 position: 'bottom',
                                 align: 'start',
-
+                                display: false,
                                 labels: {
                                     
                                     // This more specific font property overrides the global property
@@ -137,6 +139,15 @@ ORDER BY id_embalse ASC;");
                         },
                         scales: {
 
+                            x: {
+
+                                ticks: {
+                                    font: {
+                                        size: 14
+                                    },
+                                },
+
+                            },
                             y: {
                                 title: {
                                     display: true,

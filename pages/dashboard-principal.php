@@ -51,7 +51,11 @@
   .smalll {
     font-size: 0.675em;
   }
-
+  @media (max-width: 380px) {
+    .smalll {
+    font-size: 0.475em;
+  }
+}
   .h-90 {
     height: 90% !important;
   }
@@ -225,10 +229,10 @@ closeConection($conn);*/
           <div class="border border-radius-lg h-100">
             <div class="col-12 pb-2">
               <!-- Ejemplo de leyenda -->
-              <div class="row justify-content-center">
-                <div class="etiqueta col-2 px-0">
+              <div class="row justify-content-center gap-2">
+                <div class="etiqueta col-2 px-0 justify-content-end">
                   <div class="col-3 cuadro-color" style="background-color: #fd0200;"></div>
-                  <span class="smalll col-9 ps-1">( < = 30% )</span>
+                  <span class="smalll col-6 pe-1 text-end">( < = 30% )</span>
                 </div>
                 <div class="etiqueta col-2 px-0">
                   <div class="col-3 cuadro-color" style="background-color: #72dffd;"></div>
@@ -242,8 +246,8 @@ closeConection($conn);*/
                   <div class="col-3 cuadro-color" style="background-color: #3ba500;"></div>
                   <span class="smalll col-9 ps-1">( >90% <= 100% )</span>
                 </div>
-                <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #55fe01;"></div>
+                <div class="etiqueta col-2 px-0 ps-1">
+                  <div class="col-3 cuadro-color " style="background-color: #55fe01;"></div>
                   <span class="smalll col-9 ps-1">( > 100% )</span>
                 </div>
               </div>
