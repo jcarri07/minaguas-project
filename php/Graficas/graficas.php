@@ -291,25 +291,26 @@ const arbitra = {
 
 
                                     lines: [{
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1]; ?>,
-                                            cota: "Volumen minimo",
-                                            color: 'black',
-                                            h: 15,
-                                        },
-                                        {
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[$t]["cota_nor"])[1]; ?>,
-                                            cota: "Volumen normal",
-                                            color: 'black',
-                                            h: 15,
-                                        },
-                                        {
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1]; ?>,
-                                            cota: "Volumen maximo",
-                                            color: 'black',
-                                            h: -15,
-                                        }
-                                        // Agrega más líneas según sea necesario
-                                    ]
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1],2); ?>,
+                                        cota: "Volumen minimo",
+                                        color: 'black',
+                                        h: 15,
+                                    },
+                                    {
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1],2); ?>,
+                                        cota: "Volumen normal",
+                                        color: 'black',
+                                        h: 15,
+
+                                    },
+                                    {
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1],2); ?>,
+                                        cota: "Volumen maximo",
+                                        color: 'black',
+                                        h: -15,
+                                    }
+                                    // Agrega más líneas según sea necesario
+                                ]
                                 },
                                 legend: {
                                     display: false,
@@ -380,12 +381,13 @@ const arbitra = {
                                     min: <?php if ($min < $embalses[$t]["cota_min"]) {
                                                 echo $bati->getByCota($año, $min)[1];
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;
+                                                if($bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200 < 0){echo 0;}else{
+                                                    echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;}
                                             }; ?>,
                                     max: <?php if ($max > $embalses[$t]["cota_max"]) {
                                                 echo $bati->getByCota($año, $max)[1] + 200;
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 200;
+                                                echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
                                             }; ?>,
                                     border: {
                                         display: false,
@@ -501,25 +503,26 @@ const arbitra = {
 
 
                                     lines: [{
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1]; ?>,
-                                            cota: "Volumen minimo",
-                                            color: 'black',
-                                            h: 15,
-                                        },
-                                        {
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[$t]["cota_nor"])[1]; ?>,
-                                            cota: "Volumen normal",
-                                            color: 'black',
-                                            h: 15,
-                                        },
-                                        {
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1]; ?>,
-                                            cota: "Volumen maximo",
-                                            color: 'black',
-                                            h: -15,
-                                        }
-                                        // Agrega más líneas según sea necesario
-                                    ]
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1],2); ?>,
+                                        cota: "Volumen minimo",
+                                        color: 'black',
+                                        h: 15,
+                                    },
+                                    {
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1],2); ?>,
+                                        cota: "Volumen normal",
+                                        color: 'black',
+                                        h: 15,
+
+                                    },
+                                    {
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1],2); ?>,
+                                        cota: "Volumen maximo",
+                                        color: 'black',
+                                        h: -15,
+                                    }
+                                    // Agrega más líneas según sea necesario
+                                ]
                                 },
                                 legend: {
                                     display: false,
@@ -591,12 +594,13 @@ const arbitra = {
                                     min: <?php if ($min < $embalses[$t]["cota_min"]) {
                                                 echo $bati->getByCota($año, $min)[1];
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;
+                                                if($bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200 < 0){echo 0;}else{
+                                                    echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;}
                                             }; ?>,
                                     max: <?php if ($max > $embalses[$t]["cota_max"]) {
                                                 echo $bati->getByCota($año, $max)[1] + 200;
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 200;
+                                                echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
                                             }; ?>,
                                     border: {
                                         display: false,
@@ -710,25 +714,26 @@ const arbitra = {
 
 
                                     lines: [{
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1]; ?>,
-                                            cota: "Volumen minimo",
-                                            color: 'black',
-                                            h: 15,
-                                        },
-                                        {
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[$t]["cota_nor"])[1]; ?>,
-                                            cota: "Volumen normal",
-                                            color: 'black',
-                                            h: 15,
-                                        },
-                                        {
-                                            yvalue: <?php echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1]; ?>,
-                                            cota: "Volumen maximo",
-                                            color: 'black',
-                                            h: -15,
-                                        }
-                                        // Agrega más líneas según sea necesario
-                                    ]
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1],2); ?>,
+                                        cota: "Volumen minimo",
+                                        color: 'black',
+                                        h: 15,
+                                    },
+                                    {
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1],2); ?>,
+                                        cota: "Volumen normal",
+                                        color: 'black',
+                                        h: 15,
+
+                                    },
+                                    {
+                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1],2); ?>,
+                                        cota: "Volumen maximo",
+                                        color: 'black',
+                                        h: -15,
+                                    }
+                                    // Agrega más líneas según sea necesario
+                                ]
                                 },
                                 legend: {
                                     display: false,
@@ -805,12 +810,13 @@ const arbitra = {
                                     min: <?php if ($min < $embalses[$t]["cota_min"]) {
                                                 echo $bati->getByCota($año, $min)[1];
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;
+                                                if($bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200 < 0){echo 0;}else{
+                                                    echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;}
                                             }; ?>,
                                     max: <?php if ($max > $embalses[$t]["cota_max"]) {
                                                 echo $bati->getByCota($año, $max)[1] + 200;
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 200;
+                                                echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
                                             }; ?>,
                                     border: {
                                         display: false,

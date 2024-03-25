@@ -51,7 +51,8 @@ class Batimetria
     {
         $año = $this->getCloseYear($año);
         $cota = number_format(floatval($cota), 3, ".", "");
-        return (array_key_exists((string)$cota, $this->batimetria[$año])) ? explode("-", $this->batimetria[$año][(string)$cota]) : $this->getCloseCota($this->batimetria[$año], $cota, 0.001);
+        // return (array_key_exists((string)$cota, $this->batimetria[$año])) ? explode("-", $this->batimetria[$año][(string)$cota]) : $this->getCloseCota($this->batimetria[$año], $cota, 0.001);
+        return $this->interpolacionLineal($cota, $this->batimetria[$año]);
     }
 
     public function getCloseCota($batimetria, $cota, $step)
@@ -87,6 +88,79 @@ class Batimetria
         return $this->años;
     }
 
+
+    public function interpolacionLineallll($x, $tabla) {
+        $n = count($tabla);
+        // Ordenar la tabla por el valor de x
+        usort($tabla, function($a, $b) {
+            return $a['x'] <=> $b['x'];
+        });
+    
+        // Comprobar si el valor de x está fuera del rango de la tabla
+        if ($x < $tabla[0]['x']) {
+            return $tabla[0]['y']; // Devolver el valor más bajo
+        } elseif ($x > $tabla[$n - 1]['x']) {
+            return $tabla[$n - 1]['y']; // Devolver el valor más alto
+        }
+    
+        // Buscar los puntos más cercanos en la tabla
+        $puntoAnterior = null;
+        $puntoSiguiente = null;
+        foreach ($tabla as $punto) {
+            if ($punto['x'] <= $x) {
+                $puntoAnterior = $punto;
+            } else {
+                $puntoSiguiente = $punto;
+                break;
+            }
+        }
+    
+        // Realizar la interpolación lineal
+        $x0 = $puntoAnterior['x'];
+        $y0 = $puntoAnterior['y'];
+        $x1 = $puntoSiguiente['x'];
+        $y1 = $puntoSiguiente['y'];
+    
+        $y = $y0 + (($y1 - $y0) / ($x1 - $x0)) * ($x - $x0);
+    
+        return $y;
+    }
+
+    public function interpolacionLineal($x, $tabla) {
+        // Convertir las claves del array a un array numérico y ordenarlas
+        $x_values = array_keys($tabla);
+        sort($x_values);
+    
+        // Comprobar si el valor de x está fuera del rango de la tabla
+        if ($x < min($x_values)) {
+            return reset($tabla); // Devolver el valor más bajo
+        } elseif ($x > max($x_values)) {
+            return end($tabla); // Devolver el valor más alto
+        }
+    
+        // Buscar los puntos más cercanos en la tabla
+        $puntoAnterior = null;
+        $puntoSiguiente = null;
+        foreach ($x_values as $x_value) {
+            if ($x_value <= $x) {
+                $puntoAnterior = $x_value;
+            } else {
+                $puntoSiguiente = $x_value;
+                break;
+            }
+        }
+    
+        // Realizar la interpolación lineal
+        $Sup_min = explode("-",$tabla[$puntoAnterior])[0];
+        $Sup_max = explode("-",$tabla[$puntoSiguiente])[0];
+        $Sup = $Sup_min + (($Sup_max - $Sup_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
+
+        $Vol_min = explode("-",$tabla[$puntoAnterior])[1];
+        $Vol_max = explode("-",$tabla[$puntoSiguiente])[1];
+        $Vol = $Vol_min + (($Vol_max - $Vol_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
+    
+        return array($Sup,$Vol);
+    }
 
 
     // public function AuxGetCloseCota($año, $cota)

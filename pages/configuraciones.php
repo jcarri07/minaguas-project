@@ -44,7 +44,7 @@ closeConection($conn);
     display: grid;
     place-content: center;
     grid-template-columns: repeat(auto-fill,
-        minmax(90px, 1fr));
+        minmax(120px, 1fr));
     column-gap: 10px;
   }
 
@@ -203,6 +203,15 @@ closeConection($conn);
       </div>
     </div>
   </div>
+
+    <form action="php/guardar_embalses.php" method="POST" class="form-control mt-4 mb-4" enctype="multipart/form-data">
+        <label for="excel">Cargar el archivo</label>
+        <input type="file" name="excel" id="excel" class="form-control">
+        <br>
+        <button type="submit">Enviar</button>
+    </form>
+
+</div>
 
   <!-- <template id="template-propositoo">
     <div class="d-flex">
