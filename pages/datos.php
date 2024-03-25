@@ -127,7 +127,7 @@
 
                 if($_SESSION["Tipo"] == "Admin"){
 ?>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse'];?>', '', '');">
+                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse'];?>', '<?php echo $row['nombre_embalse'];?>', '', '');">
                       <i class="fas fa-history text-dark me-2" aria-hidden="true"></i>
                       <span class="hide-cell">Historial de Reportes</span>
                     </a>
@@ -257,7 +257,7 @@
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
-                <h3 class="font-weight-bolder text-primary text-gradient">Historial de Reportes</h3>
+                <h3 class="font-weight-bolder text-primary text-gradient text-title">Historial de Reportes</h3>
                 <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
               
                 <div class="text-center">
@@ -488,6 +488,7 @@
 
 
     <div id="id_embalse_aux" style="display: none;"></div>
+    <div id="nombre_embalse_aux" style="display: none;"></div>
     <div id="id_aux" style="display: none;"></div>
     <div id="opc_aux" style="display: none;"></div>
     <div id="nombre_hoja_aux" style="display: none;"></div>
@@ -735,10 +736,12 @@
 ?>
 
   <script>
-    function openModalHistory(id_embalse, anio, mes){
+    function openModalHistory(id_embalse, nombre_embalse, anio, mes){
       $("#id_embalse_aux").text(id_embalse);
+      $("#nombre_embalse_aux").text(nombre_embalse);
 
       $("#body-details").html("<h3 class='text-center'>Cargando...</h3>");
+      $("#modal-details .card-header .text-title").text("Historial de Reportes de " + nombre_embalse);
       $("#modal-details").modal("show");
 
       var datos = new FormData();
@@ -856,7 +859,7 @@
               if($("#body-details #mes").length > 0)
                 mes = $("#body-details #mes").val();
 
-              openModalHistory($("#id_embalse_aux").text(), anio, mes);
+              openModalHistory($("#id_embalse_aux").text(), $("#nombre_embalse_aux").text(), anio, mes);
             }
             else{
               openModalHistoryAdjunciones($("#id_embalse_aux").text());
@@ -976,6 +979,7 @@
 
       var datos = new FormData();
       datos.append('id_embalse', id_embalse);
+      datos.append('nombre_embalse', $("#nombre_embalse_aux").text());
 
       $.ajax({
         url: 			'php/datos/vistas/historial-adjunciones-excel.php',

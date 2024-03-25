@@ -4,6 +4,7 @@
     setlocale(LC_TIME, "spanish");
 
     $id_embalse = $_POST['id_embalse'];
+    $nombre_embalse = $_POST['nombre_embalse'];
 
     $sql = "SELECT DISTINCT nombre_embalse, archivo_importacion, fecha_importacion
             FROM embalses e, datos_embalse de
@@ -78,5 +79,5 @@
             }
 ?>
                 <div class="text-center">
-                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="openModalHistory(<?php echo $id_embalse;?>, $('#body-details #anio').val(), $('#body-details #mes').val())">Atrás</button>
+                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="openModalHistory('<?php echo $id_embalse;?>', '<?php echo $nombre_embalse;?>', $('#body-details #anio').val(), $('#body-details #mes').val())">Atrás</button>
                 </div>

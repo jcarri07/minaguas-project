@@ -89,7 +89,7 @@
                                     <th scope="col" class="sort" data-sort="name">#</th>
                                     <th scope="col" class="sort" data-sort="name">Fecha y Hora (00)</th>
                                     <th scope="col" class="sort" data-sort="budget">Cota (01)</th>
-                                    <th scope="col" class="sort" data-sort="budget">Extraccion (Hm<sup>3</sup>) (23)</th>
+                                    <th scope="col" class="sort" data-sort="budget">Extraccion (1000 <span style="text-transform: lowercase;">m</span><sup>3</sup>) (23)</th>
                                     <th scope="col" class="sort" data-sort="budget">Cargado por</th>
                                     <th scope="col" style="min-width: 60px;"></th>
                                 </tr>
