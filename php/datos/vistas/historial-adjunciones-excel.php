@@ -78,5 +78,5 @@
             }
 ?>
                 <div class="text-center">
-                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="$('#modal-details').modal('show');">Atrás</button>
+                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="openModalHistory(<?php echo $id_embalse;?>, $('#body-details #anio').val(), $('#body-details #mes').val())">Atrás</button>
                 </div>
