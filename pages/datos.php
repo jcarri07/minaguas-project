@@ -20,14 +20,32 @@
 
   $query = mysqli_query($conn, $sql);
 
+
+  $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, concepto, uso, ce.id AS 'id_codigo_extraccion', IF(leyenda_sistema <> '', leyenda_sistema, concepto) AS 'name'
+          FROM tipo_codigo_extraccion tce, codigo_extraccion ce
+          WHERE tce.id = ce.id_tipo_codigo_extraccion AND 
+            ce.estatus = 'activo' AND 
+            tce.estatus = 'activo' AND 
+            tce.id <> '6' AND 
+            tce.id <> '7' AND
+            ce.concepto <> 'Subtotal'
+          ORDER BY codigo ASC";
+  $query_codigos = mysqli_query($conn, $sql);
+
   closeConection($conn);
 
-  $options_extraccion = '<option value="">Seleccione</option>';
+  /*$options_extraccion = '<option value="">Seleccione</option>';
   $options_extraccion .='<option value="Riego">Riego</option>';
   $options_extraccion .='<option value="Hidroelectricidad">Hidroelectricidad</option>';
   $options_extraccion .='<option value="Consumo Humano">Consumo Humano</option>';
   $options_extraccion .='<option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>';
-  $options_extraccion .='<option value="Recreación">Recreación</option>';
+  $options_extraccion .='<option value="Recreación">Recreación</option>';*/
+
+  $options_extraccion = "<option value=''>Seleccione</option>";
+
+  while($row = mysqli_fetch_array($query_codigos)){
+    $options_extraccion .= "<option value='$row[id_codigo_extraccion]'>$row[name] ($row[codigo])</option>";
+  }
 ?>
 
 
@@ -109,7 +127,7 @@
 
                 if($_SESSION["Tipo"] == "Admin"){
 ?>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse'];?>');">
+                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse'];?>', '', '');">
                       <i class="fas fa-history text-dark me-2" aria-hidden="true"></i>
                       <span class="hide-cell">Historial de Reportes</span>
                     </a>
@@ -234,13 +252,18 @@
 
 
     <div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
                 <h3 class="font-weight-bolder text-primary text-gradient">Historial de Reportes</h3>
                 <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+              
+                <div class="text-center">
+                  <button type="button" class="btn btn-success mt-4 mb-0" title="Historial de Todas la importaciones Datos de Excel (Parte Base)" data-bs-dismiss="modal" onclick="openModalHistoryAdjunciones($('#id_embalse_aux').text());">Historial de Adjunciones</button>
+                </div>
+
               </div>
               <div class="card-body pb-3" id="body-details">
                 
@@ -256,6 +279,7 @@
         </div>
       </div>
     </div>
+
 
 
 
@@ -276,7 +300,7 @@
     ?>
                 <div class="row">
                   <div class="col-md-12 text-center">
-                      <button class="btn btn-success" data-bs-dismiss="modal" onclick="$('#add-data-old').modal('show');" type="button">Adjuntar Historial de Reportes</button>
+                      <button class="btn btn-success" data-bs-dismiss="modal" id="btn-open-modal-import-data" onclick="$('#add-data-old').modal('show');" type="button">Adjuntar Historial de Reportes</button>
                   </div>
                 </div>
     <?php
@@ -311,7 +335,7 @@
 
                   <div class="row">
                     <div class="col">
-                      <label>Cota</label>
+                      <label>Cota (01)</label>
                       <div class="input-group mb-3">
                         <input type="number" step="0.00001" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
                       </div>
@@ -326,7 +350,7 @@
                   <div id="box-extraccion">
                     <div class="row">
                       <div class="col">
-                        <label>Tipo</label>
+                        <label>Código</label>
                         <div class="input-group mb-3">
                           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_1" required>
                             <?php echo $options_extraccion;?>
@@ -356,10 +380,14 @@
                     </div>
                   </div>
 
+                  <div class="row" id="msg-error">
+
+                  </div>
+
                   <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0 btn-submit">Guardar</button>
-                    <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal" style="display: none;">Cerrar</button>
-                    <!--<button type="button" class="btn bg-gradient-primary btn-rounded mt-4 mb-0 btn-edit" style="display: none;">Editar</button>-->
+                    <button type="submit" class="btn bg-gradient-primary btn-lg w-100 mt-4 mb-0 btn-submit">Guardar</button>
+                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" style="display: none;">Cerrar</button>
+                    <!--<button type="button" class="btn bg-gradient-primary mt-4 mb-0 btn-edit" style="display: none;">Editar</button>-->
                   </div>
                 </form>
               </div>
@@ -397,8 +425,8 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="$('#add').modal('show');">Atrás</button>
-                    <button type="submit" class="btn bg-gradient-primary btn-rounded mt-4 mb-0 btn-submit">Examinar</button>
+                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="$('#add').modal('show');">Atrás</button>
+                    <button type="submit" class="btn bg-gradient-primary mt-4 mb-0 btn-submit">Examinar</button>
                   </div>
                 </form>
 
@@ -427,6 +455,35 @@
       </div>
     </div>
 
+
+
+
+    <div class="modal fade" id="modal-history-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-primary text-gradient">Historial de Adjunciones del Embalse</h3>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#modal-details').modal('show');">X</button>
+              </div>
+              <div class="card-body pb-3" id="body-history-excel">
+                
+              </div>
+              <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
   
 
 
@@ -434,6 +491,9 @@
     <div id="id_aux" style="display: none;"></div>
     <div id="opc_aux" style="display: none;"></div>
     <div id="nombre_hoja_aux" style="display: none;"></div>
+
+    <div id="archivo_excel_aux" style="display: none;"></div>
+    <div id="fecha_excel_aux" style="display: none;"></div>
 
 
   <script>
@@ -479,13 +539,13 @@
     var count = 1;
     $(document).on('click', '#addRows', function() { 
       count++;
-      var htmlRows = '';
+      var htmlRows = "";
       htmlRows += '<div class="row">';
       htmlRows += '   <div class="col">';
       htmlRows += '       <label>Tipo</label>';
       htmlRows += '       <div class="input-group mb-3">';
       htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" required>';
-      htmlRows += '               <?php echo $options_extraccion;?>';
+      htmlRows += "               <?php echo $options_extraccion;?>";
       htmlRows += '           </select>';
       htmlRows += '       </div>';
       htmlRows += '   </div>';
@@ -514,6 +574,8 @@
       $("#opc_aux").text("add");
 
       $("#add .title").text("Añadir Reporte");
+      $("#btn-open-modal-import-data").show();
+
       $(".removeRow").attr("disabled", false);
       $(".removeRow").each(function( index ) {
         $(this).trigger("click");
@@ -528,10 +590,14 @@
       $("#tipo_extraccion_1").attr("disabled", false);
       $("#valor_extraccion_1").attr("disabled", false);
 
+      $("#box-area-volumen-by-cota").empty();
+
       $("#add .text-retraso").show();
       $("#add .btn-submit").show();
       $("#add .btn-add-extraccion").show();
       $("#add .btn-edit").hide();
+      $("#add .btn-edit").attr("onclick", "");
+      $("#add .btn-edit").text("Cerrar");
       $('#add').modal('show');
     }
 
@@ -603,8 +669,9 @@
       var datos = new FormData();
       datos.append('id', $("#id_embalse_aux").text());
       datos.append('valor', this.value);
-      datos.append('anio', "2001");
+      datos.append('anio', "<?php echo date("Y");?>");
 
+      var valor = this.value;
       $.ajax({
         url: 			'php/datos/modelos/get-batimetria.php',
         type:			'POST',
@@ -614,13 +681,46 @@
         processData:    false,
         dataType: 'json',
         success: function(response){ //console.log(response);
-          var string =  '<div class="col" style="font-size: 0.75em;">';
-          string +=       '<span>Área o Superficie: <b>' + response[0] + ' hm<sup>2</sup></b></span>';
-          string +=     '</div>';
-          string +=     '<div class="col small" style="font-size: 0.75em;">';
-          string +=       '<span>Capacidad o Volumen: <b>' + response[1] + ' hm<sup>3</sup></b></span>';
-          string +=     '</col>';
+          var string_error =  '<div class="col text-center" style="font-size: 0.8em; color: red;">';
+          string_error +=       '<span>Ingrese la cota correcta</span>';
+          string_error +=     '</div>';
+          $("#msg-error").html("");
+          
+          //Cota minima
+          if(parseFloat(valor) < parseFloat(response[1])){
+            $("#msg-error").html(string_error);
+
+            var string =  '<div class="col" style="font-size: 1em; color: red;">';
+            string +=       '<span><b>Error:</b> la cota ingresada es inferior a la mínima <b>(' + parseFloat(response[1]).toFixed(3) + ')</b></span>';
+            string +=     '</div>';
+
+            $("#add .btn-submit").attr("disabled", true);
+          }
+          else{
+
+            if(parseFloat(valor) > parseFloat(response[2])){
+              $("#msg-error").html(string_error);
+
+              var string =  '<div class="col" style="font-size: 1em; color: red;">';
+              string +=       '<span><b>Error:</b> la cota ingresada es mayor a la máxima <b>(' + parseFloat(response[2]).toFixed(3) + ')</b></span>';
+              string +=     '</div>';
+
+              $("#add .btn-submit").attr("disabled", true);
+            }
+            else{
+              var string =  '<div class="col" style="font-size: 0.75em;">';
+              string +=       '<span>Capacidad o Volumen (02): <b>' + response[0][1] + ' hm<sup>3</sup></b></span>';
+              string +=     '</div>';
+              string +=     '<div class="col small" style="font-size: 0.75em;">';
+              string +=       '<span>Área o Superficie (03): <b>' + response[0][0] + ' hm<sup>2</sup></b></span>';
+              string +=     '</div>';
+              
+              $("#add .btn-submit").attr("disabled", false);
+            }
+          }
+
           $("#box-area-volumen-by-cota").html(string);
+          
         }
         ,
         error: function(response){
@@ -635,7 +735,7 @@
 ?>
 
   <script>
-    function openModalHistory(id_embalse){
+    function openModalHistory(id_embalse, anio, mes){
       $("#id_embalse_aux").text(id_embalse);
 
       $("#body-details").html("<h3 class='text-center'>Cargando...</h3>");
@@ -643,6 +743,8 @@
 
       var datos = new FormData();
       datos.append('id_embalse', id_embalse);
+      datos.append('anio', anio);
+      datos.append('mes', mes);
 
       $.ajax({
         url: 			'php/datos/vistas/historial_reportes.php',
@@ -664,6 +766,9 @@
     function openModalDetalles(id_registro, fecha, hora, cota, extraccion){
       $("#id_aux").text(id_registro);
       //$("#opc_aux").text("edit");
+
+      $(".removeRow").attr("disabled", false);
+      $("#btn-open-modal-import-data").hide();
 
       $("#add .title").text("Detalles del Reporte");
       $(".removeRow").each(function( index ) {
@@ -703,6 +808,8 @@
       $("#add .btn-submit").hide();
       $("#add .btn-add-extraccion").hide();
       $("#add .btn-edit").show();
+      $("#add .btn-edit").attr("onclick", "$('#modal-details').modal('show')");
+      $("#add .btn-edit").text("Atrás");
       $('#add').modal('show');
 
     }
@@ -710,7 +817,6 @@
     function openModalAction(id_registro, action){
       $("#id_aux").text(id_registro);
       $("#opc_aux").text(action);
-
       $("#modal-action .message").html("<h4 class='text-center'>¿Desea Eliminar?</h4>");
       $("#modal-action").modal("show");
     }
@@ -720,8 +826,17 @@
       datos.append('id_registro', $("#id_aux").text());
       datos.append('opc', $("#opc_aux").text());
 
+      var url = 'php/datos/modelos/carga-datos-process.php';
+
+      if($("#opc_aux").text() == "delete_data_excel"){
+        url = 'php/datos/modelos/data-excel-process.php';
+
+        datos.append('archivo_excel', $("#archivo_excel_aux").text());
+        datos.append('fecha_excel', $("#fecha_excel_aux").text());
+      }
+
       $.ajax({
-        url: 			'php/datos/modelos/carga-datos-process.php',
+        url: 			url,
         type:			'POST',
         data:			datos,
         cache:          false,
@@ -734,7 +849,18 @@
             $("#modal-generic .message").text("Eliminado exitosamente");
             $("#modal-generic").modal("show");
 
-            openModalHistory($("#id_embalse_aux").text());
+            if($("#opc_aux").text() != "delete_data_excel"){
+              var anio = '', mes = '';
+              if($("#body-details #anio").length > 0)
+                anio = $("#body-details #anio").val();
+              if($("#body-details #mes").length > 0)
+                mes = $("#body-details #mes").val();
+
+              openModalHistory($("#id_embalse_aux").text(), anio, mes);
+            }
+            else{
+              openModalHistoryAdjunciones($("#id_embalse_aux").text());
+            }
           }
           else{
             if(response == "vacio"){
@@ -784,6 +910,7 @@
         datos.append('id_embalse', $("#id_embalse_aux").text());
         datos.append('hoja', $("#nombre_hoja_aux").text());
         datos.append('nombre_archivo', $('#file')[0].files[0].name);
+        datos.append('id_usuario', '<?php echo $_SESSION['Id_usuario'];?>');
       }
       else {
         datos.append('file', $('#file')[0].files[0]);
@@ -840,6 +967,41 @@
       $("#opc_aux").text("importar_data");
       $("#nombre_hoja_aux").text(hoja);
       $("#form-add-data-old").trigger("submit");
+    }
+
+    function openModalHistoryAdjunciones(id_embalse){
+
+      $("#body-history-excel").html("<h3 class='text-center'>Cargando...</h3>");
+      $("#modal-history-excel").modal("show");
+
+      var datos = new FormData();
+      datos.append('id_embalse', id_embalse);
+
+      $.ajax({
+        url: 			'php/datos/vistas/historial-adjunciones-excel.php',
+        type:			'POST',
+        data:			datos,
+        cache:          false,
+        contentType:    false,
+        processData:    false,
+        success: function(response){
+          $("#body-history-excel").html(response);
+          iniciarTabla('table-history-excel');
+        }
+        ,
+        error: function(response){
+        }
+      });
+    }
+
+
+    function openModalDeleteHistoryExcel(id_embalse, nombre_embalse, archivo, fecha_excel, action){
+      $("#id_aux").text(id_embalse);
+      $("#opc_aux").text(action);
+      $("#archivo_excel_aux").text(archivo);
+      $("#fecha_excel_aux").text(fecha_excel);
+      $("#modal-action .message").html("<h4 class='text-center'>¿Desea Eliminar el conjunto de datos adjuntados del archivo " + archivo + " al embalse de " + nombre_embalse + "?</h4>");
+      $("#modal-action").modal("show");
     }
     
   </script>

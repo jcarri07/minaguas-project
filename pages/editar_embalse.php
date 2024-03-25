@@ -273,6 +273,15 @@ function formatoNumero($valor)
       opacity: 1;
     }
   }
+
+  .input-error {
+    /* background: #ffd6d6; */
+    border-color: #ff8f8f;
+  }
+
+  .input-error::placeholder {
+    color: #fc8383;
+  }
 </style>
 
 
@@ -411,7 +420,7 @@ function formatoNumero($valor)
               <div class="col-md-4 col-sm-12">
                 <div class="form-group">
                   <label for="embalse_nombre">Nombre del embalse</label>
-                  <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nombre del embalse" value="<?php echo $embalse["nombre_embalse"]; ?>">
+                  <input type="text" class="form-control Vrequerido" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nombre del embalse" value="<?php echo $embalse["nombre_embalse"]; ?>">
                 </div>
                 <div class="form-group">
                   <label for="presa_nombre">Nombre de la presa</label>
@@ -550,43 +559,43 @@ function formatoNumero($valor)
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_min">Cota mínima (m s.m.n.)</label>
-                  <input value="<?php echo $embalse["cota_min"]; ?>" type="text" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
+                  <input value="<?php echo $embalse["cota_min"]; ?>" type="text" class="form-control Vnumero" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_min">Volumen mínimo (hm³)</label>
-                  <input value="<?php echo $embalse["vol_min"]; ?>" type="text" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
+                  <input value="<?php echo $embalse["vol_min"]; ?>" type="text" class="form-control Vnumero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_min">Superficie mínima (ha)</label>
-                  <input value="<?php echo $embalse["sup_min"]; ?>" type="text" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
+                  <input value="<?php echo $embalse["sup_min"]; ?>" type="text" class="form-control Vnumero" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_nor">Cota normal (m s.m.n.)</label>
-                  <input value="<?php echo $embalse["cota_nor"]; ?>" type="text" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
+                  <input value="<?php echo $embalse["cota_nor"]; ?>" type="text" class="form-control Vnumero" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                 </div>
                 <div class=" form-group">
                   <label for="vol_nor">Volumen normal (hm³)</label>
-                  <input value="<?php echo $embalse["vol_nor"]; ?>" type="text" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
+                  <input value="<?php echo $embalse["vol_nor"]; ?>" type="text" class="form-control Vnumero" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                 </div>
                 <div class=" form-group">
                   <label for="sup_nor">Superficie normal (ha)</label>
-                  <input value="<?php echo $embalse["sup_nor"]; ?>" type="text" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
+                  <input value="<?php echo $embalse["sup_nor"]; ?>" type="text" class="form-control Vnumero" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_max">Cota máxima (m s.m.n.)</label>
-                  <input value="<?php echo $embalse["cota_max"]; ?>" type="text" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
+                  <input value="<?php echo $embalse["cota_max"]; ?>" type="text" class="form-control Vnumero" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_max">Volumen máximo (hm³)</label>
-                  <input value="<?php echo $embalse["vol_max"]; ?>" type="text" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
+                  <input value="<?php echo $embalse["vol_max"]; ?>" type="text" class="form-control Vnumero" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_max">Superficie máxima (ha)</label>
-                  <input value="<?php echo $embalse["sup_max"]; ?>" type="text" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
+                  <input value="<?php echo $embalse["sup_max"]; ?>" type="text" class="form-control Vnumero" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
                 </div>
               </div>
             </div>
@@ -643,7 +652,7 @@ function formatoNumero($valor)
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="operador">Operador</label>
-                <input value="<?php echo $embalse["operador"]; ?>" type="text" class="form-control" id="operador" name="operador" placeholder="Ingrese el operador">
+                <input value="<?php echo $embalse["operador"]; ?>" type="text" class="form-control Vrequerido" id="operador" name="operador" placeholder="Ingrese el operador">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="autoridad">Autoridad responsable del embalse</label>
@@ -1360,6 +1369,25 @@ function formatoNumero($valor)
   </div>
 </div>
 
+<div class="modal fade px-5" id="modal-validate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Errores de campos.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-body-validate" class="text-sm">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="show-pre-batimetria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div id="modal-show" class="modal-dialog" role="document">
     <div class="modal-content">
@@ -1975,17 +2003,17 @@ function formatoNumero($valor)
     var este = utmCoords[0];
     var huso = Math.floor((longitud + 180) / 6) + 1;
 
-    // Conversion de Coordenadas UTM a Normales
-    // var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
-    // var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
-    // var latlng = proj4(utm, wgs84, [este, norte]);
-    // var latitud = latlng[1];
-    // var longitud = latlng[0];
+    //Conversion de Coordenadas UTM a Normales
+    var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
+    var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+    var latlng = proj4(utm, wgs84, [este, norte]);
+    var latitud = latlng[1];
+    var longitud = latlng[0];
 
 
-    // $("#norte").val(norte);
-    // $("#este").val(este);
-    // $("#huso").val(huso);
+    $("#norte").val(norte);
+    $("#este").val(este);
+    $("#huso").val(huso);
 
     // console.log("Norte: " + norte + ", Este: " + este + ", Huso: " + huso);
 
@@ -2021,5 +2049,64 @@ function formatoNumero($valor)
     removerClase($("#mapa"), "map-visible")
     removerClase($("#mapa"), "fade-in-image")
     agregarClase($("#mapa"), "map-no-visible")
+  });
+
+
+  //VALIDACION DE FORMULARIO.
+
+  document.getElementById("form-embalse").addEventListener("submit", function(event) {
+    event.preventDefault();
+    console.log("A validar");
+
+    var campos = document.querySelectorAll('.Vnumero, .Vrequerido, .Varchivo');
+    var errorMessages = [];
+
+    campos.forEach(function(campo) {
+
+      var label = campo.previousElementSibling.innerText;
+
+      if (campo.classList.contains('Vnumero')) {
+        if (campo.value.trim() === "") {
+          errorMessages.push("El campo '<b>" + label + "</b>' no puede estar vacío.");
+          if (!campo.classList.contains('input-error')) {
+            campo.className += " input-error";
+          }
+        } else if (isNaN(campo.value)) {
+          errorMessages.push("El campo '<b>" + label + "</b>' debe contener solo números.");
+          if (!campo.classList.contains('input-error')) {
+            campo.className += " input-error";
+          }
+        }
+      }
+
+      if (campo.classList.contains('Vrequerido')) {
+        if (campo.value.trim() === "") {
+          errorMessages.push("El campo '<b>" + label + "</b>' no puede estar vacío.");
+          if (!campo.classList.contains('input-error')) {
+            campo.className += " input-error";
+          }
+        }
+      }
+
+      if (campo.classList.contains('Varchivo')) {
+        +
+        console.log("archivooo")
+        if (campo.files.length === 0) {
+          errorMessages.push("Debe seleccionar un archivo para el campo '<b>" + label + "</b>'.");
+          if (!campo.classList.contains('input-error')) {
+            campo.className += " input-error";
+          }
+        }
+      }
+
+    });
+
+    if (errorMessages.length > 0) {
+      event.preventDefault();
+      var errorContainer = document.getElementById("modal-body-validate");
+      console.log(errorContainer)
+      errorContainer.innerHTML = "<ul><li>" + errorMessages.join("</li><li>") + "</li></ul>";
+      $('#modal-validate').modal('show');
+    }
   });
 </script>

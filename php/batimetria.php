@@ -6,6 +6,18 @@ class Batimetria
     private $conn;
     private $batimetria;
     private $años;
+    private $cota_min;
+    private $cota_nor;
+    private $cota_max;
+    private $sup_min;
+    private $sup_nor;
+    private $sup_max;
+    private $vol_min;
+    private $vol_nor;
+    private $vol_max;
+    private $ultima_carga;
+    private $embalse;
+
 
     public function __construct($id_embalse, $conn)
     {
@@ -19,17 +31,47 @@ class Batimetria
     {
 
         $id_embalse = mysqli_real_escape_string($this->conn, $this->id_embalse);
-        $query = "SELECT batimetria FROM embalses WHERE id_embalse = $id_embalse";
+        $query = "SELECT * FROM embalses WHERE id_embalse = $id_embalse";
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {
             die("Error en la consulta: " . mysqli_error($this->conn));
         }
 
-        $batimetria = mysqli_fetch_assoc($result);
+        $embalse = mysqli_fetch_assoc($result);
+        $this->embalse = $embalse;
         mysqli_free_result($result);
 
-        $this->batimetria = json_decode($batimetria['batimetria'], true);
+        if ($embalse['batimetria'] != "") {
+            $this->batimetria = json_decode($embalse['batimetria'], true);
+        } else {
+            $this->batimetria = "";
+        }
+        $this->cota_min = $embalse['cota_min'];
+        $this->cota_nor = $embalse['cota_nor'];
+        $this->cota_max = $embalse['cota_max'];
+        $this->sup_min = $embalse['sup_min'];
+        $this->sup_nor = $embalse['sup_nor'];
+        $this->sup_max = $embalse['sup_max'];
+        $this->vol_min = $embalse['vol_min'];
+        $this->vol_nor = $embalse['vol_nor'];
+        $this->vol_max = $embalse['vol_max'];
+
+        $query = "SELECT fecha, hora, cota_actual FROM datos_embalse WHERE id_embalse = 1 ORDER BY fecha DESC, hora DESC LIMIT 1";
+        $result = mysqli_query($this->conn, $query);
+
+        if (!$result) {
+            die("Error en la consulta: " . mysqli_error($this->conn));
+        }
+
+        $datos = mysqli_fetch_assoc($result);
+        if (mysqli_num_rows($result) < 1) {
+            $this->ultima_carga = "";
+        } else {
+            $fecha = date($datos['fecha']);
+            $this->ultima_carga = array(date("Y", strtotime($fecha)), $datos['cota_actual']);
+        }
+        mysqli_free_result($result);
 
         $array = array();
         foreach ($this->batimetria as $key => $value) {
@@ -68,18 +110,21 @@ class Batimetria
         }
     }
 
-    public function getCloseYear($año_recibido)
+    public function getCloseYear($año_recibido = null)
     {
+
+        if ($año_recibido == null) {
+            return reset($this->años);
+        }
+
         $año_recibido = intval($año_recibido);
-        // Iterar sobre el vector de años
+
         foreach ($this->años as $año) {
-            // Si el año actual es menor o igual al año recibido, lo retornamos
             if ($año <= $año_recibido) {
                 return $año;
             }
         }
 
-        // Si el año recibido es menor que todos los años en el vector, retornar el menor año
         return $this->años[count($this->años) - 1];
     }
 
@@ -89,20 +134,21 @@ class Batimetria
     }
 
 
-    public function interpolacionLineallll($x, $tabla) {
+    public function interpolacionLineallll($x, $tabla)
+    {
         $n = count($tabla);
         // Ordenar la tabla por el valor de x
-        usort($tabla, function($a, $b) {
+        usort($tabla, function ($a, $b) {
             return $a['x'] <=> $b['x'];
         });
-    
+
         // Comprobar si el valor de x está fuera del rango de la tabla
         if ($x < $tabla[0]['x']) {
             return $tabla[0]['y']; // Devolver el valor más bajo
         } elseif ($x > $tabla[$n - 1]['x']) {
             return $tabla[$n - 1]['y']; // Devolver el valor más alto
         }
-    
+
         // Buscar los puntos más cercanos en la tabla
         $puntoAnterior = null;
         $puntoSiguiente = null;
@@ -114,31 +160,29 @@ class Batimetria
                 break;
             }
         }
-    
+
         // Realizar la interpolación lineal
         $x0 = $puntoAnterior['x'];
         $y0 = $puntoAnterior['y'];
         $x1 = $puntoSiguiente['x'];
         $y1 = $puntoSiguiente['y'];
-    
+
         $y = $y0 + (($y1 - $y0) / ($x1 - $x0)) * ($x - $x0);
-    
+
         return $y;
     }
 
-    public function interpolacionLineal($x, $tabla) {
-        // Convertir las claves del array a un array numérico y ordenarlas
+    public function interpolacionLineal($x, $tabla)
+    {
         $x_values = array_keys($tabla);
         sort($x_values);
-    
-        // Comprobar si el valor de x está fuera del rango de la tabla
+
         if ($x < min($x_values)) {
-            return reset($tabla); // Devolver el valor más bajo
+            return explode("-", reset($tabla));
         } elseif ($x > max($x_values)) {
-            return end($tabla); // Devolver el valor más alto
+            return explode("-", end($tabla));
         }
-    
-        // Buscar los puntos más cercanos en la tabla
+
         $puntoAnterior = null;
         $puntoSiguiente = null;
         foreach ($x_values as $x_value) {
@@ -149,17 +193,123 @@ class Batimetria
                 break;
             }
         }
-    
+
         // Realizar la interpolación lineal
-        $Sup_min = explode("-",$tabla[$puntoAnterior])[0];
-        $Sup_max = explode("-",$tabla[$puntoSiguiente])[0];
+        $Sup_min = explode("-", $tabla[$puntoAnterior])[0];
+        $Sup_max = explode("-", $tabla[$puntoSiguiente])[0];
         $Sup = $Sup_min + (($Sup_max - $Sup_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
 
-        $Vol_min = explode("-",$tabla[$puntoAnterior])[1];
-        $Vol_max = explode("-",$tabla[$puntoSiguiente])[1];
+        $Vol_min = explode("-", $tabla[$puntoAnterior])[1];
+        $Vol_max = explode("-", $tabla[$puntoSiguiente])[1];
         $Vol = $Vol_min + (($Vol_max - $Vol_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
-    
-        return array($Sup,$Vol);
+
+        return array($Sup, $Vol);
+    }
+
+    public function cotaMinima()
+    {
+        return number_format(floatval($this->cota_min), 3, ".", "");
+    }
+    public function cotaNormal()
+    {
+        return number_format(floatval($this->cota_nor), 3, ".", "");
+    }
+    public function cotaMaxima()
+    {
+        return number_format(floatval($this->cota_max), 3, ".", "");
+    }
+
+    public function superficieMinima()
+    {
+        if ($this->batimetria != "") {
+            return $this->getByCota($this->getCloseYear(), $this->cotaMinima())[0];
+        } else {
+            return $this->sup_min;
+        }
+    }
+    public function superficieNormal()
+    {
+        if ($this->batimetria != "") {
+            return $this->getByCota($this->getCloseYear(), $this->cotaNormal())[0];
+        } else {
+            return $this->sup_nor;
+        }
+    }
+    public function superficieMaxima()
+    {
+        if ($this->batimetria != "") {
+            return $this->getByCota($this->getCloseYear(), $this->cotaMaxima())[0];
+        } else {
+            return $this->sup_max;
+        }
+    }
+
+    public function volumenMinimo()
+    {
+        if ($this->batimetria != "") {
+            return $this->getByCota($this->getCloseYear(), $this->cotaMinima())[1];
+        } else {
+            return $this->vol_min;
+        }
+    }
+    public function volumenNormal()
+    {
+        if ($this->batimetria != "") {
+            return $this->getByCota($this->getCloseYear(), $this->cotaNormal())[1];
+        } else {
+            return $this->vol_nor;
+        }
+    }
+    public function volumenMaximo()
+    {
+        if ($this->batimetria != "") {
+            return $this->getByCota($this->getCloseYear(), $this->cotaMaxima())[1];
+        } else {
+            return $this->vol_max;
+        }
+    }
+
+    public function volumenDisponible()
+    {
+        if ($this->batimetria != "") {
+            return $this->volumenNormal() - $this->volumenMinimo();
+        } else {
+            if ($this->vol_nor == "" || $this->vol_min == "") {
+                return 0;
+            }
+        }
+    }
+
+    public function volumenDisponibleOriginal()
+    {
+
+            if ($this->vol_nor == "" || $this->vol_min == "") {
+                return "";
+            }else{
+                return $this->vol_nor - $this->vol_min;
+            }
+    }
+
+    public function volumenDisponibleByCota($año, $cota)
+    {
+        if ($this->batimetria != "") {
+            return $this->getByCota($año, $cota)[1] - $this->volumenMinimo();
+        } else {
+            return "0";
+        }
+    }
+
+    public function volumenActualDisponible()
+    {
+        if ($this->ultima_carga != "" && $this->batimetria != "") {
+            return $this->getByCota($this->ultima_carga[0], $this->ultima_carga[1])[1] - $this->volumenMinimo();
+        } else {
+            return $this->volumenDisponible();
+        }
+    }
+
+    public function getEmbalse(){
+        return $this->embalse;
     }
 
 

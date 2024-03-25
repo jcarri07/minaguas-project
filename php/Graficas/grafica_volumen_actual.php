@@ -16,7 +16,15 @@ $año = date('Y');
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
-    $res = mysqli_query($conn, "SELECT d.id_embalse, MAX(d.cota_actual) AS cota_actual, e.nombre_embalse FROM datos_embalse d, embalses e WHERE d.estatus = 'activo' AND e.estatus = 'activo' AND d.id_embalse = e.id_embalse GROUP BY id_embalse ORDER BY e.nombre_embalse ASC;");
+    $res = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),MAX(d.hora),(select MAX(hora) from datos_embalse                                                                                                                                                            where fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora,
+    e.nombre_embalse, (SELECT MAX(cota_actual) 
+                       FROM datos_embalse h 
+                       WHERE h.id_embalse = d.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = hora) AS cota_actual
+FROM embalses e
+LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+WHERE e.estatus = 'activo'
+GROUP BY id_embalse 
+ORDER BY id_embalse ASC;");
     $count = mysqli_num_rows($res);
     if ($count >= 1) {
         $datos_embalses = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -26,53 +34,95 @@ if ($count >= 1) {
         <canvas id="chart"></canvas>
         <script>
             $(document).ready(function() {
-                
+                <?php $bati = new Batimetria($datos_embalses[1]["id_embalse"], $conn);
+                                    $batimetria = $bati->getBatimetria();
+                                    
+                                    $x = $bati->getByCota($año, $datos_embalses[1]["cota_actual"])[1]; 
+                                    echo "console.log('volumen:".$x.",cota:".$datos_embalses[1]["cota_actual"]."');";
+                                    ?>
                 let cha = new Chart(chart, {
                     type: 'bar',
                     title: 'grafica',
-                    
-                    //labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    label:'Embalses',
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen actual',
-                            backgroundColor: '#25d366',
-                            data: [";
+                            <?php
+
                             $j = 0;
 
                             while ($j < count($datos_embalses)) {
-                                $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
-                                $batimetria = $bati->getBatimetria();
-                            ?> {
-                                    x: '<?php echo $datos_embalses[$j]["nombre_embalse"];  ?>',
-                                    y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                },
+                                if ($datos_embalses[$j]["cota_actual"] != NULL) {
+                                    $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+                                    $batimetria = $bati->getBatimetria();
+                                    echo "{backgroundColor: '";
+                                    $x = $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];
+                                    $min = $bati->volumenMinimo();
+                                    $max = $bati->volumenMaximo();
+                                    $nor = $bati->volumenNormal();
 
+                                    if ($x == 0 || ((abs(($x - $min)) * (100 / ($max - $min))) >= 0 && (abs(($x - $min)) * (100 / ($max - $min))) <= 30)) {
+                                        echo "#fd0200',";
+                                    }; //rojo
+                                    if ((abs(($x - $min)) * (100 / ($max - $min))) > 30 && (abs(($x - $min)) * (100 / ($max - $min))) <= 60) {
+                                        echo "#72dffd',";
+                                    }; //anaranjado
+                                    /*if ((abs(($x - $min)) * (100 / ($max - $min))) > 35 && (abs(($x - $min)) * (100 / ($max - $min))) <= 45) {
+                                        echo "#f1d710',";
+                                    };*/ //amarillo
+                                    if ((abs(($x - $min)) * (100 / ($max - $min))) > 60 && (abs(($x - $min)) * (100 / ($max - $min))) <= 90) {
+                                        echo "#0066eb',";
+                                    }; //verde
+                                    if ((abs(($x - $min)) * (100 / ($max - $min))) > 90 && (abs(($x - $min)) * (100 / ($max - $min))) <= 100) {
+                                        echo "#3ba500',";
+                                    }; //azul
+                                    if ((abs(($x - $min)) * (100 / ($max - $min))) > 100) {
+                                        echo "#55fe01',";
+                                    }; //rojo
+                                    echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs(($x - $min)) * (100 / ($max - $min))), 0) . "%)',
+                                        data: [";
+                                    
+                            ?>      {
+                                        x: '<?php echo 'Embalses'; //$datos_embalses[$j]["nombre_embalse"];  
+                                            ?>',
+                                        y: <?php echo $x;  ?>
+                                    },
                             <?php
 
 
-                                $j++;
+                                    $j++;
+                                    echo "]},";
+                                } else {
+                                    echo "{backgroundColor: '#fd0200',";
+                                    echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (0%)',
+                                    data: [{x: 'Embalses',y:0,}]},";
+                                    $j++;
+                                }
                             };
-                            echo "]},";
+
                             ?>
                         ],
                     },
 
                     options: {
-                        
+
                         responsive: true,
                         maintainAspectRatio: false,
-
+                        interaction: {
+                                intersect: false,
+                                axis: 'x',
+                            },
                         plugins: {
 
                             legend: {
                                 position: 'bottom',
-
+                                align: 'start',
+                                display: false,
                                 labels: {
-
+                                    
                                     // This more specific font property overrides the global property
                                     font: {
-                                        size: 18
+                                        size: 10
                                     },
 
                                 }
@@ -89,6 +139,15 @@ if ($count >= 1) {
                         },
                         scales: {
 
+                            x: {
+
+                                ticks: {
+                                    font: {
+                                        size: 14
+                                    },
+                                },
+
+                            },
                             y: {
                                 title: {
                                     display: true,
@@ -97,7 +156,7 @@ if ($count >= 1) {
                                         size: 16
                                     },
                                 },
-                               
+
                                 border: {
                                     display: false,
                                 },

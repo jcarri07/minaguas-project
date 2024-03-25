@@ -99,6 +99,7 @@ $mapa = "../../assets/img/estatus_embalses.png";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estatus Embalses</title>
+
 </head>
 
 <style>
@@ -142,11 +143,29 @@ $mapa = "../../assets/img/estatus_embalses.png";
         background-color: red;
     }
 
-    .title-container {
+    .box-title {
 
-        margin-left: 260px;
-        width: 700px;
-        color: #2E86C1;
+        font-size: 18px; color:#FFFFFF; 
+        background-color:  #0070C0;
+        /* box-shadow: 50px 50px 50px grey;  */
+        width: 95%; height: 30px; 
+        text-align: center;
+        position: absolute; 
+        vertical-align: middle;
+        margin-top: 650px; 
+        margin-left: 35px; 
+    }
+
+    .box-note {
+        font-size: 14px;; 
+        width: 95%; height: 25px; 
+        text-align: left;
+        /* position: absolute;  */
+        vertical-align: middle;
+         margin-top: 60px;  
+        /* margin-left: 20px;  */
+        border: 0.5px solid red;
+
     }
 
     .img-logo {
@@ -175,7 +194,7 @@ $mapa = "../../assets/img/estatus_embalses.png";
         text-align: center;
         padding: 5px;
         border: 1px solid #707273;
-        width: fit-content;
+        /*width: fit-content;*/
         font-size: 10px;
     }
 
@@ -189,12 +208,27 @@ $mapa = "../../assets/img/estatus_embalses.png";
         width: 150px;
         text-align: center;
         font-size: 16px;
+        border: 1px solid #707273;
+
        
     }
+
+    .text-celdas {
+        vertical-align: middle; 
+        width: 130px;
+        text-align: center;
+        font-size: 16px;
+        border: 1px solid #707273;
+
+       
+    }
+
     .total{
 
         font-size: 16px; 
-        background-color: #DAE3F3
+        background-color: #DAE3F3;
+        border: 1px solid #707273;
+
     }
 
     .header {
@@ -206,11 +240,25 @@ $mapa = "../../assets/img/estatus_embalses.png";
            /* background-color: lightgray;*/
             text-align: center;
         }
+
+    .tablaDos{
+
+        vertical-align: middle; 
+        text-align: center; 
+        font-size: 12px;
+
+    }
+    .spazio{
+        background-color: #FFFFFF;
+        color: #FFFFFF;
+        border: none;
+    }
      
 </style>
 
 <body>
 
+<!-- PAGINA 1 -->
     <div class="header">
         <hr style="top: 55px; color:#1B569D">
         <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
@@ -262,8 +310,10 @@ $mapa = "../../assets/img/estatus_embalses.png";
        
       </div>
 
-        <h4 style="position: absolute; top: 720px; text-align: center; text-justify: center;"><?php echo "$dia_actual de " . getMonthName() . " $año_actual" ?></h4>
+        <h4 style="position: absolute; top: 720px; text-align: center; text-justify: center;"><?php echo "$dia_actual DE " . getMonthName() . " $año_actual" ?></h4>
     </div>
+
+    <!-- PAGINA 2 -->
 
     <div class="header" >    
         <hr style="top: 55px; color:#1B569D">
@@ -281,19 +331,21 @@ $mapa = "../../assets/img/estatus_embalses.png";
           <th class="text-celd">HIDROLÓGICA</th>
         </tr>
        
-        <tr>
+        
           <?php while ($row = mysqli_fetch_array($result)) { ?>
+            <tr>
              <td class="text-celd" style="font-size: 12px;"><?php echo $row['nombre_embalse']; ?> </td>
              <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
              <td class="text-celd" style="font-size: 12px;"><?php echo $row['operador']; ?> </td>
+            </tr>
         <?php } ?>
-        </tr>
+      
         <tr>
         <td class="text-celd total" ><b> TOTAL </b></td>
         <td class="text-celd total" colspan="2"><b></b> Embalses</td>
         </tr>
       </table>
-      
+        
 
       <div style="font-size: 18px; color:#000000;  margin-top: 40px;"><b>Normal Bajo (30 % <  A  < 60%)</b></div>
 
@@ -304,18 +356,350 @@ $mapa = "../../assets/img/estatus_embalses.png";
           <th class="text-celd">HIDROLÓGICA</th>
         </tr>
         <tr>
-          <?php while ($row = mysqli_fetch_array($result)) { ?>
-             <td class="text-celd" style="font-size: 12px;"><?php echo $row['nombre_embalse']; ?> </td>
-             <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-             <td class="text-celd" style="font-size: 12px;"><?php echo $row['operador']; ?> </td>
-        <?php } ?>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
         </tr>
         <tr>
         <td class="text-celd total" ><b> TOTAL </b></td>
         <td class="text-celd total" colspan="2"><b></b> Embalses</td>
         </tr>
-      </table></div>
+      </table>
 
-</body>
+      <div class="box-note"> Nota:</div>
+
+    </div>
+
+
+
+     <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 560px;"><b>Normal Alto (60 % <  A  < 90 %) </b>
+
+      <table>
+        <tr>
+          <th class="text-celd">EMBALSE</th>
+          <th class="text-celd">VOL. DISP. (HM3)</th>
+          <th class="text-celd">HIDROLÓGICA</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd total" ><b> TOTAL </b></td>
+        <td class="text-celd total" colspan="2"><b></b> Embalses</td>
+        </tr>
+      </table>
+
+      </div>
+
+
+      <!-- PAGINA 3 -->
+
+      <div style="page-break-before: always;"></div>
+      <div class="header" >    
+        <hr style="top: 55px; color:#1B569D">
+        <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+    </div> 
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 20px;"><b>Buena ( 90 % <  A  < 100 %) </b>
+
+        <table>
+        <tr>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">HIDROLÓGICA</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd total" ><b> TOTAL </b></td>
+        <td class="text-celd total" colspan="2"><b></b> Embalses</td>
+        </tr>
+        </table>
+        </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 560px;"><b>Condición de Alivio </b>
+
+        <table>
+        <tr>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">HIDROLÓGICA</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd total" ><b> TOTAL </b></td>
+        <td class="text-celd total" colspan="2"><b></b> Embalses</td>
+        </tr>
+        </table>
+        </div> 
+
+        <!-- PAGINA 4 -->
+
+        <div style="page-break-before: always;"></div>
+      <div class="header" >    
+        <hr style="top: 55px; color:#1B569D">
+        <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+    </div> 
+        <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES POR HIDROLÓGICA </b>
+        
+            <table style="margin-top: 20px;">
+            <tr>
+                <th class="tablaDos" rowspan="2">HIDROLÓGICA</th>
+                <th class="tablaDos">BAJA</th>
+                <th class="tablaDos" rowspan="2">% TOTAL</th>
+                <th class="tablaDos">NORMAL- <br> BAJO</th>
+                <th class="tablaDos" rowspan="2">% TOTAL</th>
+                <th class="tablaDos">NORMAL- <br> ALTO</th>
+                <th class="tablaDos" rowspan="2">% TOTAL</th>
+            </tr>
+
+            <tr>
+                <th class="tablaDos">< 30 %</th>
+                <th class="tablaDos">30% < A < 60% </th>
+                <th class="tablaDos">60% < A < 90% </th>
+            </tr>
+
+            <tr>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            </tr>
+
+            <tr>
+                <th class="spazio" colspan="7"></th>
+            </tr>
+
+            <tr>
+            <th class="spazio" style="border-bottom: 1px solid #707273; border-right: 1px solid #707273;" ><b></b></th>  
+            <th class="tablaDos" colspan="2"><b> BAJA </b></th>
+            <th class="tablaDos" colspan="2"><b></b> NORMAL-BAJO</th>
+            <th class="tablaDos" colspan="2"><b></b> NORMAL-BAJO</th>
+            </tr>
+
+            <tr>
+            <td class="text-celdas total" style="font-size: 12px;"><b>TOTAL</b></td>
+            <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
+            <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
+            <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
+            </tr>
+
+            <tr>
+            <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
+            <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
+            <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
+            <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
+            </tr>
+
+            </table>
+
+            <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 40px; margin-left: 620px;"><b> </b>
+
+            <table>
+            <tr>
+                <th class="tablaDos" rowspan="2">HIDROLÓGICA</th>
+                <th class="tablaDos" >BUENA</th>
+                <th class="tablaDos">ALIVIANDO</th>
+                <th class="tablaDos"  rowspan="2"> TOTAL</th>
+                <th class="tablaDos" rowspan="2">% TOTAL</th>
+            </tr>
+
+            <tr>
+                <th class="tablaDos">90% < B < 100% </th>
+                <th class="tablaDos">< 100 %</th>                 
+            </tr>
+
+            <tr>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
+            </tr>
+
+            <tr>
+                <th class="spazio" colspan="7"></th>
+            </tr>
+
+            <tr>
+            <th class="spazio" style="border-bottom: 1px solid #707273; border-right: 1px solid #707273;" ><b></b></th>  
+            <th class="tablaDos" ><b> BUENA </b></th>
+            <th class="tablaDos" ><b></b> ALIVIANDO</th>
+            <th class="tablaDos" ><b></b> TOTAL</th>
+            <th class="tablaDos" ><b></b> % </th>
+            </tr>
+
+    <tr>
+        <td class="text-celdas total" style="font-size: 12px; height: 20px;"><b>TOTAL</b></td>
+        <td class="tablaDos" style="font-size: 12px;" ><b>PRUEBA</b></td>
+        <td class="tablaDos" style="font-size: 12px;" ><b>PRUEBA</b></td>
+        <td class="tablaDos" style="font-size: 12px;" ><b>PRUEBA</b></td>
+        <td class="tablaDos" style="font-size: 12px;" ><b>PRUEBA</b></td>
+    </tr>
+
+
+            </table>
+            </div>
+
+            </div>
+
+<!-- PAGINA 5 -->
+
+            <div style="page-break-before: always;"></div>
+      <div class="header" >    
+        <hr style="top: 55px; color:#1B569D">
+        <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+    </div> 
+        <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES</b>
+        </div>
+
+        <div style="width: 550px; height: 450px; background-color: lightgray; margin-top: 50px; margin-left: 35px;">
+        </div>
+
+        <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 200px; margin-left: 640px;"><b> <u># EMBALSES</u> EN CONDICIONES BUENAS Y MUY BUENAS <br> ( > 90% Y ALIVIANDO )</b></div>
+
+        <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 300px; margin-left: 640px;"><b> <u># EMBALSES</u> EN CONDICIONES NORMALES ALTO <br> ( 60 % < A < 90 % )</b></div>
+
+        <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 400px; margin-left: 640px;"><b> <u># EMBALSES</u> EN CONDICIONES NORMALES BAJO <br> ( 30 % <  A  < 60% )</b></div>
+
+        <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 500px; margin-left: 640px;"><b> <u># EMBALSES</u> EN CONDICIONES BAJAS ( < 30 %)</b></div>
+         
+        <div class="box-title"><b> # DE LOS EMBALSES SE ENCUENTRAN EN CONDICIONES NORMALES A MUY BUENAS</b></div>
+
+<!-- PAGINA 6 -->
+
+        <div style="page-break-before: always;"></div>
+      <div class="header" >    
+        <hr style="top: 55px; color:#1B569D">
+        <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+    </div> 
+        <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES</b>
+        </div>
+
+        <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 7px;"><b>DESDE EL fecha HASTA HOY</b>
+        </div>
+
+        <div style="width: 450px; height: 450px; background-color: lightgray; margin-top: 80px; margin-left: 35px;">
+        </div>
+
+        <div style="position: absolute; width: 0.5px; height: 600px; background-color: #7F7F7F; margin-top: 110px; margin-left: 525px;"></div>
+
+        <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL fecha HASTA HOY</b>
+        </div>
+
+        <div style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;">
+        </div>
+        
+        <div style="position: absolute; margin-top: 670px; margin-left: 50px; width: 95%; height: 100px;">
+        <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió #% comparado con la semana pasada y <br> #% con respecto a hace 15 días)</b></div>
+        <div style="position: absolute; margin-left: 550px; font-size: 18px; color:red; text-align: center;"><b> (Varió #% comparado con la semana pasada y <br> #% con respecto a hace 15 días)</b></div>  
+        </div>
+
+<!-- PAGINA 7 -->
+        <div style="page-break-before: always;"></div>
+        <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIÓN DE VOLUMEN DE ALMACENAMIENTO NACIONAL</b>
+      </div>
+
+     <div>
+        <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
+        </div>
+      </div>
+
+      <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 485px; border: gray 1px solid; background-color: #FFFFFF">
+        <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
+        <p style="position: absolute; top: 35px;
+        text-align: left; padding-left: 40px; font-size: 15px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
+         border-radius: 5; height: 10px; width: 10px;"></div> Embalses</p>
+    
+
+        <p style="position: absolute; top: 60px;
+        text-align: left; padding-left: 40px; font-size: 15px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: green;
+         border-radius: 5; height: 10px; width: 10px;"></div>Aumento de Volumen <b> # Embalses</b></p>
+
+         
+        <p style="position: absolute; top: 85px;
+        text-align: left; padding-left: 40px; font-size: 15px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: red;
+         border-radius: 5; height: 10px; width: 10px;"></div>Disminución de Volumen <b> # Embalses</b></p>
+
+         
+        <p style="position: absolute; top: 110px;
+        text-align: left; padding-left: 40px; font-size: 15px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: black;
+         border-radius: 5; height: 10px; width: 10px;"></div>Sin Cambioss <b> # Embalses</b></p>
+
+      </div>
+
+      <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo "$dia_actual DE " . getMonthName()?></h4>
+
+<!-- PAGINA 8 -->
+<div style="page-break-before: always;"></div>
+        <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIÓN DE VOLUMEN DE ALMACENAMIENTO NACIONAL</b>
+      </div>
+
+     <div>
+        <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
+        </div>
+      </div>
+
+      <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 485px; border: gray 1px solid; background-color: #FFFFFF">
+        <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
+        <p style="position: absolute; top: 35px;
+        text-align: left; padding-left: 40px; font-size: 15px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
+         border-radius: 5; height: 10px; width: 10px;"></div> Embalses</p>
+    
+
+        <p style="position: absolute; top: 70px;
+        text-align: left; padding-left: 40px; font-size: 15px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: green;
+         border-radius: 5; height: 10px; width: 10px;"></div>Aumento de Volumen <b> # Embalses</b></p>
+
+         
+        <p style="position: absolute; top: 105px;
+        text-align: left; padding-left: 40px; font-size: 15px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: red;
+         border-radius: 5; height: 10px; width: 10px;"></div>Disminución de Volumen <b> # Embalses</b></p>
+
+      </div>
+
+      <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo "$dia_actual DE " . getMonthName()?></h4>
+
+
+    </body>
 
 </html>

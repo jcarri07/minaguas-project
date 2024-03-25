@@ -29,15 +29,6 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         if ($_SESSION["Tipo"] == "Admin") {
         ?>
           <li class="nav-item">
-            <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
-              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-              </div>
-              <span class="nav-link-text ms-1">Usuarios</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
             <a class="nav-link <?php echo ($page == 'embalses') ? "active" : ''; ?>" href="?page=embalses">
               <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="ni ni-square-pin text-primary text-sm opacity-10"></i>
@@ -91,12 +82,20 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         <hr class="horizontal dark mt-0">
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Cuenta</h6>
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-8"><?php echo $_SESSION["Correo"];?></h6>
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-8"><?php echo $_SESSION["Correo"]; ?></h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Usuarios</span>
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'perfil') ? "active" : ''; ?>" href="?page=perfil">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+              <i class="fas fa-edit text-dark text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Editar Perfil</span>
           </a>

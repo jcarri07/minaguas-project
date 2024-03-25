@@ -143,6 +143,25 @@ CREATE TABLE embalses (
   -- FOREIGN KEY (id_parroquia) REFERENCES parroquias (id_parroquia)
 );
 
+/*DROP TABLE IF EXISTS `codigo_extraccion`;
+DROP TABLE IF EXISTS `tipo_codigo_extraccion`;*/
+CREATE TABLE IF NOT EXISTS `tipo_codigo_extraccion`(
+	id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	nombre VARCHAR(255) NULL,
+	cantidad_primaria INT NOT NULL,
+	unidad VARCHAR(100) NOT NULL,
+	estatus ENUM('activo','inactivo') DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `codigo_extraccion`(
+	id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	codigo VARCHAR(20) NOT NULL UNIQUE,
+	leyenda_sistema VARCHAR(255) NOT NULL,
+	concepto VARCHAR(100) NOT NULL,
+	uso VARCHAR(1000) NOT NULL,
+	id_tipo_codigo_extraccion INT,
+	estatus ENUM('activo','inactivo') DEFAULT NULL
+);
 
 CREATE TABLE datos_embalse (
   id_registro INT AUTO_INCREMENT PRIMARY KEY,
@@ -151,6 +170,8 @@ CREATE TABLE datos_embalse (
   hora TIME,
   cota_actual FLOAT,
   id_encargado INT(11) NOT NULL,
+  archivo_importacion VARCHAR(1000) NOT NULL,
+  fecha_importacion DATE,
   estatus VARCHAR(20) NOT NULL,
   FOREIGN KEY (id_embalse) REFERENCES embalses (id_embalse),
   FOREIGN KEY (id_encargado) REFERENCES usuarios (Id_usuario)
@@ -158,18 +179,22 @@ CREATE TABLE datos_embalse (
 
 CREATE TABLE detalles_extraccion (
   id_detalles_extraccion INT AUTO_INCREMENT PRIMARY KEY,
-  tipo_extraccion VARCHAR(50),
+  /*tipo_extraccion VARCHAR(50),*/
+  id_codigo_extraccion INT(11) NOT NULL,
   extraccion FLOAT,
   id_registro INT,
   estatus VARCHAR(20) NOT NULL,
   FOREIGN KEY (id_registro) REFERENCES datos_embalse (id_registro)
+  /*FOREIGN KEY (id_codigo_extraccion) REFERENCES codigo_extraccion (id)*/
 );
 
-CREATE TABLE configuraciones (
-  id_config INT AUTO_INCREMENT PRIMARY KEY,
-  nombre_config VARCHAR(50),
-  configuracion TEXT
-);
+CREATE TABLE `configuraciones` (
+  `id_config` int(11) NOT NULL,
+  `nombre_config` varchar(50) DEFAULT NULL,
+  `configuracion` text,
+  `fecha_sequia` date NOT NULL DEFAULT '2024-01-01',
+  `fecha_lluvia` date NOT NULL DEFAULT '2024-06-01'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE propositos (
   id_proposito INT AUTO_INCREMENT PRIMARY KEY,
@@ -180,6 +205,9 @@ CREATE TABLE propositos (
 insert  into `usuarios`(`Id_usuario`,`Contrasena`,`P_Nombre`,`S_Nombre`,`P_Apellido`,`S_Apellido`,`Cedula`,`Correo`,`Telefono`,`Tipo`,`estatus`) values 
 (1,'1234','Admin','Admin','Admin','Admin','00000000','admin@gmail.com','00000000000','Admin','activo'),
 (2,'1234','Pedro','Antonio','Rodrigues','Vargas','12345678','pedro@gmail.com','04121234567','User','activo');
+
+
+
 
 
 SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));

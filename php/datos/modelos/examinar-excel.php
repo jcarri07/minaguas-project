@@ -2,22 +2,26 @@
 //require_once '../../../vendor/PHPExcel/Classes/PHPExcel.php';
 
 require_once '../../../vendor/autoload.php';
+require_once '../../Conexion.php';
 
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     $hoja = $_POST['hoja'];
     $id_embalse = $_POST['id_embalse'];
     $nombre_archivo = $_POST['nombre_archivo'];
+    $id_encargado = $_POST['id_usuario'];
+    $fecha_importacion = date("Y-m-d");
+
 
     $spreadsheet = IOFactory::load("temp/" . $nombre_archivo);
     $spreadsheet->setActiveSheetIndexByName($hoja);
 
-
+    $array_codigos_consulta = array();
 
     $columna_inicio = "E";
     $index_columna_inicio = Coordinate::columnIndexFromString($columna_inicio);
@@ -70,12 +74,65 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
             }
         }
 
-        echo "columna: " . $letraColumna;
-        echo ", numero: " . str_replace(')','', $codigo[1]);
-        echo ", nombre codigo: " . $codigo[0];
-        echo "<br>";
+        if(isset($codigo[0]) && $codigo[0] != "" && isset($codigo[1]) && $codigo[1]){
+            $array_aux = [];
+            $array_aux['columna'] = $letraColumna;
+            $array_aux['fila'] = '8';
+            $array_aux['codigo'] = str_replace(')','', $codigo[1]);
+            $array_aux['nombre_codigo'] = $codigo[0];
+            array_push($array_codigos_consulta, $array_aux);
+        }
+
     }
 
+
+    /*echo '<pre>';
+    print_r($array_codigos_consulta);
+    echo '</pre>';*/
+
+
+    $fila = 9;
+    while($fila){
+    //for($i = $fila_inicial; $i < 400 ; $i++){
+
+        $valorCelda = $spreadsheet->getActiveSheet()->getCell('B' . $fila)->getValue();
+        if($valorCelda == ""){
+            $fila--;
+            break;
+        }
+
+        //if ($valorCelda instanceof Date) {
+        $fecha_obj = Date::excelToDateTimeObject($valorCelda);
+        $fecha = $fecha_obj->format('Y-m-d');
+
+        //echo "Celda B$fila: " . $fecha . "<br>";
+
+        $cota_actual = $spreadsheet->getActiveSheet()->getCell('C' . $fila)->getValue();
+
+        $sql = "INSERT INTO datos_embalse (id_embalse, fecha, hora, cota_actual, id_encargado, archivo_importacion, fecha_importacion, estatus) VALUES ('$id_embalse', '$fecha', '', '$cota_actual', '$id_encargado', '$nombre_archivo', '$fecha_importacion', 'activo');";
+        $res = mysqli_query($conn, $sql);
+
+        if($res == 1){
+            sleep(0.02);
+
+            $sql = "SELECT id_registro FROM datos_embalse WHERE id_embalse = '$id_embalse' AND id_encargado = '$id_encargado' ORDER BY id_registro DESC LIMIT 1;";
+            $query = mysqli_query($conn, $sql);
+            $id_registro = mysqli_fetch_array($query)['id_registro'];
+
+            //Ciclo para almacenar extracciones
+
+            
+        }
+        
+
+        if($fecha >= date("Y-m-d")){
+            break;
+        }
+
+        $fila++;
+    }
+
+    echo 'si';
 
 
     /*$excel = PHPExcel_IOFactory::load("temp/" . $nombre_archivo);
@@ -159,7 +216,7 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
 
 }
 
-
+closeConection($conn);
 
 
 
