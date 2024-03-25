@@ -184,13 +184,14 @@ closeConection($conn);
                     <th style="text-align: center;">Acción</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody >
                   <?php
                   while ($row = mysqli_fetch_array($queryEmbalses)) {
                   ?>
-                    <tr>
-                      <td>
-                        <div class="d-flex flex-column px-3">
+                    <tr >
+                      <td style="vertical-align: middle;" class="">
+                      <!-- class="d-flex flex-column px-3 mt-2 mb-2" style="height: 100%;" -->
+                        <div class="px-3">
                           <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
                           <!-- <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span> -->
                         </div>
@@ -216,8 +217,9 @@ closeConection($conn);
                       </td>
                       <td>
                         <div class="d-flex align-items-center justify-content-center text-sm">
-                          <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
-                          <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i><span class="hide-cell">Eliminar</span></a>
+                          <a data-id="<?php echo $row['id_embalse']; ?>" class="show-embalse btn btn-link text-dark px-2 mb-0" href="?page=show"><i class="fas fa-eye text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Ver</span></a>
+                          <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
+                          <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-trash text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Eliminar</span></a>
                           <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
                         </div>
                       </td>
@@ -560,12 +562,9 @@ closeConection($conn);
 
   $(document).ready(function() {
     $(".editar-embalse").click(function(e) {
-      // Evitar que el enlace realice la acción predeterminada (navegación)
       e.preventDefault();
 
-      // Obtener el valor del atributo data-id
       var id = $(this).data("id");
-      // console.log(id)
       $.ajax({
         type: "POST",
         url: "pages/session_variable.php",
@@ -573,9 +572,23 @@ closeConection($conn);
           valor: id
         },
         success: function(response) {
-          // console.log(response, "si")
           window.location.href = "?page=editar_embalse";
+        }
+      });
+    });
 
+    $(".show-embalse").click(function(e) {
+      e.preventDefault();
+
+      var id = $(this).data("id");
+      $.ajax({
+        type: "POST",
+        url: "pages/session_variable.php",
+        data: {
+          valor: id
+        },
+        success: function(response) {
+          window.location.href = "?page=show";
         }
       });
     });

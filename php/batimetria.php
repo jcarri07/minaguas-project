@@ -16,6 +16,7 @@ class Batimetria
     private $vol_nor;
     private $vol_max;
     private $ultima_carga;
+    private $embalse;
 
 
     public function __construct($id_embalse, $conn)
@@ -38,6 +39,7 @@ class Batimetria
         }
 
         $embalse = mysqli_fetch_assoc($result);
+        $this->embalse = $embalse;
         mysqli_free_result($result);
 
         if ($embalse['batimetria'] != "") {
@@ -304,6 +306,10 @@ class Batimetria
         } else {
             return $this->volumenDisponible();
         }
+    }
+
+    public function getEmbalse(){
+        return $this->embalse;
     }
 
 
