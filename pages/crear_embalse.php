@@ -165,7 +165,7 @@ date_default_timezone_set("America/Caracas");
   }
 
 
-  #mapa{
+  #mapa {
     height: 400px;
     width: 80%;
     position: absolute;
@@ -225,6 +225,16 @@ date_default_timezone_set("America/Caracas");
     100% {
       opacity: 1;
     }
+  }
+
+
+  .input-error {
+    /* background: #ffd6d6; */
+    border-color: #ff8f8f;
+  }
+
+  .input-error::placeholder {
+    color: #fc8383;
   }
 </style>
 
@@ -366,7 +376,7 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-4 col-sm-12">
                   <div class="form-group">
                     <label for="embalse_nombre">Nombre del embalse</label>
-                    <input type="text" class="form-control" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nombre del embalse" required>
+                    <input type="text" class="form-control Vrequerido" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nombre del embalse">
                   </div>
                   <div class="form-group">
                     <label for="presa_nombre">Nombre de la presa</label>
@@ -445,7 +455,7 @@ date_default_timezone_set("America/Caracas");
                 <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">
                   <div class="form-group">
                     <label for="batimetria">Batimetría</label>
-                    <input type="file" accept=".xlsx, .xls" class="form-control" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
+                    <input type="file" accept=".xlsx, .xls" class="form-control Varchivo" id="batimetria" name="batimetria" placeholder="Ingrese el tipo de batimetria">
                   </div>
                   <div class="form-group d-flex justify-content-center">
                     <a class="down-bat visible btn text-dark text-sm d-flex align-items-center"><i class="fa fa-download text-lg me-1"></i> Plantilla</a>
@@ -460,43 +470,43 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cota_min">Cota mínima (m s.m.n.)</label>
-                    <input type="text" class="form-control" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
+                    <input type="text" class="form-control Vnumero" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
                   </div>
                   <div class=" form-group">
                     <label for="vol_min">Volumen mínimo (hm³)</label>
-                    <input type="text" class="form-control" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
+                    <input type="text" class="form-control Vnumero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                   </div>
                   <div class=" form-group">
                     <label for="sup_min">Superficie mínima (ha)</label>
-                    <input type="text" class="form-control" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
+                    <input type="text" class="form-control Vnumero" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cota_nor">Cota normal (m s.m.n.)</label>
-                    <input type="text" class="form-control" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
+                    <input type="text" class="form-control Vnumero" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                   </div>
                   <div class=" form-group">
                     <label for="vol_nor">Volumen normal (hm³)</label>
-                    <input type="text" class="form-control" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
+                    <input type="text" class="form-control Vnumero" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                   </div>
                   <div class=" form-group">
                     <label for="sup_nor">Superficie normal (ha)</label>
-                    <input type="text" class="form-control" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
+                    <input type="text" class="form-control Vnumero" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cota_max">Cota máxima (m s.m.n.)</label>
-                    <input type="text" class="form-control" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
+                    <input type="text" class="form-control Vnumero" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                   </div>
                   <div class=" form-group">
                     <label for="vol_max">Volumen máximo (hm³)</label>
-                    <input type="text" class="form-control" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
+                    <input type="text" class="form-control Vnumero" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                   </div>
                   <div class=" form-group">
                     <label for="sup_max">Superficie máxima (ha)</label>
-                    <input type="text" class="form-control" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
+                    <input type="text" class="form-control Vnumero" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
                   </div>
                 </div>
               </div>
@@ -553,7 +563,7 @@ date_default_timezone_set("America/Caracas");
               <div class="row">
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="operador">Operador</label>
-                  <input type="text" class="form-control" id="operador" name="operador" placeholder="Ingrese el operador">
+                  <input type="text" class="form-control Vrequerido" id="operador" name="operador" placeholder="Ingrese el operador">
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="autoridad">Autoridad responsable del embalse</label>
@@ -1061,7 +1071,7 @@ date_default_timezone_set("America/Caracas");
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -1086,6 +1096,26 @@ date_default_timezone_set("America/Caracas");
       </div>
     </div>
   </div> -->
+
+<!-- //modal mapa -->
+<div class="modal fade px-5" id="modal-validate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Errores de campos.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-body-validate" class="text-sm">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 
@@ -1449,5 +1479,63 @@ date_default_timezone_set("America/Caracas");
     removerClase($("#mapa"), "map-visible")
     removerClase($("#mapa"), "fade-in-image")
     agregarClase($("#mapa"), "map-no-visible")
+  });
+
+
+  //VALIDACION DE FORMULARIO.
+
+  document.getElementById("form-embalse").addEventListener("submit", function(event) {
+    event.preventDefault();
+    console.log("A validar");
+
+    var campos = document.querySelectorAll('.Vnumero, .Vrequerido, .Varchivo');
+    var errorMessages = [];
+
+    campos.forEach(function(campo) {
+
+      var label = campo.previousElementSibling.innerText;
+
+      if (campo.classList.contains('Vnumero')) {
+        if (campo.value.trim() === "") {
+          errorMessages.push("El campo '<b>" + label + "</b>' no puede estar vacío.");
+          if (!campo.classList.contains('input-error')) {
+            campo.className += " input-error";
+          }
+        } else if (isNaN(campo.value)) {
+          errorMessages.push("El campo '<b>" + label + "</b>' debe contener solo números.");
+          if (!campo.classList.contains('input-error')) {
+            campo.className += " input-error";
+          }
+        }
+      }
+
+      if (campo.classList.contains('Vrequerido')) {
+        if (campo.value.trim() === "") {
+          errorMessages.push("El campo '<b>" + label + "</b>' no puede estar vacío.");
+          if (!campo.classList.contains('input-error')) {
+            campo.className += " input-error";
+          }
+        }
+      }
+
+      if (campo.classList.contains('Varchivo')) {+
+        console.log("archivooo")
+        if (campo.files.length === 0) {
+          errorMessages.push("Debe seleccionar un archivo para el campo '<b>" + label + "</b>'.");
+          if (!campo.classList.contains('input-error')) {
+            campo.className += " input-error";
+          }
+        }
+      }
+
+    });
+
+    if (errorMessages.length > 0) {
+      event.preventDefault();
+      var errorContainer = document.getElementById("modal-body-validate");
+      console.log(errorContainer)
+      errorContainer.innerHTML = "<ul><li>" + errorMessages.join("</li><li>") + "</li></ul>";
+      $('#modal-validate').modal('show');
+    }
   });
 </script>
