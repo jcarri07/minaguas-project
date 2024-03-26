@@ -193,7 +193,7 @@ const arbitra = {
                                     label: '<?php echo $nom[0] ?>',
                                     borderColor: '#36a1eb',
                                     backgroundColor: '#36a1eb',
-                                    pointRadius: 5,
+                                    pointRadius: 0,
                                     data: [<?php
                                             $j = 0;
                                             $pivote = date("Y");
