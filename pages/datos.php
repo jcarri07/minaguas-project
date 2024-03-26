@@ -730,10 +730,10 @@
             }
             else{
               var string =  '<div class="col" style="font-size: 0.75em;">';
-              string +=       '<span>Capacidad o Volumen (02): <b>' + response[0][1] + ' 1000 m<sup>3</sup></b></span>';
+              string +=       '<span>Capacidad o Volumen (02): <b>' + response[0][1] + ' (1000 m<sup>3</sup>)</b></span>';
               string +=     '</div>';
               string +=     '<div class="col small" style="font-size: 0.75em;">';
-              string +=       '<span>Área o Superficie (03): <b>' + response[0][0] + ' 1000 m<sup>2</sup></b></span>';
+              string +=       '<span>Área o Superficie (03): <b>' + response[0][0] + ' (1000 m<sup>2</sup>)</b></span>';
               string +=     '</div>';
               
               $("#add .btn-submit").attr("disabled", false);
