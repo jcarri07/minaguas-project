@@ -1,3 +1,4 @@
+
 CREATE DATABASE minagua_db;
 
 USE minagua_db;
@@ -189,11 +190,9 @@ CREATE TABLE detalles_extraccion (
 );
 
 CREATE TABLE `configuraciones` (
-  `id_config` int(11) NOT NULL,
+  `id_config` int(11) AUTO_INCREMENT PRIMARY KEY,
   `nombre_config` varchar(50) DEFAULT NULL,
-  `configuracion` text,
-  `fecha_sequia` date NOT NULL DEFAULT '2024-01-01',
-  `fecha_lluvia` date NOT NULL DEFAULT '2024-06-01'
+  `configuracion` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE propositos (

@@ -18,6 +18,11 @@ USE `minagua_db`;
 
 /*Data for the table `configuraciones` */
 
+insert into `configuraciones` (`id_config`, `nombre_config`, `configuracion`) values
+('1', 'prioritarios', '1,2,3,4,5,6,7,8,9,10'),
+('2','fecha_sequia', '2023-01-05'),
+('3','fecha_lluvia', '2023-06-01');
+
 /*Data for the table `datos_embalse` */
 
 /*Data for the table `detalles_extraccion` */

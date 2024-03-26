@@ -52,6 +52,89 @@ closeConection($conn);
 <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
 <style>
+  @media(width >=2120px) {
+
+    .embalse-info {
+      width: auto;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .embalse-card {
+      background-color: white;
+      /* height: 372.21px !important; */
+      height: 100%;
+      border: 3px dashed lightgrey;
+      width: 574.45px !important;
+      /* width: 100% !important; */
+    }
+
+    .embalse-batimetria {
+      grid-row: span 2;
+    }
+
+  }
+
+  @media(width <= 2120px) {
+
+    .embalse-info {
+      width: auto;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .embalse-card {
+      background-color: white;
+      /* height: 372.21px !important; */
+      height: 100%;
+      border: 3px dashed lightgrey;
+      /* width: 574.45px !important; */
+      width: 100%;
+    }
+
+    .embalse-batimetria {
+      grid-row: span 2;
+    }
+
+  }
+
+  @media(width <= 1478px) {
+
+    .embalse-info {
+      width: auto;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      /* grid-template-rows: 1fr 1fr 1fr; */
+      gap: 20px;
+    }
+
+    .embalse-card {
+      background-color: white;
+      /* height: 372.21px !important; */
+      height: 100%;
+      border: 3px dashed lightgrey;
+      /* width: 574.45px !important; */
+      width: 100%;
+    }
+
+    .embalse-batimetria {
+      /* grid-row: span 2; */
+    }
+
+    .embalse-datos{
+      order: -1;
+      width: 100%;
+    }
+
+  }
+
   .body-show {
     /* background: red; */
     height: 100vh;
@@ -64,26 +147,6 @@ closeConection($conn);
 
   .card-show {
     height: 100%;
-  }
-
-  .embalse-info {
-    width: auto;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 20px;
-  }
-
-  .embalse-card {
-    background-color: white;
-    /* height: 372.21px !important; */
-    height: 100%;
-    border: 3px dashed lightgrey;
-  }
-
-  .embalse-batimetria {
-    grid-row: span 2;
   }
 
   #embalse-mapa {
@@ -153,17 +216,13 @@ closeConection($conn);
     text-align: center;
   }
 
-  /* Opcional: Para darle estilo a las tablas dentro del modal */
   .table-cota {
-    /* width: 100%; */
     border: 1px solid #000000;
   }
 
   .tabla table {
     width: 100%;
-    /* Ancho del 100% para ocupar todo el espacio disponible */
-    border-collapse: collapse;
-    /* Colapso de bordes para evitar espacios entre las celdas */
+    border-collapse: collapse !important;
   }
 
   .tabla td,
@@ -172,7 +231,6 @@ closeConection($conn);
     text-align: center;
     vertical-align: middle;
     padding: 8px;
-    /* Ajusta el relleno según sea necesario */
   }
 
   /* .main-content{
@@ -192,7 +250,7 @@ closeConection($conn);
             </div>
             <div class="nombre-embalse text-dark fw-bold">Ubicación geográfica</div>
           </div>
-          <div class="embalse-card rounded px-3 d-flex flex-column gap-2">
+          <div class="embalse-card embalse-datos rounded px-3 d-flex flex-column gap-2">
             <div class="text-center" style="font-size: 32px;">
               <?php echo mb_strtoupper(mb_substr($embalse_datos["nombre_embalse"], 0), 'UTF-8') ?>
             </div>
@@ -237,20 +295,20 @@ closeConection($conn);
           </div>
           <div class="embalse-card rounded p-3 embalse-batimetria d-flex flex-column gap-4">
             <!-- <div class="text-center">Batimetrias [ <?php echo implode(" - ", $embalse->getYears()) ?> ]</div> -->
-            <div class="text-center">Información Extra</div>
-            <div class="text-center h-100 d-flex" style="overflow-x: auto;">
+            <div class="text-center">Batimetrias</div>
+            <div class="text-center h-100 d-flex flex-column">
 
               <ul class="nav nav-tabs" role="tablist">
                 <?php foreach ($embalse->getYears() as $key => $year) { ?>
-                  <!-- <li class="nav-item" role="presentation">
+                  <li class="nav-item" role="presentation">
                     <a class="nav-link <?php if ($key == 0) echo "active" ?>" id="simple-tab-<?php echo $year ?>" data-bs-toggle="tab" href="#simple-tabpanel-<?php echo $year ?>" role="tab" aria-controls="simple-tabpanel-<?php echo $year ?>" aria-selected="true"><?php echo $year ?></a>
-                  </li> -->
+                  </li>
                 <?php } ?>
               </ul>
 
-              <div class="tab-content pt-5" id="tab-content">
+              <div class="tab-content pt-2" id="tab-content">
 
-                <!-- <?php if ($embalse_datos["batimetria"] != "") {
+                <?php if ($embalse_datos["batimetria"] != "") {
                   $pre_batimetria = json_decode($embalse_datos["batimetria"], true);
                   $count = 0;
                   foreach ($pre_batimetria as $key => $anio) {
@@ -261,14 +319,14 @@ closeConection($conn);
                                             echo "active";
                                             $count++;
                                           } ?>" id="simple-tabpanel-<?php echo $key ?>" role="tabpanel" aria-labelledby="simple-tab-<?php echo $key ?>">
-                      <div class="tabla" style="width: 300px;">
-                        <h3> <?php echo $key ?> </h3>
-                        <table id="tabla<?php echo $key ?>" class="align-items-center mb-0 table-cota" border="1">
+                      <div class="tabla table-responsive">
+                        <p> <?php echo $key ?> </p>
+                        <table id="tabla<?php echo $key ?>" class="align-items-center mb-0 table-cota ">
                           <thead>
                             <tr>
-                              <th>Cota</th>
-                              <th>Área</th>
-                              <th>Capacidad</th>
+                              <th>Cota <span class="text-sm">(m s.n.m.)</span></th>
+                              <th>Área <span></span class="text-sm">(m²)</th>
+                              <th>Capacidad <span class="text-sm">(hm³)</span></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -277,9 +335,9 @@ closeConection($conn);
                               $partes = explode("-", $value);
                             ?>
                               <tr>
-                                <td><?php echo $key ?></td>
-                                <td><?php echo $partes[0] ?></td>
-                                <td><?php echo $partes[1] ?></td>
+                                <td><?php echo number_format(floatval($key), 3, ',', '.') ?></td>
+                                <td><?php echo number_format(floatval($partes[0]), 2, ',', '.') ?></td>
+                                <td><?php echo number_format(floatval($partes[1]), 2, ',', '.') ?></td>
                               </tr>
                             <?php }
                             ?>
@@ -288,7 +346,7 @@ closeConection($conn);
                       </div>
                     </div>
                 <?php }
-                } ?> -->
+                } ?>
               </div>
 
 
@@ -382,6 +440,9 @@ closeConection($conn);
               </canvas>
             </div>
           </div>
+          <input style="display: none;" type="text" name="" id="norte" value="<?php echo $embalse_datos['norte'] ?>">
+          <input style="display: none;" type="text" name="" id="este" value="<?php echo $embalse_datos['este'] ?>">
+          <input style="display: none;" type="text" name="" id="huso" value="<?php echo $embalse_datos['huso'] ?>">
         </div>
       </div>
     </div>
@@ -402,13 +463,78 @@ closeConection($conn);
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
 
-  var map = L.map('embalse-mapa').setView([8, -66], 6);
+  var tablas = $(".table-cota");
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(map);
+  for (let i = 0; i < tablas.length; i++) {
+    console.log($(tablas[i])[0].id)
+    // iniciarTabla($(tablas[i])[0].id);
+    id = $(tablas[i])[0].id;
+    console.log("id: " + id)
 
+    $("#" + id).DataTable({
+      dom: "<'top'<'d-flex align-items-center justify-content-between'f>>rt<'bottom'<'d-flex flex-column align-items-center'p>><'clear'>",
+      language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+          "first": "Primero",
+          "last": "Ultimo",
+          "next": "Siguiente",
+          "previous": "Anterior"
+        }
+      },
+    });
+  }
+  // var map = L.map('embalse-mapa').setView([8, -66], 6);
 
+  // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
+  //   attribution: '© OpenStreetMap contributors'
+  // }).addTo(map);
+
+  var norte = $("#norte").val();
+  var este = $("#este").val();
+  var huso = $("#huso").val();
+
+  if (norte != "" && este != "" && huso != "") {
+
+    norte = parseFloat(norte);
+    este = parseFloat(este);
+    huso = parseInt(huso)
+
+    proj4.defs("EPSG:326" + huso, "+proj=utm +zone=" + huso + " +datum=WGS84 +units=m +no_defs");
+
+    proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
+    var coordenadasGeograficas = proj4("EPSG:326" + huso, "EPSG:4326", [este, norte]);
+
+    var latitud = coordenadasGeograficas[1];
+    var longitud = coordenadasGeograficas[0];
+
+    var map = L.map('embalse-mapa').setView([latitud, longitud], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.marker([latitud, longitud]).addTo(map);
+
+  } else {
+    var map = L.map('embalse-mapa').setView([8, -66], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+  }
   // new Chartist.Bar('.ct-chart', {
   //   labels: ['Original', 'Batimetria', 'Actual'],
   //   series: [
@@ -464,41 +590,10 @@ closeConection($conn);
     }
   });
 
-  var tablas = $(".table-cota");
-
-  for (let i = 0; i < tablas.length; i++) {
-    console.log($(tablas[i])[0].id)
-    // iniciarTabla($(tablas[i])[0].id);
-    id = $(tablas[i])[0].id;
-    console.log("id: "+id)
-
-    $("#"+id).DataTable({
-      dom: "<'top'<'d-flex align-items-center justify-content-between'f>>rt<'bottom'<'d-flex flex-column align-items-center'p>><'clear'>",
-      language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Entradas",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        },
-    });
-  }
 
 
-  console.log(tablas)
+
+  // console.log(tablas)
   // iniciarTabla('table-embalses');
   //   if ($("#table-embalses-eliminados")) {
   //     iniciarTabla('table-embalses-eliminados');

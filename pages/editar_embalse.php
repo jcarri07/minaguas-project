@@ -1997,18 +1997,28 @@ function formatoNumero($valor)
 
     console.log("Latitud: " + latitud + ", Longitud: " + longitud);
 
-    // Conversion de Coordenadas normales a UTM
-    var utmCoords = proj4(proj4.defs('EPSG:4326'), proj4.defs('EPSG:32600'), [longitud, latitud]);
-    var norte = utmCoords[1];
-    var este = utmCoords[0];
-    var huso = Math.floor((longitud + 180) / 6) + 1;
+    // // Conversion de Coordenadas normales a UTM
+    // var utmCoords = proj4(proj4.defs('EPSG:4326'), proj4.defs('EPSG:32600'), [longitud, latitud]);
+    // var norte = utmCoords[1];
+    // var este = utmCoords[0];
+    // var huso = Math.floor((longitud + 180) / 6) + 1;
 
-    //Conversion de Coordenadas UTM a Normales
-    var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
-    var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
-    var latlng = proj4(utm, wgs84, [este, norte]);
-    var latitud = latlng[1];
-    var longitud = latlng[0];
+    // //Conversion de Coordenadas UTM a Normales
+    // var utm = '+proj=utm +zone=' + huso + ' +ellps=WGS84';
+    // var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+    // var latlng = proj4(utm, wgs84, [este, norte]);
+    // var latitud = latlng[1];
+    // var longitud = latlng[0];
+
+    proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
+
+    var zonaUTM = Math.floor((longitud + 180) / 6) + 1;
+    proj4.defs("EPSG:326" + zonaUTM, "+proj=utm +zone=" + zonaUTM + " +datum=WGS84 +units=m +no_defs");
+    var coordenadasUTM = proj4("EPSG:4326", "EPSG:326" + zonaUTM, [longitud, latitud]);
+
+    var norte = coordenadasUTM[1];
+    var este = coordenadasUTM[0];
+    var huso = zonaUTM;
 
 
     $("#norte").val(norte);
@@ -2055,7 +2065,7 @@ function formatoNumero($valor)
   //VALIDACION DE FORMULARIO.
 
   document.getElementById("form-embalse").addEventListener("submit", function(event) {
-    event.preventDefault();
+    // event.preventDefault();
     console.log("A validar");
 
     var campos = document.querySelectorAll('.Vnumero, .Vrequerido, .Varchivo');
