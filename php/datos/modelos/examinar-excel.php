@@ -10,12 +10,37 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
+function buscarPosicion($array, $valorABuscar, $columna) {
+    //$columna = 'codigo'; // Columna en la que deseas buscar
+    $posicion = array_search($valorABuscar, array_column($array, $columna));
+    return $posicion !== false ? $posicion : -1;
+}
+
 if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     $hoja = $_POST['hoja'];
     $id_embalse = $_POST['id_embalse'];
     $nombre_archivo = $_POST['nombre_archivo'];
     $id_encargado = $_POST['id_usuario'];
     $fecha_importacion = date("Y-m-d");
+
+    $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, concepto, uso, ce.id AS 'id_codigo_extraccion', IF(leyenda_sistema <> '', leyenda_sistema, concepto) AS 'name'
+            FROM tipo_codigo_extraccion tce, codigo_extraccion ce
+            WHERE tce.id = ce.id_tipo_codigo_extraccion AND 
+                ce.estatus = 'activo' AND 
+                tce.estatus = 'activo' /*AND 
+                tce.id <> '6' AND 
+                tce.id <> '7' AND
+                ce.concepto <> 'Subtotal'*/
+            ORDER BY codigo ASC;";
+    $query_codigos = mysqli_query($conn, $sql);
+    $array_codigos_sql = array();
+
+    while($row = mysqli_fetch_array($query_codigos)){
+        $array_aux = [];
+        $array_aux['id_codigo_bd'] = $row['id_codigo_extraccion'];
+        $array_aux['codigo'] = $row['codigo'];
+        array_push($array_codigos_sql, $array_aux);
+    }
 
 
     $spreadsheet = IOFactory::load("temp/" . $nombre_archivo);
@@ -120,7 +145,17 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
             $id_registro = mysqli_fetch_array($query)['id_registro'];
 
             //Ciclo para almacenar extracciones
-
+            for($i = 0 ; $i < count($array_codigos_consulta) ; $i++) {
+                $columna = $array_codigos_consulta[$i]['columna'];
+                $valor_extraccion_aux = $spreadsheet->getActiveSheet()->getCell($columna . $fila)->getValue();
+                if($valor_extraccion_aux != ""){
+                    
+                    $index_codigo = buscarPosicion($array_codigos_sql, $array_codigos_consulta[$i]['codigo'], 'codigo');
+                    $codigo_aux = $array_codigos_sql[$index_codigo]['id_codigo_bd'];
+                    $sql = "INSERT INTO detalles_extraccion (id_codigo_extraccion, extraccion, id_registro, estatus) VALUES ('$codigo_aux', '$valor_extraccion_aux', '$id_registro', 'activo');";
+                    mysqli_query($conn, $sql);
+                }
+            }
             
         }
         
