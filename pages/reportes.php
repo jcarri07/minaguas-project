@@ -220,7 +220,7 @@ date_default_timezone_set("America/Caracas");
     /* Porcentaje del ancho de la pantalla */
     max-width: 500px;
     /* Ancho máximo del modal */
-    height: 500px;
+    height: 700px;
     /* Altura del modal */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

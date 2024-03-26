@@ -51,14 +51,24 @@
   .smalll {
     font-size: 0.675em;
   }
-  @media (max-width: 380px) {
-    .smalll {
-    font-size: 0.475em;
-  }
-}
+
   .h-90 {
     height: 90% !important;
   }
+
+  @media (max-width: 380px) {
+    .smalll {
+      font-size: 0.875em;
+    }
+  }
+  @media (max-width: 576px) {
+    .h-sm-90 {
+    height: 75% !important;
+  }
+  }
+
+
+  
 </style>
 
 
@@ -210,84 +220,80 @@ closeConection($conn);*/
     <?php }  ?>
   </div>
 
-  <?php
 
-  ?>
 
   <!--grafica -->
-  <div class="container-fluid py-5">
-    <div class="row justify-content-center">
-      <!-- ... (tu código HTML) ... -->
-      <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;">
-        <div class="card h-100">
-          <div class="card-header">
-            <h6 class="mb-0">Embalses</h6>
-            <p class="text-sm">Monitoreo del volumen actual de los embalses registrados</p>
-          </div>
-          <hr class="dark horizontal">
-          <div class="card-body col-12 h-100 " id="contenedor" style="height:350px !important;">
-          <div class="border border-radius-lg h-100">
-            <div class="col-12 pb-2">
-              <!-- Ejemplo de leyenda -->
-              <div class="row justify-content-center gap-2">
-                <div class="etiqueta col-2 px-0 justify-content-end">
-                  <div class="col-3 cuadro-color" style="background-color: #fd0200;"></div>
-                  <span class="smalll col-6 pe-1 text-end">( < = 30% )</span>
-                </div>
-                <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #72dffd;"></div>
-                  <span class="smalll col-9 ps-1">( > 30% <= 60% )</span>
-                </div>
-                <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #0066eb;"></div>
-                  <span class="smalll col-9 ps-1">( >60% <= 90% )</span>
-                </div>
-                <div class="etiqueta col-2 px-0">
-                  <div class="col-3 cuadro-color" style="background-color: #3ba500;"></div>
-                  <span class="smalll col-9 ps-1">( >90% <= 100% )</span>
-                </div>
-                <div class="etiqueta col-2 px-0 ps-1">
-                  <div class="col-3 cuadro-color " style="background-color: #55fe01;"></div>
-                  <span class="smalll col-9 ps-1">( > 100% )</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 h-90 "><?php include "php/Graficas/grafica_volumen_actual.php" ?></div>
-            </div>
-          </div>
-        </div>
+
+  <!-- ... (tu código HTML) ... -->
+  <div class="col-12 px-0 py-5" style="padding-left:20px;">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h6 class="mb-0">Embalses</h6>
+        <p class="text-sm">Monitoreo del volumen actual de los embalses registrados</p>
       </div>
-      <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;">
-        <div class="card z-index-2">
-          <div class="card-header pb-3">
-            <h6 class="mb-0">Registro de Reportes</h6>
-            <p class="text-sm">Cantidad de reportes realizados al mes</p>
-            <hr class="dark horizontal">
-            <div class="d-flex mb-3">
-              <label for="embalseSelect" class="text-sm my-auto me-1">Selecciona un embalse:</label>
-              <select style="width: 180px;" class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
-                <option style="display:none">Seleccione...</option>
-                <?php
-                while ($row_embalse = $result_embalses->fetch_assoc()) {
-                  echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
-                }
-                ?>
-              </select>
-
-            </div>
-          </div>
-          <div class="card-body p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-            <div class="bg-white  shadow-dark  py-3 pe-1">
-              <div class="chart mb-1 border border-radius-lg" style="height:350px !important;">
-                <canvas id="myChart" width="400" height="200"></canvas>
+      <hr class="dark horizontal">
+      <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:350px !important;">
+        <div class="border border-radius-lg h-100">
+          <div class="col-12 pb-2 pt-1">
+            <!-- Ejemplo de leyenda -->
+            <div class="row justify-content-center gap-sm-2 ">
+              <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
+                <div class="col-2 cuadro-color" style="background-color: #fd0200;"></div>
+                <span class="smalll col-auto pe-1">( <=30% )</span>
+              </div>
+              <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
+                <div class="col-2 cuadro-color" style="background-color: #72dffd;"></div>
+                <span class="smalll col-auto ps-1">( > 30% <= 60% )</span>
+              </div>
+              <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-end">
+                <div class="col-2 cuadro-color" style="background-color: #0066eb;"></div>
+                <span class="smalll col-auto ps-1">( >60% <= 90% )</span>
+              </div>
+              <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-start">
+                <div class="col-sm-3 col-2 cuadro-color" style="background-color: #3ba500;"></div>
+                <span class="smalll col-auto ps-1">( >90% <= 100% )</span>
+              </div>
+              <div class="etiqueta col-sm-2 col-4 px-0 ps-1 justify-content-center">
+                <div class="col-3 cuadro-color " style="background-color: #55fe01;"></div>
+                <span class="smalll col-auto ps-1">( > 100% )</span>
               </div>
             </div>
           </div>
-
+          <div class="col-12 h-90 h-sm-90"><?php include "php/Graficas/grafica_volumen_actual.php" ?></div>
         </div>
       </div>
     </div>
   </div>
+  <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;" hidden>
+    <div class="card z-index-2">
+      <div class="card-header pb-3">
+        <h6 class="mb-0">Registro de Reportes</h6>
+        <p class="text-sm">Cantidad de reportes realizados al mes</p>
+        <hr class="dark horizontal">
+        <div class="d-flex mb-3">
+          <label for="embalseSelect" class="text-sm my-auto me-1">Selecciona un embalse:</label>
+          <select style="width: 180px;" class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
+            <option style="display:none">Seleccione...</option>
+            <?php
+            while ($row_embalse = $result_embalses->fetch_assoc()) {
+              echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
+            }
+            ?>
+          </select>
+
+        </div>
+      </div>
+      <div class="card-body p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+        <div class="bg-white  shadow-dark  py-3 pe-1">
+          <div class="chart mb-1 border border-radius-lg" style="height:350px !important;">
+            <canvas id="myChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 
   <div class="row mt-1">
     <div class="col-lg-9 mb-lg-0 mb-1">

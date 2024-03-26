@@ -12,7 +12,7 @@ $fecha1 = $_GET['fecha1'];
 $fecha2 = $_GET['fecha2'];
 $id = $_GET['id'];
 $name = $_GET['name'];
-$año = date('Y', strtotime($fecha2));
+$anio = date('Y', strtotime($fecha2));
 $volumen;
 $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
@@ -138,15 +138,15 @@ $res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT MAX(cot
 
 $emb = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id';");
 
-$anio = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND YEAR(fecha) = '$año' AND id_embalse = '$id' GROUP BY fecha ORDER BY fecha ASC;");
+$an = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND YEAR(fecha) = '$anio' AND id_embalse = '$id' GROUP BY fecha ORDER BY fecha ASC;");
 
 $datos1 = mysqli_fetch_all($r, MYSQLI_ASSOC);
 $datos2 = mysqli_fetch_all($res, MYSQLI_ASSOC);
 $embalse = mysqli_fetch_all($emb, MYSQLI_ASSOC);
-$datos_embalses = mysqli_fetch_all($anio, MYSQLI_ASSOC);
+$datos_embalses = mysqli_fetch_all($an, MYSQLI_ASSOC);
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
-    $volumen = $bati->getByCota($año, $datos1[0]["cota_actual"])[1];
+    $volumen = $bati->getByCota($anio, $datos1[0]["cota_actual"])[1];
     $cot = $datos1[0]["cota_actual"];
 } else {
     $volumen = 0;
@@ -162,7 +162,7 @@ $cot = 0;
             for ($k = $numeroSemana; $k < $semanas; $k++) {
                 if (isset($datos1[$i]['semana'])) {
                     if ($k == ($datos1[$i]['semana'])) {
-                        $array1[$aux] = $bati->getByCota($año, $datos1[$i]["cota_actual"])[1];
+                        $array1[$aux] = $bati->getByCota($anio, $datos1[$i]["cota_actual"])[1];
                         $i++;
                     } else {
                         $array1[$aux] = 0;
@@ -172,7 +172,7 @@ $cot = 0;
                 }
                 if (isset($datos2[$j]['semana'])) {
                     if ($k == ($datos2[$j]['semana'])) {
-                        $array2[$aux] = $bati->getByCota($año, $datos2[$j]["cota_actual"])[1];
+                        $array2[$aux] = $bati->getByCota($anio, $datos2[$j]["cota_actual"])[1];
                         $j++;
                     } else {
                         $array2[$aux] = 0;
@@ -250,7 +250,7 @@ $cot = 0;
                                     for ($k = $l; $k < ($t * $sem); $k++) {
                                         if (isset($datos1[$i]['semana'])) {
                                             if (($numeroSemana + $k) == ($datos1[$i]['semana'])) {
-                                                echo  $bati->getByCota($año, $datos1[$i]["cota_actual"])[1]; ?>, <?php
+                                                echo  $bati->getByCota($anio, $datos1[$i]["cota_actual"])[1]; ?>, <?php
 
                                                                                                                     if ($max < $datos1[$i]["cota_actual"]) {
                                                                                                                         $max = $datos1[$i]["cota_actual"];
@@ -277,7 +277,7 @@ $cot = 0;
                                     for ($k = $l; $k < ($t * $sem); $k++) {
                                         if (isset($datos2[$j]['semana'])) {
                                             if (($numeroSemana + $k) == ($datos2[$j]['semana'])) {
-                                                echo  $bati->getByCota($año, $datos2[$j]["cota_actual"])[1]; ?>, <?php
+                                                echo  $bati->getByCota($anio, $datos2[$j]["cota_actual"])[1]; ?>, <?php
 
                                                                                                                     if ($max < $datos2[$j]["cota_actual"]) {
                                                                                                                         $max = $datos2[$j]["cota_actual"];
@@ -363,18 +363,18 @@ $cot = 0;
                                 },
                             },
                             min: <?php if ($min < $embalse[0]["cota_min"]) {
-                                        if ($bati->getByCota($año, $min)[1] < 100) {
+                                        if ($bati->getByCota($anio, $min)[1] < 100) {
                                             echo 0;
                                         } else {
-                                            echo $bati->getByCota($año, $min)[1];
+                                            echo $bati->getByCota($anio, $min)[1];
                                         }
                                     } else {
-                                        echo $bati->getByCota($año, $embalse[0]["cota_min"])[1];
+                                        echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
                                     }; ?>,
                             max: <?php if ($max > $embalse[0]["cota_max"]) {
-                                        echo $bati->getByCota($año, $max)[1] + 200;
+                                        echo $bati->getByCota($anio, $max)[1] + 200;
                                     } else {
-                                        echo $bati->getByCota($año, $embalse[0]["cota_max"])[1] + 200;
+                                        echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 200;
                                     }; ?>,
                             border: {
                                 display: false,
@@ -476,7 +476,7 @@ $cot = 0;
                         pointRadius: 0,
                         data: [<?php
                                 $j = 0;
-                                $pivote = date("Y");
+                                $pivote = $anio;
                                 $min = $embalse[$t]["cota_min"];
                                 $max = $embalse[$t]["cota_max"];
                                 while ($j < count($datos_embalses)) {
@@ -487,7 +487,7 @@ $cot = 0;
 
                                 ?> {
                                         x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
-                                        y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                        y: <?php echo $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];  ?>
                                     },
                                     <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
                                             $max = $datos_embalses[$j]["cota_actual"];
@@ -525,19 +525,19 @@ $cot = 0;
 
 
                         lines: [{
-                                yvalue: <?php echo $bati->getByCota($año, $embalse[$t]["cota_min"])[1]; ?>,
+                                yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_min"])[1]; ?>,
                                 cota: "Volumen minimo",
                                 color: 'black',
                                 h: 15,
                             },
                             {
-                                yvalue: <?php echo $bati->getByCota($año, $embalse[$t]["cota_nor"])[1]; ?>,
+                                yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_nor"])[1]; ?>,
                                 cota: "Volumen normal",
                                 color: 'black',
                                 h: 15,
                             },
                             {
-                                yvalue: <?php echo $bati->getByCota($año, $embalse[$t]["cota_max"])[1]; ?>,
+                                yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_max"])[1]; ?>,
                                 cota: "Volumen maximo",
                                 color: 'black',
                                 h: -15,
@@ -558,7 +558,7 @@ $cot = 0;
                     },
                     title: {
                         display: true,
-                        text: '<?php echo "Movimiento " . $embalse[$t]['nombre_embalse'] . " - Año " . $año; ?>',
+                        text: '<?php echo "Movimiento " . $embalse[$t]['nombre_embalse'] . " - Año " . $anio; ?>',
                         fullSize: true,
                         font: {
                             size: 30
@@ -580,8 +580,8 @@ $cot = 0;
                         time: {
                             unit: 'month'
                         },
-                        min: '<?php echo $año; ?>-01',
-                        max: '<?php echo $año; ?>-12',
+                        min: '<?php echo $anio; ?>-01',
+                        max: '<?php echo $anio; ?>-12',
 
                         ticks: {
                             callback: (value, index, ticks) => {
@@ -612,14 +612,14 @@ $cot = 0;
                             },
                         },
                         min: <?php if ($min < $embalse[$t]["cota_min"]) {
-                                    echo $bati->getByCota($año, $min)[1];
+                                    echo $bati->getByCota($anio, $min)[1];
                                 } else {
-                                    echo $bati->getByCota($año, $embalse[0]["cota_min"])[1];
+                                    echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
                                 }; ?>,
                         max: <?php if ($max > $embalse[$t]["cota_max"]) {
-                                    echo $bati->getByCota($año, $max)[1] + 200;
+                                    echo $bati->getByCota($anio, $max)[1] + 200;
                                 } else {
-                                    echo $bati->getByCota($año, $embalse[$t]["cota_max"])[1] + 200;
+                                    echo $bati->getByCota($anio, $embalse[$t]["cota_max"])[1] + 200;
                                 }; ?>,
                         border: {
                             display: false,
@@ -650,7 +650,7 @@ $cot = 0;
                         pointRadius: 0,
                         data: [<?php
                                 $j = 0;
-                                $pivote = date("Y");
+                                $pivote = $anio;
                                 $min = $embalse[$t]["cota_min"];
                                 $max = $embalse[$t]["cota_max"];
                                 while ($j < count($datos_embalses)) {
@@ -661,7 +661,7 @@ $cot = 0;
 
                                 ?> {
                                         x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
-                                        y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                        y: <?php echo $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];  ?>
                                     },
                                     <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
                                             $max = $datos_embalses[$j]["cota_actual"];
@@ -700,19 +700,19 @@ $cot = 0;
 
 
                         lines: [{
-                                yvalue: <?php echo $bati->getByCota($año, $embalse[$t]["cota_min"])[1]; ?>,
+                                yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_min"])[1]; ?>,
                                 cota: "Volumen minimo",
                                 color: 'black',
                                 h: 15,
                             },
                             {
-                                yvalue: <?php echo $bati->getByCota($año, $embalse[$t]["cota_nor"])[1]; ?>,
+                                yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_nor"])[1]; ?>,
                                 cota: "Volumen normal",
                                 color: 'black',
                                 h: 15,
                             },
                             {
-                                yvalue: <?php echo $bati->getByCota($año, $embalse[$t]["cota_max"])[1]; ?>,
+                                yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_max"])[1]; ?>,
                                 cota: "Volumen maximo",
                                 color: 'black',
                                 h: -15,
@@ -789,14 +789,14 @@ $cot = 0;
                             },
                         },
                         min: <?php if ($min < $embalse[$t]["cota_min"]) {
-                                    echo $bati->getByCota($año, $min)[1];
+                                    echo $bati->getByCota($anio, $min)[1];
                                 } else {
-                                    echo $bati->getByCota($año, $embalse[0]["cota_min"])[1];
+                                    echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
                                 }; ?>,
                         max: <?php if ($max > $embalse[$t]["cota_max"]) {
-                                    echo $bati->getByCota($año, $max)[1] + 200;
+                                    echo $bati->getByCota($anio, $max)[1] + 200;
                                 } else {
-                                    echo $bati->getByCota($año, $embalse[$t]["cota_max"])[1] + 200;
+                                    echo $bati->getByCota($anio, $embalse[$t]["cota_max"])[1] + 200;
                                 }; ?>,
                         border: {
                             display: false,
