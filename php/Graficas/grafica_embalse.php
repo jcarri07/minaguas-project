@@ -15,7 +15,7 @@ $count = mysqli_num_rows($re);
             <div class="row card-body">
                 <div id="prin" class="col-12">
                     <div class="row mb-2">
-                        <div class="col-6 col-sm-4" style="padding: 0px auto;margin-bottom:5px;">
+                        <div class="col-6 col-sm-3" style="padding: 0px auto;margin-bottom:5px;">
                             <label class="form-label">Embalse</label>
                             <select name=0 id="embalses" class="form-select" required>
                                 <!--option value="0">Todas los Embalses</option-->
@@ -29,14 +29,21 @@ $count = mysqli_num_rows($re);
                             </select>
                         </div>
 
-                        <div class="col-6 col-sm-4" style="padding: 0px auto;margin-bottom:5px;">
+                        <div class="col-6 col-sm-3" style="padding: 0px auto;margin-bottom:5px;">
                             <label id="lab" class="form-label">Tipo de Grafica</label>
                             <select id="tipo" class="form-select" required>
                                 <option value="bar">Barra</option>
                                 <option value="line">Linea</option>
                             </select>
                         </div>
-                        <div class="col-12 col-sm-4">
+                        <div class="col-6 col-sm-3" style="padding: 0px auto;margin-bottom:5px;">
+                            <label id="" class="form-label">Ver por</label>
+                            <select id="ver" class="form-select" required>
+                                <option value="volumen">Volumen</option>
+                                <option value="cota">Cota</option>
+                            </select>
+                        </div>
+                        <div class="col-6 col-sm-3">
                             <label class="form-label">Periodo</label>
                             <select id="fe" class="form-select " style="padding: 0px auto; margin-bottom:5px;">
                                 <option value="Grafica_anio.php">Año</option>
@@ -47,7 +54,7 @@ $count = mysqli_num_rows($re);
                         </div>
                     </div>
                 </div>
-                <div id="contenedor" class="col-12" style="height:600px;"><canvas id="chart"></canvas></div>
+                <div id="contenedor" class="col-12 " style="height:600px;"><canvas id="chart" class="border border-radius-lg"></canvas></div>
                 <div class="col-12">
                     <div id="" class="row align-items-center">
 
@@ -114,6 +121,12 @@ $count = mysqli_num_rows($re);
 
 
         });
+        $("#ver").change(function() {
+
+            ajax();
+
+
+        });
         $("#grafica").click(function() {
 
             const x = document.querySelector("#chart");
@@ -147,12 +160,12 @@ $count = mysqli_num_rows($re);
                 case "Grafica_anio.php":
                     var fechaActual = new Date();
                     $("#formato").html('<div class="col-md-4"><label class="form-label">Año</label><select id="anio" class="form-control " style="padding: 0px auto; margin-bottom:5px;"><?php for ($i = 1980; $i <= date('Y'); $i++) {
-                    echo '<option value="' . $i . '"';
-                    if ($i == date('Y')) {
-                        echo 'selected';
-                    };
-                    echo '>' . $i . '</option>';
-                    };?></select></div></div>');
+                                                                                                                                                                                                echo '<option value="' . $i . '"';
+                                                                                                                                                                                                if ($i == date('Y')) {
+                                                                                                                                                                                                    echo 'selected';
+                                                                                                                                                                                                };
+                                                                                                                                                                                                echo '>' . $i . '</option>';
+                                                                                                                                                                                            }; ?></select></div></div>');
                     $("#anio").change(function() {
 
                         ajax();
@@ -219,12 +232,13 @@ $count = mysqli_num_rows($re);
             values.append("id_embalse", $("#embalses option:selected").val());
             values.append("tipo", $("#tipo option:selected").val());
             values.append("anio", $("#anio option:selected").val());
+            values.append("ver", $("#ver option:selected").val());
             //values.append("id_unidad", "");
             values.append("t", $("#tipo option:selected").val());
             values.append("mes", $("#mes").val());
             values.append("fecha1", $("#fecha1").val());
             values.append("fecha2", $("#fecha2").val());
-            console.log($("#fecha1").val());
+            //console.log($("#fecha1").val());
             values.append("semana", $("#semana option:selected").val());
 
             $.ajax({
