@@ -7,8 +7,33 @@
     $anio = $_POST['anio'];
     $mes = $_POST['mes'];
 
+    function buscarPosicion($array, $valorABuscar, $columna) {
+        //$columna = 'codigo'; // Columna en la que deseas buscar
+        $posicion = array_search($valorABuscar, array_column($array, $columna));
+        return $posicion !== false ? $posicion : -1;
+    }
+
+    //Solo se guardan los codigos que se pueden sumar
+    $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, concepto, uso, ce.id AS 'id_codigo_extraccion', IF(leyenda_sistema <> '', leyenda_sistema, concepto) AS 'name'
+            FROM tipo_codigo_extraccion tce, codigo_extraccion ce
+            WHERE tce.id = ce.id_tipo_codigo_extraccion AND 
+                ce.estatus = 'activo' AND 
+                tce.estatus = 'activo' AND
+                (tce.id = '1' OR tce.id = '2' OR tce.id = '3' OR tce.id = '4')
+            ORDER BY codigo ASC;";
+    $query_codigos = mysqli_query($conn, $sql);
+    $array_codigos_sql = array();
+
+    while($row = mysqli_fetch_array($query_codigos)){
+        $array_aux = [];
+        $array_aux['id_codigo_bd'] = $row['id_codigo_extraccion'];
+        $array_aux['codigo'] = $row['codigo'];
+        array_push($array_codigos_sql, $array_aux);
+    }
+
     $sql = "SELECT DISTINCT YEAR(fecha) AS 'anio'
             FROM datos_embalse
+            WHERE id_embalse = '$id_embalse' AND estatus = 'activo'
             ORDER BY anio DESC;";
     $query_anios = mysqli_query($conn, $sql);
 
@@ -109,7 +134,9 @@
                     for($j = 0 ; $j < count($extraccion_array) ; $j++) {
                         if($extraccion_array[$j] !== "") {
                             $fila = explode("&", $extraccion_array[$j]);
-                            $extraccion += $fila[1];
+
+                            if(buscarPosicion($array_codigos_sql, $fila[0], 'id_codigo_bd') !== -1)
+                                $extraccion += $fila[1];
                         }
                     }
 ?>
@@ -170,6 +197,6 @@
     //function sinDecimales(){}
 
     $("#anio, #mes").change(function(){
-        openModalHistory($("#id_embalse_aux").text(), $("#anio").val(), $("#mes").val());
+        openModalHistory($("#id_embalse_aux").text(), $("#nombre_embalse_aux").text(), $("#anio").val(), $("#mes").val());
     })
 </script>

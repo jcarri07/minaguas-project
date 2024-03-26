@@ -317,7 +317,7 @@
     ?>
                   <div class="row">
                     <div class="col">
-                      <label>Fecha</label>
+                      <label>Fecha (00)</label>
                       <div class="input-group mb-3">
                         <input type="date" class="form-control" name="fecha" id="fecha" value="<?php echo date("Y-m-d");?>" disabled required>
                       </div>
@@ -352,15 +352,15 @@
                       <div class="col">
                         <label>Código</label>
                         <div class="input-group mb-3">
-                          <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_1" required>
+                          <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_1" onchange="changeTipoExtraccion(this);" required>
                             <?php echo $options_extraccion;?>
                           </select>
                         </div>
                       </div>
                       <div class="col">
-                        <label>Valor (Hm<sup>3</sup>)</label>
+                        <label>Valor</label> <!-- (1000 m<sup>3</sup>)-->
                         <div class="input-group mb-3">
-                          <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor de la Extracción" required>
+                          <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" required>
                         </div>
                       </div>
                     </div>
@@ -368,7 +368,7 @@
 
                   <div class="row">
                     <div class="col-md-12 text-center" style="margin-top: 12px;">
-                        <button class="btn btn-success btn-add-extraccion" id="addRows" type="button">Añadir Otra Extracción</button>
+                        <button class="btn btn-success btn-add-extraccion" id="addRows" type="button">Añadir Otro</button>
                     </div>
                   </div>
 
@@ -543,17 +543,17 @@
       var htmlRows = "";
       htmlRows += '<div class="row">';
       htmlRows += '   <div class="col">';
-      htmlRows += '       <label>Tipo</label>';
+      htmlRows += '       <label>Código</label>';
       htmlRows += '       <div class="input-group mb-3">';
-      htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" required>';
+      htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" onchange="changeTipoExtraccion(this);" required>';
       htmlRows += "               <?php echo $options_extraccion;?>";
       htmlRows += '           </select>';
       htmlRows += '       </div>';
       htmlRows += '   </div>';
       htmlRows += '   <div class="col">';
-      htmlRows += '       <label>Valor (Hm<sup>3</sup>)</label>';
+      htmlRows += '       <label>Valor</label>';
       htmlRows += '       <div class="input-group mb-3">';
-      htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor de la Extracción" required>';
+      htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor" required>';
       htmlRows += '       </div>';
       htmlRows += '   </div>';
       htmlRows += '   <div class="col" style="flex: 0 0 0% !important;">';
@@ -568,6 +568,26 @@
     $(document).on('click', '#removeRow', function(){
       $(this).closest('.row').remove();
     });
+
+
+    function changeTipoExtraccion(select) {
+      //console.log(select.id);
+      var row = select.id.replace("tipo_extraccion_", "");
+      var value_select = select.value;
+      var label_valor = $("#valor_extraccion_" + row).parent().prev();
+
+      if(value_select == '' || value_select == '30' || value_select == '31') {
+        label_valor.text("Valor");
+        $("#valor_extraccion_" + row).attr("type", "text");
+      }
+      else {
+        label_valor.html("Valor (1000 m<sup>3</sup>)");
+        $("#valor_extraccion_" + row).attr("type", "number");
+      }
+
+      /*tipo_extraccion[i] = this.value;
+      valor_extraccion[i] = $("#valor_extraccion_" + row).val();*/
+    }
 
 
     function openModalAdd(id_embalse){
@@ -710,10 +730,10 @@
             }
             else{
               var string =  '<div class="col" style="font-size: 0.75em;">';
-              string +=       '<span>Capacidad o Volumen (02): <b>' + response[0][1] + ' hm<sup>3</sup></b></span>';
+              string +=       '<span>Capacidad o Volumen (02): <b>' + response[0][1] + ' 1000 m<sup>3</sup></b></span>';
               string +=     '</div>';
               string +=     '<div class="col small" style="font-size: 0.75em;">';
-              string +=       '<span>Área o Superficie (03): <b>' + response[0][0] + ' hm<sup>2</sup></b></span>';
+              string +=       '<span>Área o Superficie (03): <b>' + response[0][0] + ' 1000 m<sup>2</sup></b></span>';
               string +=     '</div>';
               
               $("#add .btn-submit").attr("disabled", false);
@@ -795,6 +815,7 @@
         var extraccion_aux = extraccion_array[i].split("&");
 
         this.value = extraccion_aux[0];
+        $(this).trigger("change");
         var row = this.id.replace("tipo_extraccion_", "");
         $("#valor_extraccion_" + row).val(extraccion_aux[1]);
 
@@ -930,29 +951,31 @@
         cache:          false,
         contentType:    false,
         processData:    false,
-        success: function(response){
+        success: function(response){ 
           $('#add-data-old .loaderParent').hide();
 
-          $("#opc_aux").text("");
-          $("#nombre_hoja_aux").text("");
+          
 
-          $("#hojas-excel").html(response);
-          iniciarTabla("hojas-excel-table");
-          /*if(response == 'si'){
-            $("#modal-generic .message").text("Registro exitoso");
-            $("#modal-generic .card-footer .btn-action").attr("onclick", "window.location.reload();");
-            $("#modal-generic").modal("show");
-          }
-          else{
-            if(response == "vacio"){
-              //alertify.warning("Datos vacíos o sin modificación.");
-                
+          if($("#opc_aux").text() == "importar_data") {
+            $("#opc_aux").text("");
+            $("#nombre_hoja_aux").text("");
+
+            console.log(response);
+            
+            if(response == 'si'){
+              $("#modal-generic .message").text("Registro exitoso");
+              $("#modal-generic .card-footer .btn-action").attr("onclick", "$('#add-data-old').modal('hide');");
+              $("#modal-generic").modal("show");
             }
             else{
               $("#modal-generic .message").text("Error al registrar");
               $("#modal-generic").modal("show");
-            } 
-          }*/
+            }
+          }
+          else{
+            $("#hojas-excel").html(response);
+            iniciarTabla("hojas-excel-table");
+          }
 
           //console.log(response);
         }

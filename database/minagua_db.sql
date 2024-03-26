@@ -1691,7 +1691,7 @@ CREATE TABLE datos_embalse (
 CREATE TABLE detalles_extraccion (
   id_detalles_extraccion INT AUTO_INCREMENT PRIMARY KEY,
   id_codigo_extraccion INT(11) NOT NULL,
-  extraccion FLOAT,
+  extraccion VARCHAR (255),
   id_registro INT,
   estatus VARCHAR(20) NOT NULL,
   FOREIGN KEY (id_registro) REFERENCES datos_embalse (id_registro)
