@@ -52,6 +52,12 @@ closeConection($conn);
 <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
 <style>
+
+  #embalse-mapa {
+    height: 100%;
+    width: 100%;
+  }
+
   @media(width >=2120px) {
 
     .embalse-info {
@@ -78,7 +84,7 @@ closeConection($conn);
 
   }
 
-  @media(width <= 2120px) {
+  @media(width <=2120px) {
 
     .embalse-info {
       width: auto;
@@ -95,7 +101,7 @@ closeConection($conn);
       height: 100%;
       border: 3px dashed lightgrey;
       /* width: 574.45px !important; */
-      width: 100%;
+      /* width: 100%; */
     }
 
     .embalse-batimetria {
@@ -104,7 +110,7 @@ closeConection($conn);
 
   }
 
-  @media(width <= 1478px) {
+  @media(width <=1478px) {
 
     .embalse-info {
       width: auto;
@@ -128,9 +134,40 @@ closeConection($conn);
       /* grid-row: span 2; */
     }
 
-    .embalse-datos{
+    .embalse-datos {
       order: -1;
       width: 100%;
+    }
+
+    /* .dataTables_wrapper{
+      background-color: red !important;
+      width: 80% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    } */
+
+    .pagination {
+      /* width: 80% !important; */
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media(width <= 1000px){
+    .card-flex{
+      flex-direction: column;
+    }
+  }
+
+  @media(width <=600px) {
+    .embalse-caracteristicas {
+      font-size: 12px;
+    }
+  }
+
+  @media(width <=550px) {
+    .embalse-caracteristicas {
+      font-size: 8px;
     }
 
   }
@@ -149,10 +186,7 @@ closeConection($conn);
     height: 100%;
   }
 
-  #embalse-mapa {
-    height: 100%;
-    width: 100%;
-  }
+
 
   canvas {
 
@@ -254,7 +288,7 @@ closeConection($conn);
             <div class="text-center" style="font-size: 32px;">
               <?php echo mb_strtoupper(mb_substr($embalse_datos["nombre_embalse"], 0), 'UTF-8') ?>
             </div>
-            <div class="w-100 d-flex gap-4">
+            <div class="w-100 d-flex gap-4 card-flex">
               <div class="w-100 h-100 rounded mini-card-info">
                 <div>
                   <span class="fw-bold" for="">Nombre de la presa:</span>
@@ -356,7 +390,7 @@ closeConection($conn);
             <div class="text-center" style="font-size: 30px;">
               Características del embalse
             </div>
-            <div class="w-full">
+            <div class="w-full embalse-caracteristicas">
               <div style="display: grid; grid-template-columns: 25% 25%; justify-content: end; justify-items:center;">
                 <div class="w-100 text-center b-l b-t">Diseño</div>
                 <div class="w-100 text-center b-l b-t b-r">Actual</div>
@@ -463,13 +497,15 @@ closeConection($conn);
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
 
+
+
   var tablas = $(".table-cota");
 
   for (let i = 0; i < tablas.length; i++) {
     console.log($(tablas[i])[0].id)
     // iniciarTabla($(tablas[i])[0].id);
     id = $(tablas[i])[0].id;
-    console.log("id: " + id)
+    console.log($(tablas[i]))
 
     $("#" + id).DataTable({
       dom: "<'top'<'d-flex align-items-center justify-content-between'f>>rt<'bottom'<'d-flex flex-column align-items-center'p>><'clear'>",
@@ -493,8 +529,10 @@ closeConection($conn);
           "previous": "Anterior"
         }
       },
+
     });
   }
+
   // var map = L.map('embalse-mapa').setView([8, -66], 6);
 
   // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
