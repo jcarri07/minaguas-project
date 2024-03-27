@@ -9,15 +9,19 @@ $prioritarios = [];
 $queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios';");
 if (mysqli_num_rows($queryPrioritarios) > 0) {
   $stringPrioritarios = mysqli_fetch_assoc($queryPrioritarios)['configuracion'];
-  var_dump($stringPrioritarios);
+  // var_dump($stringPrioritarios);
   $prioritarios = explode(",", $stringPrioritarios);
 }
 
 $embalsesPriotitarios = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse IN ($stringPrioritarios);");
 
-$queryInameh = mysqli_query($conn, "SELECT fecha_sequia, fecha_lluvia FROM configuraciones"); 
-$resultado = mysqli_fetch_assoc($queryInameh);
-
+$queryInameh = mysqli_query($conn, "SELECT nombre_config, configuracion FROM configuraciones WHERE nombre_config = 'fecha_sequia' OR nombre_config = 'fecha_lluvia';"); 
+$fechas = [];
+// $resultado = mysqli_fetch_assoc($queryInameh);
+while($resultado = mysqli_fetch_array($queryInameh)){
+  array_push($fechas, $resultado['configuracion']);
+}
+// var_dump($fechas);
 
 closeConection($conn);
 ?>
@@ -210,7 +214,7 @@ closeConection($conn);
                 <div style="text-align: center;">
                     <h5 class="mb-2">Fecha inicio época Seca:</h5>
                     <label>Fecha actual:</label>
-                    <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($resultado['fecha_sequia'])); ?>" id="fecha_actual_sequia" readonly> 
+                    <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($fechas[0])); ?>" id="fecha_actual_sequia" readonly> 
                     <label>Nueva fecha: </label>
                     <input type="date" class="form-control" style="width: 100%;" id="fecha_inameh_seca">
                 </div>
@@ -218,7 +222,7 @@ closeConection($conn);
                     <div style="text-align: center; margin-left: 80px; ">
                         <h5 class="mb-2">Fecha inicio época Lluvia:</h5>
                         <label>Fecha actual:</label>
-                        <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($resultado['fecha_lluvia'])); ?>" id="fecha_actual_lluvia" readonly>
+                        <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($fechas[1])); ?>" id="fecha_actual_lluvia" readonly>
                         <label>Nueva fecha: </label>
                         <input type="date" class="form-control" style="width: 100%;" id="fecha_inameh_lluvia">
                     </div>
@@ -433,7 +437,8 @@ closeConection($conn);
                 fecha_lluvia: fecha_lluvia }, 
                 
         success: function(response) {
-            console.log(response);
+            // console.log(response);
+            window.location.href = "?page=configuraciones";
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
