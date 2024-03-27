@@ -235,7 +235,19 @@ date_default_timezone_set("America/Caracas");
 
   .input-error::placeholder {
     color: #fc8383;
+  } 
+
+  .form-embalse{
+    position: relative;
   }
+
+  .boton-stikcy-save{
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+  }
+
+  
 </style>
 
 
@@ -902,7 +914,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
               </div> -->
 
-              <div class="text-center mt-5" style="margin: 0 auto;">
+              <div class="text-center mt-5 boton-stikcy-save" style="margin: 0 auto;">
                 <button id="submitFornBtn" type="submit" class="btn btn-primary" name="Guardar">Guardar embalse</button>
               </div>
           </form>

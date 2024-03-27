@@ -282,6 +282,16 @@ function formatoNumero($valor)
   .input-error::placeholder {
     color: #fc8383;
   }
+
+  .form-embalse {
+    position: relative;
+  }
+
+  .boton-stikcy-save {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+  }
 </style>
 
 
@@ -969,7 +979,7 @@ function formatoNumero($valor)
 
 
             <div class="row">
-              <div class="col-xl-6 col-lg-12 form-group">
+              <div class="col-xl-4 col-md-6 col-lg-12 form-group">
                 <label style="width: 100%;" for="imagen_uno">Ubicación relativa Estado/Municipio/Región hidrográfica<br>
                   <div style="width:100%; display:flex; justify-content:center;">
                     <div style="height: 250px; width:300px;" class="my-3"><img src="<?php echo $url_uno ?>" id="imagen_uno-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
@@ -980,7 +990,7 @@ function formatoNumero($valor)
                 </label>
                 <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_uno" name="imagen_uno" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
               </div>
-              <div class="col-xl-6 col-lg-12 form-group">
+              <div class="col-xl-4 col-md-6 col-lg-12 form-group">
                 <label style="width: 100%;" for="imagen_dos">Ubicación relativa de los componentes del embalse<br>
                   <div style="width:100%; display:flex; justify-content:center;">
                     <div style="height: 250px; width:300px;" class="my-3"><img src="<?php echo $url_dos ?>" id="imagen_dos-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
@@ -991,7 +1001,7 @@ function formatoNumero($valor)
                 </label>
                 <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_dos" name="imagen_dos" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
               </div>
-              <div class="col-xl-6 col-lg-12 form-group">
+              <div class="col-xl-4 col-md-6 col-lg-12 form-group">
                 <label style="width: 100%;" for="imagen_tres">Ubicación relativa de los componentes del embalse<br>
                   <div style="width:100%; display:flex; justify-content:center;">
                     <div style="height: 250px; width:300px;" class="my-3"><img src="<?php echo $url_tres ?>" id="imagen_tres-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
@@ -1028,7 +1038,7 @@ function formatoNumero($valor)
 
             <input style="display: none;" value="<?php echo $id_embalse ?>" type="text" class="form-control" id="id_embalse" name="id_embalse" placeholder="Ingrese el nomnbre del embalse">
 
-            <div class="text-center mt-5" style="margin: 0 auto;">
+            <div class="text-center mt-5 boton-stikcy-save" style="margin: 0 auto;">
               <button type="submit" class="btn btn-primary" name="Update">Editar embalse</button>
             </div>
         </form>
