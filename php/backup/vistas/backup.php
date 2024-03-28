@@ -19,7 +19,7 @@
                         <button type="button" onclick="alert('Te la creiste we 😂');" title="Descargar Respaldo" class="h6 py-1 btn mb-0 btn-outline-secondary btn-block border-2">
                             <i class="fa fa-hdd-o text-body opacity-10" style="font-size: 20px;"></i>
                             <span class="text-dark">
-                                Descargar Respaldo 
+                                Descargar Respaldo
                             </span>
                         </button>
                     </div>
