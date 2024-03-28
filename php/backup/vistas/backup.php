@@ -28,3 +28,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function respaldo(){
+        window.open('php/backup/modelos/backup-process.php', '_blank');
+    }
+</script>
