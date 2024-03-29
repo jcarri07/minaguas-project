@@ -52,13 +52,12 @@ closeConection($conn);
 <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
 <style>
-
   #embalse-mapa {
     height: 100%;
     width: 100%;
   }
 
-  @media(width >=2120px) {
+  @media(width >=1910px) {
 
     .embalse-info {
       width: auto;
@@ -74,7 +73,7 @@ closeConection($conn);
       /* height: 372.21px !important; */
       height: 100%;
       border: 3px dashed lightgrey;
-      width: 574.45px !important;
+      width: 500px !important;
       /* width: 100% !important; */
     }
 
@@ -84,7 +83,7 @@ closeConection($conn);
 
   }
 
-  @media(width <=2120px) {
+  @media(width < 1910px) {
 
     .embalse-info {
       width: auto;
@@ -110,7 +109,7 @@ closeConection($conn);
 
   }
 
-  @media(width <=1478px) {
+  @media(width <=1178px) {
 
     .embalse-info {
       width: auto;
@@ -151,17 +150,27 @@ closeConection($conn);
       display: flex;
       flex-wrap: wrap;
     }
-  }
 
-  @media(width <= 1000px){
-    .card-flex{
+    .card-flex {
       flex-direction: column;
     }
   }
 
-  @media(width <=600px) {
+  @media(width <=1100px) {
+    .card-flex {
+      flex-direction: column;
+    }
+  }
+
+  @media(width <=1376px) {
     .embalse-caracteristicas {
       font-size: 12px;
+    }
+  }
+
+  @media(width <=1276px) {
+    .embalse-caracteristicas {
+      font-size: 10px;
     }
   }
 
@@ -468,10 +477,12 @@ closeConection($conn);
           </div>
           <div class="embalse-card rounded p-3 d-flex flex-column justify-content-center">
             <!-- <div class="ct-chart ct-perfect-fourth" style="width: 100%; height: 100%"></div> -->
+            <div class="text-center text-sm text-dark">Volumenes - Embalse <?php echo $embalse_datos['nombre_embalse'] ?></div>
             <div class="chart-js" style="width: 100%; height: 90%">
               <canvas id="chart-vol">
 
               </canvas>
+              <?php include "php/Graficas/grafica_show_vol.php" ?>
             </div>
           </div>
           <input style="display: none;" type="text" name="" id="norte" value="<?php echo $embalse_datos['norte'] ?>">
@@ -529,7 +540,7 @@ closeConection($conn);
           "previous": "Anterior"
         }
       },
-
+      pagingType: 'simple',
     });
   }
 
@@ -593,40 +604,41 @@ closeConection($conn);
   //   }
   // });
 
+  ////////////////////////////////////////////////////////////////////GRAFICA
 
-  const ctx = document.getElementById('chart-vol');
+  // const ctx = document.getElementById('chart-vol');
 
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Diseño', 'Batimetría', 'Actual'],
-      datasets: [{
-        label: 'Volumenes',
-        data: [12, 19, 3],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        x: {
-          ticks: {
-            fonts: {
-              size: 18
-            }
-          }
-        },
-        y: {
-          ticks: {
-            fonts: {
-              size: 18
-            }
-          }
-        }
-      },
-      responsive: true,
-      mantainAspectRatio: false
-    }
-  });
+  // new Chart(ctx, {
+  //   type: 'bar',
+  //   data: {
+  //     labels: ['Diseño', 'Batimetría', 'Actual'],
+  //     datasets: [{
+  //       label: 'Volumenes',
+  //       data: [12, 19, 3],
+  //       borderWidth: 1
+  //     }]
+  //   },
+  //   options: {
+  //     scales: {
+  //       x: {
+  //         ticks: {
+  //           fonts: {
+  //             size: 18
+  //           }
+  //         }
+  //       },
+  //       y: {
+  //         ticks: {
+  //           fonts: {
+  //             size: 18
+  //           }
+  //         }
+  //       }
+  //     },
+  //     responsive: true,
+  //     mantainAspectRatio: false
+  //   }
+  // });
 
 
 
