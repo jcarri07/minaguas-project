@@ -156,9 +156,7 @@ $cot = 0;
 
 ?>
 
-<script>
-
-</script><?php
+<?php
             for ($k = $numeroSemana; $k < $semanas; $k++) {
                 if (isset($datos1[$i]['semana'])) {
                     if ($k == ($datos1[$i]['semana'])) {
