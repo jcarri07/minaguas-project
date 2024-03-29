@@ -116,6 +116,7 @@ e.nombre_embalse, (SELECT MAX(cota_actual)
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
         <script src="../../assets/js/Chart.js"></script>
         <script src="../../assets/js/chartjs-plugin-datalabels@2.js"></script>
         <!--script src="../../assets/js/date-fns.js"></script-->
@@ -135,6 +136,7 @@ e.nombre_embalse, (SELECT MAX(cota_actual)
             <div style="width:900px !important; height:300px;"><canvas id="chart" class="border border-radius-lg"></canvas></div>
             <div style="width:900px !important; height:300px;"><canvas id="barra1" class="border border-radius-lg"></canvas></div>
             <div style="width:900px !important; height:300px;"><canvas id="barra2" class="border border-radius-lg"></canvas></div>
+            <div style="width:900px !important; height:300px;"><canvas id="abastecimiento" class="border border-radius-lg"></canvas></div>
 
         </div>
         <!-- <div class="loaderPDF">
@@ -270,7 +272,7 @@ e.nombre_embalse, (SELECT MAX(cota_actual)
                             echo "'" . $colores[$j] . "',";
                             $j--;
                         }
-                        echo "'".$colores[3]."']},";
+                        echo "'" . $colores[3] . "']},";
 
 
                         ?>
@@ -325,6 +327,30 @@ e.nombre_embalse, (SELECT MAX(cota_actual)
                             },
                         },
                     },
+                    scales: {
+
+                        x: {
+
+                            ticks: {
+
+                                font: {
+                                    weight: 'bold',
+                                    size: 12,
+                                },
+                            },
+                        },
+
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Volumen (Hm³)',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14,
+                                },
+                            },
+                        },
+                    },
 
                 },
                 plugins: [ChartDataLabels],
@@ -336,7 +362,7 @@ e.nombre_embalse, (SELECT MAX(cota_actual)
                 title: 'grafica',
 
                 data: {
-                    labels: ["Volumen Útil total(VUT)", "Volumen Disponible Actual", "Volumen Disponible <?php echo $fecha1; ?>", "Variacion de Volumen Hasta Hoy"],
+                    labels: ["Volumen Útil total(VUT)", "Volumen Disponible Actual", "Volumen Disponible <?php echo $fecha2; ?>", "Variacion de Volumen Hasta Hoy"],
                     datasets: [
 
                         <?php
@@ -410,6 +436,135 @@ e.nombre_embalse, (SELECT MAX(cota_actual)
                                 },
                             },
                         },
+                    },
+                    scales: {
+
+                        x: {
+
+                            ticks: {
+
+                                font: {
+                                    weight: 'bold',
+                                    size: 12,
+                                },
+                            },
+                        },
+
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Volumen (Hm³)',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14,
+                                },
+                            },
+                        },
+                    },
+
+                },
+                plugins: [ChartDataLabels],
+
+            });
+
+            let abas = new Chart(abastecimiento, {
+                type: 'pie',
+                title: 'grafica',
+
+                data: {
+                    labels: ["Baja", "Normal baja", "Normal alta", "Buena y muy buena"],
+                    datasets: [
+
+                        <?php
+                        $j = 0;
+                        $pivote = $anio;
+                        echo '{
+                            
+                            label:"Dato",
+                            data:[';
+                        while ($j < count($lista)) {
+
+                            echo $lista[$j];
+                            $j++;
+                            if ($j < count($lista)) {
+                                echo ",";
+                            };
+                        };
+                        echo "],
+                        backgroundColor:[";
+                        $j = 0;
+                        while ($j < count($colores)) {
+                            echo "'" . $colores[$j] . "'";
+                            $j++;
+                            if ($j < count($colores)) {
+                                echo ",";
+                            };
+                        }
+                        echo "]},";
+
+
+                        ?>
+
+
+
+
+                    ],
+                },
+
+                options: {
+                    animations: true,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        intersect: true,
+                        axis: 'x',
+                    },
+                    layout: {
+                        padding: 20,
+                    },
+                    plugins: {
+
+                        legend: {
+                            position: 'bottom',
+
+                            labels: {
+                                padding: 25,
+                                display: true,
+                                // This more specific font property overrides the global property
+                                font: {
+                                    weight: 'bold',
+                                    size: 12,
+                                },
+
+                            }
+                        },
+                        title: {
+                            display: false,
+                            text: 'Embalse',
+                            fullSize: true,
+                            font: {
+                                size: 30
+                            }
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            formatter: ((value, ctx) => {
+                                const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
+                                    return accumulator + currentValue
+                                }, 0);
+                                porcentaje = value / totalSum * 100
+                                return `${porcentaje.toFixed(1)}%`;
+                            }),
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                        }
+
                     },
 
                 },
