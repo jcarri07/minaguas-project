@@ -8,6 +8,7 @@ $count = mysqli_num_rows($re);
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="./assets/js/html2canvas.min.js"></script>
+<link href="./assets/css/style-spinner.css" rel="stylesheet" />
 
 <div class="container-fluid py-4">
     <div class="row">
@@ -228,6 +229,7 @@ $count = mysqli_num_rows($re);
 
         function ajax() {
 
+            $("#contenedor").html('<div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
             var values = new FormData();
             values.append("id_embalse", $("#embalses option:selected").val());
             values.append("tipo", $("#tipo option:selected").val());

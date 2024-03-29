@@ -82,11 +82,12 @@ if ($count >= 1) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
             <script src="../../assets/js/Chart.js"></script>
             <!--script src="../../assets/js/date-fns.js"></script-->
             <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <script type="text/javascript" src="../../assets/js/jquery/jquery.min.js"></script>
             <script src="../../assets/js/html2canvas.min.js"></script>
             <link href="../../assets/css/style-spinner.css" rel="stylesheet" />
 
@@ -236,6 +237,7 @@ const arbitra = {
                                     label: '<?php echo $nom[1] ?>',
                                     borderColor: '#e4c482',
                                     backgroundColor: '#e4c482',
+                                    pointRadius: 0,
                                     data: [
                                         <?php
                                         $j = 0;
@@ -413,7 +415,7 @@ const arbitra = {
                                     label: '<?php echo $nom[0] ?>',
                                     borderColor: '#36a1eb',
                                     backgroundColor: '#36a1eb',
-                                    pointRadius: 5,
+                                    
                                     data: [<?php
                                             $j = 0;
                                             $pivote = date("Y");
@@ -630,7 +632,7 @@ const arbitra = {
                                     label: '<?php echo $nom[0]; ?>',
                                     borderColor: '#36a1eb',
                                     backgroundColor: '#36a1eb',
-                                    pointRadius: 5,
+                                    
                                     data: [<?php
                                             $j = 0;
                                             $pivote = date("Y");

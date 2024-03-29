@@ -27,6 +27,10 @@ date_default_timezone_set("America/Caracas");
 <!DOCTYPE html>
 <html lang="en">
 
+<div class="container-loader">
+  <div class="loader"></div>
+</div>
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -48,7 +52,7 @@ date_default_timezone_set("America/Caracas");
   <!-- CSS Files -->
   <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="./assets/js/jquery/jquery.min.js"></script>
 
   <!--DataTables-->
   <link href="vendor/datatables/css/datatables.min.css" rel="stylesheet">
@@ -80,16 +84,18 @@ date_default_timezone_set("America/Caracas");
     top: -100%;
     left: -100%;
   }
+
+  
 </style>
 
 <body class="g-sidenav-show  bg-gray-100">
   <div class="map-no-visible" id="mapa">
     <div class="relative" id="map">
-      </div>
-      <a href="" id="close-map"><i style="font-size: 40px; color:black;" class="fa fa-window-close"></i></a>
+    </div>
+    <a href="" id="close-map"><i style="font-size: 40px; color:black;" class="fa fa-window-close"></i></a>
   </div>
 
-  <div class="min-height-300 bg-primary position-absolute w-100"></div>
+  <div class="min-height-300 bg-primary position-absolute w-100 rectangle-back"></div>
   <?php include './pages/sidebar.php'; ?>
   <!-- <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
     <div class="sidenav-header">
@@ -186,6 +192,7 @@ date_default_timezone_set("America/Caracas");
     </div>
   </aside> -->
   <main class="main-content position-relative border-radius-lg h-100">
+
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
       <div class="container-fluid py-1 px-0">
