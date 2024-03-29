@@ -52,7 +52,7 @@ date_default_timezone_set("America/Caracas");
   <!-- CSS Files -->
   <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="./assets/js/jquery/jquery.min.js"></script>
 
   <!--DataTables-->
   <link href="vendor/datatables/css/datatables.min.css" rel="stylesheet">
