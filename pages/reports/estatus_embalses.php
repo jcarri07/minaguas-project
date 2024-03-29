@@ -205,6 +205,7 @@ $mapa = "../../assets/img/estatus_embalses.png";
     }
 
     .text-celd {
+        vertical-align: middle; 
         width: 150px;
         text-align: center;
         font-size: 16px;
@@ -221,6 +222,20 @@ $mapa = "../../assets/img/estatus_embalses.png";
         border: 1px solid #707273;
 
        
+    }
+
+    .celd-table {
+        vertical-align: middle; 
+        width: 80px;
+        text-align: center;
+        font-size: 14px;
+        border: 1px solid #707273;
+    }
+
+    .text-big{
+        height: 100px;
+        font-size: 16px;
+        vertical-align: middle; 
     }
 
     .total{
@@ -698,7 +713,335 @@ $mapa = "../../assets/img/estatus_embalses.png";
       </div>
 
       <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo "$dia_actual DE " . getMonthName()?></h4>
+<!-- PAGINA 9 -->
 
+        <div style="page-break-before: always;"></div>
+        <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 500px;"><b>HIDROCAPITAL</b>
+      </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 85px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+      </div>
+
+        <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px;">
+        </div>
+
+        <div style="width: 520px; height: 320px; background-color: lightgray; position: absolute; margin-top: 120px; margin-left: 560px;">
+        </div>
+        
+        <div style="position: absolute; margin-top: 430px; margin-left: 10px; width: 95%; height: 100px;">
+        <div style="position: absolute; font-size: 18px; text-align: right;"> <b>FECHA</b>
+        <table>
+        <tr>
+          <th class="text-celd">EMBALSE</th>
+          <th class="text-celd">VAR. VOL. <br>(HM3)</th>
+          <th class="text-celd">% VAR. VOL.</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        </tr>
+      </table>
+             
+        </div>
+
+        <div style="position: absolute; margin-left: 550px; font-size: 18px; text-align: right;"><b>FECHA</b>
+        <table>
+        <tr>
+          <th class="text-celd">EMBALSE</th>
+          <th class="text-celd">VAR. VOL. <br>(HM3)</th>
+          <th class="text-celd">% VAR. VOL.</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        </tr>
+      </table>
+
+        </div>  
+        </div>
+<!-- PAGINA 10 -->
+
+<div style="page-break-before: always;"></div>
+        <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 55px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+      </div>
+
+        <div style="position: absolute; margin-top: 100px; margin-left: 10px; width: 95%; height: 100px;">
+
+        <div style="position: absolute; font-size: 18px; text-align: right;"> <b> HIDROBOLÍVAR  DESDE EL FECHA</b></div>
+        <div style="width: 520px; height: 520px; background-color: lightgray; margin-top: 50px; margin-left: 10px;">
+        </div>
+
+    
+        <div style="position: absolute; margin-left: 550px; font-size: 18px; text-align: right; margin-top: 50px;">
+        <table>
+        <tr>
+          <th class="text-celd text-big">EMBALSE</th>
+          <th class="text-celd text-big">VAR. VOL. <br><br><br> (HM3)</th>
+          <th class="text-celd text-big">% VAR. VOL.</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px; height: 50px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+
+        <tr>
+        <td class="text-celd" style="font-size: 12px; height: 50px;"><b>TOTAL</b></td>
+        <td class="text-celd" style="font-size: 12px;"><b>PRUEBA</b></td>
+        <td class="text-celd" style="font-size: 12px;"><b>PRUEBA</b></td>
+        </tr>
+
+      </table>
+
+    
+        </div>  
+        </div>
+
+   <!-- PAGINA 11 -->
+   
+        <div style="page-break-before: always;"></div>
+        <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 500px;"><b>HIDROCENTRO</b>
+      </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 85px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+      </div>
+
+        <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px;">
+        </div>
+
+        <div style="width: 520px; height: 320px; background-color: lightgray; position: absolute; margin-top: 120px; margin-left: 560px;">
+        </div>
+        
+        <div style="position: absolute; margin-top: 430px; margin-left: 10px; width: 95%; height: 100px;">
+        <div style="position: absolute; font-size: 18px; text-align: right;"> <b>FECHA</b>
+        <table>
+        <tr>
+          <th class="text-celd" rowspan="2">EMBALSE</th>
+          <th class="text-celd" colspan="2">DESDE fecha</th>
+        </tr>
+        <tr>
+          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(HM3)</th>
+          <th class="text-celd" rowspan="">% VAR. <br> VOL.</th>
+        </tr>
+ <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        </tr>
+
+      </table>
+             
+        </div>
+
+        <div style="position: absolute; margin-left: 550px; font-size: 18px; text-align: right;"><b>FECHA</b>
+        <table>
+        <tr>
+          <th class="text-celd" rowspan="2">EMBALSE</th>
+          <th class="text-celd" colspan="2">DESDE fecha</th>
+        </tr>
+        <tr>
+          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(HM3)</th>
+          <th class="text-celd" rowspan="">% VAR. <br> VOL.</th>
+        </tr>
+
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+
+        <tr>
+        <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        </tr>
+
+       
+      </table>
+
+        </div>  
+        </div>
+<!-- PAGINA 12 -->
+
+<div style="page-break-before: always;"></div>
+        <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 500px;"><b>HIDROPÁEZ</b>
+      </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 85px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+      </div>
+
+        <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px; text-align: right; font-size: 18px;"><b>FECHA</b>
+        </div>
+
+        <div style="width: 520px; height: 320px; background-color: lightgray; position: absolute; margin-top: 120px; margin-left: 560px; text-align: right; font-size: 18px;"><b>FECHA</b>
+        </div>
+        
+        <div style="position: absolute; margin-top: 430px; margin-left: 10px; width: 95%; height: 100px;">
+        <div style="position: absolute; margin-top: 30px;">
+        <table>
+        <tr>
+          <th class="text-celd">EMBALSE</th>
+          <th class="text-celd">VAR. VOL. <br> (HM3)</th>
+          <th class="text-celd">% VAR. VOL.</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        </tr>
+      </table>
+             
+        </div>
+
+        <div style="position: absolute; margin-left: 550px; margin-top: 30px;">
+        <table>
+        <tr>
+          <th class="text-celd">EMBALSE</th>
+          <th class="text-celd">VAR. VOL. <br> (HM3)</th>
+          <th class="text-celd">% VAR. VOL.</th>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+        </tr>
+      </table>
+
+        </div>  
+        </div>
+   <!-- PAGINA 11 -->
+   
+   <div style="page-break-before: always;"></div>
+        <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+
+        <div style="width: 520px; height: 320px; background-color: lightgray;  position: absolute; margin-top: 80px; margin-left: 10px; text-align: right; font-size: 18px;"><b>FECHA</b>
+        </div>
+
+        <div style="width: 520px; height: 320px; background-color: lightgray; position: absolute; margin-top: 420px; margin-left: 10px; text-align: right; font-size: 18px;"><b>FECHA</b>
+        </div>
+        
+        <div style="width: 520px; height: 320px; position: absolute; margin-top: 80px; margin-left: 550px;">
+    <table>
+        <tr>
+        <th class="celd-table" colspan="5">HIDROLAGO</th>
+        </tr>
+        <tr>
+        <th class="celd-table" rowspan="2">EMBALSE</th>
+        <th style="font-size: 12px" colspan="2">DESDE 05/ENE/2023</th>
+        <th style="font-size: 12px" colspan="2">DESDE 01/JUN/2023</th>
+        </tr>
+        <tr>
+        <th class="celd-table" >VAR. VOL. <br>(HM3)</th>
+        <th class="celd-table" >% VAR. VOL.</th>
+        <th class="celd-table" >VAR. VOL. <br>(HM3)</th>
+        <th class="celd-table" >% VAR. VOL.</th>
+        </tr>
+        <tr>
+        <td class="" style="font-size: 12px; width= 10px">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="" style="font-size: 12px;"><b>TOTAL</b></td>
+        <td class="" style="font-size: 12px;"><b>PRUEBA</b></td>
+        <td class="" style="font-size: 12px;"><b>PRUEBA</b></td>
+        <td class="" style="font-size: 12px;"><b>PRUEBA</b></td>
+        <td class="" style="font-size: 12px;"><b>PRUEBA</b></td>
+        </tr>
+      </table>
+             
+        </div>
+   
+        <div style="position: absolute; margin-top: 420px; margin-left: 10px; width: 95%; height: 100px;">
+
+        <div style="position: absolute; margin-left: 540px; font-size: 18px; text-align: right;">
+        <table>
+        <tr>
+        <th class="celd-table" colspan="5">FALCÓN</th>
+        </tr>
+        <tr>
+        <th class="celd-table" rowspan="2">EMBALSE</th>
+        </tr>
+        <tr>
+        <th class="celd-table" >VAR. VOL. <br>(HM3)</th>
+        <th class="celd-table" >% VAR. VOL.</th>
+        <th class="celd-table" >VAR. VOL. <br>(HM3)</th>
+        <th class="celd-table" >% VAR. VOL.</th>
+        </tr>
+        <tr>
+        <td class="" style="font-size: 12px; width= 10px">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="" style="font-size: 12px;"><b>TOTAL</b></td>
+        <td class="" style="font-size: 12px;"><b>PRUEBA</b></td>
+        <td class="" style="font-size: 12px;"><b>PRUEBA</b></td>
+        <td class="" style="font-size: 12px;"><b>PRUEBA</b></td>
+        <td class="" style="font-size: 12px;"><b>PRUEBA</b></td>
+        </tr>
+      </table>
+        </div>  
+        </div>
 
     </body>
 

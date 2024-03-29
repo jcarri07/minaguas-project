@@ -117,6 +117,7 @@ if (isset($_POST["fecha_seca"]) && isset($_POST["fecha_lluvia"])) {
     $nueva_fecha_seca = date("Y-m-d", strtotime($nueva_fecha_seca));
     $nueva_fecha_lluvia = date("Y-m-d", strtotime($nueva_fecha_lluvia));
 
+
     $peri_seco = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'fecha_sequia'");
     if (mysqli_num_rows($peri_seco) > 0) {
         mysqli_query($conn, "UPDATE configuraciones SET configuracion = '$nueva_fecha_seca' WHERE nombre_config = 'fecha_sequia';");
@@ -130,7 +131,6 @@ if (isset($_POST["fecha_seca"]) && isset($_POST["fecha_lluvia"])) {
     }else {
         mysqli_query($conn, "INSERT INTO configuraciones (nombre_config, configuracion) VALUES ('fecha_lluvia', '$nueva_fecha_lluvia')");
     }
-
 
     // if ($resultado) {
     //     // header("Location: ../main.php?page=configuraciones");
