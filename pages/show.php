@@ -280,10 +280,113 @@ closeConection($conn);
   background-color: blue;
   height: 100vh;
 }  */
+
+  /* HTML: <div class="loader"></div> */
+
+  html {
+    position: relative;
+  }
+
+  .container-loader {
+    width: 100%;
+    height: 120vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+    background-color: #596CFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .container-loader.show {
+    opacity: 0;
+  }
+
+  .rectangle-back{
+    /* display: none; */
+  }
+
+  /* HTML: <div class="loader"></div> */
+  /* HTML: <div class="loader"></div> */
+  .loader {
+    font-size: 10px;
+    margin: 50px auto;
+    text-indent: -9999em;
+    width: 11em;
+    height: 11em;
+    border-radius: 50%;
+    background: #ffffff;
+    background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    position: relative;
+    -webkit-animation: load3 1.4s infinite linear;
+    animation: load3 1.4s infinite linear;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  .loader:before {
+    width: 50%;
+    height: 50%;
+    background: #ffffff;
+    border-radius: 100% 0 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+  }
+
+  .loader:after {
+    background: #0dc5c1;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    content: '';
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  @-webkit-keyframes load3 {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes load3 {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
 </style>
 
-<div class="container-fluid container-show py-4">
 
+
+<div id="container-fluid" class="container-fluid container-show py-4">
   <div class="row card-show">
     <div class="col-lg-12">
       <div class="card h-100 ">
@@ -478,7 +581,7 @@ closeConection($conn);
           <div class="embalse-card rounded p-3 d-flex flex-column justify-content-center">
             <!-- <div class="ct-chart ct-perfect-fourth" style="width: 100%; height: 100%"></div> -->
             <div class="text-center text-sm text-dark">Volumenes - Embalse <?php echo $embalse_datos['nombre_embalse'] ?></div>
-            <div class="chart-js" style="width: 100%; height: 90%">
+            <div class="chart-js" style="width: 100%; height: 80%">
               <canvas id="chart-vol">
 
               </canvas>
@@ -540,7 +643,7 @@ closeConection($conn);
           "previous": "Anterior"
         }
       },
-      pagingType: 'simple',
+      pagingType: 'full',
     });
   }
 
@@ -647,5 +750,31 @@ closeConection($conn);
   // iniciarTabla('table-embalses');
   //   if ($("#table-embalses-eliminados")) {
   //     iniciarTabla('table-embalses-eliminados');
+
+  function autoScrollToDiv() {
+    var targetElement = document.getElementById('container-fluid');
+    var targetOffsetTop = targetElement.offsetTop;
+
+    // Desplazarse al div de destino
+    window.scrollTo({
+      top: targetOffsetTop,
+      behavior: 'smooth' // Desplazamiento suave
+    });
+  }
+
+  // Llamar a la función de auto scroll después de que la página se haya cargado completamente
+  window.onload = function() {
+    autoScrollToDiv();
+    var loader = document.querySelector('.loader');
+    var loader2 = document.querySelector('.container-loader');
+    var container = document.querySelector('.container-loader');
+
+    // Agregar la clase 'show' para mostrar el loader
+    container.classList.add('show');
+    setTimeout(function() {
+      loader.classList.remove('loader');
+      loader2.classList.remove('container-loader');
+    }, 1000);
+  };
   //   }
 </script>
