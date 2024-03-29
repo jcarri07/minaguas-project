@@ -61,19 +61,19 @@ ORDER BY id_embalse ASC;");
                                     $max = $bati->volumenMaximo();
                                     $nor = $bati->volumenNormal();
 
-                                    if ($x == 0 || ((abs(($x - $min)) * (100 / ($max - $min))) >= 0 && (abs(($x - $min)) * (100 / ($max - $min))) <= 30)) {
+                                    if ($x == 0 || ((abs(($x - $min)) * (100 / ($max - $min))) >= 0 && (abs(($x - $min)) * (100 / ($max - $min))) < 30)) {
                                         echo "#fd0200',";
                                     }; //rojo
-                                    if ((abs(($x - $min)) * (100 / ($max - $min))) > 30 && (abs(($x - $min)) * (100 / ($max - $min))) <= 60) {
+                                    if ((abs(($x - $min)) * (100 / ($max - $min))) >= 30 && (abs(($x - $min)) * (100 / ($max - $min))) < 60) {
                                         echo "#72dffd',";
                                     }; //anaranjado
                                     /*if ((abs(($x - $min)) * (100 / ($max - $min))) > 35 && (abs(($x - $min)) * (100 / ($max - $min))) <= 45) {
                                         echo "#f1d710',";
                                     };*/ //amarillo
-                                    if ((abs(($x - $min)) * (100 / ($max - $min))) > 60 && (abs(($x - $min)) * (100 / ($max - $min))) <= 90) {
+                                    if ((abs(($x - $min)) * (100 / ($max - $min))) >= 60 && (abs(($x - $min)) * (100 / ($max - $min))) < 90) {
                                         echo "#0066eb',";
                                     }; //verde
-                                    if ((abs(($x - $min)) * (100 / ($max - $min))) > 90 && (abs(($x - $min)) * (100 / ($max - $min))) <= 100) {
+                                    if ((abs(($x - $min)) * (100 / ($max - $min))) >= 90 && (abs(($x - $min)) * (100 / ($max - $min))) <= 100) {
                                         echo "#3ba500',";
                                     }; //azul
                                     if ((abs(($x - $min)) * (100 / ($max - $min))) > 100) {
