@@ -104,6 +104,20 @@
                         </select>
                     </div>
                 </div>
+<?php
+                if($anio != ""){
+?>
+                <div class="row">
+                    <div class="col text-center">
+                        <button class="btn btn-primary px-3" data-bs-dismiss="modal" onclick="openModalParametrosAnio();">
+                            <i class="fas fa-info-circle" title="Detalles" aria-hidden="true"></i>
+                            Detalles y Parámetros de Reportes (Año <?php echo $anio;?>)
+                        </button>
+                    </div>
+                </div>
+<?php
+                }
+?>
 
 
                 <div class="table-responsive">
