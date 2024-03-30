@@ -309,7 +309,7 @@ date_default_timezone_set("America/Caracas");
   }
 
   function getIdEstatus() {
-    window.open('pages/reports/print_estatus_embalses.php', '_blank');
+    window.open('php/Graficas/graficas_estatus.php', '_blank');
   }
 
   function getIdTacariguas() {

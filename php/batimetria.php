@@ -91,6 +91,9 @@ class Batimetria
 
     public function getByCota($año, $cota)
     {
+        if ($cota == null) {
+            return 0;
+        }
         $año = $this->getCloseYear($año);
         $cota = number_format(floatval($cota), 3, ".", "");
         // return (array_key_exists((string)$cota, $this->batimetria[$año])) ? explode("-", $this->batimetria[$año][(string)$cota]) : $this->getCloseCota($this->batimetria[$año], $cota, 0.001);
@@ -281,19 +284,22 @@ class Batimetria
     public function volumenDisponibleOriginal()
     {
 
-            if ($this->vol_nor == "" || $this->vol_min == "") {
-                return 0;
-            }else{
-                return $this->vol_nor - $this->vol_min;
-            }
+        if ($this->vol_nor == "" || $this->vol_min == "") {
+            return 0;
+        } else {
+            return $this->vol_nor - $this->vol_min;
+        }
     }
 
     public function volumenDisponibleByCota($año, $cota)
     {
+        if ($cota == null) {
+            return 0;
+        }
         if ($this->batimetria != "") {
             return $this->getByCota($año, $cota)[1] - $this->volumenMinimo();
         } else {
-            return "0";
+            return 0;
         }
     }
 
@@ -302,11 +308,13 @@ class Batimetria
         if ($this->ultima_carga != "" && $this->batimetria != "") {
             return $this->getByCota($this->ultima_carga[0], $this->ultima_carga[1])[1] - $this->volumenMinimo();
         } else {
-            return $this->volumenDisponible();
+            // return $this->volumenDisponible();
+            return 0;
         }
     }
 
-    public function getEmbalse(){
+    public function getEmbalse()
+    {
         return $this->embalse;
     }
 
