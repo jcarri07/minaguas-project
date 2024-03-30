@@ -21,10 +21,10 @@ $año = $anio;
 $ver = $_POST['ver'];
 
 if ($tipo == "bar") {
-    $aux = "SELECT id_registro, d.fecha, MAX(d.hora) AS hora, (SELECT MAX(cota_actual) 
-                                                                FROM datos_embalse 
-                                                                WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual
-            FROM datos_embalse d
+    $aux = "SELECT id_registro, d.fecha, (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora, (SELECT cota_actual 
+    FROM datos_embalse 
+    WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
+FROM datos_embalse d, embalses e 
             WHERE d.estatus = 'activo' AND d.id_embalse = '$id' AND (d.fecha BETWEEN '$fecha1' AND '$fecha2')
             GROUP BY d.fecha
             ORDER BY d.fecha, d.hora DESC;";
