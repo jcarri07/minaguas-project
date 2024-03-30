@@ -209,7 +209,7 @@ date_default_timezone_set("America/Caracas");
           <p class="mb-0" style="color: white;">
             Copyright © <script>
               document.write(new Date().getFullYear())
-            </script> Desarrollado por la Dirección de Investigación e Innovación Espacial - ABAEsss.
+            </script> Desarrollado por la Dirección de Investigación e Innovación Espacial - ABAE.
           </p>
         </div>
       </div>
