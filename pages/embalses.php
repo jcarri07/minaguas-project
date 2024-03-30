@@ -28,7 +28,7 @@ while ($row = mysqli_fetch_array($queryUsers)) {
 // $embalseBat = new Batimetria(10, $conn);
 // $volumen_normal = $embalseBat->volumenNormal();
 // $volumen_minimo = $embalseBat->volumenMinimo();
-// $volumen_cota = $embalseBat->volumenDisponibleByCota("2024", "33.40");
+// $volumen_cota = $embalseBat->volumenDisponibleByCota("2024", null);
 
 // $cota = implode("-",$embalseBat->getByCota("2024","268.455"));
 // $minima = $embalseBat->cotaMinima();
@@ -155,7 +155,7 @@ closeConection($conn);
         <div class="card-header pb-0">
           <!-- <div class="row"> -->
           <!-- <div class="col-6 d-flex align-items-center"> -->
-          <h6 class="">Embalses</h6>
+          <h6 class="">Embalses <?php echo "" ?></h6>
           <!-- </div> -->
           <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
