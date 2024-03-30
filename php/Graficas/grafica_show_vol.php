@@ -1,4 +1,6 @@
 <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<script src="./assets/js/chartjs-plugin-datalabels@2.js"></script>
+
 
 <?php
 
@@ -34,11 +36,25 @@ $vol_actual = $embalse->volumenActualDisponible();
                 }]
             },
             options: {
+                layout: {
+                    padding: 20,
+                },
                 plugins: {
                     legend: {
                         display: false,
                         labels: {
                             display: false
+                        },
+                    },
+                    datalabels: {
+                        anchor: 'start',
+                        align: 'end',
+                        labels: {
+                            title: {
+                                font: {
+                                    weight: 'bold'
+                                }
+                            },
                         },
                     },
                 },
@@ -64,7 +80,8 @@ $vol_actual = $embalse->volumenActualDisponible();
                     mode: 'nearest',
                     intersect: true
                 },
-            }
+            },
+            plugins: [ChartDataLabels],
         });
     });
 </script>
