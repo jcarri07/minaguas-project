@@ -235,19 +235,17 @@ date_default_timezone_set("America/Caracas");
 
   .input-error::placeholder {
     color: #fc8383;
-  } 
+  }
 
-  .form-embalse{
+  .form-embalse {
     position: relative;
   }
 
-  .boton-stikcy-save{
+  .boton-stikcy-save {
     position: fixed;
     bottom: 100px;
     left: 50%;
   }
-
-  
 </style>
 
 
@@ -1441,6 +1439,14 @@ date_default_timezone_set("America/Caracas");
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
+  // L.tileLayer('https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey={apikey}', {
+  //   maxZoom: 19,
+  //   attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.thunderforest.com/transport/">Andy Allan</a>',
+  //   apikey: '38db809be13a400c8c5061e304ba99cd' // Reemplaza esto con tu clave de API de Thunderforest
+  // }).addTo(map);
+
+  // <iframe width="425" height="350" src="https://www.openstreetmap.org/export/embed.html?bbox=-104.0625%2C-11.910353555774101%2C-30.673828125000004%2C24.80668135385199&amp;layer=transportmap" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/#map=5/6.796/-67.368&amp;layers=T">Ver el mapa más grande</a></small>
+
   var marker;
 
   map.on('click', function(e) {
@@ -1476,7 +1482,7 @@ date_default_timezone_set("America/Caracas");
     var zonaUTM = Math.floor((longitud + 180) / 6) + 1;
     proj4.defs("EPSG:326" + zonaUTM, "+proj=utm +zone=" + zonaUTM + " +datum=WGS84 +units=m +no_defs");
     var coordenadasUTM = proj4("EPSG:4326", "EPSG:326" + zonaUTM, [longitud, latitud]);
-    
+
     var norte = coordenadasUTM[1];
     var este = coordenadasUTM[0];
     var huso = zonaUTM;

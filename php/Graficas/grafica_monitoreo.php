@@ -156,9 +156,7 @@ $cot = 0;
 
 ?>
 
-<script>
-
-</script><?php
+<?php
             for ($k = $numeroSemana; $k < $semanas; $k++) {
                 if (isset($datos1[$i]['semana'])) {
                     if ($k == ($datos1[$i]['semana'])) {
@@ -192,11 +190,12 @@ $cot = 0;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
     <script src="../../assets/js/Chart.js"></script>
     <!--script src="../../assets/js/date-fns.js"></script-->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../../assets/js/jquery/jquery.min.js"></script>
     <script src="../../assets/js/html2canvas.min.js"></script>
     <link href="../../assets/css/style-spinner.css" rel="stylesheet" />
 

@@ -274,9 +274,7 @@ class Batimetria
         if ($this->batimetria != "") {
             return $this->volumenNormal() - $this->volumenMinimo();
         } else {
-            if ($this->vol_nor == "" || $this->vol_min == "") {
-                return 0;
-            }
+            return $this->volumenDisponibleOriginal();
         }
     }
 
@@ -284,7 +282,7 @@ class Batimetria
     {
 
             if ($this->vol_nor == "" || $this->vol_min == "") {
-                return "";
+                return 0;
             }else{
                 return $this->vol_nor - $this->vol_min;
             }
