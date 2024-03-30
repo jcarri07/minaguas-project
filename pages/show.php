@@ -288,7 +288,7 @@ closeConection($conn);
   }
 
   .container-loader {
-    width: 100%;
+    width: 100vw;
     height: 120vh;
     position: fixed;
     top: 50%;
@@ -307,7 +307,7 @@ closeConection($conn);
     opacity: 0;
   }
 
-  .rectangle-back{
+  .rectangle-back {
     /* display: none; */
   }
 
@@ -384,7 +384,9 @@ closeConection($conn);
   }
 </style>
 
-
+<div class="container-loader">
+  <div class="loader"></div>
+</div>
 
 <div id="container-fluid" class="container-fluid container-show py-4">
   <div class="row card-show">
