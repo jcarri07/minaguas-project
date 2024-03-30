@@ -27,9 +27,7 @@ date_default_timezone_set("America/Caracas");
 <!DOCTYPE html>
 <html lang="en">
 
-<div class="container-loader">
-  <div class="loader"></div>
-</div>
+
 
 <head>
   <meta charset="utf-8" />
@@ -59,6 +57,9 @@ date_default_timezone_set("America/Caracas");
   <script src="vendor/datatables/js/datatables.min.js"></script>
   <script src="vendor/datatables/js/datatable-basic.init.js"></script>
 </head>
+<div class="container-loader">
+  <div class="loader"></div>
+</div>
 
 <style>
   #mapa {
