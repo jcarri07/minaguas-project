@@ -578,7 +578,7 @@ closeConection($conn);
               </div>
             </div>
           </div>
-          <div class="embalse-card rounded p-3 d-flex flex-column justify-content-center">
+          <div class="embalse-card rounded p-3 d-flex flex-column justify-content-around">
             <!-- <div class="ct-chart ct-perfect-fourth" style="width: 100%; height: 100%"></div> -->
             <div class="text-center text-sm text-dark">Volumenes - Embalse <?php echo $embalse_datos['nombre_embalse'] ?></div>
             <div class="chart-js" style="width: 100%; height: 80%">
