@@ -91,6 +91,9 @@ class Batimetria
 
     public function getByCota($año, $cota)
     {
+        if ($cota == null) {
+            return 0;
+        }
         $año = $this->getCloseYear($año);
         $cota = number_format(floatval($cota), 3, ".", "");
         // return (array_key_exists((string)$cota, $this->batimetria[$año])) ? explode("-", $this->batimetria[$año][(string)$cota]) : $this->getCloseCota($this->batimetria[$año], $cota, 0.001);
