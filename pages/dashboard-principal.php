@@ -229,7 +229,7 @@ closeConection($conn);*/
     <div class="card h-100">
       <div class="card-header pb-0">
         <h6 class="mb-0">Embalses</h6>
-        <p class="text-sm">Monitoreo del volumen actual de los embalses registrados</p>
+        <p class="text-sm">Monitoreo del Volumen Actual Útil de los embalses registrados</p>
       </div>
       <hr class="dark horizontal">
       <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:350px !important;">
