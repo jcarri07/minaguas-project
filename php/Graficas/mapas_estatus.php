@@ -66,7 +66,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales1)) {
     $bat = new Batimetria($row["id_embalse"], $conn);
     $fecha = date($row['fecha']);
     $anio = date("Y", strtotime($fecha));
-    $variacion = $bat->volumenActualDisponible() - $bat->getByCota($anio, $row["cota_actual"]);
+    $variacion = $bat->volumenActualDisponible() - $bat->getByCota($anio, $row["cota_actual"])[1];
 
     if ($variacion > 0) {
         array_push($array, "f_arriba");
@@ -100,7 +100,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
     $bat = new Batimetria($row["id_embalse"], $conn);
     $fecha = date($row['fecha']);
     $anio = date("Y", strtotime($fecha));
-    $variacion = $bat->volumenActualDisponible() - $bat->getByCota($anio, $row["cota_actual"]);
+    $variacion = $bat->volumenActualDisponible() - $bat->getByCota($anio, $row["cota_actual"])[1];
 
     if ($variacion > 0) {
         array_push($array, "f_arriba");
@@ -154,7 +154,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
         height: 600px;
     }
 
-    .leaflet-top.leaflet-left{
+    .leaflet-top.leaflet-left {
         display: none;
     }
 
@@ -347,69 +347,75 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
         return [latitud, longitud];
     }
 
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            const x = document.querySelector("#mapa-portada");
-            html2canvas(x).then(function(canvas) { //PROBLEMAS
-                //$("#ca").append(canvas);
-                canvas.willReadFrequently = true,
-                    dataURL = canvas.toDataURL("image/jpeg", 0.9);
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '../guardar-imagen.php', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-mapa'; ?>&numero=' + 1);
-                xhr.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
+    // window.addEventListener('load', function() {
+    // setTimeout(function() {
+    mapa_portada.whenReady(function() {
+        const x = document.querySelector("#mapa-portada");
+        html2canvas(x, ).then(function(canvas) { //PROBLEMAS
+            //$("#ca").append(canvas);
+            canvas.willReadFrequently = true,
+                dataURL = canvas.toDataURL("image/jpeg", 0.9);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../guardar-imagen.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-mapa'; ?>&numero=' + 1);
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
 
-                        console.log("listo");
+                    console.log("listo");
 
-                    } else {
+                } else {
 
-                    }
                 }
-            });
-
-            const y = document.querySelector("#mapa-periodo-uno");
-            html2canvas(y).then(function(canvas) { //PROBLEMAS
-                //$("#ca").append(canvas);
-                canvas.willReadFrequently = true,
-                    dataURL = canvas.toDataURL("image/jpeg", 0.9);
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '../guardar-imagen.php', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-mapa'; ?>&numero=' + 2);
-                xhr.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-
-                        console.log("listo");
-
-                    } else {
-
-                    }
-                }
-            });
-
-            const z = document.querySelector("#mapa-periodo-dos");
-            html2canvas(z).then(function(canvas) { //PROBLEMAS
-                //$("#ca").append(canvas);
-                canvas.willReadFrequently = true,
-                    dataURL = canvas.toDataURL("image/jpeg", 0.9);
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '../guardar-imagen.php', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-mapa'; ?>&numero=' + 3);
-                xhr.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-
-                        console.log("listo");
-
-                    } else {
-
-                    }
-                }
-            });
-        }, 1500);
+            }
+        });
     });
+
+    mapa_per_uno.whenReady(function() {
+        const y = document.querySelector("#mapa-periodo-uno");
+        html2canvas(y).then(function(canvas) { //PROBLEMAS
+            //$("#ca").append(canvas);
+            canvas.willReadFrequently = true,
+                dataURL = canvas.toDataURL("image/jpeg", 0.9);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../guardar-imagen.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-mapa'; ?>&numero=' + 2);
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    console.log("listo");
+
+                } else {
+
+                }
+            }
+        });
+    });
+
+    mapa_per_dos.whenReady(function() {
+        const z = document.querySelector("#mapa-periodo-dos");
+        html2canvas(z).then(function(canvas) { //PROBLEMAS
+            //$("#ca").append(canvas);
+            canvas.willReadFrequently = true,
+                dataURL = canvas.toDataURL("image/jpeg", 0.9);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../guardar-imagen.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-mapa'; ?>&numero=' + 3);
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    console.log("listo");
+
+                } else {
+
+                }
+            }
+        });
+        // }, 1500);
+    });
+    // });
 </script>
 
 </html>

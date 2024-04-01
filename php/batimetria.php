@@ -103,7 +103,7 @@ class Batimetria
     public function getByCota($año, $cota)
     {
         if ($cota == null) {
-            return 0;
+            return array(0,0);
         }
         $año = $this->getCloseYear($año);
         $cota = number_format(floatval($cota), 3, ".", "");
