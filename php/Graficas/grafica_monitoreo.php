@@ -151,7 +151,7 @@ $embalse = mysqli_fetch_all($emb, MYSQLI_ASSOC);
 $datos_embalses = mysqli_fetch_all($an, MYSQLI_ASSOC);
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
-    $volumen = $bati->getByCota(date('Y',$datos1[0]["fecha"]), $datos1[0]["cota_actual"])[1];
+    $volumen = $bati->getByCota(date('Y', strtotime($datos1[0]["fecha"])), $datos1[0]["cota_actual"])[1];
     $cot = $datos1[0]["cota_actual"];
 } else {
     $volumen = 0;
@@ -165,7 +165,7 @@ if ($count >= 1) {
 for ($k = $numeroSemana; $k < $semanas; $k++) {
     if (isset($datos1[$i]['semana'])) {
         if ($k == ($datos1[$i]['semana'])) {
-            $array1[$aux] = $bati->getByCota(date('Y',$datos1[$i]["fecha"]), $datos1[$i]["cota_actual"])[1];
+            $array1[$aux] = $bati->getByCota(date('Y', strtotime($datos1[$i]["fecha"])), $datos1[$i]["cota_actual"])[1];
             $i++;
         } else {
             $array1[$aux] = 0;
@@ -175,7 +175,7 @@ for ($k = $numeroSemana; $k < $semanas; $k++) {
     }
     if (isset($datos2[$j]['semana'])) {
         if ($k == ($datos2[$j]['semana'])) {
-            $array2[$aux] = $bati->getByCota(date('Y',$datos1[$j]["fecha"]), $datos2[$j]["cota_actual"])[1];
+            $array2[$aux] = $bati->getByCota(date('Y', strtotime($datos1[$j]["fecha"])), $datos2[$j]["cota_actual"])[1];
             $j++;
         } else {
             $array2[$aux] = 0;
@@ -255,8 +255,14 @@ $j = 0;
                                     for ($k = $l; $k < ($t * $sem); $k++) {
                                         if (isset($datos1[$i]['semana'])) {
                                             if ($fsemanas[$k]['semana'] == ($datos1[$i]['semana'])) {
-                                                echo  round($bati->getByCota(date('Y',$datos1[$i]["fecha"]), $datos1[$i]["cota_actual"])[1], 2); ?>, <?php
+                                                echo  round($bati->getByCota(date('Y', strtotime($datos1[$i]["fecha"])), $datos1[$i]["cota_actual"])[1], 2); ?>, <?php
 
+                                                if ($max < $datos1[$i]["cota_actual"]) {
+                                                    $max = $datos1[$i]["cota_actual"];
+                                                }
+                                                if ($min > $datos1[$i]["cota_actual"]) {
+                                                    $min = $datos1[$i]["cota_actual"];
+                                                }
                                                 $i++;
                                             } else {
                                                 echo 0; ?>, <?php
@@ -276,8 +282,14 @@ $j = 0;
                                     for ($k = $l; $k < ($t * $sem); $k++) {
                                         if (isset($datos2[$j]['semana'])) {
                                             if ($fsemanas[$k]['semana'] == ($datos2[$j]['semana'])) {
-                                                echo  round($bati->getByCota(date('Y',$datos2[$j]["fecha"]), $datos2[$j]["cota_actual"])[1], 2); ?>, <?php
+                                                echo  round($bati->getByCota(date('Y', strtotime($datos2[$j]["fecha"])), $datos2[$j]["cota_actual"])[1], 2); ?>, <?php
 
+                                                if ($max < $datos1[$i]["cota_actual"]) {
+                                                    $max = $datos1[$i]["cota_actual"];
+                                                }
+                                                if ($min > $datos1[$i]["cota_actual"]) {
+                                                    $min = $datos1[$i]["cota_actual"];
+                                                }
                                                                                                                             $j++;
                                                                                                                         } else {
                                                                                                                             echo 0; ?>, <?php
