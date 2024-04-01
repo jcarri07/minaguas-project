@@ -57,19 +57,30 @@ class Batimetria
         $this->vol_nor = $embalse['vol_nor'];
         $this->vol_max = $embalse['vol_max'];
 
-        $query = "SELECT fecha, hora, cota_actual FROM datos_embalse WHERE id_embalse = 1 ORDER BY fecha DESC, hora DESC LIMIT 1";
+        // $query = "SELECT fecha, hora, cota_actual FROM datos_embalse WHERE id_embalse = $id_embalse ORDER BY fecha DESC, hora DESC LIMIT 1";
+        $query = " SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+        FROM datos_embalse h 
+        WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
+        FROM embalses e
+        LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+        WHERE e.estatus = 'activo' AND e.id_embalse = $id_embalse
+        GROUP BY id_embalse;";
         $result = mysqli_query($this->conn, $query);
 
-        if (!$result) {
-            die("Error en la consulta: " . mysqli_error($this->conn));
-        }
+        // if (!$result) {
+        //     die("Error en la consulta: " . mysqli_error($this->conn));
+        // }
 
         $datos = mysqli_fetch_assoc($result);
         if (mysqli_num_rows($result) < 1) {
             $this->ultima_carga = "";
         } else {
-            $fecha = date($datos['fecha']);
-            $this->ultima_carga = array(date("Y", strtotime($fecha)), $datos['cota_actual']);
+            if ($datos['fecha'] == null || $datos['cota_actual'] == null) {
+                $this->ultima_carga = "";
+            } else {
+                $fecha = date($datos['fecha']);
+                $this->ultima_carga = array(date("Y", strtotime($fecha)), $datos['cota_actual']);
+            }
         }
         mysqli_free_result($result);
 
@@ -275,7 +286,8 @@ class Batimetria
     public function volumenDisponible()
     {
         if ($this->batimetria != "") {
-            return $this->volumenNormal() - $this->volumenMinimo();
+            $resultado = $this->volumenNormal() - $this->volumenMinimo();
+            return $resultado >= 0 ? $resultado : 0;
         } else {
             return $this->volumenDisponibleOriginal();
         }
@@ -287,7 +299,8 @@ class Batimetria
         if ($this->vol_nor == "" || $this->vol_min == "") {
             return 0;
         } else {
-            return $this->vol_nor - $this->vol_min;
+            $resultado = $this->vol_nor - $this->vol_min;
+            return $resultado >= 0 ? $resultado : 0;
         }
     }
 
@@ -297,7 +310,8 @@ class Batimetria
             return 0;
         }
         if ($this->batimetria != "") {
-            return $this->getByCota($año, $cota)[1] - $this->volumenMinimo();
+            $resultado = $this->getByCota($año, $cota)[1] - $this->volumenMinimo();
+            return $resultado >= 0 ? $resultado : 0;
         } else {
             return 0;
         }
@@ -305,8 +319,10 @@ class Batimetria
 
     public function volumenActualDisponible()
     {
+        // return $this->ultima_carga[1];
         if ($this->ultima_carga != "" && $this->batimetria != "") {
-            return $this->getByCota($this->ultima_carga[0], $this->ultima_carga[1])[1] - $this->volumenMinimo();
+            $resultado = $this->getByCota($this->ultima_carga[0], $this->ultima_carga[1])[1] - $this->volumenMinimo();
+            return $resultado >= 0 ? $resultado : 0;
         } else {
             // return $this->volumenDisponible();
             return 0;
@@ -318,6 +334,10 @@ class Batimetria
         return $this->embalse;
     }
 
+    public function cargaActual()
+    {
+        return $this->ultima_carga;
+    }
 
     // public function AuxGetCloseCota($año, $cota)
     // {
