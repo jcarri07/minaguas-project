@@ -309,7 +309,7 @@ date_default_timezone_set("America/Caracas");
   }
 
   function getIdEstatus() {
-    window.open('php/Graficas/graficas_estatus.php', '_blank');
+    window.open('php/Graficas/mapas_estatus.php', '_blank');
   }
 
   function getIdTacariguas() {

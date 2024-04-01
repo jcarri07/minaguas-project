@@ -29,6 +29,9 @@ $volumen_fechas = array(
     "2" => 0,
     "3" => 0,
 );
+
+$valores = $_GET["valores"];
+
 $queryInameh = mysqli_query($conn, "SELECT nombre_config, configuracion FROM configuraciones WHERE nombre_config = 'fecha_sequia' OR nombre_config = 'fecha_lluvia' ORDER BY id_config ASC;");
 $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
@@ -644,7 +647,7 @@ if ($count >= 1) {
                     if (this.readyState == 4 && this.status == 200) {
 
                         console.log("listo");
-                        location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&fecha2=<?php echo $fecha2; ?>";
+                        location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&fecha2=<?php echo $fecha2; ?>&valores=<?php echo $valores; ?>";
 
                     } else {
 

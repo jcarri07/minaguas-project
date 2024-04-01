@@ -117,10 +117,12 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
     array_push($variacion_lluvia, $array);
 }
 
+$valores = array($cantidades_p, $cantidades_sequia, $cantidades_lluvia);
+$valores = json_encode($valores,true);
 // var_dump($embalses_porcentaje);
 // var_dump(implode(" - ",$cantidades_p));
 // var_dump(mysqli_fetch_all($condiciones_actuales1));
-// var_dump($variacion_lluvia);
+// var_dump($valores);
 
 ?>
 
@@ -411,6 +413,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
                     if (this.readyState == 4 && this.status == 200) {
 
                         console.log("listo");
+                        location.href = "graficas_estatus.php?valores=<?php echo $valores; ?>";
 
                     } else {
 

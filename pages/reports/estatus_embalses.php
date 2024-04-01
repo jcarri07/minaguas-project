@@ -12,11 +12,13 @@ require_once '../../php/batimetria.php';
 //Eso te va a dar volumen actual [1] y el volumen  minimo [1]
 //Luego se restan y se obtiene el didponible
 
+$valores = json_decode($_GET["valores"]);
+
 $queryInameh = mysqli_query($conn, "SELECT nombre_config, configuracion FROM configuraciones WHERE nombre_config = 'fecha_sequia' OR nombre_config = 'fecha_lluvia' ORDER BY id_config ASC;");
 $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
-$anio = date('Y',strtotime($fecha1));
+$anio = date('Y', strtotime($fecha1));
 $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
     WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = (select MAX(hora) FROM datos_embalse                                                                                                                                                            WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual 
@@ -25,7 +27,7 @@ $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_
  WHERE e.estatus = 'activo' 
  GROUP BY id_embalse;");
 
-    $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+$condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
     WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha1' AND h.hora = (select MAX(hora) FROM datos_embalse                                                                                                                                                            WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual 
  FROM embalses e
@@ -33,7 +35,7 @@ $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_
  WHERE e.estatus = 'activo' 
  GROUP BY id_embalse;");
 
-    $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
     WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha2' AND h.hora = (select MAX(hora) FROM datos_embalse                                                                                                                                                            WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual 
  FROM embalses e
@@ -118,7 +120,7 @@ $image_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropp
 $logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
 $area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
 $logo_combinado = "../../assets/img/logos/logo_combinado.jpg";
-$mapa = "../../assets/img/estatus_embalses.png";
+$mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
 
 
 // $codigo = "08RHL0101";
@@ -326,39 +328,39 @@ $mapa = "../../assets/img/estatus_embalses.png";
   <div>
     <h1 style="position: absolute; top: 70px; left: 50px; text-align:center; color:#2E86C1; font-size: 23px;">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
     <h2 style="position: absolute; top: 100px; text-align: center; text-justify: center; color:#021568">Estatus de Fuentes Hídricas para Consumo Humano</h2>
-    <div style="width: 1000px; height: 480px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
-      <!-- Mapa --> <img style="width:1000px ; height: 480px;" src="<?php echo $mapa ?>" />
+    <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
+      <!-- Mapa --> <img style="width:1000px ; height: 535px;" src="<?php echo $mapa ?>" />
     </div>
     <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 485px; border: gray 1px solid; background-color: #FFFFFF">
       <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
       <p style="position: absolute; top: 25px;
         text-align: left; padding-left: 40px; font-size: 12px;">
       <div style="position: absolute; left: 20px; top: 2px; background-color: red;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición baja (< 30%) <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición baja (< 30%) <b> <?php echo $valores[0][0] ?> Embalses</b></p>
 
 
         <p style="position: absolute; top: 45px;
         text-align: left; padding-left: 40px; font-size: 12px;">
         <div style="position: absolute; left: 20px; top: 2px; background-color: #44BEF0;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Bajo (30% < A> 60%) <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Bajo (30% < A> 60%) <b> <?php echo $valores[0][1] ?> Embalses</b></p>
 
 
           <p style="position: absolute; top: 65px;
         text-align: left; padding-left: 40px; font-size: 12px;">
           <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Alto (60% < A> 90%) <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Alto (60% < A> 90%) <b> <?php echo $valores[0][2] ?> Embalses</b></p>
 
 
             <p style="position: absolute; top: 85px;
         text-align: left; padding-left: 40px; font-size: 12px;">
             <div style="position: absolute; left: 20px; top: 2px; background-color: green;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición Buena (> 90%) <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición Buena (> 90%) <b> <?php echo $valores[0][3] ?> Embalses</b></p>
 
 
             <p style="position: absolute; top: 105px;
         text-align: left; padding-left: 40px; font-size: 12px;">
             <div style="position: absolute; left: 20px; top: 2px; background-color: #58F558;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición de Alivio <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición de Alivio <b> <?php echo $valores[0][4] ?> Embalses</b></p>
 
 
             <p style="position: absolute; top: 125px;
@@ -397,33 +399,34 @@ $mapa = "../../assets/img/estatus_embalses.png";
               $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
               $batimetria = $bati->getBatimetria();
               $x = $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
-              
+
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
               if (((abs(($x - $min)) * (100 / ($max - $min))) >= 0 && (abs(($x - $min)) * (100 / ($max - $min))) < 30)) {
-                $cuenta++;?>
+                $cuenta++; ?>
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x,2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
                 </tr>
 
+              <?php }
+            } else {
+              $cuenta++; ?>
+              <tr>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
+                <td class="text-celd" style="font-size: 12px;"><?php echo 0 ?></td>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+              </tr>
           <?php }
-            }else{ $cuenta++;?>
-                  <tr>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo 0 ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
-                </tr>
-            <?php }
-              $j++;
+            $j++;
           }
           ?>
 
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta." ";?>Embalses<?php echo" (".($cuenta*100/count($datos_embalses))."%)"?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
           </tr>
         </table>
 
@@ -448,22 +451,23 @@ $mapa = "../../assets/img/estatus_embalses.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($max - $min))) >= 30 && (abs(($x - $min)) * (100 / ($max - $min))) < 60) { 
-                $cuenta++;?>
+              if ((abs(($x - $min)) * (100 / ($max - $min))) >= 30 && (abs(($x - $min)) * (100 / ($max - $min))) < 60) {
+                $cuenta++; ?>
 
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x,2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
                 </tr>
 
           <?php }
-            }$j++;
+            }
+            $j++;
           }
           ?>
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta." ";?>Embalses<?php echo" (".($cuenta*100/count($datos_embalses))."%)"?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
           </tr>
         </table>
 
@@ -492,22 +496,23 @@ $mapa = "../../assets/img/estatus_embalses.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($max - $min))) >= 60 && (abs(($x - $min)) * (100 / ($max - $min))) < 90) { 
-                $cuenta++;?>
+              if ((abs(($x - $min)) * (100 / ($max - $min))) >= 60 && (abs(($x - $min)) * (100 / ($max - $min))) < 90) {
+                $cuenta++; ?>
 
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x,2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
                 </tr>
 
           <?php }
-            }$j++;
+            }
+            $j++;
           }
           ?>
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta." ";?>Embalses<?php echo" (".($cuenta*100/count($datos_embalses))."%)"?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
           </tr>
         </table>
 
@@ -543,22 +548,23 @@ $mapa = "../../assets/img/estatus_embalses.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($max - $min))) >= 90 && (abs(($x - $min)) * (100 / ($max - $min))) <= 100) { 
-                $cuenta++;?>
+              if ((abs(($x - $min)) * (100 / ($max - $min))) >= 90 && (abs(($x - $min)) * (100 / ($max - $min))) <= 100) {
+                $cuenta++; ?>
 
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x,2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
                 </tr>
 
           <?php }
-            }$j++;
+            }
+            $j++;
           }
           ?>
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta." ";?>Embalses<?php echo" (".($cuenta*100/count($datos_embalses))."%)"?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
           </tr>
         </table>
   </div>
@@ -572,32 +578,33 @@ $mapa = "../../assets/img/estatus_embalses.png";
         <th class="text-celd">HIDROLÓGICA</th>
       </tr>
       <?php
-          $j = 0;
-          $cuenta = 0;
-          while ($j < count($datos_embalses)) {
-            if ($datos_embalses[$j]["cota_actual"] != NULL) {
-              $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
-              $batimetria = $bati->getBatimetria();
-              $x = $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
-              $min = $bati->volumenMinimo();
-              $max = $bati->volumenMaximo();
-              $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($max - $min))) > 100) { 
-                $cuenta++;?>
+      $j = 0;
+      $cuenta = 0;
+      while ($j < count($datos_embalses)) {
+        if ($datos_embalses[$j]["cota_actual"] != NULL) {
+          $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+          $batimetria = $bati->getBatimetria();
+          $x = $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
+          $min = $bati->volumenMinimo();
+          $max = $bati->volumenMaximo();
+          $nor = $bati->volumenNormal();
+          if ((abs(($x - $min)) * (100 / ($max - $min))) > 100) {
+            $cuenta++; ?>
 
-                <tr>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x,2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
-                </tr>
+            <tr>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+            </tr>
 
-          <?php }
-            }$j++;
-          }
-          ?>
+      <?php }
+        }
+        $j++;
+      }
+      ?>
       <tr>
         <td class="text-celd total"><b> TOTAL </b></td>
-        <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta." ";?>Embalses<?php echo" (".($cuenta*100/count($datos_embalses))."%)"?></td>
+        <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
       </tr>
     </table>
   </div>
@@ -731,7 +738,7 @@ $mapa = "../../assets/img/estatus_embalses.png";
   <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES</b>
   </div>
 
-  <img style="width: 550px; height: 450px; background-color: lightgray; margin-top: 50px; margin-left: 35px;" src="<?php echo "../../assets/img/temp/imagen-estatus-pie-1.png" ?>" >
+  <img style="width: 550px; height: 450px; background-color: lightgray; margin-top: 50px; margin-left: 35px;" src="<?php echo "../../assets/img/temp/imagen-estatus-pie-1.png" ?>">
 
 
   <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 200px; margin-left: 640px;"><b> <u># EMBALSES</u> EN CONDICIONES BUENAS Y MUY BUENAS <br> ( > 90% Y ALIVIANDO )</b></div>
@@ -763,15 +770,15 @@ $mapa = "../../assets/img/estatus_embalses.png";
   </div>
 
   <img style="width: 450px; height: 450px; background-color: lightgray; margin-top: 80px; margin-left: 35px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-1.png" ?>">
-  
+
 
   <div style="position: absolute; width: 0.5px; height: 600px; background-color: #7F7F7F; margin-top: 110px; margin-left: 525px;"></div>
 
   <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL fecha HASTA HOY</b>
   </div>
 
-  <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-2.png" ?>"> 
-  
+  <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-2.png" ?>">
+
 
   <div style="position: absolute; margin-top: 670px; margin-left: 50px; width: 95%; height: 100px;">
     <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió #% comparado con la semana pasada y <br> #% con respecto a hace 15 días)</b></div>
@@ -791,6 +798,7 @@ $mapa = "../../assets/img/estatus_embalses.png";
 
   <div>
     <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
+      <img style="width:1000px ; height: 535px;" src="../../assets/img/temp/imagen-estatus-mapa-2.png" />
     </div>
   </div>
 
@@ -805,19 +813,19 @@ $mapa = "../../assets/img/estatus_embalses.png";
     <p style="position: absolute; top: 60px;
         text-align: left; padding-left: 40px; font-size: 15px;">
     <div style="position: absolute; left: 20px; top: 2px; background-color: green;
-         border-radius: 5; height: 10px; width: 10px;"></div>Aumento de Volumen <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Aumento de Volumen <b> <?php echo $valores[1][0] ?> Embalses</b></p>
 
 
     <p style="position: absolute; top: 85px;
         text-align: left; padding-left: 40px; font-size: 15px;">
     <div style="position: absolute; left: 20px; top: 2px; background-color: red;
-         border-radius: 5; height: 10px; width: 10px;"></div>Disminución de Volumen <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Disminución de Volumen <b> <?php echo $valores[1][1] ?> Embalses</b></p>
 
 
     <p style="position: absolute; top: 110px;
         text-align: left; padding-left: 40px; font-size: 15px;">
     <div style="position: absolute; left: 20px; top: 2px; background-color: black;
-         border-radius: 5; height: 10px; width: 10px;"></div>Sin Cambioss <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Sin Cambioss <b> <?php echo $valores[1][2] ?> Embalses</b></p>
 
   </div>
 
@@ -836,6 +844,7 @@ $mapa = "../../assets/img/estatus_embalses.png";
 
   <div>
     <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
+      <img style="width:1000px ; height: 535px;" src="../../assets/img/temp/imagen-estatus-mapa-3.png" />
     </div>
   </div>
 
@@ -850,13 +859,13 @@ $mapa = "../../assets/img/estatus_embalses.png";
     <p style="position: absolute; top: 70px;
         text-align: left; padding-left: 40px; font-size: 15px;">
     <div style="position: absolute; left: 20px; top: 2px; background-color: green;
-         border-radius: 5; height: 10px; width: 10px;"></div>Aumento de Volumen <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Aumento de Volumen <b> <?php echo $valores[2][0] ?> Embalses</b></p>
 
 
     <p style="position: absolute; top: 105px;
         text-align: left; padding-left: 40px; font-size: 15px;">
     <div style="position: absolute; left: 20px; top: 2px; background-color: red;
-         border-radius: 5; height: 10px; width: 10px;"></div>Disminución de Volumen <b> # Embalses</b></p>
+         border-radius: 5; height: 10px; width: 10px;"></div>Disminución de Volumen <b> <?php echo $valores[2][1] ?> Embalses</b></p>
 
   </div>
 
