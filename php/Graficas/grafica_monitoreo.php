@@ -52,18 +52,25 @@ function obtenerFechasSemanas($fechaInicial, $fechaFinal)
     $fechaInicio = new DateTime($fechaInicial);
     $fechaFin = new DateTime($fechaFinal);
 
-    // Calcular la diferencia en semanas
-    $interval = $fechaInicio->diff($fechaFin);
-    $numeroSemanas = floor($interval->days / 7) + 1;
+    // Obtener el día de la semana de la fecha inicial
+    $diaSemanaInicio = $fechaInicio->format('N');
 
-    // Iterar para obtener las fechas de las semanas
-    for ($i = 0; $i < $numeroSemanas; $i++) {
-        // Obtener el primer día de la semana (lunes)
+    // Si la fecha inicial no es un lunes, establecer el inicio de la semana en la fecha inicial
+    if ($diaSemanaInicio != 1) {
+        $inicioSemana = clone $fechaInicio;
+    } else {
+        // Si es un lunes, obtener el primer día de la semana
         $inicioSemana = clone $fechaInicio;
         $inicioSemana->modify('this week');
+    }
+
+    // Iterar para obtener las fechas de las semanas
+    while ($inicioSemana <= $fechaFin) {
+        // Obtener el número de semana del año
+        $numeroSemana = $inicioSemana->format("W");
 
         // Obtener el último día de la semana (domingo)
-        $finSemana = clone $fechaInicio;
+        $finSemana = clone $inicioSemana;
         $finSemana->modify('this week');
         $finSemana->modify('next sunday');
 
@@ -73,15 +80,13 @@ function obtenerFechasSemanas($fechaInicial, $fechaFinal)
         }
 
         // Agregar al array en el formato deseado (dd/mm-dd/mm)
-        $fechasSemanas[] = $inicioSemana->format('d/m') . '-' . $finSemana->format('d/m');
+        $fechasSemanas[] = array(
+            'fechas' => $inicioSemana->format('d/m') . '-' . $finSemana->format('d/m'),
+            'semana' => $numeroSemana
+        );
 
         // Mover la fecha al inicio de la siguiente semana
-        $fechaInicio->modify('next monday');
-
-        // Detener el bucle si alcanzamos la fecha final
-        if ($inicioSemana >= $fechaFin) {
-            break;
-        }
+        $inicioSemana->modify('next monday');
     }
 
     return $fechasSemanas;
@@ -150,40 +155,40 @@ if ($count >= 1) {
     $cot = $datos1[0]["cota_actual"];
 } else {
     $volumen = 0;
-$cot = 0;
+    $cot = 0;
 }
 
 
 ?>
 
 <?php
-            for ($k = $numeroSemana; $k < $semanas; $k++) {
-                if (isset($datos1[$i]['semana'])) {
-                    if ($k == ($datos1[$i]['semana'])) {
-                        $array1[$aux] = $bati->getByCota($anio, $datos1[$i]["cota_actual"])[1];
-                        $i++;
-                    } else {
-                        $array1[$aux] = 0;
-                    }
-                } else {
-                    $array1[$aux] = 0;
-                }
-                if (isset($datos2[$j]['semana'])) {
-                    if ($k == ($datos2[$j]['semana'])) {
-                        $array2[$aux] = $bati->getByCota($anio, $datos2[$j]["cota_actual"])[1];
-                        $j++;
-                    } else {
-                        $array2[$aux] = 0;
-                    }
-                } else {
-                    $array2[$aux] = 0;
-                }
-                $aux++;
-            }
-            $i = 0;
-            $j = 0;
-            //print_r(obtenerFechasSemanas($fecha1, calcularSemanas($fecha1, $fecha2)));
-            ?>
+for ($k = $numeroSemana; $k < $semanas; $k++) {
+    if (isset($datos1[$i]['semana'])) {
+        if ($k == ($datos1[$i]['semana'])) {
+            $array1[$aux] = $bati->getByCota($anio, $datos1[$i]["cota_actual"])[1];
+            $i++;
+        } else {
+            $array1[$aux] = 0;
+        }
+    } else {
+        $array1[$aux] = 0;
+    }
+    if (isset($datos2[$j]['semana'])) {
+        if ($k == ($datos2[$j]['semana'])) {
+            $array2[$aux] = $bati->getByCota($anio, $datos2[$j]["cota_actual"])[1];
+            $j++;
+        } else {
+            $array2[$aux] = 0;
+        }
+    } else {
+        $array2[$aux] = 0;
+    }
+    $aux++;
+}
+$i = 0;
+$j = 0;
+//print_r(obtenerFechasSemanas($fecha1, calcularSemanas($fecha1, $fecha2)));
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -192,6 +197,7 @@ $cot = 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
     <script src="../../assets/js/Chart.js"></script>
+    <script src="../../assets/js/chartjs-plugin-datalabels@2.js"></script>
     <!--script src="../../assets/js/date-fns.js"></script-->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
@@ -207,7 +213,7 @@ $cot = 0;
     <div>
         <?php
         $j = 0;
-        $nom = array("Cota " . date("Y"), "Cota " . (date("Y") - 1));
+        $nom = array("Cota " . $anio, "Cota " . ($anio - 1));
         $pivote = 0;
 
         for ($t = 1; $t <=  $Nsemanas; $t++) {
@@ -248,24 +254,18 @@ $cot = 0;
                             data: [<?php
                                     for ($k = $l; $k < ($t * $sem); $k++) {
                                         if (isset($datos1[$i]['semana'])) {
-                                            if (($numeroSemana + $k) == ($datos1[$i]['semana'])) {
-                                                echo  $bati->getByCota($anio, $datos1[$i]["cota_actual"])[1]; ?>, <?php
+                                            if ($fsemanas[$k]['semana'] == ($datos1[$i]['semana'])) {
+                                                echo  round($bati->getByCota($anio, $datos1[$i]["cota_actual"])[1], 2); ?>, <?php
 
-                                                                                                                    if ($max < $datos1[$i]["cota_actual"]) {
-                                                                                                                        $max = $datos1[$i]["cota_actual"];
-                                                                                                                    }
-                                                                                                                    if ($min > $datos1[$i]["cota_actual"]) {
-                                                                                                                        $min = $datos1[$i]["cota_actual"];
-                                                                                                                    }
-                                                                                                                    $i++;
-                                                                                                                } else {
-                                                                                                                    echo 0; ?>, <?php
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        echo 0; ?>, <?php
-                                                                                                                                }
-                                                                                                                            }
-                                                                                                                                    ?>],
+                                                $i++;
+                                            } else {
+                                                echo 0; ?>, <?php
+                                                }
+                                            } else {
+                                                echo 0; ?>, <?php
+                                                    }
+                                                }
+                                                        ?>],
                         },
                         {
                             label: 'Volumen final (Hm³)',
@@ -275,21 +275,15 @@ $cot = 0;
                             data: [<?php
                                     for ($k = $l; $k < ($t * $sem); $k++) {
                                         if (isset($datos2[$j]['semana'])) {
-                                            if (($numeroSemana + $k) == ($datos2[$j]['semana'])) {
-                                                echo  $bati->getByCota($anio, $datos2[$j]["cota_actual"])[1]; ?>, <?php
+                                            if ($fsemanas[$k]['semana'] == ($datos2[$j]['semana'])) {
+                                                echo  round($bati->getByCota($anio, $datos2[$j]["cota_actual"])[1], 2); ?>, <?php
 
-                                                                                                                    if ($max < $datos2[$j]["cota_actual"]) {
-                                                                                                                        $max = $datos2[$j]["cota_actual"];
-                                                                                                                    }
-                                                                                                                    if ($min > $datos2[$j]["cota_actual"]) {
-                                                                                                                        $min = $datos2[$j]["cota_actual"];
-                                                                                                                    }
-                                                                                                                    $j++;
-                                                                                                                } else {
-                                                                                                                    echo 0; ?>, <?php
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        echo 0; ?>, <?php
+                                                                                                                            $j++;
+                                                                                                                        } else {
+                                                                                                                            echo 0; ?>, <?php
+                                                                                                                            }
+                                                                                                                        } else {
+                                                                                                                            echo 0; ?>, <?php
                                                                                                                                 }
                                                                                                                             }
                                                                                                                                     ?>],
@@ -322,19 +316,30 @@ $cot = 0;
                                 size: 30
                             }
                         },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                        },
 
                     },
                     scales: {
 
                         x: {
                             labels: [<?php for ($k = $l; $k < ($t * $sem); $k++) {
-                                            if (isset($fsemanas[$k])) { ?> '<?php echo 'Semana ' . ($k + 1); ?>', <?php }
+                                            if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo 'Semana ' . ($k + 1); ?>', <?php }
                                                                                                             } ?>],
 
                         },
                         x2: {
                             labels: [<?php for ($k = $l; $k < ($t * $sem); $k++) {
-                                            if (isset($fsemanas[$k])) { ?> '<?php echo $fsemanas[$k]; ?>', <?php }
+                                            if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo $fsemanas[$k]['fechas']; ?>', <?php }
                                                                                                     } ?>],
 
                         },
@@ -347,7 +352,7 @@ $cot = 0;
                                 display: false,
                             },
                             labels: [<?php for ($k = $l; $k < ($t * $sem); $k++) {
-                                            if (isset($fsemanas[$k])) { ?> '<?php echo round($array2[$k] - $array1[$k], 2) . " Hm³"; ?>', <?php }
+                                            if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo round($array2[$k] - $array1[$k], 2) . " Hm³"; ?>', <?php }
                                                                                                                                     } ?>],
 
                         },
@@ -386,7 +391,8 @@ $cot = 0;
 
                         },
                     },
-                }
+                },
+                plugins: [ChartDataLabels],
             });
         <?php
 
