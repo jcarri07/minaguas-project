@@ -175,6 +175,12 @@ $año_actual = date('Y');
         </div>
     </div>
     <div>
+        <div style="position: absolute; left: 1100px;">
+            <img style="height: 40px; width: 40px;" class="img-logo" src="<?php echo $srcLogo; ?>" />
+        </div>
+        <div style="position: absolute; left: 1050px; top: 22px;">
+            <img style="height: 40px; width: 50px;" src="../../assets/img/logos/MinaguasLetters.png" alt="">
+        </div>
         <h4>VARIACIÓNDE COTA POR MES</h4>
         <table>
             <thead>
@@ -276,6 +282,12 @@ $año_actual = date('Y');
         </div>
     </div>
     <div>
+        <div style="position: absolute; left: 1100px;">
+            <img style="height: 40px; width: 40px;" class="img-logo" src="<?php echo $srcLogo; ?>" />
+        </div>
+        <div style="position: absolute; left: 1050px; top: 22px;">
+            <img style="height: 40px; width: 50px;" src="../../assets/img/logos/MinaguasLetters.png" alt="">
+        </div>
         <h4 style="color:#2E86C1; position:absolute; top: 15px;">SEGUIMIENTO Y MONITOREO DE LOS NIVELES DEL LAGO LOS TACARIGUAS ( LAGO DE VALENCIA )</h4>
         <hr style="color:#2E86C1;">
         <div style="width: 500px; height: 10px; background-color: #2E86C1; padding-left: 30px;">
@@ -372,7 +384,7 @@ $año_actual = date('Y');
             </table>
         </div>
         <h4>SALIDAS AL LAGO</h4>
-        <div style="position: absolute; top: 460px; left: 160px; opacity: 0.5;">
+        <div style="position: absolute; top: 440px; left: 160px; opacity: 0.5;">
             <img src="../../assets/img/upload-arrow.png" alt="" style=" width: 50px; height: 50px;">
         </div>
         <div>
@@ -431,6 +443,12 @@ $año_actual = date('Y');
         </div>
     </div>
     <div>
+        <div style="position: absolute; left: 1100px;">
+            <img style="height: 40px; width: 40px;" class="img-logo" src="<?php echo $srcLogo; ?>" />
+        </div>
+        <div style="position: absolute; left: 1050px; top: 22px;">
+            <img style="height: 40px; width: 50px;" src="../../assets/img/logos/MinaguasLetters.png" alt="">
+        </div>
         <h4 style="color:#2E86C1; position:absolute; top: 15px;">SEGUIMIENTO Y MONITOREO DE LOS NIVELES DEL LAGO LOS TACARIGUAS ( LAGO DE VALENCIA )</h4>
         <hr style="color:#2E86C1;">
         <div style="position: absolute; top: 60px; padding-left: 900px;">
@@ -544,211 +562,291 @@ $año_actual = date('Y');
                 <p style="font-size: 12px;">Nivel de alerta (m.s.n.m.)</p>
                 <p style="font-size: 12px;">Punto de inflexión</p>
             </div>
-            <div style="position: absolute; top: 420px; left: 340px;">
-                <p style="font-size: 12px;">Cota Actual</p>
+            <div style="position: absolute; top: 450px; left: 340px; height: 20px;">
+                <p style="font-size: 12px; position: absolute; height: 20px;">Cota Actual</p>
             </div>
         </div>
         <div>
-            <h4 style="color:#2E86C1; position:absolute; top: 15px;">SEGUIMIENTO Y MONITOREO DE LOS NIVELES DEL LAGO LOS TACARIGUAS ( LAGO DE VALENCIA )</h4>
-            <hr style="color:#2E86C1;">
-            <div style="position: absolute; top: 60px; padding-left: 900px;">
-                <h4><?php echo "$dia_actual de " . getMonthName() . " de $año_actual" ?></h4>
+            <div style="position: absolute; left: 1100px;">
+                <img style="height: 40px; width: 40px;" class="img-logo" src="<?php echo $srcLogo; ?>" />
+            </div>
+            <div style="position: absolute; left: 1050px; top: 22px;">
+                <img style="height: 40px; width: 50px;" src="../../assets/img/logos/MinaguasLetters.png" alt="">
+            </div>
+            <div style="position: absolute;">
+                <h4 style="color:#2E86C1; position:absolute; top: 15px;">SEGUIMIENTO Y MONITOREO DE LOS NIVELES DEL LAGO LOS TACARIGUAS ( LAGO DE VALENCIA )</h4>
+                <hr style="color:#2E86C1;">
+                <div style="position: absolute; top: 60px; padding-left: 900px;">
+                    <h4><?php echo "$dia_actual de " . getMonthName() . " de $año_actual" ?></h4>
+                </div>
             </div>
             <style>
                 .table-large tr,
                 th,
                 td {
-                    font-size: 8;
+                    font-size: 7.5;
                 }
             </style>
-            <table class="table-large" style="position: absolute; top: 200px;">
-                <tr>
-                    <th>Columna 1</th>
-                    <th>Columna 2</th>
-                    <th>Columna 3</th>
-                </tr>
-                <!-- Filas 1 a 36 -->
-                <tr>
-                    <td>Fila 1, Celda 1</td>
-                    <td>Fila 1, Celda 2</td>
-                    <td>Fila 1, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 2, Celda 1</td>
-                    <td>Fila 2, Celda 2</td>
-                    <td>Fila 2, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 3, Celda 1</td>
-                    <td>Fila 3, Celda 2</td>
-                    <td>Fila 3, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 4, Celda 1</td>
-                    <td>Fila 4, Celda 2</td>
-                    <td>Fila 4, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 5, Celda 1</td>
-                    <td>Fila 5, Celda 2</td>
-                    <td>Fila 5, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 6, Celda 1</td>
-                    <td>Fila 6, Celda 2</td>
-                    <td>Fila 6, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 7, Celda 1</td>
-                    <td>Fila 7, Celda 2</td>
-                    <td>Fila 7, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 8, Celda 1</td>
-                    <td>Fila 8, Celda 2</td>
-                    <td>Fila 8, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 9, Celda 1</td>
-                    <td>Fila 9, Celda 2</td>
-                    <td>Fila 9, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 10, Celda 1</td>
-                    <td>Fila 10, Celda 2</td>
-                    <td>Fila 10, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 11, Celda 1</td>
-                    <td>Fila 11, Celda 2</td>
-                    <td>Fila 11, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 12, Celda 1</td>
-                    <td>Fila 12, Celda 2</td>
-                    <td>Fila 12, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 13, Celda 1</td>
-                    <td>Fila 13, Celda 2</td>
-                    <td>Fila 13, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 14, Celda 1</td>
-                    <td>Fila 14, Celda 2</td>
-                    <td>Fila 14, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 15, Celda 1</td>
-                    <td>Fila 15, Celda 2</td>
-                    <td>Fila 15, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 16, Celda 1</td>
-                    <td>Fila 16, Celda 2</td>
-                    <td>Fila 16, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 17, Celda 1</td>
-                    <td>Fila 17, Celda 2</td>
-                    <td>Fila 17, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 18, Celda 1</td>
-                    <td>Fila 18, Celda 2</td>
-                    <td>Fila 18, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 19, Celda 1</td>
-                    <td>Fila 19, Celda 2</td>
-                    <td>Fila 19, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 20, Celda 1</td>
-                    <td>Fila 20, Celda 2</td>
-                    <td>Fila 20, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 21, Celda 1</td>
-                    <td>Fila 21, Celda 2</td>
-                    <td>Fila 21, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 22, Celda 1</td>
-                    <td>Fila 22, Celda 2</td>
-                    <td>Fila 22, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 23, Celda 1</td>
-                    <td>Fila 23, Celda 2</td>
-                    <td>Fila 23, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 24, Celda 1</td>
-                    <td>Fila 24, Celda 2</td>
-                    <td>Fila 24, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 25, Celda 1</td>
-                    <td>Fila 25, Celda 2</td>
-                    <td>Fila 25, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 26, Celda 1</td>
-                    <td>Fila 26, Celda 2</td>
-                    <td>Fila 26, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 27, Celda 1</td>
-                    <td>Fila 27, Celda 2</td>
-                    <td>Fila 27, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 28, Celda 1</td>
-                    <td>Fila 28, Celda 2</td>
-                    <td>Fila 28, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 29, Celda 1</td>
-                    <td>Fila 29, Celda 2</td>
-                    <td>Fila 29, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 30, Celda 1</td>
-                    <td>Fila 30, Celda 2</td>
-                    <td>Fila 30, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 31, Celda 1</td>
-                    <td>Fila 31, Celda 2</td>
-                    <td>Fila 31, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 32, Celda 1</td>
-                    <td>Fila 32, Celda 2</td>
-                    <td>Fila 32, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 33, Celda 1</td>
-                    <td>Fila 33, Celda 2</td>
-                    <td>Fila 33, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 34, Celda 1</td>
-                    <td>Fila 34, Celda 2</td>
-                    <td>Fila 34, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 35, Celda 1</td>
-                    <td>Fila 35, Celda 2</td>
-                    <td>Fila 35, Celda 3</td>
-                </tr>
-                <tr>
-                    <td>Fila 36, Celda 1</td>
-                    <td>Fila 36, Celda 2</td>
-                    <td>Fila 36, Celda 3</td>
-                </tr>
-            </table>
+            <div style=" position: absolute; top: 100px;">
+                <table class="table-large">
+                    <tr>
+                        <th>ESTACIONES</th>
+                        <th>Precipitación<br>
+                            (mm)<br>
+                            Promedio<br>
+                            Histórico para<br>
+                            Noviembre<br>
+                        </th>
+                        <th>Precipitación<br>
+                            (mm)<br>
+                            Acumulada<br>
+                            Noviembre<br></th>
+                    </tr>
+                    <!-- Filas 1 a 36 -->
+                    <tr>
+                        <td>Fila 1, Celda 1</td>
+                        <td>Fila 1, Celda 2</td>
+                        <td>Fila 1, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 2, Celda 1</td>
+                        <td>Fila 2, Celda 2</td>
+                        <td>Fila 2, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 3, Celda 1</td>
+                        <td>Fila 3, Celda 2</td>
+                        <td>Fila 3, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 4, Celda 1</td>
+                        <td>Fila 4, Celda 2</td>
+                        <td>Fila 4, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 5, Celda 1</td>
+                        <td>Fila 5, Celda 2</td>
+                        <td>Fila 5, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 6, Celda 1</td>
+                        <td>Fila 6, Celda 2</td>
+                        <td>Fila 6, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 7, Celda 1</td>
+                        <td>Fila 7, Celda 2</td>
+                        <td>Fila 7, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 8, Celda 1</td>
+                        <td>Fila 8, Celda 2</td>
+                        <td>Fila 8, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 9, Celda 1</td>
+                        <td>Fila 9, Celda 2</td>
+                        <td>Fila 9, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 10, Celda 1</td>
+                        <td>Fila 10, Celda 2</td>
+                        <td>Fila 10, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 11, Celda 1</td>
+                        <td>Fila 11, Celda 2</td>
+                        <td>Fila 11, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 12, Celda 1</td>
+                        <td>Fila 12, Celda 2</td>
+                        <td>Fila 12, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 13, Celda 1</td>
+                        <td>Fila 13, Celda 2</td>
+                        <td>Fila 13, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 14, Celda 1</td>
+                        <td>Fila 14, Celda 2</td>
+                        <td>Fila 14, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 15, Celda 1</td>
+                        <td>Fila 15, Celda 2</td>
+                        <td>Fila 15, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 16, Celda 1</td>
+                        <td>Fila 16, Celda 2</td>
+                        <td>Fila 16, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 17, Celda 1</td>
+                        <td>Fila 17, Celda 2</td>
+                        <td>Fila 17, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 18, Celda 1</td>
+                        <td>Fila 18, Celda 2</td>
+                        <td>Fila 18, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 19, Celda 1</td>
+                        <td>Fila 19, Celda 2</td>
+                        <td>Fila 19, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 20, Celda 1</td>
+                        <td>Fila 20, Celda 2</td>
+                        <td>Fila 20, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 21, Celda 1</td>
+                        <td>Fila 21, Celda 2</td>
+                        <td>Fila 21, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 22, Celda 1</td>
+                        <td>Fila 22, Celda 2</td>
+                        <td>Fila 22, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 23, Celda 1</td>
+                        <td>Fila 23, Celda 2</td>
+                        <td>Fila 23, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 24, Celda 1</td>
+                        <td>Fila 24, Celda 2</td>
+                        <td>Fila 24, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 25, Celda 1</td>
+                        <td>Fila 25, Celda 2</td>
+                        <td>Fila 25, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 26, Celda 1</td>
+                        <td>Fila 26, Celda 2</td>
+                        <td>Fila 26, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 27, Celda 1</td>
+                        <td>Fila 27, Celda 2</td>
+                        <td>Fila 27, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 28, Celda 1</td>
+                        <td>Fila 28, Celda 2</td>
+                        <td>Fila 28, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 29, Celda 1</td>
+                        <td>Fila 29, Celda 2</td>
+                        <td>Fila 29, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 30, Celda 1</td>
+                        <td>Fila 30, Celda 2</td>
+                        <td>Fila 30, Celda 3</td>
+                    </tr>
+                </table>
+            </div>
+            <style>
+                .point {
+                    border-radius: 5;
+                    background-color: red;
+                    height: 10px;
+                    width: 10px;
+                    position: absolute;
+                    top: 30px;
+                    left: 40px;
+                }
+
+                .point-2 {
+                    border-radius: 5;
+                    background-color: black;
+                    height: 10px;
+                    width: 10px;
+                    position: absolute;
+                    top: 55px;
+                    left: 40px;
+                }
+
+                .point-3 {
+                    border-radius: 5;
+                    background-color: white;
+                    border: 1px solid black;
+                    height: 8px;
+                    width: 8px;
+                    position: absolute;
+                    top: 80px;
+                    left: 40px;
+                }
+            </style>
+            <div style="position: absolute; left: 200px; top: 100px;">
+                <table>
+                    <tr>
+                        <td>Fila 31, Celda 1</td>
+                        <td>Fila 31, Celda 2</td>
+                        <td>Fila 31, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 32, Celda 1</td>
+                        <td>Fila 32, Celda 2</td>
+                        <td>Fila 32, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 33, Celda 1</td>
+                        <td>Fila 33, Celda 2</td>
+                        <td>Fila 33, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 34, Celda 1</td>
+                        <td>Fila 34, Celda 2</td>
+                        <td>Fila 34, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 35, Celda 1</td>
+                        <td>Fila 35, Celda 2</td>
+                        <td>Fila 35, Celda 3</td>
+                    </tr>
+                    <tr>
+                        <td>Fila 36, Celda 1</td>
+                        <td>Fila 36, Celda 2</td>
+                        <td>Fila 36, Celda 3</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="position: absolute; top: 130px; left: 420px;">
+                <h4 style="color:#2E86C1; text-align: center;">ESTACIONES PLUVIOMÉTRICAS EN LA REGIÓN HIDROGRÁFICA<br>
+                    CUENCA DEL LAGO LOS TACARIGUAS<br>
+                    (LAGO DE VALENCIA)</h4>
+            </div>
+            <div style="position: absolute; top: 230px; left: 200px; height: 500px; width: 850px; ">
+                <img src="../../assets/img/imagen-los-tacariguas.png" alt="" style="width: 850px; height: 480px;">
+            </div>
+            <div style="position: absolute; border: 2px solid #1c1c1c; background-color: white; width: 300px; height: 120px; left: 750px; top: 660px;">
+                <p style="margin: 4px; padding: 0; text-align: center; font-weight: bold; margin-bottom: 10px;">LEYENDA</p>
+                <div class="point"></div>
+                <div class="point-2"></div>
+                <div class="point-3"></div>
+                <div style="margin-left: 60px;">
+                    <p style="margin: 2px; padding: 0; font-size: 10;">Estaciones con registros de precipitación<br>
+                        en el periodo del 05 de Noviembre 2023 </p>
+                    <p style="margin: 2px; padding: 0; font-size: 10;">Estaciones Meteorológicas, sin registros<br>
+                        Actualizados (Reportes en proceso) </p>
+                    <p style="margin: 2px; padding: 0; font-size: 10;">Estaciones Meteorológicas del INAMEH</p>
+                </div>
+            </div>
+            <div style="position: absolute; top: 700px; left: 200px;">
+                <p>Promedio acumulado de lluvias de las estaciones en el mes de Noviembre:<br>
+                    38,65 mm/día
+                </p>
+            </div>
         </div>
     </div>
 </body>
