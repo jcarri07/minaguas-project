@@ -331,7 +331,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
     <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
       <!-- Mapa --> <img style="width:1000px ; height: 535px;" src="<?php echo $mapa ?>" />
     </div>
-    <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 485px; border: gray 1px solid; background-color: #FFFFFF">
+    <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 540px; border: gray 1px solid; background-color: #FFFFFF">
       <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
       <p style="position: absolute; top: 25px;
         text-align: left; padding-left: 40px; font-size: 12px;">
@@ -471,7 +471,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
           </tr>
         </table>
 
-        <div class="box-note"> Nota:</div>
+        <!-- <div class="box-note"> Nota:</div> -->
 
   </div>
 
@@ -766,7 +766,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
   <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES</b>
   </div>
 
-  <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 7px;"><b>DESDE EL fecha HASTA HOY</b>
+  <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 7px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha1)); ?> HASTA HOY</b>
   </div>
 
   <img style="width: 450px; height: 450px; background-color: lightgray; margin-top: 80px; margin-left: 35px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-1.png" ?>">
@@ -774,7 +774,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
 
   <div style="position: absolute; width: 0.5px; height: 600px; background-color: #7F7F7F; margin-top: 110px; margin-left: 525px;"></div>
 
-  <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL fecha HASTA HOY</b>
+  <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha2));?> HASTA HOY</b>
   </div>
 
   <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-2.png" ?>">
@@ -828,8 +828,9 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
          border-radius: 5; height: 10px; width: 10px;"></div>Sin Cambioss <b> <?php echo $valores[1][2] ?> Embalses</b></p>
 
   </div>
+  <?php setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Establecer la localización a español?>
 
-  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo "$dia_actual DE " . getMonthName() ?></h4>
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha1)), MB_CASE_UPPER, 'UTF-8');?> </h4>
 
   <!-- PAGINA 8 -->
   <div style="page-break-before: always;"></div>
@@ -869,7 +870,8 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
 
   </div>
 
-  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo "$dia_actual DE " . getMonthName() ?></h4>
+    <h4 style="position: absolute; top: 640px;  right: 0; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8');?></h4>
+
   <!-- PAGINA 9 -->
 
   <div style="page-break-before: always;"></div>

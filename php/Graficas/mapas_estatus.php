@@ -265,7 +265,7 @@ $valores = json_encode($valores,true);
     <?php
     foreach ($embalses_porcentaje as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
-
+            // console.log("Prueba");
             ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
 
             var marker = L.marker([ubicacion[0], ubicacion[1]], {
