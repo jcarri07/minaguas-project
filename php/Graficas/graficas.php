@@ -250,7 +250,7 @@ const arbitra = {
 
                                         ?> {
                                                     x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m-d", strtotime($datos_embalses[$j]["fecha"])) . " " . $datos_embalses[$j]["hora"] ?>',
-                                                    y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                                    y: <?php echo $bati->getByCota(date("Y", strtotime($datos_embalses[$j]["fecha"])), $datos_embalses[$j]["cota_actual"])[1];  ?>
                                                 },
                                                 <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
                                                     $max = $datos_embalses[$j]["cota_actual"];
