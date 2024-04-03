@@ -791,11 +791,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
 
   <div style="position: absolute; width: 0.5px; height: 600px; background-color: #7F7F7F; margin-top: 110px; margin-left: 525px;"></div>
 
-<<<<<<< HEAD
   <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha2));?> HASTA HOY</b>
-=======
-  <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL <?php echo $fecha2 ?> HASTA HOY</b>
->>>>>>> daf87959bd7182638f70b4d390fce4da263aa1a1
   </div>
 
   <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-2.png" ?>">
