@@ -28,7 +28,23 @@ $volumen_fechas = array(
     "1" => 0,
     "2" => 0,
     "3" => 0,
+    "4" => 0,
+    "5" => 0,
 );
+
+// Obtener la fecha actual
+$fechaActual = new DateTime();
+// Restarle 15 días
+$fechaActual->modify('-15 days');
+// Obtener un string de la fecha en formato deseado (por ejemplo, 'Y-m-d' para año-mes-día)
+$fechaFormateada1 = $fechaActual->format('Y-m-d');
+
+// Obtener la fecha actual
+$fechaActual = new DateTime();
+// Restarle 15 días
+$fechaActual->modify('-7 days');
+// Obtener un string de la fecha en formato deseado (por ejemplo, 'Y-m-d' para año-mes-día)
+$fechaFormateada2 = $fechaActual->format('Y-m-d');
 
 $valores = $_GET["valores"];
 
@@ -36,7 +52,7 @@ $queryInameh = mysqli_query($conn, "SELECT nombre_config, configuracion FROM con
 $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
-$anio = date('Y',strtotime($fecha1));
+$anio = date('Y', strtotime($fecha1));
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
@@ -65,10 +81,29 @@ if ($count >= 1) {
  WHERE e.estatus = 'activo' 
  GROUP BY id_embalse;");
 
+    $condiciones_actuales3 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fechaFormateada1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+     FROM datos_embalse h 
+     WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fechaFormateada1' AND h.hora = (select MAX(hora) FROM datos_embalse                                                                                                                                                            WHERE fecha = MAX(d.fecha) AND fecha <= '$fechaFormateada1' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
+  FROM embalses e
+  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fechaFormateada1'
+  WHERE e.estatus = 'activo' 
+  GROUP BY id_embalse;");
+
+    $condiciones_actuales4 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fechaFormateada2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+      FROM datos_embalse h 
+      WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fechaFormateada2' AND h.hora = (select MAX(hora) FROM datos_embalse                                                                                                                                                            WHERE fecha = MAX(d.fecha) AND fecha <= '$fechaFormateada2' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
+   FROM embalses e
+   LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fechaFormateada2'
+   WHERE e.estatus = 'activo' 
+   GROUP BY id_embalse;");
+
+
 
     $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
     $volumen_primer_periodo = mysqli_fetch_all($condiciones_actuales1, MYSQLI_ASSOC);
     $volumen_segundo_periodo = mysqli_fetch_all($condiciones_actuales2, MYSQLI_ASSOC);
+    $volumen_quince = mysqli_fetch_all($condiciones_actuales3, MYSQLI_ASSOC);
+    $volumen_siete = mysqli_fetch_all($condiciones_actuales4, MYSQLI_ASSOC);
     $datos_json1 = json_encode($volumen_primer_periodo);
     $embalses = mysqli_fetch_all($r, MYSQLI_ASSOC);
 
@@ -86,6 +121,8 @@ if ($count >= 1) {
             $volumen_fechas[1] += $x - $min;
             $volumen_fechas[2] += $bati->volumenDisponibleByCota($anio, $volumen_primer_periodo[$j]["cota_actual"]);
             $volumen_fechas[3] += $bati->volumenDisponibleByCota($anio, $volumen_segundo_periodo[$j]["cota_actual"]);
+            $volumen_fechas[4] += $bati->volumenDisponibleByCota($anio, $volumen_quince[$j]["cota_actual"]);
+            $volumen_fechas[5] += $bati->volumenDisponibleByCota($anio, $volumen_siete[$j]["cota_actual"]);
 
             if ($x == NULL || ((abs(($x - $min)) * (100 / ($max - $min))) >= 0 && (abs(($x - $min)) * (100 / ($max - $min))) < 30)) {
                 $lista[0]++;
@@ -103,6 +140,8 @@ if ($count >= 1) {
             $volumen_fechas[0] += $bati->volumenDisponible();
             $volumen_fechas[2] += $bati->volumenDisponibleByCota($anio, $volumen_primer_periodo[$j]["cota_actual"]);
             $volumen_fechas[3] += $bati->volumenDisponibleByCota($anio, $volumen_segundo_periodo[$j]["cota_actual"]);
+            $volumen_fechas[4] += $bati->volumenDisponibleByCota($anio, $volumen_quince[$j]["cota_actual"]);
+            $volumen_fechas[5] += $bati->volumenDisponibleByCota($anio, $volumen_siete[$j]["cota_actual"]);
             $lista[0]++;
         };
         $j++;
@@ -255,7 +294,7 @@ if ($count >= 1) {
                 title: 'grafica',
 
                 data: {
-                    labels: ["Volumen Útil total(VUT)", "Volumen Disponible Actual", "Volumen Disponible <?php echo $fecha1; ?>", "Variacion de Volumen Hasta Hoy"],
+                    labels: [["Volumen Útil", "total(VUT)"], ["Volumen Disponible", "<?php echo date('d/m/y', strtotime($fecha1)); ?>"], ["Variacion de","Volumen", "Hasta Hoy"]],
                     datasets: [
 
                         <?php
@@ -337,7 +376,7 @@ if ($count >= 1) {
 
                                 font: {
                                     weight: 'bold',
-                                    size: 8,
+                                    size: 10,
                                 },
                             },
                         },
@@ -364,7 +403,7 @@ if ($count >= 1) {
                 title: 'grafica',
 
                 data: {
-                    labels: ["Volumen Útil total(VUT)", "Volumen Disponible Actual", "Volumen Disponible <?php echo $fecha2; ?>", "Variacion de Volumen Hasta Hoy"],
+                    labels: [["Volumen Útil", "total(VUT)"], ["Volumen Disponible", "<?php echo date('d/m/y', strtotime($fecha2)); ?>"], ["Variacion de ","Volumen", "Hasta Hoy"]],
                     datasets: [
 
                         <?php
@@ -449,7 +488,7 @@ if ($count >= 1) {
 
                                 font: {
                                     weight: 'bold',
-                                    size: 8,
+                                    size: 10,
                                 },
                             },
                         },
@@ -575,7 +614,17 @@ if ($count >= 1) {
                 plugins: [ChartDataLabels],
 
             });
-            <?php closeConection($conn); ?>
+            <?php closeConection($conn);
+            // Convertir el array a formato JSON
+            $json_datos = json_encode($lista);
+
+            // Codificar el JSON en base64
+            $datos_codificados = base64_encode($json_datos);
+
+            $json_datos = json_encode($volumen_fechas);
+
+            // Codificar el JSON en base64
+            $volumenes = base64_encode($json_datos); ?>
 
 
             const x = document.querySelector("#barra1");
@@ -647,7 +696,7 @@ if ($count >= 1) {
                     if (this.readyState == 4 && this.status == 200) {
 
                         console.log("listo");
-                        location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&fecha2=<?php echo $fecha2; ?>&valores=<?php echo $valores; ?>";
+                        location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&volumenes=<?php echo $volumenes; ?>&lista=<?php echo $datos_codificados; ?>&fecha2=<?php echo $fecha2; ?>&valores=<?php echo $valores; ?>";
 
                     } else {
 
