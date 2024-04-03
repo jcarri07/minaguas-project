@@ -238,7 +238,7 @@ class Batimetria
         if ($this->batimetria != "") {
             return $this->getByCota($this->getCloseYear(), $this->cotaMinima())[0];
         } else {
-            return $this->sup_min;
+            return $this->sup_min != "" ? $this->sup_min : 0;
         }
     }
     public function superficieNormal()
@@ -246,7 +246,7 @@ class Batimetria
         if ($this->batimetria != "") {
             return $this->getByCota($this->getCloseYear(), $this->cotaNormal())[0];
         } else {
-            return $this->sup_nor;
+            return $this->sup_nor != "" ? $this->sup_nor : 0;
         }
     }
     public function superficieMaxima()
@@ -254,16 +254,17 @@ class Batimetria
         if ($this->batimetria != "") {
             return $this->getByCota($this->getCloseYear(), $this->cotaMaxima())[0];
         } else {
-            return $this->sup_max;
+            return $this->sup_max != "" ? $this->sup_max : 0;
         }
     }
 
     public function volumenMinimo()
     {
+        $this->vol_min = "";
         if ($this->batimetria != "") {
             return $this->getByCota($this->getCloseYear(), $this->cotaMinima())[1];
         } else {
-            return $this->vol_min;
+            return $this->vol_min != "" ? $this->vol_min : 0;
         }
     }
     public function volumenNormal()
@@ -271,7 +272,7 @@ class Batimetria
         if ($this->batimetria != "") {
             return $this->getByCota($this->getCloseYear(), $this->cotaNormal())[1];
         } else {
-            return $this->vol_nor;
+            return $this->vol_nor != "" ? $this->vol_nor : 0;
         }
     }
     public function volumenMaximo()
@@ -279,7 +280,7 @@ class Batimetria
         if ($this->batimetria != "") {
             return $this->getByCota($this->getCloseYear(), $this->cotaMaxima())[1];
         } else {
-            return $this->vol_max;
+            return $this->vol_max != "" ? $this->vol_max : 0;
         }
     }
 
