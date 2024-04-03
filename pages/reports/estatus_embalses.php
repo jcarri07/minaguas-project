@@ -797,8 +797,37 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
   <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-2.png" ?>">
 
   <div style="position: absolute; margin-top: 670px; margin-left: 50px; width: 95%; height: 100px;">
-    <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió <?php //echo round((abs($volumenes[1]-$volumenes[2]) - abs($volumenes[5]-$volumenes[2]))*100/abs($volumenes[5]-$volumenes[2]),2)?>% comparado con la semana pasada y <br> <?php //echo round((abs($volumenes[1]-$volumenes[2]) - abs($volumenes[4]-$volumenes[2]))*100/abs(($volumenes[4]-$volumenes[2])),2)?>% con respecto a hace 15 días)</b></div>
-    <div style="position: absolute; margin-left: 550px; font-size: 18px; color:red; text-align: center;"><b> (Varió <?php //echo round((abs($volumenes[1]-$volumenes[3]) - abs($volumenes[4]-$volumenes[3]))*100/abs(($volumenes[4]-$volumenes[3])),2)?>% comparado con la semana pasada y <br> <?php //echo round((abs($volumenes[1]-$volumenes[3]) - abs($volumenes[4]-$volumenes[3]))*100/abs(($volumenes[4]-$volumenes[3])),2)?>% con respecto a hace 15 días)</b></div>
+    <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió <?php 
+    if(abs(($volumenes[5]-$volumenes[2])) != 0){
+      echo round((abs($volumenes[1]-$volumenes[2]) - abs($volumenes[5]-$volumenes[2]))*100/abs($volumenes[5]-$volumenes[2]),2);
+    }else{
+      echo 0;
+    }; 
+    
+    ?>% comparado con la semana pasada y <br> <?php 
+    if(abs(($volumenes[4]-$volumenes[2])) != 0){
+      echo round((abs($volumenes[1]-$volumenes[2]) - abs($volumenes[4]-$volumenes[2]))*100/abs(($volumenes[4]-$volumenes[2])),2);
+    }else{
+      echo 0;
+    };    
+    
+    ?>% con respecto a hace 15 días)</b></div>
+    <div style="position: absolute; margin-left: 550px; font-size: 18px; color:red; text-align: center;"><b> (Varió <?php 
+
+    if(abs(($volumenes[5]-$volumenes[3])) != 0){
+      echo round((abs($volumenes[1]-$volumenes[3]) - abs($volumenes[5]-$volumenes[3]))*100/abs(($volumenes[5]-$volumenes[3])),2);
+    }else{
+      echo 0;
+    };    
+    ?>% comparado con la semana pasada y <br> <?php 
+    if(abs(($volumenes[4]-$volumenes[3])) != 0){
+      echo round((abs($volumenes[1]-$volumenes[3]) - abs($volumenes[4]-$volumenes[3]))*100/abs(($volumenes[4]-$volumenes[3])),2);
+    }else{
+      echo 0;
+    };
+    
+    
+    ?>% con respecto a hace 15 días)</b></div>
   </div>
 
   <!-- PAGINA 7 -->
