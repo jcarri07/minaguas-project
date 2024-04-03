@@ -286,8 +286,8 @@ foreach ($data as $row) {
   //BENEFICIOS
   $PROPOSITO = $row['proposito'];
   $USO_ACTUAL = $row['uso_actual'];
-  $SECTOR_BENEFICIADO = $row['sectores_beneficiados'];
-  //$SECTOR_BENEFICIADO ="";
+  // $SECTOR_BENEFICIADO = $row['sectores_beneficiados'];
+  $SECTOR_BENEFICIADO = "";
   $POBLACION = $row['poblacion_beneficiada'];
   $AREA_RIEGO = $row['area_de_riego_beneficiada'];
   //FUNCIONARIO RESPONSABLE
@@ -693,7 +693,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.2.3.- N° de compuertas</td>
-      <td><?php echo number_format(floatval($COMPUERTAS_ALIVIADERO), 2, ',', '.'); ?></td>
+      <td><?php echo $COMPUERTAS_ALIVIADERO; ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.4.- Carga Sobre el Vertedero (m)</td>
@@ -725,7 +725,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.3.3.- N° de compuertas</td>
-      <td><?php echo number_format($NUMERO_COMPUERTAS_OBRA, 2, ',', '.'); ?></td>
+      <td><?php echo $NUMERO_COMPUERTAS_OBRA ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.3.4.- Mecanismos de emergencia</td>
@@ -771,7 +771,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">5.3.- Parroquia(s) y/o sector(es) beneficiado(s)</td>
-      <td colspan="3"><?php echo $SECTOR_BENEFICIADO ?></td>
+      <td colspan="3"><?php //echo $SECTOR_BENEFICIADO ?></td>
     </tr>
     <tr>
       <td class="subtitle">5.4.- Población beneficiada (hab.)</td>
