@@ -287,6 +287,7 @@ foreach ($data as $row) {
   $PROPOSITO = $row['proposito'];
   $USO_ACTUAL = $row['uso_actual'];
   $SECTOR_BENEFICIADO = $row['sectores_beneficiados'];
+  //$SECTOR_BENEFICIADO ="";
   $POBLACION = $row['poblacion_beneficiada'];
   $AREA_RIEGO = $row['area_de_riego_beneficiada'];
   //FUNCIONARIO RESPONSABLE
