@@ -194,14 +194,14 @@
                           <!-- class="d-flex flex-column px-3 mt-2 mb-2" style="height: 100%;" -->
                           <div class="px-3">
                             <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
-                            <!-- <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span> -->
+                            <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; ?> </span> -->
                           </div>
                         </td>
-                        <td class="hide-cell">
+                        <td style="vertical-align: middle;" class="hide-cell">
                           <div class="d-flex flex-column px-3">
-                            <?php $embal = new Batimetria($row["id_embalse"], $conn);  $acumulativo += $embal->volumenDisponible();?>
-                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $embal->volumenDisponible() ?> </h6>
-                            <span class="text-xs">20/12/2023</span>
+                            <?php $embal = new Batimetria($row["id_embalse"], $conn);  //$acumulativo += $embal->volumenDisponible();?>
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo number_format($embal->volumenDisponible(), 3,',','.') ?> <span style="font-size: 12px">hm</span>³</h6>
+                            <!-- <span class="text-xs">20/12/2023</span> -->
                           </div>
                         </td>
                         <td style="vertical-align: middle;" class="hide-cell">
@@ -231,7 +231,7 @@
                     ?>
                   </tbody>
                 </table>
-                <div><?php echo $acumulativo?></div>
+                <div><?php // echo $acumulativo?></div>
               <?php
               } else {
               ?>
@@ -289,16 +289,16 @@
                       ?>
                         <tr>
                           <td>
-                            <div class="d-flex flex-column px-3">
+                            <div style="vertical-align: middle;" class="d-flex flex-column px-3">
                               <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
-                              <!-- <span class="text-xs"> <?php echo $estados[$row['id_estado']]; ?> </span> -->
+                              <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; ?> </span> -->
                             </div>
                           </td>
                           <td class="hide-cell">
                             <div class="d-flex flex-column px-3">
                               <?php $embal = new Batimetria($row["id_embalse"], $conn) ?>
-                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><? echo $embal->volumenDisponible() ?></h6>
-                              <span class="text-xs">20/12/2023</span>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><? echo number_format($embal->volumenDisponible(), 3,',','.') ?></h6>
+                              <!-- <span class="text-xs">20/12/2023</span> -->
                             </div>
                           </td>
                           <td style="vertical-align: middle;" class="hide-cell">

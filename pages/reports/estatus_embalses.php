@@ -70,7 +70,50 @@ $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 $volumen_primer_periodo = mysqli_fetch_all($condiciones_actuales1, MYSQLI_ASSOC);
 $volumen_segundo_periodo = mysqli_fetch_all($condiciones_actuales2, MYSQLI_ASSOC);
 
+$condiciones = [];
+$CT = [0, 0, 0, 0, 0, 0];
 
+$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo';");
+
+while ($row = mysqli_fetch_array($queryEmbalses)) {
+
+  $bat = new Batimetria($row["id_embalse"], $conn);
+  $porcentaje = ($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible();
+
+  if ($porcentaje < 30) {
+    agregarACondiciones($row["operador"], $condiciones, 1);
+    $CT[0] += 1;
+    $CT[1] += 1;
+  } else if ($porcentaje >= 30 && $porcentaje < 60) {
+    agregarACondiciones($row["operador"], $condiciones, 2);
+    $CT[0] += 1;
+    $CT[2] += 1;
+  } else if ($porcentaje >= 60 && $porcentaje < 90) {
+    agregarACondiciones($row["operador"], $condiciones, 3);
+    $CT[0] += 1;
+    $CT[3] += 1;
+  } else if ($porcentaje >= 90 && $porcentaje <= 100) {
+    agregarACondiciones($row["operador"], $condiciones, 4);
+    $CT[0] += 1;
+    $CT[4] += 1;
+  } else {
+    agregarACondiciones($row["operador"], $condiciones, 5);
+    $CT[0] += 1;
+    $CT[5] += 1;
+  }
+}
+
+function agregarACondiciones($operador, &$array, $porcentaje)
+{
+  if (array_key_exists($operador, $array)) {
+    $array[$operador][0] += 1;
+    $array[$operador][$porcentaje] += 1;
+    return;
+  } else {
+    $array[$operador] = [0, 0, 0, 0, 0, 0];
+    agregarACondiciones($operador, $array, $porcentaje);
+  }
+}
 
 function getMonthName()
 {
@@ -654,16 +697,18 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
         <th class="tablaDos">30% < A < 60% </th>
         <th class="tablaDos">60% < A < 90% </th>
       </tr>
-
-      <tr>
-        <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-        <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-        <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-        <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-        <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-        <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-        <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-      </tr>
+      <?php foreach ($condiciones as $key => $values) { ?>
+        <tr>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $key ?></td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[1] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[2] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[3] . "/" . $values[0] ?></td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[3] * 100) / $values[0] : 0 ?>%</td>
+        </tr>
+      <?php
+      } ?>
 
       <tr>
         <th class="spazio" colspan="7"></th>
@@ -673,30 +718,31 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
         <th class="spazio" style="border-bottom: 1px solid #707273; border-right: 1px solid #707273;"><b></b></th>
         <th class="tablaDos" colspan="2"><b> BAJA </b></th>
         <th class="tablaDos" colspan="2"><b></b> NORMAL-BAJO</th>
-        <th class="tablaDos" colspan="2"><b></b> NORMAL-BAJO</th>
+        <th class="tablaDos" colspan="2"><b></b> NORMAL-ALTO</th>
       </tr>
+
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>TOTAL</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[1]."/".$CT[0] ?></b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[2]."/".$CT[0] ?></b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[3]."/".$CT[0] ?></b></td>
       </tr>
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b>PRUEBA</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[1]*100)/$CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[2]*100)/$CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[3]*100)/$CT[0] : 0 ?>%</b></td>
       </tr>
 
     </table>
 
-    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 40px; margin-left: 620px;"><b> </b>
+    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 39px; margin-left: 620px;"><b> </b>
 
       <table>
         <tr>
-          <th class="tablaDos" rowspan="2">HIDROLÓGICA</th>
+          <th style="height: 38px;" class="tablaDos" rowspan="2">HIDROLÓGICA</th>
           <th class="tablaDos">BUENA</th>
           <th class="tablaDos">ALIVIANDO</th>
           <th class="tablaDos" rowspan="2"> TOTAL</th>
@@ -704,18 +750,21 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
         </tr>
 
         <tr>
-          <th class="tablaDos">90% < B < 100% </th>
+          <th class="tablaDos">90% < A < 100% </th>
           <th class="tablaDos">
             < 100 %</th>
         </tr>
 
-        <tr>
-          <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-          <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-          <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-          <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-          <td class="tablaDos" style="font-size: 12px;">PRUEBA</td>
-        </tr>
+        <?php foreach ($condiciones as $key => $values) { ?>
+          <tr>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $key ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (($values[4] + $values[5]) * 100) / $values[0] : 0 ?>%</td>
+          </tr>
+        <?php
+        } ?>
 
         <tr>
           <th class="spazio" colspan="7"></th>
@@ -730,11 +779,11 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
         </tr>
 
         <tr>
-          <td class="text-celdas total" style="font-size: 12px; height: 20px;"><b>TOTAL</b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b>PRUEBA</b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b>PRUEBA</b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b>PRUEBA</b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b>PRUEBA</b></td>
+          <td class="text-celdas total" style="font-size: 12px; height: 27px;"><b>TOTAL</b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4]."/".$CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5]."/".$CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4]+$CT[5])."/".$CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (($CT[4]+$CT[5])*100)/$CT[0] : 0 ?>%</b></td>
         </tr>
 
 
@@ -769,7 +818,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
   <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 500px; margin-left: 640px;"><b> <u><?php echo $lista[0] ?> EMBALSES</u> EN CONDICIONES BAJAS ( < 30 %)</b>
   </div>
 
-  <div class="box-title"><b> <?php echo round(($lista[2]+$lista[3])*100/($lista[2]+$lista[3]+$lista[1]+$lista[0]),2) ?>% DE LOS EMBALSES SE ENCUENTRAN EN CONDICIONES NORMALES A MUY BUENAS</b></div>
+  <div class="box-title"><b> <?php echo round(($lista[2] + $lista[3]) * 100 / ($lista[2] + $lista[3] + $lista[1] + $lista[0]), 2) ?>% DE LOS EMBALSES SE ENCUENTRAN EN CONDICIONES NORMALES A MUY BUENAS</b></div>
 
   <!-- PAGINA 6 -->
 
@@ -791,43 +840,43 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
 
   <div style="position: absolute; width: 0.5px; height: 600px; background-color: #7F7F7F; margin-top: 110px; margin-left: 525px;"></div>
 
-  <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha2));?> HASTA HOY</b>
+  <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha2)); ?> HASTA HOY</b>
   </div>
 
   <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-2.png" ?>">
 
   <div style="position: absolute; margin-top: 670px; margin-left: 50px; width: 95%; height: 100px;">
-    <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió <?php 
-    if(abs(($volumenes[5]-$volumenes[2])) != 0){
-      echo round((abs($volumenes[1]-$volumenes[2]) - abs($volumenes[5]-$volumenes[2]))*100/abs($volumenes[5]-$volumenes[2]),2);
-    }else{
-      echo 0;
-    }; 
-    
-    ?>% comparado con la semana pasada y <br> <?php 
-    if(abs(($volumenes[4]-$volumenes[2])) != 0){
-      echo round((abs($volumenes[1]-$volumenes[2]) - abs($volumenes[4]-$volumenes[2]))*100/abs(($volumenes[4]-$volumenes[2])),2);
-    }else{
-      echo 0;
-    };    
-    
-    ?>% con respecto a hace 15 días)</b></div>
-    <div style="position: absolute; margin-left: 550px; font-size: 18px; color:red; text-align: center;"><b> (Varió <?php 
+    <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió <?php
+                                                                                                  if (abs(($volumenes[5] - $volumenes[2])) != 0) {
+                                                                                                    echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[5] - $volumenes[2])) * 100 / abs($volumenes[5] - $volumenes[2]), 2);
+                                                                                                  } else {
+                                                                                                    echo 0;
+                                                                                                  };
 
-    if(abs(($volumenes[5]-$volumenes[3])) != 0){
-      echo round((abs($volumenes[1]-$volumenes[3]) - abs($volumenes[5]-$volumenes[3]))*100/abs(($volumenes[5]-$volumenes[3])),2);
-    }else{
-      echo 0;
-    };    
-    ?>% comparado con la semana pasada y <br> <?php 
-    if(abs(($volumenes[4]-$volumenes[3])) != 0){
-      echo round((abs($volumenes[1]-$volumenes[3]) - abs($volumenes[4]-$volumenes[3]))*100/abs(($volumenes[4]-$volumenes[3])),2);
-    }else{
-      echo 0;
-    };
-    
-    
-    ?>% con respecto a hace 15 días)</b></div>
+                                                                                                  ?>% comparado con la semana pasada y <br> <?php
+                                                                                                                                            if (abs(($volumenes[4] - $volumenes[2])) != 0) {
+                                                                                                                                              echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[4] - $volumenes[2])) * 100 / abs(($volumenes[4] - $volumenes[2])), 2);
+                                                                                                                                            } else {
+                                                                                                                                              echo 0;
+                                                                                                                                            };
+
+                                                                                                                                            ?>% con respecto a hace 15 días)</b></div>
+    <div style="position: absolute; margin-left: 550px; font-size: 18px; color:red; text-align: center;"><b> (Varió <?php
+
+                                                                                                                    if (abs(($volumenes[5] - $volumenes[3])) != 0) {
+                                                                                                                      echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[5] - $volumenes[3])) * 100 / abs(($volumenes[5] - $volumenes[3])), 2);
+                                                                                                                    } else {
+                                                                                                                      echo 0;
+                                                                                                                    };
+                                                                                                                    ?>% comparado con la semana pasada y <br> <?php
+                                                                                                                                                              if (abs(($volumenes[4] - $volumenes[3])) != 0) {
+                                                                                                                                                                echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[4] - $volumenes[3])) * 100 / abs(($volumenes[4] - $volumenes[3])), 2);
+                                                                                                                                                              } else {
+                                                                                                                                                                echo 0;
+                                                                                                                                                              };
+
+
+                                                                                                                                                              ?>% con respecto a hace 15 días)</b></div>
   </div>
 
   <!-- PAGINA 7 -->
@@ -873,9 +922,10 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
          border-radius: 5; height: 10px; width: 10px;"></div>Sin Cambioss <b> <?php echo $valores[1][2] ?> Embalses</b></p>
 
   </div>
-  <?php setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Establecer la localización a español?>
+  <?php setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Establecer la localización a español
+  ?>
 
-  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha1)), MB_CASE_UPPER, 'UTF-8');?> </h4>
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha1)), MB_CASE_UPPER, 'UTF-8'); ?> </h4>
 
   <!-- PAGINA 8 -->
   <div style="page-break-before: always;"></div>
@@ -915,7 +965,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
 
   </div>
 
-    <h4 style="position: absolute; top: 640px;  right: 0; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8');?></h4>
+  <h4 style="position: absolute; top: 640px;  right: 0; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8'); ?></h4>
 
   <!-- PAGINA 9 -->
 
