@@ -132,6 +132,7 @@ $valores = json_encode($valores, true);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
@@ -196,17 +197,19 @@ $valores = json_encode($valores, true);
     }
 </style>
 
-<body>
+<body style="height:800px">
 
     <!-- Cantidades de embalse por porcentaje de volumen -->
-    <div id="mapa-portada"></div>
+    <div id="mapa-portada" style="position:absolute; top:-100%;"></div>
     <br>
     <!-- Variacion de volumen respecto a la fecha de sequia -->
-    <div id="mapa-periodo-uno"></div>
+    <div id="mapa-periodo-uno" style="position:absolute; top:-100%;"></div>
     <br>
     <!-- Variacion de volumen respecto a la fecha de lluvia -->
-    <div id="mapa-periodo-dos"></div>
-
+    <div id="mapa-periodo-dos" style="position:absolute; top:-100%;"></div>
+    <div class="loaderPDF">
+                <div class="lds-dual-ring"></div>
+        </div>
 </body>
 
 <script>
