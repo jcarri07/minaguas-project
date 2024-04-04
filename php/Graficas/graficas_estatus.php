@@ -294,7 +294,7 @@ if ($count >= 1) {
                 title: 'grafica',
 
                 data: {
-                    labels: [["Volumen Útil", "total(VUT)"], ["Volumen Disponible", "<?php echo date('d/m/y', strtotime($fecha1)); ?>"], ["Variacion de","Volumen", "Hasta Hoy"]],
+                    labels: [["Volumen","Útil", "total(VUT)"], ["Volumen","Disponible", "Actual"] ,["Volumen","Disponible", "<?php echo date('d/m/y', strtotime($fecha1)); ?>"], ["Variacion de","Volumen", "Hasta Hoy"]],
                     datasets: [
 
                         <?php
@@ -403,7 +403,7 @@ if ($count >= 1) {
                 title: 'grafica',
 
                 data: {
-                    labels: [["Volumen Útil", "total(VUT)"], ["Volumen Disponible", "<?php echo date('d/m/y', strtotime($fecha2)); ?>"], ["Variacion de ","Volumen", "Hasta Hoy"]],
+                    labels: [["Volumen","Útil", "total(VUT)"], ["Volumen","Disponible", "Actual"] ,["Volumen","Disponible", "<?php echo date('d/m/y', strtotime($fecha2)); ?>"], ["Variacion de","Volumen", "Hasta Hoy"]],
                     datasets: [
 
                         <?php

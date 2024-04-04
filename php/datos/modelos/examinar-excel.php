@@ -9,6 +9,7 @@ require_once '../../Conexion.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 function buscarPosicion($array, $valorABuscar, $columna) {
     //$columna = 'codigo'; // Columna en la que deseas buscar
@@ -149,6 +150,10 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
                 $columna = $array_codigos_consulta[$i]['columna'];
                 $valor_extraccion_aux = $spreadsheet->getActiveSheet()->getCell($columna . $fila)->getValue();
                 if($valor_extraccion_aux != ""){
+
+                    if($spreadsheet->getActiveSheet()->getCell($columna . $fila)->getDataType() === DataType::TYPE_FORMULA) {
+                        $valor_extraccion_aux = $spreadsheet->getActiveSheet()->getCell($columna . $fila)->getCalculatedValue();
+                    }
                     
                     $index_codigo = buscarPosicion($array_codigos_sql, $array_codigos_consulta[$i]['codigo'], 'codigo');
                     $codigo_aux = $array_codigos_sql[$index_codigo]['id_codigo_bd'];
