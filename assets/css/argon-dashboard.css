@@ -24634,9 +24634,9 @@ hr.horizontal.gray-light {
   vertical-align: middle;
 }
 
-.table tbody tr:last-child td {
+/*.table tbody tr:last-child td {
   border-width: 0;
-}
+}*/
 
 .table> :not(:last-child)> :last-child>* {
   border-bottom-color: #e9ecef;

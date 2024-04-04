@@ -109,7 +109,7 @@
 ?>
                 <div class="row">
                     <div class="col text-center">
-                        <button class="btn btn-primary px-3" data-bs-dismiss="modal" onclick="openModalParametrosAnio();">
+                        <button class="btn btn-primary px-3" data-bs-dismiss="modal" onclick="openModalParametrosAnio('<?php echo $id_embalse;?>', $('#body-details #anio').val());">
                             <i class="fas fa-info-circle" title="Detalles" aria-hidden="true"></i>
                             Detalles y Parámetros de Reportes (Año <?php echo $anio;?>)
                         </button>
@@ -149,7 +149,7 @@
                         if($extraccion_array[$j] !== "") {
                             $fila = explode("&", $extraccion_array[$j]);
 
-                            if(buscarPosicion($array_codigos_sql, $fila[0], 'id_codigo_bd') !== -1)
+                            if(buscarPosicion($array_codigos_sql, $fila[0], 'id_codigo_bd') !== -1 && is_numeric($fila[1]))
                                 $extraccion += $fila[1];
                         }
                     }

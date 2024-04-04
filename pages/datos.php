@@ -464,7 +464,7 @@
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
-                <h3 class="font-weight-bolder text-primary text-gradient">Historial de Adjunciones del Embalse</h3>
+                <h3 class="font-weight-bolder text-primary text-gradient title">Historial de Adjunciones del Embalse</h3>
                 <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#modal-details').modal('show');">X</button>
               </div>
               <div class="card-body pb-3" id="body-history-excel">
@@ -998,6 +998,8 @@
     function openModalHistoryAdjunciones(id_embalse){
 
       $("#body-history-excel").html("<h3 class='text-center'>Cargando...</h3>");
+      $("#modal-history-excel h3.title").text("Historial de Adjunciones del Embalse");
+      
       $("#modal-history-excel").modal("show");
 
       var datos = new FormData();
@@ -1029,6 +1031,33 @@
       $("#fecha_excel_aux").text(fecha_excel);
       $("#modal-action .message").html("<h4 class='text-center'>¿Desea Eliminar el conjunto de datos adjuntados del archivo " + archivo + " al embalse de " + nombre_embalse + "?</h4>");
       $("#modal-action").modal("show");
+    }
+
+    function openModalParametrosAnio(id_embalse, anio) {
+      $("#body-history-excel").html("<h3 class='text-center'>Cargando...</h3>");
+      $("#modal-history-excel h3.title").text("Detalles e Información de Reportes de " + $("#nombre_embalse_aux").text());
+      $("#modal-history-excel").modal("show");
+
+      var datos = new FormData();
+      datos.append('id_embalse', id_embalse);
+      datos.append('nombre_embalse', $("#nombre_embalse_aux").text());
+      datos.append('anio', anio);
+
+      $.ajax({
+        url: 			'php/datos/vistas/historial_anio_reportes.php',
+        type:			'POST',
+        data:			datos,
+        cache:          false,
+        contentType:    false,
+        processData:    false,
+        success: function(response){
+          $("#body-history-excel").html(response);
+          iniciarTabla('table-history-excel');
+        }
+        ,
+        error: function(response){
+        }
+      });
     }
     
   </script>
