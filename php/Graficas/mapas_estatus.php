@@ -230,8 +230,8 @@ $valores = json_encode($valores, true);
     <!-- Variacion de volumen respecto a la fecha de lluvia -->
     <div id="mapa-periodo-dos" style="position:absolute; top:-100%;"></div>
     <div class="loaderPDF">
-                <div class="lds-dual-ring"></div>
-        </div>
+        <div class="lds-dual-ring"></div>
+    </div>
 </body>
 
 <script>
@@ -280,8 +280,14 @@ $valores = json_encode($valores, true);
 
     var mapa_portada = L.map('mapa-portada').setView([9, -67], 7);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     attribution: '© OpenStreetMap contributors'
+    // }).addTo(mapa_portada);
+
+    L.tileLayer('https://{s}.tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', {
+        maxZoom: 19,
+        attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.thunderforest.com/transport/">Andy Allan</a>',
+        apikey: '38db809be13a400c8c5061e304ba99cd' // Reemplaza esto con tu clave de API de Thunderforest
     }).addTo(mapa_portada);
 
     //Añadiendo los marcadores al mapa de la portada.
@@ -313,8 +319,14 @@ $valores = json_encode($valores, true);
 
     var mapa_per_uno = L.map('mapa-periodo-uno').setView([9, -67], 7);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     attribution: '© OpenStreetMap contributors'
+    // }).addTo(mapa_per_uno);
+
+    L.tileLayer('https://{s}.tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', {
+        maxZoom: 19,
+        attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.thunderforest.com/transport/">Andy Allan</a>',
+        apikey: '38db809be13a400c8c5061e304ba99cd' // Reemplaza esto con tu clave de API de Thunderforest
     }).addTo(mapa_per_uno);
 
     //Añadiendo los marcadores al mapa de la variacion de sequia.
@@ -337,8 +349,14 @@ $valores = json_encode($valores, true);
 
     var mapa_per_dos = L.map('mapa-periodo-dos').setView([9, -67], 7);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     attribution: '© OpenStreetMap contributors'
+    // }).addTo(mapa_per_dos);
+
+    L.tileLayer('https://{s}.tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', {
+        maxZoom: 19,
+        attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.thunderforest.com/transport/">Andy Allan</a>',
+        apikey: '38db809be13a400c8c5061e304ba99cd' // Reemplaza esto con tu clave de API de Thunderforest
     }).addTo(mapa_per_dos);
 
     <?php
