@@ -463,7 +463,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if (((abs(($x - $min)) * (100 / ($max - $min))) >= 0 && (abs(($x - $min)) * (100 / ($max - $min))) < 30)) {
+              if (((abs(($x - $min)) * (100 / ($nor - $min))) >= 0 && (abs(($x - $min)) * (100 / ($nor - $min))) < 30)) {
                 $cuenta++; ?>
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
@@ -511,7 +511,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($max - $min))) >= 30 && (abs(($x - $min)) * (100 / ($max - $min))) < 60) {
+              if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 30 && (abs(($x - $min)) * (100 / ($nor - $min))) < 60) {
                 $cuenta++; ?>
 
                 <tr>
@@ -556,7 +556,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($max - $min))) >= 60 && (abs(($x - $min)) * (100 / ($max - $min))) < 90) {
+              if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 60 && (abs(($x - $min)) * (100 / ($nor - $min))) < 90) {
                 $cuenta++; ?>
 
                 <tr>
@@ -608,7 +608,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($max - $min))) >= 90 && (abs(($x - $min)) * (100 / ($max - $min))) <= 100) {
+              if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 90 && (abs(($x - $min)) * (100 / ($nor - $min))) <= 100) {
                 $cuenta++; ?>
 
                 <tr>
@@ -648,7 +648,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
           $min = $bati->volumenMinimo();
           $max = $bati->volumenMaximo();
           $nor = $bati->volumenNormal();
-          if ((abs(($x - $min)) * (100 / ($max - $min))) > 100) {
+          if ((abs(($x - $min)) * (100 / ($nor - $min))) > 100) {
             $cuenta++; ?>
 
             <tr>
