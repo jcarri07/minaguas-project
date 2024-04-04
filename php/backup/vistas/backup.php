@@ -16,7 +16,8 @@
 
                 <div class="card-body p-3 pb-0">
                     <div class="text-center mb-5 mt-5">
-                        <button type="button" onclick="alert('Te la creiste we 😂');" title="Descargar Respaldo" class="h6 py-1 btn mb-0 btn-outline-secondary btn-block border-2">
+                        <!--<button type="button" onclick="alert('Te la creiste we 😂');" title="Descargar Respaldo" class="h6 py-1 btn mb-0 btn-outline-secondary btn-block border-2">-->
+                        <button type="button" onclick="respaldo();" title="Descargar Respaldo" class="h6 py-1 btn mb-0 btn-outline-secondary btn-block border-2">
                             <i class="fa fa-hdd-o text-body opacity-10" style="font-size: 20px;"></i>
                             <span class="text-dark">
                                 Descargar Respaldo
