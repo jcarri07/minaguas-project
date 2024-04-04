@@ -118,7 +118,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
 }
 
 $valores = array($cantidades_p, $cantidades_sequia, $cantidades_lluvia);
-$valores = json_encode($valores,true);
+$valores = json_encode($valores, true);
 // var_dump($embalses_porcentaje);
 // var_dump(implode(" - ",$cantidades_p));
 // var_dump(mysqli_fetch_all($condiciones_actuales1));
@@ -351,12 +351,14 @@ $valores = json_encode($valores,true);
 
     // window.addEventListener('load', function() {
     // setTimeout(function() {
-        window.addEventListener('load', function() {
+    window.addEventListener('load', function() {
         setTimeout(function() {
             const x = document.querySelector("#mapa-portada");
-            html2canvas(x,{useCORS: true,
-		width: x.offsetWidth,
-		height: x.offsetHeight,}).then(function(canvas) { //PROBLEMAS
+            html2canvas(x, {
+                useCORS: true,
+                width: x.offsetWidth,
+                height: x.offsetHeight,
+            }).then(function(canvas) { //PROBLEMAS
                 //$("#ca").append(canvas);
                 canvas.willReadFrequently = true,
                     dataURL = canvas.toDataURL("image/jpeg", 0.9);
@@ -376,12 +378,14 @@ $valores = json_encode($valores,true);
             });
 
             const y = document.querySelector("#mapa-periodo-uno");
-            html2canvas(y,{useCORS: true,
-		width: y.offsetWidth,
-		height: y.offsetHeight,}).then(function(canvas) { //PROBLEMAS
+            html2canvas(y, {
+                useCORS: true,
+                width: y.offsetWidth,
+                height: y.offsetHeight,
+            }).then(function(canvas) { //PROBLEMAS
                 //$("#ca").append(canvas);
                 canvas.willReadFrequently = true,
-                
+
                     dataURL = canvas.toDataURL("image/jpeg", 0.9);
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '../guardar-imagen.php', true);
@@ -399,9 +403,11 @@ $valores = json_encode($valores,true);
             });
 
             const z = document.querySelector("#mapa-periodo-dos");
-            html2canvas(z,{useCORS: true,
-		width: z.offsetWidth,
-		height: z.offsetHeight,}).then(function(canvas) { //PROBLEMAS
+            html2canvas(z, {
+                useCORS: true,
+                width: z.offsetWidth,
+                height: z.offsetHeight,
+            }).then(function(canvas) { //PROBLEMAS
                 //$("#ca").append(canvas);
                 canvas.willReadFrequently = true,
                     dataURL = canvas.toDataURL("image/jpeg", 0.9);
@@ -420,7 +426,7 @@ $valores = json_encode($valores,true);
                     }
                 }
             });
-        }, 1500);
+        }, 0);
     });
     // });
 </script>
