@@ -172,15 +172,15 @@ if ($count >= 1) {
         <!--div style=" width: 1200px;"-->
         <div>
 
-            <div style="width:550px !important; height:450px;"><canvas id="chart" class="border border-radius-lg"></canvas></div>
-            <div style="width:450px !important; height:450px;"><canvas id="barra1" class="border border-radius-lg"></canvas></div>
-            <div style="width:450px !important; height:450px;"><canvas id="barra2" class="border border-radius-lg"></canvas></div>
-            <div style="width:900px !important; height:300px;"><canvas id="abastecimiento" class="border border-radius-lg"></canvas></div>
+            <div style="width:550px !important; height:450px;position:absolute; top:-100%;"><canvas id="chart" class="border border-radius-lg"></canvas></div>
+            <div style="width:450px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra1" class="border border-radius-lg"></canvas></div>
+            <div style="width:450px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra2" class="border border-radius-lg"></canvas></div>
+            <div style="width:900px !important; height:300px;position:absolute; top:-100%;"><canvas id="abastecimiento" class="border border-radius-lg"></canvas></div>
 
         </div>
-        <!-- <div class="loaderPDF">
+        <div class="loaderPDF">
                 <div class="lds-dual-ring"></div>
-            </div> -->
+        </div>
     </body>
     <script>
         $(document).ready(function() {
