@@ -13,8 +13,9 @@ $fecha_lluvia = $fechas[1]['configuracion'];
 //EMBALSES - PORCENTAJE Y VARIACION
 $embalses_porcentaje = [];
 $cantidades_p = [0, 0, 0, 0, 0];
+$condiciones = [];
 
-$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso FROM embalses WHERE estatus = 'activo';");
+$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo';");
 
 while ($row = mysqli_fetch_array($queryEmbalses)) {
     //Saco la ubicacion de los embalses.
@@ -30,24 +31,44 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
     if ($porcentaje < 30) {
         array_push($array, "i_rojo");
         $cantidades_p[0] += 1;
+        // agregarACondiciones($row["operador"], $condiciones, 1);
     } else if ($porcentaje >= 30 && $porcentaje < 60) {
         array_push($array, "i_azulclaro");
         $cantidades_p[1] += 1;
+        // agregarACondiciones($row["operador"], $condiciones, 2);
     } else if ($porcentaje >= 60 && $porcentaje < 90) {
         array_push($array, "i_azul");
         $cantidades_p[2] += 1;
+        // agregarACondiciones($row["operador"], $condiciones, 3);
     } else if ($porcentaje >= 90 && $porcentaje <= 100) {
         array_push($array, "i_verde");
         $cantidades_p[3] += 1;
+        // agregarACondiciones($row["operador"], $condiciones, 4);
     } else {
         array_push($array, "i_verdeclaro");
         $cantidades_p[4] += 1;
+        // agregarACondiciones($row["operador"], $condiciones, 5);
     }
 
     // Guardo el nombre del embalse
     array_push($array, $row["nombre_embalse"]);
     array_push($embalses_porcentaje, $array);
 }
+
+// function agregarACondiciones($operador, &$array, $porcentaje){
+//     if(array_key_exists($operador, $array)){
+//         $v = explode("-",$array[$operador]);
+//         $v[0] = intval($v[0]) + 1;
+//         $v[$porcentaje] = intval($v[$porcentaje]) + 1;
+//         $array[$operador] = implode("-", $v);
+//         return;
+//     }else{
+//         $array[$operador] = "0-0-0-0-0-0";
+//         agregarACondiciones($operador, $array, $porcentaje);
+//     }
+// }
+
+// var_dump($condiciones);
 
 $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_sequia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
@@ -119,6 +140,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
 
 $valores = array($cantidades_p, $cantidades_sequia, $cantidades_lluvia);
 $valores = json_encode($valores, true);
+// var_dump(json_encode($condiciones));
 // var_dump($embalses_porcentaje);
 // var_dump(implode(" - ",$cantidades_p));
 // var_dump(mysqli_fetch_all($condiciones_actuales1));
@@ -429,7 +451,7 @@ $valores = json_encode($valores, true);
                     }
                 }
             });
-        }, 0);
+        }, 500);
     });
     // });
 </script>
