@@ -718,7 +718,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
         <th class="spazio" style="border-bottom: 1px solid #707273; border-right: 1px solid #707273;"><b></b></th>
         <th class="tablaDos" colspan="2"><b> BAJA </b></th>
         <th class="tablaDos" colspan="2"><b></b> NORMAL-BAJO</th>
-        <th class="tablaDos" colspan="2"><b></b> NORMAL-BAJO</th>
+        <th class="tablaDos" colspan="2"><b></b> NORMAL-ALTO</th>
       </tr>
 
 
@@ -750,7 +750,7 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
         </tr>
 
         <tr>
-          <th class="tablaDos">90% < B < 100% </th>
+          <th class="tablaDos">90% < A < 100% </th>
           <th class="tablaDos">
             < 100 %</th>
         </tr>
