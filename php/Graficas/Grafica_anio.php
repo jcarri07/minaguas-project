@@ -18,14 +18,14 @@ $año = $y;
 if ($tipo == "bar") {
     $aux = "SELECT id_registro, d.fecha, (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora, (SELECT cota_actual 
     FROM datos_embalse 
-    WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
+    WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND cota_actual <> 0 AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
 FROM datos_embalse d, embalses e 
 WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id' AND YEAR(d.fecha) = '$y'  
 GROUP BY d.fecha 
 ORDER BY d.fecha ASC;";
 }
 if ($tipo == "line") {
-    $aux = "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND id_embalse = '$id' AND YEAR(fecha) = '$y' ORDER BY fecha ASC;";
+    $aux = "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND id_embalse = '$id' AND YEAR(fecha) = '$y' AND cota_actual <> 0 ORDER BY fecha ASC;";
 }
 
 $bati = new Batimetria($id, $conn);
@@ -120,7 +120,7 @@ if ($count >= 1) {
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen del año',data: [";
+                            <?php echo "{label:'Volumen del año',pointRadius: 0,data: [";
                             $min = $embalses[0]["cota_min"];
                             $max = $embalses[0]["cota_max"];
                             $j = 0;

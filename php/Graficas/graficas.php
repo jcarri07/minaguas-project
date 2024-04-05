@@ -25,7 +25,7 @@ $re = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($re);
 if ($count >= 1) {
 
-    $res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND (YEAR(fecha) = '$fecha_actual' OR YEAR(fecha) = '$f') $text ORDER BY fecha,hora ASC;");
+    $res = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND cota_actual <> 0 AND (YEAR(fecha) = '$fecha_actual' OR YEAR(fecha) = '$f') $text ORDER BY fecha,hora ASC;");
 
 
         $embalses = mysqli_fetch_all($re, MYSQLI_ASSOC);

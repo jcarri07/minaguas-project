@@ -143,7 +143,7 @@ $res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT MAX(cot
 
 $emb = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id';");
 
-$an = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND YEAR(fecha) = '$anio' AND id_embalse = '$id' GROUP BY fecha ORDER BY fecha ASC;");
+$an = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND YEAR(fecha) = '$anio' AND id_embalse = '$id' AND cota_actual <> 0 GROUP BY fecha ORDER BY fecha ASC;");
 
 $datos1 = mysqli_fetch_all($r, MYSQLI_ASSOC);
 $datos2 = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -284,11 +284,11 @@ $j = 0;
                                             if ($fsemanas[$k]['semana'] == ($datos2[$j]['semana'])) {
                                                 echo  round($bati->getByCota(date('Y', strtotime($datos2[$j]["fecha"])), $datos2[$j]["cota_actual"])[1], 2); ?>, <?php
 
-                                                if ($max < $datos1[$i]["cota_actual"]) {
-                                                    $max = $datos1[$i]["cota_actual"];
+                                                if ($max < $datos2[$j]["cota_actual"]) {
+                                                    $max = $datos2[$j]["cota_actual"];
                                                 }
-                                                if ($min > $datos1[$i]["cota_actual"]) {
-                                                    $min = $datos1[$i]["cota_actual"];
+                                                if ($min > $datos2[$j]["cota_actual"]) {
+                                                    $min = $datos2[$j]["cota_actual"];
                                                 }
                                                                                                                             $j++;
                                                                                                                         } else {
