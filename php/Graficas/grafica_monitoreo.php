@@ -162,7 +162,7 @@ if ($count >= 1) {
 ?>
 
 <?php
-for ($k = $numeroSemana; $k < $semanas; $k++) {
+for ($k = $numeroSemana; $k < $semanas+1; $k++) {
     if (isset($datos1[$i]['semana'])) {
         if ($k == ($datos1[$i]['semana'])) {
             $array1[$aux] = $bati->getByCota(date('Y', strtotime($datos1[$i]["fecha"])), $datos1[$i]["cota_actual"])[1];
@@ -173,9 +173,14 @@ for ($k = $numeroSemana; $k < $semanas; $k++) {
     } else {
         $array1[$aux] = 0;
     }
+   
+    $aux++;
+}
+$aux = 0;
+for ($k = $numeroSemana; $k < $semanas+1; $k++) {
     if (isset($datos2[$j]['semana'])) {
         if ($k == ($datos2[$j]['semana'])) {
-            $array2[$aux] = $bati->getByCota(date('Y', strtotime($datos1[$j]["fecha"])), $datos2[$j]["cota_actual"])[1];
+            $array2[$aux] = $bati->getByCota(date('Y', strtotime($datos2[$j]["fecha"])), $datos2[$j]["cota_actual"])[1];
             $j++;
         } else {
             $array2[$aux] = 0;
@@ -545,7 +550,7 @@ $j = 0;
                                 yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_min"])[1]; ?>,
                                 cota: "Volumen minimo",
                                 color: 'black',
-                                h: 15,
+                                h: -15,
                             },
                             {
                                 yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_nor"])[1]; ?>,
@@ -720,7 +725,7 @@ $j = 0;
                                 yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_min"])[1]; ?>,
                                 cota: "Volumen minimo",
                                 color: 'black',
-                                h: 15,
+                                h: -15,
                             },
                             {
                                 yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_nor"])[1]; ?>,
