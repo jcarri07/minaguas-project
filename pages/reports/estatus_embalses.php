@@ -480,7 +480,7 @@ $sin_cambio = "../../assets/icons/f-igual.png";
                 $cuenta++; ?>
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
                 </tr>
 
@@ -534,7 +534,7 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
                 </tr>
 
@@ -584,7 +584,7 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
                 </tr>
 
@@ -641,7 +641,7 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
                 </tr>
 
@@ -686,7 +686,7 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
             <tr>
               <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo round($x, 2) ?></td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
               <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
             </tr>
 
