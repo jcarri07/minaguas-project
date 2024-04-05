@@ -820,11 +820,15 @@
 
         var valor_extraccion = extraccion_aux[1];
         if(this.value == "30") {
-          valor_extraccion = extraccion_aux[1] + "%";
-          if(extraccion_aux[1] < 1) {
-            valor_extraccion = (extraccion_aux[1] * 100) + "%";
+          if($.isNumeric(extraccion_aux[1])) {
+            valor_extraccion = extraccion_aux[1] + "%";
+            if(extraccion_aux[1] < 1) {
+              valor_extraccion = (extraccion_aux[1] * 100) + "%";
+            }
           }
         }
+        if( this.value != "30" && this.value != "31" && $.isNumeric(extraccion_aux[1]) )
+          valor_extraccion = Number(extraccion_aux[1]).toFixed(3);
         $("#valor_extraccion_" + row).val(valor_extraccion);
 
         $(this).attr("disabled", true);

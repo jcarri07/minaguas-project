@@ -200,7 +200,8 @@
                         $mes_espaniol = ucfirst(strftime("%B", strtotime("$anio-$mes-01")));
 ?>
                         <h4 class="text-center">Sumatorias y Promedios <?php echo $mes == "" ? "Año $anio" : "$mes_espaniol, $anio";?></h4>
-                        <table class="table align-items-center text-sm text-center table-sm table-punteada">
+                        <div class="table-responsive">
+                        <table class="table align-items-center text-sm text-xs text-center table-sm table-punteada">
                             <thead class="table-primary">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">#</th>
@@ -210,6 +211,7 @@
                                     <th scope="col" class="sort" data-sort="budget">Concepto</th>
                                     <th scope="col" class="sort" data-sort="budget">Sumatoria (1000 <span style="text-transform: lowercase;">m</span><sup>3</sup>)</th>
                                     <th scope="col" class="sort" data-sort="budget">Promedio (1000 <span style="text-transform: lowercase;">m</span><sup>3</sup>)</th>
+                                    <th scope="col" class="sort" data-sort="budget">Volumen Caudal (Lts/seg) (LPS)</th>
                                 </tr>
                             </thead>
                             <tbody class="list">
@@ -260,10 +262,25 @@
                                         
 ?>
                                     </td>
+                                    <td style="<?php echo $negrita;?>"  class="<?php echo $celda_subtotal_top_bottom;?>">
+<?php 
+                                        if($index !== -1) {
+                                            $divisor = $array_sumas[$index]['cant_mayor_0'] != "0" ? $array_sumas[$index]['cant_mayor_0'] : 1;
+                                            echo number_format( ($array_sumas[$index]['suma'] / $divisor) , 3, ",", "");
+                                        }
+                                        else
+                                            echo "";
+
+                                        if($es_total) 
+                                            echo "-";
+?>  
+                                    </td>
                                     <td style="<?php echo $negrita;?>"  class="<?php echo $celda_subtotal_top_bottom . " " . $celda_subtotal_right;?>">
 <?php 
-                                        if($index !== -1)
-                                            echo number_format( ($array_sumas[$index]['suma'] / $array_sumas[$index]['cant_mayor_0']) , 3, ",", "");
+                                        if($index !== -1) {
+                                            $divisor = $array_sumas[$index]['cant_mayor_0'] != "0" ? $array_sumas[$index]['cant_mayor_0'] : 1;
+                                            echo number_format( (($array_sumas[$index]['suma'] / $divisor) * 1000000/86400) , 3, ",", "");
+                                        }
                                         else
                                             echo "";
 
@@ -283,6 +300,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
 <?php
                                 }
@@ -290,6 +309,7 @@
 ?>
                             </tbody>
                         </table>
+                        </div>
 
 
                         <div class="punteado">
@@ -338,7 +358,7 @@
                 array[index_aux]["cant"]++;
             }
             else {
-                var aux = {"class": $(this).attr("class"), "nombre": $(this).attr("title"), "cant": 1};
+                var aux = {"class": $(this).attr("class"), "nombre": $(this).attr("title") + " (1000 m" + "3".sup() + ")", "cant": 1};
                 array.push(aux);
             }
         });
@@ -346,7 +366,7 @@
         for(var i = 0 ; i < array.length ; i++) {
             $("td[class=" + array[i]['class'] + "]").each(function(index) {
                 if(index == 0) {
-                    $(this).text(array[i]['nombre']);
+                    $(this).html(array[i]['nombre']);
                     $(this).attr("rowspan", array[i]['cant']);
                 }
                 else{
