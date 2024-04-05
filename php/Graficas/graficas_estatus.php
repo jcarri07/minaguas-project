@@ -124,16 +124,16 @@ if ($count >= 1) {
             $volumen_fechas[4] += $bati->volumenDisponibleByCota($anio, $volumen_quince[$j]["cota_actual"]);
             $volumen_fechas[5] += $bati->volumenDisponibleByCota($anio, $volumen_siete[$j]["cota_actual"]);
 
-            if ($x == NULL || ((abs(($x - $min)) * (100 / ($max - $min))) >= 0 && (abs(($x - $min)) * (100 / ($max - $min))) < 30)) {
+            if ($x == NULL || ((abs(($x - $min)) * (100 / ($nor - $min))) >= 0 && (abs(($x - $min)) * (100 / ($nor - $min))) < 30)) {
                 $lista[0]++;
             };
-            if ((abs(($x - $min)) * (100 / ($max - $min))) >= 30 && (abs(($x - $min)) * (100 / ($max - $min))) < 60) {
+            if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 30 && (abs(($x - $min)) * (100 / ($nor - $min))) < 60) {
                 $lista[1]++;
             };
-            if ((abs(($x - $min)) * (100 / ($max - $min))) >= 60 && (abs(($x - $min)) * (100 / ($max - $min))) < 90) {
+            if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 60 && (abs(($x - $min)) * (100 / ($nor - $min))) < 90) {
                 $lista[2]++;
             };
-            if ((abs(($x - $min)) * (100 / ($max - $min))) >= 90 && (abs(($x - $min)) * (100 / ($max - $min))) <= 100) {
+            if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 90 && (abs(($x - $min)) * (100 / ($nor - $min))) <= 100) {
                 $lista[3]++;
             };
         } else {
