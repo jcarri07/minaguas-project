@@ -176,7 +176,7 @@ const arbitra = {
 
                 for ($t = 0; $t <  count($embalses); $t++) {
                     $bati = new Batimetria($embalses[$t]["id_embalse"], $conn);
-                    $batimetria = $bati->getBatimetria(); ?>
+                    ?>
                     año<?php echo $t; ?> = document.getElementById("ano<?php echo $t; ?>");
                     mes<?php echo $t; ?> = document.getElementById("mes<?php echo $t; ?>");
                     semana<?php echo $t; ?> = document.getElementById("semana<?php echo $t; ?>");
@@ -379,10 +379,11 @@ const arbitra = {
                                             size: 20
                                         },
                                     },
-                                    min: <?php if ($min < $embalses[$t]["cota_min"]) {
+                                    min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
+                                    if ($min < $embalses[$t]["cota_min"]) {
                                                 echo $bati->getByCota($año, $min)[1];
                                             } else {
-                                                if($bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200 < 0){echo 0;}else{
+                                                if($aux - 200 < 0){echo 0;}else{
                                                     echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;}
                                             }; ?>,
                                     max: <?php if ($max > $embalses[$t]["cota_max"]) {
@@ -592,10 +593,11 @@ const arbitra = {
                                             size: 20
                                         },
                                     },
-                                    min: <?php if ($min < $embalses[$t]["cota_min"]) {
+                                    min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
+                                    if ($min < $embalses[$t]["cota_min"]) {
                                                 echo $bati->getByCota($año, $min)[1];
                                             } else {
-                                                if($bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200 < 0){echo 0;}else{
+                                                if($aux - 200 < 0){echo 0;}else{
                                                     echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;}
                                             }; ?>,
                                     max: <?php if ($max > $embalses[$t]["cota_max"]) {
@@ -808,10 +810,11 @@ const arbitra = {
                                             size: 20
                                         },
                                     },
-                                    min: <?php if ($min < $embalses[$t]["cota_min"]) {
+                                    min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
+                                    if ($min < $embalses[$t]["cota_min"]) {
                                                 echo $bati->getByCota($año, $min)[1];
                                             } else {
-                                                if($bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200 < 0){echo 0;}else{
+                                                if($aux - 200 < 0){echo 0;}else{
                                                     echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;}
                                             }; ?>,
                                     max: <?php if ($max > $embalses[$t]["cota_max"]) {
