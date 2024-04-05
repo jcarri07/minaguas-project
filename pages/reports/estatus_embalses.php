@@ -36,13 +36,16 @@ $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
-$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
-    FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = (select MAX(hora) FROM datos_embalse                                                                                                                                                            WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual 
- FROM embalses e
- LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
- WHERE e.estatus = 'activo' 
- GROUP BY id_embalse;");
+
+$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),MAX(d.hora),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora,
+e.nombre_embalse, (SELECT cota_actual 
+                   FROM datos_embalse h 
+                   WHERE h.id_embalse = d.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
+FROM embalses e
+LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+WHERE e.estatus = 'activo'
+GROUP BY id_embalse 
+ORDER BY id_embalse ASC;");
 
 $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
@@ -467,7 +470,13 @@ $sin_cambio = "../../assets/icons/f-igual.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if (((abs(($x - $min)) * (100 / ($nor - $min))) >= 0 && (abs(($x - $min)) * (100 / ($nor - $min))) < 30)) {
+
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              if (((abs(($sum)) * (100 / ($nor - $min))) >= 0 && (abs(($sum)) * (100 / ($nor - $min))) < 30)) {
                 $cuenta++; ?>
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
@@ -515,7 +524,12 @@ $sin_cambio = "../../assets/icons/f-igual.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 30 && (abs(($x - $min)) * (100 / ($nor - $min))) < 60) {
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              if ((abs(($sum)) * (100 / ($nor - $min))) >= 30 && (abs(($sum)) * (100 / ($nor - $min))) < 60) {
                 $cuenta++; ?>
 
                 <tr>
@@ -560,7 +574,12 @@ $sin_cambio = "../../assets/icons/f-igual.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 60 && (abs(($x - $min)) * (100 / ($nor - $min))) < 90) {
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              if ((abs(($sum)) * (100 / ($nor - $min))) >= 60 && (abs(($sum)) * (100 / ($nor - $min))) < 90) {
                 $cuenta++; ?>
 
                 <tr>
@@ -612,7 +631,12 @@ $sin_cambio = "../../assets/icons/f-igual.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 90 && (abs(($x - $min)) * (100 / ($nor - $min))) <= 100) {
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              if ((abs(($sum)) * (100 / ($nor - $min))) >= 90 && (abs(($sum)) * (100 / ($nor - $min))) <= 100) {
                 $cuenta++; ?>
 
                 <tr>
@@ -652,7 +676,12 @@ $sin_cambio = "../../assets/icons/f-igual.png";
           $min = $bati->volumenMinimo();
           $max = $bati->volumenMaximo();
           $nor = $bati->volumenNormal();
-          if ((abs(($x - $min)) * (100 / ($nor - $min))) > 100) {
+          if (($x - $min) <= 0) {
+            $sum = 0;
+          } else {
+            $sum = $x - $min;
+          }
+          if ((abs(($sum)) * (100 / ($nor - $min))) > 100) {
             $cuenta++; ?>
 
             <tr>
@@ -728,16 +757,16 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>TOTAL</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[1]."/".$CT[0] ?></b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[2]."/".$CT[0] ?></b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[3]."/".$CT[0] ?></b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[1] . "/" . $CT[0] ?></b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[2] . "/" . $CT[0] ?></b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[3] . "/" . $CT[0] ?></b></td>
       </tr>
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[1]*100)/$CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[2]*100)/$CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[3]*100)/$CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[1] * 100) / $CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[2] * 100) / $CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[3] * 100) / $CT[0] : 0 ?>%</b></td>
       </tr>
 
     </table>
@@ -784,10 +813,10 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
         <tr>
           <td class="text-celdas total" style="font-size: 12px; height: 27px;"><b>TOTAL</b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4]."/".$CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5]."/".$CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4]+$CT[5])."/".$CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (($CT[4]+$CT[5])*100)/$CT[0] : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (($CT[4] + $CT[5]) * 100) / $CT[0] : 0 ?>%</b></td>
         </tr>
 
 
@@ -916,14 +945,14 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
     <p style="position: absolute; top: 85px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
-        </div>Disminución de Volumen <b> <?php echo $valores[1][1] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
+    </div>Disminución de Volumen <b> <?php echo $valores[1][1] ?> Embalses</b></p>
 
 
     <p style="position: absolute; top: 110px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
-        </div>Sin Cambios <b> <?php echo $valores[1][2] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
+    </div>Sin Cambios <b> <?php echo $valores[1][2] ?> Embalses</b></p>
 
   </div>
   <?php setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Establecer la localización a español
@@ -964,19 +993,19 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
     <p style="position: absolute; top: 85px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
-        </div>Disminución de Volumen <b> <?php echo $valores[2][1] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
+    </div>Disminución de Volumen <b> <?php echo $valores[2][1] ?> Embalses</b></p>
 
 
     <p style="position: absolute; top: 110px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
-        </div>Sin Cambios <b> <?php echo $valores[2][2] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
+    </div>Sin Cambios <b> <?php echo $valores[2][2] ?> Embalses</b></p>
 
 
   </div>
 
-    <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8');?></h4>
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8'); ?></h4>
 
   <!-- PAGINA 9 -->
 
