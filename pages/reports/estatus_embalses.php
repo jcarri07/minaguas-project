@@ -66,6 +66,22 @@ $hidro = mysqli_query($conn, "SELECT COUNT(e.id_embalse),e.operador
                 GROUP BY e.operador
                 ORDER BY id_embalse ASC;");
 
+$embalses_variacion = [];
+
+while ($row = mysqli_fetch_array($condiciones_actuales1)) {
+  $bat = new Batimetria($row["id_embalse"], $conn);
+  $fecha = date($row['fecha']);
+  $anio = date("Y", strtotime($fecha));
+  $final = $bat->volumenActualDisponible();
+  $inicial = $bat->getByCota($anio, $row["cota_actual"])[1];
+  $variacion = $final - $inicial;
+  $porcentaje = $inicial != 0 ? (100 * (($final - $inicial) / abs($inicial))) : 0;
+
+  $array = [$row["operador"], $row["nombre_embalse"], $variacion, $porcentaje];
+  array_push($embalses_variacion, $array);
+}
+
+
 $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 $volumen_primer_periodo = mysqli_fetch_all($condiciones_actuales1, MYSQLI_ASSOC);
 $volumen_segundo_periodo = mysqli_fetch_all($condiciones_actuales2, MYSQLI_ASSOC);
@@ -728,16 +744,16 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>TOTAL</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[1]."/".$CT[0] ?></b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[2]."/".$CT[0] ?></b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[3]."/".$CT[0] ?></b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[1] . "/" . $CT[0] ?></b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[2] . "/" . $CT[0] ?></b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[3] . "/" . $CT[0] ?></b></td>
       </tr>
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[1]*100)/$CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[2]*100)/$CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[3]*100)/$CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[1] * 100) / $CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[2] * 100) / $CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[3] * 100) / $CT[0] : 0 ?>%</b></td>
       </tr>
 
     </table>
@@ -784,10 +800,10 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
         <tr>
           <td class="text-celdas total" style="font-size: 12px; height: 27px;"><b>TOTAL</b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4]."/".$CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5]."/".$CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4]+$CT[5])."/".$CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (($CT[4]+$CT[5])*100)/$CT[0] : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (($CT[4] + $CT[5]) * 100) / $CT[0] : 0 ?>%</b></td>
         </tr>
 
 
@@ -916,14 +932,14 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
     <p style="position: absolute; top: 85px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
-        </div>Disminución de Volumen <b> <?php echo $valores[1][1] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
+    </div>Disminución de Volumen <b> <?php echo $valores[1][1] ?> Embalses</b></p>
 
 
     <p style="position: absolute; top: 110px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
-        </div>Sin Cambios <b> <?php echo $valores[1][2] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
+    </div>Sin Cambios <b> <?php echo $valores[1][2] ?> Embalses</b></p>
 
   </div>
   <?php setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Establecer la localización a español
@@ -964,19 +980,19 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
     <p style="position: absolute; top: 85px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
-        </div>Disminución de Volumen <b> <?php echo $valores[2][1] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
+    </div>Disminución de Volumen <b> <?php echo $valores[2][1] ?> Embalses</b></p>
 
 
     <p style="position: absolute; top: 110px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
-        </div>Sin Cambios <b> <?php echo $valores[2][2] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
+    </div>Sin Cambios <b> <?php echo $valores[2][2] ?> Embalses</b></p>
 
 
   </div>
 
-    <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8');?></h4>
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8'); ?></h4>
 
   <!-- PAGINA 9 -->
 
@@ -1007,11 +1023,16 @@ $sin_cambio = "../../assets/icons/f-igual.png";
           <th class="text-celd">VAR. VOL. <br>(HM3)</th>
           <th class="text-celd">% VAR. VOL.</th>
         </tr>
-        <tr>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-        </tr>
+        <?php foreach ($embalses_variacion as $value) {
+          if (strtolower(trim($value[0])) == strtolower(trim("hidrocapital"))) {
+        ?>
+            <tr>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $value[2] ?></td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $value[2] ?>%</td>
+            </tr>
+        <?php }
+        } ?>
         <tr>
           <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
           <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
@@ -1118,11 +1139,16 @@ $sin_cambio = "../../assets/icons/f-igual.png";
           <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(HM3)</th>
           <th class="text-celd" rowspan="">% VAR. <br> VOL.</th>
         </tr>
-        <tr>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-        </tr>
+        <?php foreach ($embalses_variacion as $value) {
+          if (strtolower(trim($value[0])) == strtolower(trim("hidrocentro"))) {
+        ?>
+            <tr>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $value[2] ?></td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $value[3] ?>%</td>
+            </tr>
+        <?php }
+        } ?>
         <tr>
           <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
           <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
