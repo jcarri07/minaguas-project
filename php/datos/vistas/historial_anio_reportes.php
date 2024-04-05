@@ -6,7 +6,7 @@
     $id_embalse = $_POST['id_embalse'];
     $nombre_embalse = $_POST['nombre_embalse'];
     $anio = $_POST['anio'];
-    //$mes = $_POST['mes'];
+    $mes = $_POST['mes'];
 
     $dias_del_anio = array();
 
@@ -54,8 +54,8 @@
     /*$add_where = "";
     if($anio != '')
         $add_where .= " AND YEAR(fecha) = '$anio' ";
-    /*if($mes != '')
-        $add_where .= " AND MONTH(fecha) = '$mes' ";*/
+    if($mes != '')
+        $add_where .= " AND MONTH(fecha) = '$mes' ";
 
     /*$sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, 
                 (
@@ -78,6 +78,10 @@
         $posicion = array_search($valorABuscar, array_column($array, $columna));
         return $posicion !== false ? $posicion : -1;
     }
+
+    $add_where = "";
+    if($mes != '')
+        $add_where .= " AND MONTH(dem.fecha) = '$mes' ";
 
     $sql = "SELECT 
                 COUNT(DISTINCT fecha) AS total_registros/*,
@@ -110,7 +114,7 @@
                 AND (tce.id = '1' OR tce.id = '2' OR tce.id = '3' OR tce.id = '4') 
                 AND id_embalse = '$id_embalse' 
                 AND dem.estatus = 'activo' 
-                AND YEAR(dem.fecha) = '$anio'
+                AND YEAR(dem.fecha) = '$anio' $add_where
             GROUP BY ce.id;";
     $query = mysqli_query($conn, $sql);
     $array_sumas = array();
@@ -127,7 +131,7 @@
 
 
     //Solo se guardan los codigos que se pueden sumar
-    $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, concepto, uso, ce.id AS 'id_codigo_extraccion', IF(leyenda_sistema <> '', leyenda_sistema, concepto) AS 'name'
+    $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, concepto, uso, ce.id AS 'id_codigo_extraccion', tce.id AS 'id_tipo_codigo_extraccion', IF(leyenda_sistema <> '', leyenda_sistema, concepto) AS 'name'
             FROM tipo_codigo_extraccion tce, codigo_extraccion ce
             WHERE tce.id = ce.id_tipo_codigo_extraccion AND 
                 ce.estatus = 'activo' AND 
@@ -148,6 +152,9 @@
 
         if(date("Y-m-d") == date("Y-m-d", $dia))
             break;
+
+        if(date($anio . "-12-31") == date("Y-m-d", $dia))
+            $total_dias_anio--;
     }
 ?>
 
@@ -155,7 +162,8 @@
             //if(mysqli_num_rows($query) > 0){
 ?>
                 <div class="row justify-content-center">
-                    <div class="col-sm-10">
+                    <div class="col-sm-10 punteado">
+                        <h4 class="text-center">Relación del <?php echo $anio;?></h4>
                         <table class="table align-items-center text-sm text-center table-sm">
                             <tbody class="list">
                                 <tr>
@@ -188,59 +196,79 @@
                 </div>
                 <div class="row justify-content-center mt-4">
                     <div class="col-sm-12">
-                        <table class="table align-items-center text-sm text-center table-sm">
+<?php
+                        $mes_espaniol = ucfirst(strftime("%B", strtotime("$anio-$mes-01")));
+?>
+                        <h4 class="text-center">Sumatorias y Promedios <?php echo $mes == "" ? "Año $anio" : "$mes_espaniol, $anio";?></h4>
+                        <table class="table align-items-center text-sm text-center table-sm table-punteada">
                             <thead class="table-primary">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">#</th>
+                                    <th scope="col" class="sort" data-sort="name"></th>
                                     <th scope="col" class="sort" data-sort="name">Código</th>
                                     <th scope="col" class="sort" data-sort="budget">Leyenda</th>
                                     <th scope="col" class="sort" data-sort="budget">Concepto</th>
-                                    <th scope="col" class="sort" data-sort="budget">Sumatoria</th>
-                                    <th scope="col" class="sort" data-sort="budget">Promedio</th>
+                                    <th scope="col" class="sort" data-sort="budget">Sumatoria (1000 <span style="text-transform: lowercase;">m</span><sup>3</sup>)</th>
+                                    <th scope="col" class="sort" data-sort="budget">Promedio (1000 <span style="text-transform: lowercase;">m</span><sup>3</sup>)</th>
                                 </tr>
                             </thead>
                             <tbody class="list">
 <?php
                             $i = 1;
                             $sum_cat = 0;
+                            $sum_total = 0;
                             while($row = mysqli_fetch_array($query)) {
                                 $es_total = false;
                                 $negrita = "";
+                                $celda_subtotal_top_bottom = "";
+                                $celda_subtotal_left = "";
+                                $celda_subtotal_right = "";
+                                $cancel_border_right = "";
                                 
                                 if($row['codigo'] == "08" || $row['codigo'] == "13" || $row['codigo'] == "18" || $row['codigo'] == "22")
                                     $es_total = true;
 
-                                if($es_total)
-                                    $negrita = "font-weight: bold;"
+                                if($es_total) {
+                                    $negrita = "font-weight: bold;";
+                                    $celda_subtotal_top_bottom = "cell-subtotal-top-bottom";
+                                    $celda_subtotal_left = "cell-subtotal-left";
+                                    $celda_subtotal_right = "cell-subtotal-right";
+                                    $cancel_border_right = "border-right: none;";
+                                }
 ?>
-                                <tr>
+                                <tr style="<?php echo $cancel_border_right;?>">
                                     <th><?php echo $i++;?></th>
+                                    <td class="code_<?php echo $row['id_tipo_codigo_extraccion']?>" title="<?php echo $row['nombre']?>"></td>
                                     <td><?php echo $row['codigo'];?></td>
                                     <td><?php echo $row['leyenda_sistema'];?></td>
-                                    <td style="<?php echo $negrita;?>"><?php echo $row['concepto'];?></td>
-                                    <td style="<?php echo $negrita;?>">
+                                    <td style="<?php echo $negrita;?>" class="<?php echo $celda_subtotal_top_bottom . " " . $celda_subtotal_left;?>"><?php echo $row['concepto'];?></td>
+                                    <td style="<?php echo $negrita;?>" class="<?php echo $celda_subtotal_top_bottom;?>">
 <?php
                                         $index = buscarPosicion($array_sumas, $row['codigo'], 'codigo');
                                         if($index !== -1) {
                                             echo number_format($array_sumas[$index]['suma'], 3, ",", "");
                                             $sum_cat += $array_sumas[$index]['suma'];
+                                            $sum_total += $array_sumas[$index]['suma'];
                                         }
                                         else
                                             echo "";
 
                                         if($es_total) {
-                                            echo $sum_cat;
+                                            echo number_format($sum_cat, 3, ",", "");
                                             $sum_cat = 0;
                                         }
                                         
 ?>
                                     </td>
-                                    <td>
-<?php
+                                    <td style="<?php echo $negrita;?>"  class="<?php echo $celda_subtotal_top_bottom . " " . $celda_subtotal_right;?>">
+<?php 
                                         if($index !== -1)
                                             echo number_format( ($array_sumas[$index]['suma'] / $array_sumas[$index]['cant_mayor_0']) , 3, ",", "");
                                         else
                                             echo "";
+
+                                        if($es_total) 
+                                            echo "-";
 ?>  
                                     </td>
 
@@ -262,6 +290,18 @@
 ?>
                             </tbody>
                         </table>
+
+
+                        <div class="punteado">
+                            <table class="table align-items-center text-center text-dark" style="margin-bottom: 0px; font-size: 1.2rem;">
+                                <tbody class="list">
+                                    <tr>
+                                        <th style="width: 50%;">Total Descargas (23)</th>
+                                        <th style="width: 50%; color: #1B569D;"><?php echo number_format($sum_total, 2, ".", "");?></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 <?php
@@ -276,3 +316,43 @@
                 <div class="text-center">
                     <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="openModalHistory('<?php echo $id_embalse;?>', '<?php echo $nombre_embalse;?>', $('#body-details #anio').val(), $('#body-details #mes').val())">Atrás</button>
                 </div>
+
+<script>
+
+    function buscarPosicion(array, valorABuscar, columna) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][columna] === valorABuscar) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    $(document).ready(function() {
+        var item = "";
+        var cant = 1;
+        var array = [];
+        $("td[class^=code_]").each(function(index) {
+            var index_aux = buscarPosicion(array, $(this).attr("class"), "class");
+            if(index_aux !== -1) {
+                array[index_aux]["cant"]++;
+            }
+            else {
+                var aux = {"class": $(this).attr("class"), "nombre": $(this).attr("title"), "cant": 1};
+                array.push(aux);
+            }
+        });
+
+        for(var i = 0 ; i < array.length ; i++) {
+            $("td[class=" + array[i]['class'] + "]").each(function(index) {
+                if(index == 0) {
+                    $(this).text(array[i]['nombre']);
+                    $(this).attr("rowspan", array[i]['cant']);
+                }
+                else{
+                    $(this).remove();
+                }
+            });
+        }
+    });
+</script>
