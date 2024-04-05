@@ -181,6 +181,10 @@ $logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/Mi
 $area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
 $logo_combinado = "../../assets/img/logos/logo_combinado.jpg";
 $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
+$flecha_arriba = "../../assets/icons/f-arriba.png";
+$flecha_abajo = "../../assets/icons/f-abajo.png";
+$sin_cambio = "../../assets/icons/f-igual.png";
+
 
 
 // $codigo = "08RHL0101";
@@ -906,20 +910,20 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
 
     <p style="position: absolute; top: 60px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-    <div style="position: absolute; left: 20px; top: 2px; background-color: green;
-         border-radius: 5; height: 10px; width: 10px;"></div>Aumento de Volumen <b> <?php echo $valores[1][0] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_arriba ?>">
+    </div>Aumento de Volumen <b> <?php echo $valores[1][0] ?> Embalses</b></p>
 
 
     <p style="position: absolute; top: 85px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-    <div style="position: absolute; left: 20px; top: 2px; background-color: red;
-         border-radius: 5; height: 10px; width: 10px;"></div>Disminución de Volumen <b> <?php echo $valores[1][1] ?> Embalses</b></p>
+        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
+        </div>Disminución de Volumen <b> <?php echo $valores[1][1] ?> Embalses</b></p>
 
 
     <p style="position: absolute; top: 110px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-    <div style="position: absolute; left: 20px; top: 2px; background-color: black;
-         border-radius: 5; height: 10px; width: 10px;"></div>Sin Cambioss <b> <?php echo $valores[1][2] ?> Embalses</b></p>
+        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
+        </div>Sin Cambios <b> <?php echo $valores[1][2] ?> Embalses</b></p>
 
   </div>
   <?php setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Establecer la localización a español
@@ -952,20 +956,27 @@ $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
          border-radius: 5; height: 10px; width: 10px;"></div> Embalses</p>
 
 
-    <p style="position: absolute; top: 70px;
+    <p style="position: absolute; top: 60px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-    <div style="position: absolute; left: 20px; top: 2px; background-color: green;
-         border-radius: 5; height: 10px; width: 10px;"></div>Aumento de Volumen <b> <?php echo $valores[2][0] ?> Embalses</b></p>
+    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_arriba ?>">
+    </div>Aumento de Volumen <b> <?php echo $valores[2][0] ?> Embalses</b></p>
 
 
-    <p style="position: absolute; top: 105px;
+    <p style="position: absolute; top: 85px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-    <div style="position: absolute; left: 20px; top: 2px; background-color: red;
-         border-radius: 5; height: 10px; width: 10px;"></div>Disminución de Volumen <b> <?php echo $valores[2][1] ?> Embalses</b></p>
+        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $flecha_abajo ?>">
+        </div>Disminución de Volumen <b> <?php echo $valores[2][1] ?> Embalses</b></p>
+
+
+    <p style="position: absolute; top: 110px;
+        text-align: left; padding-left: 40px; font-size: 15px;">
+        <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
+        </div>Sin Cambios <b> <?php echo $valores[2][2] ?> Embalses</b></p>
+
 
   </div>
 
-  <h4 style="position: absolute; top: 640px;  right: 0; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8'); ?></h4>
+    <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8');?></h4>
 
   <!-- PAGINA 9 -->
 
