@@ -23,7 +23,7 @@ $ver = $_POST['ver'];
 if ($tipo == "bar") {
     $aux = "SELECT id_registro, d.fecha, (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora, (SELECT cota_actual 
     FROM datos_embalse 
-    WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
+    WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND cota_actual <> 0 AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
 FROM datos_embalse d, embalses e 
 WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id' AND YEAR(d.fecha) = '$y'
 GROUP BY d.fecha 
@@ -32,7 +32,7 @@ ORDER BY d.fecha ASC;";
 if ($tipo == "line") {
     $aux = "SELECT id_registro, d.fecha,d.hora, cota_actual
 FROM datos_embalse d, embalses e
-WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id' AND YEAR(d.fecha) = '$y' AND MONTH(d.fecha) = '$me'   
+WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id' AND YEAR(d.fecha) = '$y' AND cota_actual <> 0 AND MONTH(d.fecha) = '$me'   
 ORDER BY d.fecha ASC;";
 }
 $bati = new Batimetria($id, $conn);
