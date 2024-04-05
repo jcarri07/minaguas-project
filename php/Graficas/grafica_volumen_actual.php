@@ -19,7 +19,7 @@ if ($count >= 1) {
     $res = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),MAX(d.hora),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora,
     e.nombre_embalse, (SELECT cota_actual 
                        FROM datos_embalse h 
-                       WHERE h.id_embalse = d.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
+                       WHERE h.id_embalse = d.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AND cota_actual <> 0 ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
 WHERE e.estatus = 'activo'

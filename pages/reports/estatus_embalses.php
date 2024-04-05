@@ -36,13 +36,16 @@ $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
-$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
-    FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = (select MAX(hora) FROM datos_embalse                                                                                                                                                            WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual 
- FROM embalses e
- LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
- WHERE e.estatus = 'activo' 
- GROUP BY id_embalse;");
+
+$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador, MAX(d.fecha),MAX(d.hora),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora,
+e.nombre_embalse, (SELECT cota_actual 
+                   FROM datos_embalse h 
+                   WHERE h.id_embalse = d.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
+FROM embalses e
+LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+WHERE e.estatus = 'activo'
+GROUP BY id_embalse 
+ORDER BY id_embalse ASC;");
 
 $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
@@ -483,7 +486,13 @@ $sin_cambio = "../../assets/icons/f-igual.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if (((abs(($x - $min)) * (100 / ($nor - $min))) >= 0 && (abs(($x - $min)) * (100 / ($nor - $min))) < 30)) {
+
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              if (((abs(($sum)) * (100 / ($nor - $min))) >= 0 && (abs(($sum)) * (100 / ($nor - $min))) < 30)) {
                 $cuenta++; ?>
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
@@ -531,7 +540,12 @@ $sin_cambio = "../../assets/icons/f-igual.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 30 && (abs(($x - $min)) * (100 / ($nor - $min))) < 60) {
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              if ((abs(($sum)) * (100 / ($nor - $min))) >= 30 && (abs(($sum)) * (100 / ($nor - $min))) < 60) {
                 $cuenta++; ?>
 
                 <tr>
@@ -576,7 +590,12 @@ $sin_cambio = "../../assets/icons/f-igual.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 60 && (abs(($x - $min)) * (100 / ($nor - $min))) < 90) {
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              if ((abs(($sum)) * (100 / ($nor - $min))) >= 60 && (abs(($sum)) * (100 / ($nor - $min))) < 90) {
                 $cuenta++; ?>
 
                 <tr>
@@ -628,7 +647,12 @@ $sin_cambio = "../../assets/icons/f-igual.png";
               $min = $bati->volumenMinimo();
               $max = $bati->volumenMaximo();
               $nor = $bati->volumenNormal();
-              if ((abs(($x - $min)) * (100 / ($nor - $min))) >= 90 && (abs(($x - $min)) * (100 / ($nor - $min))) <= 100) {
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              if ((abs(($sum)) * (100 / ($nor - $min))) >= 90 && (abs(($sum)) * (100 / ($nor - $min))) <= 100) {
                 $cuenta++; ?>
 
                 <tr>
@@ -668,7 +692,12 @@ $sin_cambio = "../../assets/icons/f-igual.png";
           $min = $bati->volumenMinimo();
           $max = $bati->volumenMaximo();
           $nor = $bati->volumenNormal();
-          if ((abs(($x - $min)) * (100 / ($nor - $min))) > 100) {
+          if (($x - $min) <= 0) {
+            $sum = 0;
+          } else {
+            $sum = $x - $min;
+          }
+          if ((abs(($sum)) * (100 / ($nor - $min))) > 100) {
             $cuenta++; ?>
 
             <tr>

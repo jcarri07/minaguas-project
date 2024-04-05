@@ -109,9 +109,12 @@
 ?>
                 <div class="row">
                     <div class="col text-center">
-                        <button class="btn btn-primary px-3" data-bs-dismiss="modal" onclick="openModalParametrosAnio('<?php echo $id_embalse;?>', $('#body-details #anio').val());">
+                        <button class="btn btn-primary px-3" data-bs-dismiss="modal" onclick="openModalParametrosAnio('<?php echo $id_embalse;?>', $('#body-details #anio').val(), $('#body-details #mes').val());">
                             <i class="fas fa-info-circle" title="Detalles" aria-hidden="true"></i>
-                            Detalles y Parámetros de Reportes (Año <?php echo $anio;?>)
+<?php
+                            $mes_espaniol = ucfirst(strftime("%B", strtotime("$anio-$mes-01")));
+?>
+                            <span>Detalles y Parámetros de Reportes (<?php echo $mes == "" ? "Año $anio" : "$mes_espaniol, $anio";?>)</span>
                         </button>
                     </div>
                 </div>

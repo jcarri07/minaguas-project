@@ -27103,3 +27103,33 @@ table td, table div, table th {
   margin-top: 8px;
   padding: 1px 10px;
 }
+
+.punteado{
+  border: 3px dashed lightgrey;
+  border-radius: 0.375rem;
+}
+
+.table-punteada tbody tr {
+  border-left: 3px dashed lightgrey;
+  border-right: 3px dashed lightgrey;
+}
+
+.table-punteada tbody tr:last-child {
+  border-bottom: 3px dashed lightgrey;
+}
+
+.cell-subtotal-top-bottom {
+  border-top: 2px solid #98c5e1 !important;
+  border-bottom: 2px solid #98c5e1 !important;
+  color: #1B569D !important;
+}
+
+.cell-subtotal-left {
+  border-left: 2px solid #98c5e1 !important;
+  color: #1B569D !important;
+}
+
+.cell-subtotal-right {
+  border-right: 2px solid #98c5e1 !important;
+  color: #1B569D !important;
+}

@@ -817,7 +817,15 @@
         this.value = extraccion_aux[0];
         $(this).trigger("change");
         var row = this.id.replace("tipo_extraccion_", "");
-        $("#valor_extraccion_" + row).val(extraccion_aux[1]);
+
+        var valor_extraccion = extraccion_aux[1];
+        if(this.value == "30") {
+          valor_extraccion = extraccion_aux[1] + "%";
+          if(extraccion_aux[1] < 1) {
+            valor_extraccion = (extraccion_aux[1] * 100) + "%";
+          }
+        }
+        $("#valor_extraccion_" + row).val(valor_extraccion);
 
         $(this).attr("disabled", true);
         $("#valor_extraccion_" + row).attr("disabled", true);
@@ -1033,7 +1041,7 @@
       $("#modal-action").modal("show");
     }
 
-    function openModalParametrosAnio(id_embalse, anio) {
+    function openModalParametrosAnio(id_embalse, anio, mes) {
       $("#body-history-excel").html("<h3 class='text-center'>Cargando...</h3>");
       $("#modal-history-excel h3.title").text("Detalles e Información de Reportes de " + $("#nombre_embalse_aux").text());
       $("#modal-history-excel").modal("show");
@@ -1042,6 +1050,7 @@
       datos.append('id_embalse', id_embalse);
       datos.append('nombre_embalse', $("#nombre_embalse_aux").text());
       datos.append('anio', anio);
+      datos.append('mes', mes);
 
       $.ajax({
         url: 			'php/datos/vistas/historial_anio_reportes.php',

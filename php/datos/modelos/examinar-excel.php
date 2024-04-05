@@ -153,6 +153,9 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
 
                     if($spreadsheet->getActiveSheet()->getCell($columna . $fila)->getDataType() === DataType::TYPE_FORMULA) {
                         $valor_extraccion_aux = $spreadsheet->getActiveSheet()->getCell($columna . $fila)->getCalculatedValue();
+
+                        if(!is_numeric($valor_extraccion_aux))
+                            $valor_extraccion_aux = 0;
                     }
                     
                     $index_codigo = buscarPosicion($array_codigos_sql, $array_codigos_consulta[$i]['codigo'], 'codigo');

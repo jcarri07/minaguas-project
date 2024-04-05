@@ -175,7 +175,7 @@ for ($k = $numeroSemana; $k < $semanas; $k++) {
     }
     if (isset($datos2[$j]['semana'])) {
         if ($k == ($datos2[$j]['semana'])) {
-            $array2[$aux] = $bati->getByCota(date('Y', strtotime($datos1[$j]["fecha"])), $datos2[$j]["cota_actual"])[1];
+            $array2[$aux] = $bati->getByCota(date('Y', strtotime($datos2[$j]["fecha"])), $datos2[$j]["cota_actual"])[1];
             $j++;
         } else {
             $array2[$aux] = 0;
@@ -284,11 +284,11 @@ $j = 0;
                                             if ($fsemanas[$k]['semana'] == ($datos2[$j]['semana'])) {
                                                 echo  round($bati->getByCota(date('Y', strtotime($datos2[$j]["fecha"])), $datos2[$j]["cota_actual"])[1], 2); ?>, <?php
 
-                                                if ($max < $datos1[$i]["cota_actual"]) {
-                                                    $max = $datos1[$i]["cota_actual"];
+                                                if ($max < $datos2[$j]["cota_actual"]) {
+                                                    $max = $datos2[$j]["cota_actual"];
                                                 }
-                                                if ($min > $datos1[$i]["cota_actual"]) {
-                                                    $min = $datos1[$i]["cota_actual"];
+                                                if ($min > $datos2[$j]["cota_actual"]) {
+                                                    $min = $datos2[$j]["cota_actual"];
                                                 }
                                                                                                                             $j++;
                                                                                                                         } else {
