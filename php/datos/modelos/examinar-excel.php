@@ -24,6 +24,18 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     $id_encargado = $_POST['id_usuario'];
     $fecha_importacion = date("Y-m-d");
 
+    //Comprobando si ya se importo informacion de este archivo a este embalse
+    $sql = "SELECT DISTINCT nombre_embalse, archivo_importacion, fecha_importacion
+            FROM embalses e, datos_embalse de
+            WHERE e.id_embalse = de.id_embalse AND archivo_importacion <> '' AND de.estatus = 'activo' AND de.id_embalse = '$id_embalse' AND de.archivo_importacion = '$nombre_archivo'
+            ORDER BY fecha_importacion DESC;";
+    $query = mysqli_query($conn, $sql);
+    if(mysqli_num_rows($query) > 0) {
+        echo "ya se importo";
+        unlink("temp/" . $nombre_archivo);
+        exit;
+    }
+
     $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, concepto, uso, ce.id AS 'id_codigo_extraccion', IF(leyenda_sistema <> '', leyenda_sistema, concepto) AS 'name'
             FROM tipo_codigo_extraccion tce, codigo_extraccion ce
             WHERE tce.id = ce.id_tipo_codigo_extraccion AND 

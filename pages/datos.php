@@ -118,7 +118,7 @@
 
                 if( ($_SESSION["Tipo"] == "Admin") || ($_SESSION["Tipo"] == "User" && $row['reportado_hoy'] == "no") ){
 ?>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalAdd('<?php echo $row['id_embalse'];?>');">
+                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalAdd('<?php echo $row['id_embalse'];?>', '<?php echo $row['nombre_embalse'];?>');">
                       <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
                       <span class="hide-cell">Añadir Reporte</span>
                     </a>
@@ -300,7 +300,7 @@
     ?>
                 <div class="row">
                   <div class="col-md-12 text-center">
-                      <button class="btn btn-success" data-bs-dismiss="modal" id="btn-open-modal-import-data" onclick="$('#add-data-old').modal('show');" type="button">Adjuntar Historial de Reportes</button>
+                      <button class="btn btn-success" data-bs-dismiss="modal" id="btn-open-modal-import-data" onclick="openModalAddDataOld();" type="button">Adjuntar Historial de Reportes</button>
                   </div>
                 </div>
     <?php
@@ -411,7 +411,7 @@
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
                 <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#add').modal('show');">X</button>
-                <h3 class="font-weight-bolder text-primary text-gradient mt-5 text-center">Adjuntar Excel de Reportes</h3>
+                <h3 class="font-weight-bolder text-primary text-gradient mt-5 text-center title">Adjuntar Excel de Reportes</h3>
               </div>
               <div class="card-body pb-3">
 
@@ -590,11 +590,12 @@
     }
 
 
-    function openModalAdd(id_embalse){
+    function openModalAdd(id_embalse, nombre_embalse){
       $("#id_embalse_aux").text(id_embalse);
+      $("#nombre_embalse_aux").text(nombre_embalse);
       $("#opc_aux").text("add");
 
-      $("#add .title").text("Añadir Reporte");
+      $("#add .title").text("Añadir Reporte en " + nombre_embalse);
       $("#btn-open-modal-import-data").show();
 
       $(".removeRow").attr("disabled", false);
@@ -923,6 +924,11 @@
       });
     }
 
+    function openModalAddDataOld() {
+      $('#add-data-old .title').text("Adjuntar Excel de Reportes en " + $("#nombre_embalse_aux").text());
+      $('#add-data-old').modal('show');
+    }
+
 
     $("#form-add-data-old").on("submit",function(event){
     	event.preventDefault();
@@ -984,8 +990,14 @@
               $("#modal-generic").modal("show");
             }
             else{
-              $("#modal-generic .message").text("Error al registrar");
-              $("#modal-generic").modal("show");
+              if(response == "ya se importo") {
+                $("#modal-generic .message").text("La información de este archivo ya fue añadida al embalse " + $("#nombre_embalse_aux").text() + ". Intente con otro archivo.");
+                $("#modal-generic").modal("show");
+              }
+              else {
+                $("#modal-generic .message").text("Error al registrar");
+                $("#modal-generic").modal("show");
+              }
             }
           }
           else{
