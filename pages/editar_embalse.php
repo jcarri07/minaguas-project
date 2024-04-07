@@ -728,10 +728,10 @@ function formatoNumero($valor)
             </div>
 
             <div class="row">
-              <div class="col-xl-3 col-lg-6 form-group">
+              <!-- <div class="col-xl-3 col-lg-6 form-group">
                 <label for="operador">Operador</label>
-                <input value="<?php echo $embalse["operador"]; ?>" type="text" class="form-control Vrequerido" id="operadorrr" name="operadorrr" placeholder="Ingrese el operador">
-              </div>
+                <input value="<?php //echo $embalse["operador"]; ?>" type="text" class="form-control Vrequerido" id="operadorrr" name="operadorrr" placeholder="Ingrese el operador">
+              </div> -->
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="autoridad">Autoridad responsable del embalse</label>
                 <input value="<?php echo $embalse["autoridad_responsable"]; ?>" type="text" class="form-control" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">

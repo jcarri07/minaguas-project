@@ -619,10 +619,10 @@ date_default_timezone_set("America/Caracas");
               </div>
 
               <div class="row">
-                <div class="col-xl-3 col-lg-6 col-md-6 form-group">
+                <!-- <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="operador">Operador</label>
                   <input type="text" class="form-control " id="operadorrr" name="operadorrr" placeholder="Ingrese el operador">
-                </div>
+                </div> -->
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="autoridad">Autoridad responsable del embalse</label>
                   <input type="text" class="form-control" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
