@@ -217,7 +217,7 @@
                                         <?php echo $abertura; ?>
                                     </td>
                                     <td> 
-                                        <?php echo $caudal; ?>
+                                        <?php echo is_numeric($caudal) ? number_format($extraccion, 3, ".", "") : $caudal; ?>
                                     </td>
                                     <td>
                                         <?php echo ($row['encargado'] != "" && $row['encargado'] != NULL) ? $row['encargado'] : "-";?>
