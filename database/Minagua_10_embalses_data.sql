@@ -1558,7 +1558,7 @@ insert  into `parroquias`(`id_parroquia`,`id_municipio`,`parroquia`) values
 
 /*Data for the table `propositos` */
 
-insert  into `propositos`(`id_proposito`,`proposito`,`estatus`) values 
+INSERT INTO `propositos`(`id_proposito`,`proposito`,`estatus`) VALUES 
 (1,'Consumo Humano','activo'),
 (2,'Riego','activo'),
 (3,'Control de Inundaciones','activo'),
@@ -1566,6 +1566,38 @@ insert  into `propositos`(`id_proposito`,`proposito`,`estatus`) values
 (5,'Hidroelectricidad','activo'),
 (6,'Agricultura','activo'),
 (7,'Industrial','activo');
+
+INSERT INTO `operadores`(`id_operador`,`operador`,`estatus`) VALUES 
+(1,'Hidrocaribe','activo'),
+(2,'Hidrocapital','activo'),
+(3,'Corpoelec','activo'),
+(4,'Hidrobolívar','activo'),
+(5,'CVG-Edelca','activo'),
+(6,'Hidrocentro','activo'),
+(7,'Pequiven','activo'),
+(8,'Hidrofalcón','activo'),
+(9,'Minaguas','activo'),
+(10,'Hidropáes','activo'),
+(11,'Hidrolara','activo'),
+(12,'Aguas de Monagas','activo'),
+(13,'Hidroportuguesa','activo'),
+(14,'Hidrolago','activo');
+
+INSERT INTO `regiones`(`id_region`,`region`,`estatus`) VALUES 
+(1,'Centro Oriental','activo'),
+(2,'Central','activo'),
+(3,'Llanos Centrales','activo'),
+(4,'Lago de Valencia','activo'),
+(5,'Alto Apure','activo'),
+(6,'Caroní','activo'),
+(7,'Delta (Bajo Orinoco)','activo'),
+(8,'Cuyuní','activo'),
+(9,'Centro Occidental','activo'),
+(10,'Llanos Centro Occidentales','activo'),
+(11,'Centro Occidental','activo'),
+(12,'Falconiana','activo'),
+(13,'Golfo de Venezuela','activo'),
+(14,'Occidental','activo');
 
 
 INSERT INTO `tipo_codigo_extraccion` (`id`, `nombre`, `cantidad_primaria`, `unidad`, `estatus`) 

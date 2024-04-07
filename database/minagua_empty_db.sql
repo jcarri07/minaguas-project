@@ -1,4 +1,3 @@
-
 CREATE DATABASE minagua_db;
 
 USE minagua_db;
@@ -13,8 +12,8 @@ CREATE TABLE `usuarios` (
   Cedula varchar(255) DEFAULT NULL,
   Correo varchar(255) DEFAULT NULL,
   Telefono varchar(255) DEFAULT NULL,
-  Tipo enum('Admin','User') DEFAULT NULL,
-  estatus enum('activo','inactivo') DEFAULT NULL
+  Tipo enum('Admin', 'User') DEFAULT NULL,
+  estatus enum('activo', 'inactivo') DEFAULT NULL
 );
 
 -- INSERT INTO `usuarios` (`Contrasena`, `P_Nombre`,`S_Nombre`, `P_Apellido`, `S_Apellido`,`Cedula`, `Correo`, `Telefono`, `Tipo`) VALUES
@@ -22,7 +21,6 @@ CREATE TABLE `usuarios` (
 --
 -- Estructura de tabla para la tabla `estados`
 --
-
 CREATE TABLE `estados` (
   id_estado INT(11) NOT NULL,
   estado VARCHAR(250) NOT NULL,
@@ -32,30 +30,24 @@ CREATE TABLE `estados` (
 --
 -- Estructura de tabla para la tabla `municipios`
 --
-
 CREATE TABLE `municipios` (
   id_municipio INT(11) NOT NULL,
   id_estado INT(11) NOT NULL,
-  municipio VARCHAR(100) NOT NULL
-  -- FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
+  municipio VARCHAR(100) NOT NULL -- FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
 );
-
 
 --
 -- Estructura de tabla para la tabla `parroquias`
 --
-
 CREATE TABLE `parroquias` (
   id_parroquia INT(11) NOT NULL,
   id_municipio INT(11) NOT NULL,
-  parroquia VARCHAR(250) NOT NULL
-  -- FOREIGN KEY (id_municipio) REFERENCES municipios (id_municipio)
+  parroquia VARCHAR(250) NOT NULL -- FOREIGN KEY (id_municipio) REFERENCES municipios (id_municipio)
 );
 
 --
 -- Estructura de tabla para la tabla `embalses`
 --
-
 CREATE TABLE embalses (
   id_embalse INT AUTO_INCREMENT PRIMARY KEY,
   nombre_embalse VARCHAR(255) DEFAULT "",
@@ -77,7 +69,7 @@ CREATE TABLE embalses (
   autoridad_responsable VARCHAR(255) DEFAULT "",
   proyectista VARCHAR(255) DEFAULT "",
   constructor VARCHAR(255) DEFAULT "",
-  inicio_construccion VARCHAR(50) DEFAULT "", 
+  inicio_construccion VARCHAR(50) DEFAULT "",
   duracion_de_construccion VARCHAR(50) DEFAULT "",
   inicio_de_operacion VARCHAR(50) DEFAULT "",
   monitoreo_del_embalse VARCHAR(255) DEFAULT "",
@@ -137,31 +129,31 @@ CREATE TABLE embalses (
   imagen_uno TEXT DEFAULT "",
   imagen_dos TEXT DEFAULT "",
   imagen_tres TEXT DEFAULT "",
+  region VARCHAR(255) DEFAULT "",
   id_encargado VARCHAR(11) DEFAULT "",
-  estatus enum('activo','inactivo') DEFAULT NULL
-  -- FOREIGN KEY (id_estado) REFERENCES estados (id_estado),
+  estatus enum('activo', 'inactivo') DEFAULT NULL -- FOREIGN KEY (id_estado) REFERENCES estados (id_estado),
   -- FOREIGN KEY (id_municipio) REFERENCES municipios (id_municipio),
   -- FOREIGN KEY (id_parroquia) REFERENCES parroquias (id_parroquia)
 );
 
 /*DROP TABLE IF EXISTS `codigo_extraccion`;
-DROP TABLE IF EXISTS `tipo_codigo_extraccion`;*/
+ DROP TABLE IF EXISTS `tipo_codigo_extraccion`;*/
 CREATE TABLE IF NOT EXISTS `tipo_codigo_extraccion`(
-	id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-	nombre VARCHAR(255) NULL,
-	cantidad_primaria INT NOT NULL,
-	unidad VARCHAR(100) NOT NULL,
-	estatus ENUM('activo','inactivo') DEFAULT NULL
+  id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nombre VARCHAR(255) NULL,
+  cantidad_primaria INT NOT NULL,
+  unidad VARCHAR(100) NOT NULL,
+  estatus ENUM('activo', 'inactivo') DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `codigo_extraccion`(
-	id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-	codigo VARCHAR(20) NOT NULL UNIQUE,
-	leyenda_sistema VARCHAR(255) NOT NULL,
-	concepto VARCHAR(100) NOT NULL,
-	uso VARCHAR(1000) NOT NULL,
-	id_tipo_codigo_extraccion INT,
-	estatus ENUM('activo','inactivo') DEFAULT NULL
+  id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  codigo VARCHAR(20) NOT NULL UNIQUE,
+  leyenda_sistema VARCHAR(255) NOT NULL,
+  concepto VARCHAR(100) NOT NULL,
+  uso VARCHAR(1000) NOT NULL,
+  id_tipo_codigo_extraccion INT,
+  estatus ENUM('activo', 'inactivo') DEFAULT NULL
 );
 
 CREATE TABLE datos_embalse (
@@ -193,7 +185,7 @@ CREATE TABLE `configuraciones` (
   `id_config` int(11) AUTO_INCREMENT PRIMARY KEY,
   `nombre_config` varchar(50) DEFAULT NULL,
   `configuracion` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 CREATE TABLE propositos (
   id_proposito INT AUTO_INCREMENT PRIMARY KEY,
@@ -201,12 +193,62 @@ CREATE TABLE propositos (
   estatus varchar(20) NOT NULL
 );
 
-insert  into `usuarios`(`Id_usuario`,`Contrasena`,`P_Nombre`,`S_Nombre`,`P_Apellido`,`S_Apellido`,`Cedula`,`Correo`,`Telefono`,`Tipo`,`estatus`) values 
-(1,'1234','Admin','Admin','Admin','Admin','00000000','admin@gmail.com','00000000000','Admin','activo'),
-(2,'1234','Pedro','Antonio','Rodrigues','Vargas','12345678','pedro@gmail.com','04121234567','User','activo');
+CREATE TABLE operadores (
+  id_operador INT AUTO_INCREMENT PRIMARY KEY,
+  operador VARCHAR(50),
+  estatus varchar(20) NOT NULL
+);
 
+CREATE TABLE regiones (
+  id_region INT AUTO_INCREMENT PRIMARY KEY,
+  region VARCHAR(50),
+  estatus varchar(20) NOT NULL
+);
 
+insert into
+  `usuarios`(
+    `Id_usuario`,
+    `Contrasena`,
+    `P_Nombre`,
+    `S_Nombre`,
+    `P_Apellido`,
+    `S_Apellido`,
+    `Cedula`,
+    `Correo`,
+    `Telefono`,
+    `Tipo`,
+    `estatus`
+  )
+values
+  (
+    1,
+    '1234',
+    'Admin',
+    'Admin',
+    'Admin',
+    'Admin',
+    '00000000',
+    'admin@gmail.com',
+    '00000000000',
+    'Admin',
+    'activo'
+  ),
+  (
+    2,
+    '1234',
+    'Pedro',
+    'Antonio',
+    'Rodrigues',
+    'Vargas',
+    '12345678',
+    'pedro@gmail.com',
+    '04121234567',
+    'User',
+    'activo'
+  );
 
-
-
-SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+SET
+  GLOBAL sql_mode =(
+    SELECT
+      REPLACE(@ @sql_mode, 'ONLY_FULL_GROUP_BY', '')
+  );

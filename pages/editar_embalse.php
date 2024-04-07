@@ -19,6 +19,9 @@ $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
 $queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = $id_embalse");
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
+$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
+$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
+
 
 
 $embalse = mysqli_fetch_assoc($queryEmbalse);
@@ -157,6 +160,8 @@ function formatoNumero($valor)
     display: block;
   }
 
+  #region,
+  #operador,
   #proposito,
   #uso,
   #cap-util {
@@ -610,7 +615,70 @@ function formatoNumero($valor)
               </div>
             </div>
 
+            <?php
+            $op = "";
+            while ($operador = mysqli_fetch_array($queryOperador)) {
+              if ($operador['id_operador'] == $embalse["operador"]){
+                $op = $operador["operador"];
+                break;
+              }
+            }
+            $queryOperador->data_seek(0);
+
+            $reg = "";
+            while ($region = mysqli_fetch_array($queryRegion)) {
+              if ($region['id_region'] == $embalse["region"]){
+                $reg = $region["region"];
+                break;
+              }
+            }
+            $queryRegion->data_seek(0);
+            ?>
             <div class="row justify-content-center">
+              <div class="col-xl-3 col-lg-6 form-group padre-relative">
+                <label for="operador">Operador</label>
+                <textarea readonly class="form-control Vrequerido" name="" id="operador" cols="30" rows="1" placeholder="Operador"><?php echo $op; ?></textarea>
+                <input readonly hidden type="text" class="form-control" id="operador-input" name="operador" placeholder="" value="<?php echo $embalse["operador"]; ?>">
+                <div id="modal-operador" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+
+                  <?php
+                  while ($operador = mysqli_fetch_array($queryOperador)) {
+                  ?>
+                    <div class="form-check opcion">
+                      <!-- <input type="radio" name="" id="<?php //echo $operador['id_proposito'] 
+                                                            ?>-prop" class="prop-opcion form-check-input opcion"> -->
+                      <input <?php if ($operador['id_operador'] == $embalse["operador"]) echo "checked" ?> id="<?php echo $operador['id_operador'] ?>-ope" type="radio" value="" name="ope-radio" class="ope-opcion form-check-input opcion">
+                      <label for="<?php echo $operador['id_operador'] ?>-ope" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 opcion-<?php echo $operador['id_operador'] ?>-ope opcion"><?php echo $operador['operador'] ?></label>
+                    </div>
+                  <?php
+                  }
+                  ?>
+
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-lg-6 form-group padre-relative">
+                <label for="region">Región</label>
+                <textarea readonly class="form-control Vrequerido" name="" id="region" cols="30" rows="1" placeholder="region"><?php echo $reg; ?></textarea>
+                <input readonly hidden type="text" class="form-control" id="region-input" name="region" placeholder="" value="<?php echo $embalse["region"]; ?>">
+                <div id="modal-region" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+
+                  <?php
+                  while ($region = mysqli_fetch_array($queryRegion)) {
+                  ?>
+                    <div class="form-check opcion">
+                      <!-- <input type="radio" name="" id="<?php //echo $region['id_proposito'] 
+                                                            ?>-prop" class="prop-opcion form-check-input opcion"> -->
+                      <input <?php if ($region['id_region'] == $embalse["region"]) echo "checked" ?> id="<?php echo $region['id_region'] ?>-reg" type="radio" value="" name="reg-radio" class="reg-opcion form-check-input opcion">
+                      <label for="<?php echo $region['id_region'] ?>-reg" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 opcion-<?php echo $region['id_region'] ?>-reg opcion"><?php echo $region['region'] ?></label>
+                    </div>
+                  <?php
+                  }
+                  ?>
+
+                </div>
+              </div>
+
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cap-util">Capacidad útil (hm³)</label>
@@ -662,7 +730,7 @@ function formatoNumero($valor)
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="operador">Operador</label>
-                <input value="<?php echo $embalse["operador"]; ?>" type="text" class="form-control Vrequerido" id="operador" name="operador" placeholder="Ingrese el operador">
+                <input value="<?php echo $embalse["operador"]; ?>" type="text" class="form-control Vrequerido" id="operadorrr" name="operadorrr" placeholder="Ingrese el operador">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="autoridad">Autoridad responsable del embalse</label>
@@ -1778,11 +1846,49 @@ function formatoNumero($valor)
     $("#uso-input")[0].value = id_usos.join(" - ");
   });
 
+  $("#operador").on("click", function() {
+    $("#modal-operador").toggleClass('desplegar');
+  });
+
+  $(".ope-opcion").on("change", function() {
+    // console.log($(".opcion-" + this.id)[0].innerText, this.id.split("-")[0]);
+    operador = "";
+    id = "";
+    if ($(this).is(':checked')) {
+      operador = $(".opcion-" + this.id)[0].innerText;
+      id = this.id.split("-")[0];
+
+      $("#operador")[0].value = operador;
+      $("#operador-input")[0].value = id;
+    }
+  });
+
+  $("#region").on("click", function() {
+    $("#modal-region").toggleClass('desplegar');
+  });
+
+  $(".reg-opcion").on("change", function() {
+    // console.log($(".opcion-" + this.id)[0].innerText, this.id.split("-")[0]);
+    region = "";
+    id = "";
+    if ($(this).is(':checked')) {
+      region = $(".opcion-" + this.id)[0].innerText;
+      id = this.id.split("-")[0];
+
+      $("#region")[0].value = region;
+      $("#region-input")[0].value = id;
+
+      // console.log($("#region")[0].value, $("#region-input")[0].value, $("#operador")[0].value, $("#operador-input")[0].value = id)
+    }
+  });
+
   document.documentElement.addEventListener('click', function(e) {
-    const excepciones = ["proposito", "modal-proposito", "uso", "modal-uso"];
-    if (!excepciones.includes(e.target.id) && (!$(e.target).hasClass("opcion-prop") && !$(e.target).hasClass("opcion-uso"))) {
+    const excepciones = ["proposito", "modal-proposito", "uso", "modal-uso", "operador", "modal-operador", "region", "modal-region"];
+    if (!excepciones.includes(e.target.id) && (!$(e.target).hasClass("opcion-prop") && !$(e.target).hasClass("opcion-uso") && !$(e.target).hasClass("opcion"))) {
       removerClase($("#modal-proposito"), "desplegar");
       removerClase($("#modal-uso"), "desplegar");
+      removerClase($("#modal-operador"), "desplegar");
+      removerClase($("#modal-region"), "desplegar");
     }
   });
 
@@ -1833,6 +1939,8 @@ function formatoNumero($valor)
     let vol_min = $("#vol_min").val();
 
     if (vol_min != "" && vol_nor != "") {
+      vol_nor = parseFloat(vol_nor.replace(/\./g, '').replace(',', '.'));
+      vol_min = parseFloat(vol_min.replace(/\./g, '').replace(',', '.'));
       let capacidad = vol_nor - vol_min;
       $("#cap-util")[0].value = capacidad;
     } else {
@@ -2077,6 +2185,7 @@ function formatoNumero($valor)
   document.getElementById("form-embalse").addEventListener("submit", function(event) {
     // event.preventDefault();
     console.log("A validar");
+    var regex = /^(\d{1,3}(\.\d{3})*|\d+)(,\d+)?$/; //PERFECTA
 
     var campos = document.querySelectorAll('.Vnumero, .Vrequerido, .Varchivo');
     var errorMessages = [];
@@ -2091,7 +2200,7 @@ function formatoNumero($valor)
           if (!campo.classList.contains('input-error')) {
             campo.className += " input-error";
           }
-        } else if (isNaN(campo.value)) {
+        } else if ((!regex.test(campo.value))) {
           errorMessages.push("El campo '<b>" + label + "</b>' debe contener solo números.");
           if (!campo.classList.contains('input-error')) {
             campo.className += " input-error";

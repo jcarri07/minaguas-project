@@ -4,6 +4,8 @@ include 'php/Conexion.php';
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
+$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
+$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
 ?>
 
 
@@ -106,8 +108,10 @@ date_default_timezone_set("America/Caracas");
     display: block;
   }
 
+  #region,
   #proposito,
   #uso,
+  #operador,
   #cap-util {
     background: white;
   }
@@ -522,6 +526,50 @@ date_default_timezone_set("America/Caracas");
               </div>
 
               <div class="row justify-content-center">
+                <div class="col-xl-3 col-lg-6 form-group padre-relative">
+                  <label for="operador">Operador</label>
+                  <textarea readonly class="form-control Vrequerido" name="" id="operador" cols="30" rows="1" placeholder="Operador"></textarea>
+                  <input readonly hidden type="text" class="form-control" id="operador-input" name="operador" placeholder="">
+                  <div id="modal-operador" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+
+                    <?php
+                    while ($operador = mysqli_fetch_array($queryOperador)) {
+                    ?>
+                      <div class="form-check opcion">
+                        <!-- <input type="radio" name="" id="<?php //echo $operador['id_proposito'] 
+                                                              ?>-prop" class="prop-opcion form-check-input opcion"> -->
+                        <input id="<?php echo $operador['id_operador'] ?>-ope" type="radio" value="" name="ope-radio" class="ope-opcion form-check-input opcion">
+                        <label for="<?php echo $operador['id_operador'] ?>-ope" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 opcion-<?php echo $operador['id_operador'] ?>-ope opcion"><?php echo $operador['operador'] ?></label>
+                      </div>
+                    <?php
+                    }
+                    ?>
+
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-6 form-group padre-relative">
+                  <label for="region">Región</label>
+                  <textarea readonly class="form-control Vrequerido" name="" id="region" cols="30" rows="1" placeholder="region"></textarea>
+                  <input readonly hidden type="text" class="form-control" id="region-input" name="region" placeholder="">
+                  <div id="modal-region" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+
+                    <?php
+                    while ($region = mysqli_fetch_array($queryRegion)) {
+                    ?>
+                      <div class="form-check opcion">
+                        <!-- <input type="radio" name="" id="<?php //echo $region['id_proposito'] 
+                                                              ?>-prop" class="prop-opcion form-check-input opcion"> -->
+                        <input id="<?php echo $region['id_region'] ?>-reg" type="radio" value="" name="reg-radio" class="reg-opcion form-check-input opcion">
+                        <label for="<?php echo $region['id_region'] ?>-reg" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 opcion-<?php echo $region['id_region'] ?>-reg opcion"><?php echo $region['region'] ?></label>
+                      </div>
+                    <?php
+                    }
+                    ?>
+
+                  </div>
+                </div>
+
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
                     <label for="cap-util">Capacidad útil (hm³)</label>
@@ -573,7 +621,7 @@ date_default_timezone_set("America/Caracas");
               <div class="row">
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="operador">Operador</label>
-                  <input type="text" class="form-control Vrequerido" id="operador" name="operador" placeholder="Ingrese el operador">
+                  <input type="text" class="form-control " id="operadorrr" name="operadorrr" placeholder="Ingrese el operador">
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="autoridad">Autoridad responsable del embalse</label>
@@ -1396,11 +1444,47 @@ date_default_timezone_set("America/Caracas");
     $("#uso-input")[0].value = id_usos.join("-");
   });
 
+  $("#operador").on("click", function() {
+    $("#modal-operador").toggleClass('desplegar');
+  });
+
+  $(".ope-opcion").on("change", function() {
+    // console.log($(".opcion-" + this.id)[0].innerText, this.id.split("-")[0]);
+    operador = "";
+    id = "";
+    if ($(this).is(':checked')) {
+      operador = $(".opcion-" + this.id)[0].innerText;
+      id = this.id.split("-")[0];
+
+      $("#operador")[0].value = operador;
+      $("#operador-input")[0].value = id;
+    }
+  });
+
+  $("#region").on("click", function() {
+    $("#modal-region").toggleClass('desplegar');
+  });
+
+  $(".reg-opcion").on("change", function() {
+    // console.log($(".opcion-" + this.id)[0].innerText, this.id.split("-")[0]);
+    region = "";
+    id = "";
+    if ($(this).is(':checked')) {
+      region = $(".opcion-" + this.id)[0].innerText;
+      id = this.id.split("-")[0];
+
+      $("#region")[0].value = region;
+      $("#region-input")[0].value = id;
+    }
+  });
+
   document.documentElement.addEventListener('click', function(e) {
-    const excepciones = ["proposito", "modal-proposito", "uso", "modal-uso"];
+    const excepciones = ["proposito", "modal-proposito", "uso", "modal-uso", "operador", "modal-operador", "region", "modal-region"];
     if (!excepciones.includes(e.target.id) && !$(e.target).hasClass("opcion")) {
       removerClase($("#modal-proposito"), "desplegar");
       removerClase($("#modal-uso"), "desplegar");
+      removerClase($("#modal-operador"), "desplegar");
+      removerClase($("#modal-region"), "desplegar");
     }
   });
 
@@ -1423,7 +1507,11 @@ date_default_timezone_set("America/Caracas");
     let vol_nor = $("#vol_nor").val();
     let vol_min = $("#vol_min").val();
 
+    
     if (vol_min != "" && vol_nor != "") {
+      vol_nor = parseFloat(vol_nor.replace(/\./g, '').replace(',', '.'));
+      vol_min = parseFloat(vol_min.replace(/\./g, '').replace(',', '.'));
+
       let capacidad = vol_nor - vol_min;
       $("#cap-util")[0].value = capacidad;
     } else {
@@ -1521,7 +1609,9 @@ date_default_timezone_set("America/Caracas");
   document.getElementById("form-embalse").addEventListener("submit", function(event) {
     // event.preventDefault();
     console.log("A validar");
-
+    // var regex = /^-?\d{1,3}(?:([,.])\d{3})*(?:\1\d*)?$/
+    // var regex = /^\d{1,3}(\.\d{3})*(,\d+)?$/;
+    var regex = /^(\d{1,3}(\.\d{3})*|\d+)(,\d+)?$/; //PERFECTA
     var campos = document.querySelectorAll('.Vnumero, .Vrequerido, .Varchivo');
     var errorMessages = [];
 
@@ -1530,12 +1620,13 @@ date_default_timezone_set("America/Caracas");
       var label = campo.previousElementSibling.innerText;
 
       if (campo.classList.contains('Vnumero')) {
+        // console.log(campo, campo.value, regex.test(campo.value), isNaN(campo.value));
         if (campo.value.trim() === "") {
           errorMessages.push("El campo '<b>" + label + "</b>' no puede estar vacío.");
           if (!campo.classList.contains('input-error')) {
             campo.className += " input-error";
           }
-        } else if (isNaN(campo.value)) {
+        } else if ((!regex.test(campo.value))) {
           errorMessages.push("El campo '<b>" + label + "</b>' debe contener solo números.");
           if (!campo.classList.contains('input-error')) {
             campo.className += " input-error";
