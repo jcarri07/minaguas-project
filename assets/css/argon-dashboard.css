@@ -27133,3 +27133,7 @@ table td, table div, table th {
   border-right: 2px solid #98c5e1 !important;
   color: #1B569D !important;
 }
+
+table.text-sm.text-xs {
+  font-size: 0.7rem;
+}

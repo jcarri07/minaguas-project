@@ -31,6 +31,23 @@
         array_push($array_codigos_sql, $array_aux);
     }
 
+    //Guardando los codigos de abertura y caudal
+    $sql = "SELECT id AS 'id_codigo_extraccion', codigo, concepto
+            FROM codigo_extraccion ce
+            WHERE ce.estatus = 'activo' AND 
+                (codigo = '29' OR codigo = '30')
+            ORDER BY codigo ASC;";
+    $query = mysqli_query($conn, $sql);
+    $array_codigos_no_suma = array();
+
+    while($row = mysqli_fetch_array($query)){
+        $array_aux = [];
+        $array_aux['id_codigo_extraccion'] = $row['id_codigo_extraccion'];
+        $array_aux['codigo'] = $row['codigo'];
+        $array_aux['concepto'] = $row['concepto'];
+        array_push($array_codigos_no_suma, $array_aux);
+    }
+
     $sql = "SELECT DISTINCT YEAR(fecha) AS 'anio'
             FROM datos_embalse
             WHERE id_embalse = '$id_embalse' AND estatus = 'activo'
@@ -125,13 +142,15 @@
 
                 <div class="table-responsive">
                     <div class="mb-3">
-                        <table class="table align-items-center text-sm text-center table-sm" id="table-history">
+                        <table class="table align-items-center text-sm text-center table-sm text-xs" id="table-history">
                             <thead class="table-primary">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">#</th>
                                     <th scope="col" class="sort" data-sort="name">Fecha y Hora (00)</th>
                                     <th scope="col" class="sort" data-sort="budget">Cota (01)</th>
                                     <th scope="col" class="sort" data-sort="budget">Extraccion (1000 <span style="text-transform: lowercase;">m</span><sup>3</sup>) (23)</th>
+                                    <th scope="col" class="sort" data-sort="budget">Abertura (cm,%) (29)</th>
+                                    <th scope="col" class="sort" data-sort="budget">Caudal (<span style="text-transform: lowercase;">m<sup>3</sup>/s)</span> (30)</th>
                                     <th scope="col" class="sort" data-sort="budget">Cargado por</th>
                                     <th scope="col" style="min-width: 60px;"></th>
                                 </tr>
@@ -146,6 +165,9 @@
                     $fecha = strftime("%d/%b/%Y", strtotime($row['fecha']));
                     $hora = date("g:i a", strtotime($row['hora']));
 
+                    $abertura = "";
+                    $caudal = "";
+
                     $extraccion = 0;
                     $extraccion_array = explode(";", $row['extraccion']);
                     for($j = 0 ; $j < count($extraccion_array) ; $j++) {
@@ -154,6 +176,21 @@
 
                             if(buscarPosicion($array_codigos_sql, $fila[0], 'id_codigo_bd') !== -1 && is_numeric($fila[1]))
                                 $extraccion += $fila[1];
+
+                            $index = buscarPosicion($array_codigos_no_suma, $fila[0], 'id_codigo_extraccion');
+                            if($index !== -1) {
+                                if($array_codigos_no_suma[$index]['codigo'] == "29") {
+                                    if(is_numeric($fila[1])) {
+                                        $abertura = ( ($fila[1] < 1) ? ($fila[1] * 100) : $fila[1]);
+                                        $abertura = number_format($abertura, 1, ",", "");
+                                    }
+                                    else
+                                        $abertura = $fila[1];
+                                }
+                                if($array_codigos_no_suma[$index]['codigo'] == "30") {
+                                    $caudal = $fila[1];
+                                }
+                            }
                         }
                     }
 ?>
@@ -174,7 +211,13 @@
                                         <?php echo number_format($row['cota_actual'], 3, '.' , '');?>
                                     </td>
                                     <td> 
-                                        <?php echo $extraccion; ?>
+                                        <?php echo number_format($extraccion, 3, ".", ""); ?>
+                                    </td>
+                                    <td> 
+                                        <?php echo $abertura; ?>
+                                    </td>
+                                    <td> 
+                                        <?php echo $caudal; ?>
                                     </td>
                                     <td>
                                         <?php echo ($row['encargado'] != "" && $row['encargado'] != NULL) ? $row['encargado'] : "-";?>

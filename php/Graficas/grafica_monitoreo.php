@@ -143,7 +143,7 @@ $res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT MAX(cot
 
 $emb = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id';");
 
-$an = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND YEAR(fecha) = '$anio' AND id_embalse = '$id' GROUP BY fecha ORDER BY fecha ASC;");
+$an = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND YEAR(fecha) = '$anio' AND id_embalse = '$id' AND cota_actual <> 0 GROUP BY fecha ORDER BY fecha ASC;");
 
 $datos1 = mysqli_fetch_all($r, MYSQLI_ASSOC);
 $datos2 = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -162,7 +162,7 @@ if ($count >= 1) {
 ?>
 
 <?php
-for ($k = $numeroSemana; $k < $semanas; $k++) {
+for ($k = $numeroSemana; $k < $semanas+1; $k++) {
     if (isset($datos1[$i]['semana'])) {
         if ($k == ($datos1[$i]['semana'])) {
             $array1[$aux] = $bati->getByCota(date('Y', strtotime($datos1[$i]["fecha"])), $datos1[$i]["cota_actual"])[1];
@@ -173,6 +173,11 @@ for ($k = $numeroSemana; $k < $semanas; $k++) {
     } else {
         $array1[$aux] = 0;
     }
+   
+    $aux++;
+}
+$aux = 0;
+for ($k = $numeroSemana; $k < $semanas+1; $k++) {
     if (isset($datos2[$j]['semana'])) {
         if ($k == ($datos2[$j]['semana'])) {
             $array2[$aux] = $bati->getByCota(date('Y', strtotime($datos2[$j]["fecha"])), $datos2[$j]["cota_actual"])[1];
@@ -545,7 +550,7 @@ $j = 0;
                                 yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_min"])[1]; ?>,
                                 cota: "Volumen minimo",
                                 color: 'black',
-                                h: 15,
+                                h: -15,
                             },
                             {
                                 yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_nor"])[1]; ?>,
@@ -720,7 +725,7 @@ $j = 0;
                                 yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_min"])[1]; ?>,
                                 cota: "Volumen minimo",
                                 color: 'black',
-                                h: 15,
+                                h: -15,
                             },
                             {
                                 yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_nor"])[1]; ?>,
