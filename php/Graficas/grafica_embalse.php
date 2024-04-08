@@ -6,7 +6,7 @@ include "./php/Conexion.php";
 $re = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($re);
 ?>
-<script src="../../assets/js/jquery/jquery.min.js"></script>
+<!-- <script src="../../assets/js/jquery/jquery.min.js"></script> -->
 <script src="./assets/js/html2canvas.min.js"></script>
 <link href="./assets/css/style-spinner.css" rel="stylesheet" />
 

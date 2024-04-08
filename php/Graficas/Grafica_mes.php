@@ -1,6 +1,6 @@
 <script src="./assets/js/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-<<script src="../../assets/js/jquery/jquery.min.js"></script>
+<!-- <<script src="../../assets/js/jquery/jquery.min.js"></script> -->
 <?php
 
 require_once '../Conexion.php';
@@ -19,9 +19,12 @@ $y = $anio;
 $año = $anio;
 $ver = $_POST['ver'];
 
+$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
+$count = mysqli_num_rows($r);
+if ($count >= 1) {
 
 if ($tipo == "bar") {
-    $aux = "SELECT id_registro, d.fecha, (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora, (SELECT cota_actual 
+    $aux = "SELECT id_registro, d.fecha, (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora, (SELECT cota_actual 
     FROM datos_embalse 
     WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND cota_actual <> 0 AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
 FROM datos_embalse d, embalses e 
@@ -38,9 +41,7 @@ ORDER BY d.fecha ASC;";
 $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
 $res = mysqli_query($conn, $aux);
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
-$count = mysqli_num_rows($r);
-if ($count >= 1) {
+
 
     $datos_embalses = mysqli_fetch_all($res, MYSQLI_ASSOC);
     $embalses = mysqli_fetch_all($r, MYSQLI_ASSOC);
@@ -112,7 +113,7 @@ if ($count >= 1) {
                             $pivote = $y;
                             while ($j < count($datos_embalses)) {
 
-                            ?> {
+                                if($datos_embalses[$j]["cota_actual"] != NULL){?> {
                                     x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
                                     y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
                                 },
@@ -125,7 +126,7 @@ if ($count >= 1) {
                                 } ?>
 
                             <?php
-
+                                }
 
                                 $j++;
                             };
@@ -335,7 +336,7 @@ if ($count >= 1) {
                             $pivote = $y;
                             while ($j < count($datos_embalses)) {
 
-                            ?> {
+                                if($datos_embalses[$j]["cota_actual"] != NULL){?> {
                                     x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
                                     y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                 },
@@ -348,7 +349,7 @@ if ($count >= 1) {
                                 } ?>
 
                             <?php
-
+                                }
 
                                 $j++;
                             };

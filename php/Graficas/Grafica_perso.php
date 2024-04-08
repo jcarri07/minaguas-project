@@ -1,6 +1,6 @@
 <script src="./assets/js/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-<script src="../../assets/js/jquery/jquery.min.js"></script>
+<!-- <script src="../../assets/js/jquery/jquery.min.js"></script> -->
 <?php
 
 require_once '../Conexion.php';
@@ -108,7 +108,7 @@ if ($count >= 1) {
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen del periodo',data: [";
+                            <?php echo "{label:'Volumen del periodo',pointRadius: 2,data: [";
                             $min = $embalses[0]["cota_min"];
                             $max = $embalses[0]["cota_max"];
                             $j = 0;
@@ -117,9 +117,9 @@ if ($count >= 1) {
 
                                 if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
 
-                                    $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
+                                    
 
-                            ?> {
+                                    if($datos_embalses[$j]["cota_actual"] != NULL){?> {
                                         x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
                                         y: <?php echo $bati->getByCota(date("Y", strtotime($datos_embalses[$j]["fecha"])), $datos_embalses[$j]["cota_actual"])[1];  ?>
                                     },
@@ -132,7 +132,7 @@ if ($count >= 1) {
                                     } ?>
 
                             <?php
-
+                                    }
                                 };
                                 $j++;
                             };
@@ -337,7 +337,7 @@ if ($count >= 1) {
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen del periodo',data: [";
+                            <?php echo "{label:'Volumen del periodo',pointRadius: 2,data: [";
                             $min = $embalses[0]["cota_min"];
                             $max = $embalses[0]["cota_max"];
                             $j = 0;
@@ -346,9 +346,9 @@ if ($count >= 1) {
 
                                 if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
 
-                                    $arFecha = explode('-', $datos_embalses[$j]["fecha"]);
+                                    
 
-                            ?> {
+                                    if($datos_embalses[$j]["cota_actual"] != NULL){?> {
                                         x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
                                         y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                     },
@@ -361,7 +361,7 @@ if ($count >= 1) {
                                     } ?>
 
                             <?php
-
+                                    }
                                 };
                                 $j++;
                             };

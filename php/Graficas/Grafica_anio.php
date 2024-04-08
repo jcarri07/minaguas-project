@@ -1,6 +1,6 @@
 <script src="./assets/js/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
 <?php
 
 require_once '../Conexion.php';
@@ -127,7 +127,7 @@ if ($count >= 1) {
                             $pivote = $y;
                             while ($j < count($datos_embalses)) {
 
-                            ?> {
+                                if($datos_embalses[$j]["cota_actual"] != NULL){?> {
                                     x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
                                     y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
                                 },
@@ -140,7 +140,7 @@ if ($count >= 1) {
                                 } ?>
 
                             <?php
-
+                                }
 
                                 $j++;
                             };
@@ -344,14 +344,14 @@ if ($count >= 1) {
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen del año',data: [";
+                            <?php echo "{label:'Volumen del año',pointRadius: 0,data: [";
                             $min = $embalses[0]["cota_min"];
                             $max = $embalses[0]["cota_max"];
                             $j = 0;
                             $pivote = $y;
                             while ($j < count($datos_embalses)) {
 
-                            ?> {
+                                if($datos_embalses[$j]["cota_actual"] != NULL){?> {
                                     x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
                                     y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
                                 },
@@ -364,7 +364,7 @@ if ($count >= 1) {
                                 } ?>
 
                             <?php
-
+                                }
 
                                 $j++;
                             };
