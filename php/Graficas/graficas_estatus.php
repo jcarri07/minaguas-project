@@ -57,7 +57,7 @@ $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
-    $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
+    $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha) AS fech,(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
     e.nombre_embalse, (SELECT cota_actual 
                        FROM datos_embalse h 
                        WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
@@ -115,7 +115,7 @@ ORDER BY id_embalse ASC;");
         $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
         if ($datos_embalses[$j]["cota_actual"] != NULL) {
 
-            $x = $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
+            $x = $bati->getByCota(date('Y', strtotime($datos_embalses[$j]["fech"])), $datos_embalses[$j]["cota_actual"])[1];
             $min = $bati->volumenMinimo();
             $max = $bati->volumenMaximo();
             $nor = $bati->volumenNormal();
@@ -144,20 +144,22 @@ ORDER BY id_embalse ASC;");
             $lista[0]++;
         };
         $volumen_fechas[0] += $bati->volumenDisponible();
+        if($volumen_primer_periodo[$j]['cota_actual'] != NULL) {
+            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_primer_periodo[$j]["fecha"])), $volumen_primer_periodo[$j]["cota_actual"]);
+        }
+        if($volumen_segundo_periodo[$j]['cota_actual'] != NULL) {
+            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_segundo_periodo[$j]["fecha"])), $volumen_segundo_periodo[$j]["cota_actual"]);
+        }
+        if($volumen_quince[$j]['cota_actual'] != NULL) {
+            $volumen_fechas[4] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_quince[$j]["fecha"])), $volumen_quince[$j]["cota_actual"]);
+        }
+        if($volumen_siete[$j]['cota_actual'] != NULL) {
+            $volumen_fechas[5] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_siete[$j]["fecha"])), $volumen_siete[$j]["cota_actual"]);
+        }
         $j++;
     };
-    for($i = 0; $i < count($volumen_primer_periodo); $i++) {
-        $volumen_fechas[2] += $bati->volumenDisponibleByCota($anio, $volumen_primer_periodo[$i]["cota_actual"]);
-    }
-    for($i = 0; $i < count($volumen_segundo_periodo); $i++) {
-        $volumen_fechas[3] += $bati->volumenDisponibleByCota($anio, $volumen_segundo_periodo[$i]["cota_actual"]);
-    }
-    for($i = 0; $i < count($volumen_quince); $i++) {
-        $volumen_fechas[4] += $bati->volumenDisponibleByCota($anio, $volumen_quince[$i]["cota_actual"]);
-    }
-    for($i = 0; $i < count($volumen_siete); $i++) {
-        $volumen_fechas[5] += $bati->volumenDisponibleByCota($anio, $volumen_siete[$i]["cota_actual"]);
-    }
+    
+
 
 
 ?>
