@@ -311,7 +311,7 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
     $("[name='Ecedula']").val(ced);
     $("[name='Ecedula2']").val(ced);
     $("[name='Eemail']").val(correo);
-    $("[name='Epassword']").val(pass);
+    // $("[name='Epassword']").val(pass);
     $("#edit-user").modal("show");
 
   };
@@ -518,7 +518,7 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
     $("#form").submit(function(e) {
       e.preventDefault();
 
-      if ($("[name='password']").prop("value") == $("[name='confirmar']").prop("value")) {
+      
         var values = new FormData();
 
         values.append("nombre", $("[name='nombres']").prop("value"));
@@ -526,6 +526,7 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
         values.append("telefono", $("[name='telefono']").prop("value"));
         values.append("cedula", $("[name='cedula']").prop("value"));
         values.append("email", $("[name='email']").prop("value"));
+        values.append("ident", 'editarU');
         //values.append("usuario", $("[name='usuario']").prop("value"));
         values.append("pass", $("[name='password']").prop("value"));
         console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
@@ -613,15 +614,7 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
             console.log("err2");
           }
         });
-      } else {
-        $('#new-user').modal('hide');
-        Swal.fire({
-          icon: 'warning',
-          text: 'Las contraseñas no coinciden',
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#01a9ac',
-        });
-      }
+
     });
 
     $("#form2").submit(function(e) {
@@ -637,7 +630,7 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
       values.append("email", $("[name='Eemail']").prop("value"));
       //values.append("usuario", $("[name='usuario']").prop("value"));
       values.append("pass", $("[name='Epassword']").prop("value"));
-      values.append("ident", 'editar');
+      values.append("ident", 'editarU');
       /*console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
         return n != ''
       }).length);*/

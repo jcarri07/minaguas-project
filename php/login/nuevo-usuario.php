@@ -40,8 +40,8 @@ if ($num_r >= 1) {
         echo 'existe_usuario';
         return;
     } else {
-
-        $res = mysqli_query($conn, "INSERT INTO usuarios (P_Nombre,S_Nombre, P_Apellido,S_Apellido, Cedula,Telefono, Contrasena,Tipo,Correo, estatus) VALUES ('$nombre1','$nombre2', '$apellido1','$apellido2','$cedula','$telefono','$contra','User','$email','activo');");
+        $password = password_hash($contra, PASSWORD_DEFAULT,['cost' => 5]);
+        $res = mysqli_query($conn, "INSERT INTO usuarios (P_Nombre,S_Nombre, P_Apellido,S_Apellido, Cedula,Telefono, Contrasena,Tipo,Correo, estatus) VALUES ('$nombre1','$nombre2', '$apellido1','$apellido2','$cedula','$telefono','$password','User','$email','activo');");
 
         if ($res) {
             echo "si";

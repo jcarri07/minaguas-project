@@ -9,12 +9,11 @@ $contra = $_POST["pass"];
 
 $res = mysqli_query($conn, "SELECT * 
                            FROM usuarios 
-                           WHERE Correo='$user' AND Contrasena='$contra' AND estatus = 'activo';");
-$num_r = mysqli_num_rows($res);
+                           WHERE Correo='$user' AND estatus = 'activo';");
+$obj = mysqli_fetch_object($res);
 
-
-if ($num_r >= 1) {
-    $obj = mysqli_fetch_object($res);
+if(password_verify($contra, $obj->Contrasena)){
+    
     $_SESSION["Id_usuario"] = $obj->Id_usuario;
     $_SESSION["P_Nombre"] = $obj->P_Nombre;
     $_SESSION["S_Nombre"] = $obj->S_Nombre;
@@ -30,3 +29,4 @@ if ($num_r >= 1) {
     echo "no";
 };
 closeConection($conn);
+

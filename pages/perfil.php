@@ -170,7 +170,7 @@ if ($_SESSION["Tipo"] == "Admin") {
 
     $("#edit").click(function() {
 
-      if ($("[name='confirmar']").prop("value") == <?php echo $pass ?>) {
+      
         var values = new FormData();
 
         values.append("nombre", $("[name='nombres']").prop("value"));
@@ -179,12 +179,13 @@ if ($_SESSION["Tipo"] == "Admin") {
         values.append("cedula", $("[name='cedula']").prop("value"));
         values.append("cedula2", $("[name='cedula2']").prop("value"));
         values.append("email", $("[name='email']").prop("value"));
-        //values.append("usuario", $("[name='usuario']").prop("value"));
+        values.append("viejo", $("[name='confirmar']").prop("value"));
         values.append("pass", $("[name='password']").prop("value"));
+        values.append("ident", 'editar');
 
 
         $.ajax({
-          url: 'php/Usuario/editar-usuario.php',
+          url: 'php/Usuario/editar_usuario.php',
           type: 'POST',
           data: values,
           cache: false,
@@ -262,16 +263,7 @@ if ($_SESSION["Tipo"] == "Admin") {
             console.log("err2");
           }
         });
-      } else {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Usuario no Editado',
-          text: 'Las contraseñas no coinciden',
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#01a9ac',
-        });
-        console.log("error");
-      }
+
     });
   });
 </script>
