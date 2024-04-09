@@ -10,7 +10,7 @@ $fullPath = getcwd();
 
 $host = "localhost";
 $user = "root";
-$pass = "";
+$pass = "root";
 $dbname = "minagua_db";
 
 // if (contiene_subcadena($fullPath, "C:")) {
