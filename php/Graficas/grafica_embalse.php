@@ -1,6 +1,7 @@
 <script src="./assets/js/Chart.js"></script>
 <!--script src="../../assets/js/date-fns.js"></script-->
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="./assets/js/sweetalerts.js"></script>
 <?php
 include "./php/Conexion.php";
 $re = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
@@ -244,7 +245,7 @@ $count = mysqli_num_rows($re);
             values.append("semana", $("#semana option:selected").val());
 
             $.ajax({
-                url: 'php/graficas/' + $("#fe option:selected").val(),
+                url: 'php/Graficas/' + $("#fe option:selected").val(),
                 type: 'POST',
                 data: values,
                 cache: false,
