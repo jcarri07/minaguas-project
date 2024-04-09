@@ -3,6 +3,12 @@ require_once '../../php/Conexion.php';
 
 $id = $_GET['id'];
 
+$fecha1 = $_GET['fecha1'];
+$fecha2 = $_GET['fecha2'];
+
+$año = $_GET['anio'];
+$mes = $_GET['mes'];
+
 $sql = "SELECT * FROM embalses WHERE id_embalse = $id";
 
 $res = mysqli_query($conn, $sql);
@@ -41,6 +47,8 @@ $FECHA_MONITOREO = "15/05/2023";
 $VOLUMEN_NIVEL_NORMAL = "462,41 hm3 (Cota 328,80 m s.n.m.)";
 $VOLUMEN_NIVEL_MINIMO = "76,28 hm3 (Cota 285,00 m s.n.m.)";
 $TITULO = "Gráfico de Monitoreo.";
+
+
 
 ?>
 <!DOCTYPE html>
@@ -168,14 +176,29 @@ $TITULO = "Gráfico de Monitoreo.";
     <div style="height: 50px; top:xº 130px; position:absolute; left: 45px;">
         <table style="position: absolute; top: 160px;">
             <tbody>
-                <tr>
-                    <th style="text-align: left;">Desde:</th>
-                    <td style="text-align: right;"><?php echo $FECHA_MONITOREO ?></td>
-                </tr>
-                <tr>
-                    <th style="text-align: left;">Hasta:</th>
-                    <td style="text-align: right;"><?php echo $FECHA_MONITOREO ?></td>
-                </tr>
+                <?php
+                setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp');
+                if (!empty($año) && $año != 'undefined') { ?>
+                    <tr>
+                        <th style='text-align: left;'>AÑO:</th>
+                        <td style='text-align: right;'><?php echo $año ?></td>
+                    </tr>
+                <?php } else if (!empty($mes) && $mes != 'undefined') { ?>
+                    <tr>
+                        <th style='text-align: left;'>MES:</th>
+                        <td style='text-align: right;'><?php echo mb_convert_case(strftime('%B DE %Y', strtotime($mes)), MB_CASE_UPPER, 'UTF-8'); ?></td>
+                    </tr>
+                <?php } else { ?>
+                    <tr>
+                        <th style='text-align: left;'>Desde:</th>
+                        <td style='text-align: right;'><?php echo date("d/m/Y", strtotime($fecha1)) ?></td>
+                    </tr>
+                    <tr>
+                        <th style='text-align: left;'>Hasta:</th>
+                        <td style='text-align: right;'><?php echo date("d/m/Y", strtotime($fecha2))  ?></td>
+                    </tr>
+                <?php }
+                ?>
             </tbody>
         </table>
     </div>
