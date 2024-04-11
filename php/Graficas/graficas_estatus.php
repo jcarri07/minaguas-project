@@ -178,6 +178,7 @@ ORDER BY id_embalse ASC;");
         <script src="../../assets/js/jquery/jquery.min.js"></script>
         <script src="../../assets/js/html2canvas.min.js"></script>
         <link href="../../assets/css/style-spinner.css" rel="stylesheet" />
+        <link id="pagestyle" href="../../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
         <title>Document</title>
     </head>
@@ -192,12 +193,23 @@ ORDER BY id_embalse ASC;");
             <div style="width:900px !important; height:300px;position:absolute; top:-100%;"><canvas id="abastecimiento" class="border border-radius-lg"></canvas></div>
 
         </div>
-        <div class="loaderPDF">
+        <div class="row justify-content-center h-100">
+        <div class="col-7">
+            <div class="loaderPDF " style="height: 90% !important;align-items:end !important;">
+
                 <div class="lds-dual-ring"></div>
+
+            </div>
         </div>
+        <div class="col-7">
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
     </body>
     <script>
-        $(document).ready(function() {
+        
             let cha = new Chart(chart, {
                 type: 'pie',
                 title: 'grafica',
@@ -302,6 +314,7 @@ ORDER BY id_embalse ASC;");
                 plugins: [ChartDataLabels],
 
             });
+            $('#progress-bar').attr('aria-valuenow', <?php echo 25; ?>).css('width', <?php echo 25?> + '%');
 
             let cha1 = new Chart(barra1, {
                 type: 'bar',
@@ -411,7 +424,7 @@ ORDER BY id_embalse ASC;");
                 plugins: [ChartDataLabels],
 
             });
-
+            $('#progress-bar').attr('aria-valuenow', <?php echo 50; ?>).css('width', <?php echo 50?> + '%');
             let cha2 = new Chart(barra2, {
                 type: 'bar',
                 title: 'grafica',
@@ -523,7 +536,7 @@ ORDER BY id_embalse ASC;");
                 plugins: [ChartDataLabels],
 
             });
-
+            $('#progress-bar').attr('aria-valuenow', <?php echo 75; ?>).css('width', <?php echo 75?> + '%');
             let abas = new Chart(abastecimiento, {
                 type: 'pie',
                 title: 'grafica',
@@ -628,6 +641,7 @@ ORDER BY id_embalse ASC;");
                 plugins: [ChartDataLabels],
 
             });
+            $('#progress-bar').attr('aria-valuenow', <?php echo 100; ?>).css('width', <?php echo 100?> + '%');
             <?php closeConection($conn);
             // Convertir el array a formato JSON
             $json_datos = json_encode($lista);
@@ -660,6 +674,7 @@ ORDER BY id_embalse ASC;");
                     }
                 }
             });
+$(document).ready(function() {
             const y = document.querySelector("#barra2");
             html2canvas(y).then(function(canvas) { //PROBLEMAS
                 //$("#ca").append(canvas);

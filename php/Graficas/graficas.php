@@ -90,6 +90,7 @@ if ($count >= 1) {
         <script src="../../assets/js/jquery/jquery.min.js"></script>
         <script src="../../assets/js/html2canvas.min.js"></script>
         <link href="../../assets/css/style-spinner.css" rel="stylesheet" />
+        <link id="pagestyle" href="../../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
         <title>Document</title>
     </head>
@@ -114,9 +115,20 @@ if ($count >= 1) {
             ?>
 
         </div>
-        <div class="loaderPDF">
+        <div class="row justify-content-center h-100">
+        <div class="col-7">
+            <div class="loaderPDF " style="height: 90% !important;align-items:end !important;">
+
                 <div class="lds-dual-ring"></div>
+
             </div>
+        </div>
+        <div class="col-7">
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
     </body>
 
     <script>
@@ -166,14 +178,14 @@ if ($count >= 1) {
                 // Resto del código del plugin
             }
         };
-        $(document).ready(function() {
+        
 
 
 
 
 
             <?php
-
+            $count = 0;
             for ($t = 0; $t <  count($embalses); $t++) {
                 $bati = new Batimetria($embalses[$t]["id_embalse"], $conn);
             ?>
@@ -406,6 +418,7 @@ if ($count >= 1) {
                     plugins: [arbitra],
 
                 });
+                $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30)); $count++;?> + '%');
                 let chartM<?php echo $t; ?> = new Chart(mes<?php echo $t; ?>, {
                     type: 'line',
                     title: 'grafica',
@@ -621,6 +634,7 @@ if ($count >= 1) {
                     plugins: [arbitra],
 
                 });
+                $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30)); $count++;?> + '%');
                 let chartS<?php echo $t; ?> = new Chart(semana<?php echo $t; ?>, {
                     type: 'line',
                     labels: [<?php
@@ -833,9 +847,12 @@ if ($count >= 1) {
                     },
                     plugins: [arbitra],
                 });
-            <?php
-            }
+                $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30)); $count++;?> + '%');
 
+            <?php
+            } ?>
+$(document).ready(function() {
+            <?php
             closeConection($conn);
             for ($t = 0; $t <  count($embalses); $t++) {
             ?>
@@ -896,10 +913,7 @@ if ($count >= 1) {
                         }
                     }
                 });
-
-
             <?php
-
             }
             ?>
 
