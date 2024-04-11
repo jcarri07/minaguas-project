@@ -259,7 +259,7 @@ closeConection($conn);*/
               </div>
             </div>
           </div>
-          <div class="col-12 h-90 h-sm-90"><?php include "php/Graficas/grafica_volumen_actual.php" ?></div>
+          <div id="cont" class="col-12 h-90 h-sm-90"></div>
         </div>
       </div>
     </div>
@@ -560,6 +560,7 @@ closeConection($conn);*/
   var ctx = document.getElementById('myChart').getContext('2d');
   window.myChart = new Chart(ctx, config);
   $(document).ready(function() {
+    actual();
     cargarGrafico();
 
     $.ajax({
@@ -705,4 +706,27 @@ closeConection($conn);*/
       });
     });
   }
+function actual() {
+
+
+$.ajax({
+    url: 'php/Graficas/grafica_volumen_actual.php',
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function(response) {
+        //$("#contenedor").html("");
+        $("#cont").html(response);
+
+    },
+    error: function(response) {
+
+        alertify.error("Error inesperado.");
+
+    }
+});
+
+
+};
+setInterval(actual, 60000);
 </script>

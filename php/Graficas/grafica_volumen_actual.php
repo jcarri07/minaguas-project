@@ -1,10 +1,10 @@
 <script src="./assets/js/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-<script src="../../assets/js/jquery/jquery.min.js"></script>
+<script src="./assets/js/jquery/jquery.min.js"></script>
 <?php
 
-require_once './php/Conexion.php';
-require_once './php/batimetria.php';
+require_once '../Conexion.php';
+require_once '../batimetria.php';
 
 date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
@@ -87,19 +87,18 @@ ORDER BY id_embalse ASC;");
                                         data: [";
                                     
                             ?>      {
-                                        x: '<?php echo 'Embalses'; //$datos_embalses[$j]["nombre_embalse"];  
-                                            ?>',
+                                        x: '',
                                         y: <?php echo ($sum); ?>,
                                     },
                             <?php
 
 
                                     $j++;
-                                    echo "]},";
+                                    echo "],borderWidth:1,categoryPercentage:1,},";
                                 } else {
                                     echo "{backgroundColor: '#fd0200',";
                                     echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (0%)',
-                                    data: [{x: 'Embalses',y:0,}]},";
+                                    data: [{x: '',y:0,}],borderWidth:1,categoryPercentage:1,},";
                                     $j++;
                                 }
                             };
@@ -109,7 +108,7 @@ ORDER BY id_embalse ASC;");
                     },
 
                     options: {
-
+                        
                         responsive: true,
                         maintainAspectRatio: false,
                         interaction: {
@@ -144,8 +143,9 @@ ORDER BY id_embalse ASC;");
                         scales: {
 
                             x: {
-
+                                
                                 ticks: {
+                                    
                                     font: {
                                         size: 14
                                     },
@@ -176,7 +176,7 @@ ORDER BY id_embalse ASC;");
                         },
                     },
                 });
-            })
+            });
         </script>
 <?php
     } else {
