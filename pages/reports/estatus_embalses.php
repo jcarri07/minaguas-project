@@ -37,31 +37,31 @@ $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
 
-$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador, MAX(d.fecha),MAX(d.hora),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora,
+$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
 e.nombre_embalse, (SELECT cota_actual 
                    FROM datos_embalse h 
-                   WHERE h.id_embalse = d.id_embalse AND h.fecha = MAX(d.fecha) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
+                   WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
 WHERE e.estatus = 'activo'
 GROUP BY id_embalse 
 ORDER BY id_embalse ASC;");
 
-$condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
-    FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha1' AND h.hora = (select MAX(hora) FROM datos_embalse                                                                                                                                                            WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual 
- FROM embalses e
- LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
- WHERE e.estatus = 'activo' 
- GROUP BY id_embalse;");
+$condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+FROM datos_embalse h 
+WHERE h.id_embalse = e.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0 AND da.fecha <= '$fecha1') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha1' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual 
+FROM embalses e
+LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
+WHERE e.estatus = 'activo' 
+GROUP BY id_embalse;");
 
-$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,operador,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
-    FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha2' AND h.hora = (select MAX(hora) FROM datos_embalse                                                                                                                                                            WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual 
- FROM embalses e
- LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
- WHERE e.estatus = 'activo' 
- GROUP BY id_embalse;");
+$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+FROM datos_embalse h 
+WHERE h.id_embalse = e.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0 AND da.fecha <= '$fecha2') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha2' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual 
+FROM embalses e
+LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
+WHERE e.estatus = 'activo'
+GROUP BY id_embalse;");
 
 $hidro = mysqli_query($conn, "SELECT COUNT(e.id_embalse),e.operador
                 FROM embalses e
@@ -319,6 +319,7 @@ $sin_cambio = "../../assets/icons/f-igual.png";
 
   th,
   td {
+    vertical-align: middle;
     text-align: center;
     padding: 5px;
     border: 1px solid #707273;
@@ -327,6 +328,9 @@ $sin_cambio = "../../assets/icons/f-igual.png";
   }
 
   th {
+    margin-top: auto;
+    margin-bottom: auto;
+    vertical-align: middle;
     text-align: center;
     background-color: #0070C0;
     color: #FFFFFF;
@@ -1361,6 +1365,195 @@ $sin_cambio = "../../assets/icons/f-igual.png";
         </tr>
       </table>
     </div>
+  </div>
+  <!-- PAGINA 14 -->
+
+  <div style="page-break-before: always;"></div>
+  <div class="header">
+    <hr style="top: 55px; color:#1B569D">
+    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+  </div>
+
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+  </div>
+
+  <div style="position: absolute; margin-top: 80px; margin-left: 10px; width: 95%; height: 100px;">
+    <div style="position: absolute; margin-top: 30px;">
+      <table>
+        <tr>
+          <th style=" width: 100px;" class="text-celdas" rowspan="2">HIDROLÓGICA</th>
+          <th style=" width: 90px; " class="text-celdas" colspan="2" ><p style="">VOLUMEN DISPONIBLE (HM3)</p></th>
+          <th style=" width: 90px;" class="text-celdas" colspan="2"><p style="padding-top: 25px;">VARIACION DEL VOLUMEN DISPONIBLE (HM3)</p></th>
+          <th style=" width: 90px;" class="text-celdas" colspan="2"><p style=" padding-top: 36px;">VARIACION PORCENTUAL DE VOLUMEN HASTA HOY (%)</p></th>
+          <th style=" width: 90px;" class="text-celdas">VARIACION DE VOLUMEN HACE UNA SEMANA</th>
+          <th style=" width: 90px;" class="text-celdas">VARIACION PORCENTUAL DE VOLUMEN HACE UNA SEMANA</th>
+
+        </tr>
+        <tr>          
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">DESDE</th>
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">DESDE</th>
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">DESDE</th>
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">DESDE</th>
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">DESDE</th>
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">DESDE</th>
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">(Hm3)</th>
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">(%)</th>
+        </tr>
+
+        <tr>          
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
+        </tr>
+
+      </table>
+
+    </div>
+  </div>
+
+  <div style="page-break-before: always;"></div>
+  <div class="header">
+    <hr style="top: 55px; color:#1B569D">
+    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic; text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+  </div>
+
+  <h2 style="position: absolute; top: 50px; text-align: center; text-justify: center; color:#000000">GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</h2>
+
+  <div>
+    <div style="width: 1000px; height: 565px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
+      <!-- Mapa --> <img style="width:1000px ; height: 565px;" src="<?php echo $mapa ?>" />
+    </div>
+    <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 540px; border: gray 1px solid; background-color: #FFFFFF">
+      <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
+      <p style="position: absolute; top: 25px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+      <div style="position: absolute; left: 20px; top: 2px; background-color: red;
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición baja (< 30%) <b> <?php echo $valores[0][0] ?> Embalses</b></p>
+
+
+        <p style="position: absolute; top: 45px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+        <div style="position: absolute; left: 20px; top: 2px; background-color: #44BEF0;
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Bajo (30% < A> 60%) <b> <?php echo $valores[0][1] ?> Embalses</b></p>
+
+
+          <p style="position: absolute; top: 65px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+          <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Alto (60% < A> 90%) <b> <?php echo $valores[0][2] ?> Embalses</b></p>
+
+
+            <p style="position: absolute; top: 85px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+            <div style="position: absolute; left: 20px; top: 2px; background-color: green;
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición Buena (> 90%) <b> <?php echo $valores[0][3] ?> Embalses</b></p>
+
+
+            <p style="position: absolute; top: 105px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+            <div style="position: absolute; left: 20px; top: 2px; background-color: #58F558;
+         border-radius: 5; height: 10px; width: 10px;"></div>Condición de Alivio <b> <?php echo $valores[0][4] ?> Embalses</b></p>
+
+
+            <p style="position: absolute; top: 125px;
+        text-align: left; padding-left: 40px; font-size: 12px;">
+            <div style="position: absolute; left: 20px; top: 2px; width: 0; height: 0;
+        border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 10px solid black;"></div> EDC (Embalse de Compensación)</p>
+
+    </div>
+  </div>
+
+  <div style="page-break-before: always;"></div>
+  <div class="header">
+    <hr style="top: 55px; color:#1B569D">
+    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+  </div>
+
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
+  </div>
+
+  <div style="width: 520px; height: 620px; background-color: lightgray;  position: absolute; margin-top: 100px; margin-left: 10px; text-align: right; font-size: 18px;">
+  </div>
+
+  <div style="width: 520px; height: 320px; position: absolute; margin-top: 100px; margin-left: 550px;">
+  <table>
+        
+        <tr>
+          <th class="celd-table">SIMBOLO</th>
+          <th class="celd-table">DESCRIPCION</th>
+          <th class="celd-table">EMBALSE</th>
+          <th class="celd-table">MESES DE  <br>ABAST.</th>
+          <th class="celd-table">HIDROLÓGICA</th>
+        </tr>
+        <tr>
+        <td class="" style="font-size: 12px;"><div style="background-color: orange; border-radius: 5; height: 10px; width: 10px;"></div></td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="" style="font-size: 12px;"><div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px;"></div></td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="" style="font-size: 12px;"><div style="background-color: green; border-radius: 5; height: 10px; width: 10px;"></div></td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="" style="font-size: 12px;"><div style="background-color: green; border-radius: 5; height: 10px; width: 10px;"></div></td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+
+      </table>
+
+  
+
+  <div style="margin-top: 20px">
+    <div >
+      <table>
+      <tr>
+          <th class="celd-table">SIMBOLO</th>
+          <th class="celd-table">DESCRIPCION</th>
+          <th class="celd-table">EMBALSE</th>
+          <th class="celd-table">MESES DE  <br>ABAST.</th>
+          <th class="celd-table">HIDROLÓGICA</th>
+        </tr>
+        <tr>
+          <td class="" style="font-size: 12px;"><div style="background-color: red; border-radius: 5; height: 10px; width: 10px;"></div></td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+        <tr>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+          <td class="" style="font-size: 12px;">PRUEBA</td>
+        </tr>
+      </table>
+    </div>
+  </div>
   </div>
 
 </body>

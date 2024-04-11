@@ -1,10 +1,10 @@
 <script src="./assets/js/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-<script src="../../assets/js/jquery/jquery.min.js"></script>
+<script src="./assets/js/jquery/jquery.min.js"></script>
 <?php
 
-require_once './php/Conexion.php';
-require_once './php/batimetria.php';
+require_once '../Conexion.php';
+require_once '../batimetria.php';
 
 date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
@@ -16,10 +16,10 @@ $año = date('Y');
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
-    $res = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),MAX(d.hora),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
+    $res = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
     e.nombre_embalse, (SELECT cota_actual 
                        FROM datos_embalse h 
-                       WHERE h.id_embalse = d.id_embalse AND h.fecha = MAX(d.fecha) AND cota_actual <> 0 AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
+                       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
 WHERE e.estatus = 'activo'
@@ -87,19 +87,18 @@ ORDER BY id_embalse ASC;");
                                         data: [";
                                     
                             ?>      {
-                                        x: '<?php echo 'Embalses'; //$datos_embalses[$j]["nombre_embalse"];  
-                                            ?>',
+                                        x: '',
                                         y: <?php echo ($sum); ?>,
                                     },
                             <?php
 
 
                                     $j++;
-                                    echo "]},";
+                                    echo "],borderWidth:1,categoryPercentage:1,},";
                                 } else {
                                     echo "{backgroundColor: '#fd0200',";
                                     echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (0%)',
-                                    data: [{x: 'Embalses',y:0,}]},";
+                                    data: [{x: '',y:0,}],borderWidth:1,categoryPercentage:1,},";
                                     $j++;
                                 }
                             };
@@ -109,7 +108,7 @@ ORDER BY id_embalse ASC;");
                     },
 
                     options: {
-
+                        
                         responsive: true,
                         maintainAspectRatio: false,
                         interaction: {
@@ -144,8 +143,9 @@ ORDER BY id_embalse ASC;");
                         scales: {
 
                             x: {
-
+                                
                                 ticks: {
+                                    
                                     font: {
                                         size: 14
                                     },
@@ -176,7 +176,7 @@ ORDER BY id_embalse ASC;");
                         },
                     },
                 });
-            })
+            });
         </script>
 <?php
     } else {
