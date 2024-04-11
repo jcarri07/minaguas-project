@@ -70,7 +70,7 @@ $año_actual = date('Y');
 $año_pasado = date('Y', strtotime('-1 year'));
 
 $num_rows = $result->num_rows;
-$area_cuenca_img_default = "broken_image.png";
+$img_default = "broken_image.png";
 
 if (contiene_subcadena($fullPath, "C:")) {
   $img_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
@@ -224,7 +224,7 @@ $variacion_mensual = getMonthName();
         <h1 style="text-align: center; color: #2E86C1;"><?php echo getMonthName() ?></h1>
       </div>
       <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 120px;" src="<?php if (empty($row['imagen_tres'])) {
-                                                                                                    echo $area_path . $area_cuenca_img_default;
+                                                                                                    echo $area_path . $img_default;
                                                                                                   } else {
                                                                                                     echo $area_path . $row['imagen_tres'];
                                                                                                   } ?>" />
@@ -352,7 +352,7 @@ $variacion_mensual = getMonthName();
           <h1 style="text-align: center; color: #2E86C1;"><?php echo getMonthName() ?></h1>
         </div>
         <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 120px;" src="<?php if (empty($row['imagen_tres'])) {
-                                                                                                      echo $area_path . $area_cuenca_img_default;
+                                                                                                      echo $area_path . $img_default;
                                                                                                     } else {
                                                                                                       echo $area_path . $row['imagen_tres'];
                                                                                                     } ?>" />

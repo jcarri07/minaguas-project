@@ -26,6 +26,12 @@ if (mysqli_num_rows($res) > 0) {
 $HOST = basename(getcwd());
 $fullPath = getcwd();
 
+if (contiene_subcadena($fullPath, "C:")) {
+  $area_path =  "../../pages/reports_images/";
+} else {
+  $area_path =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/";
+}
+
 function cutRoute($rutaCompleta)
 {
   $publicHtmlPos = strpos($rutaCompleta, 'public_html');
@@ -63,6 +69,7 @@ function formatoNumero($valor)
 
   return $resultado;
 }
+$img_default = "broken_image.png";
 
 $srcLogo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
 $srcLogoLetters = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
@@ -771,7 +778,8 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">5.3.- Parroquia(s) y/o sector(es) beneficiado(s)</td>
-      <td colspan="3"><?php //echo $SECTOR_BENEFICIADO ?></td>
+      <td colspan="3"><?php //echo $SECTOR_BENEFICIADO 
+                      ?></td>
     </tr>
     <tr>
       <td class="subtitle">5.4.- Población beneficiada (hab.)</td>
@@ -818,12 +826,20 @@ foreach ($data as $row) {
     <tr style="text-align: center;">
       <td>
         <?php if ($srcMap != "" && $srcMap != null) { ?>
-          <img style="width: 280px; height: 200px;" src="<?php echo $srcMap; ?>" />
+          <img style="width: 280px; height: 200px;" src="<?php if (empty($row['imagen_uno'])) {
+                                                            echo $area_path . $img_default;
+                                                          } else {
+                                                            echo $area_path . $row['imagen_uno'];
+                                                          } ?>" />
         <?php } ?>
       </td>
       <td>
         <?php if ($srcMapReport != "" &&  $srcMapReport != null) { ?>
-          <img style="width: 280px; height: 200px;" src="<?php echo $srcMapReport; ?>" />
+          <img style="width: 280px; height: 200px;" src="<?php if (empty($row['imagen_dos'])) {
+                                                            echo $area_path . $img_default;
+                                                          } else {
+                                                            echo $area_path . $row['imagen_dos'];
+                                                          } ?>" />
         <?php } ?>
       </td>
     </tr>
