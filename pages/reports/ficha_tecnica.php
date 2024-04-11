@@ -825,22 +825,18 @@ foreach ($data as $row) {
     </tr>
     <tr style="text-align: center;">
       <td>
-        <?php if ($srcMap != "" && $srcMap != null) { ?>
-          <img style="width: 280px; height: 200px;" src="<?php if (empty($row['imagen_uno'])) {
-                                                            echo $area_path . $img_default;
-                                                          } else {
-                                                            echo $area_path . $row['imagen_uno'];
-                                                          } ?>" />
-        <?php } ?>
+        <img style="width: 280px; height: 200px;" src="<?php if (empty($row['imagen_uno'])) {
+                                                          echo $area_path . $img_default;
+                                                        } else {
+                                                          echo $area_path . $row['imagen_uno'];
+                                                        } ?>" />
       </td>
       <td>
-        <?php if ($srcMapReport != "" &&  $srcMapReport != null) { ?>
-          <img style="width: 280px; height: 200px;" src="<?php if (empty($row['imagen_dos'])) {
-                                                            echo $area_path . $img_default;
-                                                          } else {
-                                                            echo $area_path . $row['imagen_dos'];
-                                                          } ?>" />
-        <?php } ?>
+        <img style="width: 280px; height: 200px;" src="<?php if (empty($row['imagen_dos'])) {
+                                                          echo $area_path . $img_default;
+                                                        } else {
+                                                          echo $area_path . $row['imagen_dos'];
+                                                        } ?>" />
       </td>
     </tr>
   </table>
