@@ -105,9 +105,9 @@ if ($count >= 1) {
 
             for ($t = 0; $t <  count($embalses); $t++) {
             ?>
-                    <div style="width:1830px !important; height:600px; position:absolute; top:-100%;"><canvas class="alA" id="ano<?php echo $t; ?>"></canvas></div>
-                    <div style="width:1830px !important; height:460px; position:absolute; top:-100%;"><canvas class="alM" id="mes<?php echo $t; ?>"></canvas></div>
-                    <div style="width:900px !important; height:300px; position:absolute; top:-100%;"><canvas class="alS" id="semana<?php echo $t; ?>"></canvas></div>
+                <div style="width:1830px !important; height:600px; position:absolute; top:-100%;"><canvas class="alA" id="ano<?php echo $t; ?>"></canvas></div>
+                <div style="width:1830px !important; height:460px; position:absolute; top:-100%;"><canvas class="alM" id="mes<?php echo $t; ?>"></canvas></div>
+                <div style="width:900px !important; height:300px; position:absolute; top:-100%;"><canvas class="alS" id="semana<?php echo $t; ?>"></canvas></div>
 
             <?php
 
@@ -116,19 +116,19 @@ if ($count >= 1) {
 
         </div>
         <div class="row justify-content-center h-100">
-        <div class="col-7">
-            <div class="loaderPDF " style="height: 90% !important;align-items:end !important;">
+            <div class="col-7">
+                <div class="loaderPDF " style="height: 90% !important;align-items:end !important;">
 
-                <div class="lds-dual-ring"></div>
+                    <div class="lds-dual-ring"></div>
 
+                </div>
+            </div>
+            <div class="col-7">
+                <div class="progress">
+                    <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </div>
         </div>
-        <div class="col-7">
-            <div class="progress">
-                <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-        </div>
-    </div>
     </body>
 
     <script>
@@ -178,81 +178,40 @@ if ($count >= 1) {
                 // Resto del código del plugin
             }
         };
-        
 
 
 
 
 
-            <?php
-            $count = 0;
-            for ($t = 0; $t <  count($embalses); $t++) {
-                $bati = new Batimetria($embalses[$t]["id_embalse"], $conn);
-            ?>
-                anio<?php echo $t; ?> = document.getElementById("ano<?php echo $t; ?>");
-                mes<?php echo $t; ?> = document.getElementById("mes<?php echo $t; ?>");
-                semana<?php echo $t; ?> = document.getElementById("semana<?php echo $t; ?>");
+
+        <?php
+        $count = 0;
+        for ($t = 0; $t <  count($embalses); $t++) {
+            $bati = new Batimetria($embalses[$t]["id_embalse"], $conn);
+        ?>
+            anio<?php echo $t; ?> = document.getElementById("ano<?php echo $t; ?>");
+            mes<?php echo $t; ?> = document.getElementById("mes<?php echo $t; ?>");
+            semana<?php echo $t; ?> = document.getElementById("semana<?php echo $t; ?>");
 
 
 
-                let chartA<?php echo $t; ?> = new Chart(anio<?php echo $t; ?>, {
-                    type: 'line',
-                    title: 'grafica',
-                    //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
-                    data: {
-                        datasets: [
+            let chartA<?php echo $t; ?> = new Chart(anio<?php echo $t; ?>, {
+                type: 'line',
+                title: 'grafica',
+                //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
+                data: {
+                    datasets: [
 
-                            {
-                                label: '<?php echo $nom[0] ?>',
-                                borderColor: '#36a1eb',
-                                backgroundColor: '#36a1eb',
-                                pointRadius: 0,
-                                data: [<?php
-                                        $j = 0;
-                                        $pivote = date("Y");
-                                        $min = $embalses[$t]["cota_min"];
-                                        $max = $embalses[$t]["cota_max"];
-                                        while ($j < count($datos_embalses)) {
-
-                                            if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
-
-
-
-                                        ?> {
-                                                x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
-                                                y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                            },
-                                            <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                                    $max = $datos_embalses[$j]["cota_actual"];
-                                                }
-                                                if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                                    $min = $datos_embalses[$j]["cota_actual"];
-                                                } ?>
-
-                                    <?php
-
-                                            };
-                                            $j++;
-                                        };
-                                    ?>
-                                ],
-                                pointBackgroundColor: function(context) {
-                                    var index = context.dataIndex;
-                                    var value = context.dataset.data[index];
-                                    return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                                },
-
-                            },
-
-                            {
-                                label: '<?php echo $nom[1] ?>',
-                                borderColor: '#e4c482',
-                                backgroundColor: '#e4c482',
-                                pointRadius: 0,
-                                data: [
-                                    <?php
+                        {
+                            label: '<?php echo $nom[0] ?>',
+                            borderColor: '#36a1eb',
+                            backgroundColor: '#36a1eb',
+                            pointRadius: 0,
+                            data: [<?php
                                     $j = 0;
-                                    $pivote = date("Y") - 1;
+                                    $pivote = date("Y");
+                                    $min = $embalses[$t]["cota_min"];
+                                    $max = $embalses[$t]["cota_max"];
                                     while ($j < count($datos_embalses)) {
 
                                         if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
@@ -260,221 +219,224 @@ if ($count >= 1) {
 
 
                                     ?> {
-                                                x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m-d", strtotime($datos_embalses[$j]["fecha"])) . " " . $datos_embalses[$j]["hora"] ?>',
-                                                y: <?php echo $bati->getByCota(date("Y", strtotime($datos_embalses[$j]["fecha"])), $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                            },
-                                            <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                            x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
+                                            y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                        },
+                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
                                                 $max = $datos_embalses[$j]["cota_actual"];
                                             }
                                             if ($min > $datos_embalses[$j]["cota_actual"]) {
                                                 $min = $datos_embalses[$j]["cota_actual"];
                                             } ?>
 
-                                    <?php
+                                <?php
 
                                         };
                                         $j++;
-                                    }
-                                    ?>
-                                ],
-                                pointBackgroundColor: function(context) {
-                                    var index = context.dataIndex;
-                                    var value = context.dataset.data[index];
-                                    return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                                },
-
+                                    };
+                                ?>
+                            ],
+                            pointBackgroundColor: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                             },
 
-
-                        ],
-                    },
-
-                    options: {
-                        animations: false,
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        interaction: {
-                            intersect: false,
-                            axis: 'x',
                         },
-                        plugins: {
-                            arbitra: {
+
+                        {
+                            label: '<?php echo $nom[1] ?>',
+                            borderColor: '#e4c482',
+                            backgroundColor: '#e4c482',
+                            pointRadius: 0,
+                            data: [
+                                <?php
+                                $j = 0;
+                                $pivote = date("Y") - 1;
+                                while ($j < count($datos_embalses)) {
+
+                                    if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
 
 
-                                lines: [{
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
-                                        cota: "Volumen minimo",
-                                        color: 'black',
-                                        h: 15,
-                                    },
-                                    {
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
-                                        cota: "Volumen normal",
-                                        color: 'black',
-                                        h: 15,
 
-                                    },
-                                    {
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
-                                        cota: "Volumen maximo",
-                                        color: 'black',
-                                        h: -15,
-                                    }
-                                    // Agrega más líneas según sea necesario
-                                ]
-                            },
-                            legend: {
-                                display: false,
-                                labels: {
+                                ?> {
+                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m-d", strtotime($datos_embalses[$j]["fecha"])) . " " . $datos_embalses[$j]["hora"] ?>',
+                                            y: <?php echo $bati->getByCota(date("Y", strtotime($datos_embalses[$j]["fecha"])), $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                        },
+                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                            $max = $datos_embalses[$j]["cota_actual"];
+                                        }
+                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                            $min = $datos_embalses[$j]["cota_actual"];
+                                        } ?>
 
-                                    // This more specific font property overrides the global property
-                                    font: {
-                                        size: 20
-                                    },
+                                <?php
 
+                                    };
+                                    $j++;
                                 }
+                                ?>
+                            ],
+                            pointBackgroundColor: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                             },
-                            title: {
-                                display: false,
-                                text: 'Embalse <?php echo $embalses[$t]['nombre_embalse']; ?>',
-                                fullSize: true,
+
+                        },
+
+
+                    ],
+                },
+
+                options: {
+                    animations: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        axis: 'x',
+                    },
+                    plugins: {
+                        arbitra: {
+
+
+                            lines: [{
+                                    yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
+                                    cota: "Volumen minimo",
+                                    color: 'black',
+                                    h: 15,
+                                },
+                                {
+                                    yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
+                                    cota: "Volumen normal",
+                                    color: 'black',
+                                    h: 15,
+
+                                },
+                                {
+                                    yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
+                                    cota: "Volumen maximo",
+                                    color: 'black',
+                                    h: -15,
+                                }
+                                // Agrega más líneas según sea necesario
+                            ]
+                        },
+                        legend: {
+                            display: false,
+                            labels: {
+
+                                // This more specific font property overrides the global property
                                 font: {
-                                    size: 30
-                                }
+                                    size: 20
+                                },
+
+                            }
+                        },
+                        title: {
+                            display: false,
+                            text: 'Embalse <?php echo $embalses[$t]['nombre_embalse']; ?>',
+                            fullSize: true,
+                            font: {
+                                size: 30
+                            }
+                        },
+
+                    },
+                    scales: {
+
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Año <?php echo date('Y'); ?>',
+                                font: {
+                                    size: 18
+                                },
+                            },
+                            type: 'time',
+                            time: {
+                                unit: 'month'
+                            },
+                            min: '<?php echo $año; ?>-01',
+                            max: '<?php echo $año; ?>-12',
+
+                            ticks: {
+                                callback: (value, index, ticks) => {
+
+                                    const date = new Date(value);
+                                    //console.log(date);
+                                    return new Intl.DateTimeFormat('es-ES', {
+                                        month: 'short',
+
+                                    }).format(value);
+                                },
+                                font: {
+                                    size: 18
+                                },
+                            },
+                            grid: {
+                                color: function(context) {},
                             },
 
                         },
-                        scales: {
 
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Año <?php echo date('Y'); ?>',
-                                    font: {
-                                        size: 18
-                                    },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Volumen (Hm³)',
+                                font: {
+                                    size: 20
                                 },
-                                type: 'time',
-                                time: {
-                                    unit: 'month'
-                                },
-                                min: '<?php echo $año; ?>-01',
-                                max: '<?php echo $año; ?>-12',
-
-                                ticks: {
-                                    callback: (value, index, ticks) => {
-
-                                        const date = new Date(value);
-                                        //console.log(date);
-                                        return new Intl.DateTimeFormat('es-ES', {
-                                            month: 'short',
-
-                                        }).format(value);
-                                    },
-                                    font: {
-                                        size: 18
-                                    },
-                                },
-                                grid: {
-                                    color: function(context) {},
-                                },
-
                             },
-
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Volumen (Hm³)',
-                                    font: {
-                                        size: 20
-                                    },
-                                },
-                                min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
-                                        if ($min < $embalses[$t]["cota_min"]) {
-                                            echo $bati->getByCota($año, $min)[1];
+                            min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
+                                    if ($min < $embalses[$t]["cota_min"]) {
+                                        echo $bati->getByCota($año, $min)[1];
+                                    } else {
+                                        if ($aux - 200 < 0) {
+                                            echo 0;
                                         } else {
-                                            if ($aux - 200 < 0) {
-                                                echo 0;
-                                            } else {
-                                                echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;
-                                            }
-                                        }; ?>,
-                                max: <?php if ($max > $embalses[$t]["cota_max"]) {
-                                            echo $bati->getByCota($año, $max)[1] + 200;
-                                        } else {
-                                            echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
-                                        }; ?>,
-                                border: {
-                                    display: false,
-                                },
-                                ticks: {
-                                    font: {
-                                        size: 14
-                                    },
+                                            echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;
+                                        }
+                                    }; ?>,
+                            max: <?php if ($max > $embalses[$t]["cota_max"]) {
+                                        echo $bati->getByCota($año, $max)[1] + 200;
+                                    } else {
+                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
+                                    }; ?>,
+                            border: {
+                                display: false,
+                            },
+                            ticks: {
+                                font: {
+                                    size: 14
                                 },
                             },
                         },
                     },
-                    plugins: [arbitra],
+                },
+                plugins: [arbitra],
 
-                });
-                $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30)); $count++;?> + '%');
-                let chartM<?php echo $t; ?> = new Chart(mes<?php echo $t; ?>, {
-                    type: 'line',
-                    title: 'grafica',
-                    //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
-                    data: {
-                        datasets: [
+            });
+            $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
+                                                                                                            $count++; ?> + '%');
+            let chartM<?php echo $t; ?> = new Chart(mes<?php echo $t; ?>, {
+                type: 'line',
+                title: 'grafica',
+                //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
+                data: {
+                    datasets: [
 
-                            {
-                                label: '<?php echo $nom[0] ?>',
-                                borderColor: '#36a1eb',
-                                backgroundColor: '#36a1eb',
+                        {
+                            label: '<?php echo $nom[0] ?>',
+                            borderColor: '#36a1eb',
+                            backgroundColor: '#36a1eb',
 
-                                data: [<?php
-                                        $j = 0;
-                                        $pivote = date("Y");
-                                        $min = $embalses[$t]["cota_min"];
-                                        $max = $embalses[$t]["cota_max"];
-                                        while ($j < count($datos_embalses)) {
-
-                                            if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M"))) {
-
-
-
-                                        ?> {
-                                                x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
-                                                y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                            },
-                                            <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                                    $max = $datos_embalses[$j]["cota_actual"];
-                                                }
-                                                if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                                    $min = $datos_embalses[$j]["cota_actual"];
-                                                } ?>
-
-                                    <?php
-
-                                            };
-                                            $j++;
-                                        };
-                                    ?>
-                                ],
-                                pointBackgroundColor: function(context) {
-                                    var index = context.dataIndex;
-                                    var value = context.dataset.data[index];
-                                    return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                                },
-                            },
-
-                            {
-                                label: '<?php echo $nom[1] ?>',
-                                borderColor: '#e4c482',
-                                backgroundColor: '#e4c482',
-                                data: [
-                                    <?php
+                            data: [<?php
                                     $j = 0;
-                                    $pivote = date("Y") - 1;
+                                    $pivote = date("Y");
+                                    $min = $embalses[$t]["cota_min"];
+                                    $max = $embalses[$t]["cota_max"];
                                     while ($j < count($datos_embalses)) {
 
                                         if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M"))) {
@@ -482,376 +444,417 @@ if ($count >= 1) {
 
 
                                     ?> {
-                                                x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m-d", strtotime($datos_embalses[$j]["fecha"])) . " " . $datos_embalses[$j]["hora"] ?>',
-                                                y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                            },
+                                            x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
+                                            y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                        },
+                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                                $max = $datos_embalses[$j]["cota_actual"];
+                                            }
+                                            if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                                $min = $datos_embalses[$j]["cota_actual"];
+                                            } ?>
 
-                                    <?php
+                                <?php
+
+                                        };
+                                        $j++;
+                                    };
+                                ?>
+                            ],
+                            pointBackgroundColor: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
+                            },
+                        },
+
+                        {
+                            label: '<?php echo $nom[1] ?>',
+                            borderColor: '#e4c482',
+                            backgroundColor: '#e4c482',
+                            data: [
+                                <?php
+                                $j = 0;
+                                $pivote = date("Y") - 1;
+                                while ($j < count($datos_embalses)) {
+
+                                    if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M"))) {
+
+
+
+                                ?> {
+                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m-d", strtotime($datos_embalses[$j]["fecha"])) . " " . $datos_embalses[$j]["hora"] ?>',
+                                            y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                        },
+
+                                <?php
+
+                                    };
+                                    $j++;
+                                }
+                                ?>
+                            ],
+                            pointBackgroundColor: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
+                            },
+                        },
+
+
+                    ],
+                },
+
+                options: {
+                    animations: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        axis: 'x',
+                    },
+                    plugins: {
+                        arbitra: {
+
+
+                            lines: [{
+                                    yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
+                                    cota: "Volumen minimo",
+                                    color: 'black',
+                                    h: 15,
+                                },
+                                {
+                                    yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
+                                    cota: "Volumen normal",
+                                    color: 'black',
+                                    h: 15,
+
+                                },
+                                {
+                                    yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
+                                    cota: "Volumen maximo",
+                                    color: 'black',
+                                    h: -15,
+                                }
+                                // Agrega más líneas según sea necesario
+                            ]
+                        },
+                        legend: {
+                            display: false,
+                            labels: {
+
+                                // This more specific font property overrides the global property
+                                font: {
+                                    size: 20
+                                },
+
+                            }
+                        },
+                        title: {
+                            display: false,
+                            text: 'Embalse <?php echo $embalses[$t]['nombre_embalse']; ?>',
+                            fullSize: true,
+                            font: {
+                                size: 30
+                            }
+                        },
+
+                    },
+                    scales: {
+
+                        x: {
+                            title: {
+                                display: true,
+                                text: ' <?php echo date('M Y'); ?>',
+                                font: {
+                                    size: 18
+                                },
+                            },
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            min: '<?php echo date('Y-m') . '-01';  ?>',
+                            max: '<?php echo date('Y-m') . '-' . date('t') ?>',
+
+                            ticks: {
+                                callback: (value, index, ticks) => {
+
+                                    const date = new Date(value);
+                                    //console.log(date);
+                                    return new Intl.DateTimeFormat('es-ES', {
+                                        month: 'short',
+                                        day: 'numeric',
+
+                                    }).format(value);
+                                },
+                                font: {
+                                    size: 18
+                                },
+                            },
+                            grid: {
+                                color: function(context) {},
+                            },
+
+                        },
+
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Volumen (Hm³)',
+                                font: {
+                                    size: 20
+                                },
+                            },
+                            min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
+                                    if ($min < $embalses[$t]["cota_min"]) {
+                                        echo $bati->getByCota($año, $min)[1];
+                                    } else {
+                                        if ($aux - 200 < 0) {
+                                            echo 0;
+                                        } else {
+                                            echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;
+                                        }
+                                    }; ?>,
+                            max: <?php if ($max > $embalses[$t]["cota_max"]) {
+                                        echo $bati->getByCota($año, $max)[1] + 200;
+                                    } else {
+                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
+                                    }; ?>,
+                            border: {
+                                display: false,
+                            },
+                            ticks: {
+                                font: {
+                                    size: 14
+                                },
+                            },
+                        },
+                    },
+                },
+                plugins: [arbitra],
+
+            });
+            $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
+                                                                                                            $count++; ?> + '%');
+            let chartS<?php echo $t; ?> = new Chart(semana<?php echo $t; ?>, {
+                type: 'line',
+                labels: [<?php
+                            foreach ($fechasSemana as $dia) {
+                                echo ',"' . $dia . '"';
+                            }
+
+                            ?>],
+                data: {
+                    datasets: [
+
+                        {
+                            label: '<?php echo $nom[0]; ?>',
+                            borderColor: '#36a1eb',
+                            backgroundColor: '#36a1eb',
+
+                            data: [<?php
+                                    $j = 0;
+                                    $pivote = date("Y");
+                                    $min = $embalses[$t]["cota_min"];
+                                    $max = $embalses[$t]["cota_max"];
+                                    while ($j < count($datos_embalses)) {
+
+                                        if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M")) && (date("D", strtotime($datos_embalses[$j]["fecha"])) >= 2) && (date("d", strtotime($datos_embalses[$j]["fecha"])) <= 8)) {
+
+
+
+                                    ?> {
+                                            x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
+                                            y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                        },
+                                        <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                                $max = $datos_embalses[$j]["cota_actual"];
+                                            }
+                                            if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                                $min = $datos_embalses[$j]["cota_actual"];
+                                            } ?>
+
+                                <?php
+
+                                        };
+                                        $j++;
+                                    };
+                                ?>
+                            ],
+                            pointBackgroundColor: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
+                            },
+                        },
+                        {
+                            label: '<?php echo $nom[1] ?>',
+                            borderColor: '#e4c482',
+                            backgroundColor: '#e4c482',
+                            data: [<?php
+                                    $j = 0;
+                                    $pivote = date("Y") - 1;
+                                    while ($j < count($datos_embalses)) {
+
+                                        if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("m", strtotime($datos_embalses[$j]["fecha"])) == date("m")) && (date("d", strtotime($datos_embalses[$j]["fecha"])) >= 2) && (date("d", strtotime($datos_embalses[$j]["fecha"])) <= 8)) {
+
+
+
+                                    ?> {
+                                            x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m", strtotime($datos_embalses[$j]["fecha"])) . '-' . date("d", strtotime($datos_embalses[$j]["fecha"])) . " " . $datos_embalses[$j]["hora"] ?>',
+                                            y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                        },
+
+                                <?php
 
                                         };
                                         $j++;
                                     }
-                                    ?>
-                                ],
-                                pointBackgroundColor: function(context) {
-                                    var index = context.dataIndex;
-                                    var value = context.dataset.data[index];
-                                    return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                                },
+                                ?>
+                            ],
+                            pointBackgroundColor: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                             },
-
-
-                        ],
-                    },
-
-                    options: {
-                        animations: false,
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        interaction: {
-                            intersect: false,
-                            axis: 'x',
                         },
-                        plugins: {
-                            arbitra: {
 
 
-                                lines: [{
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
-                                        cota: "Volumen minimo",
-                                        color: 'black',
-                                        h: 15,
-                                    },
-                                    {
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
-                                        cota: "Volumen normal",
-                                        color: 'black',
-                                        h: 15,
+                    ],
+                },
+                options: {
+                    animations: false,
+                    maintainAspectRatio: false,
+                    locale: 'es',
+                    interaction: {
+                        intersect: false,
+                    },
+                    plugins: {
+                        arbitra: {
 
-                                    },
-                                    {
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
-                                        cota: "Volumen maximo",
-                                        color: 'black',
-                                        h: -15,
-                                    }
-                                    // Agrega más líneas según sea necesario
-                                ]
-                            },
-                            legend: {
-                                display: false,
-                                labels: {
 
-                                    // This more specific font property overrides the global property
-                                    font: {
-                                        size: 20
-                                    },
+                            lines: [{
+                                    yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
+                                    cota: "Volumen minimo",
+                                    color: 'black',
+                                    h: 15,
+                                },
+                                {
+                                    yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
+                                    cota: "Volumen normal",
+                                    color: 'black',
+                                    h: 15,
 
+                                },
+                                {
+                                    yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
+                                    cota: "Volumen maximo",
+                                    color: 'black',
+                                    h: -15,
                                 }
-                            },
-                            title: {
-                                display: false,
-                                text: 'Embalse <?php echo $embalses[$t]['nombre_embalse']; ?>',
-                                fullSize: true,
+                                // Agrega más líneas según sea necesario
+                            ]
+                        },
+                        legend: {
+                            display: false,
+                            labels: {
+                                // This more specific font property overrides the global property
                                 font: {
-                                    size: 30
-                                }
-                            },
+                                    size: 16
+                                },
 
+                            }
                         },
-                        scales: {
-
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: ' <?php echo date('M Y'); ?>',
-                                    font: {
-                                        size: 18
-                                    },
-                                },
-                                type: 'time',
-                                time: {
-                                    unit: 'day'
-                                },
-                                min: '<?php echo date('Y-m') . '-01';  ?>',
-                                max: '<?php echo date('Y-m') . '-' . date('t') ?>',
-
-                                ticks: {
-                                    callback: (value, index, ticks) => {
-
-                                        const date = new Date(value);
-                                        //console.log(date);
-                                        return new Intl.DateTimeFormat('es-ES', {
-                                            month: 'short',
-                                            day: 'numeric',
-
-                                        }).format(value);
-                                    },
-                                    font: {
-                                        size: 18
-                                    },
-                                },
-                                grid: {
-                                    color: function(context) {},
-                                },
-
-                            },
-
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Volumen (Hm³)',
-                                    font: {
-                                        size: 20
-                                    },
-                                },
-                                min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
-                                        if ($min < $embalses[$t]["cota_min"]) {
-                                            echo $bati->getByCota($año, $min)[1];
-                                        } else {
-                                            if ($aux - 200 < 0) {
-                                                echo 0;
-                                            } else {
-                                                echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;
-                                            }
-                                        }; ?>,
-                                max: <?php if ($max > $embalses[$t]["cota_max"]) {
-                                            echo $bati->getByCota($año, $max)[1] + 200;
-                                        } else {
-                                            echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
-                                        }; ?>,
-                                border: {
-                                    display: false,
-                                },
-                                ticks: {
-                                    font: {
-                                        size: 14
-                                    },
-                                },
-                            },
+                        title: {
+                            display: false,
+                            text: 'Embalse <?php echo $embalses[$t]['nombre_embalse']; ?>',
+                            fullSize: true,
+                            font: {
+                                size: 30
+                            }
                         },
                     },
-                    plugins: [arbitra],
+                    scales: {
 
-                });
-                $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30)); $count++;?> + '%');
-                let chartS<?php echo $t; ?> = new Chart(semana<?php echo $t; ?>, {
-                    type: 'line',
-                    labels: [<?php
-                                foreach ($fechasSemana as $dia) {
-                                    echo ',"' . $dia . '"';
-                                }
-
-                                ?>],
-                    data: {
-                        datasets: [
-
-                            {
-                                label: '<?php echo $nom[0]; ?>',
-                                borderColor: '#36a1eb',
-                                backgroundColor: '#36a1eb',
-
-                                data: [<?php
-                                        $j = 0;
-                                        $pivote = date("Y");
-                                        $min = $embalses[$t]["cota_min"];
-                                        $max = $embalses[$t]["cota_max"];
-                                        while ($j < count($datos_embalses)) {
-
-                                            if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M")) && (date("D", strtotime($datos_embalses[$j]["fecha"])) >= 2)&& (date("d", strtotime($datos_embalses[$j]["fecha"])) <=8)) {
-
-
-
-                                        ?> {
-                                                x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
-                                                y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                            },
-                                            <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                                    $max = $datos_embalses[$j]["cota_actual"];
-                                                }
-                                                if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                                    $min = $datos_embalses[$j]["cota_actual"];
-                                                } ?>
-
-                                    <?php
-
-                                            };
-                                            $j++;
-                                        };
-                                    ?>
-                                ],
-                                pointBackgroundColor: function(context) {
-                                    var index = context.dataIndex;
-                                    var value = context.dataset.data[index];
-                                    return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Semana <?php echo date("W", strtotime($fechasSemana[0])) . " " . strftime('del mes de %B', DateTime::createFromFormat("Y-m-d", end($fechasSemana))->getTimestamp()); ?>',
+                                font: {
+                                    size: 16
                                 },
                             },
-                            {
-                                label: '<?php echo $nom[1] ?>',
-                                borderColor: '#e4c482',
-                                backgroundColor: '#e4c482',
-                                data: [<?php
-                                        $j = 0;
-                                        $pivote = date("Y") - 1;
-                                        while ($j < count($datos_embalses)) {
+                            label: 'Año',
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            min: '<?php echo date('Y-m') . '-02';  ?>',
+                            max: '<?php echo date('Y-m') . '-08'; ?>',
+                            ticks: {
+                                callback: (value, index, ticks) => {
 
-                                            if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalses[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("m", strtotime($datos_embalses[$j]["fecha"])) == date("m")) && (date("d", strtotime($datos_embalses[$j]["fecha"])) >= 2)&& (date("d", strtotime($datos_embalses[$j]["fecha"])) <=8)) {
+                                    const date = new Date(value);
+                                    //console.log(date);
+                                    return new Intl.DateTimeFormat('es-ES', {
+                                        day: 'numeric',
+                                        month: 'short',
+                                    }).format(value);
+                                },
+                                font: {
+                                    size: 14
+                                },
+                            },
+                            grid: {
+                                color: function(context) {},
+                            },
 
-
-
-                                        ?> {
-                                                x: '<?php echo (date("Y", strtotime($datos_embalses[$j]["fecha"])) + 1) . '-' . date("m",strtotime($datos_embalses[$j]["fecha"])) . '-' . date("d", strtotime($datos_embalses[$j]["fecha"])) . " " . $datos_embalses[$j]["hora"] ?>',
-                                                y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                            },
-
-                                    <?php
-
-                                            };
-                                            $j++;
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Volumen (Hm³)',
+                                font: {
+                                    size: 20
+                                },
+                            },
+                            min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
+                                    if ($min < $embalses[$t]["cota_min"]) {
+                                        echo $bati->getByCota($año, $min)[1];
+                                    } else {
+                                        if ($aux - 200 < 0) {
+                                            echo 0;
+                                        } else {
+                                            echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;
                                         }
-                                    ?>
-                                ],
-                                pointBackgroundColor: function(context) {
-                                    var index = context.dataIndex;
-                                    var value = context.dataset.data[index];
-                                    return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                                },
-                            },
-
-
-                        ],
-                    },
-                    options: {
-                        animations: false,
-                        maintainAspectRatio: false,
-                        locale: 'es',
-                        interaction: {
-                            intersect: false,
-                        },
-                        plugins: {
-                            arbitra: {
-
-
-                                lines: [{
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
-                                        cota: "Volumen minimo",
-                                        color: 'black',
-                                        h: 15,
-                                    },
-                                    {
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
-                                        cota: "Volumen normal",
-                                        color: 'black',
-                                        h: 15,
-
-                                    },
-                                    {
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
-                                        cota: "Volumen maximo",
-                                        color: 'black',
-                                        h: -15,
-                                    }
-                                    // Agrega más líneas según sea necesario
-                                ]
-                            },
-                            legend: {
+                                    }; ?>,
+                            max: <?php if ($max > $embalses[$t]["cota_max"]) {
+                                        echo $bati->getByCota($año, $max)[1] + 200;
+                                    } else {
+                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
+                                    }; ?>,
+                            border: {
                                 display: false,
-                                labels: {
-                                    // This more specific font property overrides the global property
-                                    font: {
-                                        size: 16
-                                    },
-
-                                }
                             },
-                            title: {
-                                display: false,
-                                text: 'Embalse <?php echo $embalses[$t]['nombre_embalse']; ?>',
-                                fullSize: true,
+                            ticks: {
                                 font: {
-                                    size: 30
-                                }
-                            },
-                        },
-                        scales: {
-
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Semana <?php echo date("W", strtotime($fechasSemana[0])) . " " . strftime('del mes de %B', DateTime::createFromFormat("Y-m-d", end($fechasSemana))->getTimestamp()); ?>',
-                                    font: {
-                                        size: 16
-                                    },
-                                },
-                                label: 'Año',
-                                type: 'time',
-                                time: {
-                                    unit: 'day'
-                                },
-                                min: '<?php echo date('Y-m') . '-02';  ?>',
-                                max: '<?php echo date('Y-m') . '-08'; ?>',
-                                ticks: {
-                                    callback: (value, index, ticks) => {
-
-                                        const date = new Date(value);
-                                        //console.log(date);
-                                        return new Intl.DateTimeFormat('es-ES', {
-                                            day: 'numeric',
-                                            month: 'short',
-                                        }).format(value);
-                                    },
-                                    font: {
-                                        size: 14
-                                    },
-                                },
-                                grid: {
-                                    color: function(context) {},
-                                },
-
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Volumen (Hm³)',
-                                    font: {
-                                        size: 20
-                                    },
-                                },
-                                min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
-                                        if ($min < $embalses[$t]["cota_min"]) {
-                                            echo $bati->getByCota($año, $min)[1];
-                                        } else {
-                                            if ($aux - 200 < 0) {
-                                                echo 0;
-                                            } else {
-                                                echo $bati->getByCota($año, $embalses[$t]["cota_min"])[1] - 200;
-                                            }
-                                        }; ?>,
-                                max: <?php if ($max > $embalses[$t]["cota_max"]) {
-                                            echo $bati->getByCota($año, $max)[1] + 200;
-                                        } else {
-                                            echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
-                                        }; ?>,
-                                border: {
-                                    display: false,
-                                },
-                                ticks: {
-                                    font: {
-                                        size: 14
-                                    },
+                                    size: 14
                                 },
                             },
                         },
-
-
                     },
-                    plugins: [arbitra],
-                });
-                $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30)); $count++;?> + '%');
 
-            <?php
-            } ?>
-$(document).ready(function() {
+
+                },
+                plugins: [arbitra],
+            });
+            $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
+                                                                                                            $count++; ?> + '%');
+
+        <?php
+        } ?>
+        $(document).ready(function() {
             <?php
             closeConection($conn);
             for ($t = 0; $t <  count($embalses); $t++) {

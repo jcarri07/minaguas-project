@@ -384,7 +384,7 @@ $año_actual = date('Y');
             </table>
         </div>
         <h4>SALIDAS AL LAGO</h4>
-        <div style="position: absolute; top: 440px; left: 160px; opacity: 0.5;">
+        <div style="position: absolute; top: 430px; left: 160px; opacity: 0.5;">
             <img src="../../assets/img/upload-arrow.png" alt="" style=" width: 50px; height: 50px;">
         </div>
         <div>

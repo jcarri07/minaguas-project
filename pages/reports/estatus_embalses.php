@@ -195,16 +195,26 @@ $año_pasado = date('Y', strtotime('-1 year'));
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";*/
 // $area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
 
-$image_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
-$logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
-$area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
-$logo_combinado = "../../assets/img/logos/logo_combinado.jpg";
-$mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
-$flecha_arriba = "../../assets/icons/f-arriba.png";
-$flecha_abajo = "../../assets/icons/f-abajo.png";
-$sin_cambio = "../../assets/icons/f-igual.png";
 
-
+if (contiene_subcadena($fullPath, "C:")) {
+  $image_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
+  $logo_letters = "../../assets/img/logos/MinaguasLetters.png";
+  $area =  "../../pages/reports_images/Area_cuenca.png";
+  $logo_combinado = "../../assets/img/logos/logo_combinado.jpg";
+  $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
+  $flecha_arriba = "../../assets/icons/f-arriba.png";
+  $flecha_abajo = "../../assets/icons/f-abajo.png";
+  $sin_cambio = "../../assets/icons/f-igual.png";
+} else {
+  $image_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
+  $logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
+  $area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
+  $logo_combinado = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/logo_combinado.jpg";
+  $mapa = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-1.png";
+  $flecha_arriba = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-arriba.png";
+  $flecha_abajo = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-abajo.png";
+  $sin_cambio = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-igual.png";
+}
 
 // $codigo = "08RHL0101";
 // $titulo = "EMBALSE CAMATAGUA - ESTADO ARAGUA";
@@ -1383,14 +1393,20 @@ $sin_cambio = "../../assets/icons/f-igual.png";
       <table>
         <tr>
           <th style=" width: 100px;" class="text-celdas" rowspan="2">HIDROLÓGICA</th>
-          <th style=" width: 90px; " class="text-celdas" colspan="2" ><p style="">VOLUMEN DISPONIBLE (HM3)</p></th>
-          <th style=" width: 90px;" class="text-celdas" colspan="2"><p style="padding-top: 25px;">VARIACION DEL VOLUMEN DISPONIBLE (HM3)</p></th>
-          <th style=" width: 90px;" class="text-celdas" colspan="2"><p style=" padding-top: 36px;">VARIACION PORCENTUAL DE VOLUMEN HASTA HOY (%)</p></th>
+          <th style=" width: 90px; " class="text-celdas" colspan="2">
+            <p style="">VOLUMEN DISPONIBLE (HM3)</p>
+          </th>
+          <th style=" width: 90px;" class="text-celdas" colspan="2">
+            <p style="padding-top: 25px;">VARIACION DEL VOLUMEN DISPONIBLE (HM3)</p>
+          </th>
+          <th style=" width: 90px;" class="text-celdas" colspan="2">
+            <p style=" padding-top: 36px;">VARIACION PORCENTUAL DE VOLUMEN HASTA HOY (%)</p>
+          </th>
           <th style=" width: 90px;" class="text-celdas">VARIACION DE VOLUMEN HACE UNA SEMANA</th>
           <th style=" width: 90px;" class="text-celdas">VARIACION PORCENTUAL DE VOLUMEN HACE UNA SEMANA</th>
 
         </tr>
-        <tr>          
+        <tr>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">DESDE</th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">DESDE</th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">DESDE</th>
@@ -1401,7 +1417,7 @@ $sin_cambio = "../../assets/icons/f-igual.png";
           <th class="text-celdas" style="font-size: 12px; width: 90px;">(%)</th>
         </tr>
 
-        <tr>          
+        <tr>
           <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
           <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
           <td class="text-celdas" style="font-size: 12px; width: 90px;">PRUEBA</td>
@@ -1485,75 +1501,85 @@ $sin_cambio = "../../assets/icons/f-igual.png";
   </div>
 
   <div style="width: 520px; height: 320px; position: absolute; margin-top: 100px; margin-left: 550px;">
-  <table>
-        
-        <tr>
-          <th class="celd-table">SIMBOLO</th>
-          <th class="celd-table">DESCRIPCION</th>
-          <th class="celd-table">EMBALSE</th>
-          <th class="celd-table">MESES DE  <br>ABAST.</th>
-          <th class="celd-table">HIDROLÓGICA</th>
-        </tr>
-        <tr>
-        <td class="" style="font-size: 12px;"><div style="background-color: orange; border-radius: 5; height: 10px; width: 10px;"></div></td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-        </tr>
-        <tr>
-        <td class="" style="font-size: 12px;"><div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px;"></div></td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-        </tr>
-        <tr>
-        <td class="" style="font-size: 12px;"><div style="background-color: green; border-radius: 5; height: 10px; width: 10px;"></div></td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-        </tr>
-        <tr>
-        <td class="" style="font-size: 12px;"><div style="background-color: green; border-radius: 5; height: 10px; width: 10px;"></div></td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-        </tr>
+    <table>
 
-      </table>
-
-  
-
-  <div style="margin-top: 20px">
-    <div >
-      <table>
       <tr>
-          <th class="celd-table">SIMBOLO</th>
-          <th class="celd-table">DESCRIPCION</th>
-          <th class="celd-table">EMBALSE</th>
-          <th class="celd-table">MESES DE  <br>ABAST.</th>
-          <th class="celd-table">HIDROLÓGICA</th>
-        </tr>
-        <tr>
-          <td class="" style="font-size: 12px;"><div style="background-color: red; border-radius: 5; height: 10px; width: 10px;"></div></td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-        </tr>
-        <tr>
+        <th class="celd-table">SIMBOLO</th>
+        <th class="celd-table">DESCRIPCION</th>
+        <th class="celd-table">EMBALSE</th>
+        <th class="celd-table">MESES DE <br>ABAST.</th>
+        <th class="celd-table">HIDROLÓGICA</th>
+      </tr>
+      <tr>
+        <td class="" style="font-size: 12px;">
+          <div style="background-color: orange; border-radius: 5; height: 10px; width: 10px;"></div>
+        </td>
         <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-          <td class="" style="font-size: 12px;">PRUEBA</td>
-        </tr>
-      </table>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+      </tr>
+      <tr>
+        <td class="" style="font-size: 12px;">
+          <div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px;"></div>
+        </td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+      </tr>
+      <tr>
+        <td class="" style="font-size: 12px;">
+          <div style="background-color: green; border-radius: 5; height: 10px; width: 10px;"></div>
+        </td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+      </tr>
+      <tr>
+        <td class="" style="font-size: 12px;">
+          <div style="background-color: green; border-radius: 5; height: 10px; width: 10px;"></div>
+        </td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+      </tr>
+
+    </table>
+
+
+
+    <div style="margin-top: 20px">
+      <div>
+        <table>
+          <tr>
+            <th class="celd-table">SIMBOLO</th>
+            <th class="celd-table">DESCRIPCION</th>
+            <th class="celd-table">EMBALSE</th>
+            <th class="celd-table">MESES DE <br>ABAST.</th>
+            <th class="celd-table">HIDROLÓGICA</th>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">
+              <div style="background-color: red; border-radius: 5; height: 10px; width: 10px;"></div>
+            </td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
   </div>
 
 </body>
