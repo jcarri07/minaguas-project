@@ -1,4 +1,5 @@
 <script src="./assets/js/Chart.js"></script>
+<!-- <script src="./assets/js/chart-zoom.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
 <?php
@@ -62,7 +63,7 @@ if ($count >= 1) {
     <script>
         $(document).ready(function() {
 
-            
+
             const label = <?php echo obtenerEtiquetas($y); ?>;
             if ('<?php echo $ver; ?>' == 'volumen') {
 
@@ -127,24 +128,24 @@ if ($count >= 1) {
                             $pivote = $y;
                             while ($j < count($datos_embalses)) {
 
-                                if($datos_embalses[$j]["cota_actual"] != NULL){?> {
-                                    x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
-                                    y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                },
-                                <?php
-                                if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                    $max = $datos_embalses[$j]["cota_actual"];
-                                }
-                                if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                    $min = $datos_embalses[$j]["cota_actual"];
-                                } ?>
+                                if ($datos_embalses[$j]["cota_actual"] != NULL) { ?> {
+                                        x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
+                                        y: <?php echo $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                    },
+                                    <?php
+                                    if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                        $max = $datos_embalses[$j]["cota_actual"];
+                                    }
+                                    if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                        $min = $datos_embalses[$j]["cota_actual"];
+                                    } ?>
 
                             <?php
                                 }
 
                                 $j++;
                             };
-                            echo "]},";
+                            echo "],categoryPercentage:1,},";
                             ?>
 
 
@@ -162,6 +163,7 @@ if ($count >= 1) {
                             axis: 'x',
                         },
                         plugins: {
+                            
                             arbitra: {
 
 
@@ -351,24 +353,24 @@ if ($count >= 1) {
                             $pivote = $y;
                             while ($j < count($datos_embalses)) {
 
-                                if($datos_embalses[$j]["cota_actual"] != NULL){?> {
-                                    x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
-                                    y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                },
-                                <?php
-                                if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                    $max = $datos_embalses[$j]["cota_actual"];
-                                }
-                                if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                    $min = $datos_embalses[$j]["cota_actual"];
-                                } ?>
+                                if ($datos_embalses[$j]["cota_actual"] != NULL) { ?> {
+                                        x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
+                                        y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                    },
+                                    <?php
+                                    if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                        $max = $datos_embalses[$j]["cota_actual"];
+                                    }
+                                    if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                        $min = $datos_embalses[$j]["cota_actual"];
+                                    } ?>
 
                             <?php
                                 }
 
                                 $j++;
                             };
-                            echo "]},";
+                            echo "],categoryPercentage:1,},";
                             ?>
 
 
@@ -386,6 +388,7 @@ if ($count >= 1) {
                             axis: 'x',
                         },
                         plugins: {
+
                             arbitra: {
 
 
