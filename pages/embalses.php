@@ -25,10 +25,10 @@
 
 
 
-  $embalseBat = new Batimetria(6, $conn);
+  // $embalseBat = new Batimetria(1, $conn);
+  // $variable = $embalseBat->volumenMinimo();
   // $volumen_normal = $embalseBat->volumenNormal();
   // $volumen_minimo = $embalseBat->volumenMinimo();
-  $volumen_cota = $embalseBat->volumenActualDisponible();
 
   // $cota = implode("-",$embalseBat->getByCota("2024","268.455"));
   // $minima = $embalseBat->cotaMinima();
