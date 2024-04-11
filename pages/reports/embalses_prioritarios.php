@@ -70,18 +70,21 @@ $año_actual = date('Y');
 $año_pasado = date('Y', strtotime('-1 year'));
 
 $num_rows = $result->num_rows;
+$area_cuenca_img_default = "broken_image.png";
 
 if (contiene_subcadena($fullPath, "C:")) {
   $img_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
   $logo_letters = "../../assets/img/logos/MinaguasLetters.png";
   $area =  "../../pages/reports_images/Area_cuenca.png";
+  $area_path =  "../../pages/reports_images/";
 } else {
   $img_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
   $logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
   $area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
+  $area_path =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/";
 }
 
-$codigo = "08RHL0101";
+$codigo = "";
 $titulo = "EMBALSE CAMATAGUA - ESTADO ARAGUA";
 $cota = 289.87;
 $mes = "Noviembre";
@@ -220,7 +223,11 @@ $variacion_mensual = getMonthName();
       <div style="position: absolute; left: 500px; top: 80px; width: 460px;">
         <h1 style="text-align: center; color: #2E86C1;"><?php echo getMonthName() ?></h1>
       </div>
-      <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 120px;" src="<?php echo $area ?>" />
+      <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 120px;" src="<?php if (empty($row['imagen_tres'])) {
+                                                                                                    echo $area_path . $area_cuenca_img_default;
+                                                                                                  } else {
+                                                                                                    echo $area_path . $row['imagen_tres'];
+                                                                                                  } ?>" />
       <div style="position: absolute; width: 230px; left: 100px; top: 320px;">
         <h5 style="text-align: center;">Área de la Cuenca: <?php echo number_format(floatVal($row['area_cuenca']), 2, ',', '.'); ?> Km2</h5>
       </div>
@@ -344,8 +351,12 @@ $variacion_mensual = getMonthName();
         <div style="position: absolute; left: 500px; top: 80px; width: 460px;">
           <h1 style="text-align: center; color: #2E86C1;"><?php echo getMonthName() ?></h1>
         </div>
-        <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 120px;" src="<?php echo $area ?>" />
-        <div style="position: absolute; width: 230px; left: 100px; top: 320px;">
+        <img style="position: absolute; height: 210px; width: 230px; left: 100px; top: 120px;" src="<?php if (empty($row['imagen_tres'])) {
+                                                                                                      echo $area_path . $area_cuenca_img_default;
+                                                                                                    } else {
+                                                                                                      echo $area_path . $row['imagen_tres'];
+                                                                                                    } ?>" />
+        <div style=" position: absolute; width: 230px; left: 100px; top: 320px;">
           <h5 style="text-align: center;">Área de la Cuenca: <?php echo number_format(floatVal($row['area_cuenca']), 2, ',', '.'); ?> Km2</h5>
         </div>
 

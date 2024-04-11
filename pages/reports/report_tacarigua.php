@@ -6,6 +6,16 @@ $srcLogo = "../../assets/img/logos/cropped-mminaguas.jpg";
 $srcLogoLetters = "../../assets/img/logos/MinaguasLetters.png";
 $grafica = '../../assets/img/grafica-tacarigua.png';
 
+if (contiene_subcadena($fullPath, "C:")) {
+    $srcLogo = "../../assets/img/logos/cropped-mminaguas.jpg";
+    $srcLogoLetters = "../../assets/img/logos/MinaguasLetters.png";
+    $grafica = '../../assets/img/grafica-tacarigua.png';
+} else {
+    $srcLogo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
+    $srcLogoLetters = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
+    $grafica = 'https://embalsesminaguas.000webhostapp.com/assets/img/grafica-tacarigua.png';
+}
+
 function getMonthName()
 {
     $fecha_actual = getdate();
@@ -179,7 +189,7 @@ $año_actual = date('Y');
             <img style="height: 40px; width: 40px;" class="img-logo" src="<?php echo $srcLogo; ?>" />
         </div>
         <div style="position: absolute; left: 1050px; top: 22px;">
-            <img style="height: 40px; width: 50px;" src="../../assets/img/logos/MinaguasLetters.png" alt="">
+            <img style="height: 40px; width: 50px;" src="<?php echo $srcLogoLetters; ?>" alt="">
         </div>
         <h4>VARIACIÓNDE COTA POR MES</h4>
         <table>
@@ -447,7 +457,7 @@ $año_actual = date('Y');
             <img style="height: 40px; width: 40px;" class="img-logo" src="<?php echo $srcLogo; ?>" />
         </div>
         <div style="position: absolute; left: 1050px; top: 22px;">
-            <img style="height: 40px; width: 50px;" src="../../assets/img/logos/MinaguasLetters.png" alt="">
+            <img style="height: 40px; width: 50px;" src="<?php echo $srcLogoLetters; ?>" alt="">
         </div>
         <h4 style="color:#2E86C1; position:absolute; top: 15px;">SEGUIMIENTO Y MONITOREO DE LOS NIVELES DEL LAGO LOS TACARIGUAS ( LAGO DE VALENCIA )</h4>
         <hr style="color:#2E86C1;">
@@ -571,7 +581,7 @@ $año_actual = date('Y');
                 <img style="height: 40px; width: 40px;" class="img-logo" src="<?php echo $srcLogo; ?>" />
             </div>
             <div style="position: absolute; left: 1050px; top: 22px;">
-                <img style="height: 40px; width: 50px;" src="../../assets/img/logos/MinaguasLetters.png" alt="">
+                <img style="height: 40px; width: 50px;" src="<?php echo $srcLogoLetters; ?>" alt="">
             </div>
             <div style="position: absolute;">
                 <h4 style="color:#2E86C1; position:absolute; top: 15px;">SEGUIMIENTO Y MONITOREO DE LOS NIVELES DEL LAGO LOS TACARIGUAS ( LAGO DE VALENCIA )</h4>

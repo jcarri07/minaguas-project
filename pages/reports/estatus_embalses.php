@@ -1,7 +1,7 @@
 <?php
 require_once '../../php/Conexion.php';
-$fullPath = getcwd();
-$parts = explode(DIRECTORY_SEPARATOR, $fullPath);
+// $fullPath = getcwd();
+// $parts = explode(DIRECTORY_SEPARATOR, $fullPath);
 date_default_timezone_set('America/Caracas');
 require_once '../../php/batimetria.php';
 
@@ -205,6 +205,11 @@ if (contiene_subcadena($fullPath, "C:")) {
   $flecha_arriba = "../../assets/icons/f-arriba.png";
   $flecha_abajo = "../../assets/icons/f-abajo.png";
   $sin_cambio = "../../assets/icons/f-igual.png";
+  $status_pie_1 = "../../assets/img/temp/imagen-estatus-pie-1.png";
+  $status_barra_1 = "../../assets/img/temp/imagen-estatus-barra-1.png";
+  $status_barra_2 = "../../assets/img/temp/imagen-estatus-barra-2.png";
+  $status_mapa = "../../assets/img/temp/imagen-estatus-mapa-2.png";
+  $status_mapa_3 = "../../assets/img/temp/imagen-estatus-mapa-3.png";
 } else {
   $image_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
   $logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
@@ -214,6 +219,11 @@ if (contiene_subcadena($fullPath, "C:")) {
   $flecha_arriba = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-arriba.png";
   $flecha_abajo = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-abajo.png";
   $sin_cambio = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-igual.png";
+  $status_pie_1 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-pie-1.png";
+  $status_barra_1 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-barra-1.png";
+  $status_barra_2 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-barra-2.png";
+  $status_mapa = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-2.png";
+  $status_mapa_3 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-3.png";
 }
 
 // $codigo = "08RHL0101";
@@ -643,7 +653,6 @@ if (contiene_subcadena($fullPath, "C:")) {
   </div>
 
   <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 20px;"><b>Buena ( 90 % < A < 100 %) </b>
-
         <table>
           <tr>
             <th class="text-celd">EMBALSE</th>
@@ -867,7 +876,7 @@ if (contiene_subcadena($fullPath, "C:")) {
   <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES</b>
   </div>
 
-  <img style="width: 550px; height: 450px; background-color: lightgray; margin-top: 50px; margin-left: 35px;" src="<?php echo "../../assets/img/temp/imagen-estatus-pie-1.png" ?>">
+  <img style="width: 550px; height: 450px; background-color: lightgray; margin-top: 50px; margin-left: 35px;" src="<?php echo $status_pie_1 ?>">
 
 
   <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 200px; margin-left: 640px;"><b> <u><?php echo $lista[3] ?> EMBALSES</u> EN CONDICIONES BUENAS Y MUY BUENAS <br> ( > 90% Y ALIVIANDO )</b></div>
@@ -898,7 +907,7 @@ if (contiene_subcadena($fullPath, "C:")) {
   <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 7px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha1)); ?> HASTA HOY</b>
   </div>
 
-  <img style="width: 450px; height: 450px; background-color: lightgray; margin-top: 80px; margin-left: 35px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-1.png" ?>">
+  <img style="width: 450px; height: 450px; background-color: lightgray; margin-top: 80px; margin-left: 35px;" src="<?php echo $status_barra_1 ?>">
 
 
   <div style="position: absolute; width: 0.5px; height: 600px; background-color: #7F7F7F; margin-top: 110px; margin-left: 525px;"></div>
@@ -906,7 +915,7 @@ if (contiene_subcadena($fullPath, "C:")) {
   <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha2)); ?> HASTA HOY</b>
   </div>
 
-  <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo "../../assets/img/temp/imagen-estatus-barra-2.png" ?>">
+  <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo $status_barra_2 ?>">
 
   <div style="position: absolute; margin-top: 670px; margin-left: 50px; width: 95%; height: 100px;">
     <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió <?php
@@ -955,7 +964,7 @@ if (contiene_subcadena($fullPath, "C:")) {
 
   <div>
     <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
-      <img style="width:1000px ; height: 535px;" src="../../assets/img/temp/imagen-estatus-mapa-2.png" />
+      <img style="width:1000px ; height: 535px;" src="<?php echo $status_mapa ?>" />
     </div>
   </div>
 
@@ -1003,7 +1012,7 @@ if (contiene_subcadena($fullPath, "C:")) {
 
   <div>
     <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
-      <img style="width:1000px ; height: 535px;" src="../../assets/img/temp/imagen-estatus-mapa-3.png" />
+      <img style="width:1000px ; height: 535px;" src="<?php echo $status_mapa_3 ?>" />
     </div>
   </div>
 
