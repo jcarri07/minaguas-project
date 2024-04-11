@@ -61,14 +61,12 @@
       font-size: 0.875em;
     }
   }
+
   @media (max-width: 576px) {
     .h-sm-90 {
-    height: 75% !important;
+      height: 75% !important;
+    }
   }
-  }
-
-
-  
 </style>
 
 
@@ -259,7 +257,9 @@ closeConection($conn);*/
               </div>
             </div>
           </div>
-          <div id="cont" class="col-12 h-90 h-sm-90"></div>
+          <div class="table-responsive col-12 h-90 h-sm-90">
+            <div id="cont" class="h-100" style="width:1530px !important;"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -559,8 +559,32 @@ closeConection($conn);*/
   };
   var ctx = document.getElementById('myChart').getContext('2d');
   window.myChart = new Chart(ctx, config);
+
+  function actual() {
+
+
+    $.ajax({
+      url: 'php/Graficas/grafica_volumen_actual.php',
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        //$("#contenedor").html("");
+        $("#cont").html(response);
+
+      },
+      error: function(response) {
+
+        alertify.error("Error inesperado.");
+
+      }
+    });
+
+
+  };
+  actual();
   $(document).ready(function() {
-    actual();
+
     cargarGrafico();
 
     $.ajax({
@@ -706,27 +730,6 @@ closeConection($conn);*/
       });
     });
   }
-function actual() {
 
-
-$.ajax({
-    url: 'php/Graficas/grafica_volumen_actual.php',
-    cache: false,
-    contentType: false,
-    processData: false,
-    success: function(response) {
-        //$("#contenedor").html("");
-        $("#cont").html(response);
-
-    },
-    error: function(response) {
-
-        alertify.error("Error inesperado.");
-
-    }
-});
-
-
-};
-setInterval(actual, 60000);
+  setInterval(actual, 60000);
 </script>
