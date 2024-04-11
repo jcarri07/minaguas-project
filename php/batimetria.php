@@ -10,7 +10,7 @@ class Batimetria
     private $cota_nor;
     private $cota_max;
     private $sup_min;
-    private $sup_nor;
+    private $sup_nor = "";
     private $sup_max;
     private $vol_min;
     private $vol_nor;
@@ -260,8 +260,7 @@ class Batimetria
 
     public function volumenMinimo()
     {
-        $this->vol_min = "";
-        if ($this->batimetria != "") {
+        if ($this->batimetria != "") { 
             return $this->getByCota($this->getCloseYear(), $this->cotaMinima())[1];
         } else {
             return $this->vol_min != "" ? $this->vol_min : 0;
@@ -296,7 +295,6 @@ class Batimetria
 
     public function volumenDisponibleOriginal()
     {
-
         if ($this->vol_nor == "" || $this->vol_min == "") {
             return 0;
         } else {
