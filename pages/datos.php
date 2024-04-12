@@ -146,10 +146,18 @@
 <?php
             }
             else{
+              if($_SESSION["Tipo"] == "User"){
+?>
+                  <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No hay embalses asignados</h2>
+                  <br><br><br>
+<?php  
+              }
+              else {
 ?>
                   <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No hay información</h2>
                   <br><br><br>
-<?php                  
+<?php          
+              }        
             }
 ?>
                 <!--<li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
