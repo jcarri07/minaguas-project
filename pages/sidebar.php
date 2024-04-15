@@ -12,9 +12,24 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
     </a>
   </div>
 
+  <style>
+    /* Estilos para pantallas con altura menor a 740px */
+    @media (max-height: 750px) {
+      .navbar-nav {
+        height: auto;
+      }
+
+      li.nav-item {
+        height: 40px;
+        font-size: 12px;
+      }
+    }
+  </style>
+
+
   <hr class="horizontal dark mt-0">
   <div class="">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav d-flex flex-column" style="height: 100vh; overflow-y: auto;">
       <div class="d-flex flex-column">
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == '') ? 'active' : ''; ?>" href="?page=">
@@ -87,22 +102,23 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
 
       </div>
 
-      <div class="d-flex flex-column col-12" style="position: absolute; bottom: 0;">
+      <div class="d-flex flex-column col-12" style="position: absolute; bottom: 0; padding-bottom: 20px;
+      ">
         <hr class="horizontal dark mt-0">
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Cuenta</h6>
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-8"><?php echo $_SESSION["Correo"]; ?></h6>
         </li>
         <?php if ($_SESSION["Tipo"] == "Admin") { ?>
-        <li class="nav-item">
-          <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Usuarios</span>
-          </a>
-        </li>
-        <?php }?>
+          <li class="nav-item">
+            <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Usuarios</span>
+            </a>
+          </li>
+        <?php } ?>
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'perfil') ? "active" : ''; ?>" href="?page=perfil">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
