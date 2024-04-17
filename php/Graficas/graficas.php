@@ -206,7 +206,6 @@ if ($count >= 1) {
                             label: '<?php echo $nom[0] ?>',
                             borderColor: '#36a1eb',
                             backgroundColor: '#36a1eb',
-                            pointRadius: 0,
                             data: [<?php
                                     $j = 0;
                                     $pivote = date("Y");
@@ -240,6 +239,11 @@ if ($count >= 1) {
                                 var index = context.dataIndex;
                                 var value = context.dataset.data[index];
                                 return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
+                            },
+                            pointRadius: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '6' : '0';
                             },
 
                         },
@@ -277,12 +281,6 @@ if ($count >= 1) {
                                 }
                                 ?>
                             ],
-                            pointBackgroundColor: function(context) {
-                                var index = context.dataIndex;
-                                var value = context.dataset.data[index];
-                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                            },
-
                         },
 
 
@@ -466,12 +464,18 @@ if ($count >= 1) {
                                 var value = context.dataset.data[index];
                                 return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                             },
+                            pointRadius: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '6' : '0';
+                            },
                         },
 
                         {
                             label: '<?php echo $nom[1] ?>',
                             borderColor: '#e4c482',
                             backgroundColor: '#e4c482',
+                            pointRadius: 0,
                             data: [
                                 <?php
                                 $j = 0;
@@ -494,11 +498,6 @@ if ($count >= 1) {
                                 }
                                 ?>
                             ],
-                            pointBackgroundColor: function(context) {
-                                var index = context.dataIndex;
-                                var value = context.dataset.data[index];
-                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                            },
                         },
 
 
@@ -687,11 +686,18 @@ if ($count >= 1) {
                                 var value = context.dataset.data[index];
                                 return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                             },
+                            pointRadius: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '6' : '0';
+                            },
+                            
                         },
                         {
                             label: '<?php echo $nom[1] ?>',
                             borderColor: '#e4c482',
                             backgroundColor: '#e4c482',
+                            pointRadius: 0,
                             data: [<?php
                                     $j = 0;
                                     $pivote = date("Y") - 1;
@@ -713,11 +719,6 @@ if ($count >= 1) {
                                     }
                                 ?>
                             ],
-                            pointBackgroundColor: function(context) {
-                                var index = context.dataIndex;
-                                var value = context.dataset.data[index];
-                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                            },
                         },
 
 
