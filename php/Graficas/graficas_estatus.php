@@ -46,7 +46,9 @@ $volumen_fechas = array(
 );
 $suma_extracciones;
 $evaporacion = 0;
+//$calculo_evaporacion = ($area_embalse * ($evaporacion/1000)*0.8*30.5)/1000000;
 $filtracion = 0;
+//$calculo_filtracion = ($x*($filtracion(%)/100))/30.5
 // Obtener la fecha actual
 $fechaActual = new DateTime();
 // Restarle 15 días
