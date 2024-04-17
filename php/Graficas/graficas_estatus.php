@@ -723,12 +723,7 @@ if ($count >= 1) {
         $json_datos = json_encode($volumen_fechas);
 
         // Codificar el JSON en base64
-        $volumenes = base64_encode($json_datos);
-        
-        $json_datos = json_encode($suma_extracciones);
-
-        // Codificar el JSON en base64
-        $sumas = base64_encode($json_datos);?>
+        $volumenes = base64_encode($json_datos);?>
 
 
         const x = document.querySelector("#barra1");
@@ -801,7 +796,7 @@ if ($count >= 1) {
                     if (this.readyState == 4 && this.status == 200) {
 
                         console.log("listo");
-                        location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&volumenes=<?php echo $volumenes; ?>&lista=<?php echo $datos_codificados; ?>&fecha2=<?php echo $fecha2; ?>&extracciones=<?php echo $valores; ?>&valores=<?php echo $valores; ?>";
+                        location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&volumenes=<?php echo $volumenes; ?>&lista=<?php echo $datos_codificados; ?>&fecha2=<?php echo $fecha2; ?>&valores=<?php echo $valores; ?>";
 
                     } else {
 

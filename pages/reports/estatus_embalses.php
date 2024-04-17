@@ -28,11 +28,6 @@ $datos_codificados = $_GET['volumenes'];
 // Decodificar los datos codificados en base64
 $datos_decodificados = base64_decode($datos_codificados);
 
-$datos_codificados = $_GET['extracciones'];
-
-// Decodificar los datos codificados en base64
-$datos_extracciones = base64_decode($datos_codificados);
-
 // Decodificar el JSON para obtener el array original
 $volumenes = json_decode($datos_decodificados, true);
 
@@ -42,20 +37,16 @@ $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
 
-$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
+$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,MAX(d.fecha) AS fech,               (
+  SELECT SUM(extraccion)
+  FROM detalles_extraccion dex
+  WHERE dex.id_registro = (SELECT id_registro
+     FROM datos_embalse h 
+     WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0)
+) AS 'extraccion',
 e.nombre_embalse, (SELECT cota_actual 
-                   FROM datos_embalse h 
-                   WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
-FROM embalses e
-LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-WHERE e.estatus = 'activo'
-GROUP BY id_embalse 
-ORDER BY id_embalse ASC;");
-
-$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
-e.nombre_embalse, (SELECT cota_actual 
-                   FROM datos_embalse h 
-                   WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
+     FROM datos_embalse h 
+     WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
 WHERE e.estatus = 'activo'
