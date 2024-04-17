@@ -28,6 +28,11 @@ $datos_codificados = $_GET['volumenes'];
 // Decodificar los datos codificados en base64
 $datos_decodificados = base64_decode($datos_codificados);
 
+$datos_codificados = $_GET['extracciones'];
+
+// Decodificar los datos codificados en base64
+$datos_extracciones = base64_decode($datos_codificados);
+
 // Decodificar el JSON para obtener el array original
 $volumenes = json_decode($datos_decodificados, true);
 
@@ -36,6 +41,16 @@ $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
+
+$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
+e.nombre_embalse, (SELECT cota_actual 
+                   FROM datos_embalse h 
+                   WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
+FROM embalses e
+LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+WHERE e.estatus = 'activo'
+GROUP BY id_embalse 
+ORDER BY id_embalse ASC;");
 
 $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
 e.nombre_embalse, (SELECT cota_actual 
@@ -206,6 +221,7 @@ if (contiene_subcadena($fullPath, "C:")) {
   $flecha_abajo = "../../assets/icons/f-abajo.png";
   $sin_cambio = "../../assets/icons/f-igual.png";
   $status_pie_1 = "../../assets/img/temp/imagen-estatus-pie-1.png";
+  $status_pie_2 = "../../assets/img/temp/imagen-estatus-pie-2.png";
   $status_barra_1 = "../../assets/img/temp/imagen-estatus-barra-1.png";
   $status_barra_2 = "../../assets/img/temp/imagen-estatus-barra-2.png";
   $status_mapa = "../../assets/img/temp/imagen-estatus-mapa-2.png";
@@ -220,6 +236,7 @@ if (contiene_subcadena($fullPath, "C:")) {
   $flecha_abajo = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-abajo.png";
   $sin_cambio = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-igual.png";
   $status_pie_1 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-pie-1.png";
+  $status_pie_2 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-pie-2.png";
   $status_barra_1 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-barra-1.png";
   $status_barra_2 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-barra-2.png";
   $status_mapa = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-2.png";
@@ -1506,8 +1523,8 @@ if (contiene_subcadena($fullPath, "C:")) {
   <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
   </div>
 
-  <div style="width: 520px; height: 620px; background-color: lightgray;  position: absolute; margin-top: 100px; margin-left: 10px; text-align: right; font-size: 18px;">
-  </div>
+  <img style="width: 520px; height: 620px; background-color: lightgray;  position: absolute; margin-top: 100px; margin-left: 10px; text-align: right; font-size: 18px;" src="<?php echo $status_pie_2 ?>">
+  
 
   <div style="width: 520px; height: 320px; position: absolute; margin-top: 100px; margin-left: 550px;">
     <table>
