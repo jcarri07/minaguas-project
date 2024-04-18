@@ -178,6 +178,31 @@ if ($count >= 1) {
                 // Resto del código del plugin
             }
         };
+        const point = {
+                    id: 'point',
+                    afterDatasetsDraw: function(chart, arg,options) {
+                                const {ctx} = chart;
+                                const dataset = chart.data.datasets[0];
+                                const meta = chart.getDatasetMeta(0);
+
+                                if (meta.hidden) return;
+
+                                const lastElement = meta.data[meta.data.length - 1];
+                                const fontSize = 16;
+                                const fontStyle = 'normal';
+                                const fontFamily = 'Arial';
+                                if(dataset.data.length > 0){
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'bottom';
+                                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                                ctx.fillStyle = 'black';
+                                total = dataset.data[dataset.data.length - 1].y;
+                                ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
+                                }
+                                ctx.restore();
+                            },
+                };
 
 
 
@@ -356,8 +381,8 @@ if ($count >= 1) {
                             time: {
                                 unit: 'month'
                             },
-                            min: '<?php echo $año; ?>-01',
-                            max: '<?php echo $año; ?>-12',
+                            min: '<?php echo $año; ?>-01-01',
+                            max: '<?php echo $año; ?>-12-31',
 
                             ticks: {
                                 callback: (value, index, ticks) => {
@@ -413,7 +438,7 @@ if ($count >= 1) {
                         },
                     },
                 },
-                plugins: [arbitra],
+                plugins: [arbitra,point],
 
             });
             $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
@@ -631,7 +656,7 @@ if ($count >= 1) {
                         },
                     },
                 },
-                plugins: [arbitra],
+                plugins: [arbitra,point],
 
             });
             $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
@@ -691,7 +716,7 @@ if ($count >= 1) {
                                 var value = context.dataset.data[index];
                                 return index === context.dataset.data.length - 1 ? '6' : '0';
                             },
-                            
+
                         },
                         {
                             label: '<?php echo $nom[1] ?>',
@@ -848,7 +873,7 @@ if ($count >= 1) {
 
 
                 },
-                plugins: [arbitra],
+                plugins: [arbitra,point],
             });
             $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
                                                                                                             $count++; ?> + '%');
