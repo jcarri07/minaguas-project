@@ -810,8 +810,8 @@ $j = 0;
                     }
                 },
                 title: {
-                    display: false,
-                    text: 'Embalse <?php echo $embalse[0]['nombre_embalse']; ?>',
+                    display: true,
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . strftime('%B',  strtotime(date("Y-m-d"))); ?>',
                     fullSize: true,
                     font: {
                         size: 30
@@ -823,7 +823,7 @@ $j = 0;
 
                 x: {
                     title: {
-                        display: true,
+                        display: false,
                         text: ' <?php echo date('M Y'); ?>',
                         font: {
                             size: 18
