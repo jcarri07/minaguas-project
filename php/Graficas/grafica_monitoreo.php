@@ -234,6 +234,8 @@ $j = 0;
         <div style="width:1030px !important; height:480px; <?php echo 'position:absolute; top:-100%;';
                                                             ?>"><canvas class="ch" id="anio"></canvas></div>
         <div style="width:1030px !important; height:480px; <?php echo 'position:absolute; top:-100%;';
+                                                            ?>"><canvas class="ch" id="mes"></canvas></div>
+        <div style="width:1030px !important; height:480px; <?php echo 'position:absolute; top:-100%;';
                                                             ?>"><canvas class="ch" id="semana"></canvas></div>
 
     </div>
@@ -283,12 +285,12 @@ $j = 0;
                                                                                                                                                                 $i++;
                                                                                                                                                             } else {
                                                                                                                                                                 echo 0; ?>, <?php
-                                                                                                                                                                            }
-                                                                                                                                                                        } else {
-                                                                                                                                                                            echo 0; ?>, <?php
                                                                                                                                                                         }
-                                                                                                                                                                    }
-                                                                                                                                                                            ?>],
+                                                                                                                                                                    } else {
+                                                                                                                                                                        echo 0; ?>, <?php
+                                                                                                                                                                                }
+                                                                                                                                                                            }
+                                                                                                                                                                                    ?>],
                     },
                     {
                         label: 'Volumen final (Hm³)',
@@ -310,12 +312,12 @@ $j = 0;
                                                                                                                                                                 $j++;
                                                                                                                                                             } else {
                                                                                                                                                                 echo 0; ?>, <?php
-                                                                                                                                                                            }
-                                                                                                                                                                        } else {
-                                                                                                                                                                            echo 0; ?>, <?php
                                                                                                                                                                         }
-                                                                                                                                                                    }
-                                                                                                                                                                            ?>],
+                                                                                                                                                                    } else {
+                                                                                                                                                                        echo 0; ?>, <?php
+                                                                                                                                                                                }
+                                                                                                                                                                            }
+                                                                                                                                                                                    ?>],
                     },
                 ],
             },
@@ -497,6 +499,33 @@ $j = 0;
             // Resto del código del plugin
         }
     };
+    const point = {
+        id: 'point',
+        afterDatasetsDraw: function(chart, arg, options) {
+            const {
+                ctx
+            } = chart;
+            const dataset = chart.data.datasets[0];
+            const meta = chart.getDatasetMeta(0);
+
+            if (meta.hidden) return;
+
+            const lastElement = meta.data[meta.data.length - 1];
+            const fontSize = 12;
+            const fontStyle = 'normal';
+            const fontFamily = 'Arial';
+            if (dataset.data.length > 0) {
+                ctx.save();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                ctx.fillStyle = 'black';
+                total = dataset.data[dataset.data.length - 1].y;
+                ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
+            }
+            ctx.restore();
+        },
+    };
     //grafica anual
     let chartA = new Chart(anio, {
         type: 'line',
@@ -513,11 +542,11 @@ $j = 0;
                     data: [<?php
                             $j = 0;
                             $pivote = $anio;
-                            $min = $embalse[$t]["cota_min"];
-                            $max = $embalse[$t]["cota_max"];
+                            $min = $embalse[0]["cota_min"];
+                            $max = $embalse[0]["cota_max"];
                             while ($j < count($datos_embalses)) {
 
-                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
+                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[0]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
 
 
 
@@ -544,6 +573,11 @@ $j = 0;
                         var value = context.dataset.data[index];
                         return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                     },
+                    pointRadius: function(context) {
+                        var index = context.dataIndex;
+                        var value = context.dataset.data[index];
+                        return index === context.dataset.data.length - 1 ? '6' : '0';
+                    },
                 }
             ],
         },
@@ -561,19 +595,19 @@ $j = 0;
 
 
                     lines: [{
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_min"])[1]; ?>,
+                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
                             cota: "Volumen minimo",
                             color: 'black',
                             h: -15,
                         },
                         {
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_nor"])[1]; ?>,
+                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_nor"])[1]; ?>,
                             cota: "Volumen normal",
                             color: 'black',
                             h: 15,
                         },
                         {
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_max"])[1]; ?>,
+                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
                             cota: "Volumen maximo",
                             color: 'black',
                             h: -15,
@@ -594,7 +628,7 @@ $j = 0;
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[$t]['nombre_embalse'] . " - Año " . $anio; ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Año " . $anio; ?>',
                     fullSize: true,
                     font: {
                         size: 30
@@ -630,7 +664,7 @@ $j = 0;
                             }).format(value);
                         },
                         font: {
-                            size: 18
+                            size: 10
                         },
                     },
                     grid: {
@@ -647,15 +681,15 @@ $j = 0;
                             size: 20
                         },
                     },
-                    min: <?php if ($min < $embalse[$t]["cota_min"]) {
+                    min: <?php if ($min < $embalse[0]["cota_min"]) {
                                 echo $bati->getByCota($anio, $min)[1];
                             } else {
                                 echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
                             }; ?>,
-                    max: <?php if ($max > $embalse[$t]["cota_max"]) {
+                    max: <?php if ($max > $embalse[0]["cota_max"]) {
                                 echo $bati->getByCota($anio, $max)[1] + 200;
                             } else {
-                                echo $bati->getByCota($anio, $embalse[$t]["cota_max"])[1] + 200;
+                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 200;
                             }; ?>,
                     border: {
                         display: false,
@@ -668,15 +702,14 @@ $j = 0;
                 },
             },
         },
-        plugins: [arbitra],
+        plugins: [arbitra, point],
 
     });
-    $('#progress-bar').attr('aria-valuenow', <?php echo (($Nsemanas + 1) * 100 / ($Nsemanas + 2)); ?>).css('width', <?php echo (($Nsemanas + 1) * 100 / ($Nsemanas + 2)); ?> + '%');
+    $('#progress-bar').attr('aria-valuenow', <?php echo (($Nsemanas + 1) * 100 / ($Nsemanas + 3)); ?>).css('width', <?php echo (($Nsemanas + 1) * 100 / ($Nsemanas + 3)); ?> + '%');
 
-    //grafica de semana usando la fecha fina y 6 dias antes
-    let chartS = new Chart(semana, {
+    let chartM = new Chart(mes, {
         type: 'line',
-        title: '',
+        title: 'grafica',
         //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
         data: {
             datasets: [
@@ -685,15 +718,15 @@ $j = 0;
                     label: '<?php echo $nom[0] ?>',
                     borderColor: '#36a1eb',
                     backgroundColor: '#36a1eb',
-                    pointRadius: 0,
+
                     data: [<?php
                             $j = 0;
-                            $pivote = $anio;
-                            $min = $embalse[$t]["cota_min"];
-                            $max = $embalse[$t]["cota_max"];
+                            $pivote = date("Y");
+                            $min = $embalse[0]["cota_min"];
+                            $max = $embalse[0]["cota_max"];
                             while ($j < count($datos_embalses)) {
 
-                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[$t]["id_embalse"] == $datos_embalses[$j]["id_embalse"])) {
+                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[0]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M"))) {
 
 
 
@@ -720,6 +753,200 @@ $j = 0;
                         var value = context.dataset.data[index];
                         return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                     },
+                    pointRadius: function(context) {
+                        var index = context.dataIndex;
+                        var value = context.dataset.data[index];
+                        return index === context.dataset.data.length - 1 ? '6' : '0';
+                    },
+                },
+
+
+            ],
+        },
+
+        options: {
+            animations: false,
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                intersect: false,
+                axis: 'x',
+            },
+            plugins: {
+                arbitra: {
+
+
+                    lines: [{
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
+                            cota: "Volumen minimo",
+                            color: 'black',
+                            h: 15,
+                        },
+                        {
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
+                            cota: "Volumen normal",
+                            color: 'black',
+                            h: 15,
+
+                        },
+                        {
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
+                            cota: "Volumen maximo",
+                            color: 'black',
+                            h: -15,
+                        }
+                        // Agrega más líneas según sea necesario
+                    ]
+                },
+                legend: {
+                    display: false,
+                    labels: {
+
+                        // This more specific font property overrides the global property
+                        font: {
+                            size: 20
+                        },
+
+                    }
+                },
+                title: {
+                    display: false,
+                    text: 'Embalse <?php echo $embalse[0]['nombre_embalse']; ?>',
+                    fullSize: true,
+                    font: {
+                        size: 30
+                    }
+                },
+
+            },
+            scales: {
+
+                x: {
+                    title: {
+                        display: true,
+                        text: ' <?php echo date('M Y'); ?>',
+                        font: {
+                            size: 18
+                        },
+                    },
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    },
+                    min: '<?php echo date('Y-m') . '-01';  ?>',
+                    max: '<?php echo date('Y-m') . '-' . date('t') ?>',
+
+                    ticks: {
+                        callback: (value, index, ticks) => {
+
+                            const date = new Date(value);
+                            //console.log(date);
+                            return new Intl.DateTimeFormat('es-ES', {
+                                month: 'short',
+                                day: 'numeric',
+
+                            }).format(value);
+                        },
+                        font: {
+                            size: 12
+                        },
+                    },
+                    grid: {
+                        color: function(context) {},
+                    },
+
+                },
+
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Volumen (Hm³)',
+                        font: {
+                            size: 20
+                        },
+                    },
+                    min: <?php $aux = $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
+                            if ($min < $embalse[0]["cota_min"]) {
+                                echo $bati->getByCota($anio, $min)[1];
+                            } else {
+                                if ($aux - 200 < 0) {
+                                    echo 0;
+                                } else {
+                                    echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1] - 200;
+                                }
+                            }; ?>,
+                    max: <?php if ($max > $embalse[0]["cota_max"]) {
+                                echo $bati->getByCota($anio, $max)[1] + 200;
+                            } else {
+                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 50;
+                            }; ?>,
+                    border: {
+                        display: false,
+                    },
+                    ticks: {
+                        font: {
+                            size: 14
+                        },
+                    },
+                },
+            },
+        },
+        plugins: [arbitra, point],
+
+    });
+    $('#progress-bar').attr('aria-valuenow', <?php echo (($Nsemanas + 2) * 100 / ($Nsemanas + 3)); ?>).css('width', <?php echo (($Nsemanas + 2) * 100 / ($Nsemanas + 3)); ?> + '%');
+    //grafica de semana usando la fecha fina y 6 dias antes
+    let chartS = new Chart(semana, {
+        type: 'line',
+        title: '',
+        //labels: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"],
+        data: {
+            datasets: [
+
+                {
+                    label: '<?php echo $nom[0] ?>',
+                    borderColor: '#36a1eb',
+                    backgroundColor: '#36a1eb',
+                    pointRadius: 0,
+                    data: [<?php
+                            $j = 0;
+                            $pivote = $anio;
+                            $min = $embalse[0]["cota_min"];
+                            $max = $embalse[0]["cota_max"];
+                            while ($j < count($datos_embalses)) {
+
+                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[0]["id_embalse"] == $datos_embalses[$j]["id_embalse"])&& (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M",strtotime($fecha2)))) {
+
+
+
+                            ?> {
+                                    x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
+                                    y: <?php echo $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                },
+                                <?php if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                        $max = $datos_embalses[$j]["cota_actual"];
+                                    }
+                                    if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                        $min = $datos_embalses[$j]["cota_actual"];
+                                    } ?>
+
+                        <?php
+
+                                };
+                                $j++;
+                            };
+                        ?>
+                    ],
+                    pointBackgroundColor: function(context) {
+                        var index = context.dataIndex;
+                        var value = context.dataset.data[index];
+                        return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
+                    },
+                    pointRadius: function(context) {
+                        var index = context.dataIndex;
+                        var value = context.dataset.data[index];
+                        return index === context.dataset.data.length - 1 ? '6' : '0';
+                    },
 
                 }
             ],
@@ -738,19 +965,19 @@ $j = 0;
 
 
                     lines: [{
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_min"])[1]; ?>,
+                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
                             cota: "Volumen minimo",
                             color: 'black',
                             h: -15,
                         },
                         {
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_nor"])[1]; ?>,
+                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_nor"])[1]; ?>,
                             cota: "Volumen normal",
                             color: 'black',
                             h: 15,
                         },
                         {
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[$t]["cota_max"])[1]; ?>,
+                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
                             cota: "Volumen maximo",
                             color: 'black',
                             h: -15,
@@ -771,7 +998,7 @@ $j = 0;
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[$t]['nombre_embalse'] . " desde " . $fechaFormateada2 . " al " . $fechaFormateada; ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde " . $fechaFormateada2 . " al " . $fechaFormateada; ?>',
                     fullSize: true,
                     font: {
                         size: 30
@@ -826,15 +1053,15 @@ $j = 0;
                             size: 20
                         },
                     },
-                    min: <?php if ($min < $embalse[$t]["cota_min"]) {
+                    min: <?php if ($min < $embalse[0]["cota_min"]) {
                                 echo $bati->getByCota($anio, $min)[1];
                             } else {
                                 echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
                             }; ?>,
-                    max: <?php if ($max > $embalse[$t]["cota_max"]) {
+                    max: <?php if ($max > $embalse[0]["cota_max"]) {
                                 echo $bati->getByCota($anio, $max)[1] + 200;
                             } else {
-                                echo $bati->getByCota($anio, $embalse[$t]["cota_max"])[1] + 200;
+                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 200;
                             }; ?>,
                     border: {
                         display: false,
@@ -847,10 +1074,10 @@ $j = 0;
                 },
             },
         },
-        plugins: [arbitra],
+        plugins: [arbitra, point],
 
     });
-    $('#progress-bar').attr('aria-valuenow', <?php echo (($Nsemanas + 2) * 100 / ($Nsemanas + 2)); ?>).css('width', <?php echo (($Nsemanas + 2) * 100 / ($Nsemanas + 2)); ?> + '%');
+    $('#progress-bar').attr('aria-valuenow', <?php echo (($Nsemanas + 3) * 100 / ($Nsemanas + 3)); ?>).css('width', <?php echo (($Nsemanas + 3) * 100 / ($Nsemanas + 3)); ?> + '%');
 
     $(document).ready(function() {
         <?php
@@ -889,6 +1116,25 @@ $j = 0;
             xhr.open('POST', '../guardar-imagen.php', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'monitoreo-anio'; ?>&numero=' + 1);
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    console.log("listo");
+
+                } else {
+
+                }
+            }
+        });
+        const y = document.querySelector("#mes");
+        html2canvas(y).then(function(canvas) { //PROBLEMAS
+            //$("#ca").append(canvas);
+            canvas.willReadFrequently = true,
+                dataURL = canvas.toDataURL("image/jpeg", 0.9);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../guardar-imagen.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'monitoreo-mes'; ?>&numero=' + 1);
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
 
