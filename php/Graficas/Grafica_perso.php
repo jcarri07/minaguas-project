@@ -44,7 +44,7 @@ $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
-
+    $count = mysqli_num_rows($res);
     $datos_embalses = mysqli_fetch_all($res, MYSQLI_ASSOC);
     $embalses = mysqli_fetch_all($r, MYSQLI_ASSOC);
 
@@ -52,7 +52,33 @@ if ($count >= 1) {
     <canvas id="chart" class="border border-radius-lg"></canvas>
     <script>
         $(document).ready(function() {
+            const point = {
+                    id: 'point',
+                    afterDatasetsDraw: function(chart, arg, options) {
+                        const {
+                            ctx
+                        } = chart;
+                        const dataset = chart.data.datasets[0];
+                        const meta = chart.getDatasetMeta(0);
 
+                        if (meta.hidden) return;
+
+                        const lastElement = meta.data[meta.data.length - 1];
+                        const fontSize = 12;
+                        const fontStyle = 'normal';
+                        const fontFamily = 'Arial';
+                        if (dataset.data.length > 0) {
+                            ctx.save();
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'bottom';
+                            ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                            ctx.fillStyle = 'black';
+                            total = dataset.data[dataset.data.length - 1].y;
+                            ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
+                        }
+                        ctx.restore();
+                    },
+                };
             if ('<?php echo $ver; ?>' == 'volumen') {
 
                 const arbitra = {
@@ -108,7 +134,7 @@ if ($count >= 1) {
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen del periodo',pointRadius: 2,data: [";
+                            <?php echo "{label:'Volumen del periodo',pointRadius: 1,backgroundColor:'#326fa8',borderColor: '#326fa8',data: [";
                             $min = $embalses[0]["cota_min"];
                             $max = $embalses[0]["cota_max"];
                             $j = 0;
@@ -119,7 +145,7 @@ if ($count >= 1) {
 
                                     
 
-                                    if($datos_embalses[$j]["cota_actual"] != NULL){?> {
+                                    if($count){?> {
                                         x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
                                         y: <?php echo $bati->getByCota(date("Y", strtotime($datos_embalses[$j]["fecha"])), $datos_embalses[$j]["cota_actual"])[1];  ?>
                                     },
@@ -153,6 +179,9 @@ if ($count >= 1) {
                             intersect: false,
                             axis: 'x',
                         },
+                        layout: {
+                            padding: 23,
+                        },
                         plugins: {
                             arbitra: {
 
@@ -160,20 +189,20 @@ if ($count >= 1) {
                                 lines: [{
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_min"])[1], 2); ?>,
                                         cota: "Volumen minimo",
-                                        color: 'black',
+                                        color: 'red',
                                         h: -15,
                                     },
                                     {
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_nor"])[1], 2); ?>,
                                         cota: "Volumen normal",
-                                        color: 'black',
+                                        color: 'green',
                                         h: 15,
 
                                     },
                                     {
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_max"])[1], 2); ?>,
                                         cota: "Volumen maximo",
-                                        color: 'black',
+                                        color: 'blue',
                                         h: -15,
                                     }
                                     // Agrega más líneas según sea necesario
@@ -276,7 +305,7 @@ if ($count >= 1) {
 
                         },
                     },
-                    plugins: [arbitra],
+                    plugins: [arbitra,point],
 
                 });
 
@@ -337,7 +366,7 @@ if ($count >= 1) {
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen del periodo',pointRadius: 2,data: [";
+                            <?php echo "{label:'Volumen del periodo',pointRadius: 1,backgroundColor:'#326fa8',borderColor: '#326fa8',data: [";
                             $min = $embalses[0]["cota_min"];
                             $max = $embalses[0]["cota_max"];
                             $j = 0;
@@ -382,6 +411,9 @@ if ($count >= 1) {
                             intersect: false,
                             axis: 'x',
                         },
+                        layout: {
+                            padding: 23,
+                        },
                         plugins: {
                             arbitra: {
 
@@ -389,20 +421,20 @@ if ($count >= 1) {
                                 lines: [{
                                         yvalue: <?php echo $embalses[0]["cota_min"]; ?>,
                                         cota: "Cota minima",
-                                        color: 'black',
+                                        color: 'red',
                                         h: -15,
                                     },
                                     {
                                         yvalue: <?php echo $embalses[0]["cota_nor"]; ?>,
                                         cota: "Cota normal",
-                                        color: 'black',
+                                        color: 'green',
                                         h: 15,
 
                                     },
                                     {
                                         yvalue: <?php echo $embalses[0]["cota_max"]; ?>,
                                         cota: "Cota maxima",
-                                        color: 'black',
+                                        color: 'blue',
                                         h: -15,
                                     }
                                     // Agrega más líneas según sea necesario
@@ -505,7 +537,7 @@ if ($count >= 1) {
 
                         },
                     },
-                    plugins: [arbitra],
+                    plugins: [arbitra,point],
 
                 });
 
