@@ -246,7 +246,28 @@ $TITULO6 = "Gráfico 6";
         </div>
     </div>
     <div style=" position: absolute; width: 1080px;">
-        <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO5 ?></p>
+        <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo "Grafico Mensual"; ?></p>
+    </div>
+    <div style="position: absolute; top: 140px; width: 1030px; height: 485px; border-color: grey;border-width: 2px; border-style: solid; margin-left: 20px; border-radius: 10px;">
+        <img src="../../assets/img/temp/imagen-monitoreo-mes-1.png" alt="monitoreo" style="width: 1000px; height: 480px; margin-left: 10px;margin-top: 2px">
+    </div>
+
+    <div style="height: 400px;"></div>
+    <div>
+        <div>
+            <img class="img-logo-letters" src="<?php echo $srcLogoLetters; ?>" />
+            <img class="img-logo" src="<?php echo $srcLogo; ?>" />
+        </div>
+        <p style="position: absolute; text-align: center; text-justify: center; top: 15px;">
+            VICEMINISTERIO DE ADMINISTRACIÓN DE CUENCAS HIDROGRÁFICAS<br>
+            DIRECCIÓN GENERAL DE MANEJO DE EMBALSES<br>
+            DIRECCIÓN DE OPERACIÓN Y MANTENIMIENTO DE EMBALSES</p>
+        <div style="position: absolute; left: 1000px; width: 70px; top: 20px;">
+            <p style="font-weight: 900;"><?php echo $fecha_hora; ?></p>
+        </div>
+    </div>
+    <div style=" position: absolute; width: 1080px;">
+        <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo "Grafico Anual"; ?></p>
     </div>
     <div style="position: absolute; top: 140px; width: 1030px; height: 485px; border-color: grey;border-width: 2px; border-style: solid; margin-left: 20px; border-radius: 10px;">
         <img src="../../assets/img/temp/imagen-monitoreo-anio-1.png" alt="monitoreo" style="width: 1000px; height: 480px; margin-left: 10px;margin-top: 2px">
@@ -267,7 +288,7 @@ $TITULO6 = "Gráfico 6";
         </div>
     </div>
     <div style=" position: absolute; width: 1080px;">
-        <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo $TITULO6 ?></p>
+        <p style="position: absolute; text-align: center; top:80px; width: 1050px;"><?php echo "Grafico Movimiento" ?></p>
     </div>
     <div style="position: absolute; top: 140px; width: 1030px; height: 480px; border-color: grey;border-width: 2px; border-style: solid; margin-left: 20px; border-radius: 10px;">
         <img src="../../assets/img/temp/imagen-monitoreo-semana-1.png" alt="monitoreo" style="width: 1000px; height: 470px; margin-left: 10px;margin-top: 2px">
