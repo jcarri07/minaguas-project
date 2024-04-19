@@ -222,7 +222,7 @@ insert into
 values
   (
     1,
-    '1234',
+    '$2y$05$drIpNODWj6463HT6/68CMeojRcps3aFrd3ejsroKklrSorYD4INkG',
     'Admin',
     'Admin',
     'Admin',
@@ -235,7 +235,7 @@ values
   ),
   (
     2,
-    '1234',
+    '$2y$05$lOy35Mzm/nB40AwP7GwYL.PPoHNyVBdNYK.QWdRTBTp.Cbmk.Ei9m',
     'Pedro',
     'Antonio',
     'Rodrigues',
