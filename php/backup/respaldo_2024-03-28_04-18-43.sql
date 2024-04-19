@@ -2504,7 +2504,7 @@ CREATE TABLE `tipo_codigo_extraccion` (
 
 INSERT INTO tipo_codigo_extraccion (id, nombre, cantidad_primaria, unidad, estatus) VALUES 
 (1, 'Descarga por Aliviadero', 1000, 'm3', 'activo'),
-(2, 'Descarga por Connducto de Toma', 1000, 'm3', 'activo'),
+(2, 'Descarga por Conducto de Toma', 1000, 'm3', 'activo'),
 (3, 'Entrega Individualizada', 1000, 'm3', 'activo'),
 (4, 'Descarga No Controlada', 1000, 'm3', 'activo'),
 (5, 'Abertura de Valvula o Compuerta', 0, '', 'activo'),

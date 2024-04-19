@@ -178,6 +178,31 @@ if ($count >= 1) {
                 // Resto del código del plugin
             }
         };
+        const point = {
+                    id: 'point',
+                    afterDatasetsDraw: function(chart, arg,options) {
+                                const {ctx} = chart;
+                                const dataset = chart.data.datasets[0];
+                                const meta = chart.getDatasetMeta(0);
+
+                                if (meta.hidden) return;
+
+                                const lastElement = meta.data[meta.data.length - 1];
+                                const fontSize = 16;
+                                const fontStyle = 'normal';
+                                const fontFamily = 'Arial';
+                                if(dataset.data.length > 0){
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'bottom';
+                                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                                ctx.fillStyle = 'black';
+                                total = dataset.data[dataset.data.length - 1].y;
+                                ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
+                                }
+                                ctx.restore();
+                            },
+                };
 
 
 
@@ -206,7 +231,6 @@ if ($count >= 1) {
                             label: '<?php echo $nom[0] ?>',
                             borderColor: '#36a1eb',
                             backgroundColor: '#36a1eb',
-                            pointRadius: 0,
                             data: [<?php
                                     $j = 0;
                                     $pivote = date("Y");
@@ -240,6 +264,11 @@ if ($count >= 1) {
                                 var index = context.dataIndex;
                                 var value = context.dataset.data[index];
                                 return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
+                            },
+                            pointRadius: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '6' : '0';
                             },
 
                         },
@@ -277,12 +306,6 @@ if ($count >= 1) {
                                 }
                                 ?>
                             ],
-                            pointBackgroundColor: function(context) {
-                                var index = context.dataIndex;
-                                var value = context.dataset.data[index];
-                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                            },
-
                         },
 
 
@@ -358,8 +381,8 @@ if ($count >= 1) {
                             time: {
                                 unit: 'month'
                             },
-                            min: '<?php echo $año; ?>-01',
-                            max: '<?php echo $año; ?>-12',
+                            min: '<?php echo $año; ?>-01-01',
+                            max: '<?php echo $año; ?>-12-31',
 
                             ticks: {
                                 callback: (value, index, ticks) => {
@@ -415,7 +438,7 @@ if ($count >= 1) {
                         },
                     },
                 },
-                plugins: [arbitra],
+                plugins: [arbitra,point],
 
             });
             $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
@@ -466,12 +489,18 @@ if ($count >= 1) {
                                 var value = context.dataset.data[index];
                                 return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                             },
+                            pointRadius: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '6' : '0';
+                            },
                         },
 
                         {
                             label: '<?php echo $nom[1] ?>',
                             borderColor: '#e4c482',
                             backgroundColor: '#e4c482',
+                            pointRadius: 0,
                             data: [
                                 <?php
                                 $j = 0;
@@ -494,11 +523,6 @@ if ($count >= 1) {
                                 }
                                 ?>
                             ],
-                            pointBackgroundColor: function(context) {
-                                var index = context.dataIndex;
-                                var value = context.dataset.data[index];
-                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                            },
                         },
 
 
@@ -632,7 +656,7 @@ if ($count >= 1) {
                         },
                     },
                 },
-                plugins: [arbitra],
+                plugins: [arbitra,point],
 
             });
             $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
@@ -687,11 +711,18 @@ if ($count >= 1) {
                                 var value = context.dataset.data[index];
                                 return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
                             },
+                            pointRadius: function(context) {
+                                var index = context.dataIndex;
+                                var value = context.dataset.data[index];
+                                return index === context.dataset.data.length - 1 ? '6' : '0';
+                            },
+
                         },
                         {
                             label: '<?php echo $nom[1] ?>',
                             borderColor: '#e4c482',
                             backgroundColor: '#e4c482',
+                            pointRadius: 0,
                             data: [<?php
                                     $j = 0;
                                     $pivote = date("Y") - 1;
@@ -713,11 +744,6 @@ if ($count >= 1) {
                                     }
                                 ?>
                             ],
-                            pointBackgroundColor: function(context) {
-                                var index = context.dataIndex;
-                                var value = context.dataset.data[index];
-                                return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                            },
                         },
 
 
@@ -847,7 +873,7 @@ if ($count >= 1) {
 
 
                 },
-                plugins: [arbitra],
+                plugins: [arbitra,point],
             });
             $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
                                                                                                             $count++; ?> + '%');

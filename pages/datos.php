@@ -29,7 +29,7 @@
             tce.id <> '6' AND 
             tce.id <> '7' AND
             ce.concepto <> 'Subtotal'
-          ORDER BY codigo ASC";
+          ORDER BY codigo ASC;";
   $query_codigos = mysqli_query($conn, $sql);
 
   closeConection($conn);
@@ -41,10 +41,17 @@
   $options_extraccion .='<option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>';
   $options_extraccion .='<option value="Recreación">Recreación</option>';*/
 
+  $array_codigos = array();
   $options_extraccion = "<option value=''>Seleccione</option>";
 
   while($row = mysqli_fetch_array($query_codigos)){
     $options_extraccion .= "<option value='$row[id_codigo_extraccion]'>$row[name] ($row[codigo])</option>";
+
+    $array_aux = [];
+    $array_aux['id_codigo_bd'] = $row['id_codigo_extraccion'];
+    $array_aux['codigo'] = $row['codigo'];
+    $array_aux['nombre'] = $row['nombre'];
+    array_push($array_codigos, $array_aux);
   }
 ?>
 
@@ -97,7 +104,7 @@
                   <th scope="row">
                     <div class="media">
                         <div class="media-body">
-                            <span class="name mb-0"><?php echo $row['nombre_embalse'];?></span>
+                            <span class="name mb-0 text-dark"><?php echo $row['nombre_embalse'];?></span>
                         </div>
                     </div>
                   </th>
@@ -129,7 +136,7 @@
 ?>
                     <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse'];?>', '<?php echo $row['nombre_embalse'];?>', '', '');">
                       <i class="fas fa-history text-dark me-2" aria-hidden="true"></i>
-                      <span class="hide-cell">Historial de Reportes</span>
+                      <span class="hide-cell">Historial de Extracciones</span>
                     </a>
 <?php
                 }
@@ -146,10 +153,18 @@
 <?php
             }
             else{
+              if($_SESSION["Tipo"] == "User"){
+?>
+                  <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No hay embalses asignados</h2>
+                  <br><br><br>
+<?php  
+              }
+              else {
 ?>
                   <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No hay información</h2>
                   <br><br><br>
-<?php                  
+<?php          
+              }        
             }
 ?>
                 <!--<li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
@@ -257,7 +272,7 @@
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
-                <h3 class="font-weight-bolder text-primary text-gradient text-title">Historial de Reportes</h3>
+                <h3 class="font-weight-bolder text-primary text-gradient text-title">Historial de Extracciones</h3>
                 <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
               
                 <div class="text-center">
@@ -300,7 +315,7 @@
     ?>
                 <div class="row">
                   <div class="col-md-12 text-center">
-                      <button class="btn btn-success" data-bs-dismiss="modal" id="btn-open-modal-import-data" onclick="openModalAddDataOld();" type="button">Adjuntar Historial de Reportes</button>
+                      <button class="btn btn-success" data-bs-dismiss="modal" id="btn-open-modal-import-data" onclick="openModalAddDataOld();" type="button">Adjuntar Historial de Extracciones</button>
                   </div>
                 </div>
     <?php
@@ -351,7 +366,7 @@
                     <div class="row">
                       <div class="col">
                         <label>Código</label>
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-4">
                           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_1" onchange="changeTipoExtraccion(this);" required>
                             <?php echo $options_extraccion;?>
                           </select>
@@ -359,7 +374,7 @@
                       </div>
                       <div class="col">
                         <label>Valor</label> <!-- (1000 m<sup>3</sup>)-->
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-4">
                           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" required>
                         </div>
                       </div>
@@ -536,6 +551,8 @@
       }
     });
 
+    var array_codigos = <?php echo json_encode($array_codigos);?>
+
 
     var count = 1;
     $(document).on('click', '#addRows', function() { 
@@ -544,7 +561,7 @@
       htmlRows += '<div class="row">';
       htmlRows += '   <div class="col">';
       htmlRows += '       <label>Código</label>';
-      htmlRows += '       <div class="input-group mb-3">';
+      htmlRows += '       <div class="input-group mb-4">';
       htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" onchange="changeTipoExtraccion(this);" required>';
       htmlRows += "               <?php echo $options_extraccion;?>";
       htmlRows += '           </select>';
@@ -552,7 +569,7 @@
       htmlRows += '   </div>';
       htmlRows += '   <div class="col">';
       htmlRows += '       <label>Valor</label>';
-      htmlRows += '       <div class="input-group mb-3">';
+      htmlRows += '       <div class="input-group mb-4">';
       htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor" required>';
       htmlRows += '       </div>';
       htmlRows += '   </div>';
@@ -585,6 +602,19 @@
         $("#valor_extraccion_" + row).attr("type", "number");
       }
 
+
+      if(value_select != '') {
+        if($("#descripcion_extraccion_" + row).length > 0) 
+          $("#descripcion_extraccion_" + row).remove();
+
+        var descripcion = '<span style="font-size: 0.76rem; display: block; margin-top: -25px;" id="descripcion_extraccion_' + row + '" class="text-dark">' + array_codigos.find(e => e.id_codigo_bd === value_select)['nombre'] + '</span>';
+        $(select).parent().after(descripcion);
+      }
+      else {
+        if($("#descripcion_extraccion_" + row).length > 0) 
+          $("#descripcion_extraccion_" + row).remove();
+      }
+
       /*tipo_extraccion[i] = this.value;
       valor_extraccion[i] = $("#valor_extraccion_" + row).val();*/
     }
@@ -595,7 +625,7 @@
       $("#nombre_embalse_aux").text(nombre_embalse);
       $("#opc_aux").text("add");
 
-      $("#add .title").text("Añadir Reporte en " + nombre_embalse);
+      $("#add .title").text("Añadir Reporte de Extracción en " + nombre_embalse);
       $("#btn-open-modal-import-data").show();
 
       $(".removeRow").attr("disabled", false);
@@ -762,7 +792,7 @@
       $("#nombre_embalse_aux").text(nombre_embalse);
 
       $("#body-details").html("<h3 class='text-center'>Cargando...</h3>");
-      $("#modal-details .card-header .text-title").text("Historial de Reportes de " + nombre_embalse);
+      $("#modal-details .card-header .text-title").text("Historial de Extracciones de " + nombre_embalse);
       $("#modal-details").modal("show");
 
       var datos = new FormData();
@@ -794,7 +824,7 @@
       $(".removeRow").attr("disabled", false);
       $("#btn-open-modal-import-data").hide();
 
-      $("#add .title").text("Detalles del Reporte");
+      $("#add .title").text("Detalles del Reporte de la Extracción");
       $(".removeRow").each(function( index ) {
         $(this).trigger("click");
       });

@@ -54,10 +54,15 @@
             ORDER BY anio DESC;";
     $query_anios = mysqli_query($conn, $sql);
 
-    if($mes != "" && $anio == ''){
+    if($anio == '') {
         $anio = mysqli_fetch_array($query_anios)['anio'];
         $query_anios = mysqli_query($conn, $sql);
     }
+
+    /*if($mes != "" && $anio == ''){
+        $anio = mysqli_fetch_array($query_anios)['anio'];
+        $query_anios = mysqli_query($conn, $sql);
+    }*/
 
     $add_where = "";
     if($anio != '')
@@ -91,9 +96,14 @@
                         <label>Año</label>
                         <div class="input-group mb-3">
                             <select class="form-select" name="anio" id="anio">
-                                <option value=''>Todos</option>
+                                <!--<option value=''>Todos</option>-->
 <?php
+                            $i = 0;
                             while($row = mysqli_fetch_array($query_anios)){
+                                /*$selected = "";
+                                if($i == 0 && $anio == "")
+                                    $selected = "selected";
+                                $i++;*/
 ?>
                                 <option value='<?php echo $row['anio'];?>' <?php echo ($anio == $row['anio']) ? 'selected' : '';?>><?php echo $row['anio'];?></option>
 <?php
@@ -142,7 +152,7 @@
 
                 <div class="table-responsive">
                     <div class="mb-3">
-                        <table class="table align-items-center text-sm text-center table-sm text-xs" id="table-history">
+                        <table class="table align-items-center text-sm text-center table-sm text-xs text-dark" id="table-history">
                             <thead class="table-primary">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">#</th>
@@ -197,9 +207,9 @@
 
 
                                 <tr>
-                                    <td>
+                                    <th>
                                         <?php echo $i;?>
-                                    </td>
+                                    </th>
                                     <th scope="row">
                                         <div class="media">
                                             <div class="media-body">

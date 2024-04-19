@@ -19,7 +19,7 @@ $vol_actual = $embalse->volumenActualDisponible();
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Diseño (hm³)', 'Batimetría (hm³)', 'Actual (hm³)'],
+                labels: [['Diseño','(hm³)'], ['Batimetría','(hm³)'], ['Actual','(hm³)']],
                 datasets: [{
                     data: [<?php echo $vol_original . "," . $vol_batimetria . "," . $vol_actual ?>],
                     backgroundColor: [

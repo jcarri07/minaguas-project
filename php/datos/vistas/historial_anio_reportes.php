@@ -201,7 +201,7 @@
 ?>
                         <h4 class="text-center">Sumatorias y Promedios <?php echo $mes == "" ? "Año $anio" : "$mes_espaniol, $anio";?></h4>
                         <div class="table-responsive">
-                        <table class="table align-items-center text-sm text-xs text-center table-sm table-punteada">
+                        <table class="table align-items-center text-sm text-xs text-center table-sm table-punteada text-dark">
                             <thead class="table-primary">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">#</th>
