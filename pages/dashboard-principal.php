@@ -97,6 +97,7 @@ $nombreEmbalse = $row1['nombre_embalse'];
 
 closeConection($conn);*/
 ?>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
 
 <div class="container-fluid py-5">
   <div class="row justify-content-center">
@@ -321,26 +322,167 @@ closeConection($conn);*/
       #container-div {
         width: 100%;
       }
+
+      #contain-charts {
+        justify-content: space-around;
+      }
     }
   </style>
 
 
   <div class="container">
     <div class="row">
-      <div class="col-12 pt-2 bg-white" id="container-div">
-        <div class=" d-flex flex-row flex-wrap justify-content-center gap-2 pb-2">
-          <div class="bg-secondary rounded flex-grow-1" style="height: 400px;"></div>
-          <div class="bg-secondary rounded flex-grow-1" style="height: 400px;"></div>
+      <div class="col-12 pt-2 bg-white punteado" id="container-div">
+        <div class=" d-flex flex-row flex-wrap justify-content-center gap-2 pb-2" id="cotain-charts">
+          <div class="d-flex justify-content-center align-items-center rounded ">
+            <div style="width: 350px">
+              <canvas id="grafica"></canvas>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center align-items-center ">
+            <div class="" style="width: 350px; padding: 0; margin: 0;">
+              <canvas id="grafica2" style="width: 350px;"></canvas>
+            </div>
+          </div>
         </div>
         <div class="d-flex flex-row flex-wrap justify-content-center gap-2">
-          <div class="bg-secondary rounded flex-grow-1" style="height: 400px;"></div>
-          <div class="bg-secondary rounded flex-grow-1" style="height: 400px;"></div>
+          <div class="d-flex justify-content-center align-items-center " style="height: 350px; width: 350px;">
+            <div class="progress-bar">
+              <progress value="75" min="0" max="100" style="visibility:hidden;height:0;width:0;">75%</progress>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center align-items-center rounded ">
+            <div style="width: 350px">
+              <canvas id="grafica3"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <style>
+    .progress-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      color: gray;
+      font-size: 30px;
+      font-weight: bold;
+      background:
+        radial-gradient(closest-side, white 79%, transparent 80% 100%),
+        conic-gradient(gray 75%, lightblue 0);
+    }
 
+    .progress-bar::before {
+      content: "75%";
+    }
+
+    .punteado {
+      border-style: dashed;
+      border-width: 4px;
+      border-color: gray 0.7;
+      background-color: cc3366;
+      font-family: verdana, arial;
+      font-size: 10pt;
+    }
+  </style>
+
+  <script>
+    const labels = ['Enero', 'Febrero', 'Marzo', 'Abril']
+    const colors = ['rgb(69,177,223)', 'rgb(99,201,122)', 'rgb(203,82,82)', 'rgb(229,224,88)'];
+
+    const graph = document.querySelector("#grafica2");
+
+    const data = {
+      labels: labels,
+      datasets: [{
+        data: [1, 2, 3, 4],
+        backgroundColor: colors
+      }]
+    };
+
+    const config = {
+      type: 'pie',
+      data: data,
+    };
+
+    new Chart(graph, config);
+  </script>
+
+  <script>
+    const labels2 = ['Enero', 'Febrero', 'Marzo', 'Abril']
+
+    const graph2 = document.querySelector("#grafica3");
+
+    const data2 = {
+      labels: labels,
+      datasets: [{
+        label: "Ejemplo 1",
+        data: [1, 2, 3, 4],
+        backgroundColor: 'rgba(9, 129, 176, 0.2)'
+      }]
+    };
+
+    const config2 = {
+      type: 'bar',
+      data: data,
+    };
+    new Chart(graph2, config2);
+  </script>
+
+  <script>
+    const labels3 = ['Enero', 'Febrero', 'Marzo', 'Abril']
+
+    const dataset1 = {
+      label: "Dataset 1",
+      data: [10, 55, 60, 120],
+      borderColor: 'rgba(248, 37, 37, 0.8)',
+      fill: false,
+      tension: 0.1
+    };
+
+    const dataset2 = {
+      label: "Dataset 2",
+      data: [5, 44, 55, 100],
+      borderColor: 'rgba(69, 248, 84, 0.8)',
+      fill: false,
+      tension: 0.1
+    };
+
+    const dataset3 = {
+      label: "Dataset 3",
+      data: [20, 40, 55, 120],
+      borderColor: 'rgba(69, 140, 248, 0.8)',
+      fill: false,
+      tension: 0.1
+    };
+
+    const dataset4 = {
+      label: "Dataset 4",
+      data: [18, 40, 20, 100],
+      borderColor: 'rgba(245, 40, 145, 0.8)',
+      fill: false,
+      tension: 0.1
+    };
+
+    const graph3 = document.querySelector("#grafica");
+
+    const data3 = {
+      labels: labels,
+      datasets: [dataset1, dataset2, dataset3, dataset4]
+    };
+
+    const config3 = {
+      type: 'line',
+      data: data,
+    };
+
+    new Chart(graph3, config3);
+  </script>
 
   <!-- <div class="col-lg-9 mb-lg-0 mb-1">
       <div class="card user-card-full">
@@ -584,7 +726,7 @@ closeConection($conn);*/
 <script src="./assets/js/jquery/jquery.min.js"></script>
 
 <script>
-  var config = {
+  var configuration = {
     type: 'bar',
     data: {
       labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -658,7 +800,7 @@ closeConection($conn);*/
           borderColor: 'white',
           borderWidth: 1
         });
-        var config = {
+        var configuration = {
           type: 'bar',
           data: {
             labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -692,7 +834,7 @@ closeConection($conn);*/
         };
 
         var ctx = document.getElementById('myChart').getContext('2d');
-        window.myChart = new Chart(ctx, config);
+        window.myChart = new Chart(ctx, configuration);
       },
       error: function(error) {
         console.error('Error:', error);
