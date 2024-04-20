@@ -101,7 +101,7 @@ closeConection($conn);*/
 <div class="container-fluid py-5">
   <div class="row justify-content-center">
     <?php if ($_SESSION["Tipo"] == "Admin") { ?>
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <!-- <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <a href="?page=usuarios">
           <div class="card">
             <div class="card-body p-3">
@@ -127,10 +127,10 @@ closeConection($conn);*/
             </div>
           </div>
         </a>
-      </div>
+      </div> -->
     <?php }  ?>
     <?php if ($_SESSION["Tipo"] == "Admin") { ?>
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <!-- <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <a href="?page=embalses">
           <div class="card">
             <div class="card-body p-3">
@@ -158,9 +158,9 @@ closeConection($conn);*/
             </div>
           </div>
         </a>
-      </div>
+      </div> -->
     <?php }  ?>
-    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+    <!-- <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
       <a href="?page=datos">
         <div class="card">
           <div class="card-body p-3">
@@ -173,10 +173,10 @@ closeConection($conn);*/
                     CARGA DE DATOS
                   </h5>
 
-                  <!--<p class="mb-0 text-sm">
+                  <p class="mb-0 text-sm">
                       <span class="text-danger text-xs font-weight-bolder"></span>
                       Cargar datos a tiempo real
-                    </p>-->
+                    </p>
                 </div>
               </div>
               <div class="col-4 text-end">
@@ -188,9 +188,9 @@ closeConection($conn);*/
           </div>
         </div>
       </a>
-    </div>
+    </div> -->
     <?php if ($_SESSION["Tipo"] == "Admin") { ?>
-      <div class="col-xl-3 col-sm-6">
+      <!-- <div class="col-xl-3 col-sm-6">
         <a href="?page=reportes">
           <div class="card">
             <div class="card-body p-3">
@@ -214,7 +214,7 @@ closeConection($conn);*/
             </div>
           </div>
         </a>
-      </div>
+      </div> -->
     <?php }  ?>
   </div>
 
@@ -294,9 +294,55 @@ closeConection($conn);*/
     </div>
   </div>
 
+  <style>
+    @media (max-width: 840px) {
 
-  <div class="row mt-1">
-    <div class="col-lg-9 mb-lg-0 mb-1">
+      .d-flex.flex-row.justify-content-center.gap-2 {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .d-flex.flex-row.justify-content-center.gap-2>div {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+
+      .p-10 {
+        padding: 5px;
+      }
+
+    }
+
+    @media (min-width: 1630px) {
+
+      #container-div {
+        width: 100%;
+      }
+    }
+  </style>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 pt-2 bg-white" id="container-div">
+        <div class=" d-flex flex-row flex-wrap justify-content-center gap-2 pb-2">
+          <div class="bg-secondary rounded flex-grow-1" style="height: 400px;"></div>
+          <div class="bg-secondary rounded flex-grow-1" style="height: 400px;"></div>
+        </div>
+        <div class="d-flex flex-row flex-wrap justify-content-center gap-2">
+          <div class="bg-secondary rounded flex-grow-1" style="height: 400px;"></div>
+          <div class="bg-secondary rounded flex-grow-1" style="height: 400px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- <div class="col-lg-9 mb-lg-0 mb-1">
       <div class="card user-card-full">
         <div class="row m-l-0 m-r-0">
           <div class="col-sm-4 bg-c-lite-green user-profile">
@@ -309,8 +355,8 @@ closeConection($conn);*/
 
             </div>
           </div>
-          <div class="col-sm-8" style="display: flex;">
-            <div class="card-block">
+          <div class="col-sm-8" style="display: flex;"> -->
+  <!-- <div class="card-block">
               <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="margin-top: 15px;">UN HITO INNOVADOR</h6>
               <div class="row">
                 <div class="col-sm-12" style="text-align: justify;">
@@ -323,8 +369,8 @@ closeConection($conn);*/
                     Venezuela es hoy en día el país latinoamericano con un Ministerio dedicado exclusivamente a la Gestión Integral del Recurso Hídrico entendida como la atención a todos los usos y aprovechamiento de las aguas en fuentes (ríos, lagos, mares, acuíferos) en calidad y cantidad de aguas superficiales y subterráneas. Lo que atiende directamente la condición estratégica de nuestro territorio al ser la 4ta reserva de agua dulce en América Latina y el 11vo en el Mundo.
 
                   <h6 class="text-muted f-w-400"><a href="..\..\..\cdn-cgi\l\email-protection.htm" class="__cf_email__" data-cfemail="3a505f54437a5d575b535614595557"></a></h6>
-                </div>
-                <!-- <div class="col-sm-6">
+                </div> -->
+  <!-- <div class="col-sm-6">
                                                                     <p class="m-b-10 f-w-600">Agencia Bolivariana para Actividades Espaciales</p>
                                                                     <h6 class="text-muted f-w-400"></h6>
                                                                 </div>
@@ -339,19 +385,19 @@ closeConection($conn);*/
                                                                     <p class="m-b-10 f-w-600">Most Viewed</p>
                                                                     <h6 class="text-muted f-w-400">Able Pro Admin</h6>
                                                                 </div>-->
-              </div>
-              <!--<ul class="social-link list-unstyled m-t-40 m-b-10">
+  <!-- </div> -->
+  <!--<ul class="social-link list-unstyled m-t-40 m-b-10">
                                                                 <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook"><i class="feather icon-facebook facebook" aria-hidden="true"></i></a></li>
                                                                 <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter"><i class="feather icon-twitter twitter" aria-hidden="true"></i></a></li>
                                                                 <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram"><i class="feather icon-instagram instagram" aria-hidden="true"></i></a></li>
                                                             </ul>-->
-            </div>
-          </div>
-        </div>
-
+  <!-- </div>
       </div>
+    </div>
 
-      <!--<div class="card z-index-2 h-100">
+  </div> -->
+
+  <!--<div class="card z-index-2 h-100">
           
 
           <div class="col-lg-2">
@@ -387,8 +433,8 @@ closeConection($conn);*/
               </div>
             </div>
           </div>-->
-    </div>
-    <div class="col-lg-3">
+</div>
+<!-- <div class="col-lg-3">
       <div class="card card-carousel overflow-hidden h-100 p-0">
         <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
           <div class="carousel-inner border-radius-lg h-100">
@@ -421,13 +467,13 @@ closeConection($conn);*/
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-    </div>
-  </div>
+    </div> -->
+</div>
 </div>
 
 <!--RRSS-->
 
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
   <div class="row justify-content-center rrss-container">
     <div class="col-xl-1 col-sm-2 mb-xl-0 mb-4 rrss-item">
       <div class="card">
@@ -508,7 +554,7 @@ closeConection($conn);*/
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!--<footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
