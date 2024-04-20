@@ -273,14 +273,15 @@
             ]);
 
 
+            //Añadiendo membrete
             $hoja->setCellValue('A1', '% De información faltante hasta la fecha:');
             $hoja->setCellValue('A2', 'Información Faltante (días):');
             $hoja->setCellValue('A3', 'Días Transcurridos:');
             $hoja->setCellValue('A4', 'Información Faltante del Año:');
             $hoja->setCellValue('A5', 'Embalse:');
             $hoja->setCellValue('B5', mb_strtoupper($row['nombre_embalse']));
-
             $hoja->setCellValue("A7", 'FECHA');
+
             $styleCell = $hoja->getStyle("A7");
             $styleCell->getFont()->setBold(true);
             $styleCell->getAlignment()->setWrapText(true);
@@ -322,8 +323,7 @@
 
 
 
-            //Filas del reporte
-
+            //Filas de extracciones
             $sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, 
                         (
                             SELECT GROUP_CONCAT(id_codigo_extraccion, '&', extraccion, '&', id_detalles_extraccion SEPARATOR ';')
@@ -395,6 +395,7 @@
                 ]);
 
 
+                //Añadiendo extracciones
                 $index_row = buscarPosicion($array_extracciones, date("Y-m-d", strtotime($dia_actual)), 'fecha');
                 if($index_row != -1) {
                     $extraccion = $array_extracciones[$index_row];
@@ -425,7 +426,7 @@
                 }*/
 
 
-                //Bordes
+                //Bordes en las celdas de extracciones
                 $celdaInicio = 'A' . $fila_actual;
                 $celdaFin = $COLUMNA_FINAL_REPORTE . $fila_actual;
 
@@ -448,7 +449,7 @@
         }
 
 
-
+        //Generar el documento excel
         $writer = new Xlsx($spreadsheet);
 
         // Guardar el archivo en el servidor o enviarlo al navegador para descarga

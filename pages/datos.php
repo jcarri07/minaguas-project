@@ -768,6 +768,7 @@
           if(response == 'si'){
             $("#modal-generic .message").text("Registro exitoso");
             $("#modal-generic .card-footer .btn-action").attr("onclick", "window.location.reload();");
+            $("#modal-generic .card-header .close-modal").attr("onclick", "window.location.reload();");
             $("#modal-generic").modal("show");
           }
           else{
