@@ -32,6 +32,12 @@
           ORDER BY codigo ASC;";
   $query_codigos = mysqli_query($conn, $sql);
 
+  $sql = "SELECT DISTINCT YEAR(fecha) AS 'anio'
+    FROM datos_embalse
+    WHERE estatus = 'activo'
+    ORDER BY anio DESC;";
+  $query_anios = mysqli_query($conn, $sql);
+
   closeConection($conn);
 
   /*$options_extraccion = '<option value="">Seleccione</option>';
@@ -53,6 +59,7 @@
     $array_aux['nombre'] = $row['nombre'];
     array_push($array_codigos, $array_aux);
   }
+
 ?>
 
 
@@ -82,6 +89,16 @@
                 
 <?php
             if(mysqli_num_rows($query) > 0){
+              if($_SESSION["Tipo"] == "Admin"){
+?>
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary" onclick="exportExcel();">
+                    Exportar Extracciones en Excel
+                    <i class="fa fa-file-excel-o" style="margin-left: 5px; font-size: 18px;"></i>
+                  </button>
+                </div>
+<?php
+              }
 ?>
                 <div class="table-responsive mb-3">
                     <table class="table align-items-center text-sm text-center table-sm" id="table">
@@ -484,6 +501,64 @@
               </div>
               <div class="card-body pb-3" id="body-history-excel">
                 
+              </div>
+              <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="modal fade" id="select-anio-export-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-primary text-gradient title"></h3>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+              </div>
+              <div class="card-body pb-3">
+
+                <form id="form-export-excel">
+                  <div class="row">
+                    <div class="col">
+                      <label>Seleccione el Año</label>
+                      <div class="input-group mb-4">
+                        <select class="form-select" name="anio_export_excel" id="anio_export_excel" required>
+                          <option value="">Seleccione</option>
+  <?php
+                        while($row = mysqli_fetch_array($query_anios)) {
+  ?>
+                          <option value="<?php echo $row['anio'];?>"><?php echo $row['anio'];?></option>
+  <?php
+                        }
+  ?>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 loaderParent">
+                      <div class="loader">
+                      </div>
+                      Por favor, espere
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn bg-gradient-primary mt-4 mb-0 btn-submit">Descargar</button>
+                  </div>
+                </form>
               </div>
               <div class="card-footer text-center pt-0 px-sm-4 px-1">
                 <!--<p class="mb-4 mx-auto">
@@ -1118,6 +1193,19 @@
         }
       });
     }
+
+    function exportExcel() {
+      $("#select-anio-export-excel").modal("show");
+    }
+
+    
+
+    $("#form-export-excel").on("submit",function(event){
+      event.preventDefault();
+
+      var url = "php/datos/modelos/exportar-extracciones-excel.php?anio=" + this.anio_export_excel.value;
+      window.open(url, "_blank");
+    });
     
   </script>
 
