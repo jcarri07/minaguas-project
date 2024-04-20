@@ -13,6 +13,17 @@ include '../php/Conexion.php';
 
 require '../vendor/autoload.php';
 
+function stringFloat($num, $dec = 2)
+{
+    // return number_format(floatval(str_replace(',', '.', $num)), $dec, ',', '.');
+    // return floatval(str_replace('.', ',', $num));
+    // return $num;
+    $numero_limpio = str_replace('.', '', $num);
+    $numero_limpio = str_replace(',', '.', $numero_limpio);
+    $numero = floatval($numero_limpio);
+    return $numero;
+}
+
 if (isset($_POST["Guardar"])) {
 
     // Obtener los datos del formulario
@@ -42,15 +53,15 @@ if (isset($_POST["Guardar"])) {
     $monitoreo = $_POST["monitoreo"];
     // $batimetria = $_POST["batimetria"];
     $vida_util = $_POST["vida_util"];
-    $cota_min = $_POST["cota_min"];
-    $volumen_min = $_POST["vol_min"];
-    $superficie_min = $_POST["sup_min"];
-    $cota_nor = $_POST["cota_nor"];
-    $volumen_nor = $_POST["vol_nor"];
-    $superficie_nor = $_POST["sup_nor"];
-    $cota_max = $_POST["cota_max"];
-    $volumen_max = $_POST["vol_max"];
-    $superficie_max = $_POST["sup_max"];
+    $cota_min = stringFloat($_POST["cota_min"]);
+    $volumen_min = stringFloat($_POST["vol_min"]);
+    $superficie_min = stringFloat($_POST["sup_min"]);
+    $cota_nor = stringFloat($_POST["cota_nor"]);
+    $volumen_nor = stringFloat($_POST["vol_nor"]);
+    $superficie_nor = stringFloat($_POST["sup_nor"]);
+    $cota_max = stringFloat($_POST["cota_max"]);
+    $volumen_max = stringFloat($_POST["vol_max"]);
+    $superficie_max = stringFloat($_POST["sup_max"]);
     $numero_presas = $_POST["numero_presas"];
     $tipo_presa = $_POST["tipo_presa"];
     $altura = $_POST["altura"];
@@ -203,9 +214,9 @@ if (isset($_POST["Guardar"])) {
 
                 for ($row = 2; $row <= $highestRow; $row++) {
                     $num++;
-                    $cota = number_format($sheet->getCell('A'.$row)->getValue(), 3, '.', '');
-                    $area = $sheet->getCell('B'.$row)->getValue();
-                    $capacidad = $sheet->getCell('C'.$row)->getValue();
+                    $cota = number_format($sheet->getCell('A' . $row)->getValue(), 3, '.', '');
+                    $area = $sheet->getCell('B' . $row)->getValue();
+                    $capacidad = $sheet->getCell('C' . $row)->getValue();
                     $cota_embalse[$cota] = $area . "-" . $capacidad;
                 }
 
@@ -330,15 +341,15 @@ if (isset($_POST["Update"])) {
     $monitoreo = $_POST["monitoreo"];
     // $batimetria = $_POST["batimetria"];   // AUN NO SE COMO HACER ESTE!
     $vida_util = $_POST["vida_util"];
-    $cota_min = $_POST["cota_min"];
-    $volumen_min = $_POST["vol_min"];
-    $superficie_min = $_POST["sup_min"];
-    $cota_nor = $_POST["cota_nor"];
-    $volumen_nor = $_POST["vol_nor"];
-    $superficie_nor = $_POST["sup_nor"];
-    $cota_max = $_POST["cota_max"];
-    $volumen_max = $_POST["vol_max"];
-    $superficie_max = $_POST["sup_max"];
+    $cota_min = stringFloat($_POST["cota_min"]);
+    $volumen_min = stringFloat($_POST["vol_min"]);
+    $superficie_min = stringFloat($_POST["sup_min"]);
+    $cota_nor = stringFloat($_POST["cota_nor"]);
+    $volumen_nor = stringFloat($_POST["vol_nor"]);
+    $superficie_nor = stringFloat($_POST["sup_nor"]);
+    $cota_max = stringFloat($_POST["cota_max"]);
+    $volumen_max = stringFloat($_POST["vol_max"]);
+    $superficie_max = stringFloat($_POST["sup_max"]);
     $numero_presas = $_POST["numero_presas"];
     $tipo_presa = $_POST["tipo_presa"];
     $altura = $_POST["altura"];
@@ -480,9 +491,9 @@ if (isset($_POST["Update"])) {
 
                 for ($row = 2; $row <= $highestRow; $row++) {
                     $num++;
-                    $cota = number_format($sheet->getCell("A".$row)->getValue(), 3, '.', '');
-                    $area = $sheet->getCell("B".$row)->getValue();
-                    $capacidad = $sheet->getCell("C".$row)->getValue();
+                    $cota = number_format($sheet->getCell("A" . $row)->getValue(), 3, '.', '');
+                    $area = $sheet->getCell("B" . $row)->getValue();
+                    $capacidad = $sheet->getCell("C" . $row)->getValue();
                     $cota_embalse[$cota] = $area . "-" . $capacidad;
                 }
 

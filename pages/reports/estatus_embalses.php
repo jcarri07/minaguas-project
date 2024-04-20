@@ -75,7 +75,16 @@ $hidro = mysqli_query($conn, "SELECT COUNT(e.id_embalse),e.operador
                 GROUP BY e.operador
                 ORDER BY id_embalse ASC;");
 
+$queryOp =  mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
+$totalop = [];
+
+while ($op = mysqli_fetch_array($queryOp)) {
+  $totalop[$op["id_operador"]] = $op["operador"];
+}
+
 $embalses_variacion = [];
+$operadores = [];
+$countOp = [];
 
 while ($row = mysqli_fetch_array($condiciones_actuales1)) {
   $bat = new Batimetria($row["id_embalse"], $conn);
@@ -86,10 +95,18 @@ while ($row = mysqli_fetch_array($condiciones_actuales1)) {
   $variacion = $final - $inicial;
   $porcentaje = $inicial != 0 ? (100 * (($final - $inicial) / abs($inicial))) : 0;
 
-  $array = [$row["operador"], $row["nombre_embalse"], $variacion, $porcentaje];
+  if (!in_array($totalop[$row["operador"]], $operadores)) {
+    array_push($operadores, $totalop[$row["operador"]]);
+    $countOp[$totalop[$row["operador"]]] = 1;
+  } else {
+    $countOp[$totalop[$row["operador"]]] += 1;
+  }
+
+  $array = [$totalop[$row["operador"]], $row["nombre_embalse"], $variacion, $porcentaje];
   array_push($embalses_variacion, $array);
 }
 
+var_dump($embalses_variacion);
 
 $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 $volumen_primer_periodo = mysqli_fetch_all($condiciones_actuales1, MYSQLI_ASSOC);
@@ -1056,73 +1073,154 @@ if (contiene_subcadena($fullPath, "C:")) {
 
   <!-- PAGINA 9 -->
 
-  <div style="page-break-before: always;"></div>
-  <div class="header">
-    <hr style="top: 55px; color:#1B569D">
-    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-  </div>
+  <?php
+  $A_operador = 85;
+  $A_tabla = 130;
+  $incremento = 0;
+  $acumulado = 0;
+  $disponible = 24;
+  $inicial = true;
+  $tituloini = true;
+  ?>
 
-  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 500px;"><b>HIDROCAPITAL</b>
-  </div>
+  <?php foreach ($operadores as $operador) { ?>
 
-  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 85px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
-  </div>
 
-  <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px;">
+    <?php if ($inicial) { ?>
+      <div style="page-break-before: always;"></div>
+      <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+      </div>
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+      </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?></b></div>
+      <?php
+
+      if (($disponible - ($countOp[$operador] + 5)) > 5) {
+        $disponible -= ($countOp[$operador] + 5);
+        $acumulado += (150 + ($countOp[$operador] * 30));
+        $inicial = false;
+      } else {
+        $A_operador = 85;
+        $A_tabla = 130;
+        $incremento = 0;
+        $acumulado = 0;
+        $disponible = 24;
+        $inicial = true;
+      }
+    } else {
+
+      $incremento += $acumulado;
+      $acumulado = 0;
+      if ((($countOp[$operador] + 5)) > $disponible) {
+
+        $A_operador = 85;
+        $A_tabla = 130;
+        $incremento = 0;
+        $disponible = 24;
+
+        if (($disponible - ($countOp[$operador] + 5)) > 5) {
+          $disponible -= ($countOp[$operador] + 5);
+          $acumulado += (150 + ($countOp[$operador] * 30));
+          $inicial = false;
+        } else {
+          $A_operador = 85;
+          $A_tabla = 130;
+          $incremento = 0;
+          $acumulado = 0;
+          $disponible = 24;
+          $inicial = true;
+        }
+      ?>
+
+        <div style="page-break-before: always;"></div>
+        <div class="header">
+          <hr style="top: 55px; color:#1B569D">
+          <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+          <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+        <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+        </div>
+
+        <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?></b></div>
+      <?php } else {
+        $disponible -= ($countOp[$operador] + 5);
+        $acumulado += (150 + ($countOp[$operador] * 30));
+        $inicial = false; ?>
+
+        <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador + $incremento; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?></b>
+        </div>
+
+    <?php
+
+      }
+    } ?>
+
+
+
+
+
+    <!-- <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px;">
   </div>
 
   <div style="width: 520px; height: 320px; background-color: lightgray; position: absolute; margin-top: 120px; margin-left: 560px;">
-  </div>
+  </div> -->
 
-  <div style="position: absolute; margin-top: 430px; margin-left: 10px; width: 95%; height: 100px;">
-    <div style="position: absolute; font-size: 18px; text-align: right;"> <b>FECHA</b>
-      <table>
-        <tr>
-          <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">VAR. VOL. <br>(HM3)</th>
-          <th class="text-celd">% VAR. VOL.</th>
-        </tr>
-        <?php foreach ($embalses_variacion as $value) {
-          if (strtolower(trim($value[0])) == strtolower(trim("hidrocapital"))) {
-        ?>
-            <tr>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $value[2] ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $value[2] ?>%</td>
-            </tr>
-        <?php }
-        } ?>
-        <tr>
-          <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
-          <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
-          <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
-        </tr>
-      </table>
+    <div style="position: absolute; margin-top: <?php echo $A_tabla + $incremento; ?>px; margin-left: 10px; width: 95%; height: 100px;">
+      <div style="position: absolute; font-size: 18px; text-align: right;"> <b>FECHA</b>
+        <table>
+          <tr>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VAR. VOL. <br>(HM3)</th>
+            <th class="text-celd">% VAR. VOL.</th>
+          </tr>
+          <?php foreach ($embalses_variacion as $value) {
+            if (strtolower(trim($value[0])) == strtolower(trim($operador))) {
+          ?>
+              <tr>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $value[2] ?></td>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $value[2] ?>%</td>
+              </tr>
+          <?php }
+          } ?>
+          <tr>
+            <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
+            <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+            <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+          </tr>
+        </table>
 
+      </div>
+
+      <div style="position: absolute; margin-left: 550px; font-size: 18px; text-align: right;"><b>FECHA</b>
+        <table>
+          <tr>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VAR. VOL. <br>(HM3)</th>
+            <th class="text-celd">% VAR. VOL.</th>
+          </tr>
+          <tr>
+            <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+            <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+            <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+          <tr>
+            <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
+            <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+            <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
+          </tr>
+        </table>
+
+      </div>
     </div>
 
-    <div style="position: absolute; margin-left: 550px; font-size: 18px; text-align: right;"><b>FECHA</b>
-      <table>
-        <tr>
-          <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">VAR. VOL. <br>(HM3)</th>
-          <th class="text-celd">% VAR. VOL.</th>
-        </tr>
-        <tr>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-        </tr>
-        <tr>
-          <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
-          <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
-          <td class="text-celd" style="font-size: 16px;"><b>PRUEBA</b></td>
-        </tr>
-      </table>
+  <?php }
+  ?>
 
-    </div>
-  </div>
   <!-- PAGINA 10 -->
 
   <div style="page-break-before: always;"></div>
@@ -1515,7 +1613,7 @@ if (contiene_subcadena($fullPath, "C:")) {
   </div>
 
   <img style="width: 520px; height: 620px; background-color: lightgray;  position: absolute; margin-top: 100px; margin-left: 10px; text-align: right; font-size: 18px;" src="<?php echo $status_pie_2 ?>">
-  
+
 
   <div style="width: 520px; height: 320px; position: absolute; margin-top: 100px; margin-left: 550px;">
     <table>

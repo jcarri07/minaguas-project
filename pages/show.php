@@ -38,6 +38,16 @@ while ($row = mysqli_fetch_array($query)) {
   }
 }
 
+function stringFloat($num, $dec = 2)
+{
+  // return number_format(floatval(str_replace(',', '.', $num)), $dec, ',', '.');
+  // return floatval(str_replace('.', ',', $num));
+  // return $num;
+  $numero_limpio = str_replace('.', '', $num);
+  $numero_limpio = str_replace(',', '.', $numero_limpio);
+  $numero = floatval($numero_limpio);
+  return $numero;
+}
 
 closeConection($conn);
 ?>
@@ -526,9 +536,9 @@ closeConection($conn);
                 </div>
                 <div class="w-100" style="display: grid; grid-template-columns: 50% 50%; justify-items:center;">
                   <div class="w-100 text-center b-t b-l b-r" style="grid-column: span 2;"><?php echo $embalse->cotaMinima() ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format($embalse_datos["vol_min"], 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_min"]), 2, ".", "") ?></div>
                   <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->volumenMinimo(), 2, ".", "") ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format($embalse_datos["sup_min"], 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["sup_min"]), 2, ".", "") ?></div>
                   <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->superficieMinima(), 2, ".", "") ?></div>
                 </div>
               </div>
@@ -549,9 +559,9 @@ closeConection($conn);
                 </div>
                 <div class="w-100" style="display: grid; grid-template-columns: 50% 50%; justify-items:center;">
                   <div class="w-100 text-center b-t b-l b-r" style="grid-column: span 2;"><?php echo $embalse->cotaNormal() ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format($embalse_datos["vol_nor"], 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_nor"]), 2, ".", "") ?></div>
                   <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->volumenNormal(), 2, ".", "") ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format($embalse_datos["sup_nor"], 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["sup_nor"]), 2, ".", "") ?></div>
                   <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->superficieNormal(), 2, ".", "") ?></div>
                 </div>
               </div>
@@ -572,9 +582,9 @@ closeConection($conn);
                 </div>
                 <div class="w-100" style="display: grid; grid-template-columns: 50% 50%; justify-items:center;">
                   <div class="w-100 text-center b-t b-l b-r" style="grid-column: span 2;"><?php echo $embalse->cotaMaxima() ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format($embalse_datos["vol_max"], 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_max"]), 2, ".", "") ?></div>
                   <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->volumenMaximo(), 2, ".", "") ?></div>
-                  <div class="w-100 text-center b-t b-l b-r b-b"><?php echo number_format($embalse_datos["sup_max"], 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r b-b"><?php echo number_format(floatval($embalse_datos["sup_max"]), 2, ".", "") ?></div>
                   <div class="w-100 text-center b-t b-r b-b"><?php echo number_format($embalse->superficieMaxima(), 2, ".", "") ?></div>
                 </div>
               </div>
