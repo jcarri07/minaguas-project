@@ -1221,7 +1221,7 @@ if (contiene_subcadena($fullPath, "C:")) {
   <?php }
   ?>
 
-  <!-- PAGINA 10 -->
+  <!-- PAGINA 10
 
   <div style="page-break-before: always;"></div>
   <div class="header">
@@ -1265,7 +1265,7 @@ if (contiene_subcadena($fullPath, "C:")) {
     </div>
   </div>
 
-  <!-- PAGINA 11 -->
+  <!-- PAGINA 11 
 
   <div style="page-break-before: always;"></div>
   <div class="header">
@@ -1345,7 +1345,7 @@ if (contiene_subcadena($fullPath, "C:")) {
 
     </div>
   </div>
-  <!-- PAGINA 12 -->
+  <!-- PAGINA 12 
 
   <div style="page-break-before: always;"></div>
   <div class="header">
@@ -1409,7 +1409,7 @@ if (contiene_subcadena($fullPath, "C:")) {
 
     </div>
   </div>
-  <!-- PAGINA 12 -->
+  <!-- PAGINA 12 
 
   <div style="page-break-before: always;"></div>
   <div class="header">
@@ -1490,7 +1490,7 @@ if (contiene_subcadena($fullPath, "C:")) {
         </tr>
       </table>
     </div>
-  </div>
+  </div> -->
   <!-- PAGINA 13 -->
 
   <div style="page-break-before: always;"></div>
@@ -1503,7 +1503,7 @@ if (contiene_subcadena($fullPath, "C:")) {
   <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
   </div>
 
-  <div style="position: absolute; margin-top: 80px; margin-left: 10px; width: 95%; height: 100px;">
+  <div style="position: absolute; margin-top: 80px; margin-left: 30px; width: 95%; height: 100px;">
     <div style="position: absolute; margin-top: 30px;">
       <table>
         <tr>
