@@ -298,7 +298,7 @@ class Batimetria
         if ($this->vol_nor == "" || $this->vol_min == "") {
             return 0;
         } else {
-            $resultado = $this->vol_nor - $this->vol_min;
+            $resultado = floatval($this->vol_nor) - floatval($this->vol_min);
             return $resultado >= 0 ? $resultado : 0;
         }
     }

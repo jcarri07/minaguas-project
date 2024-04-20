@@ -78,6 +78,29 @@ function formatoNumero($valor)
 
   return $resultado;
 }
+
+
+function stringFloatttt($num, $dec = 2)
+{
+  // return number_format(floatval(str_replace(',', '.', $num)), $dec, ',', '.');
+  // return floatval(str_replace('.', ',', $num));
+  // return $num;
+  $numero_limpio = str_replace('.', '', $num);
+  $numero_limpio = str_replace(',', '.', $numero_limpio);
+  $numero = floatval($numero_limpio);
+  return number_format($numero, $dec, ",", ".");
+}
+
+function stringFloat($num, $dec = 2)
+{
+  // return number_format(floatval(str_replace(',', '.', $num)), $dec, ',', '.');
+  // return floatval(str_replace('.', ',', $num));
+  // return $num;
+  // $numero_limpio = str_replace('.', ',', $num);
+  // $numero_limpio = str_replace(',', '.', $numero_limpio);
+  $numero = floatval($num);
+  return number_format($numero, $dec, ",", ".");
+}
 ?>
 
 <link rel="stylesheet" href="./assets/css/nice-select2.css">
@@ -571,54 +594,56 @@ function formatoNumero($valor)
                 </div>
               </div>
 
+              <!--  -->
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_min">Cota mínima (m s.m.n.)</label>
-                  <input value="<?php echo $embalse["cota_min"]; ?>" type="text" class="form-control Vnumero" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
+                  <input value="<?php echo stringFloat($embalse["cota_min"]) ?>" type="text" class="form-control Vnumero" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_min">Volumen mínimo (hm³)</label>
-                  <input value="<?php echo $embalse["vol_min"]; ?>" type="text" class="form-control Vnumero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
+                  <input value="<?php echo stringFloat($embalse["vol_min"]) ?>" type="text" class="form-control Vnumero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_min">Superficie mínima (ha)</label>
-                  <input value="<?php echo $embalse["sup_min"]; ?>" type="text" class="form-control Vnumero" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
+                  <input value="<?php echo stringFloat($embalse["sup_min"]) ?>" type="text" class="form-control Vnumero" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_nor">Cota normal (m s.m.n.)</label>
-                  <input value="<?php echo $embalse["cota_nor"]; ?>" type="text" class="form-control Vnumero" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
+                  <input value="<?php echo stringFloat($embalse["cota_nor"]) ?>" type="text" class="form-control Vnumero" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                 </div>
                 <div class=" form-group">
                   <label for="vol_nor">Volumen normal (hm³)</label>
-                  <input value="<?php echo $embalse["vol_nor"]; ?>" type="text" class="form-control Vnumero" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
+                  <input value="<?php echo stringFloat($embalse["vol_nor"]) ?>" type="text" class="form-control Vnumero" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                 </div>
                 <div class=" form-group">
                   <label for="sup_nor">Superficie normal (ha)</label>
-                  <input value="<?php echo $embalse["sup_nor"]; ?>" type="text" class="form-control Vnumero" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
+                  <input value="<?php echo stringFloat($embalse["sup_nor"]) ?>" type="text" class="form-control Vnumero" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_max">Cota máxima (m s.m.n.)</label>
-                  <input value="<?php echo $embalse["cota_max"]; ?>" type="text" class="form-control Vnumero" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
+                  <input value="<?php echo stringFloat($embalse["cota_max"]) ?>" type="text" class="form-control Vnumero" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_max">Volumen máximo (hm³)</label>
-                  <input value="<?php echo $embalse["vol_max"]; ?>" type="text" class="form-control Vnumero" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
+                  <input value="<?php echo stringFloat($embalse["vol_max"]) ?>" type="text" class="form-control Vnumero" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_max">Superficie máxima (ha)</label>
-                  <input value="<?php echo $embalse["sup_max"]; ?>" type="text" class="form-control Vnumero" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
+                  <input value="<?php echo stringFloat($embalse["sup_max"]) ?>" type="text" class="form-control Vnumero" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
                 </div>
               </div>
+              <!--  -->
             </div>
 
             <?php
             $op = "";
             while ($operador = mysqli_fetch_array($queryOperador)) {
-              if ($operador['id_operador'] == $embalse["operador"]){
+              if ($operador['id_operador'] == $embalse["operador"]) {
                 $op = $operador["operador"];
                 break;
               }
@@ -627,7 +652,7 @@ function formatoNumero($valor)
 
             $reg = "";
             while ($region = mysqli_fetch_array($queryRegion)) {
-              if ($region['id_region'] == $embalse["region"]){
+              if ($region['id_region'] == $embalse["region"]) {
                 $reg = $region["region"];
                 break;
               }
@@ -730,7 +755,8 @@ function formatoNumero($valor)
             <div class="row">
               <!-- <div class="col-xl-3 col-lg-6 form-group">
                 <label for="operador">Operador</label>
-                <input value="<?php //echo $embalse["operador"]; ?>" type="text" class="form-control Vrequerido" id="operadorrr" name="operadorrr" placeholder="Ingrese el operador">
+                <input value="<?php //echo $embalse["operador"]; 
+                              ?>" type="text" class="form-control Vrequerido" id="operadorrr" name="operadorrr" placeholder="Ingrese el operador">
               </div> -->
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="autoridad">Autoridad responsable del embalse</label>
