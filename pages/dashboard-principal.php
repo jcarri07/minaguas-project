@@ -270,25 +270,25 @@ closeConection($conn);*/
       <div class="col-12 pt-2 bg-white rounded" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" id="container-div">
         <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pt-7 pb-7 mt-5 punteado" id="contain-charts">
           <div class="d-flex justify-content-center align-items-center rounded pb-4 ">
-            <div class="grafica">
-              <canvas id="grafica"></canvas>
+            <div class="grafica"  id="contenedor-1">
+            
             </div>
           </div>
           <div class="d-flex justify-content-center align-items-center pb-4 ">
-            <div class="grafica">
-              <canvas id="grafica3"></canvas>
+            <div class="grafica" id="contenedor-2">
+              
             </div>
           </div>
         </div>
         <div class="d-flex flex-row flex-wrap justify-content-around align-items-center gap-2 mt-5 mb-5 mb-4  punteado">
           <div class="d-flex justify-content-center align-items-center pb-4 " style="height: 350px; width: 350px;">
-            <div class="progress-bar grafica">
-              <progress value="75" min="0" max="100" style="visibility:hidden;height:0;width:0;">75%</progress>
+            <div class="" id="contenedor-3">
+              
             </div>
           </div>
           <div class="d-flex justify-content-center align-items-center rounded pb-4 ">
-            <div class="grafica" style="width: 350px; padding: 0; margin: 0;">
-              <canvas id="grafica2" style="width: 350px;"></canvas>
+            <div class="progress-bar grafica" style="width: 350px; padding: 0; margin: 0;" id="contenedor-4">
+              
             </div>
           </div>
         </div>
@@ -358,7 +358,7 @@ closeConection($conn);*/
       data: data,
     };
 
-    new Chart(graph, config);
+    // new Chart(graph, config);
   </script>
 
   <script>
@@ -379,7 +379,7 @@ closeConection($conn);*/
       type: 'bar',
       data: data,
     };
-    new Chart(graph2, config2);
+    // new Chart(graph2, config2);
   </script>
 
   <script>
@@ -429,7 +429,7 @@ closeConection($conn);*/
       data: data,
     };
 
-    new Chart(graph3, config3);
+    // new Chart(graph3, config3);
   </script>
 
   <div class="col-12 px-0 py-5" style="padding-left:20px;">
@@ -764,6 +764,7 @@ closeConection($conn);*/
       }
     }
   };
+  
   var ctx = document.getElementById('myChart').getContext('2d');
   window.myChart = new Chart(ctx, config);
 
@@ -786,9 +787,26 @@ closeConection($conn);*/
 
       }
     });
+    $.ajax({
+      url: 'php/Graficas/grafica_dashboard.php',
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        //$("#contenedor").html("");
+        $("#contenedor-1").html(response);
+
+      },
+      error: function(response) {
+
+        alertify.error("Error inesperado.");
+
+      }
+    });
 
 
   };
+  
   actual();
   $(document).ready(function() {
 
