@@ -268,16 +268,30 @@ closeConection($conn);*/
   <div class="container">
     <div class="row">
       <div class="col-12 pt-2 bg-white rounded" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" id="container-div">
+      <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 mb-2" id="contain-charts">
+          <label class="d-flex justify-content-center align-items-center rounded">
+          Volumen total Disponible
+          </label>
+          <label class="d-flex justify-content-center align-items-center" style="">
+          Hace 7 Dias
+          </label>
+          <label class="d-flex justify-content-center align-items-center" style="">
+          Hace 1 Año
+          </label>
+          <label class="d-flex justify-content-center align-items-center rounded">
+          Lo de miguel
+  </label>
+        </div>
         <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 mb-2" id="contain-charts">
           <div class="d-flex justify-content-center align-items-center rounded">
-            <div class="grafica" id="contenedor-1">
+          <div style="height:350px" id="contenedor-1">
             </div>
           </div>
-          <div class="d-flex justify-content-center align-items-center">
-            <div class="grafica" id="contenedor-2">
+          <div class="d-flex justify-content-center align-items-center" style="">
+            <div class="" id="contenedor-2">
             </div>
           </div>
-          <div class="d-flex justify-content-center align-items-center" style="height: 350px; width: 350px;">
+          <div class="d-flex justify-content-center align-items-center" style="">
             <div class="" id="contenedor-3">
             </div>
           </div>
