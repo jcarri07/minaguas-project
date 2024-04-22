@@ -153,11 +153,10 @@ if ($count >= 1) {
             $nor = $bati->volumenNormal();
             //$bati->getByCota($anio, $datos_embalses[$j]["cota_max"])[1]-$bati->getByCota($anio, $datos_embalses[$j]["cota_min"])[1];
             if (($x - $min) <= 0) {
-                $volumen_fechas[1] = 0;
                 $sum = 0;
             } else {
-                $volumen_fechas[1] += $x - $min;
                 $sum = $x - $min;
+                $volumen_fechas[1] += $sum;
             }
             if ($x == 0 || ((abs(($sum)) * (100 / ($nor - $min))) >= 0 && (abs(($sum)) * (100 / ($nor - $min))) < 30)) {
                 $lista[0]++;
@@ -189,16 +188,16 @@ if ($count >= 1) {
 
         $volumen_fechas[0] += $bati->volumenDisponible();
         if ($volumen_primer_periodo[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_primer_periodo[$j]["fecha"])), $volumen_primer_periodo[$j]["cota_actual"]);
+            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_primer_periodo[$j]["fecha"])), $volumen_primer_periodo[$j]["cota_actual"])-$min;
         }
         if ($volumen_segundo_periodo[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_segundo_periodo[$j]["fecha"])), $volumen_segundo_periodo[$j]["cota_actual"]);
+            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_segundo_periodo[$j]["fecha"])), $volumen_segundo_periodo[$j]["cota_actual"])-$min;
         }
         if ($volumen_quince[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[4] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_quince[$j]["fecha"])), $volumen_quince[$j]["cota_actual"]);
+            $volumen_fechas[4] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_quince[$j]["fecha"])), $volumen_quince[$j]["cota_actual"])-$min;
         }
         if ($volumen_siete[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[5] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_siete[$j]["fecha"])), $volumen_siete[$j]["cota_actual"]);
+            $volumen_fechas[5] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_siete[$j]["fecha"])), $volumen_siete[$j]["cota_actual"])-$min;
         }
         $j++;
     };
