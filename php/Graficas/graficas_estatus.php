@@ -188,16 +188,16 @@ if ($count >= 1) {
 
         $volumen_fechas[0] += $bati->volumenDisponible();
         if ($volumen_primer_periodo[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_primer_periodo[$j]["fecha"])), $volumen_primer_periodo[$j]["cota_actual"])-$min;
+            $volumen_fechas[2] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_primer_periodo[$j]["fecha"])), $volumen_primer_periodo[$j]["cota_actual"]));
         }
         if ($volumen_segundo_periodo[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_segundo_periodo[$j]["fecha"])), $volumen_segundo_periodo[$j]["cota_actual"])-$min;
+            $volumen_fechas[3] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_segundo_periodo[$j]["fecha"])), $volumen_segundo_periodo[$j]["cota_actual"]));
         }
         if ($volumen_quince[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[4] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_quince[$j]["fecha"])), $volumen_quince[$j]["cota_actual"])-$min;
+            $volumen_fechas[4] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_quince[$j]["fecha"])), $volumen_quince[$j]["cota_actual"]));
         }
         if ($volumen_siete[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[5] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_siete[$j]["fecha"])), $volumen_siete[$j]["cota_actual"])-$min;
+            $volumen_fechas[5] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_siete[$j]["fecha"])), $volumen_siete[$j]["cota_actual"]));
         }
         $j++;
     };
@@ -804,6 +804,8 @@ if ($count >= 1) {
             });
 
         });
+        console.log("<?php echo$volumen_fechas[1].', '.$volumen_fechas[2].', '.$volumen_fechas[3].', '.$volumen_fechas[4].', '.$volumen_fechas[5]?>");
+        // console.log("<?php echo$fechaFormateada2?>");
     </script>
 
 <?php };
