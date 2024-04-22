@@ -268,27 +268,21 @@ closeConection($conn);*/
   <div class="container">
     <div class="row">
       <div class="col-12 pt-2 bg-white rounded" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" id="container-div">
-        <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pt-7 pb-7 mt-5 punteado" id="contain-charts">
-          <div class="d-flex justify-content-center align-items-center rounded pb-4 ">
-            <div class="grafica"  id="contenedor-1">
-            
+        <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 mb-2" id="contain-charts">
+          <div class="d-flex justify-content-center align-items-center rounded">
+            <div class="grafica" id="contenedor-1">
             </div>
           </div>
-          <div class="d-flex justify-content-center align-items-center pb-4 ">
+          <div class="d-flex justify-content-center align-items-center">
             <div class="grafica" id="contenedor-2">
-              
             </div>
           </div>
-        </div>
-        <div class="d-flex flex-row flex-wrap justify-content-around align-items-center gap-2 mt-5 mb-5 mb-4  punteado">
-          <div class="d-flex justify-content-center align-items-center pb-4 " style="height: 350px; width: 350px;">
+          <div class="d-flex justify-content-center align-items-center" style="height: 350px; width: 350px;">
             <div class="" id="contenedor-3">
-              
             </div>
           </div>
-          <div class="d-flex justify-content-center align-items-center rounded pb-4 ">
+          <div class="d-flex justify-content-center align-items-center rounded">
             <div class="progress-bar grafica" style="width: 350px; padding: 0; margin: 0;" id="contenedor-4">
-              
             </div>
           </div>
         </div>
@@ -764,7 +758,7 @@ closeConection($conn);*/
       }
     }
   };
-  
+
   var ctx = document.getElementById('myChart').getContext('2d');
   window.myChart = new Chart(ctx, config);
 
@@ -806,7 +800,7 @@ closeConection($conn);*/
 
 
   };
-  
+
   actual();
   $(document).ready(function() {
 
