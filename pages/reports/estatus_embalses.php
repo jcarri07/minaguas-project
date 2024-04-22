@@ -973,37 +973,41 @@ if (contiene_subcadena($fullPath, "C:")) {
   <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo $status_barra_2 ?>">
 
   <div style="position: absolute; margin-top: 670px; margin-left: 50px; width: 95%; height: 100px;">
-    <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió <?php
-                                                                                                  if (abs(($volumenes[5] - $volumenes[2])) != 0) {
-                                                                                                    echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[5] - $volumenes[2])) * 100 / abs($volumenes[5] - $volumenes[2]), 2);
-                                                                                                  } else {
-                                                                                                    echo 0;
-                                                                                                  };
+    <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió
+        <?php
+        if (abs(($volumenes[5] - $volumenes[2])) != 0) {
+          echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[5] - $volumenes[2])) * 100 / abs($volumenes[5] - $volumenes[2]), 2);
+        } else {
+          echo 0;
+        };
 
-                                                                                                  ?>% comparado con la semana pasada y <br> <?php
-                                                                                                                                            if (abs(($volumenes[4] - $volumenes[2])) != 0) {
-                                                                                                                                              echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[4] - $volumenes[2])) * 100 / abs(($volumenes[4] - $volumenes[2])), 2);
-                                                                                                                                            } else {
-                                                                                                                                              echo 0;
-                                                                                                                                            };
+        ?>% comparado con la semana pasada y <br>
+        <?php
+        if (abs(($volumenes[4] - $volumenes[2])) != 0) {
+          echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[4] - $volumenes[2])) * 100 / abs(($volumenes[4] - $volumenes[2])), 2);
+        } else {
+          echo 0;
+        };
 
-                                                                                                                                            ?>% con respecto a hace 15 días)</b></div>
-    <div style="position: absolute; margin-left: 550px; font-size: 18px; color:red; text-align: center;"><b> (Varió <?php
+        ?>% con respecto a hace 15 días)</b></div>
+    <div style="position: absolute; margin-left: 550px; font-size: 18px; color:red; text-align: center;"><b> (Varió
+        <?php
 
-                                                                                                                    if (abs(($volumenes[5] - $volumenes[3])) != 0) {
-                                                                                                                      echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[5] - $volumenes[3])) * 100 / abs(($volumenes[5] - $volumenes[3])), 2);
-                                                                                                                    } else {
-                                                                                                                      echo 0;
-                                                                                                                    };
-                                                                                                                    ?>% comparado con la semana pasada y <br> <?php
-                                                                                                                                                              if (abs(($volumenes[4] - $volumenes[3])) != 0) {
-                                                                                                                                                                echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[4] - $volumenes[3])) * 100 / abs(($volumenes[4] - $volumenes[3])), 2);
-                                                                                                                                                              } else {
-                                                                                                                                                                echo 0;
-                                                                                                                                                              };
+        if (abs(($volumenes[5] - $volumenes[3])) != 0) {
+          echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[5] - $volumenes[3])) * 100 / abs(($volumenes[5] - $volumenes[3])), 2);
+        } else {
+          echo 0;
+        };
+        ?>% comparado con la semana pasada y <br>
+        <?php
+        if (abs(($volumenes[4] - $volumenes[3])) != 0) {
+          echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[4] - $volumenes[3])) * 100 / abs(($volumenes[4] - $volumenes[3])), 2);
+        } else {
+          echo 0;
+        };
 
 
-                                                                                                                                                              ?>% con respecto a hace 15 días)</b></div>
+        ?>% con respecto a hace 15 días)</b></div>
   </div>
 
   <!-- PAGINA 7 -->
@@ -1649,6 +1653,7 @@ if (contiene_subcadena($fullPath, "C:")) {
     <!-- <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?> OPERADOR</b></div> -->
 
 
+<<<<<<< HEAD
     <div style="position: absolute; margin-top: 120px; margin-left: 20px; font-size: 18px; text-align: right;"><b><?php echo $region ?></b>
       <table>
         <tr>
@@ -1673,6 +1678,107 @@ if (contiene_subcadena($fullPath, "C:")) {
         <?php }
         } ?>
       </table>
+=======
+  <div style="position: absolute; margin-top: 120px; margin-left: 20px; font-size: 18px; text-align: right;"><b>OPERADOR</b>
+    <table>
+      <tr>
+        <th class="celd-table">SIMBOLO</th>
+        <th class="celd-table">DESCRIPCION</th>
+        <th class="celd-table">EMBALSE</th>
+        <th class="celd-table">MESES DE <br>ABAST.</th>
+        <th class="celd-table">HIDROLÓGICA</th>
+      </tr>
+      <tr>
+        <td class="" style="font-size: 12px;">
+          <div style="background-color: orange; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+        </td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+      </tr>
+      <tr>
+        <td class="" style="font-size: 12px;">
+          <div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+        </td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+      </tr>
+      <tr>
+        <td class="" style="font-size: 12px;">
+          <div style="background-color: #88FE31; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+        </td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+      </tr>
+      <tr>
+        <td class="" style="font-size: 12px;">
+          <div style="background-color: green; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+        </td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+        <td class="" style="font-size: 12px;">PRUEBA</td>
+      </tr>
+
+    </table>
+
+
+    <div style="position: absolute; margin-left: 20px; font-size: 18px; text-align: right;">
+      <div><b>OPERADOR</b>
+        <table>
+          <tr>
+            <th class="celd-table">SIMBOLO</th>
+            <th class="celd-table">DESCRIPCION</th>
+            <th class="celd-table">EMBALSE</th>
+            <th class="celd-table">MESES DE <br>ABAST.</th>
+            <th class="celd-table">HIDROLÓGICA</th>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">
+              <div style="background-color: orange; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+            </td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">
+              <div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+            </td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">
+              <div style="background-color: #88FE31; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+            </td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">
+              <div style="background-color: green; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+            </td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+>>>>>>> 50ee5a626ec801a95f96eeca727c99552bb72c9e
 
 
       <div style="position: absolute; margin-left: 20px; font-size: 18px; text-align: right;">
@@ -1878,3 +1984,4 @@ if (contiene_subcadena($fullPath, "C:")) {
 </body>
 
 </html>
+<?php closeConection($conn); ?>

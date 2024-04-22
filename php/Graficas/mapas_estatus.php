@@ -477,5 +477,5 @@ $valores = json_encode($valores, true);
     });
     // });
 </script>
-
+<?php closeConection($conn);?>
 </html>
