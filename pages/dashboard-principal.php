@@ -242,6 +242,15 @@ closeConection($conn);*/
       .grafica {
         width: 280px !important;
       }
+
+      #contenedor-1 {
+        width: 250px;
+      }
+
+      #contenedor-4 {
+        width: 250px;
+        height: 250px;
+      }
     }
 
     @media (max-width: 400px) {
@@ -262,41 +271,60 @@ closeConection($conn);*/
     .grafica1 {
       width: 350px;
     }
+
+    .card-data {
+      height: 100px;
+      width: 200px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+
+    .shadow {
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
   </style>
 
 
   <div class="container">
     <div class="row">
-      <div class="col-12 pt-2 bg-white rounded" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" id="container-div">
-      <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 mb-2" id="contain-charts">
-          <label class="d-flex justify-content-center align-items-center rounded">
-          Volumen total Disponible
-          </label>
-          <label class="d-flex justify-content-center align-items-center" style="">
-          Hace 7 Dias
-          </label>
-          <label class="d-flex justify-content-center align-items-center" style="">
-          Hace 1 Año
-          </label>
-          <label class="d-flex justify-content-center align-items-center rounded">
-          Lo de miguel
-  </label>
-        </div>
-        <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 mb-2" id="contain-charts">
-          <div class="d-flex justify-content-center align-items-center rounded">
-          <div style="height:350px" id="contenedor-1">
+      <div class="col-12 pt-2 bg-white rounded shadow" id="container-div">
+        <div class=" d-flex flex-row flex-wrap justify-content-around align-items-center gap-2 mb-2" id="contain-charts">
+          <div class="d-flex flex-column justify-content-center align-items-center shadow rounded p-3 border">
+            <h4 class="d-flex justify-content-center align-items-center rounded">
+              Volumen total disponible
+            </h4>
+            <div class="d-flex justify-content-center align-items-center rounded">
+              <div style="height:350px" id="contenedor-1">
+              </div>
             </div>
           </div>
-          <div class="d-flex justify-content-center align-items-center" style="">
-            <div class="" id="contenedor-2">
+          <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border">
+            <h4 class="d-flex justify-content-center align-items-center">
+              Hace 7 Días
+            </h4>
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="" id="contenedor-2">
+              </div>
             </div>
           </div>
-          <div class="d-flex justify-content-center align-items-center" style="">
-            <div class="" id="contenedor-3">
+
+          <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border">
+            <h4 class="d-flex justify-content-center align-items-center">
+              Hace un año
+            </h4>
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="" id="contenedor-3">
+              </div>
             </div>
           </div>
-          <div class="d-flex justify-content-center align-items-center rounded">
-            <div class="progress-bar grafica" style="width: 350px; padding: 0; margin: 0;" id="contenedor-4">
+          <div class="d-flex flex-column shadow border rounded p-3">
+            <h4 class="d-flex justify-content-center align-items-center">
+              Lo de Miguel
+            </h4>
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="d-flex justify-content-center align-items-center rounded" id="contenedor-4">
+                <div class="progress-bar grafica" id="contenedor-4">
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -306,7 +334,7 @@ closeConection($conn);*/
 
   <div class="container">
     <div class="row">
-      <div class="col-12 pt-2 bg-white rounded mt-4" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" id="container-div">
+      <div class="col-12 pt-2 bg-white rounded mt-4 shadow" id="container-div">
         <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pb-6" id="contain-charts">
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 500px;">
             <h2>MAPA</h2>
