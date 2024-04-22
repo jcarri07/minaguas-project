@@ -81,16 +81,17 @@ if ($count >= 1) {
         }
         $volumen_fechas[0] += $bati->volumenDisponible();
         if ($volumen_primer_periodo[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_primer_periodo[$j]["fecha"])), $volumen_primer_periodo[$j]["cota_actual"]) - $min;
+            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_primer_periodo[$j]["fecha"])), $volumen_primer_periodo[$j]["cota_actual"]);
         }
         if ($volumen_segundo_periodo[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_segundo_periodo[$j]["fecha"])), $volumen_segundo_periodo[$j]["cota_actual"]) - $min;
+            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_segundo_periodo[$j]["fecha"])), $volumen_segundo_periodo[$j]["cota_actual"]);
         }
         $j++;
     };
 ?>
-
-    <canvas id="barra1" class="border border-radius-lg"></canvas>
+                
+                    <canvas id="barra1" class="border border-radius-lg"></canvas>
+            
 
     <script>
         $(document).ready(function() {
@@ -105,18 +106,21 @@ if ($count >= 1) {
                             color,
                             h
                         } = line;
-
+                        const fontSize = 10;
+                        const fontStyle = 'normal';
+                        const fontFamily = 'Arial';
+                        ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
                         ctx.beginPath();
                         ctx.lineWidth = 1;
                         ctx.moveTo(left, y.getPixelForValue(yvalue));
                         ctx.lineTo(right, y.getPixelForValue(yvalue));
                         ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?> + " %", right - 340, y.getPixelForValue(yvalue) + h);
+                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?> + "%", right - 125, y.getPixelForValue(yvalue) + h);
                         //ctx.stroke();
                     });
                     ctx.restore();
                 },
-                beforeDatasetsDraw: function(chart, args, plugins) {
+                afterDatasetsDraw: function(chart, args, plugins) {
                     const {
                         ctx,
                         scales: {
@@ -154,7 +158,6 @@ if ($count >= 1) {
                     ],
                 },
                 options: {
-                    animations: false,
                     responsive: true,
                     maintainAspectRatio: false,
                     interaction: {
@@ -162,7 +165,7 @@ if ($count >= 1) {
                         axis: 'x',
                     },
                     layout: {
-                        padding: 20,
+                        padding: 10,
                     },
                     plugins: {
                         legend: {
@@ -190,7 +193,7 @@ if ($count >= 1) {
                                 yvalue: <?php echo round($volumen_fechas[1], 2) ?>,
                                 cota: "",
                                 color: 'black',
-                                h: 0,
+                                h: -5,
                             }, ]
                         },
                     },
@@ -217,6 +220,7 @@ if ($count >= 1) {
                 },
                 plugins: [arbi],
             });
+        });
             $("#contenedor-2").html('<?php
                                         $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[1]);
                                         if ($valor >= 0) {
@@ -225,7 +229,7 @@ if ($count >= 1) {
                                         };
                                         if ($valor < 0) {
 
-                                            echo '<h2 class="row col-12 item-align-center"><div <div class="col-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="text-danger"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-3">' . round(abs($valor), 3) . '</span></h2>';
+                                            echo '<h2 class="row col-12 item-align-center"><div <div class="col-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-3">' . round(abs($valor), 3) . '</span></h2>';
                                         };
 
                                         ?>');
@@ -237,11 +241,11 @@ if ($count >= 1) {
                                         };
                                         if ($valor < 0) {
 
-                                            echo '<h2 class="row col-12 item-align-center"><div <div class="col-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="text-danger"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-3">' . round(abs($valor), 3) . '</span></h2>';
+                                            echo '<h2 class="row col-12 item-align-center"><div <div class="col-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-3">' . round(abs($valor), 3) . '</span></h2>';
                                         };
 
                                         ?>');
-        });
+        
     </script>
 <?php };
 closeConection($conn); ?>
