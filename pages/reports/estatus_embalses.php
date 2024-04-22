@@ -943,37 +943,41 @@ if (contiene_subcadena($fullPath, "C:")) {
   <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo $status_barra_2 ?>">
 
   <div style="position: absolute; margin-top: 670px; margin-left: 50px; width: 95%; height: 100px;">
-    <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió <?php
-                                                                                                  if (abs(($volumenes[5] - $volumenes[2])) != 0) {
-                                                                                                    echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[5] - $volumenes[2])) * 100 / abs($volumenes[5] - $volumenes[2]), 2);
-                                                                                                  } else {
-                                                                                                    echo 0;
-                                                                                                  };
+    <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió
+        <?php
+        if (abs(($volumenes[5] - $volumenes[2])) != 0) {
+          echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[5] - $volumenes[2])) * 100 / abs($volumenes[5] - $volumenes[2]), 2);
+        } else {
+          echo 0;
+        };
 
-                                                                                                  ?>% comparado con la semana pasada y <br> <?php
-                                                                                                                                            if (abs(($volumenes[4] - $volumenes[2])) != 0) {
-                                                                                                                                              echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[4] - $volumenes[2])) * 100 / abs(($volumenes[4] - $volumenes[2])), 2);
-                                                                                                                                            } else {
-                                                                                                                                              echo 0;
-                                                                                                                                            };
+        ?>% comparado con la semana pasada y <br>
+        <?php
+        if (abs(($volumenes[4] - $volumenes[2])) != 0) {
+          echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[4] - $volumenes[2])) * 100 / abs(($volumenes[4] - $volumenes[2])), 2);
+        } else {
+          echo 0;
+        };
 
-                                                                                                                                            ?>% con respecto a hace 15 días)</b></div>
-    <div style="position: absolute; margin-left: 550px; font-size: 18px; color:red; text-align: center;"><b> (Varió <?php
+        ?>% con respecto a hace 15 días)</b></div>
+    <div style="position: absolute; margin-left: 550px; font-size: 18px; color:red; text-align: center;"><b> (Varió
+        <?php
 
-                                                                                                                    if (abs(($volumenes[5] - $volumenes[3])) != 0) {
-                                                                                                                      echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[5] - $volumenes[3])) * 100 / abs(($volumenes[5] - $volumenes[3])), 2);
-                                                                                                                    } else {
-                                                                                                                      echo 0;
-                                                                                                                    };
-                                                                                                                    ?>% comparado con la semana pasada y <br> <?php
-                                                                                                                                                              if (abs(($volumenes[4] - $volumenes[3])) != 0) {
-                                                                                                                                                                echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[4] - $volumenes[3])) * 100 / abs(($volumenes[4] - $volumenes[3])), 2);
-                                                                                                                                                              } else {
-                                                                                                                                                                echo 0;
-                                                                                                                                                              };
+        if (abs(($volumenes[5] - $volumenes[3])) != 0) {
+          echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[5] - $volumenes[3])) * 100 / abs(($volumenes[5] - $volumenes[3])), 2);
+        } else {
+          echo 0;
+        };
+        ?>% comparado con la semana pasada y <br>
+        <?php
+        if (abs(($volumenes[4] - $volumenes[3])) != 0) {
+          echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[4] - $volumenes[3])) * 100 / abs(($volumenes[4] - $volumenes[3])), 2);
+        } else {
+          echo 0;
+        };
 
 
-                                                                                                                                                              ?>% con respecto a hace 15 días)</b></div>
+        ?>% con respecto a hace 15 días)</b></div>
   </div>
 
   <!-- PAGINA 7 -->
@@ -1665,57 +1669,57 @@ if (contiene_subcadena($fullPath, "C:")) {
 
     </table>
 
-    
+
     <div style="position: absolute; margin-left: 20px; font-size: 18px; text-align: right;">
       <div><b>OPERADOR</b>
         <table>
-        <tr>
-        <th class="celd-table">SIMBOLO</th>
-        <th class="celd-table">DESCRIPCION</th>
-        <th class="celd-table">EMBALSE</th>
-        <th class="celd-table">MESES DE <br>ABAST.</th>
-        <th class="celd-table">HIDROLÓGICA</th>
-      </tr>
-      <tr>
-        <td class="" style="font-size: 12px;">
-          <div style="background-color: orange; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
-        </td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-      </tr>
-      <tr>
-        <td class="" style="font-size: 12px;">
-          <div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
-        </td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-      </tr>
-      <tr>
-        <td class="" style="font-size: 12px;">
-          <div style="background-color: #88FE31; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
-        </td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-      </tr>
-      <tr>
-        <td class="" style="font-size: 12px;">
-          <div style="background-color: green; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
-        </td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-        <td class="" style="font-size: 12px;">PRUEBA</td>
-      </tr>
+          <tr>
+            <th class="celd-table">SIMBOLO</th>
+            <th class="celd-table">DESCRIPCION</th>
+            <th class="celd-table">EMBALSE</th>
+            <th class="celd-table">MESES DE <br>ABAST.</th>
+            <th class="celd-table">HIDROLÓGICA</th>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">
+              <div style="background-color: orange; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+            </td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">
+              <div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+            </td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">
+              <div style="background-color: #88FE31; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+            </td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size: 12px;">
+              <div style="background-color: green; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+            </td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+            <td class="" style="font-size: 12px;">PRUEBA</td>
+          </tr>
         </table>
       </div>
-      </div>
-      </div>
+    </div>
+  </div>
 
   <!-- PAGINA 16 -->
 
@@ -1740,9 +1744,15 @@ if (contiene_subcadena($fullPath, "C:")) {
 
         </tr>
         <tr>
-          <td class="text-celdas" style="font-size: 12px; width: 90px;"><div style="background-color: red; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div></td>
-          <td class="text-celdas" style="font-size: 12px; width: 90px;"><div style="background-color: orange; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div></td>
-          <td class="text-celdas" style="font-size: 12px; width: 90px;"><div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div></td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">
+            <div style="background-color: red; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+          </td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">
+            <div style="background-color: orange; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+          </td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">
+            <div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+          </td>
         </tr>
 
         <tr>
@@ -1782,36 +1792,37 @@ if (contiene_subcadena($fullPath, "C:")) {
   <div style="position: absolute; margin-top: 100px; margin-left: 10px; width: 95%; height: 100px;">
 
     <div style="position: absolute; text-align: center;">
-    <h3> Alerta <span style="color: red; border: 0.5px solid black;">Roja</span>  0 a 4 Meses</h3>
-    <img style="width: 450px; height: 520px; background-color: lightgray; margin-top: 0px; margin-left: 50px;" src="<?php echo $status_pie_2 ?>">
+      <h3> Alerta <span style="color: red; border: 0.5px solid black;">Roja</span> 0 a 4 Meses</h3>
+      <img style="width: 450px; height: 520px; background-color: lightgray; margin-top: 0px; margin-left: 50px;" src="<?php echo $status_pie_2 ?>">
     </div>
 
 
     <div style="position: absolute; margin-left: 550px; font-size: 18px; text-align: center; margin-top: 0px;">
-    <h3> 5 Meses  < Alerta <span style="color: orange; border: 0.5px solid black;">Naranja</span> <  8 Meses</h3>
+      <h3> 5 Meses < Alerta <span style="color: orange; border: 0.5px solid black;">Naranja</span>
+          < 8 Meses</h3>
 
-      <table>
-        <tr>
-          <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">MESES <br> DE <br> GARANTÍA</th>
-          <th class="text-celd">HIDROLÓGICA</th>
-        </tr>
-        <tr>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-        </tr>
-        <tr>
-          <td class="height: 20px; text-celd total" style="font-size: 12px;"><b>TOTAL</b></td>
-          <td class="text-celd total" style="font-size: 12px;"><b>PRUEBA</b></td>
-          <td class="" style="font-size: 12px;" rowspan="2"><b></b></td>
+            <table>
+              <tr>
+                <th class="text-celd">EMBALSE</th>
+                <th class="text-celd">MESES <br> DE <br> GARANTÍA</th>
+                <th class="text-celd">HIDROLÓGICA</th>
+              </tr>
+              <tr>
+                <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+                <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+                <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+              </tr>
+              <tr>
+                <td class="height: 20px; text-celd total" style="font-size: 12px;"><b>TOTAL</b></td>
+                <td class="text-celd total" style="font-size: 12px;"><b>PRUEBA</b></td>
+                <td class="" style="font-size: 12px;" rowspan="2"><b></b></td>
 
-       </tr>
-       <tr>
-          <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
-          <td class="text-celd total" style="font-size: 12px;"><b> % PRUEBA</b></td>
-       </tr>
-      </table>
+              </tr>
+              <tr>
+                <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
+                <td class="text-celd total" style="font-size: 12px;"><b> % PRUEBA</b></td>
+              </tr>
+            </table>
 
 
     </div>
@@ -1828,35 +1839,37 @@ if (contiene_subcadena($fullPath, "C:")) {
   <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 55px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
   </div>
 
-    <div style="position: absolute; margin-left: 280px; font-size: 18px; text-align: center; margin-top: 100px;">
-    <h3>9 Meses < Alerta <span style="color: #E0EC1A;">Amarilla</span> < 12 Meses</h3>
+  <div style="position: absolute; margin-left: 280px; font-size: 18px; text-align: center; margin-top: 100px;">
+    <h3>9 Meses < Alerta <span style="color: #E0EC1A;">Amarilla</span>
+        < 12 Meses</h3>
 
-      <table>
-        <tr>
-          <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">MESES <br> DE <br> GARANTÍA</th>
-          <th class="text-celd">HIDROLÓGICA</th>
-        </tr>
-        <tr>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-          <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
-        </tr>
-        <tr>
-          <td class="height: 20px; text-celd total" style="font-size: 12px;"><b>TOTAL</b></td>
-          <td class="text-celd total" style="font-size: 12px;"><b>PRUEBA</b></td>
-          <td class="" style="font-size: 12px;" rowspan="2"><b></b></td>
+          <table>
+            <tr>
+              <th class="text-celd">EMBALSE</th>
+              <th class="text-celd">MESES <br> DE <br> GARANTÍA</th>
+              <th class="text-celd">HIDROLÓGICA</th>
+            </tr>
+            <tr>
+              <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+              <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+              <td class="text-celd" style="font-size: 12px;">PRUEBA</td>
+            </tr>
+            <tr>
+              <td class="height: 20px; text-celd total" style="font-size: 12px;"><b>TOTAL</b></td>
+              <td class="text-celd total" style="font-size: 12px;"><b>PRUEBA</b></td>
+              <td class="" style="font-size: 12px;" rowspan="2"><b></b></td>
 
-       </tr>
-       <tr>
-          <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
-          <td class="text-celd total" style="font-size: 12px;"><b> % PRUEBA</b></td>
-       </tr>
-      </table>
+            </tr>
+            <tr>
+              <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
+              <td class="text-celd total" style="font-size: 12px;"><b> % PRUEBA</b></td>
+            </tr>
+          </table>
 
 
-    </div>
+  </div>
 
 </body>
 
 </html>
+<?php closeConection($conn); ?>
