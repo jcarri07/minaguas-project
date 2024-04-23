@@ -334,7 +334,8 @@ $j = 0;
 
                             // This more specific font property overrides the global property
                             font: {
-                                size: 18
+                                size: 18,
+                                family:'Arial',
                             },
 
                         }
@@ -344,7 +345,8 @@ $j = 0;
                         text: 'Control de nivel - <?php echo $embalse[0]['nombre_embalse']; ?>',
                         fullSize: true,
                         font: {
-                            size: 30
+                            size: 30,
+                            family:'Arial',
                         }
                     },
                     datalabels: {
@@ -353,7 +355,8 @@ $j = 0;
                         labels: {
                             title: {
                                 font: {
-                                    weight: 'bold'
+                                    weight: 'bold',
+                                    family:'Arial',
                                 }
                             },
                         },
@@ -367,13 +370,23 @@ $j = 0;
                                         if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo 'Semana ' . ($k + 1); ?>', <?php }
                                                                                                                 } ?>],
 
-                    },
+ticks: {
+                                font: {
+                                    size: 14,
+                                    family:'Arial',
+                                },
+                            },},
                     x2: {
                         labels: [<?php for ($k = $l; $k < ($t * $sem); $k++) {
                                         if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo $fsemanas[$k]['fechas']; ?>', <?php }
                                                                                                                     } ?>],
 
-                    },
+ticks: {
+                                font: {
+                                    size: 14,
+                                    family:'Arial',
+                                },
+                            },},
 
                     x3: {
                         border: {
@@ -386,7 +399,13 @@ $j = 0;
                                         if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo round($array2[$k] - $array1[$k], 2) . " Hm³"; ?>', <?php }
                                                                                                                                         } ?>],
 
-                    },
+ticks: {
+                                font: {
+                                    size: 14,
+                                    family:'Arial',
+                                    weight: 'bold',
+                                },
+                            },},
 
 
                     y: {
@@ -394,7 +413,9 @@ $j = 0;
                             display: true,
                             text: 'Volumen (Hm³)',
                             font: {
-                                size: 16
+                                size: 16,
+                                family:'Arial',
+                                weight: 'bold',
                             },
                         },
                         min: <?php if ($min < $embalse[0]["cota_min"]) {
@@ -416,7 +437,8 @@ $j = 0;
                         },
                         ticks: {
                             font: {
-                                size: 14
+                                size: 14,
+                                family:'Arial',
                             },
                         },
 
@@ -471,7 +493,7 @@ $j = 0;
                 ctx.moveTo(left, y.getPixelForValue(yvalue));
                 ctx.lineTo(right, y.getPixelForValue(yvalue));
                 ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                ctx.fillText(cota + ": " + yvalue + " (Hm³)", right - 200, y.getPixelForValue(yvalue) + h);
+                ctx.fillText(cota + ": " + yvalue + " (Hm³)", right*4.2/6, y.getPixelForValue(yvalue) + h);
                 ctx.stroke();
             });
 
@@ -631,7 +653,8 @@ $j = 0;
                     text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Año " . $anio; ?>',
                     fullSize: true,
                     font: {
-                        size: 30
+                        size: 30,
+                        family:'Arial',
                     }
                 },
 
@@ -643,7 +666,8 @@ $j = 0;
                         display: true,
                         text: '',
                         font: {
-                            size: 18
+                            size: 18,
+                            family:'Arial',
                         },
                     },
                     type: 'time',
@@ -664,7 +688,8 @@ $j = 0;
                             }).format(value);
                         },
                         font: {
-                            size: 10
+                            size: 18,
+                            family:'Arial',
                         },
                     },
                     grid: {
@@ -678,7 +703,9 @@ $j = 0;
                         display: true,
                         text: 'Volumen (Hm³)',
                         font: {
-                            size: 20
+                            size: 20,
+                            family:'Arial',
+                            weight: 'bold',
                         },
                     },
                     min: <?php if ($min < $embalse[0]["cota_min"]) {
@@ -696,7 +723,8 @@ $j = 0;
                     },
                     ticks: {
                         font: {
-                            size: 14
+                            size: 14,
+                            family:'Arial',
                         },
                     },
                 },
@@ -814,7 +842,8 @@ $j = 0;
                     text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . strftime('%B',  strtotime(date("Y-m-d"))); ?>',
                     fullSize: true,
                     font: {
-                        size: 30
+                        size: 30,
+                        family:'Arial',
                     }
                 },
 
@@ -848,7 +877,8 @@ $j = 0;
                             }).format(value);
                         },
                         font: {
-                            size: 12
+                            size: 12,
+                            family:'Arial',
                         },
                     },
                     grid: {
@@ -862,7 +892,9 @@ $j = 0;
                         display: true,
                         text: 'Volumen (Hm³)',
                         font: {
-                            size: 20
+                            size: 20,
+                            family:'Arial',
+                            weight: 'bold',
                         },
                     },
                     min: <?php $aux = $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
@@ -885,7 +917,8 @@ $j = 0;
                     },
                     ticks: {
                         font: {
-                            size: 14
+                            size: 14,
+                            family:'Arial',
                         },
                     },
                 },
@@ -1001,7 +1034,8 @@ $j = 0;
                     text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde " . $fechaFormateada2 . " al " . $fechaFormateada; ?>',
                     fullSize: true,
                     font: {
-                        size: 30
+                        size: 30,
+                        family:'Arial',
                     }
                 },
 
@@ -1013,7 +1047,8 @@ $j = 0;
                         display: true,
                         text: '',
                         font: {
-                            size: 18
+                            size: 18,
+                            family:'Arial',
                         },
                     },
                     type: 'time',
@@ -1036,7 +1071,8 @@ $j = 0;
                             }).format(value);
                         },
                         font: {
-                            size: 18
+                            size: 18,
+                            family:'Arial',
                         },
                     },
                     grid: {
@@ -1050,7 +1086,9 @@ $j = 0;
                         display: true,
                         text: 'Volumen (Hm³)',
                         font: {
-                            size: 20
+                            size: 20,
+                            family:'Arial',
+                            weight: 'bold',
                         },
                     },
                     min: <?php if ($min < $embalse[0]["cota_min"]) {
@@ -1068,7 +1106,8 @@ $j = 0;
                     },
                     ticks: {
                         font: {
-                            size: 14
+                            size: 14,
+                            family:'Arial',
                         },
                     },
                 },

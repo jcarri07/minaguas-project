@@ -297,12 +297,12 @@ closeConection($conn);*/
               Volumen total disponible
             </h4>
             <div class="d-flex justify-content-center align-items-center rounded">
-              <div style="height:350px" id="contenedor-1">
+              <div style="height:380px" id="contenedor-1">
               </div>
             </div>
           </div>
-          <div class="d-flex flex-column gap-4 p-7 justify-content-center align-items-center shadow rounded" id="container-cards" style="width: 350px;">
-            <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border">
+          <div class="d-flex flex-column gap-4 p-2 justify-content-center align-items-center shadow border rounded" id="container-cards" style="width: 350px; height:450px;">
+            <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border" style="width:100%; height:100%;">
               <h4 class="d-flex justify-content-center align-items-center">
                 Hace 7 Días
               </h4>
@@ -311,7 +311,7 @@ closeConection($conn);*/
                 </div>
               </div>
             </div>
-            <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border">
+            <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border" style="width:100%; height:100%;">
               <h4 class="d-flex justify-content-center align-items-center">
                 Hace un año
               </h4>
@@ -321,13 +321,16 @@ closeConection($conn);*/
               </div>
             </div>
           </div>
-          <div class="d-flex flex-column shadow border rounded p-3">
-            <h4 class="d-flex justify-content-center align-items-center">
-              Lo de Miguel
-            </h4>
+          <div class="d-flex flex-column shadow border rounded p-3" style="min-height: 420px;">
+            <h6 class="d-flex justify-content-center align-items-center" id="title-4" style="margin-top: -15px; margin-bottom: -3px;">
+              <!--Lo de Miguel-->
+            </h6>
             <div class="d-flex justify-content-center align-items-center">
-              <div class="d-flex justify-content-center align-items-center rounded" id="">
+              <div class="d-flex flex-column justify-content-center align-items-center rounded" id="">
                 <div class="" id="contenedor-4">
+                </div>
+                <div id="leyenda-4" class="pt-2 w-100">
+                  
                 </div>
               </div>
             </div>
@@ -349,131 +352,7 @@ closeConection($conn);*/
     </div>
   </div>
 
-  <style>
-    .progress-bar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      color: gray;
-      font-size: 30px;
-      font-weight: bold;
-      background:
-        radial-gradient(closest-side, white 79%, transparent 80% 100%),
-        conic-gradient(gray 75%, lightblue 0);
-    }
-
-    .progress-bar::before {
-      content: "75%";
-    }
-
-    .punteado {
-      border-style: dashed;
-      border-width: 4px;
-      border-color: gray 0.7;
-      background-color: cc3366;
-      font-family: verdana, arial;
-      font-size: 10pt;
-    }
-  </style>
-
-  <script>
-    const labels = ['Enero', 'Febrero', 'Marzo', 'Abril']
-    const colors = ['rgb(69,177,223)', 'rgb(99,201,122)', 'rgb(203,82,82)', 'rgb(229,224,88)'];
-
-    const graph = document.querySelector("#grafica2");
-
-    const data = {
-      labels: labels,
-      datasets: [{
-        data: [1, 2, 3, 4],
-        backgroundColor: colors
-      }]
-    };
-
-    const config = {
-      type: 'pie',
-      data: data,
-    };
-
-    // new Chart(graph, config);
-  </script>
-
-  <script>
-    const labels2 = ['Enero', 'Febrero', 'Marzo', 'Abril']
-
-    const graph2 = document.querySelector("#grafica3");
-
-    const data2 = {
-      labels: labels,
-      datasets: [{
-        label: "Ejemplo 1",
-        data: [1, 2, 3, 4],
-        backgroundColor: 'rgba(9, 129, 176, 0.2)'
-      }]
-    };
-
-    const config2 = {
-      type: 'bar',
-      data: data,
-    };
-    // new Chart(graph2, config2);
-  </script>
-
-  <script>
-    const labels3 = ['Enero', 'Febrero', 'Marzo', 'Abril']
-
-    const dataset1 = {
-      label: "Dataset 1",
-      data: [10, 55, 60, 120],
-      borderColor: 'rgba(248, 37, 37, 0.8)',
-      fill: false,
-      tension: 0.1
-    };
-
-    const dataset2 = {
-      label: "Dataset 2",
-      data: [5, 44, 55, 100],
-      borderColor: 'rgba(69, 248, 84, 0.8)',
-      fill: false,
-      tension: 0.1
-    };
-
-    const dataset3 = {
-      label: "Dataset 3",
-      data: [20, 40, 55, 120],
-      borderColor: 'rgba(69, 140, 248, 0.8)',
-      fill: false,
-      tension: 0.1
-    };
-
-    const dataset4 = {
-      label: "Dataset 4",
-      data: [18, 40, 20, 100],
-      borderColor: 'rgba(245, 40, 145, 0.8)',
-      fill: false,
-      tension: 0.1
-    };
-
-    const graph3 = document.querySelector("#grafica");
-
-    const data3 = {
-      labels: labels,
-      datasets: [dataset1, dataset2, dataset3, dataset4]
-    };
-
-    const config3 = {
-      type: 'line',
-      data: data,
-    };
-
-    // new Chart(graph3, config3);
-  </script>
-
-  <div class="col-12 px-0 py-5" style="padding-left:20px;">
+  <div class="container py-3 px-2" style="padding-left:20px;">
     <div class="card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;">
       <div class="card-header pb-0">
         <h6 class="mb-0">Embalses</h6>
@@ -508,7 +387,7 @@ closeConection($conn);*/
             </div>
           </div>
           <div class="table-responsive col-12 h-90 h-sm-90">
-            <div id="cont" class="h-100" style="width:1530px !important;"></div>
+            <div id="cont" class="h-100" style="min-width:1000px !important;"></div>
           </div>
         </div>
       </div>
@@ -807,10 +686,10 @@ closeConection($conn);*/
   };
 
   var ctx = document.getElementById('myChart').getContext('2d');
-  window.myChart = new Chart(ctx, config);
+  
 
   function actual() {
-
+    $("#contenedor-1").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
 
     $.ajax({
       url: 'php/Graficas/grafica_volumen_actual.php',
@@ -869,71 +748,71 @@ closeConection($conn);*/
 
     cargarGrafico();
 
-    $.ajax({
-      url: './php/obtener_datos_embalses.php?id=inicial',
-      type: 'GET',
-      dataType: 'json',
-      success: function(datos) {
-        datos_inicial = datos[0];
-        if (window.myChart) {
-          window.myChart.destroy();
-        }
+    // $.ajax({
+    //   url: './php/obtener_datos_embalses.php?id=inicial',
+    //   type: 'GET',
+    //   dataType: 'json',
+    //   success: function(datos) {
+    //     datos_inicial = datos[0];
+    //     if (window.myChart) {
+    //       window.myChart.destroy();
+    //     }
 
-        var datasets = [];
-        var data = [];
-        console.log('Los datos:', datos_inicial);
-        $("#embalseSelect").val(datos[2]);
+    //     var datasets = [];
+    //     var data = [];
+    //     console.log('Los datos:', datos_inicial);
+    //     $("#embalseSelect").val(datos[2]);
 
-        for (var mes = 1; mes <= 12; mes++) {
-          data.push(Math.round(datos_inicial[mes] || 0));
-        }
-        datasets.push({
-          label: datos[1],
-          data: data,
-          backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)',
-          borderColor: 'white',
-          borderWidth: 1
-        });
-        var configuration = {
-          type: 'bar',
-          data: {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            datasets: datasets
-          },
-          options: {
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                labels: {
+    //     for (var mes = 1; mes <= 12; mes++) {
+    //       data.push(Math.round(datos_inicial[mes] || 0));
+    //     }
+    //     datasets.push({
+    //       label: datos[1],
+    //       data: data,
+    //       backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)',
+    //       borderColor: 'white',
+    //       borderWidth: 1
+    //     });
+    //     var configuration = {
+    //       type: 'bar',
+    //       data: {
+    //         labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    //         datasets: datasets
+    //       },
+    //       options: {
+    //         maintainAspectRatio: false,
+    //         plugins: {
+    //           legend: {
+    //             labels: {
 
-                  // This more specific font property overrides the global property
-                  font: {
-                    size: 20
-                  },
+    //               // This more specific font property overrides the global property
+    //               font: {
+    //                 size: 20
+    //               },
 
-                }
-              },
-            },
-            scales: {
-              y: {
-                title: {
-                  display: true,
-                  text: 'Cantidad de Reportes'
-                },
-                beginAtZero: true,
-                precision: 0
-              }
-            }
-          }
-        };
+    //             }
+    //           },
+    //         },
+    //         scales: {
+    //           y: {
+    //             title: {
+    //               display: true,
+    //               text: 'Cantidad de Reportes'
+    //             },
+    //             beginAtZero: true,
+    //             precision: 0
+    //           }
+    //         }
+    //       }
+    //     };
 
-        var ctx = document.getElementById('myChart').getContext('2d');
-        window.myChart = new Chart(ctx, configuration);
-      },
-      error: function(error) {
-        console.error('Error:', error);
-      }
-    });
+    //     var ctx = document.getElementById('myChart').getContext('2d');
+    //     window.myChart = new Chart(ctx, configuration);
+    //   },
+    //   error: function(error) {
+    //     console.error('Error:', error);
+    //   }
+    // });
 
   });
 

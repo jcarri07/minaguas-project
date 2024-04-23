@@ -106,7 +106,7 @@ if ($count >= 1) {
                             color,
                             h
                         } = line;
-                        const fontSize = 10;
+                        const fontSize = 14;
                         const fontStyle = 'normal';
                         const fontFamily = 'Arial';
                         ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
@@ -115,7 +115,7 @@ if ($count >= 1) {
                         ctx.moveTo(left, y.getPixelForValue(yvalue));
                         ctx.lineTo(right, y.getPixelForValue(yvalue));
                         ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?> + "%", right*1.87/3, y.getPixelForValue(yvalue) + h);
+                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?> + "%", right*1.65/3, y.getPixelForValue(yvalue) + h);
                         //ctx.stroke();
                     });
                     ctx.restore();
@@ -153,13 +153,14 @@ if ($count >= 1) {
                             label:"Dato",
                             data:[{x:"",y:' . round($volumen_fechas[0], 2) . '},{x:"",y:' . round($volumen_fechas[1], 2) . '}';
 
-                        echo "],backgroundColor:['#dae8f6','#2e75b6'],borderColor:'#2e75b6',borderWidth:2},";
+                        echo "],backgroundColor:['#9fe3a3','#2e75b6'],borderColor:'#2e75b6',borderWidth:2},";
                         ?>
                     ],
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    
                     interaction: {
                         intersect: true,
                         axis: 'x',
@@ -175,7 +176,7 @@ if ($count >= 1) {
 
                                 // This more specific font property overrides the global property
                                 font: {
-                                    weight: 'bold',
+                                    
                                     size: 12,
                                 },
                             }
@@ -185,7 +186,7 @@ if ($count >= 1) {
                             text: 'Embalse',
                             fullSize: true,
                             font: {
-                                size: 30
+                                size: 20
                             }
                         },
                         arbitra: {
@@ -201,7 +202,7 @@ if ($count >= 1) {
                         x: {
                             ticks: {
                                 font: {
-                                    weight: 'bold',
+                                    
                                     size: 10,
                                 },
                             },
@@ -211,10 +212,19 @@ if ($count >= 1) {
                                 display: true,
                                 text: 'Volumen (Hm³)',
                                 font: {
+                                    
+                                    size: 12,
+                                    family:'Arial',
                                     weight: 'bold',
-                                    size: 14,
                                 },
+
                             },
+                            ticks:{
+                                    font:{
+                                        size:12,
+                                        family:'Arial',
+                                    },
+                                },
                         },
                     },
                 },
@@ -225,11 +235,11 @@ if ($count >= 1) {
                                         $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[1]);
                                         if ($valor >= 0) {
 
-                                            echo '<h2 class="row col-12 align-items-center"><div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important"><path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h2>';
+                                            echo '<h1 class="row col-12 align-items-center"><div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important"><path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h1>';
                                         };
                                         if ($valor < 0) {
 
-                                            echo '<h2 class="row col-12 align-items-center"><div <div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h2>';
+                                            echo '<h1 class="row col-12 align-items-center"><div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h1>';
                                         };
 
                                         ?>');
@@ -237,11 +247,11 @@ if ($count >= 1) {
                                         $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[1]);
                                         if ($valor >= 0) {
 
-                                            echo '<h2 class="row col-12 align-items-center"><div <div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important"><path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h2>';
+                                            echo '<h1 class="row col-12 align-items-center"><div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important"><path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h1>';
                                         };
                                         if ($valor < 0) {
 
-                                            echo '<h2 class="row col-12 align-items-center"><div <div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h2>';
+                                            echo '<h1 class="row col-12 align-items-center"><div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h1>';
                                         };
 
                                         ?>');

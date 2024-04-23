@@ -248,8 +248,8 @@ if ($count >= 1) {
         <div>
 
             <div style="width:550px !important; height:450px;position:absolute; top:-100%;"><canvas id="chart" class="border border-radius-lg"></canvas></div>
-            <div style="width:500px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra1" class="border border-radius-lg"></canvas></div>
-            <div style="width:500px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra2" class="border border-radius-lg"></canvas></div>
+            <div style="width:450px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra1" class="border border-radius-lg"></canvas></div>
+            <div style="width:450px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra2" class="border border-radius-lg"></canvas></div>
             <div style="width:520px !important; height:620px;position:absolute; top:-100%;"><canvas id="abastecimiento" class="border border-radius-lg"></canvas></div>
 
         </div>
@@ -336,6 +336,7 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 12,
+                                family:'Arial',
                             },
 
                         }
@@ -361,8 +362,10 @@ if ($count >= 1) {
                         labels: {
                             title: {
                                 font: {
-                                    weight: 'bold'
-                                }
+                                    weight: 'bold',
+                                    family:'Arial',
+                                },
+                                color:'#000000',
                             },
                         },
                     }
@@ -453,7 +456,8 @@ if ($count >= 1) {
                         labels: {
                             title: {
                                 font: {
-                                    weight: 'bold'
+                                    weight: 'bold',
+                                    family:'Arial',
                                 }
                             },
                         },
@@ -468,6 +472,7 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 10,
+                                family:'Arial',
                             },
                         },
                     },
@@ -479,6 +484,13 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 14,
+                                family:'Arial',
+                            },
+                        },
+                        ticks:{
+                            font:{
+                                size:12,
+                                family:'Arial',
                             },
                         },
                     },
@@ -570,7 +582,8 @@ if ($count >= 1) {
                         labels: {
                             title: {
                                 font: {
-                                    weight: 'bold'
+                                    weight: 'bold',
+                                    family:'Arial',
                                 }
                             },
                         },
@@ -585,6 +598,7 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 10,
+                                family:'Arial',
                             },
                         },
                     },
@@ -596,6 +610,13 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 14,
+                                family:'Arial',
+                            },
+                        },
+                        ticks:{
+                            font:{
+                                size:12,
+                                family:'Arial',
                             },
                         },
                     },
@@ -673,6 +694,7 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 12,
+                                family:'Arial',
                             },
 
                         }
@@ -699,8 +721,9 @@ if ($count >= 1) {
                             title: {
                                 font: {
                                     size:20,
-                                    weight: 'bold'
-                                }
+                                    family:'Arial',
+                                    weight:'bold',
+                                },color:'#000000',
                             },
                         },
                     }

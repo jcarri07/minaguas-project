@@ -56,7 +56,7 @@ $count = mysqli_num_rows($re);
                         </div>
                     </div>
                 </div>
-                <div class="table-responsive col-12" style="height:640px;"><div id="contenedor" class="" style="height:600px;width:1530px"><canvas id="chart" class="border border-radius-lg"></canvas></div></div>
+                <div class="table-responsive col-12" style="height:640px;"><div id="contenedor" class="" style="height:600px;min-width:1000px"><canvas id="chart" class="border border-radius-lg"></canvas></div></div>
                 <div class="col-12">
                     <div id="" class="row align-items-center">
 

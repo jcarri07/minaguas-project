@@ -150,7 +150,7 @@ if ($count >= 1) {
                     ctx.moveTo(left, y.getPixelForValue(yvalue));
                     ctx.lineTo(right, y.getPixelForValue(yvalue));
                     ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                    ctx.fillText(cota + ": " + yvalue + " (Hm³)", right - 200, y.getPixelForValue(yvalue) + h);
+                    ctx.fillText(cota + ": " + yvalue + " (Hm³)", right*4.2/6, y.getPixelForValue(yvalue) + h);
                     ctx.stroke();
                 });
 
@@ -328,7 +328,7 @@ if ($count >= 1) {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
                                     cota: "Volumen minimo",
                                     color: 'black',
-                                    h: 15,
+                                    h: -10,
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
@@ -341,7 +341,7 @@ if ($count >= 1) {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
                                     cota: "Volumen maximo",
                                     color: 'black',
-                                    h: -15,
+                                    h: -5,
                                 }
                                 // Agrega más líneas según sea necesario
                             ]
@@ -374,7 +374,8 @@ if ($count >= 1) {
                                 display: true,
                                 text: 'Año <?php echo date('Y'); ?>',
                                 font: {
-                                    size: 18
+                                    size: 18,
+                                    family:'Arial',
                                 },
                             },
                             type: 'time',
@@ -395,7 +396,8 @@ if ($count >= 1) {
                                     }).format(value);
                                 },
                                 font: {
-                                    size: 18
+                                    size: 18,
+                                    family:'Arial',
                                 },
                             },
                             grid: {
@@ -409,7 +411,8 @@ if ($count >= 1) {
                                 display: true,
                                 text: 'Volumen (Hm³)',
                                 font: {
-                                    size: 20
+                                    size: 20,
+                                    family:'Arial',
                                 },
                             },
                             min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
@@ -432,7 +435,8 @@ if ($count >= 1) {
                             },
                             ticks: {
                                 font: {
-                                    size: 14
+                                    size: 14,
+                                    family:'Arial',
                                 },
                             },
                         },
@@ -545,7 +549,7 @@ if ($count >= 1) {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
                                     cota: "Volumen minimo",
                                     color: 'black',
-                                    h: 15,
+                                    h: -10,
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
@@ -558,7 +562,7 @@ if ($count >= 1) {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
                                     cota: "Volumen maximo",
                                     color: 'black',
-                                    h: -15,
+                                    h: -5,
                                 }
                                 // Agrega más líneas según sea necesario
                             ]
@@ -591,7 +595,8 @@ if ($count >= 1) {
                                 display: true,
                                 text: ' <?php echo date('M Y'); ?>',
                                 font: {
-                                    size: 18
+                                    size: 18,
+                                    family:'Arial',
                                 },
                             },
                             type: 'time',
@@ -613,7 +618,8 @@ if ($count >= 1) {
                                     }).format(value);
                                 },
                                 font: {
-                                    size: 18
+                                    size: 18,
+                                    family:'Arial',
                                 },
                             },
                             grid: {
@@ -627,7 +633,8 @@ if ($count >= 1) {
                                 display: true,
                                 text: 'Volumen (Hm³)',
                                 font: {
-                                    size: 20
+                                    size: 20,
+                                    family:'Arial',
                                 },
                             },
                             min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
@@ -650,7 +657,8 @@ if ($count >= 1) {
                             },
                             ticks: {
                                 font: {
-                                    size: 14
+                                    size: 14,
+                                    family:'Arial',
                                 },
                             },
                         },
@@ -764,7 +772,7 @@ if ($count >= 1) {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
                                     cota: "Volumen minimo",
                                     color: 'black',
-                                    h: 15,
+                                    h: -10,
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
@@ -777,7 +785,7 @@ if ($count >= 1) {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
                                     cota: "Volumen maximo",
                                     color: 'black',
-                                    h: -15,
+                                    h: -5,
                                 }
                                 // Agrega más líneas según sea necesario
                             ]
@@ -808,7 +816,8 @@ if ($count >= 1) {
                                 display: true,
                                 text: 'Semana <?php echo date("W", strtotime($fechasSemana[0])) . " " . strftime('del mes de %B', DateTime::createFromFormat("Y-m-d", end($fechasSemana))->getTimestamp()); ?>',
                                 font: {
-                                    size: 16
+                                    size: 16,
+                                    family:'Arial',
                                 },
                             },
                             label: 'Año',
@@ -829,7 +838,8 @@ if ($count >= 1) {
                                     }).format(value);
                                 },
                                 font: {
-                                    size: 14
+                                    size: 14,
+                                    family:'Arial',
                                 },
                             },
                             grid: {
@@ -842,7 +852,8 @@ if ($count >= 1) {
                                 display: true,
                                 text: 'Volumen (Hm³)',
                                 font: {
-                                    size: 20
+                                    size: 20,
+                                    family:'Arial',
                                 },
                             },
                             min: <?php $aux = $bati->getByCota($año, $embalses[$t]["cota_min"])[1];
@@ -865,7 +876,8 @@ if ($count >= 1) {
                             },
                             ticks: {
                                 font: {
-                                    size: 14
+                                    size: 14,
+                                    family:'Arial',
                                 },
                             },
                         },

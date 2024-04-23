@@ -97,7 +97,7 @@ ORDER BY d.fecha ASC;";
                             ctx.moveTo(left, y.getPixelForValue(yvalue));
                             ctx.lineTo(right, y.getPixelForValue(yvalue));
                             ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                            ctx.fillText(cota + ": " + yvalue + " (Hm³)", right - 250, y.getPixelForValue(yvalue) + h);
+                            ctx.fillText(cota + ": " + yvalue + " (Hm³)", right*4.2/6, y.getPixelForValue(yvalue) + h);
                             ctx.stroke();
                         });
 
@@ -221,7 +221,8 @@ ORDER BY d.fecha ASC;";
 
                                     // This more specific font property overrides the global property
                                     font: {
-                                        size: 18
+                                        size: 18,
+                                        family:'Arial',
                                     },
 
                                 }
@@ -264,7 +265,8 @@ ORDER BY d.fecha ASC;";
                                         }).format(value);
                                     },
                                     font: {
-                                        size: 18
+                                        size: 18,
+                                        family:'Arial',
                                     },
                                 },
                                 grid: {
@@ -278,7 +280,9 @@ ORDER BY d.fecha ASC;";
                                     display: true,
                                     text: 'Volumen (Hm³)',
                                     font: {
-                                        size: 16
+                                        size: 16,
+                                        family:'Arial',
+                                        weight: 'bold',
                                     },
                                 },
                                 min: <?php if ($min < $embalses[0]["cota_min"]) {
@@ -300,7 +304,8 @@ ORDER BY d.fecha ASC;";
                                 },
                                 ticks: {
                                     font: {
-                                        size: 14
+                                        size: 14,
+                                        family:'Arial',
                                     },
                                 },
 
@@ -458,7 +463,8 @@ ORDER BY d.fecha ASC;";
 
                                     // This more specific font property overrides the global property
                                     font: {
-                                        size: 18
+                                        size: 18,
+                                        family:'Arial',
                                     },
 
                                 }
@@ -501,7 +507,8 @@ ORDER BY d.fecha ASC;";
                                         }).format(value);
                                     },
                                     font: {
-                                        size: 18
+                                        size: 18,
+                                        family:'Arial',
                                     },
                                 },
                                 grid: {
@@ -515,7 +522,9 @@ ORDER BY d.fecha ASC;";
                                     display: true,
                                     text: 'Volumen (Hm³)',
                                     font: {
-                                        size: 16
+                                        size: 16,
+                                        family:'Arial',
+                                        weight: 'bold',
                                     },
                                 },
                                 min: <?php if ($min < $embalses[0]["cota_min"]) {
@@ -537,7 +546,8 @@ ORDER BY d.fecha ASC;";
                                 },
                                 ticks: {
                                     font: {
-                                        size: 14
+                                        size: 14,
+                                        family:'Arial',
                                     },
                                 },
 
