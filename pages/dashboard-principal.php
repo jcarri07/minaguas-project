@@ -251,6 +251,11 @@ closeConection($conn);*/
         width: 250px;
         height: 250px;
       }
+
+      #container-cards {
+        padding: 0;
+        width: 280px !important;
+      }
     }
 
     @media (max-width: 400px) {
@@ -275,7 +280,6 @@ closeConection($conn);*/
     .card-data {
       height: 100px;
       width: 200px;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 
     .shadow {
@@ -297,22 +301,23 @@ closeConection($conn);*/
               </div>
             </div>
           </div>
-          <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border">
-            <h4 class="d-flex justify-content-center align-items-center">
-              Hace 7 Días
-            </h4>
-            <div class="d-flex justify-content-center align-items-center">
-              <div class="" id="contenedor-2">
+          <div class="d-flex flex-column gap-4 p-7 justify-content-center align-items-center shadow rounded" id="container-cards" style="width: 350px;">
+            <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border">
+              <h4 class="d-flex justify-content-center align-items-center">
+                Hace 7 Días
+              </h4>
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="" id="contenedor-2">
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border">
-            <h4 class="d-flex justify-content-center align-items-center">
-              Hace un año
-            </h4>
-            <div class="d-flex justify-content-center align-items-center">
-              <div class="" id="contenedor-3">
+            <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border">
+              <h4 class="d-flex justify-content-center align-items-center">
+                Hace un año
+              </h4>
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="" id="contenedor-3">
+                </div>
               </div>
             </div>
           </div>
