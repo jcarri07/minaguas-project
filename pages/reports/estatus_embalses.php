@@ -98,7 +98,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales1)) {
   // $fecha = date($row['fecha']);
   $anio = date("Y", strtotime($row['fecha']));
   $final = $bat->volumenActualDisponible();
-  $inicial = $bat->volumenDisponibleByCota($anio, $row["cota_actual"])[1];
+  $inicial = $bat->volumenDisponibleByCota($anio, $row["cota_actual"]);
   $variacion = $final - $inicial;
   $porcentaje = $inicial != 0 ? (100 * (($final - $inicial) / abs($inicial))) : 0;
 
