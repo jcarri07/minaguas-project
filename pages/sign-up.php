@@ -1,3 +1,14 @@
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+};
+if (isset($_SESSION["Id_usuario"])) {
+
+  print "<script>window.location='../main.php';</script>";
+}
+
+date_default_timezone_set("America/Caracas");
+?>
 <!--
 =========================================================
 * Argon Dashboard 2 - v2.0.4
@@ -12,25 +23,10 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
+
 <!DOCTYPE html>
 <html lang="en">
-<?php
-if (!isset($_SESSION)) {
-  session_start();
-  if (isset($_SESSION["id_usuario"])) {
 
-    print "<script>window.location='home/dashboard.php';</script>";
-  }
-} else {
-  if (isset($_SESSION["id_usuario"])) {
-
-    print "<script>window.location='home/dashboard.php';</script>";
-  }
-}
-
-
-date_default_timezone_set("America/Caracas");
-?>
 
 <head>
   <meta charset="utf-8" />
@@ -46,8 +42,8 @@ date_default_timezone_set("America/Caracas");
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../assets/js/fontawesome/42d5adcbca.js"></script>
+  <script src="../assets/js/sweetalerts.js"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
@@ -104,7 +100,7 @@ date_default_timezone_set("America/Caracas");
   <!-- End Navbar -->
   <main class="main-content mt-0 h-75">
 
-    <section class="row" style="">
+    <section class="row">
       <div class="col-12 d-flex justify-content-center d-none d-sm-flex" style="height: 120px; background-color:#0081d5;">
         <img src="../assets/img/mina.png" class="col-xxl-8 col-xl-9 col-lg-10 col-md-12 col-sm-12 col-xs-12" style="background-position: center;object-fit:cover;">
       </div>
@@ -133,21 +129,21 @@ date_default_timezone_set("America/Caracas");
                       </div>
                       <div class="row ">
                         <div class="mb-3 col-6">
-                          <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" name="telefono" required>
+                          <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="telefono" required>
                         </div>
                         <div class="mb-3 col-6">
                           <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula" required>
                         </div>
                       </div>
-                      <div class="mb-3">
+                      <!--div class="mb-3">
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
-                      </div>
+                      </div-->
                       <div class="row ">
                         <div class="mb-3 col-6">
                           <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
                         </div>
                         <div class="mb-3 col-6">
-                          <input type="text" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
+                          <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
                         </div>
 
                       </div>
@@ -162,7 +158,7 @@ date_default_timezone_set("America/Caracas");
                         <a href="sign-in.php"><button type="submit" class="btn btn-primary w-100 my-4 mb-2">Crear Usuario</button></a>
                       </div>
                       <div class="text-center">
-                        <p class="text-sm mt-3 mb-0">Ya tienes una Cuenta? <a href="../sign-in.php" class="text-primary font-weight-bolder">Iniciar Sesion</a></p>
+                        <p class="text-sm mt-3 mb-0">Ya tienes una Cuenta? <a href="../index.php" class="text-primary font-weight-bolder">Iniciar Sesion</a></p>
                       </div>
                     </form>
                   </div>
@@ -174,20 +170,20 @@ date_default_timezone_set("America/Caracas");
             <div class="col-xl-6 col-lg-6 col-md-9 col-sm-8 col-sx-5 d-flex flex-column mx-lg-0 justify-content-center">
               <div class="m-3 border-radius-lg d-flex flex-column justify-content-center px-lg-2">
                 <!--span class="mask bg-gradient-primary opacity-6" style="background-size: cover;"></span-->
-                
-                  <img src="../assets/img/computadora.png" class="px-lg-4 px-xl-6" style="object-fit:cover;">
-                
-                <p class="text-white position-relative text-left px-lg-3 mt-4">Es un proceso sencillo, solo debe llenar las casillas con sus datos y podrá disponer de una cuenta para ilgresar al sistema.</p>
+
+                <img src="../assets/img/computadora.png" class="px-lg-4 px-xl-6" style="object-fit:cover;">
+
+                <p class="text-white position-relative text-left px-lg-3 mt-4">Es un proceso sencillo, solo debe llenar las casillas con sus datos y podrá disponer de una cuenta para ingresar al sistema.</p>
                 <div class="row" style="padding-left: 27px;">
                   <div class="row col-12">
                     <div class="col-1" style="height: 20px;padding:1px;">
-                      <img src="../assets/img/icons/seguridad.png" class="icon-xxs" >
+                      <img src="../assets/img/icons/seguridad.png" class="icon-xxs">
                     </div>
                     <p class="col-11" style="padding-left: 0;">Seguridad y Eficiencia</p>
                   </div>
-                  <div class="row col-12" >
-                  <div class="col-1" style="height: 20px;padding:1px;">
-                      <img src="../assets/img/icons/rapidez.png" class="icon-xxs" >
+                  <div class="row col-12">
+                    <div class="col-1" style="height: 20px;padding:1px;">
+                      <img src="../assets/img/icons/rapidez.png" class="icon-xxs">
                     </div>
                     <p class="col-11" style="padding-left: 0;">Rapidez y efectividad</p>
                   </div>
@@ -208,7 +204,7 @@ date_default_timezone_set("America/Caracas");
   </main>
 
   <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-  <footer class="footer " >
+  <footer class="footer ">
     <div class="container pb-4">
       <!--div class="row">
         <div class="col-lg-8 mb-4 mx-auto text-center">
@@ -254,7 +250,7 @@ date_default_timezone_set("America/Caracas");
           <p class="mb-0" style="color: white;">
             Copyright © <script>
               document.write(new Date().getFullYear())
-            </script> Desarrolládo por la Dirección de Investigación eh Innovación Espacia.
+            </script> Desarrolládo por la Dirección de Investigación eh Innovación - ABAE.
           </p>
         </div>
       </div>
@@ -281,144 +277,137 @@ date_default_timezone_set("America/Caracas");
     $(document).ready(function() {
 
       $("#form").submit(function(e) {
-        e.preventDefault();
+          e.preventDefault();
 
-        if ($("[name='nombres']").prop("value").split(' ').filter(function(n) {
-            return n != ''
-          }).length != 2) {
-          Swal.fire({
-            icon: 'warning',
-            title: 'Ingrese sus 2 Nombres',
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#01a9ac',
-          });
-        } else {
-          if ($("[name='apellidos']").prop("value").split(' ').filter(function(n) {
+          /*if ($("[name='nombres']").prop("value").split(' ').filter(function(n) {
               return n != ''
             }).length != 2) {
             Swal.fire({
               icon: 'warning',
-              title: 'Ingrese sus 2 Apellidos',
+              title: 'Ingrese sus 2 Nombres',
               confirmButtonText: 'Aceptar',
               confirmButtonColor: '#01a9ac',
             });
           } else {
-            if ($("[name='password']").prop("value") == $("[name='confirmar']").prop("value")) {
-              var values = new FormData();
-              Swal.fire({
-                icon: 'warning',
-                title: 'Ingrese sus 2 Nombres',
-                text: $("[name='nombres']").prop("value").split(' ').filter(function(n) {
-                  return n != ''
-                }).length,
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#01a9ac',
-              });
-              values.append("nombre", $("[name='nombres']").prop("value"));
-              values.append("apellido", $("[name='apellidos']").prop("value"));
-              values.append("telefono", $("[name='telefono']").prop("value"));
-              values.append("cedula", $("[name='cedula']").prop("value"));
-              values.append("email", $("[name='email']").prop("value"));
-              values.append("usuario", $("[name='usuario']").prop("value"));
-              values.append("pass", $("[name='password']").prop("value"));
-              console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+            if ($("[name='apellidos']").prop("value").split(' ').filter(function(n) {
                 return n != ''
-              }).length);
-
-              $.ajax({
-                url: '../php/login/nuevo-usuario.php',
-                type: 'POST',
-                data: values,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-
-                  switch (response) {
-                    case "si":
-                      Swal.fire({
-                        icon: 'success',
-                        title: 'Usuario Registrado',
-                        showConfirmButton: false,
-                        timer: 2000
-                      }); //CUANDO REGISTRA EXITOSAMENTE
-                      setTimeout(function() {
-                        window.location = "../sign-in.php";
-                      }, 2000);
-                      break;
-                    case "no":
-                      Swal.fire({
-                        icon: 'error',
-                        title: 'Usuario no Registrado',
-                        text: 'Problema de comunicación con el servidor, intente más tarde',
-                        confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#01a9ac',
-                      }); //ERROR AL REGISTRAR
-                      console.log("no");
-                      break;
-                    case "existe_cedula":
-                      Swal.fire({
-                        icon: 'warning',
-                        title: 'Usuario no Registrado',
-                        text: 'El número de cédula ya existe',
-                        confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#01a9ac',
-                      }); //CEDULA EXISTENTE
-                      console.log("no ced");
-                      break;
-                    case "existe_usuario":
-                      Swal.fire({
-                        icon: 'warning',
-                        title: 'Usuario no Registrado',
-                        text: 'El nombre de usuario ya existe',
-                        confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#01a9ac',
-                      }); //NOMBRE DE USUARIO EXISTENTE
-                      console.log("no usu");
-                      break;
-                    default:
-                      Swal.fire({
-                        icon: 'error',
-                        title: 'Error Inesperado',
-                        text: toString(response),
-                        confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#01a9ac',
-                      });
-                      console.log(response);
-                      break;
-                  }
-
-                },
-                error: function(response) {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Error Inesperado',
-                    text: toString(response),
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#01a9ac',
-                  });
-                  console.log("err2");
-                }
-              });
-            } else {
+              }).length != 2) {
               Swal.fire({
                 icon: 'warning',
-                text: 'Las contraseñas no coinciden',
+                title: 'Ingrese sus 2 Apellidos',
                 confirmButtonText: 'Aceptar',
                 confirmButtonColor: '#01a9ac',
               });
-            }
+            } else {*/
+          if ($("[name='password']").prop("value") == $("[name='confirmar']").prop("value")) {
+            var values = new FormData();
+
+            values.append("nombre", $("[name='nombres']").prop("value"));
+            values.append("apellido", $("[name='apellidos']").prop("value"));
+            values.append("telefono", $("[name='telefono']").prop("value"));
+            values.append("cedula", $("[name='cedula']").prop("value"));
+            values.append("email", $("[name='email']").prop("value"));
+            //values.append("usuario", $("[name='usuario']").prop("value"));
+            values.append("pass", $("[name='password']").prop("value"));
+            console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+              return n != ''
+            }).length);
+
+            $.ajax({
+              url: '../php/login/nuevo-usuario.php',
+              type: 'POST',
+              data: values,
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function(response) {
+
+                switch (response) {
+                  case "si":
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Usuario Registrado',
+                      showConfirmButton: false,
+                      timer: 2000
+                    }); //CUANDO REGISTRA EXITOSAMENTE
+                    setTimeout(function() {
+                      window.location = "../index.php";
+                    }, 2000);
+                    break;
+                  case "no":
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Usuario no Registrado',
+                      text: 'Problema de comunicación con el servidor, intente más tarde',
+                      confirmButtonText: 'Aceptar',
+                      confirmButtonColor: '#01a9ac',
+                    }); //ERROR AL REGISTRAR
+                    console.log("no");
+                    break;
+                  case "existe_cedula":
+                    Swal.fire({
+                      icon: 'warning',
+                      title: 'Usuario no Registrado',
+                      text: 'El número de cédula ya existe',
+                      confirmButtonText: 'Aceptar',
+                      confirmButtonColor: '#01a9ac',
+                    }); //CEDULA EXISTENTE
+                    console.log("no ced");
+                    break;
+                  case "existe_usuario":
+                    Swal.fire({
+                      icon: 'warning',
+                      title: 'Usuario no Registrado',
+                      text: 'El nombre de usuario ya existe',
+                      confirmButtonText: 'Aceptar',
+                      confirmButtonColor: '#01a9ac',
+                    }); //NOMBRE DE USUARIO EXISTENTE
+                    console.log("no usu");
+                    break;
+                  default:
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Error Inesperado',
+                      text: toString(response),
+                      confirmButtonText: 'Aceptar',
+                      confirmButtonColor: '#01a9ac',
+                    });
+                    console.log(response);
+                    break;
+                }
+
+              },
+              error: function(response) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error Inesperado',
+                  text: toString(response),
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                });
+                console.log("err2");
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: 'warning',
+              text: 'Las contraseñas no coinciden',
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#01a9ac',
+            });
           }
         }
 
 
-      });
+
+        /*}}*/
+      );
     });
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+  <!--script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script-->
 </body>
 
 </html>

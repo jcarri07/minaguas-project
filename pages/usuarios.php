@@ -1,714 +1,723 @@
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
+<?php include "php/Usuario/Lista_usuario.php";
+$options_extraccion = '<option value="">Seleccione</option>';
+$options_extraccion .= '<option value="Riego">Riego</option>';
+$options_extraccion .= '<option value="Hidroelectricidad">Hidroelectricidad</option>';
+$options_extraccion .= '<option value="Consumo Humano">Consumo Humano</option>';
+$options_extraccion .= '<option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>';
+$options_extraccion .= '<option value="Recreación">Recreación</option>';
+?>
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
 
-=========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/logos/cropped-mminaguas.webp">
-  <title>
-    Minaguas
-  </title>
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-</head>
-
-<body class="g-sidenav-show   bg-gray-100">
-  <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <?php include './sidebar.php'; ?>
-  <main class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
-      <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Tables</li>
-          </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Tables</h6>
-        </nav>
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Type here...">
-            </div>
+<!-- Modal-New -->
+<div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true">
+  <div class="modal-dialog modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+          <div class="card-header pb-0 text-left">
+            <h3 class="font-weight-bolder text-primary text-gradient">Nuevo Usuario</h3>
+            <!--<p class="mb-0">Enter your email and password to register</p>-->
           </div>
-          <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
-              </a>
-            </li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
+          <div class="card-body pb-3">
+            <form id="form" role="form">
+              <div class="mb-3">
+                <label>Nombre(s)</label>
+                <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" required>
+              </div>
+              <div class="mb-3">
+                <label>Apellido(s)</label>
+                <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" required>
+              </div>
+              <div class="mb-3">
+                <label>Correo</label>
+                <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required>
+              </div>
+              <div class="row ">
+                <div class="mb-3 col-6">
+                  <label>Telefono</label>
+                  <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" name="telefono" required>
                 </div>
-              </a>
-            </li>
-            <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0">
-                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
-              </a>
-              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New message</span> from Laur
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          13 minutes ago
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New album</span> by Travis Scott
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          1 day
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                          <title>credit-card</title>
-                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                              <g transform="translate(1716.000000, 291.000000)">
-                                <g transform="translate(453.000000, 454.000000)">
-                                  <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                                  <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                                </g>
-                              </g>
-                            </g>
-                          </g>
-                        </svg>
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          Payment successfully completed
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          2 days
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- End Navbar -->
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>Authors table</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
-                      <th class="text-secondary opacity-7"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">John Michael</h6>
-                            <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                        <p class="text-xs text-secondary mb-0">Organization</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user2">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                            <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">11/01/19</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user3">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                            <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Executive</p>
-                        <p class="text-xs text-secondary mb-0">Projects</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">19/09/17</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user4">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Michael Levi</h6>
-                            <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">24/12/08</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user5">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Richard Gran</h6>
-                            <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                        <p class="text-xs text-secondary mb-0">Executive</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">04/10/21</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user6">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                            <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programtor</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="mb-3 col-6">
+                  <label>Cedula</label>
+                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula" required>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>Projects table</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center justify-content-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Budget</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Completion</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm rounded-circle me-2" alt="spotify">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Spotify</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">60%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-invision.svg" class="avatar avatar-sm rounded-circle me-2" alt="invision">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Invision</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$5,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-jira.svg" class="avatar avatar-sm rounded-circle me-2" alt="jira">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Jira</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$3,400</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">30%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="30" style="width: 30%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-slack.svg" class="avatar avatar-sm rounded-circle me-2" alt="slack">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Slack</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$1,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">0%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-webdev.svg" class="avatar avatar-sm rounded-circle me-2" alt="webdev">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Webdev</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$14,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">80%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80" style="width: 80%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm rounded-circle me-2" alt="xd">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Adobe XD</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,300</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <label>Contraseña</label>
+              <!--div class="mb-3">
+                        <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
+                      </div-->
+              <div class="row ">
+                <div class="mb-3 col-6">
+                  <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
+                </div>
+                <div class="mb-3 col-6">
+                  <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
+                </div>
+
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
+
+              <!--div class="form-check form-check-info text-start">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">
+                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                  </label>
+                </div-->
+              <div class="text-center">
+                <a href="sign-in.php"><button type="submit" class="btn btn-primary w-100 my-4 mb-2">Crear Usuario</button></a>
               </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                </li>
-              </ul>
-            </div>
+            </form>
           </div>
-        </div>
-      </footer> -->
-    </div>
-  </main>
-  <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="fa fa-cog py-2"> </i>
-    </a>
-    <div class="card shadow-lg">
-      <div class="card-header pb-0 pt-3 ">
-        <div class="float-start">
-          <h5 class="mt-3 mb-0">Argon Configurator</h5>
-          <p>See our dashboard options.</p>
-        </div>
-        <div class="float-end mt-4">
-          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-            <i class="fa fa-close"></i>
-          </button>
-        </div>
-        <!-- End Toggle Button -->
-      </div>
-      <hr class="horizontal dark my-1">
-      <div class="card-body pt-sm-3 pt-0 overflow-auto">
-        <!-- Sidebar Backgrounds -->
-        <div>
-          <h6 class="mb-0">Sidebar Colors</h6>
-        </div>
-        <a href="javascript:void(0)" class="switch-trigger background-color">
-          <div class="badge-colors my-2 text-start">
-            <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
+          <div class="card-footer text-center pt-0 px-sm-4 px-1">
+            <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
           </div>
-        </a>
-        <!-- Sidenav Type -->
-        <div class="mt-3">
-          <h6 class="mb-0">Sidenav Type</h6>
-          <p class="text-sm">Choose between 2 different sidenav types.</p>
-        </div>
-        <div class="d-flex">
-          <button class="btn bg-gradient-primary w-100 px-3 mb-2 active me-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
-          <button class="btn bg-gradient-primary w-100 px-3 mb-2" data-class="bg-default" onclick="sidebarType(this)">Dark</button>
-        </div>
-        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-        <!-- Navbar Fixed -->
-        <div class="d-flex my-3">
-          <h6 class="mb-0">Navbar Fixed</h6>
-          <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
-          </div>
-        </div>
-        <hr class="horizontal dark my-sm-4">
-        <div class="mt-2 mb-5 d-flex">
-          <h6 class="mb-0">Light / Dark</h6>
-          <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
-          </div>
-        </div>
-        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/argon-dashboard">Free Download</a>
-        <a class="btn btn-outline-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard">View documentation</a>
-        <div class="w-100 text-center">
-          <a class="github-button" href="https://github.com/creativetimofficial/argon-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/argon-dashboard on GitHub">Star</a>
-          <h6 class="mt-3">Thank you for sharing!</h6>
-          <a href="https://twitter.com/intent/tweet?text=Check%20Argon%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fargon-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-          </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/argon-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-          </a>
         </div>
       </div>
     </div>
   </div>
-  <!--   Core JS Files   -->
-  <script>
-    // Función para manejar el evento de clic en el botón
-    function toggleClass() {
-      var body = document.body;
-      body.classList.toggle('g-sidenav-pinned');
-    }
+</div>
+<!-- Modal-Edit -->
+<div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
+  <div class="modal-dialog modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+          <div class="card-header pb-0 text-left">
+            <h3 class="font-weight-bolder text-primary text-gradient">Editar</h3>
+            <!--<p class="mb-0">Enter your email and password to register</p>-->
+          </div>
+          <div class="card-body pb-3">
+            <form id="form2" role="form">
+              <div class="mb-2">
+                <label>Nombre(s)</label>
+                <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="Enombres" required>
+              </div>
+              <div class="mb-2">
+                <label>Apellido(s)</label>
+                <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="Eapellidos" required>
+              </div>
+              <div class="mb-2">
+                <label>Correo</label>
+                <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="Eemail" required>
+              </div>
+              <div class="row ">
+                <div class="mb-2 col-6">
+                  <label>Telefono</label>
+                  <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" name="Etelefono" required>
+                </div>
+                <div class="mb-2 col-6">
+                  <label>Cedula</label>
+                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="Ecedula" required>
+                </div>
 
-    // Obtener el botón y agregar un event listener
-    var toggleButton = document.getElementById('iconNavbarSidenav');
-    toggleButton.addEventListener('click', toggleClass);
-  </script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
+              </div>
+              <div class="">
+                <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="Ecedula2" hidden>
+              </div>
+              <!--div class="mb-3">
+                        <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
+                      </div-->
+
+              <div class="mb-2">
+                <label>Contraseña</label>
+                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" required>
+              </div>
+              <!--div class="mb-3 col-6">
+                  <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="Econfirmar" required>
+                </div-->
+
+
+              <!--div class="form-check form-check-info text-start">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">
+                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                  </label>
+                </div-->
+              <div class="text-center">
+                <a href="sign-in.php"><button type="submit" class="btn btn-primary w-100 my-4 mb-2">Guardar cambios</button></a>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-center pt-0 px-sm-4 px-1">
+            <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal-historial -->
+<div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+          <div class="card-header pb-0 text-left">
+            <h3 class="font-weight-bolder text-primary text-gradient">Historial de Reportes</h3>
+            <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+          </div>
+          <div class="card-body pb-3" id="body-details">
+
+          </div>
+          <div class="card-footer text-center pt-0 px-sm-4 px-1">
+            <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal-historial-detalles -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+          <div class="card-header pb-0 text-left">
+            <h3 class="font-weight-bolder text-primary text-gradient title"></h3>
+            <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+            <!--<p class="mb-0">Enter your email and password to register</p>-->
+          </div>
+          <div class="card-body pb-3">
+            <form role="form text-left" id="form3">
+              <?php
+              if (date("H:i") . ":00" > "10:00:00") {
+              ?>
+                <h6 class="text-red text-center text-retraso">Estás retrasado al enviar el reporte</h6>
+              <?php
+              }
+              ?>
+              <div class="row">
+                <div class="col">
+                  <label>Fecha</label>
+                  <div class="input-group mb-3">
+                    <input type="date" class="form-control" name="fecha" id="fecha" value="<?php echo date("Y-m-d"); ?>" disabled required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Hora</label>
+                  <div class="input-group mb-3">
+                    <input type="time" class="form-control" name="hora" id="hora" value="<?php echo date("H:i") . ":00"; ?>" disabled required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Cota</label>
+                  <div class="input-group mb-3">
+                    <input type="number" step="0.00001" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
+                  </div>
+                </div>
+              </div>
+
+              <h6 class="mt-2">Extracción</h6>
+              <div id="box-extraccion">
+                <div class="row">
+                  <div class="col">
+                    <label>Tipo</label>
+                    <div class="input-group mb-3">
+                      <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_1" required>
+                        <?php echo $options_extraccion; ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label>Valor</label>
+                    <div class="input-group mb-3">
+                      <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor de la Extracción" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 text-center" style="margin-top: 12px;">
+                  <button class="btn btn-success btn-add-extraccion" id="addRows" type="button">Añadir Otra Extracción</button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 loaderParent">
+                  <div class="loader">
+                  </div>
+                  Por favor, espere
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0 btn-submit">Guardar</button>
+                <button type="button" class="btn btn-secondary btn-rounded mt-4 mb-0 btn-edit" data-bs-dismiss="modal" style="display: none;">Cerrar</button>
+                <!--<button type="button" class="btn bg-gradient-primary btn-rounded mt-4 mb-0 btn-edit" style="display: none;">Editar</button>-->
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-center pt-0 px-sm-4 px-1">
+            <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    iniciarTabla('table-user');
+    /*   $('#table-user').DataTable({
+         language: {
+           "decimal": "",
+           "emptyTable": "No hay información",
+           "info": "Mostrando resultados _START_ a _END_ de _TOTAL_",
+           "infoEmpty": "Mostrando 0 to_MENU_of_TOTAL_Entradas",
+           "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+           "infoPostFix": "",
+           "thousands": ",",
+           "lengthMenu": "Mostrar _MENU_ Entradas",
+           "loadingRecords": "Cargando...",
+           "processing": "Procesando...",
+           "search": "Buscar:",
+           "zeroRecords": "Sin resultados encontrados",
+           "paginate": {
+             "first": "Primero",
+             "last": "Ultimo",
+             "next": ">",
+             "previous": "<"
+           }
+         },
+       });*/
+  });
+
+
+  function Modaledit(p_nom, s_nom, p_ape, s_ape, pass, ced, correo, telf) {
+    $("[name='Enombres']").val(p_nom + ' ' + s_nom);
+    $("[name='Eapellidos']").val(p_ape + ' ' + s_ape);
+    $("[name='Etelefono']").val(telf);
+    $("[name='Ecedula']").val(ced);
+    $("[name='Ecedula2']").val(ced);
+    $("[name='Eemail']").val(correo);
+    // $("[name='Epassword']").val(pass);
+    $("#edit-user").modal("show");
+
+  };
+
+  function Modaldelete(id) {
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "Una vez Eliminado no podra deshacer su elección",
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: "#5e72e4",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        var values = new FormData();
+        values.append("id", id);
+        values.append("ident", 'borrar');
+
+        $.ajax({
+          url: 'php/Usuario/editar_usuario.php',
+          type: 'POST',
+          data: values,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            switch (response) {
+              case "borrado":
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Usuario Eliminado',
+                  showConfirmButton: false,
+                  timer: 1200
+                });
+                setTimeout(function() {
+                  window.location.reload();
+                }, 1200);
+                break;
+              case "usuario no existe":
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Error en eliminacion',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                });
+                break;
+              default:
+                console.log(response);
+                break;
+            }
+
+          },
+        });
+      } else {
+        console.log("presiono cancelar");
       }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
-</body>
+    });
 
-</html>
+  };
+
+  function recuperar(id) {
+
+    var values = new FormData();
+    values.append("id", id);
+    values.append("ident", 'recuperar');
+
+    $.ajax({
+      url: 'php/Usuario/editar_usuario.php',
+      type: 'POST',
+      data: values,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        switch (response) {
+          case "recuperado":
+            Swal.fire({
+              icon: 'success',
+              title: 'Usuario Restaurado',
+              showConfirmButton: false,
+              timer: 1200
+            });
+            setTimeout(function() {
+              window.location.reload();
+            }, 1200);
+            break;
+          case "usuario no existe":
+            Swal.fire({
+              icon: 'warning',
+              title: 'Error en recuperar',
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#01a9ac',
+            });
+            break;
+          default:
+            console.log(response);
+            break;
+        }
+
+      },
+    });
+
+  };
+
+  function openModalHistory(id_usuario) {
+
+    var values = new FormData();
+    values.append("id_encargado", id_usuario);
+    $("#id_embalse_aux").text(id_usuario);
+
+    $("#body-details").html("<h3 class='text-center'>Cargando...</h3>");
+    $("#modal-details").modal("show");
+
+    $.ajax({
+      url: 'php/Usuario/historial.php',
+      type: 'POST',
+      data: values,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        $("#body-details").html(response);
+        iniciarTabla('table-history');
+      },
+      error: function(response) {}
+    });
+  }
+
+
+  function openModalDetalles(id_registro, fecha, hora, cota, extraccion) {
+    $("#id_aux").text(id_registro);
+    //$("#opc_aux").text("edit");
+
+    $("#add .title").text("Detalles del Reporte");
+    $(".removeRow").each(function(index) {
+      $(this).trigger("click");
+    });
+
+    $("#fecha").val(fecha);
+    $("#hora").val(hora);
+    $("#valor_cota").val(cota);
+    var extraccion_array = extraccion.split(";");
+    if (extraccion_array.length > 1) {
+      for (var i = 0; i < extraccion_array.length - 1; i++) {
+        $("#addRows").trigger("click");
+      }
+    }
+
+    $(".removeRow").attr("disabled", true);
+
+    //var ids_rows_extracciones = [];
+    $("select[name='tipo_extraccion[]']").each(function(i) {
+      var extraccion_aux = extraccion_array[i].split("&");
+
+      this.value = extraccion_aux[0];
+      var row = this.id.replace("tipo_extraccion_", "");
+      $("#valor_extraccion_" + row).val(extraccion_aux[1]);
+
+      $(this).attr("disabled", true);
+      $("#valor_extraccion_" + row).attr("disabled", true);
+
+      //En este atributo se guarda el id del detalle de la extraccion en caso de editar
+      //$(this).attr("id_detalle_edit", extraccion_aux[2]);
+    });
+
+    $("#valor_cota").attr("disabled", true);
+
+    $("#add .text-retraso").hide();
+    $("#add .btn-submit").hide();
+    $("#add .btn-add-extraccion").hide();
+    $("#add .btn-edit").show();
+    $('#add').modal('show');
+
+  }
+
+  var count = 1;
+  $(document).on('click', '#addRows', function() {
+    count++;
+    var htmlRows = '';
+    htmlRows += '<div class="row">';
+    htmlRows += '   <div class="col">';
+    htmlRows += '       <label>Tipo</label>';
+    htmlRows += '       <div class="input-group mb-3">';
+    htmlRows += '           <select class="form-select" name="tipo_extraccion[]" id="tipo_extraccion_' + count + '" required>';
+    htmlRows += '               <?php echo $options_extraccion; ?>';
+    htmlRows += '           </select>';
+    htmlRows += '       </div>';
+    htmlRows += '   </div>';
+    htmlRows += '   <div class="col">';
+    htmlRows += '       <label>Valor</label>';
+    htmlRows += '       <div class="input-group mb-3">';
+    htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor de la Extracción" required>';
+    htmlRows += '       </div>';
+    htmlRows += '   </div>';
+    htmlRows += '</div>';
+
+    $('#box-extraccion').append(htmlRows);
+  });
+
+  $(document).ready(function() {
+
+    $("#form").submit(function(e) {
+      e.preventDefault();
+
+      
+        var values = new FormData();
+
+        values.append("nombre", $("[name='nombres']").prop("value"));
+        values.append("apellido", $("[name='apellidos']").prop("value"));
+        values.append("telefono", $("[name='telefono']").prop("value"));
+        values.append("cedula", $("[name='cedula']").prop("value"));
+        values.append("email", $("[name='email']").prop("value"));
+        values.append("ident", 'editarU');
+        //values.append("usuario", $("[name='usuario']").prop("value"));
+        values.append("pass", $("[name='password']").prop("value"));
+        console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+          return n != ''
+        }).length);
+
+        $.ajax({
+          url: 'php/login/nuevo-usuario.php',
+          type: 'POST',
+          data: values,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+
+            switch (response) {
+              case "si":
+                $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Usuario Registrado',
+                  showConfirmButton: false,
+                  timer: 1500
+                }); //CUANDO REGISTRA EXITOSAMENTE
+                setTimeout(function() {
+                  window.location.reload();
+                }, 1500);
+                break;
+              case "no":
+                $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Usuario no Registrado',
+                  text: 'Problema de comunicación con el servidor, intente más tarde',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //ERROR AL REGISTRAR
+                console.log("no");
+                break;
+              case "existe_cedula":
+                $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Usuario no Registrado',
+                  text: 'El número de cédula ya existe',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //CEDULA EXISTENTE
+                console.log("no ced");
+                break;
+              case "existe_usuario":
+                $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Usuario no Registrado',
+                  text: 'El nombre de usuario ya existe',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //NOMBRE DE USUARIO EXISTENTE
+                console.log("no usu");
+                break;
+              default:
+                $('#new-user').modal('hide');
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error Inesperado',
+                  text: toString(response),
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                });
+                console.log(response);
+                break;
+            }
+
+          },
+          error: function(response) {
+            $('#new-user').modal('hide');
+            Swal.fire({
+              icon: 'error',
+              title: 'Error Inesperado',
+              text: toString(response),
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#01a9ac',
+            });
+            console.log("err2");
+          }
+        });
+
+    });
+
+    $("#form2").submit(function(e) {
+      e.preventDefault();
+
+      var values = new FormData();
+
+      values.append("nombre", $("[name='Enombres']").prop("value"));
+      values.append("apellido", $("[name='Eapellidos']").prop("value"));
+      values.append("telefono", $("[name='Etelefono']").prop("value"));
+      values.append("cedula", $("[name='Ecedula']").prop("value"));
+      values.append("cedula2", $("[name='Ecedula2']").prop("value"));
+      values.append("email", $("[name='Eemail']").prop("value"));
+      //values.append("usuario", $("[name='usuario']").prop("value"));
+      values.append("pass", $("[name='Epassword']").prop("value"));
+      values.append("ident", 'editarU');
+      /*console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+        return n != ''
+      }).length);*/
+
+      $.ajax({
+        url: 'php/Usuario/editar_usuario.php',
+        type: 'POST',
+        data: values,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+
+          switch (response) {
+            case "si":
+              $('#edit-user').modal('hide');
+              Swal.fire({
+                icon: 'success',
+                title: 'Usuario Editado',
+                showConfirmButton: false,
+                timer: 1500
+              }); //CUANDO REGISTRA EXITOSAMENTE
+              setTimeout(function() {
+                window.location.reload();
+              }, 1500);
+              break;
+            case "no":
+              $('#edit-user').modal('hide');
+              Swal.fire({
+                icon: 'error',
+                title: 'Usuario no Editado',
+                text: 'Problema de comunicación con el servidor, intente más tarde',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac',
+              }); //ERROR AL REGISTRAR
+              console.log("no");
+              break;
+            case "existe_cedula":
+              $('#edit-user').modal('hide');
+              Swal.fire({
+                icon: 'warning',
+                title: 'Usuario no Editado',
+                text: 'El número de cédula ya existe',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac',
+              }); //CEDULA EXISTENTE
+              console.log("no ced");
+              break;
+            case "existe_usuario":
+              $('#edit-user').modal('hide');
+              Swal.fire({
+                icon: 'warning',
+                title: 'Usuario no Editado',
+                text: 'El nombre de usuario ya existe',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac',
+              }); //NOMBRE DE USUARIO EXISTENTE
+              console.log("no usu");
+              break;
+            default:
+              $('#edit-user').modal('hide');
+              Swal.fire({
+                icon: 'error',
+                title: 'Error Inesperado',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac',
+              });
+              console.log(response);
+              break;
+          }
+
+        },
+        error: function(response) {
+          $('#edit-user').modal('hide');
+          Swal.fire({
+            icon: 'error',
+            title: 'Error Inesperado',
+            text: toString(response),
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#01a9ac',
+          });
+          console.log("err2");
+        }
+      });
+
+    });
+
+
+  });
+</script>

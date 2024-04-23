@@ -1,176 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+  <?php
+  require_once 'php/Conexion.php';
+  require_once 'php/batimetria.php';
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/logos/cropped-mminaguas.webp">
-  <title>
-    Minaguas
-  </title>
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
+  $queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
+  $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
+  $queryUsers = mysqli_query($conn, "SELECT * FROM usuarios;");
+  // $result = mysqli_fetch_assoc($queriEstados);
+  $queryEmbalsesEliminados = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'inactivo';");
+  $numEliminados = mysqli_num_rows($queryEmbalsesEliminados);
 
-<body class="g-sidenav-show   bg-gray-100">
-  <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
-    <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Argon Dashboard 2</span>
-      </a>
-    </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-      <!-- SIDEBAR -->
-      <?php include './sidebar.php'; ?>
-    </div>
-    <div class="sidenav-footer mx-3 ">
-      <div class="card card-plain shadow-none" id="sidenavCard">
-        <img class="w-50 mx-auto" src="../assets/img/illustrations/icon-documentation.svg" alt="sidebar_illustration">
-        <div class="card-body text-center p-3 w-100 pt-0">
-          <div class="docs-info">
-            <h6 class="mb-0">Need help?</h6>
-            <p class="text-xs font-weight-bold mb-0">Please check our docs</p>
-          </div>
-        </div>
-      </div>
-      <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
-      <a class="btn btn-primary btn-sm mb-0 w-100" href="https://www.creative-tim.com/product/argon-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
-    </div>
-  </aside>
-  <main class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
-      <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Embalses</a></li>
-            <!--<li class="breadcrumb-item text-sm text-white active" aria-current="page">Billing</li>-->
-          </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Fichas Técnicas de los Embalses</h6>
-        </nav>
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Type here...">
-            </div>
-          </div>
-          <!--<ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
-              </a>
-            </li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                </div>
-              </a>
-            </li>
-            <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0">
-                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
-              </a>
-              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New message</span> from Laur
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          13 minutes ago
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New album</span> by Travis Scott
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          1 day
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                          <title>credit-card</title>
-                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                              <g transform="translate(1716.000000, 291.000000)">
-                                <g transform="translate(453.000000, 454.000000)">
-                                  <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                                  <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                                </g>
-                              </g>
-                            </g>
-                          </g>
-                        </svg>
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          Payment successfully completed
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          2 days
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>-->
-        </div>
-      </div>
-    </nav>
-    <!-- End Navbar -->
-    <div class="container-fluid py-4">
-      <div class="row">
-        <!--<div class="col-lg-8">
+  $estados = array();
+  while ($row = mysqli_fetch_array($queryEstados)) {
+    $id = $row['id_estado'];
+    $estado = $row['estado'];
+    $estados[$id] = $estado;
+  }
+
+  $encargados = array();
+  while ($row = mysqli_fetch_array($queryUsers)) {
+    $id = $row['Id_usuario'];
+    $nombre = $row['P_Nombre'] . " " . $row['P_Apellido'];
+    $encargados[$id] = $nombre;
+  }
+
+
+
+  // $embalseBat = new Batimetria(1, $conn);
+  // $variable = $embalseBat->volumenMinimo();
+  // $volumen_normal = $embalseBat->volumenNormal();
+  // $volumen_minimo = $embalseBat->volumenMinimo();
+
+  // $cota = implode("-",$embalseBat->getByCota("2024","268.455"));
+  // $minima = $embalseBat->cotaMinima();
+  // $año = implode("-", $embalseBat->getYears());
+  // $closeYear = $embalseBat->getCloseYear();
+  // $volMin = $embalseBat->volumenDisponible();
+  // $ultima = $embalseBat->volumenActualDisponible();
+  // $year = $embalseBat->getCloseYear("2015");
+  // $prueba = $embalseBat->getByCota("2001", 210.209);
+
+  // $prueba = $embalseBat->getCloseCota("2001","210.206");
+
+  // Ahora puedes acceder a la capital de un estado específico
+  // $capitalCarabobo = $estados["24"];
+
+  // Muestra la capital de Carabobo
+  // echo "La capital de Carabobo es: " . $capitalCarabobo;
+
+  // echo json_encode($arrayEstados);
+  // echo $arrayEstados[0]['2'];
+  // echo json_encode($arrayEstados[0][1], $estados['1']);
+  // closeConection($conn);
+  ?>
+  <div class="container-fluid py-4">
+    <div class="row">
+      <!--<div class="col-lg-8">
           <div class="row">
             <div class="col-xl-6 mb-xl-0 mb-4">
               <div class="card bg-transparent shadow-xl">
@@ -266,83 +150,201 @@
             </div>
           </div>
         </div>-->
-        <div class="col-lg-12">
-          <div class="card h-100">
-            <div class="card-header pb-0 p-3">
-              <div class="row">
-                <div class="col-6 d-flex align-items-center">
-                  <h6 class="mb-0">Embalses</h6>
-                </div>
-                <!--<div class="col-6 text-end">
+      <div class="col-lg-12">
+        <div class="card h-100">
+          <div class="card-header pb-0">
+            <!-- <div class="row"> -->
+            <!-- <div class="col-6 d-flex align-items-center"> -->
+            <h6 class="">Embalses</h6>
+            <!-- </div> -->
+            <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
                 </div>-->
-              </div>
+            <!-- </div> -->
+          </div>
+          <div class="card-body p-3 pb-0">
+            <div class="text-center">
+              <a href="?page=crear_embalse">
+                <button type="button" class="btn btn-primary btn-block">
+                  Nuevo
+                </button>
+              </a>
             </div>
-            <div class="card-body p-3 pb-0">
-              <div class="text-center">
-                <a href="/minaguas-project/pages/crear_embalse.php">
-                  <button type="button" class="btn bg-gradient-info btn-block">
-                    Nuevo
-                  </button>
-                </a>
-              </div>
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-1 text-dark font-weight-bold text-sm">16 de Octubre 2023</h6>
-                    <span class="text-xs">Boconó - Tucupido</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">10 de Febrero 2021</h6>
-                    <span class="text-xs">Embalse 2</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">05 de April 2020</h6>
-                    <span class="text-xs">Embalse 3</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="$('#edit-embalse').modal('show');"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">25 de Junio 2019</h6>
-                    <span class="text-xs">Embalse 4</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">01 de Marzo 2019</h6>
-                    <span class="text-xs">Embalse 5</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Editar</a>
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-              </ul>
+
+            <div class="dt-responsive table-responsive">
+              <?php
+              if (mysqli_num_rows($queryEmbalses) > 0) {
+              ?>
+                <table id="table-embalses" class="table table-striped table-bordered nowrap">
+                  <thead>
+                    <tr>
+                      <th>Embalse</th>
+                      <th class="hide-cell">Volumen disponible</th>
+                      <th style="text-align: center;" class="hide-cell">Encargado</th>
+                      <th style="text-align: center;">Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $acumulativo = 0;
+                    while ($row = mysqli_fetch_array($queryEmbalses)) {
+                    ?>
+                      <tr>
+                        <td style="vertical-align: middle;" class="">
+                          <!-- class="d-flex flex-column px-3 mt-2 mb-2" style="height: 100%;" -->
+                          <div class="px-3">
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
+                            <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; ?> </span> -->
+                          </div>
+                        </td>
+                        <td style="vertical-align: middle;" class="hide-cell">
+                          <div class="d-flex flex-column px-3">
+                            <?php $embal = new Batimetria($row["id_embalse"], $conn);  //$acumulativo += $embal->volumenDisponible();?>
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo number_format($embal->volumenDisponible(), 3,',','.') ?> <span style="font-size: 12px">hm</span>³</h6>
+                            <!-- <span class="text-xs">20/12/2023</span> -->
+                          </div>
+                        </td>
+                        <td style="vertical-align: middle;" class="hide-cell">
+                          <div class="d-flex justify-content-center">
+                            <div><?php
+                                  if ($row['id_encargado'] == '0' || $row['id_encargado'] == null || $row['id_encargado'] == '') { ?>
+                                <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay personal encargado</h6>
+                              <?php
+                                  } else {
+                              ?>
+                                <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
+                              <?php } ?>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center justify-content-center text-sm">
+                            <a data-id="<?php echo $row['id_embalse']; ?>" class="show-embalse btn btn-link text-dark px-2 mb-0" href="?page=show"><i class="fas fa-eye text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Ver</span></a>
+                            <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
+                            <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-trash text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Eliminar</span></a>
+                            <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
+                          </div>
+                        </td>
+                      </tr>
+                    <?php
+                    }
+                    ?>
+                  </tbody>
+                </table>
+                <div><?php // echo $acumulativo?></div>
+              <?php
+              } else {
+              ?>
+                <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No existen embalses cargados</h2>
+              <?php
+              }
+              ?>
             </div>
+            <br><br><br>
+
           </div>
         </div>
       </div>
-      <!--<div class="row">
+      <?php
+      if ($numEliminados > 0) {
+      ?>
+
+        <div class="col-lg-12 mt-5">
+          <div class="card h-100">
+            <div class="card-header pb-0">
+              <!-- <div class="row"> -->
+              <!-- <div class="col-6 d-flex align-items-center"> -->
+              <h6 class="">Embalses eliminados</h6>
+              <!-- </div> -->
+              <!--<div class="col-6 text-end">
+                  <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
+                </div>-->
+              <!-- </div> -->
+            </div>
+            <div class="card-body p-3 pb-0">
+              <!-- <div class="text-center">
+            <a href="?page=crear_embalse">
+              <button type="button" class="btn btn-primary btn-block">
+                Nuevo
+              </button>
+            </a>
+          </div> -->
+
+              <div class="dt-responsive table-responsive">
+                <?php
+                if (mysqli_num_rows($queryEmbalsesEliminados) > 0) {
+                ?>
+                  <table id="table-embalses-eliminados" class="table table-striped table-bordered nowrap">
+                    <thead>
+                      <tr>
+                        <th>Embalse</th>
+                        <th class="hide-cell">Volumen disponible</th>
+                        <th style="text-align: center;" class="hide-cell">Encargado</th>
+                        <th style="text-align: center;">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      while ($row = mysqli_fetch_array($queryEmbalsesEliminados)) {
+                      ?>
+                        <tr>
+                          <td>
+                            <div style="vertical-align: middle;" class="d-flex flex-column px-3">
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
+                              <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; ?> </span> -->
+                            </div>
+                          </td>
+                          <td class="hide-cell">
+                            <div class="d-flex flex-column px-3">
+                              <?php $embal = new Batimetria($row["id_embalse"], $conn) ?>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><? echo number_format($embal->volumenDisponible(), 3,',','.') ?></h6>
+                              <!-- <span class="text-xs">20/12/2023</span> -->
+                            </div>
+                          </td>
+                          <td style="vertical-align: middle;" class="hide-cell">
+                            <div class="d-flex justify-content-center">
+                              <div><?php
+                                    if ($row['id_encargado'] == '0' || $row['id_encargado'] == null || $row['id_encargado'] == '') { ?>
+                                  <h6 class="mb-1 text-dark font-weight-bold text-sm">No hay personal encargado</h6>
+                                <?php
+                                    } else {
+                                ?>
+                                  <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
+                                <?php } ?>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex align-items-center justify-content-center text-sm">
+                              <a data-id="<?php echo $row['id_embalse']; ?>" class="restaurar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-redo text-dark me-2" aria-hidden="true"></i><span class="hide-cell">Restaurar</span></a>
+                              <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
+                            </div>
+                          </td>
+                        </tr>
+                      <?php
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                <?php
+                } else {
+                ?>
+                  <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No existen embalses cargados</h2>
+                <?php
+                }
+                ?>
+              </div>
+              <br><br><br>
+
+            </div>
+          </div>
+        </div>
+
+      <?php
+      }
+      ?>
+    </div>
+    <!--<div class="row">
         <div class="col-md-7 mt-4">
           <div class="card">
             <div class="card-header pb-0 px-3">
@@ -486,46 +488,43 @@
           </div>
         </div>
       </div>-->
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                desarrollado por
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Dirección de Investigación e Innovación - ABAE
-                </a>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                </li>
-              </ul>
-            </div>
+    <!--<footer class="footer pt-3  ">
+    <div class="container-fluid">
+      <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6 mb-lg-0 mb-4">
+          <div class="copyright text-center text-sm text-muted text-lg-start">
+            © <script>
+              document.write(new Date().getFullYear())
+            </script>,
+            desarrollado por
+            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Dirección de Investigación e Innovación - ABAE
+            </a>
           </div>
         </div>
-      </footer>
+        <div class="col-lg-6">
+          <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </main>
+  </footer>-->
+  </div>
+
 
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -534,83 +533,235 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+    // iniciarTabla('table-embalses');
+    // if ($("#table-embalses-eliminados")) {
+    //   iniciarTabla('table-embalses-eliminados');
+    // }
+
+
+    // $('#table-embalses').DataTable({
+    //   dom: "<'top'<'d-flex align-items-center justify-content-between'lf>>rt<'bottom'<'d-flex flex-column align-items-center'ip>><'clear'>",
+    //   language: {
+    //     "decimal": "",
+    //     "emptyTable": "No hay información",
+    //     "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+    //     "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+    //     "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+    //     "infoPostFix": "",
+    //     "thousands": ",",
+    //     "lengthMenu": "Mostrar _MENU_ Entradas",
+    //     "loadingRecords": "Cargando...",
+    //     "processing": "Procesando...",
+    //     "search": "Buscar:",
+    //     "zeroRecords": "Sin resultados encontrados",
+    //     "paginate": {
+    //       "first": "Primero",
+    //       "last": "Ultimo",
+    //       "next": "Siguiente",
+    //       "previous": "Anterior"
+    //     }
+    //   },
+    // });
+
+    $(document).ready(function() {
+      $(".editar-embalse").click(function(e) {
+        e.preventDefault();
+
+        var id = $(this).data("id");
+        $.ajax({
+          type: "POST",
+          url: "pages/session_variable.php",
+          data: {
+            valor: id
+          },
+          success: function(response) {
+            window.location.href = "?page=editar_embalse";
+          }
+        });
+      });
+
+      $(".show-embalse").click(function(e) {
+        e.preventDefault();
+
+        var id = $(this).data("id");
+        $.ajax({
+          type: "POST",
+          url: "pages/session_variable.php",
+          data: {
+            valor: id
+          },
+          success: function(response) {
+            window.location.href = "?page=show";
+          }
+        });
+      });
+
+      $(".eliminar-embalse").on("click", function(e) {
+        // Realizar la consulta AJAX al servidor
+        console.log("Eliminar");
+        e.preventDefault();
+        var id_embalse = $(this).data("id");
+        console.log(id_embalse)
+        $.ajax({
+          url: "./php/get-embalse.php", // Ruta a tu script PHP de consulta
+          type: "POST",
+          data: {
+            id: id_embalse,
+            action: "eliminar"
+          },
+          success: function(data) {
+            // Mostrar el resultado en la modal
+            console.log(data)
+            $("#embalseTitulo").text("¿Eliminar embalse?")
+            $("#embalseNombre").text(data);
+            $("#embalseIdInput")[0].value = id_embalse;
+            $("#buttom-form")[0].name = "eliminar";
+            $('#modal-form').modal('show');
+          },
+          error: function() {
+            alert("Error al realizar la consulta.");
+          }
+        });
+      });
+
+      $(".restaurar-embalse").on("click", function(e) {
+        // Realizar la consulta AJAX al servidor
+        console.log("Restaurar");
+        e.preventDefault();
+        var id_embalse = $(this).data("id");
+        console.log(id_embalse)
+        $.ajax({
+          url: "./php/get-embalse.php", // Ruta a tu script PHP de consulta
+          type: "POST",
+          data: {
+            id: id_embalse,
+            action: "restaurar"
+          },
+          success: function(data) {
+            // Mostrar el resultado en la modal
+            console.log(data)
+            $("#embalseTitulo").text("¿Restaurar embalse?")
+            $("#embalseNombre").text(data);
+            $("#embalseIdInput")[0].value = id_embalse;
+            $("#buttom-form")[0].name = "restaurar";
+            $('#modal-form').modal('show');
+          },
+          error: function() {
+            alert("Error al realizar la consulta.");
+          }
+        });
+      });
+
+      iniciarTabla('table-embalses');
+      if ($("#table-embalses-eliminados")) {
+        iniciarTabla('table-embalses-eliminados');
+      }
+
+    });
   </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
-</body>
-
-</html>
 
 
-<!-- Modal -->
-<div class="modal fade" id="edit-embalse" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true">
-  <div class="modal-dialog modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-body p-0">
-        <div class="card card-plain">
-          <div class="card-header pb-0 text-left">
-            <h3 class="font-weight-bolder text-primary text-gradient">Editar</h3>
-            <!--<p class="mb-0">Enter your email and password to register</p>-->
-          </div>
-          <div class="card-body pb-3">
-            <form role="form text-left">
-              <div class="row">
-                <div class="col">
-                  <label>Nombre</label>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre" value="Nombre" aria-describedby="name-addon">
-                  </div>
-                </div>
-                <div class="col">
-                  <label>Capacidad</label>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Capacidad" aria-label="Capacidad" value="Capacidad" aria-describedby="email-addon">
-                  </div>
-                </div>
+
+  <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <button type="button" class="btn btn-secondary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+          <div class="card card-plain">
+
+            <div class="card-body">
+
+              <div class="">
+                <h5 style="text-align:center;" id="embalseTitulo" class="mb-0"></h5>
+                <h3 style="text-align:center;" id="embalseNombre" class="mt-3"></h3>
               </div>
-              <div class="row">
-                <div class="col">
-                  <label>Dirección</label>
-                  <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Dirección" aria-label="Direccion" value="Direccion" aria-describedby="password-addon">
-                  </div>
+              <form method="POST" action="php/proces_embalse.php" enctype="multipart/form-data">
+
+                <div class="input-group mb-2">
+                  <input style="display: none;" id="embalseIdInput" type="text" class="form-control" name="id_embalse" value="">
                 </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  .
-                  <br>
-                  .
-                  <br>
-                  .
-                  <br>
-                  .
-                  <br>
-                  .
-                  <br>
+
+                <div class="text-center d-flex flex-col-6 justify-content-center">
+                  <button type="submit" id="buttom-form" name="delete" class="btn btn-round btn-primary btn-lg  mt-3 mb-0">Confirmar</button>
                 </div>
-                <!--<div class="form-check form-check-info text-left">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked="">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        I agree the <a href="javascrpt:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
-                      </label>
-                    </div>-->
-              </div>
-              <div class="text-center">
-                <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0">Guardar</button>
-              </div>
-            </form>
-          </div>
-          <div class="card-footer text-center pt-0 px-sm-4 px-1">
-            <!--<p class="mb-4 mx-auto">
-                  Already have an account?
-                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
-                </p>--->
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="edit-embalse" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="card card-plain">
+            <div class="card-header pb-0 text-left">
+              <h3 class="font-weight-bolder text-primary text-gradient">Editar</h3>
+              <!--<p class="mb-0">Enter your email and password to register</p>-->
+            </div>
+            <div class="card-body pb-3">
+              <form role="form text-left">
+                <div class="row">
+                  <div class="col">
+                    <label>Nombre</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre" value="Nombre" aria-describedby="name-addon">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label>Capacidad</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Capacidad" aria-label="Capacidad" value="Capacidad" aria-describedby="email-addon">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label>Dirección</label>
+                    <div class="input-group mb-3">
+                      <input type="password" class="form-control" placeholder="Dirección" aria-label="Direccion" value="Direccion" aria-describedby="password-addon">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    .
+                    <br>
+                    .
+                    <br>
+                    .
+                    <br>
+                    .
+                    <br>
+                    .
+                    <br>
+                  </div>
+                  <!--<div class="form-check form-check-info text-left">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked="">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        I agree the <a href="javascrpt:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                      </label>
+                    </div>-->
+                </div>
+                <div class="text-center">
+                  <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0">Guardar</button>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer text-center pt-0 px-sm-4 px-1">
+              <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
