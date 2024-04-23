@@ -203,16 +203,16 @@ if ($count >= 1) {
     };
     $j = 0;
     while ($j < count($suma_extracciones)) {
-        if ($suma_extracciones[$j] <= 120 && $suma_extracciones[$j] >= 0) {
+        if ($suma_extracciones[$j] < 150 && $suma_extracciones[$j] >= 0) {
             $condicion[0]++;
         };
-        if ($suma_extracciones[$j] > 120 && $suma_extracciones[$j] <= 240) {
+        if ($suma_extracciones[$j] >= 150 && $suma_extracciones[$j] < 240) {
             $condicion[1]++;
         };        
-        if ($suma_extracciones[$j] > 240 && $suma_extracciones[$j] <= 360) {
+        if ($suma_extracciones[$j] >= 270 && $suma_extracciones[$j] < 360) {
             $condicion[2]++;
         };        
-        if ($suma_extracciones[$j] > 360) {
+        if ($suma_extracciones[$j] >= 360) {
             $condicion[3]++;
         };
         $j++;
