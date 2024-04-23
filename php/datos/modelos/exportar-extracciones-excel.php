@@ -410,12 +410,28 @@
                             $index_extraccion = buscarPosicion($array_codigos, $fila[0], 'id_codigo_extraccion');
                             $columna_extraccion = $array_codigos[$index_extraccion]['columna'];
 
-                            $hoja->setCellValue($columna_extraccion . $fila_actual, $fila[1]);
+                            $valor_extraccion = $fila[1];
+                            if($array_codigos[$index_extraccion]['id_codigo_extraccion'] == "30") {
+                                if(is_numeric($valor_extraccion)) {
+                                    $valor_extraccion = $fila[1] . "%";
+                                    if($fila[1] < 1) {
+                                        $valor_extraccion = ($fila[1] * 100) . "%";
+                                    }
+                                }
+                            }
+
+                            $hoja->setCellValue($columna_extraccion . $fila_actual, $valor_extraccion);
                             $hoja->getStyle($columna_extraccion . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                             $hoja->getStyle($columna_extraccion . $fila_actual)->getNumberFormat()->setFormatCode('0.00');
 
                         }
                     }
+
+                    //Añadiendo informacion a la celda de "reportado"
+                    $index_aux = Coordinate::columnIndexFromString($COLUMNA_FINAL_REPORTE);
+                    $final_aux = Coordinate::stringFromColumnIndex($index_aux - 1);
+                    $hoja->setCellValue($final_aux . $fila_actual, $extraccion['encargado']);
+                    $hoja->getStyle($final_aux . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                 }
 
 
