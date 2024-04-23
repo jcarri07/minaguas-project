@@ -12,7 +12,7 @@ if (mysqli_num_rows($res) > 0) {
     $data[] = $row;
   }
 } else {
-  echo "No se encontraron resultados.";
+  // echo "No se encontraron resultados.";
 }
 ?>
 <!DOCTYPE html>
