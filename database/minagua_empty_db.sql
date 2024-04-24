@@ -12,7 +12,7 @@ CREATE TABLE `usuarios` (
   Cedula varchar(255) DEFAULT NULL,
   Correo varchar(255) DEFAULT NULL,
   Telefono varchar(255) DEFAULT NULL,
-  Tipo enum('Admin', 'User') DEFAULT NULL,
+  Tipo enum('SuperAdmin','Admin', 'User') DEFAULT NULL,
   estatus enum('activo', 'inactivo') DEFAULT NULL
 );
 
@@ -234,7 +234,7 @@ values
     'activo'
   ),
   (
-    2,
+    3,
     '$2y$05$lOy35Mzm/nB40AwP7GwYL.PPoHNyVBdNYK.QWdRTBTp.Cbmk.Ei9m',
     'Pedro',
     'Antonio',
@@ -244,6 +244,19 @@ values
     'pedro@gmail.com',
     '04121234567',
     'User',
+    'activo'
+  ),
+  (
+    1,
+    '$2y$05$lOy35Mzm/nB40AwP7GwYL.PPoHNyVBdNYK.QWdRTBTp.Cbmk.Ei9m',
+    'Admin',
+    'Admin',
+    'Admin',
+    'Admin',
+    '99999999',
+    'superadmin@gmail.com',
+    '04121234567',
+    'SuperAdmin',
     'activo'
   );
 
