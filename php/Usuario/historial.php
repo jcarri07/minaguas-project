@@ -62,7 +62,7 @@ WHERE id_encargado = '$id_encargado' AND de.estatus = 'activo'
 GROUP BY de.id_registro
 ORDER BY fecha DESC, id_registro DESC;";
 $query = mysqli_query($conn, $sql);
-$array_codigos_sql = array();
+//$array_codigos_sql = array();
 
 
 ?>
