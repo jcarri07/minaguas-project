@@ -134,7 +134,7 @@ if ($count >= 1) {
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen del periodo',pointRadius: 1,backgroundColor:'#326fa8',borderColor: '#326fa8',data: [";
+                            <?php echo "{label:'Volumen del periodo',pointRadius: 1,backgroundColor:'#36a2eb',borderColor: '#36a2eb',data: [";
                             $min = $embalses[0]["cota_min"];
                             $max = $embalses[0]["cota_max"];
                             $j = 0;
@@ -371,7 +371,7 @@ if ($count >= 1) {
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen del periodo',pointRadius: 1,backgroundColor:'#326fa8',borderColor: '#326fa8',data: [";
+                            <?php echo "{label:'Volumen del periodo',pointRadius: 1,backgroundColor:'#36a2eb',borderColor: '#36a2eb',data: [";
                             $min = $embalses[0]["cota_min"];
                             $max = $embalses[0]["cota_max"];
                             $j = 0;
