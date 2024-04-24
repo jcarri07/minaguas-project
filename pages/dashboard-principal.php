@@ -303,21 +303,21 @@ closeConection($conn);*/
               </div>
             </div>
           </div>
-          <div class="d-flex flex-column gap-4 p-2 justify-content-center align-items-center shadow border rounded" id="container-cards" style="width: 350px; height:450px;">
-            <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border" style="width:100%; height:100%;">
-              <h4 class="d-flex justify-content-center align-items-center">
+          <div class="d-flex flex-column gap-5 p-2 justify-content-center align-items-center shadow border rounded" id="container-cards" style="width: 350px; height:450px;">
+            <div class="col-12 flex-column justify-content-center align-items-center rounded border" style="width:100%;height:45%">
+              <h4 class="d-flex justify-content-start align-items-center">
                 Hace 7 Días
               </h4>
-              <div class="d-flex justify-content-center align-items-center">
+              <div class="col-12 justify-content-center align-items-center">
                 <div class="" id="contenedor-2">
                 </div>
               </div>
             </div>
-            <div class="card-data d-flex flex-column justify-content-center align-items-center rounded border" style="width:100%; height:100%;">
-              <h4 class="d-flex justify-content-center align-items-center">
+            <div class="col-12 flex-column justify-content-center align-items-center rounded border" style="width:100%;height:45%">
+              <h4 class="d-flex justify-content-start align-items-center">
                 Hace un año
               </h4>
-              <div class="d-flex justify-content-center align-items-center">
+              <div class="col-12 justify-content-center align-items-center">
                 <div class="" id="contenedor-3">
                 </div>
               </div>
