@@ -1755,8 +1755,8 @@ if (contiene_subcadena($fullPath, "C:")) {
   $A_tabla = 120;
   $incremento = 0;
   $acumulado = 0;
-  $disponible = 26;
-  $disponible_right = 26;
+  $disponible = 25;
+  $disponible_right = 25;
   $inicial = true;
   $tituloini = true;
   $right = false;
@@ -1797,8 +1797,8 @@ if (contiene_subcadena($fullPath, "C:")) {
         $A_tabla = 120;
         $incremento = 0;
         $acumulado = 0;
-        $disponible = 26;
-        $disponible_right = 26;
+        $disponible = 25;
+        $disponible_right = 25;
         $inicial = true;
       }
     } else {
@@ -1810,7 +1810,7 @@ if (contiene_subcadena($fullPath, "C:")) {
         $A_operador = 85;
         $A_tabla = 120;
         $incremento = 0;
-        $disponible = 26;
+        $disponible = 25;
 
         if ($right == false) {
           $margin_left = 550;
@@ -1827,7 +1827,7 @@ if (contiene_subcadena($fullPath, "C:")) {
           $A_tabla = 120;
           $incremento = 0;
           $acumulado = 0;
-          $disponible = 26;
+          $disponible = 25;
           $inicial = true;
           $right = true;
           $margin_left = 20;
