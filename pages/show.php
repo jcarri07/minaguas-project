@@ -684,7 +684,7 @@ closeConection($conn);
     var longitud = coordenadasGeograficas[0];
 
     var map = L.map('embalse-mapa').setView([latitud, longitud], 12);
-
+    map.scrollWheelZoom.disable();
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       attribution: '© OpenStreetMap contributors'
