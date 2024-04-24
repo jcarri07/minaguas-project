@@ -347,7 +347,7 @@ closeConection($conn);*/
 
       <div class="col-12 pt-2 bg-white rounded mt-4 shadow" id="container-div">
         <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pb-2" id="contain-charts">
-          <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 500px;">
+          <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 700px;">
             <!-- ]  <div id="mapa-container"> -->
             <!-- <div id="mapa-portada" style="width: 100%; height: 100%;"></div> -->
             <?php include "mapa_dashboard.php" ?>

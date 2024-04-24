@@ -94,7 +94,7 @@ while ($row < count($datos_embalses)) {
 <style>
     #mapa-portada {
         width: 1500px;
-        height: 500px;
+        height: 700px;
     }
 
     .leaflet-top.leaflet-left {
@@ -249,7 +249,8 @@ while ($row < count($datos_embalses)) {
     })
 
     // Creación de los mapas
-    var mapa_portada = L.map('mapa-portada').setView([9, -67], 7);
+    var mapa_portada = L.map('mapa-portada').setView([9, -66.5], 7);
+    mapa_portada.scrollWheelZoom.disable();
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
