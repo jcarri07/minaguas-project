@@ -160,7 +160,11 @@ if ($count >= 1) {
     <?php
     function lista($conn)
     {
+      if($_SESSION["Tipo"] == "SuperAdmin"){
+        $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'SuperAdmin' AND estatus = 'inactivo';");
+      }else{
       $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin' AND estatus = 'inactivo';");
+      }
       $count = mysqli_num_rows($res);
 
       if ($count >= 1) {
@@ -168,13 +172,13 @@ if ($count >= 1) {
 
         <div class="col-12">
 
-          <div class="card h-auto">
+          <div class=" h-auto">
             <div class="card-header pb-0">
               <h6>Usuarios Eliminados</h6>
             </div>
             <div class="card-body p-3 pb-0">
               <div class="dt-responsive table-responsive p-0 pb-3">
-                <table id="table-user" class="table align-items-center mb-0">
+                <table id="table-user2" class="table align-items-center mb-0">
                   <thead>
                     <tr>
                       <!--th class="text-uppercase text-xxs font-weight-bolder  ps-2">Foto</th-->
