@@ -56,6 +56,16 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
                 </div>
 
               </div>
+              <?php if($_SESSION["Tipo"] == "SuperAdmin"){?>
+              
+                <label id="" class="form-label">Ver por</label>
+                            <select name="tipo" class="form-select" required>
+                                <option value="Admin">Administrador</option>
+                                <option value="User">Usuario</option>
+                            </select>
+
+              <?php }?>
+
 
               <!--div class="form-check form-check-info text-start">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
@@ -125,6 +135,16 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
                 <label>Contraseña</label>
                 <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" required>
               </div>
+
+              <?php if($_SESSION["Tipo"] == "SuperAdmin"){?>
+              
+              <label id="" class="form-label">Ver por</label>
+                          <select name="Etipo" class="form-select" required>
+                              <option value="Admin">Administrador</option>
+                              <option value="User">Usuario</option>
+                          </select>
+
+            <?php }?>
               <!--div class="mb-3 col-6">
                   <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="Econfirmar" required>
                 </div-->
@@ -304,13 +324,14 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
   });
 
 
-  function Modaledit(p_nom, s_nom, p_ape, s_ape, pass, ced, correo, telf) {
+  function Modaledit(p_nom, s_nom, p_ape, s_ape, pass, ced, correo, telf,tipo) {
     $("[name='Enombres']").val(p_nom + ' ' + s_nom);
     $("[name='Eapellidos']").val(p_ape + ' ' + s_ape);
     $("[name='Etelefono']").val(telf);
     $("[name='Ecedula']").val(ced);
     $("[name='Ecedula2']").val(ced);
     $("[name='Eemail']").val(correo);
+    $("[name='Etipo'] option[value="+tipo+"]").prop('selected', true);
     // $("[name='Epassword']").val(pass);
     $("#edit-user").modal("show");
 
@@ -527,6 +548,8 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
         values.append("cedula", $("[name='cedula']").prop("value"));
         values.append("email", $("[name='email']").prop("value"));
         values.append("ident", 'editarU');
+        values.append("tipo", <?php if($_SESSION["Tipo"] == "SuperAdmin"){ ?>$("[name='Etipo'] option:selected").val()<?php }else{ ?>"User"<?php } ?>);
+        
         //values.append("usuario", $("[name='usuario']").prop("value"));
         values.append("pass", $("[name='password']").prop("value"));
         console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
@@ -631,6 +654,9 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
       //values.append("usuario", $("[name='usuario']").prop("value"));
       values.append("pass", $("[name='Epassword']").prop("value"));
       values.append("ident", 'editarU');
+      
+      values.append("tipo", <?php if($_SESSION["Tipo"] == "SuperAdmin"){ ?>$("[name='Etipo'] option:selected").val()<?php }else{ ?>"User"<?php } ?>);
+      
       /*console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
         return n != ''
       }).length);*/

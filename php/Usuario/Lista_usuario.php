@@ -1,6 +1,10 @@
 <?php
 include "php/Conexion.php";
+if($_SESSION["Tipo"] == "SuperAdmin"){
+  $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'SuperAdmin' AND estatus = 'activo';");
+}else{
 $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin' AND estatus = 'activo';");
+}
 $count = mysqli_num_rows($res);
 if ($count >= 1) {
 
@@ -79,12 +83,12 @@ if ($count >= 1) {
                         ?>
 
                       </td>
-                      <td class="align-middle text-center justify-content-center d-flex">
+                      <td class="align-middle text-center justify-content-center">
                       <a type='button' onclick="openModalHistory('<?php echo $val['Id_usuario']; ?>')" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
                       <i class="fas fa-clipboard-list text-dark me-1" aria-hidden="true"></i>
                           Historial
                         </a>
-                        <a type='button' onclick="Modaledit('<?php echo $val['P_Nombre']; ?>','<?php echo $val['S_Nombre']; ?>','<?php echo $val['P_Apellido']; ?>','<?php echo $val['S_Apellido']; ?>','<?php echo $val['Contrasena']; ?>','<?php echo $val['Cedula']; ?>','<?php echo $val['Correo']; ?>','<?php echo $val['Telefono'] ?>')" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
+                        <a type='button' onclick="Modaledit('<?php echo $val['P_Nombre']; ?>','<?php echo $val['S_Nombre']; ?>','<?php echo $val['P_Apellido']; ?>','<?php echo $val['S_Apellido']; ?>','<?php echo $val['Contrasena']; ?>','<?php echo $val['Cedula']; ?>','<?php echo $val['Correo']; ?>','<?php echo $val['Telefono'] ?>','<?php echo $val['Tipo'] ?>')" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
                           <i class="fas fa-pencil-alt text-dark me-1" aria-hidden="true"></i>
                           Editar
                         </a>

@@ -66,7 +66,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         </li>
 
         <?php
-        if ($_SESSION["Tipo"] == "Admin") {
+        if ($_SESSION["Tipo"] == "Admin"||$_SESSION["Tipo"] == "SuperAdmin") {
         ?>
 
           <li class="nav-item">
@@ -109,7 +109,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Cuenta</h6>
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-8"><?php echo $_SESSION["Correo"]; ?></h6>
         </li>
-        <?php if ($_SESSION["Tipo"] == "Admin") { ?>
+        <?php if ($_SESSION["Tipo"] == "Admin" ||$_SESSION["Tipo"] == "SuperAdmin") { ?>
           <li class="nav-item">
             <a class="nav-link <?php echo ($page == 'usuarios') ? "active" : ''; ?>" href="?page=usuarios">
               <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -129,7 +129,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         </li>
 
         <?php
-        if ($_SESSION["Tipo"] == "Admin") {
+        if ($_SESSION["Tipo"] == "SuperAdmin") {
         ?>
           <li class="nav-item">
             <a class="nav-link <?php echo ($page == 'configuraciones') ? "active" : ''; ?>" href="?page=configuraciones">

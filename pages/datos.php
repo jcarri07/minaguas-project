@@ -89,7 +89,7 @@
                 
 <?php
             if(mysqli_num_rows($query) > 0){
-              if($_SESSION["Tipo"] == "Admin"){
+              if($_SESSION["Tipo"] == "Admin"||$_SESSION["Tipo"] == "SuperAdmin"){
 ?>
                 <div class="text-center">
                   <button type="button" class="btn btn-primary" onclick="exportExcel();">
@@ -140,7 +140,7 @@
 <?php
                 }
 
-                if( ($_SESSION["Tipo"] == "Admin") || ($_SESSION["Tipo"] == "User" && $row['reportado_hoy'] == "no") ){
+                if( ($_SESSION["Tipo"] == "Admin"||$_SESSION["Tipo"] == "SuperAdmin") || ($_SESSION["Tipo"] == "User" && $row['reportado_hoy'] == "no") ){
 ?>
                     <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalAdd('<?php echo $row['id_embalse'];?>', '<?php echo $row['nombre_embalse'];?>');">
                       <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
@@ -149,7 +149,7 @@
 <?php
                 }
 
-                if($_SESSION["Tipo"] == "Admin"){
+                if($_SESSION["Tipo"] == "Admin"||$_SESSION["Tipo"] == "SuperAdmin"){
 ?>
                     <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse'];?>', '<?php echo $row['nombre_embalse'];?>', '', '');">
                       <i class="fas fa-history text-dark me-2" aria-hidden="true"></i>
@@ -328,7 +328,7 @@
               </div>
               <div class="card-body pb-3">
     <?php
-              if($_SESSION["Tipo"] == "Admin"){
+              if($_SESSION["Tipo"] == "Admin"||$_SESSION["Tipo"] == "SuperAdmin"){
     ?>
                 <div class="row">
                   <div class="col-md-12 text-center">
@@ -620,7 +620,7 @@
       /*$("#modal-generic .message").text("Registro exitoso");
       $("#modal-generic").modal("show");*/
 
-      if("<?php echo $_SESSION["Tipo"];?>" == "Admin"){
+      if("<?php echo $_SESSION["Tipo"];?>" == "Admin"||"<?php echo $_SESSION["Tipo"];?>" == "SuperAdmin"){
         $("#fecha").attr("disabled", false);
         $("#hora").attr("disabled", false);
       }
@@ -749,7 +749,7 @@
       datos.append('cota', this.valor_cota.value);
       datos.append('tipo_extraccion', tipo_extraccion);
       datos.append('valor_extraccion', valor_extraccion);
-      if("<?php echo $_SESSION["Tipo"];?>" == "Admin"){
+      if("<?php echo $_SESSION["Tipo"];?>" == "Admin"||"<?php echo $_SESSION["Tipo"];?>" == "SuperAdmin"){
         datos.append('fecha', $("#fecha").val());
         datos.append('hora', $("#hora").val());
       }
@@ -859,7 +859,7 @@
 
 
 <?php
-  if($_SESSION["Tipo"] == "Admin"){
+  if($_SESSION["Tipo"] == "Admin"||$_SESSION["Tipo"] == "SuperAdmin"){
 ?>
 
   <script>
