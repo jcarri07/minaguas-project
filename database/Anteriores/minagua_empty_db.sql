@@ -247,7 +247,7 @@ values
     'activo'
   ),
   (
-    2,
+    1,
     '$2y$05$lOy35Mzm/nB40AwP7GwYL.PPoHNyVBdNYK.QWdRTBTp.Cbmk.Ei9m',
     'Admin',
     'Admin',
