@@ -50,9 +50,6 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,9 +58,6 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
     <script src="./assets/js/jquery/jquery.min.js"></script>
-
-
-    <title>Mapas Estatus</title>
 </head>
 
 <style>
@@ -77,45 +71,44 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
     }
 
     .leaflet-popup-content-wrapper {
-        text-align: center;
-        background-color: rgba(255, 255, 255, 1);
-        color: black;
-        font-size: 8px;
-        padding: 0;
-        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+        text-align: center !important;
+        background-color: rgba(255, 255, 255, 1) !important;
+        color: black !important;
+        font-size: 8px !important;
+        padding: 0 !important;
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1) !important;
     }
 
 
     .leaflet-popup-content {
-        background-color: rgba(0, 0, 0, 0);
-        margin: 8px 10px;
+        background-color: rgba(0, 0, 0, 0) !important;
+        margin: 8px 10px !important;
     }
 
     .leaflet-popup-close-button {
-        display: none;
+        display: none !important;
     }
 
     .leaflet-popup-tip-container {
-        margin-top: -8px;
+        margin-top: -8px !important;
     }
 
     .leaflet-popup-tip {
-        background-color: rgba(0, 0, 0, 0);
-        color: rgba(0, 0, 0, 0);
-        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, 0) !important;
+        color: rgba(0, 0, 0, 0) !important;
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1) !important;
     }
 
     .leaflet-popup.leaflet-zoom-animated {
-        /* bottom: -23px; */
-        /* opacity: 1; */
-        margin-bottom: 5.5px;
+        margin-bottom: 5.5px !important;
     }
+    
 </style>
 
 <body style="height:1500px">
 
     <!-- Cantidades de embalse por porcentaje de volumen -->
-    <div id="mapa-portada" style=""></div>
+    <div id="mapa-portada"></div>
 
 </body>
 
@@ -168,36 +161,39 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
         attribution: '© OpenStreetMap contributors'
     }).addTo(mapa_portada);
 
+    var ubicacion;
+
+    <?php
+    foreach ($embalses_porcentaje as $emb) {
+        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
+            // console.log("Prueba");
+            ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
+
+            var marker = L.marker([ubicacion[0], ubicacion[1]], {
+                icon: <?php echo $emb[4] ?>
+            }).addTo(mapa_portada).bindPopup("<b><?php echo $emb[5] ?></b>", {
+                autoClose: false,
+                closeOnClick: false
+            }).openPopup();
+    <?php }
+    }
+    ?>
+
     function geoToUtm(norte, este, huso) {
-    norte = parseFloat(norte);
-    este = parseFloat(este);
-    huso = parseInt(huso)
+        norte = parseFloat(norte);
+        este = parseFloat(este);
+        huso = parseInt(huso)
 
-    proj4.defs("EPSG:326" + huso, "+proj=utm +zone=" + huso + " +datum=WGS84 +units=m +no_defs");
+        proj4.defs("EPSG:326" + huso, "+proj=utm +zone=" + huso + " +datum=WGS84 +units=m +no_defs");
 
-    proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
-    var coordenadasGeograficas = proj4("EPSG:326" + huso, "EPSG:4326", [este, norte]);
+        proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
+        var coordenadasGeograficas = proj4("EPSG:326" + huso, "EPSG:4326", [este, norte]);
 
-    var latitud = coordenadasGeograficas[1];
-    var longitud = coordenadasGeograficas[0];
+        var latitud = coordenadasGeograficas[1];
+        var longitud = coordenadasGeograficas[0];
 
-    return [latitud, longitud];
-}
-
-// <?php
-// foreach ($embalses_porcentaje as $emb) {
-// if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
-//     ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>);
-//     var marker = L.marker([ubicacion[0], ubicacion[1]], {
-//         icon: <?php echo $emb[4]; ?> // Se agregaron comillas alrededor de la declaración de echo de PHP
-//     }).addTo(mapa_portada).bindPopup("<b><?php echo $emb[5] ?></b>", {
-//         autoClose: false, 
-//         closeOnClick: false
-//     }).openPopup();
-// <?php 
-// }
-// ?>
-
+        return [latitud, longitud];
+    }
     // L.tileLayer('https://{s}.tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', {
     //     maxZoom: 19,
     //     attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.thunderforest.com/transport/">Andy Allan</a>',
@@ -205,9 +201,8 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
     // }).addTo(mapa_portada);
 
     //Añadiendo los marcadores al mapa de la portada.
-
-    echo json_encode($embalses_porcentaje);
-
+    <?php
+    // echo json_encode($embalses_porcentaje);
+    ?>
 </script>
-<?php closeConection($conn);?>
-</html>
+<?php closeConection($conn); ?>

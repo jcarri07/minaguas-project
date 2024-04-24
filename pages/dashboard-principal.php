@@ -332,7 +332,7 @@ closeConection($conn);*/
                 <div class="" id="contenedor-4">
                 </div>
                 <div id="leyenda-4" class="pt-2 w-100">
-                  
+
                 </div>
               </div>
             </div>
@@ -344,87 +344,89 @@ closeConection($conn);*/
 
   <div class="container">
     <div class="row">
-      <div class="col-12 pt-2 bg-white rounded mt-4 shadow" id="container-div">
-        <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pb-6" id="contain-charts">
-          <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 500px;">
-        <!-- ]  <div id="mapa-container"> -->
-        <div id="mapa-portada" style="width: 100%; height: 100%;"></div>
-      </div>
-    </div>
-  </div>
 
-  <div class="container py-3 px-2" style="padding-left:20px;">
-    <div class="card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;">
-      <div class="card-header pb-0">
-        <h6 class="mb-0">Embalses</h6>
-        <p class="text-sm">Monitoreo del Volumen Actual Útil de los embalses registrados</p>
+      <div class="col-12 pt-2 bg-white rounded mt-4 shadow" id="container-div">
+        <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pb-2" id="contain-charts">
+          <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 500px;">
+            <!-- ]  <div id="mapa-container"> -->
+            <!-- <div id="mapa-portada" style="width: 100%; height: 100%;"></div> -->
+            <?php include "mapa_dashboard.php" ?>
+          </div>
+        </div>
       </div>
-      <hr class="dark horizontal">
-      <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:350px !important;">
-        <div class="border border-radius-lg h-100">
-          <div class="col-12 pb-2 pt-1">
-            <!-- Ejemplo de leyenda -->
-            <div class="row justify-content-center gap-sm-2 ">
-              <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
-                <div class="col-2 cuadro-color" style="background-color: #fd0200;"></div>
-                <span class="smalll col-auto pe-1">( <=30% )</span>
+
+      <div class="container py-3 px-2" style="padding-left:20px;">
+        <div class="card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;">
+          <div class="card-header pb-0">
+            <h6 class="mb-0">Embalses</h6>
+            <p class="text-sm">Monitoreo del Volumen Actual Útil de los embalses registrados</p>
+          </div>
+          <hr class="dark horizontal">
+          <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:350px !important;">
+            <div class="border border-radius-lg h-100">
+              <div class="col-12 pb-2 pt-1">
+                <!-- Ejemplo de leyenda -->
+                <div class="row justify-content-center gap-sm-2 ">
+                  <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
+                    <div class="col-2 cuadro-color" style="background-color: #fd0200;"></div>
+                    <span class="smalll col-auto pe-1">( <=30% )</span>
+                  </div>
+                  <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
+                    <div class="col-2 cuadro-color" style="background-color: #72dffd;"></div>
+                    <span class="smalll col-auto ps-1">( > 30% <= 60% )</span>
+                  </div>
+                  <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-end">
+                    <div class="col-2 cuadro-color" style="background-color: #0066eb;"></div>
+                    <span class="smalll col-auto ps-1">( >60% <= 90% )</span>
+                  </div>
+                  <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-start">
+                    <div class="col-sm-3 col-2 cuadro-color" style="background-color: #3ba500;"></div>
+                    <span class="smalll col-auto ps-1">( >90% <= 100% )</span>
+                  </div>
+                  <div class="etiqueta col-sm-2 col-4 px-0 ps-1 justify-content-center">
+                    <div class="col-3 cuadro-color " style="background-color: #55fe01;"></div>
+                    <span class="smalll col-auto ps-1">( > 100% )</span>
+                  </div>
+                </div>
               </div>
-              <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
-                <div class="col-2 cuadro-color" style="background-color: #72dffd;"></div>
-                <span class="smalll col-auto ps-1">( > 30% <= 60% )</span>
-              </div>
-              <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-end">
-                <div class="col-2 cuadro-color" style="background-color: #0066eb;"></div>
-                <span class="smalll col-auto ps-1">( >60% <= 90% )</span>
-              </div>
-              <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-start">
-                <div class="col-sm-3 col-2 cuadro-color" style="background-color: #3ba500;"></div>
-                <span class="smalll col-auto ps-1">( >90% <= 100% )</span>
-              </div>
-              <div class="etiqueta col-sm-2 col-4 px-0 ps-1 justify-content-center">
-                <div class="col-3 cuadro-color " style="background-color: #55fe01;"></div>
-                <span class="smalll col-auto ps-1">( > 100% )</span>
+              <div class="table-responsive col-12 h-90 h-sm-90">
+                <div id="cont" class="h-100" style="min-width:1000px !important;"></div>
               </div>
             </div>
           </div>
-          <div class="table-responsive col-12 h-90 h-sm-90">
-            <div id="cont" class="h-100" style="min-width:1000px !important;"></div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;" hidden>
+        <div class="card z-index-2">
+          <div class="card-header pb-3">
+            <h6 class="mb-0">Registro de Reportes</h6>
+            <p class="text-sm">Cantidad de reportes realizados al mes</p>
+            <hr class="dark horizontal">
+            <div class="d-flex mb-3">
+              <label for="embalseSelect" class="text-sm my-auto me-1">Selecciona un embalse:</label>
+              <select style="width: 180px;" class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
+                <option style="display:none">Seleccione...</option>
+                <?php
+                while ($row_embalse = $result_embalses->fetch_assoc()) {
+                  echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
+                }
+                ?>
+              </select>
+
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-6 col-md-4 mt-4 mb-3" style="padding-left:20px;" hidden>
-    <div class="card z-index-2">
-      <div class="card-header pb-3">
-        <h6 class="mb-0">Registro de Reportes</h6>
-        <p class="text-sm">Cantidad de reportes realizados al mes</p>
-        <hr class="dark horizontal">
-        <div class="d-flex mb-3">
-          <label for="embalseSelect" class="text-sm my-auto me-1">Selecciona un embalse:</label>
-          <select style="width: 180px;" class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
-            <option style="display:none">Seleccione...</option>
-            <?php
-            while ($row_embalse = $result_embalses->fetch_assoc()) {
-              echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
-            }
-            ?>
-          </select>
-
-        </div>
-      </div>
-      <div class="card-body p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-        <div class="bg-white  shadow-dark  py-3 pe-1">
-          <div class="chart mb-1 border border-radius-lg" style="height:350px !important;">
-            <canvas id="myChart" width="400" height="200"></canvas>
+          <div class="card-body p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+            <div class="bg-white  shadow-dark  py-3 pe-1">
+              <div class="chart mb-1 border border-radius-lg" style="height:350px !important;">
+                <canvas id="myChart" width="400" height="200"></canvas>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- <div class="col-lg-9 mb-lg-0 mb-1">
+      <!-- <div class="col-lg-9 mb-lg-0 mb-1">
       <div class="card user-card-full">
         <div class="row m-l-0 m-r-0">
           <div class="col-sm-4 bg-c-lite-green user-profile">
@@ -438,7 +440,7 @@ closeConection($conn);*/
             </div>
           </div>
           <div class="col-sm-8" style="display: flex;"> -->
-  <!-- <div class="card-block">
+      <!-- <div class="card-block">
               <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="margin-top: 15px;">UN HITO INNOVADOR</h6>
               <div class="row">
                 <div class="col-sm-12" style="text-align: justify;">
@@ -452,7 +454,7 @@ closeConection($conn);*/
 
                   <h6 class="text-muted f-w-400"><a href="..\..\..\cdn-cgi\l\email-protection.htm" class="__cf_email__" data-cfemail="3a505f54437a5d575b535614595557"></a></h6>
                 </div> -->
-  <!-- <div class="col-sm-6">
+      <!-- <div class="col-sm-6">
                                                                     <p class="m-b-10 f-w-600">Agencia Bolivariana para Actividades Espaciales</p>
                                                                     <h6 class="text-muted f-w-400"></h6>
                                                                 </div>
@@ -467,19 +469,19 @@ closeConection($conn);*/
                                                                     <p class="m-b-10 f-w-600">Most Viewed</p>
                                                                     <h6 class="text-muted f-w-400">Able Pro Admin</h6>
                                                                 </div>-->
-  <!-- </div> -->
-  <!--<ul class="social-link list-unstyled m-t-40 m-b-10">
+      <!-- </div> -->
+      <!--<ul class="social-link list-unstyled m-t-40 m-b-10">
                                                                 <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook"><i class="feather icon-facebook facebook" aria-hidden="true"></i></a></li>
                                                                 <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter"><i class="feather icon-twitter twitter" aria-hidden="true"></i></a></li>
                                                                 <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram"><i class="feather icon-instagram instagram" aria-hidden="true"></i></a></li>
                                                             </ul>-->
-  <!-- </div>
+      <!-- </div>
       </div>
     </div>
 
   </div> -->
 
-  <!--<div class="card z-index-2 h-100">
+      <!--<div class="card z-index-2 h-100">
           
 
           <div class="col-lg-2">
@@ -515,8 +517,8 @@ closeConection($conn);*/
               </div>
             </div>
           </div>-->
-</div>
-<!-- <div class="col-lg-3">
+    </div>
+    <!-- <div class="col-lg-3">
       <div class="card card-carousel overflow-hidden h-100 p-0">
         <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
           <div class="carousel-inner border-radius-lg h-100">
@@ -550,7 +552,7 @@ closeConection($conn);*/
         </button>
       </div>
     </div> -->
-</div>
+  </div>
 </div>
 
 <!--RRSS-->
@@ -673,46 +675,44 @@ closeConection($conn);*/
 <body style="height:1500px">
 </body>
 <script>
-    var mapa_portada = L.map('mapa-portada').setView([9.5, -67], 7);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(mapa_portada);
-    var ubicacion;  
+  // var mapa_portada = L.map('mapa-portada').setView([9.5, -67], 7);
+  // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //     attribution: '© OpenStreetMap contributors'
+  // }).addTo(mapa_portada);
+  // var ubicacion;  
 
-    $.ajax({
-    url: 'pages/mapa_dashboard.php',
-    type: 'GET',
-    dataType: 'json',
-    success: function(data) {
+  // $.ajax({
+  // url: 'pages/mapa_dashboard.php',
+  // type: 'GET',
+  // dataType: 'json',
+  // success: function(data) {
 
-        // var mapa_portada = L.map('mapa-portada').setView([9.5, -68], 7);
+  //     // var mapa_portada = L.map('mapa-portada').setView([9.5, -68], 7);
 
-        // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //     attribution: '© OpenStreetMap contributors'
-        // }).addTo(mapa_portada);
+  //     // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //     //     attribution: '© OpenStreetMap contributors'
+  //     // }).addTo(mapa_portada);
 
-        //Añadiendo los marcadores al mapa de la portada.
-        data.forEach(function(emb) {
-            if (emb[0] != "" && emb[1] != "" && emb[2] != "") {
-                var ubicacion = geoToUtm(emb[0], emb[1], emb[2]);
-                var marker = L.marker([ubicacion[0], ubicacion[1]], {
-                    icon: emb[4]
-                }).addTo(mapa_portada).bindPopup("<b>" + emb[5] + "</b>", {
-                    autoClose: false,
-                    closeOnClick: false
-                }).openPopup();
-            }
-        });
-    },
-    error: function(xhr, status, error) {
-        // Manejo de errores, si es necesario
-    }
-});
-
+  //     //Añadiendo los marcadores al mapa de la portada.
+  //     data.forEach(function(emb) {
+  //         if (emb[0] != "" && emb[1] != "" && emb[2] != "") {
+  //             var ubicacion = geoToUtm(emb[0], emb[1], emb[2]);
+  //             var marker = L.marker([ubicacion[0], ubicacion[1]], {
+  //                 icon: emb[4]
+  //             }).addTo(mapa_portada).bindPopup("<b>" + emb[5] + "</b>", {
+  //                 autoClose: false,
+  //                 closeOnClick: false
+  //             }).openPopup();
+  //         }
+  //     });
+  // },
+  // error: function(xhr, status, error) {
+  //     // Manejo de errores, si es necesario
+  // }
+  // });
 </script>
 
 <script>
-
   var configuration = {
     type: 'bar',
     data: {
@@ -734,7 +734,7 @@ closeConection($conn);*/
   };
 
   var ctx = document.getElementById('myChart').getContext('2d');
-  
+
 
   function actual() {
     $("#contenedor-1").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
