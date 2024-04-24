@@ -18,9 +18,6 @@
 
   }
 
-  .icon-center {}
-
-
   @media (max-width: 1100px) {
     .rrss-item {
       flex: 1 0 100%;
@@ -309,7 +306,7 @@ closeConection($conn);*/
                 Hace 7 Días
               </h4>
               <div class="col-12 justify-content-center align-items-center">
-                <div class="" id="contenedor-2">
+                <div class="ps-3" id="contenedor-2">
                 </div>
               </div>
             </div>
@@ -318,7 +315,7 @@ closeConection($conn);*/
                 Hace un año
               </h4>
               <div class="col-12 justify-content-center align-items-center">
-                <div class="" id="contenedor-3">
+                <div class="ps-3" id="contenedor-3">
                 </div>
               </div>
             </div>
