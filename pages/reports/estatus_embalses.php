@@ -37,6 +37,9 @@ $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
 
+$fecha_actual = date("Y-m-d");
+$fecha3 = date("Y-m-d", strtotime("-7 days", strtotime($fecha_actual)));
+
 $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,MAX(d.fecha) AS fech,               (
 SELECT SUM(extraccion)
         FROM detalles_extraccion dex, codigo_extraccion ce
@@ -69,6 +72,14 @@ LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo
 WHERE e.estatus = 'activo'
 GROUP BY id_embalse;");
 
+$condiciones_actuales3 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha3' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+FROM datos_embalse h 
+WHERE h.id_embalse = e.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0 AND da.fecha <= '$fecha3') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha3' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual 
+FROM embalses e
+LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha3'
+WHERE e.estatus = 'activo'
+GROUP BY id_embalse;");
+
 $hidro = mysqli_query($conn, "SELECT COUNT(e.id_embalse),e.operador
                 FROM embalses e
                 WHERE e.estatus = 'activo'
@@ -92,6 +103,7 @@ while ($reg = mysqli_fetch_array($queryReg)) {
 $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 $volumen_primer_periodo = mysqli_fetch_all($condiciones_actuales1, MYSQLI_ASSOC);
 $volumen_segundo_periodo = mysqli_fetch_all($condiciones_actuales2, MYSQLI_ASSOC);
+$volumen_tercer_periodo = mysqli_fetch_all($condiciones_actuales3, MYSQLI_ASSOC);
 
 $embalses_variacion = [];
 $operadores = [];
@@ -102,6 +114,7 @@ $num = 0;
 while ($num < count($volumen_primer_periodo)) {
   $row = $volumen_primer_periodo[$num];
   $row2 = $volumen_segundo_periodo[$num];
+  $row3 = $volumen_tercer_periodo[$num];
   $bat = new Batimetria($row["id_embalse"], $conn);
   // $fecha = date($row['fecha']);
   $anio = date("Y", strtotime($row['fecha']));
@@ -116,11 +129,17 @@ while ($num < count($volumen_primer_periodo)) {
   $variacion2 = $final2 - $inicial2;
   $porcentaje2 = $inicial2 != 0 ? (100 * (($final2 - $inicial2) / abs($inicial2))) : 0;
 
+  $anio3 = date("Y", strtotime($row3['fecha']));
+  $final3 = $bat->volumenActualDisponible();
+  $inicial3 = $bat->volumenDisponibleByCota($anio3, $row3["cota_actual"]);
+  $variacion3 = $final3 - $inicial3;
+  $porcentaje3 = $inicial3 != 0 ? (100 * (($final3 - $inicial3) / abs($inicial3))) : 0;
+
 
   if (!in_array($totalop[$row["operador"]], $operadores)) {
     array_push($operadores, $totalop[$row["operador"]]);
     $countOp[$totalop[$row["operador"]]] = 1;
-    $variacion_total_op[$totalop[$row["operador"]]] = [$inicial, $inicial2, $variacion, $variacion2, $porcentaje, $porcentaje2, 0, 0];
+    $variacion_total_op[$totalop[$row["operador"]]] = [$inicial, $inicial2, $variacion, $variacion2, $porcentaje, $porcentaje2, $variacion3, $porcentaje3];
   } else {
     $countOp[$totalop[$row["operador"]]] += 1;
     $variacion_total_op[$totalop[$row["operador"]]][0] += $inicial;
@@ -129,9 +148,11 @@ while ($num < count($volumen_primer_periodo)) {
     $variacion_total_op[$totalop[$row["operador"]]][3] += $variacion2;
     $variacion_total_op[$totalop[$row["operador"]]][4] += $porcentaje;
     $variacion_total_op[$totalop[$row["operador"]]][5] += $porcentaje2;
+    $variacion_total_op[$totalop[$row["operador"]]][6] += $variacion3;
+    $variacion_total_op[$totalop[$row["operador"]]][7] += $porcentaje3;
   }
 
-  $array = [$totalop[$row["operador"]], $row["nombre_embalse"], $variacion, $porcentaje, $variacion2, $porcentaje2];
+  $array = [$totalop[$row["operador"]], $row["nombre_embalse"], $variacion, $porcentaje, $variacion2, $porcentaje2, $variacion3, $porcentaje3];
   array_push($embalses_variacion, $array);
   $num++;
 }
@@ -1297,15 +1318,15 @@ if (contiene_subcadena($fullPath, "C:")) {
           ?>
               <tr>
                 <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
-                <td class="text-celd" style="font-size: 12px;"><?php echo number_format($value[2], 2, ",", "") ?></td>
-                <td class="text-celd" style="font-size: 12px;"><?php echo number_format($value[3], 2, ",", "") ?>%</td>
+                <td class="text-celd" style="font-size: 12px; color:<?php if($value[2] < 0){echo "red"; }else{echo "green"; } ?>"><?php echo number_format($value[2], 2, ",", "") ?></td>
+                <td class="text-celd" style="font-size: 12px; color:<?php if($value[3] < 0){echo "red"; }else{echo "green"; } ?>"><?php echo number_format($value[3], 2, ",", "") ?>%</td>
               </tr>
           <?php }
           } ?>
           <tr>
             <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
-            <td class="text-celd" style="font-size: 16px;"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
-            <td class="text-celd" style="font-size: 16px;"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
+            <td class="text-celd" style="font-size: 16px; color:<?php if($tot_vol < 0){echo "red"; }else{echo "green"; } ?>"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
+            <td class="text-celd" style="font-size: 16px; color:<?php if($tot_por < 0){echo "red"; }else{echo "green"; } ?>"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
           </tr>
         </table>
 
@@ -1328,15 +1349,15 @@ if (contiene_subcadena($fullPath, "C:")) {
           ?>
               <tr>
                 <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
-                <td class="text-celd" style="font-size: 12px;"><?php echo number_format($value[4], 2, ",", ""); ?></td>
-                <td class="text-celd" style="font-size: 12px;"><?php echo number_format($value[5], 2, ",", ""); ?>%</td>
+                <td class="text-celd" style="font-size: 12px; color:<?php if($value[4] < 0){echo "red"; }else{echo "green"; } ?>"><?php echo number_format($value[4], 2, ",", ""); ?></td>
+                <td class="text-celd" style="font-size: 12px; color:<?php if($value[5] < 0){echo "red"; }else{echo "green"; } ?>"><?php echo number_format($value[5], 2, ",", ""); ?>%</td>
               </tr>
           <?php }
           } ?>
           <tr>
             <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
-            <td class="text-celd" style="font-size: 16px;"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
-            <td class="text-celd" style="font-size: 16px;"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
+            <td class="text-celd" style="font-size: 16px; color:<?php if($tot_vol < 0){echo "red"; }else{echo "green"; } ?>"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
+            <td class="text-celd" style="font-size: 16px; color:<?php if($tot_por < 0){echo "red"; }else{echo "green"; } ?>"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
           </tr>
         </table>
 
@@ -1625,7 +1646,7 @@ if (contiene_subcadena($fullPath, "C:")) {
     <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
   </div>
 
-  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY <?php echo $fecha3." - ".$fecha2;?></b>
   </div>
 
   <div style="position: absolute; margin-top: 80px; margin-left: 30px; width: 95%; height: 100px;">
