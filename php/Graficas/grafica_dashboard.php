@@ -150,7 +150,7 @@ if ($count >= 1) {
 
                         echo '{
                             
-                            label:"Volumen Total Disponible",
+                            label:"Volumen Util Actual(VTD)",
                             data:{volumen:' . round($volumen_fechas[1], 2) . '},';
                         echo "backgroundColor:'#2e75b6',
                         borderColor:'#2e75b6',

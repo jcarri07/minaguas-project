@@ -520,7 +520,7 @@ ORDER BY d.fecha ASC;";
                             y: {
                                 title: {
                                     display: true,
-                                    text: 'Volumen (Hm³)',
+                                    text: 'Cota (m.s.n.m)',
                                     font: {
                                         size: 16,
                                         family:'Arial',
