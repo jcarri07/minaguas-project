@@ -464,51 +464,73 @@ $options_extraccion .= '<option value="Recreación">Recreación</option>';
   }
 
 
-  function openModalDetalles(id_registro, fecha, hora, cota, extraccion) {
-    $("#id_aux").text(id_registro);
-    //$("#opc_aux").text("edit");
+  function openModalDetalles(id_registro, fecha, hora, cota, extraccion){
+      $("#id_aux").text(id_registro);
+      //$("#opc_aux").text("edit");
 
-    $("#add .title").text("Detalles del Reporte");
-    $(".removeRow").each(function(index) {
-      $(this).trigger("click");
-    });
+      $(".removeRow").attr("disabled", false);
+      $("#btn-open-modal-import-data").hide();
 
-    $("#fecha").val(fecha);
-    $("#hora").val(hora);
-    $("#valor_cota").val(cota);
-    var extraccion_array = extraccion.split(";");
-    if (extraccion_array.length > 1) {
-      for (var i = 0; i < extraccion_array.length - 1; i++) {
-        $("#addRows").trigger("click");
+      $("#add .title").text("Detalles del Reporte de la Extracción");
+      $(".removeRow").each(function( index ) {
+        $(this).trigger("click");
+      });
+
+      $("#fecha").val(fecha);
+      $("#hora").val(hora);
+      $("#valor_cota").val(cota);
+      var extraccion_array = extraccion.split(";");
+      if(extraccion_array.length > 1){
+        for(var i = 0 ; i < extraccion_array.length - 1 ; i++){
+          $("#addRows").trigger("click");
+        }
       }
+
+      $(".removeRow").attr("disabled", true);
+
+      //var ids_rows_extracciones = [];
+      $("select[name='tipo_extraccion[]']").each(function(i) {
+        var extraccion_aux = extraccion_array[i].split("&");
+
+        this.value = extraccion_aux[0];
+        $(this).trigger("change");
+        var row = this.id.replace("tipo_extraccion_", "");
+
+        var valor_extraccion = extraccion_aux[1];
+        if(this.value == "30") {
+          if($.isNumeric(extraccion_aux[1])) {
+            valor_extraccion = extraccion_aux[1] + "%";
+            if(extraccion_aux[1] < 1) {
+              valor_extraccion = (extraccion_aux[1] * 100) + "%";
+            }
+          }
+        }
+        if(this.value == "31") {
+          if($.isNumeric(extraccion_aux[1])) 
+            valor_extraccion = Number(extraccion_aux[1]).toFixed(4);
+        }
+        if( this.value != "30" && this.value != "31" && $.isNumeric(extraccion_aux[1]) )
+          valor_extraccion = Number(extraccion_aux[1]).toFixed(3);
+        $("#valor_extraccion_" + row).val(valor_extraccion);
+
+        $(this).attr("disabled", true);
+        $("#valor_extraccion_" + row).attr("disabled", true);
+
+        //En este atributo se guarda el id del detalle de la extraccion en caso de editar
+        //$(this).attr("id_detalle_edit", extraccion_aux[2]);
+      });
+
+      $("#valor_cota").attr("disabled", true);
+
+      $("#add .text-retraso").hide();
+      $("#add .btn-submit").hide();
+      $("#add .btn-add-extraccion").hide();
+      $("#add .btn-edit").show();
+      $("#add .btn-edit").attr("onclick", "$('#modal-details').modal('show')");
+      $("#add .btn-edit").text("Atrás");
+      $('#add').modal('show');
+
     }
-
-    $(".removeRow").attr("disabled", true);
-
-    //var ids_rows_extracciones = [];
-    $("select[name='tipo_extraccion[]']").each(function(i) {
-      var extraccion_aux = extraccion_array[i].split("&");
-
-      this.value = extraccion_aux[0];
-      var row = this.id.replace("tipo_extraccion_", "");
-      $("#valor_extraccion_" + row).val(extraccion_aux[1]);
-
-      $(this).attr("disabled", true);
-      $("#valor_extraccion_" + row).attr("disabled", true);
-
-      //En este atributo se guarda el id del detalle de la extraccion en caso de editar
-      //$(this).attr("id_detalle_edit", extraccion_aux[2]);
-    });
-
-    $("#valor_cota").attr("disabled", true);
-
-    $("#add .text-retraso").hide();
-    $("#add .btn-submit").hide();
-    $("#add .btn-add-extraccion").hide();
-    $("#add .btn-edit").show();
-    $('#add').modal('show');
-
-  }
 
   var count = 1;
   $(document).on('click', '#addRows', function() {
