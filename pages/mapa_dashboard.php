@@ -4,48 +4,81 @@ require_once 'php/Conexion.php';
 require_once 'php/batimetria.php';
 
 //EMBALSES - PORCENTAJE Y VARIACION
-$embalses_porcentaje = [];
+$embalses_abst = [];
 $cantidades_p = [0, 0, 0, 0, 0];
 $condiciones = [];
 
-$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo';");
+// $queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo';");
+$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,norte,este,huso, MAX(d.fecha) AS fech,               (
+    SELECT SUM(extraccion)
+            FROM detalles_extraccion dex, codigo_extraccion ce
+            WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
+               FROM datos_embalse h 
+               WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
+          ) AS 'extraccion',
+          e.nombre_embalse, (SELECT cota_actual 
+               FROM datos_embalse h 
+               WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
+          FROM embalses e
+    LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+    WHERE e.estatus = 'activo'
+    GROUP BY id_embalse 
+    ORDER BY id_embalse ASC;");
 
-while ($row = mysqli_fetch_array($queryEmbalses)) {
-    //Saco la ubicacion de los embalses.
-    $array = array($row["norte"], $row["este"], $row["huso"]);
 
-    //Calculo del porcentaje.
-    $bat = new Batimetria($row["id_embalse"], $conn);
-    $porcentaje = ($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible();
-    array_push($array, $porcentaje);
-    // echo $row["nombre_embalse"]." Vol: ".$bat->cargaActual()." -- ";
+$datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
+
+$row = 0;
+
+while ($row < count($datos_embalses)) {
+    $array = array($datos_embalses[$row]["norte"], $datos_embalses[$row]["este"], $datos_embalses[$row]["huso"]);
+
+     $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
+  
+    $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
+  
+    $array = [$datos_embalses[$row]["nombre_embalse"]];
+//    array_push($embalse_abast, $array);
+
+//     $row++;
+//   }
+  
+
+
+// while ($row = mysqli_fetch_array($datos_embalses)) {
+//     //Saco la ubicacion de los embalses.
+//     $array = array($row["norte"], $row["este"], $row["huso"]);
+
+//     //Calculo del porcentaje.
+//     $bat = new Batimetria($row["id_embalse"], $conn);
+//     $porcentaje = ($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible();
+//     array_push($array, $porcentaje);
+//     // echo $row["nombre_embalse"]." Vol: ".$bat->cargaActual()." -- ";
 
     // Dependiendo del porcentaje, se asigna su icono, y se cuenta para su categoria.
-    if ($porcentaje < 30) {
+    if ($abastecimiento < 0 && $abastecimiento < 4) {
         array_push($array, "i_rojo");
         $cantidades_p[0] += 1;
         // agregarACondiciones($row["operador"], $condiciones, 1);
-    } else if ($porcentaje >= 30 && $porcentaje < 60) {
+    } else if ($abastecimiento < 5 && $abastecimiento < 8) {
         array_push($array, "i_azulclaro");
         $cantidades_p[1] += 1;
         // agregarACondiciones($row["operador"], $condiciones, 2);
-    } else if ($porcentaje >= 60 && $porcentaje < 90) {
+    } else if ($abastecimiento < 9 && $abastecimiento < 12) {
         array_push($array, "i_azul");
         $cantidades_p[2] += 1;
         // agregarACondiciones($row["operador"], $condiciones, 3);
-    } else if ($porcentaje >= 90 && $porcentaje <= 100) {
+    } else if ($abastecimiento > 12) {
         array_push($array, "i_verde");
         $cantidades_p[3] += 1;
         // agregarACondiciones($row["operador"], $condiciones, 4);
-    } else {
-        array_push($array, "i_verdeclaro");
-        $cantidades_p[4] += 1;
-        // agregarACondiciones($row["operador"], $condiciones, 5);
     }
 
     // Guardo el nombre del embalse
-    array_push($array, $row["nombre_embalse"]);
-    array_push($embalses_porcentaje, $array);
+    //array_push($array, $row["nombre_embalse"]);
+    array_push($embalse_abast, $array);
+    $row++;
+
 }
 
 ?>
@@ -156,6 +189,7 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
 
     // Creación de los mapas
     var mapa_portada = L.map('mapa-portada').setView([9.5, -68], 7);
+    map.scrollWheelZoom.disable();
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -164,7 +198,7 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
     var ubicacion;
 
     <?php
-    foreach ($embalses_porcentaje as $emb) {
+    foreach ($embalse_abast as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
             // console.log("Prueba");
             ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
