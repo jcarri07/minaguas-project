@@ -5,7 +5,7 @@ setlocale(LC_TIME, "spanish");
 
 $id_encargado = $_POST['id_encargado'];
 
-$sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, GROUP_CONCAT(tipo_extraccion, '&', extraccion, '&', id_detalles_extraccion SEPARATOR ';') AS 'extraccion', (SELECT CONCAT(P_Nombre, ' ', P_Apellido) FROM usuarios u WHERE u.id_usuario = de.id_encargado) AS 'encargado'
+$sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, GROUP_CONCAT(id_codigo_extraccion, '&', extraccion, '&', id_detalles_extraccion SEPARATOR ';') AS 'extraccion', (SELECT CONCAT(P_Nombre, ' ', P_Apellido) FROM usuarios u WHERE u.id_usuario = de.id_encargado) AS 'encargado'
             FROM datos_embalse de, detalles_extraccion dex
             WHERE de.id_registro = dex.id_registro AND id_encargado = '$id_encargado'  AND de.estatus = 'activo'
             GROUP BY de.id_registro
@@ -43,7 +43,7 @@ if (mysqli_num_rows($query) > 0) {
                         $extraccion_array = explode(";", $row['extraccion']);
                         for ($j = 0; $j < count($extraccion_array); $j++) {
                             $fila = explode("&", $extraccion_array[$j]);
-                            $extraccion += $fila[1];
+                            $extraccion +=$fila[1];
                         }
                     ?>
 

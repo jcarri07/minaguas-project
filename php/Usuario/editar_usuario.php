@@ -36,6 +36,7 @@ function editar($conn)
     $cedula2 = $_POST["cedula2"];
     $telefono = $_POST["telefono"];
     $email = $_POST["email"];
+    $tipo = $_POST["tipo"];
     $num = 0;
 
     $apellido2 = "";
@@ -110,7 +111,7 @@ function editar($conn)
 
 
         $password = password_hash($contra, PASSWORD_DEFAULT,['cost' => 5]);
-        $res = mysqli_query($conn, "UPDATE usuarios SET `Contrasena`='$password',`P_Nombre`='$nombre1',`S_Nombre`='$nombre2',`P_Apellido`='$apellido1',`S_Apellido`='$apellido2',`Cedula`='$cedula',`Correo`='$email',`Telefono`='$telefono',`Tipo`='User' WHERE Cedula = '$cedula2';");
+        $res = mysqli_query($conn, "UPDATE usuarios SET `Contrasena`='$password',`P_Nombre`='$nombre1',`S_Nombre`='$nombre2',`P_Apellido`='$apellido1',`S_Apellido`='$apellido2',`Cedula`='$cedula',`Correo`='$email',`Telefono`='$telefono',`Tipo`='$tipo' WHERE Cedula = '$cedula2';");
 
         if ($res) {
             echo "si";
@@ -130,6 +131,7 @@ function editarU($conn)
     $cedula2 = $_POST["cedula2"];
     $telefono = $_POST["telefono"];
     $email = $_POST["email"];
+    $tipo = $_POST["tipo"];
     $num = 0;
 
     $apellido2 = "";
@@ -199,7 +201,7 @@ function editarU($conn)
 
 
         $password = password_hash($contra, PASSWORD_DEFAULT,['cost' => 5]);
-        $res = mysqli_query($conn, "UPDATE usuarios SET `Contrasena`='$password',`P_Nombre`='$nombre1',`S_Nombre`='$nombre2',`P_Apellido`='$apellido1',`S_Apellido`='$apellido2',`Cedula`='$cedula',`Correo`='$email',`Telefono`='$telefono',`Tipo`='User' WHERE Cedula = '$cedula2';");
+        $res = mysqli_query($conn, "UPDATE usuarios SET `Contrasena`='$password',`P_Nombre`='$nombre1',`S_Nombre`='$nombre2',`P_Apellido`='$apellido1',`S_Apellido`='$apellido2',`Cedula`='$cedula',`Correo`='$email',`Telefono`='$telefono',`Tipo`='$tipo' WHERE Cedula = '$cedula2';");
 
         if ($res) {
             echo "si";

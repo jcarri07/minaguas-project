@@ -12,14 +12,14 @@ $fechaActual = new DateTime();
 // Restarle 15 días
 $fechaActual->modify('-7 days');
 // Obtener un string de la fecha en formato deseado (por ejemplo, 'Y-m-d' para año-mes-día)
-$fechaFormateada1 = $fechaActual->format('Y-m-d');
+$fecha_dia = $fechaActual->format('Y-m-d');
 
 // Obtener la fecha actual
 $fechaActual = new DateTime();
 // Restarle 15 días
 $fechaActual->modify('-1 years');
 // Obtener un string de la fecha en formato deseado (por ejemplo, 'Y-m-d' para año-mes-día)
-$fechaFormateada2 = $fechaActual->format('Y-m-d');
+$fecha_anio = $fechaActual->format('Y-m-d');
 
 $queryInameh = mysqli_query($conn, "SELECT nombre_config, configuracion FROM configuraciones WHERE nombre_config = 'fecha_sequia' OR nombre_config = 'fecha_lluvia' ORDER BY id_config ASC;");
 $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
@@ -40,25 +40,25 @@ if ($count >= 1) {
   GROUP BY id_embalse 
   ORDER BY id_embalse ASC;");
 
-    $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, d.fecha AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fechaFormateada1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+    $condiciones_dias = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_dia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0 AND da.fecha <= '$fechaFormateada1' LIMIT 1) AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fechaFormateada1' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual  
+    WHERE h.id_embalse = e.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0 AND da.fecha <= '$fecha_dia') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha_dia' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual  
   FROM embalses e
-  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fechaFormateada1'
+  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_dia'
   WHERE e.estatus = 'activo'
-  GROUP BY id_embalse;");
+  GROUP BY id_embalse;;");
 
-    $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, d.fecha AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha = '$fechaFormateada2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+    $condiciones_anio = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_anio' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0 AND da.fecha = '$fechaFormateada2' LIMIT 1) AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = '$fechaFormateada2' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
+    WHERE h.id_embalse = e.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0 AND da.fecha <= '$fecha_anio') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha_anio' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
    FROM embalses e
-   LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha = '$fechaFormateada2'
+   LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_anio'
    WHERE e.estatus = 'activo'
    GROUP BY id_embalse;");
 
     $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
-    $volumen_primer_periodo = mysqli_fetch_all($condiciones_actuales1, MYSQLI_ASSOC);
-    $volumen_segundo_periodo = mysqli_fetch_all($condiciones_actuales2, MYSQLI_ASSOC);
+    $volumen_dias = mysqli_fetch_all($condiciones_dias, MYSQLI_ASSOC);
+    $volumen_anio = mysqli_fetch_all($condiciones_anio, MYSQLI_ASSOC);
 
     $j = 0;
 
@@ -80,11 +80,11 @@ if ($count >= 1) {
             $volumen_fechas[1] += $sum;
         }
         $volumen_fechas[0] += $bati->volumenDisponible();
-        if ($volumen_primer_periodo[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_primer_periodo[$j]["fecha"])), $volumen_primer_periodo[$j]["cota_actual"]);
+        if ($volumen_dias[$j]['cota_actual'] != NULL) {
+            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_dias[$j]["fecha"])), $volumen_dias[$j]["cota_actual"]);
         }
-        if ($volumen_segundo_periodo[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_segundo_periodo[$j]["fecha"])), $volumen_segundo_periodo[$j]["cota_actual"]);
+        if ($volumen_anio[$j]['cota_actual'] != NULL) {
+            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_anio[$j]["fecha"])), $volumen_anio[$j]["cota_actual"]);
         }
         $j++;
     };
@@ -151,7 +151,7 @@ if ($count >= 1) {
                         echo '{
                             
                             label:"Dato",
-                            data:[{x:"",y:' . round($volumen_fechas[0], 2) . '},{x:"",y:' . round($volumen_fechas[1], 2) . '}';
+                            data:[{x:"Volumen",y:' . round($volumen_fechas[0], 2) . '},{x:"Volumen",y:' . round($volumen_fechas[1], 2) . '}';
 
                         echo "],backgroundColor:['#9fe3a3','#2e75b6'],borderColor:'#2e75b6',borderWidth:2},";
                         ?>
@@ -201,6 +201,7 @@ if ($count >= 1) {
                     scales: {
                         x: {
                             ticks: {
+                                display:false,
                                 font: {
                                     
                                     size: 10,
@@ -232,26 +233,26 @@ if ($count >= 1) {
             });
         });
             $("#contenedor-2").html('<?php
-                                        $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[1]);
+                                        $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[1]);
                                         if ($valor >= 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important"><path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h1>';
+                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important" ><path  d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                         };
                                         if ($valor < 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h1>';
+                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important "><path h d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                         };
 
                                         ?>');
             $("#contenedor-3").html('<?php
-                                        $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[1]);
+                                        $valor = -100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[1]);
                                         if ($valor >= 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important"><path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h1>';
+                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important" ><path  d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                         };
                                         if ($valor < 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8">' . round(abs($valor), 2) . '%</span></h1>';
+                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important "><path h d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                         };
 
                                         ?>');

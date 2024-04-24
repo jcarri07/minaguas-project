@@ -7,6 +7,7 @@ $apellido = $_POST["apellido"];
 $cedula = $_POST["cedula"];
 $telefono = $_POST["telefono"];
 $email = $_POST["email"];
+$tipo = $_POST["tipo"];
 
 $apellido2 = "";
 $nombre2 = "";
@@ -41,7 +42,7 @@ if ($num_r >= 1) {
         return;
     } else {
         $password = password_hash($contra, PASSWORD_DEFAULT,['cost' => 5]);
-        $res = mysqli_query($conn, "INSERT INTO usuarios (P_Nombre,S_Nombre, P_Apellido,S_Apellido, Cedula,Telefono, Contrasena,Tipo,Correo, estatus) VALUES ('$nombre1','$nombre2', '$apellido1','$apellido2','$cedula','$telefono','$password','User','$email','activo');");
+        $res = mysqli_query($conn, "INSERT INTO usuarios (P_Nombre,S_Nombre, P_Apellido,S_Apellido, Cedula,Telefono, Contrasena,Tipo,Correo, estatus) VALUES ('$nombre1','$nombre2', '$apellido1','$apellido2','$cedula','$telefono','$password','$tipo','$email','activo');");
 
         if ($res) {
             echo "si";

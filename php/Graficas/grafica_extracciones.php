@@ -1,15 +1,7 @@
 <?php
 require_once '../Conexion.php';
 require_once '../batimetria.php';
-/*
-$colores = array(
-    "3" => "#9dc3e6",
-    "2" => "#5b9bd5",
-    "1" => "#2e75b6",
-    "0" => "#4679a7",
-);*/
 
-$colors = array();
 
 function getRandomColor() {
     $letters = str_split('0123456789ABCDEF');
@@ -69,10 +61,24 @@ if ($count >= 1) {
 
 $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 
+
+
+$colores_fixed_array = array(
+    "6" => "#109F2D",
+    "5" => "#7091DC",
+    "4" => "#703374",
+    "3" => "#F17900",
+    "2" => "#F5CD5A",
+    "1" => "#A6B748",
+    "0" => "#F28894",
+);
+
+$colors = array();
+
 $j = 0;
 while ($j < count($datos_embalses)) {
     $color = getRandomColor();
-    $colors[$datos_embalses[$j]['tipo_extraccion']] = $color;
+    $colors[$datos_embalses[$j]['tipo_extraccion']] = $colores_fixed_array[$j];
     $j++;
 }
 

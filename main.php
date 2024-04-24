@@ -189,7 +189,7 @@ date_default_timezone_set("America/Caracas");
       <a class="btn btn-primary btn-sm mb-0 w-100" href="https://www.creative-tim.com/product/argon-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
     </div>
   </aside> -->
-  <main class="main-content position-relative border-radius-lg h-100">
+  <main class="main-content position-relative border-radius-lg">
 
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
