@@ -328,8 +328,8 @@ closeConection($conn);*/
               <!-- Lo de Miguel -->
             </h4>
             <div class="d-flex justify-content-center align-items-center">
-              <div class="d-flex justify-content-center align-items-center rounded" id="contenedor-4">
-                <div class="progress-bar grafica" id="contenedor-4">
+              <div class="d-flex justify-content-center align-items-center rounded" id="">
+                <div class="" id="contenedor-4">
                 </div>
               </div>
             </div>
@@ -884,6 +884,22 @@ closeConection($conn);*/
       success: function(response) {
         //$("#contenedor").html("");
         $("#contenedor-1").html(response);
+
+      },
+      error: function(response) {
+
+        alertify.error("Error inesperado.");
+
+      }
+    });
+    $.ajax({
+      url: 'php/Graficas/grafica_extracciones.php',
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        //$("#contenedor").html("");
+        $("#contenedor-4").html(response);
 
       },
       error: function(response) {

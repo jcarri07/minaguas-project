@@ -84,20 +84,20 @@ if ($count >= 1) {
     // GROUP BY id_embalse 
     // ORDER BY id_embalse ASC;");
     $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,MAX(d.fecha) AS fech,               (
-    SELECT SUM(extraccion)
-    FROM detalles_extraccion dex
-    WHERE dex.id_registro = (SELECT id_registro
-       FROM datos_embalse h 
-       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0)
-  ) AS 'extraccion',
-  e.nombre_embalse, (SELECT cota_actual 
-       FROM datos_embalse h 
-       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
-  FROM embalses e
-  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-  WHERE e.estatus = 'activo'
-  GROUP BY id_embalse 
-  ORDER BY id_embalse ASC;");
+        SELECT SUM(extraccion)
+        FROM detalles_extraccion dex, codigo_extraccion ce
+        WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
+           FROM datos_embalse h 
+           WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
+      ) AS 'extraccion',
+      e.nombre_embalse, (SELECT cota_actual 
+           FROM datos_embalse h 
+           WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
+      FROM embalses e
+      LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+      WHERE e.estatus = 'activo'
+      GROUP BY id_embalse 
+      ORDER BY id_embalse ASC;");
 
     $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
@@ -248,8 +248,8 @@ if ($count >= 1) {
         <div>
 
             <div style="width:550px !important; height:450px;position:absolute; top:-100%;"><canvas id="chart" class="border border-radius-lg"></canvas></div>
-            <div style="width:450px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra1" class="border border-radius-lg"></canvas></div>
-            <div style="width:450px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra2" class="border border-radius-lg"></canvas></div>
+            <div style="width:500px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra1" class="border border-radius-lg"></canvas></div>
+            <div style="width:500px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra2" class="border border-radius-lg"></canvas></div>
             <div style="width:520px !important; height:620px;position:absolute; top:-100%;"><canvas id="abastecimiento" class="border border-radius-lg"></canvas></div>
 
         </div>

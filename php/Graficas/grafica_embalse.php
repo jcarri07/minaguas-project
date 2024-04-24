@@ -34,8 +34,8 @@ $count = mysqli_num_rows($re);
                         <div class="col-6 col-sm-3" style="padding: 0px auto;margin-bottom:5px;">
                             <label id="lab" class="form-label">Tipo de Grafica</label>
                             <select id="tipo" class="form-select" required>
-                                <option value="bar">Barra</option>
                                 <option value="line">Linea</option>
+                                <option value="bar">Barra</option>
                             </select>
                         </div>
                         <div class="col-6 col-sm-3" style="padding: 0px auto;margin-bottom:5px;">
