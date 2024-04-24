@@ -4,9 +4,6 @@ require_once 'php/Conexion.php';
 require_once 'php/batimetria.php';
 
 //EMBALSES - PORCENTAJE Y VARIACION
-$embalses_abst = [];
-$cantidades_p = [0, 0, 0, 0, 0];
-$condiciones = [];
 
 // $queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo';");
 $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,norte,este,huso, MAX(d.fecha) AS fech,               (
@@ -28,59 +25,60 @@ $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,regio
 
 $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 
+$embalses_abast = [];
+$cantidades_p = [0, 0, 0, 0, 0];
+$condiciones = [];
 $row = 0;
 
 while ($row < count($datos_embalses)) {
     $array = array($datos_embalses[$row]["norte"], $datos_embalses[$row]["este"], $datos_embalses[$row]["huso"]);
 
-     $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
-  
+    $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
+
     $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
-  
-    $array = [$datos_embalses[$row]["nombre_embalse"]];
-//    array_push($embalse_abast, $array);
 
-//     $row++;
-//   }
-  
+    array_push($array, $datos_embalses[$row]["nombre_embalse"]);
 
+    $porcentaje = ($emb->volumenActualDisponible() * 100) / $emb->volumenDisponible();
 
-// while ($row = mysqli_fetch_array($datos_embalses)) {
-//     //Saco la ubicacion de los embalses.
-//     $array = array($row["norte"], $row["este"], $row["huso"]);
+    $icono = "i_";
 
-//     //Calculo del porcentaje.
-//     $bat = new Batimetria($row["id_embalse"], $conn);
-//     $porcentaje = ($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible();
-//     array_push($array, $porcentaje);
-//     // echo $row["nombre_embalse"]." Vol: ".$bat->cargaActual()." -- ";
-
+    
     // Dependiendo del porcentaje, se asigna su icono, y se cuenta para su categoria.
-    if ($abastecimiento < 0 && $abastecimiento < 4) {
-        array_push($array, "i_rojo");
-        $cantidades_p[0] += 1;
-        // agregarACondiciones($row["operador"], $condiciones, 1);
-    } else if ($abastecimiento < 5 && $abastecimiento < 8) {
-        array_push($array, "i_azulclaro");
-        $cantidades_p[1] += 1;
-        // agregarACondiciones($row["operador"], $condiciones, 2);
-    } else if ($abastecimiento < 9 && $abastecimiento < 12) {
-        array_push($array, "i_azul");
-        $cantidades_p[2] += 1;
-        // agregarACondiciones($row["operador"], $condiciones, 3);
-    } else if ($abastecimiento > 12) {
-        array_push($array, "i_verde");
-        $cantidades_p[3] += 1;
-        // agregarACondiciones($row["operador"], $condiciones, 4);
+    $abastecimiento = intval($abastecimiento);
+    if ($abastecimiento < 0 && $abastecimiento < 5) {
+        $icono.="rojo_";
+    } else if ($abastecimiento > 4 && $abastecimiento < 9) {
+        $icono.="naranja_";
+    } else if ($abastecimiento > 8 && $abastecimiento < 13) {
+        $icono.="amarillo_";
+    } else {
+        $icono.="verde_";
     }
 
-    // Guardo el nombre del embalse
-    //array_push($array, $row["nombre_embalse"]);
-    array_push($embalse_abast, $array);
-    $row++;
 
+    if ($porcentaje < 30) {
+        $icono.= "30";
+    } else if ($porcentaje >= 30 && $porcentaje < 60) {
+        $icono.= "60";
+    } else if ($porcentaje >= 60 && $porcentaje < 90) {
+        $icono.= "90";
+    } else if ($porcentaje >= 90 && $porcentaje <= 100) {
+        $icono.= "100";
+    } else {
+        $icono.= "200";
+    }
+
+    array_push($array, $icono);
+    // var_dump($array[3]);
+    // Guardo el nombre del embalse
+    // array_push($array, $row["nombre_embalse"]);
+    array_push($embalses_abast, $array);
+    // $embalses_abast[$row] = $array;
+    $row++;
 }
 
+// var_dump($embalses_abast);
 ?>
 
 <head>
@@ -135,22 +133,21 @@ while ($row < count($datos_embalses)) {
     .leaflet-popup.leaflet-zoom-animated {
         margin-bottom: 5.5px !important;
     }
-    
 </style>
 
-<body style="height:1500px">
+<!-- <body style="height:1500px"> -->
 
-    <!-- Cantidades de embalse por porcentaje de volumen -->
-    <div id="mapa-portada"></div>
+<!-- Cantidades de embalse por porcentaje de volumen -->
+<div id="mapa-portada"></div>
 
-</body>
+<!-- </body> -->
 
 <script>
     // Creación de íconos
     var PointIcon = L.Icon.extend({
         options: {
             shadowUrl: 'assets/icons/i-sombra.png',
-            iconSize: [15, 15],
+            iconSize: [18, 18],
             shadowSize: [15, 15],
             shadowAnchor: [8, 8],
         }
@@ -187,9 +184,72 @@ while ($row < count($datos_embalses)) {
         iconUrl: 'assets/icons/f-igual.png'
     })
 
+    var i_rojo_30 = new PointIcon({
+        iconUrl: 'assets/icons/i-rojo-30.png'
+    })
+    var i_rojo_60 = new PointIcon({
+        iconUrl: 'assets/icons/i-rojo-60.png'
+    })
+    var i_rojo_90 = new PointIcon({
+        iconUrl: 'assets/icons/i-rojo-90.png'
+    })
+    var i_rojo_100 = new PointIcon({
+        iconUrl: 'assets/icons/i-rojo-100.png'
+    })
+    var i_rojo_200 = new PointIcon({
+        iconUrl: 'assets/icons/i-rojo-200.png'
+    })
+
+    var i_naranja_30 = new PointIcon({
+        iconUrl: 'assets/icons/i-naranja-30.png'
+    })
+    var i_naranja_60 = new PointIcon({
+        iconUrl: 'assets/icons/i-naranja-60.png'
+    })
+    var i_naranja_90 = new PointIcon({
+        iconUrl: 'assets/icons/i-naranja-90.png'
+    })
+    var i_naranja_100 = new PointIcon({
+        iconUrl: 'assets/icons/i-naranja-100.png'
+    })
+    var i_naranja_200 = new PointIcon({
+        iconUrl: 'assets/icons/i-naranja-200.png'
+    })
+
+    var i_amarillo_30 = new PointIcon({
+        iconUrl: 'assets/icons/i-amarillo-30.png'
+    })
+    var i_amarillo_60 = new PointIcon({
+        iconUrl: 'assets/icons/i-amarillo-60.png'
+    })
+    var i_amarillo_90 = new PointIcon({
+        iconUrl: 'assets/icons/i-amarillo-90.png'
+    })
+    var i_amarillo_100 = new PointIcon({
+        iconUrl: 'assets/icons/i-amarillo-100.png'
+    })
+    var i_amarillo_200 = new PointIcon({
+        iconUrl: 'assets/icons/i-amarillo-200.png'
+    })
+
+    var i_verde_30 = new PointIcon({
+        iconUrl: 'assets/icons/i-verde-30.png'
+    })
+    var i_verde_60 = new PointIcon({
+        iconUrl: 'assets/icons/i-verde-60.png'
+    })
+    var i_verde_90 = new PointIcon({
+        iconUrl: 'assets/icons/i-verde-90.png'
+    })
+    var i_verde_100 = new PointIcon({
+        iconUrl: 'assets/icons/i-verde-100.png'
+    })
+    var i_verde_200 = new PointIcon({
+        iconUrl: 'assets/icons/i-verde-200.png'
+    })
+
     // Creación de los mapas
-    var mapa_portada = L.map('mapa-portada').setView([9.5, -68], 7);
-    map.scrollWheelZoom.disable();
+    var mapa_portada = L.map('mapa-portada').setView([9, -67], 7);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -198,17 +258,17 @@ while ($row < count($datos_embalses)) {
     var ubicacion;
 
     <?php
-    foreach ($embalse_abast as $emb) {
+    foreach ($embalses_abast as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
-            // console.log("Prueba");
             ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
 
             var marker = L.marker([ubicacion[0], ubicacion[1]], {
                 icon: <?php echo $emb[4] ?>
-            }).addTo(mapa_portada).bindPopup("<b><?php echo $emb[5] ?></b>", {
+            }).addTo(mapa_portada).bindPopup("<b><?php echo $emb[3] ?></b>", {
                 autoClose: false,
                 closeOnClick: false
             }).openPopup();
+        <?php } else { ?>
     <?php }
     }
     ?>
