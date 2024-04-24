@@ -1,10 +1,32 @@
 <?php include "php/Usuario/Lista_usuario.php";
-$options_extraccion = '<option value="">Seleccione</option>';
+/*$options_extraccion = '<option value="">Seleccione</option>';
 $options_extraccion .= '<option value="Riego">Riego</option>';
 $options_extraccion .= '<option value="Hidroelectricidad">Hidroelectricidad</option>';
 $options_extraccion .= '<option value="Consumo Humano">Consumo Humano</option>';
 $options_extraccion .= '<option value="Control de Inundaciones (Aliviadero)">Control de Inundaciones (Aliviadero)</option>';
-$options_extraccion .= '<option value="Recreación">Recreación</option>';
+$options_extraccion .= '<option value="Recreación">Recreación</option>';*/
+
+
+$sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, concepto, uso, ce.id AS 'id_codigo_extraccion', IF(leyenda_sistema <> '', leyenda_sistema, concepto) AS 'name'
+          FROM tipo_codigo_extraccion tce, codigo_extraccion ce
+          WHERE tce.id = ce.id_tipo_codigo_extraccion AND 
+            ce.estatus = 'activo' AND 
+            tce.estatus = 'activo' AND 
+            tce.id <> '6' AND 
+            tce.id <> '7' AND
+            ce.concepto <> 'Subtotal'
+          ORDER BY codigo ASC;";
+  $query_codigos = mysqli_query($conn, $sql);
+
+$options_extraccion = '<option value="">Seleccione</option>';
+
+while($row = mysqli_fetch_array($query_codigos)){
+  $options_extraccion .= '<option value="' . $row['id_codigo_extraccion'] . '"> ' . $row['name']  . ' (' . $row['codigo'] . ')</option>';
+}
+
+
+closeConection($conn);
+
 ?>
 
 

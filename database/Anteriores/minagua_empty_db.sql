@@ -221,7 +221,7 @@ insert into
   )
 values
   (
-    1,
+    2,
     '$2y$05$drIpNODWj6463HT6/68CMeojRcps3aFrd3ejsroKklrSorYD4INkG',
     'Admin',
     'Admin',
