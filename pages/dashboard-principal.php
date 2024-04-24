@@ -359,7 +359,7 @@ closeConection($conn);*/
         <div class="card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;">
           <div class="card-header pb-0">
             <h6 class="mb-0">Embalses</h6>
-            <p class="text-sm">Monitoreo del Volumen Actual Útil de los embalses registrados</p>
+            <p class="text-sm">Monitoreo del Volumen Útil Actual de los embalses registrados</p>
           </div>
           <hr class="dark horizontal">
           <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:350px !important;">
@@ -675,41 +675,7 @@ closeConection($conn);*/
 <body style="height:1500px">
 </body>
 <script>
-  // var mapa_portada = L.map('mapa-portada').setView([9.5, -67], 7);
-  // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  //     attribution: '© OpenStreetMap contributors'
-  // }).addTo(mapa_portada);
-  // var ubicacion;  
 
-  // $.ajax({
-  // url: 'pages/mapa_dashboard.php',
-  // type: 'GET',
-  // dataType: 'json',
-  // success: function(data) {
-
-  //     // var mapa_portada = L.map('mapa-portada').setView([9.5, -68], 7);
-
-  //     // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  //     //     attribution: '© OpenStreetMap contributors'
-  //     // }).addTo(mapa_portada);
-
-  //     //Añadiendo los marcadores al mapa de la portada.
-  //     data.forEach(function(emb) {
-  //         if (emb[0] != "" && emb[1] != "" && emb[2] != "") {
-  //             var ubicacion = geoToUtm(emb[0], emb[1], emb[2]);
-  //             var marker = L.marker([ubicacion[0], ubicacion[1]], {
-  //                 icon: emb[4]
-  //             }).addTo(mapa_portada).bindPopup("<b>" + emb[5] + "</b>", {
-  //                 autoClose: false,
-  //                 closeOnClick: false
-  //             }).openPopup();
-  //         }
-  //     });
-  // },
-  // error: function(xhr, status, error) {
-  //     // Manejo de errores, si es necesario
-  // }
-  // });
 </script>
 
 <script>

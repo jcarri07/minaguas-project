@@ -112,7 +112,7 @@ $variacion_total_op = [];
 
 $num = 0;
 while ($num < count($volumen_primer_periodo)) {
-  $row = $volumen_primer_periodo[$num];
+  $row = $volumen_primer_periodo[$num];    
   $row2 = $volumen_segundo_periodo[$num];
   $row3 = $volumen_tercer_periodo[$num];
   $bat = new Batimetria($row["id_embalse"], $conn);
