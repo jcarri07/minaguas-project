@@ -38,4 +38,5 @@ if (!isset($_GET['page']) || $_GET['page'] == "") {
     if ($_GET['page'] == "show") {
         include "pages/show.php";
     }
+   
 }

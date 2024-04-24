@@ -98,6 +98,8 @@ $nombreEmbalse = $row1['nombre_embalse'];
 closeConection($conn);*/
 ?>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <div class="container-fluid py-5">
   <div class="row justify-content-center">
@@ -323,7 +325,7 @@ closeConection($conn);*/
           </div>
           <div class="d-flex flex-column shadow border rounded p-3">
             <h4 class="d-flex justify-content-center align-items-center">
-              Lo de Miguel
+              <!-- Lo de Miguel -->
             </h4>
             <div class="d-flex justify-content-center align-items-center">
               <div class="d-flex justify-content-center align-items-center rounded" id="contenedor-4">
@@ -342,9 +344,8 @@ closeConection($conn);*/
       <div class="col-12 pt-2 bg-white rounded mt-4 shadow" id="container-div">
         <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pb-6" id="contain-charts">
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 500px;">
-            <h2>MAPA</h2>
-          </div>
-        </div>
+        <!-- ]  <div id="mapa-container"> -->
+        <div id="mapa-portada" style="width: 100%; height: 100%;"></div>
       </div>
     </div>
   </div>
@@ -784,8 +785,55 @@ closeConection($conn);*/
 <script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="./assets/js/plugins/chartjs.min.js"></script>
 <script src="./assets/js/jquery/jquery.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
+
+
+
+<body style="height:1500px">
+</body>
+<script>
+    var mapa_portada = L.map('mapa-portada').setView([9.5, -67], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(mapa_portada);
+    var ubicacion;  
+
+    $.ajax({
+    url: 'pages/mapa_dashboard.php',
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+
+        // var mapa_portada = L.map('mapa-portada').setView([9.5, -68], 7);
+
+        // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     attribution: '© OpenStreetMap contributors'
+        // }).addTo(mapa_portada);
+
+        //Añadiendo los marcadores al mapa de la portada.
+        data.forEach(function(emb) {
+            if (emb[0] != "" && emb[1] != "" && emb[2] != "") {
+                var ubicacion = geoToUtm(emb[0], emb[1], emb[2]);
+                var marker = L.marker([ubicacion[0], ubicacion[1]], {
+                    icon: emb[4]
+                }).addTo(mapa_portada).bindPopup("<b>" + emb[5] + "</b>", {
+                    autoClose: false,
+                    closeOnClick: false
+                }).openPopup();
+            }
+        });
+    },
+    error: function(xhr, status, error) {
+        // Manejo de errores, si es necesario
+    }
+});
+
+</script>
 
 <script>
+
   var configuration = {
     type: 'bar',
     data: {
