@@ -321,6 +321,7 @@ closeConection($conn);
 <script>
   $(document).ready(function() {
     iniciarTabla('table-user');
+    iniciarTabla('table-user2');
     /*   $('#table-user').DataTable({
          language: {
            "decimal": "",
