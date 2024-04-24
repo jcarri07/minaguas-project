@@ -371,7 +371,7 @@ if ($count >= 1) {
                     data: {
                         datasets: [
 
-                            <?php echo "{label:'Volumen del periodo',pointRadius: 1,backgroundColor:'#36a2eb',borderColor: '#36a2eb',data: [";
+                            <?php echo "{label:'Cota del periodo',pointRadius: 1,backgroundColor:'#36a2eb',borderColor: '#36a2eb',data: [";
                             $min = $embalses[0]["cota_min"];
                             $max = $embalses[0]["cota_max"];
                             $j = 0;

@@ -404,7 +404,7 @@ if ($count >= 1) {
 
                                 $fech = $año;
                                 while ($pivote <= $fech) {
-                                    echo "{label:'Volumen del año " . $fech . "',pointRadius: 0,data: [";
+                                    echo "{label:'Cota del año " . $fech . "',pointRadius: 0,data: [";
 
                                     $j = 0;
 
