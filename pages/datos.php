@@ -1204,7 +1204,7 @@
     $("#form-export-excel").on("submit",function(event){
       event.preventDefault();
 
-      var url = "php/datos/modelos/exportar-extracciones-excel.php?anio=" + this.anio_export_excel.value;
+      var url = "php/datos/modelos/loader-extracciones-excel.php?anio=" + this.anio_export_excel.value;
       window.open(url, "_blank");
     });
     

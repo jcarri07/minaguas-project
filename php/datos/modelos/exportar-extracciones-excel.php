@@ -541,12 +541,12 @@
 
         if (file_exists($nombreArchivo)) {
             // Configurar los encabezados HTTP para indicar que se va a descargar un archivo
-            header('Content-Description: File Transfer');
+            //header('Content-Description: File Transfer');
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment; filename="' . basename($nombreArchivo) . '"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
+            //header('Expires: 0');
+            //header('Cache-Control: must-revalidate');
+            //header('Pragma: public');
             header('Content-Length: ' . filesize($nombreArchivo));
             // Leer el archivo y enviar su contenido al navegador
             readfile($nombreArchivo);

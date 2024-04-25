@@ -674,7 +674,7 @@ if (1) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
               <?php }
@@ -683,7 +683,7 @@ if (1) {
               <tr>
                 <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                 <td class="text-celd" style="font-size: 12px;"><?php echo 0 ?></td>
-                <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
               </tr>
           <?php }
             $j++;
@@ -728,7 +728,7 @@ if (1) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
           <?php }
@@ -778,7 +778,7 @@ if (1) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
           <?php }
@@ -834,7 +834,7 @@ if (1) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
           <?php }
@@ -879,7 +879,7 @@ if (1) {
             <tr>
               <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
               <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
             </tr>
 
       <?php }
@@ -924,7 +924,7 @@ if (1) {
       </tr>
       <?php foreach ($condiciones as $key => $values) { ?>
         <tr>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $key ?></td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[1] * 100) / $values[0] : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
@@ -981,7 +981,7 @@ if (1) {
 
         <?php foreach ($condiciones as $key => $values) { ?>
           <tr>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $key ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
