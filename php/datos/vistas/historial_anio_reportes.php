@@ -18,6 +18,21 @@
         $dia = strtotime('+1 day', $dia);
     }
 
+    $meses = array(
+        1 => 'Enero',
+        2 => 'Febrero',
+        3 => 'Marzo',
+        4 => 'Abril',
+        5 => 'Mayo',
+        6 => 'Junio',
+        7 => 'Julio',
+        8 => 'Agosto',
+        9 => 'Septiembre',
+        10 => 'Octubre',
+        11 => 'Noviembre',
+        12 => 'Diciembre'
+    );
+
     //echo count($dias_del_anio);
 
     
@@ -180,15 +195,20 @@
                                 </tr>
                                 <tr>
                                     <th>Fecha del Último Reporte</th>
-                                    <td><?php echo strftime("%d/%b/%Y", strtotime($ultimo_reporte));?></td>
+                                    <td>
+<?php 
+                                        //echo strftime("%d/%b/%Y", strtotime($ultimo_reporte));
+                                        echo $fecha = date('d', strtotime($ultimo_reporte)) . "/" . substr($meses[date('n', strtotime($ultimo_reporte))],0,3) . "./" . date('Y', strtotime($ultimo_reporte));
+?>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Fecha Inicial</th>
-                                    <td><?php echo "01/01/" . $anio;?></td>
+                                    <td><?php echo "01/Ene./" . $anio;?></td>
                                 </tr>
                                 <tr>
                                     <th>Fecha Final</th>
-                                    <td><?php echo "31/12/" . $anio;?></td>
+                                    <td><?php echo "31/Dic./" . $anio;?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -197,7 +217,8 @@
                 <div class="row justify-content-center mt-4">
                     <div class="col-sm-12">
 <?php
-                        $mes_espaniol = ucfirst(strftime("%B", strtotime("$anio-$mes-01")));
+                        //$mes_espaniol = ucfirst(strftime("%B", strtotime("$anio-$mes-01")));
+                        $mes_espaniol = ucfirst($meses[date('n', strtotime("$anio-$mes-01"))]);
 ?>
                         <h4 class="text-center">Sumatorias y Promedios <?php echo $mes == "" ? "Año $anio" : "$mes_espaniol, $anio";?></h4>
                         <div class="table-responsive">
