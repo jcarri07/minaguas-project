@@ -44,8 +44,11 @@ if ($count >= 1) {
         $meses = range(1, 12);
 
         foreach ($meses as $mes) {
-            $primerDia = strftime('%b',  strtotime("$y-$mes-01")) . date('-01', strtotime("$y-$mes-01"));
-            $ultimoDia = strftime('%b',  strtotime("$y-$mes-01")) . date('-t', strtotime("$y-$mes-01"));
+            /*$primerDia = strftime('%b',  strtotime("$y-$mes-01")) . date('-01', strtotime("$y-$mes-01"));
+            $ultimoDia = strftime('%b',  strtotime("$y-$mes-01")) . date('-t', strtotime("$y-$mes-01"));*/
+
+            $primerDia = date('M-d', strtotime("$y-$mes-01"));
+            $ultimoDia = date('M-t', strtotime("$y-$mes-01"));
 
             $etiquetas[] = "(" . $primerDia . "/" . $ultimoDia . ")";
         }

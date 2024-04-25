@@ -11,6 +11,28 @@ $f = $fecha_actual - 1;
 $pri = $_GET['pri'];
 $text = "";
 
+function getMonthName($numero_mes_aux)
+{
+    if($numero_mes_aux == "") {
+        $fecha_actual = getdate();
+
+        $numero_mes = $fecha_actual['mon'];
+    }
+    else{
+        $numero_mes = $numero_mes_aux;
+    }
+
+    $nombres_meses = array(
+        1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril",
+        5 => "Mayo", 6 => "Junio", 7 => "Julio", 8 => "Agosto",
+        9 => "Septiembre", 10 => "Octubre", 11 => "Noviembre", 12 => "Diciembre"
+    );
+
+    $nombre_mes = $nombres_meses[$numero_mes];
+
+    return  $nombre_mes;
+}
+
 
 if ($pri) {
     $stringPrioritarios = "0";
@@ -814,7 +836,7 @@ if ($count >= 1) {
                         x: {
                             title: {
                                 display: true,
-                                text: 'Semana <?php echo date("W", strtotime($fechasSemana[0])) . " " . strftime('del mes de %B', DateTime::createFromFormat("Y-m-d", end($fechasSemana))->getTimestamp()); ?>',
+                                text: 'Semana <?php echo date("W", strtotime($fechasSemana[0])) . " del mes de " . getMonthName(DateTime::createFromFormat("Y-m-d", end($fechasSemana))->format('n')); ?>',
                                 font: {
                                     size: 16,
                                     family:'Arial',
