@@ -128,11 +128,11 @@
 
             if($i == 0) {
                 $hoja = $spreadsheet->getActiveSheet();
-                $hoja->setTitle($i);
+                $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
             }
             else {
                 $hoja = $spreadsheet->createSheet();
-                $hoja->setTitle($i);
+                $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
             }
 
             $i++;
@@ -303,7 +303,7 @@
             $hoja->setCellValue('A3', 'Días Transcurridos:');
             $hoja->setCellValue('A4', 'Información Faltante del Año:');
             $hoja->setCellValue('A5', 'Embalse:');
-            $hoja->setCellValue('B5', mb_strtoupper($row['nombre_embalse']));
+            $hoja->setCellValue('B5', mb_strtoupper($i));
             $hoja->setCellValue("A7", 'FECHA');
 
             $styleCell = $hoja->getStyle("A7");
