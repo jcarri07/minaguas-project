@@ -930,7 +930,7 @@ if (1) {
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[2] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[3] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[3] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[3] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
         </tr>
       <?php
       } ?>
