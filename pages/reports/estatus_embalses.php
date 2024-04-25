@@ -926,9 +926,9 @@ if (1) {
         <tr>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[1] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[1] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[2] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[2] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[3] . "/" . $values[0] ?></td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[3] * 100) / $values[0] : 0 ?>%</td>
         </tr>
@@ -956,9 +956,9 @@ if (1) {
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[1] * 100) / $CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[2] * 100) / $CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[3] * 100) / $CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[1] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[2] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[3] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
       </tr>
 
     </table>
@@ -985,7 +985,7 @@ if (1) {
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (($values[4] + $values[5]) * 100) / $values[0] : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ( ( $values[4] + $values[5]) * 100) / $values[0] ), 2, '.', '' ) ) : 0 ?>%</td>
           </tr>
         <?php
         } ?>
@@ -1007,7 +1007,7 @@ if (1) {
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (($CT[4] + $CT[5]) * 100) / $CT[0] : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? ( number_format( ( ( ( $CT[4] + $CT[5]) * 100) / $CT[0] ), 2, '.', '' ) ) : 0 ?>%</b></td>
         </tr>
 
 
