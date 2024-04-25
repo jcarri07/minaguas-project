@@ -195,26 +195,28 @@
                     $caudal = "";
 
                     $extraccion = 0;
-                    $extraccion_array = explode(";", $row['extraccion']);
-                    for($j = 0 ; $j < count($extraccion_array) ; $j++) {
-                        if($extraccion_array[$j] !== "") {
-                            $fila = explode("&", $extraccion_array[$j]);
+                    if(is_string($row['extraccion'])) {
+                        $extraccion_array = explode(";", $row['extraccion']);
+                        for($j = 0 ; $j < count($extraccion_array) ; $j++) {
+                            if($extraccion_array[$j] !== "") {
+                                $fila = explode("&", $extraccion_array[$j]);
 
-                            if(buscarPosicion($array_codigos_sql, $fila[0], 'id_codigo_bd') !== -1 && is_numeric($fila[1]))
-                                $extraccion += $fila[1];
+                                if(buscarPosicion($array_codigos_sql, $fila[0], 'id_codigo_bd') !== -1 && is_numeric($fila[1]))
+                                    $extraccion += $fila[1];
 
-                            $index = buscarPosicion($array_codigos_no_suma, $fila[0], 'id_codigo_extraccion');
-                            if($index !== -1) {
-                                if($array_codigos_no_suma[$index]['codigo'] == "29") {
-                                    if(is_numeric($fila[1])) {
-                                        $abertura = ( ($fila[1] < 1) ? ($fila[1] * 100) : $fila[1]);
-                                        $abertura = number_format($abertura, 1, ",", "");
+                                $index = buscarPosicion($array_codigos_no_suma, $fila[0], 'id_codigo_extraccion');
+                                if($index !== -1) {
+                                    if($array_codigos_no_suma[$index]['codigo'] == "29") {
+                                        if(is_numeric($fila[1])) {
+                                            $abertura = ( ($fila[1] < 1) ? ($fila[1] * 100) : $fila[1]);
+                                            $abertura = number_format($abertura, 1, ",", "");
+                                        }
+                                        else
+                                            $abertura = $fila[1];
                                     }
-                                    else
-                                        $abertura = $fila[1];
-                                }
-                                if($array_codigos_no_suma[$index]['codigo'] == "30") {
-                                    $caudal = $fila[1];
+                                    if($array_codigos_no_suma[$index]['codigo'] == "30") {
+                                        $caudal = $fila[1];
+                                    }
                                 }
                             }
                         }
