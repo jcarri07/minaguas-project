@@ -399,184 +399,183 @@ if (1) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estatus Embalses</title>
 
+  <style>
+    hr {
+      background-color: #2E86C1;
+      height: 2px;
+      width: 80%;
+      top: 65px;
+      color: #2E86C1;
+      position: absolute;
+    }
+
+    .square {
+      width: 60px;
+      height: 60px;
+      background-color: #2E86C1;
+      border-radius: 10;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 100px;
+
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .code {
+      height: 40px;
+      left: 100px;
+      color: #2E86C1;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .code-container {
+      left: 75px;
+      bottom: 10px;
+      width: 500px;
+      background-color: red;
+    }
+
+    .box-title {
+
+      font-size: 18px;
+      color: #FFFFFF;
+      background-color: #0070C0;
+      /* box-shadow: 50px 50px 50px grey;  */
+      width: 95%;
+      height: 30px;
+      text-align: center;
+      position: absolute;
+      vertical-align: middle;
+      margin-top: 650px;
+      margin-left: 35px;
+    }
+
+    .box-note {
+      font-size: 14px;
+      ;
+      width: 95%;
+      height: 25px;
+      text-align: left;
+      /* position: absolute;  */
+      vertical-align: middle;
+      margin-top: 60px;
+      /* margin-left: 20px;  */
+      border: 0.5px solid red;
+
+    }
+
+    .img-logo {
+      float: left;
+      width: 50px;
+      margin-bottom: 50px;
+    }
+
+    .img-letters {
+      float: right;
+      width: 100px;
+      background-color: red;
+    }
+
+    .container-letters {
+      left: 950px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      vertical-align: middle;
+      text-align: center;
+      padding: 5px;
+      border: 1px solid #707273;
+      /*width: fit-content;*/
+      font-size: 10px;
+    }
+
+    th {
+      margin-top: auto;
+      margin-bottom: auto;
+      vertical-align: middle;
+      text-align: center;
+      background-color: #0070C0;
+      color: #FFFFFF;
+    }
+
+    .text-celd {
+      vertical-align: middle;
+      width: 150px;
+      text-align: center;
+      font-size: 16px;
+      border: 1px solid #707273;
+
+
+    }
+
+    .text-celdas {
+      vertical-align: middle;
+      width: 130px;
+      text-align: center;
+      font-size: 16px;
+      border: 1px solid #707273;
+
+
+    }
+
+    .celd-table {
+      vertical-align: middle;
+      width: 80px;
+      text-align: center;
+      font-size: 14px;
+      border: 1px solid #707273;
+    }
+
+    .text-big {
+      height: 100px;
+      font-size: 16px;
+      vertical-align: middle;
+    }
+
+    .total {
+
+      font-size: 16px;
+      background-color: #DAE3F3;
+      border: 1px solid #707273;
+
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      /* background-color: lightgray;*/
+      text-align: center;
+    }
+
+    .tablaDos {
+
+      vertical-align: middle;
+      text-align: center;
+      font-size: 12px;
+
+    }
+
+    .spazio {
+      background-color: #FFFFFF;
+      color: #FFFFFF;
+      border: none;
+    }
+  </style>
 </head>
-
-<style>
-  hr {
-    background-color: #2E86C1;
-    height: 2px;
-    width: 80%;
-    top: 65px;
-    color: #2E86C1;
-    position: absolute;
-  }
-
-  .square {
-    width: 60px;
-    height: 60px;
-    background-color: #2E86C1;
-    border-radius: 10;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 100px;
-
-    color: #fff;
-    font-size: 40px;
-    font-weight: bold;
-  }
-
-  .code {
-    height: 40px;
-    left: 100px;
-    color: #2E86C1;
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .code-container {
-    left: 75px;
-    bottom: 10px;
-    width: 500px;
-    background-color: red;
-  }
-
-  .box-title {
-
-    font-size: 18px;
-    color: #FFFFFF;
-    background-color: #0070C0;
-    /* box-shadow: 50px 50px 50px grey;  */
-    width: 95%;
-    height: 30px;
-    text-align: center;
-    position: absolute;
-    vertical-align: middle;
-    margin-top: 650px;
-    margin-left: 35px;
-  }
-
-  .box-note {
-    font-size: 14px;
-    ;
-    width: 95%;
-    height: 25px;
-    text-align: left;
-    /* position: absolute;  */
-    vertical-align: middle;
-    margin-top: 60px;
-    /* margin-left: 20px;  */
-    border: 0.5px solid red;
-
-  }
-
-  .img-logo {
-    float: left;
-    width: 50px;
-    margin-bottom: 50px;
-  }
-
-  .img-letters {
-    float: right;
-    width: 100px;
-    background-color: red;
-  }
-
-  .container-letters {
-    left: 950px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  th,
-  td {
-    vertical-align: middle;
-    text-align: center;
-    padding: 5px;
-    border: 1px solid #707273;
-    /*width: fit-content;*/
-    font-size: 10px;
-  }
-
-  th {
-    margin-top: auto;
-    margin-bottom: auto;
-    vertical-align: middle;
-    text-align: center;
-    background-color: #0070C0;
-    color: #FFFFFF;
-  }
-
-  .text-celd {
-    vertical-align: middle;
-    width: 150px;
-    text-align: center;
-    font-size: 16px;
-    border: 1px solid #707273;
-
-
-  }
-
-  .text-celdas {
-    vertical-align: middle;
-    width: 130px;
-    text-align: center;
-    font-size: 16px;
-    border: 1px solid #707273;
-
-
-  }
-
-  .celd-table {
-    vertical-align: middle;
-    width: 80px;
-    text-align: center;
-    font-size: 14px;
-    border: 1px solid #707273;
-  }
-
-  .text-big {
-    height: 100px;
-    font-size: 16px;
-    vertical-align: middle;
-  }
-
-  .total {
-
-    font-size: 16px;
-    background-color: #DAE3F3;
-    border: 1px solid #707273;
-
-  }
-
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    /* background-color: lightgray;*/
-    text-align: center;
-  }
-
-  .tablaDos {
-
-    vertical-align: middle;
-    text-align: center;
-    font-size: 12px;
-
-  }
-
-  .spazio {
-    background-color: #FFFFFF;
-    color: #FFFFFF;
-    border: none;
-  }
-</style>
 
 <body>
 
