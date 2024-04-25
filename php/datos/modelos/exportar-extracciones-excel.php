@@ -128,13 +128,11 @@
 
             if($i == 0) {
                 $hoja = $spreadsheet->getActiveSheet();
-                //$hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
-                $hoja->setTitle("Embalse " . $i);
+                $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
             }
             else {
                 $hoja = $spreadsheet->createSheet();
-                //$hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
-                $hoja->setTitle("Embalse " . $i);
+                $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
             }
 
             $i++;
