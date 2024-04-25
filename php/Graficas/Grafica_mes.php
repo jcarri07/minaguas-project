@@ -383,7 +383,7 @@ ORDER BY d.fecha ASC;";
 
                                 $fech = $año;
                                 while ($pivote <= $fech) {
-                                    echo "{label:'Volumen del año " . $fech . "',pointRadius: 0,data: [";
+                                    echo "{label:'Cota del año " . $fech . "',pointRadius: 0,data: [";
 
                                     $j = 0;
 
@@ -520,7 +520,7 @@ ORDER BY d.fecha ASC;";
                             y: {
                                 title: {
                                     display: true,
-                                    text: 'Volumen (Hm³)',
+                                    text: 'Cota (m.s.n.m)',
                                     font: {
                                         size: 16,
                                         family:'Arial',

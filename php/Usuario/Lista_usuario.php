@@ -3,7 +3,7 @@ include "php/Conexion.php";
 if($_SESSION["Tipo"] == "SuperAdmin"){
   $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'SuperAdmin' AND estatus = 'activo';");
 }else{
-$res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin' AND estatus = 'activo';");
+$res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin' AND NOT Tipo = 'SuperAdmin'AND estatus = 'activo';");
 }
 $count = mysqli_num_rows($res);
 if ($count >= 1) {
@@ -163,7 +163,7 @@ if ($count >= 1) {
       if($_SESSION["Tipo"] == "SuperAdmin"){
         $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'SuperAdmin' AND estatus = 'inactivo';");
       }else{
-      $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin' AND estatus = 'inactivo';");
+      $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin' AND NOT Tipo = 'Admin' AND estatus = 'inactivo';");
       }
       $count = mysqli_num_rows($res);
 

@@ -89,9 +89,9 @@ if ($count >= 1) {
         $j++;
     };
 ?>
-                
-                    <canvas id="barra1" class="border border-radius-lg"></canvas>
-            
+
+    <canvas id="barra1" class="border border-radius-lg"></canvas>
+
 
     <script>
         $(document).ready(function() {
@@ -115,7 +115,7 @@ if ($count >= 1) {
                         ctx.moveTo(left, y.getPixelForValue(yvalue));
                         ctx.lineTo(right, y.getPixelForValue(yvalue));
                         ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?> + "%", right*1.65/3, y.getPixelForValue(yvalue) + h);
+                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?> + "%", right * 1.65 / 3, y.getPixelForValue(yvalue) + h);
                         //ctx.stroke();
                     });
                     ctx.restore();
@@ -144,23 +144,32 @@ if ($count >= 1) {
                 title: 'grafica',
 
                 data: {
-                    labels: [],
+
                     datasets: [
                         <?php
-                        $pivote = $anio;
+
                         echo '{
                             
-                            label:"Dato",
-                            data:[{x:"Volumen",y:' . round($volumen_fechas[0], 2) . '},{x:"Volumen",y:' . round($volumen_fechas[1], 2) . '}';
+                            label:"Volumen Util Actual(VTD)",
+                            data:{volumen:' . round($volumen_fechas[1], 2) . '},';
+                        echo "backgroundColor:'#2e75b6',
+                        borderColor:'#2e75b6',
+                        borderWidth:2},";
+                        echo '{
+                            
+                            label:"Volumen Util Total(VUT)",
+                            data:{volumen:' . round($volumen_fechas[0], 2) . '},';
 
-                        echo "],backgroundColor:['#9fe3a3','#2e75b6'],borderColor:'#2e75b6',borderWidth:2},";
+                        echo "backgroundColor:'#9fe3a3',
+                        borderColor:'#2e75b6',
+                        borderWidth:2}";
                         ?>
                     ],
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    
+
                     interaction: {
                         intersect: true,
                         axis: 'x',
@@ -176,7 +185,7 @@ if ($count >= 1) {
 
                                 // This more specific font property overrides the global property
                                 font: {
-                                    
+
                                     size: 12,
                                 },
                             }
@@ -200,71 +209,73 @@ if ($count >= 1) {
                     },
                     scales: {
                         x: {
+                            stacked: true,
+                            labels:["volumen"],
                             ticks: {
-                                display:false,
+                                display: true,
                                 font: {
-                                    
+
                                     size: 10,
                                 },
                             },
                         },
                         y: {
+                            stacked: true,
                             title: {
                                 display: true,
                                 text: 'Volumen (Hm³)',
                                 font: {
-                                    
+
                                     size: 12,
-                                    family:'Arial',
+                                    family: 'Arial',
                                     weight: 'bold',
                                 },
 
                             },
-                            ticks:{
-                                    font:{
-                                        size:12,
-                                        family:'Arial',
-                                    },
+                            ticks: {
+                                font: {
+                                    size: 12,
+                                    family: 'Arial',
                                 },
+                            },
                         },
                     },
                 },
                 plugins: [arbi],
             });
         });
-            $("#contenedor-2").html('<?php
-                                        $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[1]);
-                                        if ($valor > 0) {
+        $("#contenedor-2").html('<?php
+                                    $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[1]);
+                                    if ($valor > 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important" ><path  d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
-                                        };
-                                        if ($valor == 0) {
+                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important" ><path  d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                    };
+                                    if ($valor == 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
-                                        };
-                                        if ($valor < 0) {
+                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                    };
+                                    if ($valor < 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important "><path h d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
-                                        };
+                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important "><path h d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                    };
 
-                                        ?>');
-            $("#contenedor-3").html('<?php
-                                        $valor = -100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[1]);
-                                        if ($valor > 0) {
+                                    ?>');
+        $("#contenedor-3").html('<?php
+                                    $valor = -100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[1]);
+                                    if ($valor > 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important" ><path  d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
-                                        };
-                                        if ($valor == 0) {
+                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important" ><path  d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                    };
+                                    if ($valor == 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
-                                        };
-                                        if ($valor < 0) {
+                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                    };
+                                    if ($valor < 0) {
 
-                                            echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important "><path h d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
-                                        };
+                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important "><path h d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                    };
 
-                                        ?>');
-        
+                                    ?>');
     </script>
 <?php };
 closeConection($conn); ?>
