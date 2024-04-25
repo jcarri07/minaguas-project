@@ -7,6 +7,21 @@
     $anio = $_POST['anio'];
     $mes = $_POST['mes'];
 
+    $meses = array(
+        1 => 'Enero',
+        2 => 'Febrero',
+        3 => 'Marzo',
+        4 => 'Abril',
+        5 => 'Mayo',
+        6 => 'Junio',
+        7 => 'Julio',
+        8 => 'Agosto',
+        9 => 'Septiembre',
+        10 => 'Octubre',
+        11 => 'Noviembre',
+        12 => 'Diciembre'
+    );
+
     function buscarPosicion($array, $valorABuscar, $columna) {
         //$columna = 'codigo'; // Columna en la que deseas buscar
         $posicion = array_search($valorABuscar, array_column($array, $columna));
@@ -139,7 +154,7 @@
                         <button class="btn btn-primary px-3" data-bs-dismiss="modal" onclick="openModalParametrosAnio('<?php echo $id_embalse;?>', $('#body-details #anio').val(), $('#body-details #mes').val());">
                             <i class="fas fa-info-circle" title="Detalles" aria-hidden="true"></i>
 <?php
-                            $mes_espaniol = ucfirst(strftime("%B", strtotime("$anio-$mes-01")));
+                            $mes_espaniol = ucfirst($meses[date('n', strtotime("$anio-$mes-01"))]);
 ?>
                             <span>Detalles y Parámetros de Reportes (<?php echo $mes == "" ? "Año $anio" : "$mes_espaniol, $anio";?>)</span>
                         </button>
@@ -172,7 +187,8 @@
                 $i = 0;
                 while($row = mysqli_fetch_array($query)){
                     $i++;
-                    $fecha = strftime("%d/%b/%Y", strtotime($row['fecha']));
+                    //$fecha = strftime("%d/%b/%Y", strtotime($row['fecha']));
+                    $fecha = date('d', strtotime($row['fecha'])) . "/" . substr($meses[date('n', strtotime($row['fecha']))],0,3) . "./" . date('Y', strtotime($row['fecha']));
                     $hora = date("g:i a", strtotime($row['hora']));
 
                     $abertura = "";
