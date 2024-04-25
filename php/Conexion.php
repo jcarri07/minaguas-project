@@ -33,6 +33,8 @@ if (!$conn) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
+$conn->set_charset("utf8");
+
 // Si la conexión es exitosa, muestra un mensaje por consola
 // echo "Conexión exitosa a la base de datos project-manager";
 
