@@ -349,7 +349,7 @@ $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";*/
 // $area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
 
 
-if (contiene_subcadena($fullPath, "C:")) {
+if (1) {
   $image_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
   $logo_letters = "../../assets/img/logos/MinaguasLetters.png";
   $area =  "../../pages/reports_images/Area_cuenca.png";
@@ -365,20 +365,20 @@ if (contiene_subcadena($fullPath, "C:")) {
   $status_mapa = "../../assets/img/temp/imagen-estatus-mapa-2.png";
   $status_mapa_3 = "../../assets/img/temp/imagen-estatus-mapa-3.png";
 } else {
-  $image_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
-  $logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
-  $area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
-  $logo_combinado = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/logo_combinado.jpg";
-  $mapa = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-1.png";
-  $flecha_arriba = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-arriba.png";
-  $flecha_abajo = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-abajo.png";
-  $sin_cambio = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-igual.png";
-  $status_pie_1 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-pie-1.png";
-  $status_pie_2 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-pie-2.png";
-  $status_barra_1 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-barra-1.png";
-  $status_barra_2 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-barra-2.png";
-  $status_mapa = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-2.png";
-  $status_mapa_3 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-3.png";
+  $image_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
+  $logo_letters =  "../../assets/img/logos/MinaguasLetters.png";
+  $area =  "../../pages/reports_images/Area_cuenca.png";
+  $logo_combinado = "../../assets/img/logos/logo_combinado.jpg";
+  $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
+  $flecha_arriba = "../../assets/icons/f-arriba.png";
+  $flecha_abajo = "../../assets/icons/f-abajo.png";
+  $sin_cambio = "../../assets/icons/f-igual.png";
+  $status_pie_1 = "../../assets/img/temp/imagen-estatus-pie-1.png";
+  $status_pie_2 = "../../assets/img/temp/imagen-estatus-pie-2.png";
+  $status_barra_1 = "../../assets/img/temp/imagen-estatus-barra-1.png";
+  $status_barra_2 = "../../assets/img/temp/imagen-estatus-barra-2.png";
+  $status_mapa = "../../assets/img/temp/imagen-estatus-mapa-2.png";
+  $status_mapa_3 = "../../assets/img/temp/imagen-estatus-mapa-3.png";
 }
 
 // $codigo = "08RHL0101";

@@ -30,12 +30,12 @@ foreach ($data as $row) {
     $NOMBRE_EMBALSE = $row['nombre_embalse'];
 }
 
-if (contiene_subcadena($fullPath, "C:")) {
+if (1) {
     $srcLogo = "../../assets/img/logos/cropped-mminaguas.jpg";
     $srcLogoLetters = "../../assets/img/logos/MinaguasLetters.png";
 } else {
-    $srcLogo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
-    $srcLogoLetters = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
+    $srcLogo = "../../assets/img/logos/cropped-mminaguas.jpg";
+    $srcLogoLetters = "../../assets/img/logos/MinaguasLetters.png";
 }
 
 

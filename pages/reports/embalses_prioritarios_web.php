@@ -75,9 +75,9 @@ $num_rows = $result->num_rows;
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";
 $area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";*/
 
-$image_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
-$logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
-$area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
+$image_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
+$logo_letters =  "../../assets/img/logos/MinaguasLetters.png";
+$area =  "../../pages/reports_images/Area_cuenca.png";
 
 
 $codigo = "08RHL0101";
@@ -259,7 +259,7 @@ $variacion_mensual = getMonthName();
             </div>
 
             <div style="position: absolute; height: 160px; width: 500px; left: 480px; top: 300px; border: gray 1px solid;">
-                <img style="height: 100%; width: 100%;" src="<?php echo "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-$id-3.png" ?>">
+                <img style="height: 100%; width: 100%;" src="<?php echo "../../assets/img/temp/imagen-$id-3.png" ?>">
             </div>
 
             <div style="position: absolute; left: 650px; top: 260px;">
@@ -271,7 +271,7 @@ $variacion_mensual = getMonthName();
             </div>
 
             <div style="position: absolute; height: 230px; width: 915px; left: 65px; top: 500px; border: gray 1px solid;">
-                <img style="height: 100%; width: 100%;" src="<?php echo "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-$id-2.png" ?>">
+                <img style="height: 100%; width: 100%;" src="<?php echo "../../assets/img/temp/imagen-$id-2.png" ?>">
             </div>
 
             <table style="position: absolute; top: 150px; left: 500px;">
@@ -387,7 +387,7 @@ $variacion_mensual = getMonthName();
                 </div>
 
                 <div style="position: absolute; height: 290px; width: 915px; left: 65px; top: 450px; border: gray 1px solid;">
-                    <img style="height: 100%; width: 100%;" src="<?php echo "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-$id-1.png" ?>">
+                    <img style="height: 100%; width: 100%;" src="<?php echo "../../assets/img/temp/imagen-$id-1.png" ?>">
                 </div>
 
                 <table style="position: absolute; top: 150px; left: 500px;">
