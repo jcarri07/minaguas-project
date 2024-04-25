@@ -157,6 +157,22 @@ while ($num < count($volumen_primer_periodo)) {
   $num++;
 }
 
+
+$meses = array(
+  1 => 'Enero',
+  2 => 'Febrero',
+  3 => 'Marzo',
+  4 => 'Abril',
+  5 => 'Mayo',
+  6 => 'Junio',
+  7 => 'Julio',
+  8 => 'Agosto',
+  9 => 'Septiembre',
+  10 => 'Octubre',
+  11 => 'Noviembre',
+  12 => 'Diciembre'
+);
+
 // var_dump($embalses_variacion);
 
 
@@ -1153,7 +1169,7 @@ if (1) {
   <?php setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Establecer la localización a español
   ?>
 
-  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha1)), MB_CASE_UPPER, 'UTF-8'); ?> </h4>
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?> </h4>
 
   <!-- PAGINA 8 -->
   <div style="page-break-before: always;"></div>
@@ -1200,8 +1216,8 @@ if (1) {
 
   </div>
 
-  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . date('F', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8'); ?></h4>
-
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?></h4>
+<!--aqui-->
   <!-- PAGINA 9 -->
 
   <?php
