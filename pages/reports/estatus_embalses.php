@@ -157,6 +157,22 @@ while ($num < count($volumen_primer_periodo)) {
   $num++;
 }
 
+
+$meses = array(
+  1 => 'Enero',
+  2 => 'Febrero',
+  3 => 'Marzo',
+  4 => 'Abril',
+  5 => 'Mayo',
+  6 => 'Junio',
+  7 => 'Julio',
+  8 => 'Agosto',
+  9 => 'Septiembre',
+  10 => 'Octubre',
+  11 => 'Noviembre',
+  12 => 'Diciembre'
+);
+
 // var_dump($embalses_variacion);
 
 
@@ -349,7 +365,7 @@ $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";*/
 // $area =  "/" . $projectName . "/pages/reports_images/Area_cuenca.png";
 
 
-if (contiene_subcadena($fullPath, "C:")) {
+if (1) {
   $image_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
   $logo_letters = "../../assets/img/logos/MinaguasLetters.png";
   $area =  "../../pages/reports_images/Area_cuenca.png";
@@ -365,20 +381,20 @@ if (contiene_subcadena($fullPath, "C:")) {
   $status_mapa = "../../assets/img/temp/imagen-estatus-mapa-2.png";
   $status_mapa_3 = "../../assets/img/temp/imagen-estatus-mapa-3.png";
 } else {
-  $image_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
-  $logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
-  $area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
-  $logo_combinado = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/logo_combinado.jpg";
-  $mapa = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-1.png";
-  $flecha_arriba = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-arriba.png";
-  $flecha_abajo = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-abajo.png";
-  $sin_cambio = "https://embalsesminaguas.000webhostapp.com/assets/icons/f-igual.png";
-  $status_pie_1 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-pie-1.png";
-  $status_pie_2 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-pie-2.png";
-  $status_barra_1 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-barra-1.png";
-  $status_barra_2 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-barra-2.png";
-  $status_mapa = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-2.png";
-  $status_mapa_3 = "https://embalsesminaguas.000webhostapp.com/assets/img/temp/imagen-estatus-mapa-3.png";
+  $image_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
+  $logo_letters =  "../../assets/img/logos/MinaguasLetters.png";
+  $area =  "../../pages/reports_images/Area_cuenca.png";
+  $logo_combinado = "../../assets/img/logos/logo_combinado.jpg";
+  $mapa = "../../assets/img/temp/imagen-estatus-mapa-1.png";
+  $flecha_arriba = "../../assets/icons/f-arriba.png";
+  $flecha_abajo = "../../assets/icons/f-abajo.png";
+  $sin_cambio = "../../assets/icons/f-igual.png";
+  $status_pie_1 = "../../assets/img/temp/imagen-estatus-pie-1.png";
+  $status_pie_2 = "../../assets/img/temp/imagen-estatus-pie-2.png";
+  $status_barra_1 = "../../assets/img/temp/imagen-estatus-barra-1.png";
+  $status_barra_2 = "../../assets/img/temp/imagen-estatus-barra-2.png";
+  $status_mapa = "../../assets/img/temp/imagen-estatus-mapa-2.png";
+  $status_mapa_3 = "../../assets/img/temp/imagen-estatus-mapa-3.png";
 }
 
 // $codigo = "08RHL0101";
@@ -399,185 +415,183 @@ if (contiene_subcadena($fullPath, "C:")) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estatus Embalses</title>
 
+  <style>
+    hr {
+      background-color: #2E86C1;
+      height: 2px;
+      width: 80%;
+      top: 65px;
+      color: #2E86C1;
+      position: absolute;
+    }
+
+    .square {
+      width: 60px;
+      height: 60px;
+      background-color: #2E86C1;
+      border-radius: 10;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 100px;
+
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .code {
+      height: 40px;
+      left: 100px;
+      color: #2E86C1;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .code-container {
+      left: 75px;
+      bottom: 10px;
+      width: 500px;
+      background-color: red;
+    }
+
+    .box-title {
+
+      font-size: 18px;
+      color: #FFFFFF;
+      background-color: #0070C0;
+      /* box-shadow: 50px 50px 50px grey;  */
+      width: 95%;
+      height: 30px;
+      text-align: center;
+      position: absolute;
+      vertical-align: middle;
+      margin-top: 650px;
+      margin-left: 35px;
+    }
+
+    .box-note {
+      font-size: 14px;
+      ;
+      width: 95%;
+      height: 25px;
+      text-align: left;
+      /* position: absolute;  */
+      vertical-align: middle;
+      margin-top: 60px;
+      /* margin-left: 20px;  */
+      border: 0.5px solid red;
+
+    }
+
+    .img-logo {
+      float: left;
+      width: 50px;
+      margin-bottom: 50px;
+    }
+
+    .img-letters {
+      float: right;
+      width: 100px;
+      background-color: red;
+    }
+
+    .container-letters {
+      left: 950px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      vertical-align: middle;
+      text-align: center;
+      padding: 5px;
+      border: 1px solid #707273;
+      /*width: fit-content;*/
+      font-size: 10px;
+    }
+
+    th {
+      margin-top: auto;
+      margin-bottom: auto;
+      vertical-align: middle;
+      text-align: center;
+      background-color: #0070C0;
+      color: #FFFFFF;
+    }
+
+    .text-celd {
+      vertical-align: middle;
+      width: 150px;
+      text-align: center;
+      font-size: 16px;
+      border: 1px solid #707273;
+
+
+    }
+
+    .text-celdas {
+      vertical-align: middle;
+      width: 130px;
+      text-align: center;
+      font-size: 16px;
+      border: 1px solid #707273;
+
+
+    }
+
+    .celd-table {
+      vertical-align: middle;
+      width: 80px;
+      text-align: center;
+      font-size: 14px;
+      border: 1px solid #707273;
+    }
+
+    .text-big {
+      height: 100px;
+      font-size: 16px;
+      vertical-align: middle;
+    }
+
+    .total {
+
+      font-size: 16px;
+      background-color: #DAE3F3;
+      border: 1px solid #707273;
+
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      /* background-color: lightgray;*/
+      text-align: center;
+    }
+
+    .tablaDos {
+
+      vertical-align: middle;
+      text-align: center;
+      font-size: 12px;
+
+    }
+
+    .spazio {
+      background-color: #FFFFFF;
+      color: #FFFFFF;
+      border: none;
+    }
+  </style>
 </head>
-
-<style>
-  hr {
-    background-color: #2E86C1;
-    height: 2px;
-    width: 80%;
-    top: 65px;
-    color: #2E86C1;
-    position: absolute;
-  }
-
-  .square {
-    width: 60px;
-    height: 60px;
-    background-color: #2E86C1;
-    border-radius: 10;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 100px;
-
-    color: #fff;
-    font-size: 40px;
-    font-weight: bold;
-  }
-
-  .code {
-    height: 40px;
-    left: 100px;
-    color: #2E86C1;
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .code-container {
-    left: 75px;
-    bottom: 10px;
-    width: 500px;
-    background-color: red;
-  }
-
-  .box-title {
-
-    font-size: 18px;
-    color: #FFFFFF;
-    background-color: #0070C0;
-    /* box-shadow: 50px 50px 50px grey;  */
-    width: 95%;
-    height: 30px;
-    text-align: center;
-    position: absolute;
-    vertical-align: middle;
-    margin-top: 650px;
-    margin-left: 35px;
-  }
-
-  .box-note {
-    font-size: 14px;
-    ;
-    width: 95%;
-    height: 25px;
-    text-align: left;
-    /* position: absolute;  */
-    vertical-align: middle;
-    margin-top: 60px;
-    /* margin-left: 20px;  */
-    border: 0.5px solid red;
-
-  }
-
-  .img-logo {
-    float: left;
-    width: 50px;
-    margin-bottom: 50px;
-  }
-
-  .img-letters {
-    float: right;
-    width: 100px;
-    background-color: red;
-  }
-
-  .container-letters {
-    left: 950px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  th,
-  td {
-    vertical-align: middle;
-    text-align: center;
-    padding: 5px;
-    border: 1px solid #707273;
-    /*width: fit-content;*/
-    font-size: 10px;
-  }
-
-  th {
-    margin-top: auto;
-    margin-bottom: auto;
-    vertical-align: middle;
-    text-align: center;
-    background-color: #0070C0;
-    color: #FFFFFF;
-  }
-
-  .text-celd {
-    vertical-align: middle;
-    width: 150px;
-    text-align: center;
-    font-size: 16px;
-    border: 1px solid #707273;
-
-
-  }
-
-  .text-celdas {
-    vertical-align: middle;
-    width: 130px;
-    text-align: center;
-    font-size: 16px;
-    border: 1px solid #707273;
-
-
-  }
-
-  .celd-table {
-    vertical-align: middle;
-    width: 80px;
-    text-align: center;
-    font-size: 14px;
-    border: 1px solid #707273;
-  }
-
-  .text-big {
-    height: 100px;
-    font-size: 16px;
-    vertical-align: middle;
-  }
-
-  .total {
-
-    font-size: 16px;
-    background-color: #DAE3F3;
-    border: 1px solid #707273;
-
-  }
-
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    /* background-color: lightgray;*/
-    text-align: center;
-  }
-
-  .tablaDos {
-
-    vertical-align: middle;
-    text-align: center;
-    font-size: 12px;
-
-  }
-
-  .spazio {
-    background-color: #FFFFFF;
-    color: #FFFFFF;
-    border: none;
-  }
-</style>
-
 <body>
 
   <!-- PAGINA 1 -->
@@ -676,7 +690,7 @@ if (contiene_subcadena($fullPath, "C:")) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
               <?php }
@@ -685,7 +699,7 @@ if (contiene_subcadena($fullPath, "C:")) {
               <tr>
                 <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                 <td class="text-celd" style="font-size: 12px;"><?php echo 0 ?></td>
-                <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
               </tr>
           <?php }
             $j++;
@@ -730,7 +744,7 @@ if (contiene_subcadena($fullPath, "C:")) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
           <?php }
@@ -780,7 +794,7 @@ if (contiene_subcadena($fullPath, "C:")) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
           <?php }
@@ -836,7 +850,7 @@ if (contiene_subcadena($fullPath, "C:")) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
           <?php }
@@ -881,7 +895,7 @@ if (contiene_subcadena($fullPath, "C:")) {
             <tr>
               <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
               <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
             </tr>
 
       <?php }
@@ -926,13 +940,13 @@ if (contiene_subcadena($fullPath, "C:")) {
       </tr>
       <?php foreach ($condiciones as $key => $values) { ?>
         <tr>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $key ?></td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[1] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[1] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[2] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[2] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[3] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[3] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[3] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
         </tr>
       <?php
       } ?>
@@ -958,9 +972,9 @@ if (contiene_subcadena($fullPath, "C:")) {
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[1] * 100) / $CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[2] * 100) / $CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[3] * 100) / $CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[1] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[2] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[3] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
       </tr>
 
     </table>
@@ -978,23 +992,22 @@ if (contiene_subcadena($fullPath, "C:")) {
 
         <tr>
           <th class="tablaDos">90% < A < 100% </th>
-          <th class="tablaDos">
-            < 100 %</th>
+          <th class="tablaDos"> < 100 %</th>
         </tr>
 
         <?php foreach ($condiciones as $key => $values) { ?>
           <tr>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $key ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (($values[4] + $values[5]) * 100) / $values[0] : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ( ( $values[4] + $values[5]) * 100) / $values[0] ), 2, '.', '' ) ) : 0 ?>%</td>
           </tr>
         <?php
         } ?>
 
         <tr>
-          <th class="spazio" colspan="7"></th>
+          <th class="spazio" colspan="5"></th> <!--antes era  colspan="7"-->
         </tr>
 
         <tr>
@@ -1010,7 +1023,7 @@ if (contiene_subcadena($fullPath, "C:")) {
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (($CT[4] + $CT[5]) * 100) / $CT[0] : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? ( number_format( ( ( ( $CT[4] + $CT[5]) * 100) / $CT[0] ), 2, '.', '' ) ) : 0 ?>%</b></td>
         </tr>
 
 
@@ -1156,7 +1169,7 @@ if (contiene_subcadena($fullPath, "C:")) {
   <?php setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Establecer la localización a español
   ?>
 
-  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha1)), MB_CASE_UPPER, 'UTF-8'); ?> </h4>
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?> </h4>
 
   <!-- PAGINA 8 -->
   <div style="page-break-before: always;"></div>
@@ -1203,8 +1216,8 @@ if (contiene_subcadena($fullPath, "C:")) {
 
   </div>
 
-  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8'); ?></h4>
-
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?></h4>
+<!--aqui-->
   <!-- PAGINA 9 -->
 
   <?php

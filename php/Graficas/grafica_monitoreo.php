@@ -17,8 +17,33 @@ $volumen;
 $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
 
-$numeroSemana = strftime('%W', strtotime($fecha1)); //semana del año
-$ex = strftime('%W', strtotime($fecha1));
+function getMonthName($numero_mes_aux)
+{
+    if($numero_mes_aux == "") {
+        $fecha_actual = getdate();
+
+        $numero_mes = $fecha_actual['mon'];
+    }
+    else{
+        $numero_mes = $numero_mes_aux;
+    }
+
+    $nombres_meses = array(
+        1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril",
+        5 => "Mayo", 6 => "Junio", 7 => "Julio", 8 => "Agosto",
+        9 => "Septiembre", 10 => "Octubre", 11 => "Noviembre", 12 => "Diciembre"
+    );
+
+    $nombre_mes = $nombres_meses[$numero_mes];
+
+    return  $nombre_mes;
+}
+
+/*$numeroSemana = strftime('%W', strtotime($fecha1)); //semana del año
+$ex = strftime('%W', strtotime($fecha1));*/
+
+$numeroSemana = date('W', strtotime($fecha1));
+$ex = date('W', strtotime($fecha1));
 function calcularSemanas($fecha, $fecha2)
 {
     // Obtener la fecha actual y la fecha proporcionada
@@ -457,16 +482,23 @@ ticks: {
     // Crear un objeto DateTime a partir de la cadena
     $fechaObjeto = DateTime::createFromFormat("Y-m-d", $fecha2);
     // Obtener el día, mes y año
-    $dia = strftime("%d", $fechaObjeto->getTimestamp());
-    $mes = strftime("%B", $fechaObjeto->getTimestamp()); // Nombre completo del mes
+    /*$dia = strftime("%d", $fechaObjeto->getTimestamp());
+    $mes = strftime("%B", $fechaObjeto->getTimestamp()); */// Nombre completo del mes
+    $dia = date('d', $fechaObjeto->getTimestamp());
+    //$mes = date('F', $fechaObjeto->getTimestamp());
+    $mes = getMonthName( $fechaObjeto->format('n') );
+
     //$anio = strftime("%A",$fechaObjeto->getTimestamp());
     // Formatear la fecha como "DÍA DE MES"
     $fechaFormateada = $dia . " de " . ucwords($mes);
 
     $fechaObjeto = DateTime::createFromFormat("Y-m-d", date('Y-m-d', strtotime('-9 days', strtotime($fecha2))));
     // Obtener el día, mes y año
-    $dia = strftime("%d", $fechaObjeto->getTimestamp());
-    $mes = strftime("%B", $fechaObjeto->getTimestamp()); // Nombre completo del mes
+    /*$dia = strftime("%d", $fechaObjeto->getTimestamp());
+    $mes = strftime("%B", $fechaObjeto->getTimestamp()); */// Nombre completo del mes
+    $dia = date('d', $fechaObjeto->getTimestamp());
+    $mes = getMonthName( $fechaObjeto->format('n') );
+
     //$anio = strftime("%A",$fechaObjeto->getTimestamp());
     // Formatear la fecha como "DÍA DE MES"
     $fechaFormateada2 = $dia . " de " . ucwords($mes);
@@ -533,15 +565,15 @@ ticks: {
             if (meta.hidden) return;
 
             const lastElement = meta.data[meta.data.length - 1];
-            const fontSize = 12;
-            const fontStyle = 'normal';
+            const fontSize = 13;
+            const fontStyle = 'bold';
             const fontFamily = 'Arial';
             if (dataset.data.length > 0) {
                 ctx.save();
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'bottom';
                 ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
-                ctx.fillStyle = 'black';
+                ctx.fillStyle = 'blue';
                 total = dataset.data[dataset.data.length - 1].y;
                 ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
             }
@@ -839,7 +871,7 @@ ticks: {
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . strftime('%B',  strtotime(date("Y-m-d"))); ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . getMonthName(""); ?>',
                     fullSize: true,
                     font: {
                         size: 30,

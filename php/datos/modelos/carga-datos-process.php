@@ -22,7 +22,8 @@ if ($opc == "add") {
     }
 
     $res = mysqli_query($conn, "INSERT INTO datos_embalse (id_embalse, fecha, hora, cota_actual, id_encargado, archivo_importacion, fecha_importacion, estatus) VALUES ('$id_embalse', '$fecha', '$hora', '$cota', '$id_encargado', '', NULL, 'activo');");
-    sleep(0.3);
+    //sleep(0.3);
+    usleep(300000); // 0.3 segundos = 300000 microsegundos
 
     if ($res == 1) {
         $sql = "SELECT id_registro FROM datos_embalse WHERE id_embalse = '$id_embalse' AND id_encargado = '$id_encargado' ORDER BY id_registro DESC LIMIT 1;";

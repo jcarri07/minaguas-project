@@ -93,6 +93,19 @@
         $array_aux['name'] = $row['name'];
         $array_aux['id_codigo_extraccion'] = $row['id_codigo_extraccion'];
         $array_aux['columna'] = "";
+        $array_aux['sumatoria'] = 0;
+        $array_aux['cantidad'] = 0;
+
+        if ($row['id_tipo_extraccion'] == '1' ||
+            $row['id_tipo_extraccion'] == '2' ||
+            $row['id_tipo_extraccion'] == '3' ||
+            $row['id_tipo_extraccion'] == '4'
+        ) {
+            $array_aux['sumable'] = true;
+        }
+        else
+            $array_aux['sumable'] = false;
+
         array_push($array_codigos, $array_aux);
     }
 
@@ -102,6 +115,16 @@
 
         $i = 0;
         while($row = mysqli_fetch_array($query)) {
+
+            //Reseteando las cantidades y sumatorias a 0 para cada embalse
+            foreach($array_codigos as &$codigo) {
+                $codigo['sumatoria'] = 0;
+                $codigo['cantidad'] = 0;
+            }
+            unset($codigo);
+
+
+
 
             if($i == 0) {
                 $hoja = $spreadsheet->getActiveSheet();
@@ -216,7 +239,8 @@
 
                         $codigo['columna'] = $column_aux;
 
-                        $hoja->setCellValue($column_aux . "8", $codigo['name'] . " (" . $codigo['codigo'] . ")");
+                        //Se ingresa mas abajo en conjunto con el promedio
+                        //$hoja->setCellValue($column_aux . "8", $codigo['name'] . " (" . $codigo['codigo'] . ")");
 
                         $hoja->getStyle($column_aux . "8")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                         $hoja->getStyle($column_aux . "8")->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
@@ -360,6 +384,7 @@
 
             $dia_actual = "$anio-01-01";
             $fila_actual = 9;
+            $cant_registros = 0;
             //$columna_actual = "A";
             for($i = 0 ; $i < $numberOfDays ; $i++) {
 
@@ -383,8 +408,8 @@
                     
                 }*/
 
-                //Aplicando color a las celdas
-                $index_aux = Coordinate::columnIndexFromString($COLUMNA_FINAL_REPORTE);
+                //Aplicando color a las celdas (tarda en generarse el excel)
+                /*$index_aux = Coordinate::columnIndexFromString($COLUMNA_FINAL_REPORTE);
                 $final_aux = Coordinate::stringFromColumnIndex($index_aux - 4);
                 //echo 'C' , $fila_actual . ":" . $final_aux . $fila_actual; echo "<br>";
                 $hoja->getStyle('C' . $fila_actual . ":" . $final_aux . $fila_actual)->applyFromArray([
@@ -392,38 +417,51 @@
                         'fillType' => Fill::FILL_SOLID,
                         'startColor' => ['argb' => 'FFF4D5'],
                     ],
-                ]);
+                ]);*/
 
 
                 //Añadiendo extracciones
                 $index_row = buscarPosicion($array_extracciones, date("Y-m-d", strtotime($dia_actual)), 'fecha');
                 if($index_row != -1) {
+                    $cant_registros++;
                     $extraccion = $array_extracciones[$index_row];
                     $hoja->setCellValue("C" . $fila_actual, $extraccion['cota_actual']);
                     $hoja->getStyle("C" . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-                    $extraccion_aux = explode(";", $extraccion['extraccion']);
-                    for($j = 0 ; $j < count($extraccion_aux) ; $j++) {
-                        if($extraccion_aux[$j] !== "") {
-                            $fila = explode("&", $extraccion_aux[$j]);
+                    if($extraccion['extraccion'] != NULL) {
+                        $extraccion_aux = explode(";", $extraccion['extraccion']);
+                        for($j = 0 ; $j < count($extraccion_aux) ; $j++) {
+                            if($extraccion_aux[$j] !== "") {
+                                $fila = explode("&", $extraccion_aux[$j]);
 
-                            $index_extraccion = buscarPosicion($array_codigos, $fila[0], 'id_codigo_extraccion');
-                            $columna_extraccion = $array_codigos[$index_extraccion]['columna'];
+                                $index_extraccion = buscarPosicion($array_codigos, $fila[0], 'id_codigo_extraccion');
+                                $columna_extraccion = $array_codigos[$index_extraccion]['columna'];
 
-                            $valor_extraccion = $fila[1];
-                            if($array_codigos[$index_extraccion]['id_codigo_extraccion'] == "30") {
-                                if(is_numeric($valor_extraccion)) {
-                                    $valor_extraccion = $fila[1] . "%";
-                                    if($fila[1] < 1) {
-                                        $valor_extraccion = ($fila[1] * 100) . "%";
+                                //AUmentado la cantidad de reportes y su suma
+                                if( $array_codigos[$index_extraccion]['sumable'] == true &&
+                                    $fila[1] != "" && 
+                                    $fila[1] != 0 && 
+                                    $fila[1] != "0"
+                                ) {
+                                    $array_codigos[$index_extraccion]['sumatoria'] += $fila[1];
+                                    $array_codigos[$index_extraccion]['cantidad']++;
+                                }
+
+                                $valor_extraccion = $fila[1];
+                                if($array_codigos[$index_extraccion]['id_codigo_extraccion'] == "30") {
+                                    if(is_numeric($valor_extraccion)) {
+                                        $valor_extraccion = $fila[1] . "%";
+                                        if($fila[1] < 1) {
+                                            $valor_extraccion = ($fila[1] * 100) . "%";
+                                        }
                                     }
                                 }
+
+                                $hoja->setCellValue($columna_extraccion . $fila_actual, $valor_extraccion);
+                                $hoja->getStyle($columna_extraccion . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                                $hoja->getStyle($columna_extraccion . $fila_actual)->getNumberFormat()->setFormatCode('0.00');
+
                             }
-
-                            $hoja->setCellValue($columna_extraccion . $fila_actual, $valor_extraccion);
-                            $hoja->getStyle($columna_extraccion . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                            $hoja->getStyle($columna_extraccion . $fila_actual)->getNumberFormat()->setFormatCode('0.00');
-
                         }
                     }
 
@@ -442,19 +480,19 @@
                 }*/
 
 
-                //Bordes en las celdas de extracciones
+                //Bordes en las celdas de extracciones (tarda en generarse el excel)
                 $celdaInicio = 'A' . $fila_actual;
                 $celdaFin = $COLUMNA_FINAL_REPORTE . $fila_actual;
 
                 // Aplicar bordes a las celdas del rango específico
-                $hoja->getStyle($celdaInicio . ':' . $celdaFin)->applyFromArray([
+                /*$hoja->getStyle($celdaInicio . ':' . $celdaFin)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => Border::BORDER_THIN,
                             'color' => ['argb' => '000000'],
                         ],
                     ],
-                ]);
+                ]);*/
 
                 $dia_actual = date("Y-m-d",strtotime($dia_actual."+ 1 days")); 
                 $fila_actual++;
@@ -462,6 +500,35 @@
             }
 
 
+            //Añadiendo valores de estadisticas a la cabecera de la hoja
+            $dia_del_anio_aux = (date("Y") == $anio) ? (date('z') + 1) : $numberOfDays;
+            $hoja->setCellValue('C1', number_format(100 - ($cant_registros * 100 / $dia_del_anio_aux), 2, ".", "") . "%"); // % de informacion faltante hasta la fecha
+            $hoja->getStyle("C1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            //$hoja->setCellValue('D1', date('z') );
+            $hoja->setCellValue('C2', $numberOfDays - $cant_registros); // Información Faltante (días)
+            $hoja->getStyle("C2")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+            $hoja->setCellValue('C3', $dia_del_anio_aux); // Días transcurridos
+            $hoja->getStyle("C3")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+            $hoja->setCellValue('C4', number_format(100 - ($cant_registros * 100 / $numberOfDays), 2, ".", "") . "%"); // % de informacion faltante del año 
+            $hoja->getStyle("C4")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+
+            //Añadiendo los promedios a los codigos
+            //aca no se necesita la referencia con el "&", ya que no se asignara ningun valor al array
+            foreach($array_codigos as $codigo) {
+                if($codigo['sumable']) {
+                    $divisor = $codigo['cantidad'] > 0 ? $codigo['cantidad'] : 1;
+                    $promedio = number_format( ($codigo['sumatoria'] / $divisor), 2, ',', '');
+
+                    $contenido_celda = $codigo['name'] . " (" . $codigo['codigo'] . ")" . "\n" . $promedio;
+                    $hoja->setCellValue($codigo['columna'] . "8", $contenido_celda);
+
+                    //Esto es para que se implemente el salto de linea en la celda
+                    $hoja->getStyle($codigo['columna'] . "8")->getAlignment()->setWrapText(true);
+                }
+            }
         }
 
 
@@ -474,12 +541,12 @@
 
         if (file_exists($nombreArchivo)) {
             // Configurar los encabezados HTTP para indicar que se va a descargar un archivo
-            header('Content-Description: File Transfer');
+            //header('Content-Description: File Transfer');
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment; filename="' . basename($nombreArchivo) . '"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
+            //header('Expires: 0');
+            //header('Cache-Control: must-revalidate');
+            //header('Pragma: public');
             header('Content-Length: ' . filesize($nombreArchivo));
             // Leer el archivo y enviar su contenido al navegador
             readfile($nombreArchivo);

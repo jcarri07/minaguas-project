@@ -72,17 +72,17 @@ $año_pasado = date('Y', strtotime('-1 year'));
 $num_rows = $result->num_rows;
 $img_default = "broken_image.png";
 
-if (contiene_subcadena($fullPath, "C:")) {
+//if (contiene_subcadena($fullPath, "C:")) {
   $img_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
   $logo_letters = "../../assets/img/logos/MinaguasLetters.png";
   $area =  "../../pages/reports_images/Area_cuenca.png";
   $area_path =  "../../pages/reports_images/";
-} else {
-  $img_logo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
-  $logo_letters =  "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
-  $area =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Area_cuenca.png";
-  $area_path =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/";
-}
+/*} else {
+  $img_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
+  $logo_letters =  "../../assets/img/logos/MinaguasLetters.png";
+  $area =  "../../pages/reports_images/Area_cuenca.png";
+  $area_path =  "../../pages/reports_images/";
+}*/
 
 $codigo = "";
 $titulo = "EMBALSE CAMATAGUA - ESTADO ARAGUA";

@@ -26,10 +26,10 @@ if (mysqli_num_rows($res) > 0) {
 $HOST = basename(getcwd());
 $fullPath = getcwd();
 
-if (contiene_subcadena($fullPath, "C:")) {
+if (1) {
   $area_path =  "../../pages/reports_images/";
 } else {
-  $area_path =  "https://embalsesminaguas.000webhostapp.com/pages/reports_images/";
+  $area_path =  "../../pages/reports_images/";
 }
 
 function cutRoute($rutaCompleta)
@@ -71,12 +71,12 @@ function formatoNumero($valor)
 }
 $img_default = "broken_image.png";
 
-$srcLogo = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/cropped-mminaguas.jpg";
-$srcLogoLetters = "https://embalsesminaguas.000webhostapp.com/assets/img/logos/MinaguasLetters.png";
+$srcLogo = "../../assets/img/logos/cropped-mminaguas.jpg";
+$srcLogoLetters = "../../assets/img/logos/MinaguasLetters.png";
 
-$srcMap = "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Imagen_map.png";
-$srcMapReport = "https://embalsesminaguas.000webhostapp.com/pages/reports_images/Imagens_map_report.png";
-$srcFooter = "https://embalsesminaguas.000webhostapp.com/pages/reports_images/pie_de_pagina.png";
+$srcMap = "../../pages/reports_images/Imagen_map.png";
+$srcMapReport = "../../pages/reports_images/Imagens_map_report.png";
+$srcFooter = "../../pages/reports_images/pie_de_pagina.png";
 
 $image_logo =  "/" . cutRoute($fullPath) . "/assets/img/logos/cropped-mminaguas.jpg";
 $logo_letters =  "/" . $projectName . "/assets/img/logos/MinaguasLetters.png";
