@@ -269,6 +269,6 @@ closeConection($conn); ?>
 
 
 
-    $("#title-4").html("<span class='text-center'>Extracciones de los Últimos 30 días <br> (" + suma.toFixed(2) + " x10<sup>3</sup>m<sup>3</sup>) </span>");
+    $("#title-4").html("<span class='text-center'>Extracciones de los Últimos 30 días <br> (" + new Intl.NumberFormat("de-DE").format(suma.toFixed(2)) + " x10<sup>3</sup>m<sup>3</sup>) </span>");
 
 </script>
