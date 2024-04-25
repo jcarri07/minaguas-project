@@ -87,7 +87,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales1)) {
     $array = array($row["norte"], $row["este"], $row["huso"]);
 
     $bat = new Batimetria($row["id_embalse"], $conn);
-    $fecha = date($row['fecha']);
+    $fecha = $row['fecha'] != null ? date($row['fecha']) : date("Y-m-d");
     $anio = date("Y", strtotime($fecha));
     $variacion = $bat->volumenActualDisponible() - $bat->getByCota($anio, $row["cota_actual"])[1];
 
@@ -123,7 +123,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
     $array = array($row["norte"], $row["este"], $row["huso"]);
 
     $bat = new Batimetria($row["id_embalse"], $conn);
-    $fecha = date($row['fecha']);
+    $fecha = $row['fecha'] != null ? date($row['fecha']) : date("Y-m-d");
     $anio = date("Y", strtotime($fecha));
     $variacion = $bat->volumenActualDisponible() - $bat->getByCota($anio, $row["cota_actual"])[1];
 
