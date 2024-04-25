@@ -203,9 +203,9 @@ foreach ($data as $row) {
   $idE = $row['id_estado'];
   $idM = $row['id_municipio'];
   $idP = $row['id_parroquia'];
-  $ESTADO = mysqli_fetch_assoc(mysqli_query($conn, "SELECT estado FROM estados WHERE id_estado = $idE"))['estado'];
-  $MUNICIPIO = mysqli_fetch_assoc(mysqli_query($conn, "SELECT municipio FROM municipios WHERE id_municipio = $idM"))['municipio'];
-  $PARROQUIA = mysqli_fetch_assoc(mysqli_query($conn, "SELECT parroquia FROM parroquias WHERE id_parroquia = $idP"))['parroquia'];
+  $ESTADO = mysqli_fetch_assoc(mysqli_query($conn, "SELECT estado FROM estados WHERE id_estado IN ($idE)"))['estado'];
+  $MUNICIPIO = mysqli_fetch_assoc(mysqli_query($conn, "SELECT municipio FROM municipios WHERE id_municipio IN ($idM)"))['municipio'];
+  $PARROQUIA = mysqli_fetch_assoc(mysqli_query($conn, "SELECT parroquia FROM parroquias WHERE id_parroquia IN ($idP)"))['parroquia'];
   //INFO CUENCA
   $ESTE = $row['este'];
   $NORTE = $row['norte'];
@@ -712,7 +712,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.2.6.- Longitud (m)</td>
-      <td><?php echo number_format($LONGITUD_ALIVIADERO, 2, ',', '.'); ?></td>
+      <td><?php echo $LONGITUD_ALIVIADERO; ?></td>
     </tr>
   </table>
   <table>
@@ -744,7 +744,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.3.6.- Gasto máximo (m3/s)</td>
-      <td><?php echo number_format($GASTO_MAXIMO, 2, ',', '.'); ?></td>
+      <td><?php echo $GASTO_MAXIMO; ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.3.7.- Descarga de fondo</td>

@@ -112,7 +112,7 @@ $variacion_total_op = [];
 
 $num = 0;
 while ($num < count($volumen_primer_periodo)) {
-  $row = $volumen_primer_periodo[$num];    
+  $row = $volumen_primer_periodo[$num];
   $row2 = $volumen_segundo_periodo[$num];
   $row3 = $volumen_tercer_periodo[$num];
   $bat = new Batimetria($row["id_embalse"], $conn);
@@ -204,7 +204,10 @@ $row = 0;
 while ($row < count($datos_embalses)) {
   $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
 
-  $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
+  $abastecimiento = 0;
+  if ($datos_embalses[$row]["extraccion"] > 0) {
+    $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
+  }
 
   if (!in_array($totalreg[$datos_embalses[$row]["region"]], $regiones)) {
     array_push($regiones, $totalreg[$datos_embalses[$row]["region"]]);
@@ -1318,15 +1321,31 @@ if (contiene_subcadena($fullPath, "C:")) {
           ?>
               <tr>
                 <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
-                <td class="text-celd" style="font-size: 12px; color:<?php if($value[2] < 0){echo "red"; }else{echo "green"; } ?>"><?php echo number_format($value[2], 2, ",", "") ?></td>
-                <td class="text-celd" style="font-size: 12px; color:<?php if($value[3] < 0){echo "red"; }else{echo "green"; } ?>"><?php echo number_format($value[3], 2, ",", "") ?>%</td>
+                <td class="text-celd" style="font-size: 12px; color:<?php if ($value[2] < 0) {
+                                                                      echo "red";
+                                                                    } else {
+                                                                      echo "green";
+                                                                    } ?>"><?php echo number_format($value[2], 2, ",", "") ?></td>
+                <td class="text-celd" style="font-size: 12px; color:<?php if ($value[3] < 0) {
+                                                                      echo "red";
+                                                                    } else {
+                                                                      echo "green";
+                                                                    } ?>"><?php echo number_format($value[3], 2, ",", "") ?>%</td>
               </tr>
           <?php }
           } ?>
           <tr>
             <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
-            <td class="text-celd" style="font-size: 16px; color:<?php if($tot_vol < 0){echo "red"; }else{echo "green"; } ?>"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
-            <td class="text-celd" style="font-size: 16px; color:<?php if($tot_por < 0){echo "red"; }else{echo "green"; } ?>"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
+            <td class="text-celd" style="font-size: 16px; color:<?php if ($tot_vol < 0) {
+                                                                  echo "red";
+                                                                } else {
+                                                                  echo "green";
+                                                                } ?>"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
+            <td class="text-celd" style="font-size: 16px; color:<?php if ($tot_por < 0) {
+                                                                  echo "red";
+                                                                } else {
+                                                                  echo "green";
+                                                                } ?>"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
           </tr>
         </table>
 
@@ -1349,15 +1368,31 @@ if (contiene_subcadena($fullPath, "C:")) {
           ?>
               <tr>
                 <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
-                <td class="text-celd" style="font-size: 12px; color:<?php if($value[4] < 0){echo "red"; }else{echo "green"; } ?>"><?php echo number_format($value[4], 2, ",", ""); ?></td>
-                <td class="text-celd" style="font-size: 12px; color:<?php if($value[5] < 0){echo "red"; }else{echo "green"; } ?>"><?php echo number_format($value[5], 2, ",", ""); ?>%</td>
+                <td class="text-celd" style="font-size: 12px; color:<?php if ($value[4] < 0) {
+                                                                      echo "red";
+                                                                    } else {
+                                                                      echo "green";
+                                                                    } ?>"><?php echo number_format($value[4], 2, ",", ""); ?></td>
+                <td class="text-celd" style="font-size: 12px; color:<?php if ($value[5] < 0) {
+                                                                      echo "red";
+                                                                    } else {
+                                                                      echo "green";
+                                                                    } ?>"><?php echo number_format($value[5], 2, ",", ""); ?>%</td>
               </tr>
           <?php }
           } ?>
           <tr>
             <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
-            <td class="text-celd" style="font-size: 16px; color:<?php if($tot_vol < 0){echo "red"; }else{echo "green"; } ?>"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
-            <td class="text-celd" style="font-size: 16px; color:<?php if($tot_por < 0){echo "red"; }else{echo "green"; } ?>"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
+            <td class="text-celd" style="font-size: 16px; color:<?php if ($tot_vol < 0) {
+                                                                  echo "red";
+                                                                } else {
+                                                                  echo "green";
+                                                                } ?>"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
+            <td class="text-celd" style="font-size: 16px; color:<?php if ($tot_por < 0) {
+                                                                  echo "red";
+                                                                } else {
+                                                                  echo "green";
+                                                                } ?>"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
           </tr>
         </table>
 
@@ -1646,7 +1681,7 @@ if (contiene_subcadena($fullPath, "C:")) {
     <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
   </div>
 
-  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY <?php echo $fecha3." - ".$fecha2;?></b>
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY <?php echo $fecha3 . " - " . $fecha2; ?></b>
   </div>
 
   <div style="position: absolute; margin-top: 80px; margin-left: 30px; width: 95%; height: 100px;">
@@ -1655,7 +1690,7 @@ if (contiene_subcadena($fullPath, "C:")) {
         <tr>
           <th style=" width: 100px;" class="text-celdas" rowspan="2">HIDROLÓGICA</th>
           <th style=" width: 90px; " class="text-celdas" colspan="2">
-            <p >VOLUMEN DISPONIBLE (HM3)</p>
+            <p>VOLUMEN DISPONIBLE (HM3)</p>
           </th>
           <th style=" width: 90px;" class="text-celdas" colspan="2">
             <p style="padding-top: 25px;">VARIACION DEL VOLUMEN DISPONIBLE (HM3)</p>
@@ -1679,15 +1714,15 @@ if (contiene_subcadena($fullPath, "C:")) {
         </tr>
         <?php foreach ($variacion_total_op as $key => $value) { ?>
           <tr>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $key?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[0],2,",",""); ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[1],2,",",""); ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[2],2,",",""); ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[3],2,",",""); ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[4],2,",","")."%"; ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[5],2,",","")."%"; ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[6],2,",",""); ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[7],2,",","")."%"; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $key ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[0], 2, ",", ""); ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[1], 2, ",", ""); ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[2], 2, ",", ""); ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[3], 2, ",", ""); ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[4], 2, ",", "") . "%"; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[5], 2, ",", "") . "%"; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[6], 2, ",", ""); ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[7], 2, ",", "") . "%"; ?></td>
           </tr>
         <?php } ?>
       </table>
@@ -1984,7 +2019,7 @@ if (contiene_subcadena($fullPath, "C:")) {
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[2] . "/" . $value[4]; ?></td>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[3] . "/" . $value[4]; ?></td>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[4] . "/" . $value[4]; ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[4] != 0 ? ($value[4] * 100) / $value[4]."%" : 0 . "%"; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[4] != 0 ? ($value[4] * 100) / $value[4] . "%" : 0 . "%"; ?></td>
           </tr>
 
         <?php } ?>
@@ -1995,7 +2030,7 @@ if (contiene_subcadena($fullPath, "C:")) {
           <td class="total" style="font-size: 12px;"><b><?php echo $t_op_a[2] ?></b></td>
           <td class="total" style="font-size: 12px;"><b><?php echo $t_op_a[3] ?></b></td>
           <td class="total" style="font-size: 12px;"><b><?php echo $t_op_a[4] . "/" . $t_op_a[4] ?></b></td>
-          <td class="total" style="font-size: 12px;"><b><?php echo $value[4] != 0 ? ($t_op_a[4] * 100) / $t_op_a[4]."%" : 0 . "%" ?></b></td>
+          <td class="total" style="font-size: 12px;"><b><?php echo $value[4] != 0 ? ($t_op_a[4] * 100) / $t_op_a[4] . "%" : 0 . "%" ?></b></td>
 
         </tr>
       </table>

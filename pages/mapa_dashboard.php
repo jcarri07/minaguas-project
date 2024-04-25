@@ -35,7 +35,10 @@ while ($row < count($datos_embalses)) {
 
     $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
 
-    $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
+    $abastecimiento = 0;
+    if ($datos_embalses[$row]["extraccion"] > 0) {
+        $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
+    }
 
     array_push($array, $datos_embalses[$row]["nombre_embalse"]);
 
@@ -43,30 +46,30 @@ while ($row < count($datos_embalses)) {
 
     $icono = "i_";
 
-    
+
     // Dependiendo del porcentaje, se asigna su icono, y se cuenta para su categoria.
     $abastecimiento = intval($abastecimiento);
     if ($abastecimiento < 0 && $abastecimiento < 5) {
-        $icono.="rojo_";
+        $icono .= "rojo_";
     } else if ($abastecimiento > 4 && $abastecimiento < 9) {
-        $icono.="naranja_";
+        $icono .= "naranja_";
     } else if ($abastecimiento > 8 && $abastecimiento < 13) {
-        $icono.="amarillo_";
+        $icono .= "amarillo_";
     } else {
-        $icono.="verde_";
+        $icono .= "verde_";
     }
 
 
     if ($porcentaje < 30) {
-        $icono.= "30";
+        $icono .= "30";
     } else if ($porcentaje >= 30 && $porcentaje < 60) {
-        $icono.= "60";
+        $icono .= "60";
     } else if ($porcentaje >= 60 && $porcentaje < 90) {
-        $icono.= "90";
+        $icono .= "90";
     } else if ($porcentaje >= 90 && $porcentaje <= 100) {
-        $icono.= "100";
+        $icono .= "100";
     } else {
-        $icono.= "200";
+        $icono .= "200";
     }
 
     array_push($array, $icono);
