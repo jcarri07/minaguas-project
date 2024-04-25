@@ -128,11 +128,13 @@
 
             if($i == 0) {
                 $hoja = $spreadsheet->getActiveSheet();
-                $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
+                //$hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
+                $hoja->setTitle("Embalse " . $i);
             }
             else {
                 $hoja = $spreadsheet->createSheet();
-                $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
+                //$hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
+                $hoja->setTitle("Embalse " . $i);
             }
 
             $i++;
@@ -303,7 +305,7 @@
             $hoja->setCellValue('A3', 'Días Transcurridos:');
             $hoja->setCellValue('A4', 'Información Faltante del Año:');
             $hoja->setCellValue('A5', 'Embalse:');
-            $hoja->setCellValue('B5', mb_strtoupper($i));
+            $hoja->setCellValue('B5', mb_strtoupper($row['nombre_embalse']));
             $hoja->setCellValue("A7", 'FECHA');
 
             $styleCell = $hoja->getStyle("A7");
@@ -428,38 +430,40 @@
                     $hoja->setCellValue("C" . $fila_actual, $extraccion['cota_actual']);
                     $hoja->getStyle("C" . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-                    $extraccion_aux = explode(";", $extraccion['extraccion']);
-                    for($j = 0 ; $j < count($extraccion_aux) ; $j++) {
-                        if($extraccion_aux[$j] !== "") {
-                            $fila = explode("&", $extraccion_aux[$j]);
+                    if($extraccion['extraccion'] != NULL) {
+                        $extraccion_aux = explode(";", $extraccion['extraccion']);
+                        for($j = 0 ; $j < count($extraccion_aux) ; $j++) {
+                            if($extraccion_aux[$j] !== "") {
+                                $fila = explode("&", $extraccion_aux[$j]);
 
-                            $index_extraccion = buscarPosicion($array_codigos, $fila[0], 'id_codigo_extraccion');
-                            $columna_extraccion = $array_codigos[$index_extraccion]['columna'];
+                                $index_extraccion = buscarPosicion($array_codigos, $fila[0], 'id_codigo_extraccion');
+                                $columna_extraccion = $array_codigos[$index_extraccion]['columna'];
 
-                            //AUmentado la cantidad de reportes y su suma
-                            if( $array_codigos[$index_extraccion]['sumable'] == true &&
-                                $fila[1] != "" && 
-                                $fila[1] != 0 && 
-                                $fila[1] != "0"
-                            ) {
-                                $array_codigos[$index_extraccion]['sumatoria'] += $fila[1];
-                                $array_codigos[$index_extraccion]['cantidad']++;
-                            }
+                                //AUmentado la cantidad de reportes y su suma
+                                if( $array_codigos[$index_extraccion]['sumable'] == true &&
+                                    $fila[1] != "" && 
+                                    $fila[1] != 0 && 
+                                    $fila[1] != "0"
+                                ) {
+                                    $array_codigos[$index_extraccion]['sumatoria'] += $fila[1];
+                                    $array_codigos[$index_extraccion]['cantidad']++;
+                                }
 
-                            $valor_extraccion = $fila[1];
-                            if($array_codigos[$index_extraccion]['id_codigo_extraccion'] == "30") {
-                                if(is_numeric($valor_extraccion)) {
-                                    $valor_extraccion = $fila[1] . "%";
-                                    if($fila[1] < 1) {
-                                        $valor_extraccion = ($fila[1] * 100) . "%";
+                                $valor_extraccion = $fila[1];
+                                if($array_codigos[$index_extraccion]['id_codigo_extraccion'] == "30") {
+                                    if(is_numeric($valor_extraccion)) {
+                                        $valor_extraccion = $fila[1] . "%";
+                                        if($fila[1] < 1) {
+                                            $valor_extraccion = ($fila[1] * 100) . "%";
+                                        }
                                     }
                                 }
+
+                                $hoja->setCellValue($columna_extraccion . $fila_actual, $valor_extraccion);
+                                $hoja->getStyle($columna_extraccion . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                                $hoja->getStyle($columna_extraccion . $fila_actual)->getNumberFormat()->setFormatCode('0.00');
+
                             }
-
-                            $hoja->setCellValue($columna_extraccion . $fila_actual, $valor_extraccion);
-                            $hoja->getStyle($columna_extraccion . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                            $hoja->getStyle($columna_extraccion . $fila_actual)->getNumberFormat()->setFormatCode('0.00');
-
                         }
                     }
 
