@@ -1655,7 +1655,7 @@ if (contiene_subcadena($fullPath, "C:")) {
         <tr>
           <th style=" width: 100px;" class="text-celdas" rowspan="2">HIDROLÓGICA</th>
           <th style=" width: 90px; " class="text-celdas" colspan="2">
-            <p style="">VOLUMEN DISPONIBLE (HM3)</p>
+            <p >VOLUMEN DISPONIBLE (HM3)</p>
           </th>
           <th style=" width: 90px;" class="text-celdas" colspan="2">
             <p style="padding-top: 25px;">VARIACION DEL VOLUMEN DISPONIBLE (HM3)</p>
@@ -1956,9 +1956,9 @@ if (contiene_subcadena($fullPath, "C:")) {
       <table>
         <tr>
           <th style="height: 80px;" class="text-celd" rowspan="2">HIDROLÓGICA</th>
-          <th style="" class="text-celd" colspan="4">ALERTAS</th>
-          <th style="" class="text-celd" rowspan="2">TOTAL</th>
-          <th style="" class="text-celd" rowspan="2">% TOTAL</th>
+          <th class="text-celd" colspan="4">ALERTAS</th>
+          <th class="text-celd" rowspan="2">TOTAL</th>
+          <th class="text-celd" rowspan="2">% TOTAL</th>
 
         </tr>
         <tr>

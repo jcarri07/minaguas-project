@@ -41,7 +41,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         </li>
 
         <?php
-        if ($_SESSION["Tipo"] == "Admin") {
+        if ($_SESSION["Tipo"] == "Admin"||$_SESSION["Tipo"] == "SuperAdmin") {
         ?>
           <li class="nav-item">
             <a class="nav-link <?php echo ($page == 'embalses') ? "active" : ''; ?>" href="?page=embalses">
