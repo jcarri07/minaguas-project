@@ -31,7 +31,7 @@
             ce.concepto <> 'Subtotal'
           ORDER BY codigo ASC;";
   $query_codigos = mysqli_query($conn, $sql);
-echo date('z');
+
   $sql = "SELECT DISTINCT YEAR(fecha) AS 'anio'
     FROM datos_embalse
     WHERE estatus = 'activo'
