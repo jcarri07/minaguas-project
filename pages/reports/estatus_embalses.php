@@ -976,8 +976,7 @@ if (1) {
 
         <tr>
           <th class="tablaDos">90% < A < 100% </th>
-          <th class="tablaDos">
-            < 100 %</th>
+          <th class="tablaDos"> < 100 %</th>
         </tr>
 
         <?php foreach ($condiciones as $key => $values) { ?>
@@ -992,7 +991,7 @@ if (1) {
         } ?>
 
         <tr>
-          <th class="spazio" colspan="7"></th>
+          <th class="spazio" colspan="5"></th> <!--antes era  colspan="7"-->
         </tr>
 
         <tr>
@@ -1781,7 +1780,448 @@ if (1) {
 
     </div>
   </div>
+  <!-- PAGINA 15 -->
 
+  <?php
+  $A_region = 120;
+  $A_tabla = 120;
+  $incremento = 0;
+  $acumulado = 0;
+  $disponible = 25;
+  $disponible_right = 25;
+  $inicial = true;
+  $tituloini = true;
+  $right = false;
+  $margin_left = 20;
+  $espacio = 90;
+
+  function descripcion($meses)
+  {
+    $meses = intval($meses);
+    // if ($meses < 1) return "0 meses";
+    if ($meses < 5) return ["0-4 meses", "#ff0000"];
+    if ($meses > 4 && $meses < 9) return ["5-8 meses", "#ffaa00"];
+    if ($meses > 8 && $meses < 13) return ["9-12", "#ffff00"];
+    if ($meses > 12) return ["+12 meses", "#70ad47"];
+  }
+
+  ?>
+
+  <?php foreach ($regiones as $region) { ?>
+
+    <?php if ($inicial) { ?>
+      <div style="page-break-before: always;"></div>
+      <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+      </div>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
+      </div>
+      <?php
+      if (($disponible - ($countReg[$region] + 4)) > 4) {
+        $disponible -= ($countReg[$region] + 4);
+        $acumulado += ($espacio + ($countReg[$region] * 30));
+        $inicial = false;
+      } else {
+        $A_operador = 85;
+        $A_tabla = 120;
+        $incremento = 0;
+        $acumulado = 0;
+        $disponible = 25;
+        $disponible_right = 25;
+        $inicial = true;
+      }
+    } else {
+
+      $incremento += $acumulado;
+      $acumulado = 0;
+      if ((($countReg[$region] + 4)) > $disponible) {
+
+        $A_operador = 85;
+        $A_tabla = 120;
+        $incremento = 0;
+        $disponible = 25;
+
+        if ($right == false) {
+          $margin_left = 550;
+          $disponible = $disponible_right;
+          $right = true;
+        }
+
+        if (($disponible - ($countReg[$region] + 4)) > 4) {
+          $disponible -= ($countReg[$region] + 4);
+          $acumulado += ($espacio + ($countReg[$region] * 30));
+          $inicial = false;
+        } else {
+          $A_operador = 85;
+          $A_tabla = 120;
+          $incremento = 0;
+          $acumulado = 0;
+          $disponible = 25;
+          $inicial = true;
+          $right = true;
+          $margin_left = 20;
+        }
+
+        if ($right == true && (($countReg[$region] + 4)) > $disponible) {
+      ?>
+
+          <div style="page-break-before: always;"></div>
+          <div class="header">
+            <hr style="top: 55px; color:#1B569D">
+            <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+            <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+          </div>
+
+          <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
+          </div>
+
+        <?php }
+      } else {
+        $disponible -= ($countReg[$region] + 4);
+        $acumulado += ($espacio + ($countReg[$region] * 30));
+        $inicial = false; ?>
+
+
+    <?php
+
+      }
+    }
+    ?>
+    <!-- <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?> OPERADOR</b></div> -->
+
+
+    <div style="position: absolute; margin-top: <?php echo $A_tabla + $incremento; ?>px; margin-left: <?php echo $margin_left; ?>px; font-size: 18px; text-align: right;"><b>Región <?php echo $region ?></b>
+      <table>
+        <tr>
+          <th class="celd-table">ALERTA</th>
+          <th class="celd-table">DESCRIPCION</th>
+          <th class="celd-table">EMBALSE</th>
+          <th class="celd-table">MESES DE <br>ABAST.</th>
+          <th class="celd-table">HIDROLÓGICA</th>
+        </tr>
+        <?php foreach ($embalse_abast as $abast) {
+          if (strtolower(trim($abast[0])) == strtolower(trim($region))) {
+        ?>
+            <tr>
+              <td class="" style="font-size: 12px;">
+                <div style="background-color:<?php echo descripcion($abast[3])[1] ?>; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+              </td>
+              <td class="" style="font-size: 12px;"><?php echo descripcion($abast[3])[0] ?></td>
+              <td class="" style="font-size: 12px;"><?php echo $abast[2] ?></td>
+              <td class="" style="font-size: 12px;"><?php echo intval($abast[3]) ?></td>
+              <td class="" style="font-size: 12px;"><?php echo $abast[1] ?></td>
+            </tr>
+        <?php }
+        } ?>
+      </table>
+
+
+      <!-- <div style="position: absolute; margin-left: 20px; font-size: 18px; text-align: right;">
+        <div><b>OPERADOR</b>
+          <table>
+            <tr>
+              <th class="celd-table">SIMBOLO</th>
+              <th class="celd-table">DESCRIPCION</th>
+              <th class="celd-table">EMBALSE</th>
+              <th class="celd-table">MESES DE <br>ABAST.</th>
+              <th class="celd-table">HIDROLÓGICA</th>
+            </tr>
+            <tr>
+              <td class="" style="font-size: 12px;">
+                <div style="background-color: orange; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+              </td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+            </tr>
+            <tr>
+              <td class="" style="font-size: 12px;">
+                <div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+              </td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+            </tr>
+            <tr>
+              <td class="" style="font-size: 12px;">
+                <div style="background-color: #88FE31; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+              </td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+            </tr>
+            <tr>
+              <td class="" style="font-size: 12px;">
+                <div style="background-color: green; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+              </td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+              <td class="" style="font-size: 12px;">PRUEBA</td>
+            </tr>
+          </table>
+        </div>
+      </div> -->
+    </div>
+
+  <?php } ?>
+  <!-- PAGINA 16 -->
+
+  <div style="page-break-before: always;"></div>
+  <div class="header">
+    <hr style="top: 55px; color:#1B569D">
+    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+  </div>
+
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
+  </div>
+
+  <div style="position: absolute; margin-top: 80px; margin-left: 55px; width: 95%; height: 100px;">
+    <div style="position: absolute; margin-top: 30px;">
+      <table>
+        <tr>
+          <th style="height: 80px;" class="text-celd" rowspan="2">HIDROLÓGICA</th>
+          <th class="text-celd" colspan="4">ALERTAS</th>
+          <th class="text-celd" rowspan="2">TOTAL</th>
+          <th class="text-celd" rowspan="2">% TOTAL</th>
+
+        </tr>
+        <tr>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">
+            <div style="background-color: red; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+          </td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">
+            <div style="background-color: orange; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+          </td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">
+            <div style="background-color: yellow; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+          </td>
+          <td class="text-celdas" style="font-size: 12px; width: 90px;">
+            <div style="background-color: #70ad47; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+          </td>
+        </tr>
+        <?php foreach ($operador_abast as $key => $value) {
+        ?>
+          <tr>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $key; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[0] . "/" . $value[4]; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[1] . "/" . $value[4]; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[2] . "/" . $value[4]; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[3] . "/" . $value[4]; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[4] . "/" . $value[4]; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $value[4] != 0 ? ($value[4] * 100) / $value[4] . "%" : 0 . "%"; ?></td>
+          </tr>
+
+        <?php } ?>
+        <tr>
+          <td class="total" style="font-size: 12px; height: 20px;"><b>TOTAL</b></td>
+          <td class="total" style="font-size: 12px;"><b><?php echo $t_op_a[0] ?></b></td>
+          <td class="total" style="font-size: 12px;"><b><?php echo $t_op_a[1] ?></b></td>
+          <td class="total" style="font-size: 12px;"><b><?php echo $t_op_a[2] ?></b></td>
+          <td class="total" style="font-size: 12px;"><b><?php echo $t_op_a[3] ?></b></td>
+          <td class="total" style="font-size: 12px;"><b><?php echo $t_op_a[4] . "/" . $t_op_a[4] ?></b></td>
+          <td class="total" style="font-size: 12px;"><b><?php echo $value[4] != 0 ? ($t_op_a[4] * 100) / $t_op_a[4] . "%" : 0 . "%" ?></b></td>
+
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- PAGINA 17 -->
+
+  <div style="page-break-before: always;"></div>
+  <div class="header">
+    <hr style="top: 55px; color:#1B569D">
+    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+  </div>
+
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 55px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
+  </div>
+
+  <div style="position: absolute; margin-top: 150px; margin-left: 280px; width: 95%; height: 100px;">
+
+    <div style="position: absolute; text-align: center;">
+      <img style="width: 450px; height: 520px; background-color: lightgray; margin-top: 0px; margin-left: 50px;" src="<?php echo $status_pie_2 ?>">
+    </div>
+
+  </div>
+
+  <!-- PAGINA 17 -->
+
+  <div style="page-break-before: always;"></div>
+  <div class="header">
+    <hr style="top: 55px; color:#1B569D">
+    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+  </div>
+
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 55px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
+  </div>
+
+  <div style="position: absolute; margin-left: 55px; font-size: 18px; text-align: center; margin-top: 100px;">
+    <h3>0 Meses < Alerta <span style="color:red;">Roja</span>
+        < 4 Meses</h3>
+
+          <table>
+            <tr>
+              <th class="text-celd">EMBALSE</th>
+              <th class="" style="width:100px; font-size: 16px;">MESES <br> DE <br> GARANTÍA</th>
+              <th class="text-celd">HIDROLÓGICA</th>
+            </tr>
+            <?php
+            $cant = 0;
+            foreach ($embalse_abast as $value) {
+              if (intval($value[3]) < 5) {
+                $cant++;
+            ?>
+                <tr>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $value[2]; ?></td>
+                  <td class="" style="font-size: 12px;"><?php echo intval($value[3]); ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $value[1]; ?></td>
+                </tr>
+            <?php }
+            } ?>
+            <tr>
+              <td class="height: 20px; text-celd total" style="font-size: 12px;"><b>TOTAL</b></td>
+              <td class="" style="font-size: 12px;"><b><?php echo intval($cant) ?></b></td>
+              <td class="" style="font-size: 12px;" rowspan="2"><b></b></td>
+
+            </tr>
+            <tr>
+              <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
+              <td class="" style="font-size: 12px;"><b> <?php echo ($cant * 100) / count($embalse_abast) . "%" ?></b></td>
+            </tr>
+          </table>
+  </div>
+
+  <div style="position: absolute; margin-left: 550px; font-size: 18px; text-align: center; margin-top: 100px;">
+    <h3>5 Meses < Alerta <span style="color: orange;">Naranja</span>
+        < 8 Meses</h3>
+
+          <table>
+            <tr>
+              <th class="text-celd">EMBALSE</th>
+              <th class="" style="width:100px; font-size: 16px;">MESES <br> DE <br> GARANTÍA</th>
+              <th class="text-celd">HIDROLÓGICA</th>
+            </tr>
+            <?php
+            $cant = 0;
+            foreach ($embalse_abast as $value) {
+              if (intval($value[3]) > 4 && intval($value[3]) < 9) {
+                $cant++;
+            ?>
+                <tr>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $value[2]; ?></td>
+                  <td class="" style="font-size: 12px;"><?php echo intval($value[3]); ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $value[1]; ?></td>
+                </tr>
+            <?php }
+            } ?>
+            <tr>
+              <td class="height: 20px; text-celd total" style="font-size: 12px;"><b>TOTAL</b></td>
+              <td class="" style="font-size: 12px;"><b><?php echo intval($cant) ?></b></td>
+              <td class="" style="font-size: 12px;" rowspan="2"><b></b></td>
+
+            </tr>
+            <tr>
+              <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
+              <td class="" style="font-size: 12px;"><b> <?php echo ($cant * 100) / count($embalse_abast) . "%" ?></b></td>
+            </tr>
+          </table>
+  </div>
+
+  <!-- PAGINA 18 -->
+
+  <div style="page-break-before: always;"></div>
+  <div class="header">
+    <hr style="top: 55px; color:#1B569D">
+    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+  </div>
+
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 55px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
+  </div>
+
+  <div style="position: absolute; margin-left: 55px; font-size: 18px; text-align: center; margin-top: 100px;">
+    <h3>9 Meses < Alerta <span style="color:#ffc219;">Amarilla</span>
+        < 12 Meses</h3>
+
+          <table>
+            <tr>
+              <th class="text-celd">EMBALSE</th>
+              <th class="" style="width:100px; font-size: 16px;">MESES <br> DE <br> GARANTÍA</th>
+              <th class="text-celd">HIDROLÓGICA</th>
+            </tr>
+            <?php
+            $cant = 0;
+            foreach ($embalse_abast as $value) {
+              if (intval($value[3]) > 8 && intval($value[3]) < 13) {
+                $cant++;
+            ?>
+                <tr>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $value[2]; ?></td>
+                  <td class="" style="font-size: 12px;"><?php echo intval($value[3]); ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $value[1]; ?></td>
+                </tr>
+            <?php }
+            } ?>
+            <tr>
+              <td class="height: 20px; text-celd total" style="font-size: 12px;"><b>TOTAL</b></td>
+              <td class="" style="font-size: 12px;"><b><?php echo intval($cant) ?></b></td>
+              <td class="" style="font-size: 12px;" rowspan="2"><b></b></td>
+
+            </tr>
+            <tr>
+              <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
+              <td class="" style="font-size: 12px;"><b> <?php echo ($cant * 100) / count($embalse_abast) . "%" ?></b></td>
+            </tr>
+          </table>
+  </div>
+
+  <div style="position: absolute; margin-left: 550px; font-size: 18px; text-align: center; margin-top: 100px;">
+    <h3>Alerta <span style="color: green;">Verde</span>
+      > 12 Meses</h3>
+
+    <table>
+      <tr>
+        <th class="text-celd">EMBALSE</th>
+        <th class="" style="width:100px; font-size: 16px;">MESES <br> DE <br> GARANTÍA</th>
+        <th class="text-celd">HIDROLÓGICA</th>
+      </tr>
+      <?php
+      $cant = 0;
+      foreach ($embalse_abast as $value) {
+        if (intval($value[3]) > 12) {
+          $cant++;
+      ?>
+          <tr>
+            <td class="text-celd" style="font-size: 12px;"><?php echo $value[2]; ?></td>
+            <td class="" style="font-size: 12px;"><?php echo intval($value[3]); ?></td>
+            <td class="text-celd" style="font-size: 12px;"><?php echo $value[1]; ?></td>
+          </tr>
+      <?php }
+      } ?>
+      <tr>
+        <td class="height: 20px; text-celd total" style="font-size: 12px;"><b>TOTAL</b></td>
+        <td class="" style="font-size: 12px;"><b><?php echo intval($cant) ?></b></td>
+        <td class="" style="font-size: 12px;" rowspan="2"><b></b></td>
+
+      </tr>
+      <tr>
+        <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
+        <td class="" style="font-size: 12px;"><b> <?php echo ($cant * 100) / count($embalse_abast) . "%" ?></b></td>
+      </tr>
+    </table>
+  </div>
 
 
 
