@@ -220,7 +220,7 @@ if ($count >= 1) {
                             },
                         },
                         y: {
-                            stacked: true,
+                            stacked: false,
                             title: {
                                 display: true,
                                 text: 'Volumen (Hm³)',
