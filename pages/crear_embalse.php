@@ -106,6 +106,7 @@ date_default_timezone_set("America/Caracas");
 
   .desplegar {
     display: block;
+    z-index: 100 !important;
   }
 
   #region,
@@ -191,12 +192,14 @@ date_default_timezone_set("America/Caracas");
   .map-no-visible {
     top: -50%;
     left: -50%;
+    z-index: -100 !important;
   }
 
   .map-visible {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 100 !important;
   }
 
   #show-map {

@@ -1,5 +1,7 @@
 <?php
 include 'php/Conexion.php';
+require_once 'php/batimetria.php';
+
 
 
 if (!isset($_SESSION)) {
@@ -14,6 +16,8 @@ if (isset($_SESSION['id_embalse'])) {
   $id_embalse = $_SESSION['id_embalse'];
   echo $id_embalse;
 }
+
+$bat_emb = new Batimetria($id_embalse, $conn);
 // var_dump($id_embalse);
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
@@ -181,6 +185,7 @@ function stringFloat($num, $dec = 2)
 
   .desplegar {
     display: block;
+    z-index: 100 !important;
   }
 
   #region,
@@ -262,12 +267,14 @@ function stringFloat($num, $dec = 2)
   .map-no-visible {
     top: -100%;
     left: -100%;
+    z-index: -100 !important;
   }
 
   .map-visible {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 100 !important;
   }
 
   #show-map {
@@ -564,7 +571,7 @@ function stringFloat($num, $dec = 2)
                   <div class="form-group">
                     <label for="batimetria">Batimetría</label>
                     <div id="pre-bat" class="input-group">
-                      <input type="text" class="form-control" id="" name="" placeholder="" value="<?php echo $embalse["nombre_embalse"] ?> :[ año - año ]"> <!--el que muestra la batimetria de la base de datos. -->
+                      <input type="text" class="form-control" id="" name="" placeholder="" value="<?php echo $embalse["nombre_embalse"] ?> :[ <?php echo implode(" - ", $bat_emb->getYears()) ?> ]"> <!--el que muestra la batimetria de la base de datos. -->
                       <span onclick="$('#show-pre-batimetria').modal('show');" id="show-pre-bat" class="input-group-text  cursor-pointer text-bold"><i class="fas fa-eye text-sm "></i></span>
                       <span id="change-bat" class="input-group-text  cursor-pointer text-bold"><i class="fas fa-trash text-sm me-1"></i></span>
                     </div>
