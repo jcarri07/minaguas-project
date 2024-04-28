@@ -344,18 +344,28 @@ closeConection($conn);*/
 
       <div class="col-12 pt-2 bg-white rounded mt-4 shadow" id="container-div">
         <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pb-2" id="contain-charts">
+        <div class="col-12 pb-2 pt-1">
+       
+            <h4 class="mb-0">Mapa</h4>
+            <p class="text-sm">Indicador de Porcentaje y Abastecimiento de los embalses</p>
+          
+        </div>
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 700px;">
             <!-- ]  <div id="mapa-container"> -->
             <!-- <div id="mapa-portada" style="width: 100%; height: 100%;"></div> -->
             <?php include "mapa_dashboard.php" ?>
           </div>
+          
+          <div class="row justify-content-center gap-sm-2 ">
+            <img src="./assets/icons/leyenda_mapa.png" >
+            </div>
         </div>
       </div>
 
       <div class="container py-3 px-2" style="padding-left:20px;">
         <div class="card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;">
           <div class="card-header pb-0">
-            <h6 class="mb-0">Embalses</h6>
+            <h4 class="mb-0">Embalses</h4>
             <p class="text-sm">Monitoreo del Volumen Útil Actual de los embalses registrados</p>
           </div>
           <hr class="dark horizontal">
@@ -366,23 +376,23 @@ closeConection($conn);*/
                 <div class="row justify-content-center gap-sm-2 ">
                   <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
                     <div class="col-2 cuadro-color" style="background-color: #fd0200;"></div>
-                    <span class="smalll col-auto pe-1">( <=30% )</span>
+                    <span class="smalll col-auto pe-1" style="font-size: 14px;">( < = 30% )</span>
                   </div>
                   <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
                     <div class="col-2 cuadro-color" style="background-color: #72dffd;"></div>
-                    <span class="smalll col-auto ps-1">( > 30% <= 60% )</span>
+                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( > 30% < = 60% )</span>
                   </div>
                   <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-end">
                     <div class="col-2 cuadro-color" style="background-color: #0066eb;"></div>
-                    <span class="smalll col-auto ps-1">( >60% <= 90% )</span>
+                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( >60% < = 90% )</span>
                   </div>
                   <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-start">
                     <div class="col-sm-3 col-2 cuadro-color" style="background-color: #3ba500;"></div>
-                    <span class="smalll col-auto ps-1">( >90% <= 100% )</span>
+                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( >90% < = 100% )</span>
                   </div>
                   <div class="etiqueta col-sm-2 col-4 px-0 ps-1 justify-content-center">
                     <div class="col-3 cuadro-color " style="background-color: #55fe01;"></div>
-                    <span class="smalll col-auto ps-1">( > 100% )</span>
+                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( > 100% )</span>
                   </div>
                 </div>
               </div>
