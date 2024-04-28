@@ -80,7 +80,7 @@ closeConection($conn);
               </div>
               <?php if($_SESSION["Tipo"] == "SuperAdmin"){?>
               
-                <label id="" class="form-label">Ver por</label>
+                <label id="" class="form-label">Tipo</label>
                             <select name="tipo" class="form-select" required>
                                 <option value="Admin">Administrador</option>
                                 <option value="User">Usuario</option>
@@ -160,7 +160,7 @@ closeConection($conn);
 
               <?php if($_SESSION["Tipo"] == "SuperAdmin"){?>
               
-              <label id="" class="form-label">Ver por</label>
+              <label id="" class="form-label">Tipo</label>
                           <select name="Etipo" class="form-select" required>
                               <option value="Admin">Administrador</option>
                               <option value="User">Usuario</option>
