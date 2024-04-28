@@ -155,7 +155,7 @@ closeConection($conn);
 
               <div class="mb-2">
                 <label>Contraseña</label>
-                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" required>
+                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" value="">
               </div>
 
               <?php if($_SESSION["Tipo"] == "SuperAdmin"){?>
@@ -595,7 +595,7 @@ closeConection($conn);
         values.append("ident", 'editarU');
         values.append("tipo", <?php if($_SESSION["Tipo"] == "SuperAdmin"){ ?>$("[name='Etipo'] option:selected").val()<?php }else{ ?>"User"<?php } ?>);
         
-        //values.append("usuario", $("[name='usuario']").prop("value"));
+        values.append("usuario", $("[name='usuario']").prop("value"));
         values.append("pass", $("[name='password']").prop("value"));
         console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
           return n != ''
