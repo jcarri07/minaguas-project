@@ -354,9 +354,7 @@
                         <input type="date" class="form-control" name="fecha" id="fecha" value="<?php echo date("Y-m-d");?>" disabled required>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="row">
                     <div class="col">
                       <label>Hora</label>
                       <div class="input-group mb-3">
