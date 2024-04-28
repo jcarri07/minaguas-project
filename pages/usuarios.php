@@ -80,7 +80,7 @@ closeConection($conn);
               </div>
               <?php if($_SESSION["Tipo"] == "SuperAdmin"){?>
               
-                <label id="" class="form-label">Ver por</label>
+                <label id="" class="form-label">Tipo</label>
                             <select name="tipo" class="form-select" required>
                                 <option value="Admin">Administrador</option>
                                 <option value="User">Usuario</option>
@@ -155,12 +155,12 @@ closeConection($conn);
 
               <div class="mb-2">
                 <label>Contraseña</label>
-                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" required>
+                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" value="">
               </div>
 
               <?php if($_SESSION["Tipo"] == "SuperAdmin"){?>
               
-              <label id="" class="form-label">Ver por</label>
+              <label id="" class="form-label">Tipo</label>
                           <select name="Etipo" class="form-select" required>
                               <option value="Admin">Administrador</option>
                               <option value="User">Usuario</option>
@@ -595,7 +595,7 @@ closeConection($conn);
         values.append("ident", 'editarU');
         values.append("tipo", <?php if($_SESSION["Tipo"] == "SuperAdmin"){ ?>$("[name='Etipo'] option:selected").val()<?php }else{ ?>"User"<?php } ?>);
         
-        //values.append("usuario", $("[name='usuario']").prop("value"));
+        values.append("usuario", $("[name='usuario']").prop("value"));
         values.append("pass", $("[name='password']").prop("value"));
         console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
           return n != ''
