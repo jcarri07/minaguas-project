@@ -528,8 +528,12 @@
                     //Esto es para que se implemente el salto de linea en la celda
                     $hoja->getStyle($codigo['columna'] . "8")->getAlignment()->setWrapText(true);
                 }
+                else
+                    $hoja->setCellValue($codigo['columna'] . "8", $codigo['name'] . " (" . $codigo['codigo'] . ")");
             }
         }
+
+        closeConection($conn);
 
 
         //Generar el documento excel
