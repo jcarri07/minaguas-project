@@ -297,7 +297,7 @@
                           <td class="hide-cell">
                             <div class="d-flex flex-column px-3">
                               <?php $embal = new Batimetria($row["id_embalse"], $conn) ?>
-                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><? echo number_format($embal->volumenDisponible(), 3,',','.') ?></h6>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 3,',','.') ?><span style="font-size: 12px">hm</span>³</h6>
                               <!-- <span class="text-xs">20/12/2023</span> -->
                             </div>
                           </td>
