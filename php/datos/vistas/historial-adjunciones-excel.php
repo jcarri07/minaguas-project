@@ -20,7 +20,7 @@
 
                 <div class="table-responsive">
                     <div class="mb-3">
-                        <table class="table align-items-center text-sm text-center table-sm" id="table-history-excel">
+                        <table class="table align-items-center text-sm text-center table-sm text-dark" id="table-history-excel">
                             <thead class="table-primary">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">#</th>
