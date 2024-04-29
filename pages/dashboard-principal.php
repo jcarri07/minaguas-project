@@ -293,7 +293,7 @@ closeConection($conn);*/
         <div class=" d-flex flex-row flex-wrap justify-content-around align-items-center gap-2 mb-2" id="contain-charts">
           <div class="d-flex flex-column justify-content-center align-items-center shadow rounded p-3 border">
             <h4 class="d-flex justify-content-center align-items-center rounded">
-             Volumen Total Disponible
+              Volumen Total Disponible
             </h4>
             <div class="d-flex justify-content-center align-items-center rounded">
               <div style="height:380px" id="contenedor-1">
