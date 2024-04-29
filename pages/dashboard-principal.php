@@ -293,7 +293,7 @@ closeConection($conn);*/
         <div class=" d-flex flex-row flex-wrap justify-content-around align-items-center gap-2 mb-2" id="contain-charts">
           <div class="d-flex flex-column justify-content-center align-items-center shadow rounded p-3 border">
             <h4 class="d-flex justify-content-center align-items-center rounded">
-             Volumen Total Disponible
+              Volumen Total Disponible
             </h4>
             <div class="d-flex justify-content-center align-items-center rounded">
               <div style="height:380px" id="contenedor-1">
@@ -302,10 +302,10 @@ closeConection($conn);*/
           </div>
           <div class="d-flex flex-column gap-5 p-2 justify-content-center align-items-center shadow border rounded" id="container-cards" style="width: 350px; height:450px;">
             <div class="col-12 flex-column justify-content-center align-items-center rounded border" style="width:100%;height:45%">
-              <h4 class="d-flex justify-content-start align-items-center">
+              <h4 class="d-flex justify-content-center align-items-center">
                 Variacion desde hace 7 Días
               </h4>
-              <div class="col-12 justify-content-center align-items-center">
+              <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-2">
                 </div>
               </div>
@@ -314,7 +314,7 @@ closeConection($conn);*/
               <h4 class="d-flex justify-content-start align-items-center">
                 Variacion desde el año pasado
               </h4>
-              <div class="col-12 justify-content-center align-items-center">
+              <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-3">
                 </div>
               </div>
@@ -344,21 +344,21 @@ closeConection($conn);*/
 
       <div class="col-12 pt-2 bg-white rounded mt-4 shadow" id="container-div">
         <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pb-2" id="contain-charts">
-        <div class="col-12 pb-2 pt-1">
-       
+          <div class="col-12 pb-2 pt-1">
+
             <h4 class="mb-0">Mapa</h4>
             <p class="text-sm">Indicador de Porcentaje y Abastecimiento de los embalses</p>
-          
-        </div>
+
+          </div>
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 700px;">
             <!-- ]  <div id="mapa-container"> -->
             <!-- <div id="mapa-portada" style="width: 100%; height: 100%;"></div> -->
             <?php include "mapa_dashboard.php" ?>
           </div>
-          
+
           <div class="row justify-content-center gap-sm-2 ">
-            <img src="./assets/icons/leyenda_mapa.png" >
-            </div>
+            <img src="./assets/icons/leyenda_mapa.png">
+          </div>
         </div>
       </div>
 
@@ -376,19 +376,19 @@ closeConection($conn);*/
                 <div class="row justify-content-center gap-sm-2 ">
                   <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
                     <div class="col-2 cuadro-color" style="background-color: #fd0200;"></div>
-                    <span class="smalll col-auto pe-1" style="font-size: 14px;">( < = 30% )</span>
+                    <span class="smalll col-auto pe-1" style="font-size: 14px;">( <=30% )</span>
                   </div>
                   <div class="etiqueta col-sm-2 col-4 px-0 justify-content-center">
                     <div class="col-2 cuadro-color" style="background-color: #72dffd;"></div>
-                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( > 30% < = 60% )</span>
+                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( > 30% <=60% )</span>
                   </div>
                   <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-end">
                     <div class="col-2 cuadro-color" style="background-color: #0066eb;"></div>
-                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( >60% < = 90% )</span>
+                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( >60% <=90% )</span>
                   </div>
                   <div class="etiqueta col-sm-2 col-6 px-0 justify-content-sm-center justify-content-start">
                     <div class="col-sm-3 col-2 cuadro-color" style="background-color: #3ba500;"></div>
-                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( >90% < = 100% )</span>
+                    <span class="smalll col-auto ps-1" style="font-size: 14px;">( >90% <=100% )</span>
                   </div>
                   <div class="etiqueta col-sm-2 col-4 px-0 ps-1 justify-content-center">
                     <div class="col-3 cuadro-color " style="background-color: #55fe01;"></div>
