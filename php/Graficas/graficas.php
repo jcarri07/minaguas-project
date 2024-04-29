@@ -106,7 +106,7 @@ if ($count >= 1) {
         <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
         <script src="../../assets/js/Chart.js"></script>
         <!--script src="../../assets/js/date-fns.js"></script-->
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+        <script src="../../assets/js/date-fns.js"></script>
 
         <script src="../../assets/js/jquery/jquery.min.js"></script>
         <script src="../../assets/js/html2canvas.min.js"></script>

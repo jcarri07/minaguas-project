@@ -157,6 +157,22 @@ while ($num < count($volumen_primer_periodo)) {
   $num++;
 }
 
+
+$meses = array(
+  1 => 'Enero',
+  2 => 'Febrero',
+  3 => 'Marzo',
+  4 => 'Abril',
+  5 => 'Mayo',
+  6 => 'Junio',
+  7 => 'Julio',
+  8 => 'Agosto',
+  9 => 'Septiembre',
+  10 => 'Octubre',
+  11 => 'Noviembre',
+  12 => 'Diciembre'
+);
+
 // var_dump($embalses_variacion);
 
 
@@ -674,7 +690,7 @@ if (1) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
               <?php }
@@ -683,7 +699,7 @@ if (1) {
               <tr>
                 <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                 <td class="text-celd" style="font-size: 12px;"><?php echo 0 ?></td>
-                <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
               </tr>
           <?php }
             $j++;
@@ -728,7 +744,7 @@ if (1) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
           <?php }
@@ -778,7 +794,7 @@ if (1) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
           <?php }
@@ -834,7 +850,7 @@ if (1) {
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
                   <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
                 </tr>
 
           <?php }
@@ -879,7 +895,7 @@ if (1) {
             <tr>
               <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
               <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]['operador']; ?> </td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
             </tr>
 
       <?php }
@@ -924,13 +940,13 @@ if (1) {
       </tr>
       <?php foreach ($condiciones as $key => $values) { ?>
         <tr>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $key ?></td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[1] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[1] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[2] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[2] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[3] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ($values[3] * 100) / $values[0] : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[3] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
         </tr>
       <?php
       } ?>
@@ -956,9 +972,9 @@ if (1) {
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[1] * 100) / $CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[2] * 100) / $CT[0] : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ($CT[3] * 100) / $CT[0] : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[1] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[2] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[3] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
       </tr>
 
     </table>
@@ -981,11 +997,11 @@ if (1) {
 
         <?php foreach ($condiciones as $key => $values) { ?>
           <tr>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $key ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (($values[4] + $values[5]) * 100) / $values[0] : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ( ( $values[4] + $values[5]) * 100) / $values[0] ), 2, '.', '' ) ) : 0 ?>%</td>
           </tr>
         <?php
         } ?>
@@ -1007,7 +1023,7 @@ if (1) {
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (($CT[4] + $CT[5]) * 100) / $CT[0] : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? ( number_format( ( ( ( $CT[4] + $CT[5]) * 100) / $CT[0] ), 2, '.', '' ) ) : 0 ?>%</b></td>
         </tr>
 
 
@@ -1153,7 +1169,7 @@ if (1) {
   <?php setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Establecer la localización a español
   ?>
 
-  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha1)), MB_CASE_UPPER, 'UTF-8'); ?> </h4>
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;">DESDE EL <?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?> </h4>
 
   <!-- PAGINA 8 -->
   <div style="page-break-before: always;"></div>
@@ -1200,8 +1216,8 @@ if (1) {
 
   </div>
 
-  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(strftime('%d DE %B', strtotime($fecha2)), MB_CASE_UPPER, 'UTF-8'); ?></h4>
-
+  <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?></h4>
+<!--aqui-->
   <!-- PAGINA 9 -->
 
   <?php

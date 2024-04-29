@@ -354,9 +354,7 @@
                         <input type="date" class="form-control" name="fecha" id="fecha" value="<?php echo date("Y-m-d");?>" disabled required>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="row">
                     <div class="col">
                       <label>Hora</label>
                       <div class="input-group mb-3">
@@ -763,7 +761,7 @@
         cache:          false,
         contentType:    false,
         processData:    false,
-        success: function(response){ //console.log(response);
+        success: function(response){ console.log(response);
           $('.loaderParent').hide();
           if(response == 'si'){
             $("#modal-generic .message").text("Registro exitoso");
@@ -1204,7 +1202,7 @@
     $("#form-export-excel").on("submit",function(event){
       event.preventDefault();
 
-      var url = "php/datos/modelos/exportar-extracciones-excel.php?anio=" + this.anio_export_excel.value;
+      var url = "php/datos/modelos/loader-extracciones-excel.php?anio=" + this.anio_export_excel.value;
       window.open(url, "_blank");
     });
     

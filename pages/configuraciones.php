@@ -184,7 +184,7 @@ closeConection($conn);
             <!-- configuraciones de embalses prioritarios -->
             <div class="">
               <div>
-                <h3 class="mb-2 text-center">Embalses Priorizados:</h3>
+                <h3 class="mb-2 text-center">Embalses Prioritarios:</h3>
                 <div class="config-container-prioritarios">
 
                   <?php
@@ -238,12 +238,12 @@ closeConection($conn);
   </div>
 </div>
 
-<form action="php/guardar_embalses.php" method="POST" class="form-control mt-4 mb-4" enctype="multipart/form-data">
+<!-- <form action="php/guardar_embalses.php" method="POST" class="form-control mt-4 mb-4" enctype="multipart/form-data">
   <label for="excel">Cargar el archivo</label>
   <input type="file" name="excel" id="excel" class="form-control">
   <br>
   <button type="submit">Enviar</button>
-</form>
+</form> -->
 
 </div>
 

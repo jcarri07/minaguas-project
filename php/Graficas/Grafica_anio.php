@@ -1,6 +1,6 @@
 <script src="./assets/js/Chart.js"></script>
 <!-- <script src="./assets/js/chart-zoom.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="./assets/js/date-fns.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
 <?php
 
@@ -69,32 +69,32 @@ if ($count >= 1) {
 
             const label = <?php echo obtenerEtiquetas($y); ?>;
             const point = {
-                    id: 'point',
-                    afterDatasetsDraw: function(chart, arg, options) {
-                        const {
-                            ctx
-                        } = chart;
-                        const dataset = chart.data.datasets[0];
-                        const meta = chart.getDatasetMeta(0);
+                id: 'point',
+                afterDatasetsDraw: function(chart, arg, options) {
+                    const {
+                        ctx
+                    } = chart;
+                    const dataset = chart.data.datasets[0];
+                    const meta = chart.getDatasetMeta(0);
 
-                        if (meta.hidden) return;
+                    if (meta.hidden) return;
 
-                        const lastElement = meta.data[meta.data.length - 1];
-                        const fontSize = 12;
-                        const fontStyle = 'normal';
-                        const fontFamily = 'Arial';
-                        if (dataset.data.length > 0) {
-                            ctx.save();
-                            ctx.textAlign = 'center';
-                            ctx.textBaseline = 'bottom';
-                            ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
-                            ctx.fillStyle = 'black';
-                            total = dataset.data[dataset.data.length - 1].y;
-                            ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
-                        }
-                        ctx.restore();
-                    },
-                };
+                    const lastElement = meta.data[meta.data.length - 1];
+                    const fontSize = 13;
+                    const fontStyle = 'bold';
+                    const fontFamily = 'Arial';
+                    if (dataset.data.length > 0) {
+                        ctx.save();
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                        ctx.fillStyle = 'blue';
+                        total = dataset.data[dataset.data.length - 1].y;
+                        ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
+                    }
+                    ctx.restore();
+                },
+            };
             if ('<?php echo $ver; ?>' == 'volumen') {
 
                 const arbitra = {
@@ -115,7 +115,7 @@ if ($count >= 1) {
                             ctx.moveTo(left, y.getPixelForValue(yvalue));
                             ctx.lineTo(right, y.getPixelForValue(yvalue));
                             ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                            ctx.fillText(cota + ": " + yvalue + " (Hm³)", right*4.2/6, y.getPixelForValue(yvalue) + h);
+                            ctx.fillText(cota + ": " + yvalue + " (Hm³)", right * 4.2 / 6, y.getPixelForValue(yvalue) + h);
                             ctx.stroke();
                         });
                         ctx.restore();
@@ -143,7 +143,7 @@ if ($count >= 1) {
                         // Resto del código del plugin
                     },
                 };
-                
+
 
                 let cha = new Chart(chart, {
                     type: '<?php echo $tipo; ?>',
@@ -244,7 +244,7 @@ if ($count >= 1) {
                                     // This more specific font property overrides the global property
                                     font: {
                                         size: 18,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
 
                                 }
@@ -288,7 +288,7 @@ if ($count >= 1) {
                                     },
                                     font: {
                                         size: 18,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
                                 },
                                 grid: {
@@ -303,7 +303,7 @@ if ($count >= 1) {
                                     text: 'Volumen (Hm³)',
                                     font: {
                                         size: 16,
-                                        family:'Arial',
+                                        family: 'Arial',
                                         weight: 'bold',
                                     },
                                 },
@@ -327,7 +327,7 @@ if ($count >= 1) {
                                 ticks: {
                                     font: {
                                         size: 14,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
                                 },
 
@@ -390,7 +390,7 @@ if ($count >= 1) {
                         // Resto del código del plugin
                     }
                 };
-                
+
 
                 let cha = new Chart(chart, {
                     type: '<?php echo $tipo; ?>',
@@ -489,7 +489,7 @@ if ($count >= 1) {
                                     // This more specific font property overrides the global property
                                     font: {
                                         size: 18,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
 
                                 }
@@ -533,7 +533,7 @@ if ($count >= 1) {
                                     },
                                     font: {
                                         size: 18,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
                                 },
                                 grid: {
@@ -548,7 +548,7 @@ if ($count >= 1) {
                                     text: 'Cota (m.s.n.m)',
                                     font: {
                                         size: 16,
-                                        family:'Arial',
+                                        family: 'Arial',
                                         weight: 'bold',
                                     },
                                 },
@@ -572,7 +572,7 @@ if ($count >= 1) {
                                 ticks: {
                                     font: {
                                         size: 14,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
                                 },
 
@@ -581,7 +581,7 @@ if ($count >= 1) {
 
                         },
                     },
-                    plugins: [arbitra,point],
+                    plugins: [arbitra, point],
 
                 });
 

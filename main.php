@@ -332,7 +332,7 @@ header('Content-Type: text/html; charset=UTF-8');
     ?>
     <div class=""></div>
     <footer class="footer pt-2 pb-4" style=" flex-shrink: none;
-        position: sticky;
+        /*position: sticky;*/
         bottom: 0;
         width: 100%;">
       <div class="container-fluid">

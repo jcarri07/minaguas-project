@@ -528,8 +528,12 @@
                     //Esto es para que se implemente el salto de linea en la celda
                     $hoja->getStyle($codigo['columna'] . "8")->getAlignment()->setWrapText(true);
                 }
+                else
+                    $hoja->setCellValue($codigo['columna'] . "8", $codigo['name'] . " (" . $codigo['codigo'] . ")");
             }
         }
+
+        closeConection($conn);
 
 
         //Generar el documento excel
@@ -541,12 +545,12 @@
 
         if (file_exists($nombreArchivo)) {
             // Configurar los encabezados HTTP para indicar que se va a descargar un archivo
-            header('Content-Description: File Transfer');
+            //header('Content-Description: File Transfer');
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment; filename="' . basename($nombreArchivo) . '"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
+            //header('Expires: 0');
+            //header('Cache-Control: must-revalidate');
+            //header('Pragma: public');
             header('Content-Length: ' . filesize($nombreArchivo));
             // Leer el archivo y enviar su contenido al navegador
             readfile($nombreArchivo);

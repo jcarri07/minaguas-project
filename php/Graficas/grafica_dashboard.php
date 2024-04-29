@@ -210,7 +210,7 @@ if ($count >= 1) {
                     scales: {
                         x: {
                             stacked: true,
-                            labels:["volumen"],
+                            labels: ["volumen"],
                             ticks: {
                                 display: true,
                                 font: {
@@ -220,7 +220,7 @@ if ($count >= 1) {
                             },
                         },
                         y: {
-                            stacked: true,
+                            stacked: false,
                             title: {
                                 display: true,
                                 text: 'Volumen (Hm³)',
@@ -248,15 +248,15 @@ if ($count >= 1) {
                                     $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[1]);
                                     if ($valor > 0) {
 
-                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important" ><path  d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                     };
                                     if ($valor == 0) {
 
-                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                     };
                                     if ($valor < 0) {
 
-                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important "><path h d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                     };
 
                                     ?>');
@@ -264,15 +264,15 @@ if ($count >= 1) {
                                     $valor = -100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[1]);
                                     if ($valor > 0) {
 
-                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#2dce89 !important" ><path  d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                     };
                                     if ($valor == 0) {
 
-                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                     };
                                     if ($valor < 0) {
 
-                                        echo '<h1 class="row col-12 align-items-center"><div class="col-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill:#fd0200 !important "><path h d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg></div><span class=" col-8" style="font-size:60px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
                                     };
 
                                     ?>');
