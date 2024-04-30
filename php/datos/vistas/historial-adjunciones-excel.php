@@ -11,6 +11,21 @@
             WHERE e.id_embalse = de.id_embalse AND archivo_importacion <> '' AND de.estatus = 'activo' AND de.id_embalse = '$id_embalse'
             ORDER BY fecha_importacion DESC;";
     $query = mysqli_query($conn, $sql);
+
+    $meses = array(
+        1 => 'Enero',
+        2 => 'Febrero',
+        3 => 'Marzo',
+        4 => 'Abril',
+        5 => 'Mayo',
+        6 => 'Junio',
+        7 => 'Julio',
+        8 => 'Agosto',
+        9 => 'Septiembre',
+        10 => 'Octubre',
+        11 => 'Noviembre',
+        12 => 'Diciembre'
+    );
 ?>
 
 <?php
@@ -36,7 +51,8 @@
                 $i = 0;
                 while($row = mysqli_fetch_array($query)){
                     $i++;
-                    $fecha = strftime("%d/%b/%Y", strtotime($row['fecha_importacion']));
+                    //$fecha = strftime("%d/%b/%Y", strtotime($row['fecha_importacion']));
+                    $fecha = date('d', strtotime($row['fecha_importacion'])) . "/" . substr($meses[date('n', strtotime($row['fecha_importacion']))],0,3) . "./" . date('Y', strtotime($row['fecha_importacion']));
                     //$hora = date("g:i a", strtotime($row['hora']));
 
 ?>
