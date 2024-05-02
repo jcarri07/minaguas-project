@@ -1063,10 +1063,10 @@ ticks: {
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde " . $fechaFormateada2 . " al " . $fechaFormateada; ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde " . $fechaFormateada2 . " del ".date('Y',strtotime($fecha1))." al " . $fechaFormateada." del ".date('Y',strtotime($fecha2)); ?>',
                     fullSize: true,
                     font: {
-                        size: 30,
+                        size: 26,
                         family:'Arial',
                     }
                 },
