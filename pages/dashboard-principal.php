@@ -312,7 +312,7 @@ closeConection($conn);*/
             </div>
             <div class="col-12 flex-column justify-content-center align-items-center rounded border" style="width:100%;height:45%">
               <h4 class="d-flex justify-content-start align-items-center">
-                Variacion desde el año pasado
+                Variacion desde el año <?php echo date('Y')-1;?>
               </h4>
               <div class="col-12 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-3">
