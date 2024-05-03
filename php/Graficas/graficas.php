@@ -929,7 +929,7 @@ if ($count >= 1) {
                 const y<?php echo $t; ?> = document.querySelector("#mes<?php echo $t; ?>");
                 const z<?php echo $t; ?> = document.querySelector("#semana<?php echo $t; ?>");
                 var i = 1;
-                html2canvas(x<?php echo $t; ?>,willReadFrequently:true).then(function(canvas) { //PROBLEMAS
+                html2canvas(x<?php echo $t; ?>).then(function(canvas) { //PROBLEMAS
                     //$("#ca").append(canvas);
                     
                         dataURL = canvas.toDataURL("image/jpeg", 0.9);
@@ -947,7 +947,7 @@ if ($count >= 1) {
                         }
                     }
                 });
-                html2canvas(y<?php echo $t; ?>,willReadFrequently:true).then(function(canva) { //PROBLEMAS
+                html2canvas(y<?php echo $t; ?>).then(function(canva) { //PROBLEMAS
                     //$("#ca").append(canvas);
                     
                         dataURL = canva.toDataURL("image/jpeg", 0.9);
@@ -964,7 +964,7 @@ if ($count >= 1) {
                         }
                     }
                 });
-                html2canvas(z<?php echo $t; ?>,willReadFrequently:true).then(function(canva) { //PROBLEMAS
+                html2canvas(z<?php echo $t; ?>).then(function(canva) { //PROBLEMAS
                     //$("#ca").append(canvas);
                     
                         dataURL = canva.toDataURL("image/jpeg", 0.9);
