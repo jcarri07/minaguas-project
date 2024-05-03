@@ -473,7 +473,7 @@ $valores = json_encode($valores, true);
                     }
                 }
             });
-        }, 500);
+        }, 1500);
     });
     // });
 </script>
