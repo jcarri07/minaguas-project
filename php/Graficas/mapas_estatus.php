@@ -473,9 +473,10 @@ $valores = json_encode($valores, true);
                     }
                 }
             });
-        }, 1500);
+        }, 5000);
     });
     // });
 </script>
-<?php closeConection($conn);?>
+<?php closeConection($conn); ?>
+
 </html>
