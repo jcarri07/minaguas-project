@@ -76,17 +76,22 @@ $colores_fixed_array = array(
 $colors = array();
 
 $j = 0;
+$sumatoria_pa_condicion = 0;
 while ($j < count($datos_embalses)) {
+    $sumatoria_pa_condicion += $datos_embalses[$j]['suma'];
     $color = getRandomColor();
     $colors[$datos_embalses[$j]['tipo_extraccion']] = $colores_fixed_array[$j];
     $j++;
 }
 
 $j = 0;
+
+
+    if($sumatoria_pa_condicion > 0) {
 ?>
                 
-<canvas id="extracciones" class="border border-radius-lg"></canvas>
-<script src="./assets/js/chartjs-plugin-datalabels@2.js"></script>
+    <canvas id="extracciones" class="border border-radius-lg"></canvas>
+    <script src="./assets/js/chartjs-plugin-datalabels@2.js"></script>
             
 
     <script>
@@ -245,7 +250,16 @@ $j = 0;
         });
         
     </script>
-<?php };
+<?php 
+    } else {
+        echo "<h4 class='text-center' style='margin: 118px 0;'>No hay cargas de extracciones <br> recientes.</h4>";
+    }
+
+}//Fin if de inameh
+
+
+
+
 closeConection($conn); ?>
 
 
