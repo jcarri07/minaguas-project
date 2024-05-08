@@ -8,7 +8,7 @@ $data = mysqli_fetch_array($res);
 $pass = $data["Contrasena"];
 closeConection($conn);
 $aux = "disabled";
-if ($_SESSION["Tipo"] == "Admin") {
+if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin" ) {
   $aux = "";
 }
 ?>
