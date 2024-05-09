@@ -210,7 +210,7 @@ if ($count >= 1) {
                     scales: {
                         x: {
                             stacked: true,
-                            labels: ["volumen"],
+                            labels: ["Volumen"],
                             ticks: {
                                 display: true,
                                 font: {
