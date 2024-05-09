@@ -650,7 +650,7 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
-                            cota: "Volumen minimo",
+                            cota: "Volumen mínimo",
                             color: 'black',
                             h: -15,
                         },
@@ -662,7 +662,7 @@ ticks: {
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
-                            cota: "Volumen maximo",
+                            cota: "Volumen máximo",
                             color: 'black',
                             h: -15,
                         }
@@ -838,7 +838,7 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
-                            cota: "Volumen minimo",
+                            cota: "Volumen mínimo",
                             color: 'black',
                             h: 15,
                         },
@@ -851,7 +851,7 @@ ticks: {
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
-                            cota: "Volumen maximo",
+                            cota: "Volumen máximo",
                             color: 'black',
                             h: -15,
                         }
@@ -1031,7 +1031,7 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
-                            cota: "Volumen minimo",
+                            cota: "Volumen mínimo",
                             color: 'black',
                             h: -15,
                         },
@@ -1043,7 +1043,7 @@ ticks: {
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
-                            cota: "Volumen maximo",
+                            cota: "Volumen máximo",
                             color: 'black',
                             h: -15,
                         }

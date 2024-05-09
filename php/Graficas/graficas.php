@@ -354,7 +354,7 @@ if ($count >= 1) {
 
                             lines: [{
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
-                                    cota: "Volumen minimo",
+                                    cota: "Volumen mínimo",
                                     color: 'black',
                                     h: -10,
                                 },
@@ -367,7 +367,7 @@ if ($count >= 1) {
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
-                                    cota: "Volumen maximo",
+                                    cota: "Volumen máximo",
                                     color: 'black',
                                     h: -5,
                                 }
@@ -575,7 +575,7 @@ if ($count >= 1) {
 
                             lines: [{
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
-                                    cota: "Volumen minimo",
+                                    cota: "Volumen mínimo",
                                     color: 'black',
                                     h: -10,
                                 },
@@ -588,7 +588,7 @@ if ($count >= 1) {
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
-                                    cota: "Volumen maximo",
+                                    cota: "Volumen máximo",
                                     color: 'black',
                                     h: -5,
                                 }
@@ -798,7 +798,7 @@ if ($count >= 1) {
 
                             lines: [{
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
-                                    cota: "Volumen minimo",
+                                    cota: "Volumen mínimo",
                                     color: 'black',
                                     h: -10,
                                 },
@@ -811,7 +811,7 @@ if ($count >= 1) {
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
-                                    cota: "Volumen maximo",
+                                    cota: "Volumen máximo",
                                     color: 'black',
                                     h: -5,
                                 }
