@@ -151,14 +151,14 @@ if ($count >= 1) {
                         echo '{
                             
                             label:"Volumen Util Actual(VTD)",
-                            data:{volumen:' . round($volumen_fechas[1], 2) . '},';
+                            data:{Volumen:' . round($volumen_fechas[1], 2) . '},';
                         echo "backgroundColor:'#2e75b6',
                         borderColor:'#2e75b6',
                         borderWidth:2},";
                         echo '{
                             
                             label:"Volumen Util Total(VUT)",
-                            data:{volumen:' . round($volumen_fechas[0], 2) . '},';
+                            data:{Volumen:' . round($volumen_fechas[0], 2) . '},';
 
                         echo "backgroundColor:'#9fe3a3',
                         borderColor:'#2e75b6',
