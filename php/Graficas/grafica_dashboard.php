@@ -215,7 +215,8 @@ if ($count >= 1) {
                                 display: true,
                                 font: {
 
-                                    size: 10,
+                                    size: 16,
+                                    family: 'Arial',
                                 },
                             },
                         },
@@ -226,7 +227,7 @@ if ($count >= 1) {
                                 text: 'Volumen (Hm³)',
                                 font: {
 
-                                    size: 12,
+                                    size: 14,
                                     family: 'Arial',
                                     weight: 'bold',
                                 },
