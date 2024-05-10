@@ -155,7 +155,7 @@ ORDER BY id_embalse ASC;");
                             y: {
                                 title: {
                                     display: true,
-                                    text: 'Volúmen (Hm³)',
+                                    text: 'Volumen (Hm³)',
                                     font: {
                                         size: 16
                                     },
