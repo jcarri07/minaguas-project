@@ -160,7 +160,7 @@ if ($count >= 1) {
 
                                 $fech = $año;
                                 while ($pivote <= $fech) {
-                                    echo "{label:'Volumen del año " . $fech . "',pointRadius: 0,data: [";
+                                    echo "{label:'Volúmen del año " . $fech . "',pointRadius: 0,data: [";
 
                                     $j = 0;
 
@@ -216,20 +216,20 @@ if ($count >= 1) {
 
                                 lines: [{
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_min"])[1], 2); ?>,
-                                        cota: "Volumen mínimo",
+                                        cota: "Volúmen mínimo",
                                         color: 'red',
                                         h: -15,
                                     },
                                     {
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_nor"])[1], 2); ?>,
-                                        cota: "Volumen normal",
+                                        cota: "Volúmen normal",
                                         color: 'green',
                                         h: 15,
 
                                     },
                                     {
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_max"])[1], 2); ?>,
-                                        cota: "Volumen máximo",
+                                        cota: "Volúmen máximo",
                                         color: 'blue',
                                         h: -15,
                                     }
@@ -300,7 +300,7 @@ if ($count >= 1) {
                             y: {
                                 title: {
                                     display: true,
-                                    text: 'Volumen (Hm³)',
+                                    text: 'Volúmen (Hm³)',
                                     font: {
                                         size: 16,
                                         family: 'Arial',

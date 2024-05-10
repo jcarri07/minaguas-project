@@ -38,7 +38,7 @@ ORDER BY id_embalse ASC;");
                                     $batimetria = $bati->getBatimetria();
                                     
                                     $x = $bati->getByCota($año, $datos_embalses[1]["cota_actual"])[1]; 
-                                    echo "console.log('volumen:".$x.",cota:".$datos_embalses[1]["cota_actual"]."');";
+                                    echo "console.log('volúmen:".$x.",cota:".$datos_embalses[1]["cota_actual"]."');";
                                     ?>
                 let cha = new Chart(chart, {
                     type: 'bar',
