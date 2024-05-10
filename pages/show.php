@@ -453,7 +453,7 @@ closeConection($conn);
           </div>
           <div class="embalse-card rounded p-3 embalse-batimetria d-flex flex-column gap-4">
             <!-- <div class="text-center">Batimetrias [ <?php echo implode(" - ", $embalse->getYears()) ?> ]</div> -->
-            <div class="text-center">Batimetrias</div>
+            <div class="text-center">Batimetrías</div>
             <div class="text-center h-100 d-flex flex-column">
 
               <ul class="nav nav-tabs" role="tablist">
@@ -592,7 +592,7 @@ closeConection($conn);
           </div>
           <div class="embalse-card rounded p-3 d-flex flex-column justify-content-around">
             <!-- <div class="ct-chart ct-perfect-fourth" style="width: 100%; height: 100%"></div> -->
-            <div class="text-center text-sm text-dark">Volumenes - Embalse <?php echo $embalse_datos['nombre_embalse'] ?></div>
+            <div class="text-center text-sm text-dark">Volúmenes - Embalse <?php echo $embalse_datos['nombre_embalse'] ?></div>
             <div class="chart-js" style="width: 100%; height: 80%">
               <canvas id="chart-vol">
 
@@ -650,7 +650,7 @@ closeConection($conn);
         "zeroRecords": "Sin resultados encontrados",
         "paginate": {
           "first": "Primero",
-          "last": "Ultimo",
+          "last": "Último",
           "next": "Siguiente",
           "previous": "Anterior"
         }

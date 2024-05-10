@@ -1140,7 +1140,7 @@ function stringFloat($num, $dec = 2)
             <input style="display: none;" value="<?php echo $id_embalse ?>" type="text" class="form-control" id="id_embalse" name="id_embalse" placeholder="Ingrese el nomnbre del embalse">
 
             <div class="text-center mt-5 boton-stikcy-save" style="margin: 0 auto;">
-              <button type="submit" class="btn btn-primary" name="Update">Editar embalse</button>
+              <button type="submit" class="btn btn-primary" name="Update">Guardar cambios</button>
             </div>
         </form>
 
