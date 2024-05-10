@@ -102,7 +102,7 @@ while ($row < count($datos_embalses)) {
     }
 
     .leaflet-top.leaflet-left {
-        display: none;
+        /* display: none; */
     }
 
     .leaflet-popup-content-wrapper {
