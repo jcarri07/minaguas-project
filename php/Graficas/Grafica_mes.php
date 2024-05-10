@@ -194,7 +194,7 @@ ORDER BY d.fecha ASC;";
 
                                 lines: [{
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_min"])[1], 2); ?>,
-                                        cota: "Volumen minimo",
+                                        cota: "Volumen mínimo",
                                         color: 'red',
                                         h: -15,
                                     },
@@ -207,7 +207,7 @@ ORDER BY d.fecha ASC;";
                                     },
                                     {
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_max"])[1], 2); ?>,
-                                        cota: "Volumen maximo",
+                                        cota: "Volumen máximo",
                                         color: 'blue',
                                         h: -15,
                                     }

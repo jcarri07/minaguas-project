@@ -151,14 +151,14 @@ if ($count >= 1) {
                         echo '{
                             
                             label:"Volumen Util Actual(VTD)",
-                            data:{volumen:' . round($volumen_fechas[1], 2) . '},';
+                            data:{Volumen:' . round($volumen_fechas[1], 2) . '},';
                         echo "backgroundColor:'#2e75b6',
                         borderColor:'#2e75b6',
                         borderWidth:2},";
                         echo '{
                             
                             label:"Volumen Util Total(VUT)",
-                            data:{volumen:' . round($volumen_fechas[0], 2) . '},';
+                            data:{Volumen:' . round($volumen_fechas[0], 2) . '},';
 
                         echo "backgroundColor:'#9fe3a3',
                         borderColor:'#2e75b6',
@@ -210,12 +210,13 @@ if ($count >= 1) {
                     scales: {
                         x: {
                             stacked: true,
-                            labels: ["volumen"],
+                            labels: ["Volumen"],
                             ticks: {
                                 display: true,
                                 font: {
 
-                                    size: 10,
+                                    size: 16,
+                                    family: 'Arial',
                                 },
                             },
                         },
@@ -226,7 +227,7 @@ if ($count >= 1) {
                                 text: 'Volumen (Hm³)',
                                 font: {
 
-                                    size: 12,
+                                    size: 14,
                                     family: 'Arial',
                                     weight: 'bold',
                                 },

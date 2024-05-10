@@ -303,7 +303,7 @@ closeConection($conn);*/
           <div class="d-flex flex-column gap-5 p-2 justify-content-center align-items-center shadow border rounded bg-white" id="container-cards" style="width: 350px; height:450px;">
             <div class="col-12 flex-column justify-content-center align-items-center rounded border" style="width:100%;height:45%">
               <h4 class="d-flex justify-content-center align-items-center">
-                Variacion desde hace 7 Días
+                Variación desde hace 7 Días
               </h4>
               <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-2">
@@ -312,7 +312,7 @@ closeConection($conn);*/
             </div>
             <div class="col-12 flex-column justify-content-center align-items-center rounded bg-white border" style="width:100%;height:45%">
               <h4 class="d-flex justify-content-start align-items-center">
-                Variacion desde el año <?php echo date('Y')-1;?>
+                Variación desde el año <?php echo date('Y')-1;?>
               </h4>
               <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-3">

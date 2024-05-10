@@ -35,9 +35,9 @@ $count = mysqli_num_rows($re);
                         </div>
 
                         <div class="col-6 col-sm-2" style="padding: 0px auto;margin-bottom:5px;">
-                            <label id="lab" class="form-label">Tipo de Grafica:</label>
+                            <label id="lab" class="form-label">Tipo de Gráfica:</label>
                             <select id="tipo" class="form-select" required>
-                                <option value="line">Linea</option>
+                                <option value="line">Línea</option>
                                 <option value="bar">Barra</option>
                             </select>
                         </div>
@@ -49,7 +49,7 @@ $count = mysqli_num_rows($re);
                             </select>
                         </div>
                         <div class="col-6 col-sm-2">
-                            <label class="form-label">Periodo:</label>
+                            <label class="form-label">Período:</label>
                             <select id="fe" class="form-select " style="padding: 0px auto; margin-bottom:5px;">
                                 <option value="Grafica_anio.php">Año</option>
                                 <option value="Grafica_mes.php">Mes</option>
