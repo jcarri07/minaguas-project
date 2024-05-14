@@ -199,7 +199,7 @@ date_default_timezone_set("America/Caracas");
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 100 !important;
+    z-index: 999999 !important;
   }
 
   #show-map {

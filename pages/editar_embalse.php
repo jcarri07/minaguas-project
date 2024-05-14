@@ -17,11 +17,11 @@ if (isset($_SESSION['id_embalse'])) {
   echo $id_embalse;
 }
 
-$bat_emb = new Batimetria($id_embalse, $conn);
 // var_dump($id_embalse);
+$bat_emb = new Batimetria($id_embalse, $conn);
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
-$queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = $id_embalse");
+$queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id_embalse'");
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
 $queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
 $queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
@@ -274,7 +274,7 @@ function stringFloat($num, $dec = 2)
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 100 !important;
+    z-index: 999999 !important;
   }
 
   #show-map {

@@ -220,7 +220,7 @@
                         <td>
                           <div class="d-flex align-items-center justify-content-center text-sm">
                             <a data-id="<?php echo $row['id_embalse']; ?>" class="show-embalse btn btn-link text-dark px-2 mb-0" href="?page=show"><i class="fas fa-eye text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Ver</span></a>
-                            <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0" href="?page=editar_embalse"><i class="fas fa-pencil-alt text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
+                            <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0" ><i class="fas fa-pencil-alt text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
                             <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-trash text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Eliminar</span></a>
                             <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
                           </div>
@@ -567,7 +567,7 @@
     $(document).ready(function() {
       $(".editar-embalse").click(function(e) {
         e.preventDefault();
-
+        console.log("EDITAR")
         var id = $(this).data("id");
         $.ajax({
           type: "POST",

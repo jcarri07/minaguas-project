@@ -30,15 +30,16 @@ class Batimetria
     private function loadBatimetria()
     {
 
-        $id_embalse = mysqli_real_escape_string($this->conn, $this->id_embalse);
-        $query = "SELECT * FROM embalses WHERE id_embalse = $id_embalse";
+        // $id_embalse = mysqli_real_escape_string($this->conn, $this->id_embalse);
+        $id_embalse = $this->id_embalse;
+        $query = "SELECT * FROM embalses WHERE id_embalse = '$id_embalse'";
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {
             die("Error en la consulta: " . mysqli_error($this->conn));
         }
 
-        $embalse = mysqli_fetch_assoc($result);
+        $embalse = mysqli_fetch_array($result);
         $this->embalse = $embalse;
         mysqli_free_result($result);
 
@@ -63,7 +64,7 @@ class Batimetria
         WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual 
         FROM embalses e
         LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-        WHERE e.estatus = 'activo' AND e.id_embalse = $id_embalse
+        WHERE e.estatus = 'activo' AND e.id_embalse = '$id_embalse'
         GROUP BY id_embalse;";
         $result = mysqli_query($this->conn, $query);
 
