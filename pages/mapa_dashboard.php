@@ -48,14 +48,17 @@ while ($row < count($datos_embalses)) {
 
 
     // Dependiendo del porcentaje, se asigna su icono, y se cuenta para su categoria.
-    $abastecimiento = intval($abastecimiento);
-    if ($abastecimiento < 0 && $abastecimiento < 5) {
+    // $abastecimiento = intval($abastecimiento);
+    if (intval($abastecimiento) < 5) {
         $icono .= "rojo_";
-    } else if ($abastecimiento > 4 && $abastecimiento < 9) {
+    } 
+     if (intval($abastecimiento) > 4 && intval($abastecimiento) < 9) {
         $icono .= "naranja_";
-    } else if ($abastecimiento > 8 && $abastecimiento < 13) {
+    } 
+     if (intval($abastecimiento) > 8 && intval($abastecimiento) < 13) {
         $icono .= "amarillo_";
-    } else {
+    } 
+    if (intval($abastecimiento) > 12) {
         $icono .= "verde_";
     }
 
