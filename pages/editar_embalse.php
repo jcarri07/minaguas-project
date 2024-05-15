@@ -2107,7 +2107,7 @@ function stringFloat($num, $dec = 2)
 
   // MAPA PARA EXTRAER EL NORTE, ESTE, HUSO
   var map = L.map('map').setView([8, -66], 6);
-  map.scrollWheelZoom.disable();
+  // map.scrollWheelZoom.disable();
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);

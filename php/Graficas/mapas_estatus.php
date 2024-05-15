@@ -23,7 +23,7 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
 
     //Calculo del porcentaje.
     $bat = new Batimetria($row["id_embalse"], $conn);
-    $porcentaje = ($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible();
+    $porcentaje = $bat->volumenDisponible() != 0 ? (($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible()) : 0;
     array_push($array, $porcentaje);
     // echo $row["nombre_embalse"]." Vol: ".$bat->cargaActual()." -- ";
 

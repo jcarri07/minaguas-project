@@ -42,7 +42,7 @@ while ($row < count($datos_embalses)) {
 
     array_push($array, $datos_embalses[$row]["nombre_embalse"]);
 
-    $porcentaje = ($emb->volumenActualDisponible() * 100) / $emb->volumenDisponible();
+    $porcentaje = $emb->volumenDisponible() != 0 ? (($emb->volumenActualDisponible() * 100) / $emb->volumenDisponible()) : 0 ;
 
     $icono = "i_";
 

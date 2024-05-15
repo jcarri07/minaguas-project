@@ -48,6 +48,7 @@ class Batimetria
         } else {
             $this->batimetria = "";
         }
+
         $this->cota_min = $embalse['cota_min'];
         $this->cota_nor = $embalse['cota_nor'];
         $this->cota_max = $embalse['cota_max'];
@@ -107,6 +108,9 @@ class Batimetria
             return array(0,0);
         }
         $año = $this->getCloseYear($año);
+        if(!array_key_exists($año, $this->batimetria)){
+            return array(0,0);
+        }
         $cota = number_format(floatval($cota), 3, ".", "");
         // return (array_key_exists((string)$cota, $this->batimetria[$año])) ? explode("-", $this->batimetria[$año][(string)$cota]) : $this->getCloseCota($this->batimetria[$año], $cota, 0.001);
         return $this->interpolacionLineal($cota, $this->batimetria[$año]);
@@ -127,7 +131,6 @@ class Batimetria
 
     public function getCloseYear($año_recibido = null)
     {
-
         if ($año_recibido == null) {
             return reset($this->años);
         }
@@ -189,6 +192,9 @@ class Batimetria
 
     public function interpolacionLineal($x, $tabla)
     {
+        if($tabla == null) {
+            return array(0, 0);
+        }
         $x_values = array_keys($tabla);
         sort($x_values);
 

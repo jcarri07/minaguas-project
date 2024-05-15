@@ -184,7 +184,7 @@ $queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, 
 while ($row = mysqli_fetch_array($queryEmbalses)) {
 
   $bat = new Batimetria($row["id_embalse"], $conn);
-  $porcentaje = ($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible();
+  $porcentaje = $bat->volumenDisponible() != 0 ? (($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible()) : 0;
 
   if ($porcentaje < 30) {
     agregarACondiciones($row["operador"], $condiciones, 1);
@@ -708,7 +708,7 @@ if (1) {
 
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),2,",",".") . "%)" ?></td>
           </tr>
         </table>
 
@@ -754,7 +754,7 @@ if (1) {
           ?>
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),"2",",",".") . "%)" ?></td>
           </tr>
         </table>
 
@@ -804,7 +804,7 @@ if (1) {
           ?>
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),"2",",",".") . "%)" ?></td>
           </tr>
         </table>
 
@@ -860,7 +860,7 @@ if (1) {
           ?>
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),"2",",",".") . "%)" ?></td>
           </tr>
         </table>
   </div>
@@ -905,7 +905,7 @@ if (1) {
       ?>
       <tr>
         <td class="text-celd total"><b> TOTAL </b></td>
-        <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . ($cuenta * 100 / count($datos_embalses)) . "%)" ?></td>
+        <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),"2",",",".") . "%)" ?></td>
       </tr>
     </table>
   </div>
@@ -2114,7 +2114,7 @@ if (1) {
             </tr>
             <tr>
               <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
-              <td class="" style="font-size: 12px;"><b> <?php echo ($cant * 100) / count($embalse_abast) . "%" ?></b></td>
+              <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)),"2",",",".") . "%" ?></b></td>
             </tr>
           </table>
   </div>
@@ -2150,7 +2150,7 @@ if (1) {
             </tr>
             <tr>
               <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
-              <td class="" style="font-size: 12px;"><b> <?php echo ($cant * 100) / count($embalse_abast) . "%" ?></b></td>
+              <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)),"2",",",".") . "%" ?></b></td>
             </tr>
           </table>
   </div>
@@ -2198,7 +2198,7 @@ if (1) {
             </tr>
             <tr>
               <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
-              <td class="" style="font-size: 12px;"><b> <?php echo ($cant * 100) / count($embalse_abast) . "%" ?></b></td>
+              <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)),"2",",",".") . "%" ?></b></td>
             </tr>
           </table>
   </div>
