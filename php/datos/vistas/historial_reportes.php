@@ -70,8 +70,10 @@
     $query_anios = mysqli_query($conn, $sql);
 
     if($anio == '') {
-        $anio = mysqli_fetch_array($query_anios)['anio'];
-        $query_anios = mysqli_query($conn, $sql);
+        if(mysqli_num_rows($query_anios) > 0) {
+            $anio = mysqli_fetch_array($query_anios)['anio'];
+            $query_anios = mysqli_query($conn, $sql);
+        }
     }
 
     /*if($mes != "" && $anio == ''){
