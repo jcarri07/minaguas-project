@@ -144,7 +144,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
         ?>
 
         <li class="nav-item">
-          <a class="nav-link off <?php echo ($page == 'cerrar_sesion') ? "active" : ''; ?>" href="?page=cerrar_sesion">
+          <a class="nav-link off <?php echo ($page == 'cerrar_sesion') ? "active" : ''; ?>" href="">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-button-power text-info text-sm opacity-10"></i>
             </div>
