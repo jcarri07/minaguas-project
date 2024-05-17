@@ -36,6 +36,7 @@ if ($count >= 1) {
                     <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Nombre(s)</th>
                     <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Apellido(s)</th>
                     <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Email</th>
+                    <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Tipo</th>
                     <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Ultima Entrada</th>
                     <th class="text-uppercase text-xxs font-weight-bolder  text-center">Opciones</th>
                   </tr>
@@ -68,6 +69,11 @@ if ($count >= 1) {
                           <h6 class="mb-0 text-secondary text-sm"><?php echo $val["Correo"]; ?></h6>
                         </div>
                       </td>
+                      <td>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-secondary text-sm"><?php echo $val["Tipo"]?></h6>
+                          </div>
+                        </td>
                       <td class="align-middle hide-cell">
                         <?php
                         $aux = $val["Id_usuario"];
@@ -185,6 +191,7 @@ if ($count >= 1) {
                       <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Nombre(s)</th>
                       <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Apellido(s)</th>
                       <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Email</th>
+                      <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Tipo</th>
                       <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Ultima Entrada</th>
                       <th class="text-uppercase text-xxs font-weight-bolder  text-center">Opciones</th>
                     </tr>
@@ -218,6 +225,11 @@ if ($count >= 1) {
                         <td class="align-middle text-sm hide-cell">
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-secondary text-sm"><?php echo $val["Correo"]; ?></h6>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-secondary text-sm"><?php echo $val["Tipo"]?></h6>
                           </div>
                         </td>
                         <td class="align-middle hide-cell">
