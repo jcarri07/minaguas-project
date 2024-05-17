@@ -73,7 +73,7 @@ date_default_timezone_set("America/Caracas");
                       <span class="mb-0 text-sm font-weight-bolder"><?php echo $row["nombre_embalse"] ?></span>
                     </td>
                     <td class="align-middle text-center hide-cell">
-                      <p class="mb-0 text-sm font-weight-bolder"><?php echo $row['afluentes_principales'] ?>&nbsp;m³</p>
+                      <p class="mb-0 text-sm font-weight-bolder"><?php echo $row['afluentes_principales'] ?>&nbsp;</p>
                     </td>
                     <td class="align-middle text-center hide-cell">
                       <span class="mb-0 text-sm font-weight-bolder"><?php echo $row['nombre_presa'] ?></span>

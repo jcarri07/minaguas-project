@@ -1677,18 +1677,22 @@ function stringFloat($num, $dec = 2)
             //   if (row > range.e.r) {
             //     break;
             //   }
-            var cota = worksheet[XLSX.utils.encode_cell({
+            let celda;
+            celda = worksheet[XLSX.utils.encode_cell({
               r: row,
               c: 0
-            })].v.toFixed(3);
-            var area = worksheet[XLSX.utils.encode_cell({
+            })];
+            var cota = celda ? celda.v.toFixed(3) : "";
+            celda = worksheet[XLSX.utils.encode_cell({
               r: row,
               c: 1
-            })].v;
-            var capacidad = worksheet[XLSX.utils.encode_cell({
+            })];
+            var area = celda ? celda.v : "";
+            celda = worksheet[XLSX.utils.encode_cell({
               r: row,
               c: 2
-            })].v;
+            })];
+            var capacidad = celda ? celda.v : "";
             cotaEmbalse[cota] = area + '-' + capacidad;
             row++;
             // }

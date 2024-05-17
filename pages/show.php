@@ -483,7 +483,7 @@ closeConection($conn);
                           <thead>
                             <tr>
                               <th>Cota <span class="text-sm">(m s.n.m.)</span></th>
-                              <th>Área <span></span class="text-sm">(m²)</th>
+                              <th>Área <span></span class="text-sm">(ha)</th>
                               <th>Capacidad <span class="text-sm">(hm³)</span></th>
                             </tr>
                           </thead>
@@ -517,7 +517,7 @@ closeConection($conn);
             <div class="w-full embalse-caracteristicas">
               <div style="display: grid; grid-template-columns: 25% 25%; justify-content: end; justify-items:center;">
                 <div class="w-100 text-center b-l b-t">Diseño</div>
-                <div class="w-100 text-center b-l b-t b-r">Actual</div>
+                <div class="w-100 text-center b-l b-t b-r"><?php echo $embalse->getCloseYear(); ?></div>
               </div>
               <div style="display: grid; grid-template-columns: 25% 25% 50%; justify-items:center; align-items: center">
                 <div class="border-cell w-100 h-100 d-flex flex-column justify-content-center">
