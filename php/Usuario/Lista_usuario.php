@@ -69,9 +69,9 @@ if ($count >= 1) {
                           <h6 class="mb-0 text-secondary text-sm"><?php echo $val["Correo"]; ?></h6>
                         </div>
                       </td>
-                      <td>
+                      <td class=" hide-cell">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-secondary text-sm"><?php echo $val["Tipo"]?></h6>
+                            <h6 class="mb-0 text-secondary text-sm"><?php if($val["Tipo"] == "Admin"){echo "Administrador";}else{if($val["Tipo"] == "User"){echo "Usuario";}}?></h6>
                           </div>
                         </td>
                       <td class="align-middle hide-cell">
@@ -227,9 +227,9 @@ if ($count >= 1) {
                             <h6 class="mb-0 text-secondary text-sm"><?php echo $val["Correo"]; ?></h6>
                           </div>
                         </td>
-                        <td>
+                        <td class=" hide-cell">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-secondary text-sm"><?php echo $val["Tipo"]?></h6>
+                            <h6 class="mb-0 text-secondary text-sm"><?php if($val["Tipo"] == "Admin"){echo "Administrador";}else{if($val["Tipo"] == "User"){echo "Usuario";}}?></h6>
                           </div>
                         </td>
                         <td class="align-middle hide-cell">
