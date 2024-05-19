@@ -5,6 +5,11 @@ require_once 'batimetria.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 $type = $_GET["type"];
 
@@ -32,6 +37,20 @@ if ($type == "excel") {
         $sheet->setCellValue("A" . 1, "COTA");
         $sheet->setCellValue("B" . 1, "AREA");
         $sheet->setCellValue("C" . 1, "CAPACIDAD");
+        $sheet->getColumnDimension("A")->setWidth(15);
+        $sheet->getColumnDimension("B")->setWidth(15);
+        $sheet->getColumnDimension("C")->setWidth(15);
+        $sheet->getStyle("A1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle("B1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle("C1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $color = '5E72E4';
+        $sheet->getStyle("A1")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+        $sheet->getStyle("B1")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+        $sheet->getStyle("C1")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+
+        $sheet->getStyle("A1")->getFont()->getColor()->setARGB('FFFFFF');
+        $sheet->getStyle("B1")->getFont()->getColor()->setARGB('FFFFFF');
+        $sheet->getStyle("C1")->getFont()->getColor()->setARGB('FFFFFF');
 
         $i = 2;
         foreach ($añoCotas as $cotas => $datos) {
@@ -40,8 +59,8 @@ if ($type == "excel") {
             $Cota = $cotas;
             // $Volumen = explode("-", $datos)[0];
             // $Superficie =  explode("-", $datos)[1];
-            $Volumen = explodeBat($datos,0);
-            $Superficie = explodeBat($datos,1);
+            $Volumen = explodeBat($datos, 0);
+            $Superficie = explodeBat($datos, 1);
 
             $sheet->setCellValue("A" . $i, $Cota);
             $sheet->setCellValue("B" . $i, $Volumen);
@@ -76,6 +95,21 @@ if ($type == "plantilla") {
     $sheet->setCellValue("A" . 1, "COTA");
     $sheet->setCellValue("B" . 1, "AREA");
     $sheet->setCellValue("C" . 1, "CAPACIDAD");
+
+    $sheet->getColumnDimension("A")->setWidth(15);
+    $sheet->getColumnDimension("B")->setWidth(15);
+    $sheet->getColumnDimension("C")->setWidth(15);
+    $sheet->getStyle("A1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+    $sheet->getStyle("B1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+    $sheet->getStyle("C1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+    $color = '5E72E4';
+    $sheet->getStyle("A1")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+    $sheet->getStyle("B1")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+    $sheet->getStyle("C1")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+
+    $sheet->getStyle("A1")->getFont()->getColor()->setARGB('FFFFFF');
+    $sheet->getStyle("B1")->getFont()->getColor()->setARGB('FFFFFF');
+    $sheet->getStyle("C1")->getFont()->getColor()->setARGB('FFFFFF');
 
     $writer = new Xlsx($spreadsheet);
     $excelFileName = 'archivo_excel.xlsx';
