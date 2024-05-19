@@ -27038,6 +27038,10 @@ table td, table div, table th {
   white-space: normal !important;
 }
 
+table td {
+  white-space: nowrap !important;
+}
+
 @media (max-width: 575.98px) {
   table td, table div, table th, table .text-sm, table a{
     font-size: 12px !important;
