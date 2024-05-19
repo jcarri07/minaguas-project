@@ -20,7 +20,7 @@ if (isset($_SESSION['id_embalse'])) {
 // var_dump($id_embalse);
 $bat_emb = new Batimetria($id_embalse, $conn);
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
-$queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
+$queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User' OR tipo = 'Admin';");
 $queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id_embalse'");
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
 $queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
@@ -498,11 +498,11 @@ function explodeBat($value, $i = null)
                 <div class="form-group">
                   <label for="responsable">Responsable de la carga de datos</label>
                   <select class="wide" id="responsable" name="responsable">
-                    <option value=""></option>
+                    <option value="">Sin encargado</option>
                     <?php
                     while ($row1 = mysqli_fetch_array($queryResponsable)) {
                     ?>
-                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre'] . " " . $row1['S_Nombre'] . " " . $row1['P_Apellido'] . " " . $row1['S_Apellido']; ?></option>
+                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre'] . " " . $row1['S_Nombre'] . " " . $row1['P_Apellido'] . " " . $row1['S_Apellido'] . " - (" . $row1['Tipo'].")"; ?></option>
                     <?php
                     }
                     ?>

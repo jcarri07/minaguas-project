@@ -14,7 +14,7 @@ if (mysqli_num_rows($res) > 0) {
 } else {
   // echo "No se encontraron resultados.";
 }
-closeConection($conn);
+
 ?>
 
 
@@ -61,8 +61,8 @@ date_default_timezone_set("America/Caracas");
               <thead>
                 <tr>
                   <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">NOMBRE DEL EMBALSE</th>
-                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7 ps-2 hide-cell">AFLUENTES PRINCIPALES</th>
-                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7 hide-cell">FUNCIONARIO RESPONSABLE</th>
+                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7 ps-2 hide-cell">CUENCA PRINCIPAL</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7 hide-cell">OPERADOR</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">REPORTES</th>
                 </tr>
               </thead>
@@ -73,10 +73,15 @@ date_default_timezone_set("America/Caracas");
                       <span class="mb-0 text-sm font-weight-bolder"><?php echo $row["nombre_embalse"] ?></span>
                     </td>
                     <td class="align-middle text-center hide-cell">
-                      <p class="mb-0 text-sm font-weight-bolder"><?php echo $row['afluentes_principales'] ?>&nbsp;</p>
+                      <p class="mb-0 text-sm font-weight-bolder"><?php echo $row['cuenca_principal'] ?>&nbsp;</p>
                     </td>
+                    <?php
+                    $OPERADOR_ID = $row['operador'];
+                    $OPERADOR = mysqli_fetch_assoc( mysqli_query($conn, "SELECT operador FROM operadores WHERE id_operador = '$OPERADOR_ID'"))['operador'];
+                    
+                    ?>
                     <td class="align-middle text-center hide-cell">
-                      <span class="mb-0 text-sm font-weight-bolder"><?php echo $row['nombre_presa'] ?></span>
+                      <span class="mb-0 text-sm font-weight-bolder"><?php echo $OPERADOR ?></span>
                     </td>
                     <td class="d-flex justify-content-center align-items-center">
                       <div class="d-flex align-items-center justify-content-center w-80 gap-2 ">
@@ -101,7 +106,8 @@ date_default_timezone_set("America/Caracas");
                       </div>
                     </td>
                   </tr>
-                <?php } ?>
+                <?php }
+                closeConection($conn); ?>
               </tbody>
             </table>
             <div class="d-flex justify-content-end align-items-end w-100 pt-4 px-4 gap-2">
