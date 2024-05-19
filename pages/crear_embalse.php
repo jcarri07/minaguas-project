@@ -1355,11 +1355,12 @@ date_default_timezone_set("America/Caracas");
 
   function construirTabla(embalse, data) {
     var tabla = '<table class="align-items-center mb-0 table-cota" border="1">';
-    tabla += '<tr><th>Cota</th><th>Área</th><th>Capacidad</th></tr>';
+    tabla += '<tr><th style="background-color: #5e72e4; color:white">Cota</th><th style="background-color: #5e72e4; color:white">Área</th><th style="background-color: #5e72e4; color:white">Capacidad</th></tr>';
 
     for (var cota in data) {
-      var partes = data[cota].split('-');
-      tabla += '<tr><td>' + cota + '</td><td>' + partes[0] + '</td><td>' + partes[1] + '</td></tr>';
+      // var partes = data[cota].split('-');
+      var partes = explodeBat(data[cota]);
+      tabla += '<tr><td>' + cota + '</td><td>' + parseFloat(partes[0]).toFixed(2) + '</td><td>' + parseFloat(partes[1]).toFixed(2) + '</td></tr>';
     }
 
     tabla += '</table>';
@@ -1381,6 +1382,30 @@ date_default_timezone_set("America/Caracas");
       // modal_body.innerHTML += tablaHTML;
     }
   }
+
+  function explodeBat(value, i = null) {
+    // Expresión regular para manejar ambos formatos
+    const pattern = /^(-?[\d,.]+)-(-?[\d,.]+)$/;
+    const matches = value.match(pattern);
+
+    if (matches) {
+        const valores = [matches[1], matches[2]]; // Valores capturados
+
+        if (i !== null) {
+            return valores[i];
+        } else {
+            return valores;
+        }
+    } else {
+        const valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+
+        if (i !== null) {
+            return valores[i];
+        } else {
+            return valores;
+        }
+    }
+}
 
   function previewImage(id) {
     document.querySelector("#" + id).addEventListener("change", function(e) {

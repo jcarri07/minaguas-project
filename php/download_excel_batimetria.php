@@ -9,7 +9,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $type = $_GET["type"];
 
 if ($type == "excel") {
-    
+
     $id = $_GET["id"];
     $Bocono = new Batimetria($id, $conn);
     $Batimetria = $Bocono->getBatimetria();
@@ -17,7 +17,7 @@ if ($type == "excel") {
 
     $spreadsheet = new Spreadsheet();
     $spreadsheet->removeSheetByIndex(0);
-    
+
 
     $datos = [
         'Juan' => ['Nombre', 'Edad', 'Ocupación'],
@@ -38,8 +38,10 @@ if ($type == "excel") {
             // $columnaLetra = chr(ord('A') + $filaIndice);
             // $celda = $columnaLetra . $i;
             $Cota = $cotas;
-            $Volumen = explode("-", $datos)[0];
-            $Superficie =  explode("-", $datos)[1];
+            // $Volumen = explode("-", $datos)[0];
+            // $Superficie =  explode("-", $datos)[1];
+            $Volumen = explodeBat($datos,0);
+            $Superficie = explodeBat($datos,1);
 
             $sheet->setCellValue("A" . $i, $Cota);
             $sheet->setCellValue("B" . $i, $Volumen);
@@ -83,6 +85,30 @@ if ($type == "plantilla") {
     header('Content-Disposition: attachment;filename="' . $excelFileName . '"');
     header('Cache-Control: max-age=0');
     $writer->save('php://output');
+}
+
+function explodeBat($value, $i = null)
+{
+
+    $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
+
+    if (preg_match($pattern, $value, $matches)) {
+        $valores = [$matches[1], $matches[2]]; // Valores capturados
+
+        if ($i !== null) {
+            return $valores[$i];
+        } else {
+            return $valores;
+        }
+    } else {
+        $valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+
+        if ($i !== null) {
+            return $valores[$i];
+        } else {
+            return $valores;
+        }
+    }
 }
 
 exit();
