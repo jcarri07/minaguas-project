@@ -30,15 +30,16 @@ class Batimetria
     private function loadBatimetria()
     {
 
-        $id_embalse = mysqli_real_escape_string($this->conn, $this->id_embalse);
-        $query = "SELECT * FROM embalses WHERE id_embalse = $id_embalse";
+        // $id_embalse = mysqli_real_escape_string($this->conn, $this->id_embalse);
+        $id_embalse = $this->id_embalse;
+        $query = "SELECT * FROM embalses WHERE id_embalse = '$id_embalse'";
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {
             die("Error en la consulta: " . mysqli_error($this->conn));
         }
 
-        $embalse = mysqli_fetch_assoc($result);
+        $embalse = mysqli_fetch_array($result);
         $this->embalse = $embalse;
         mysqli_free_result($result);
 
@@ -47,6 +48,7 @@ class Batimetria
         } else {
             $this->batimetria = "";
         }
+
         $this->cota_min = $embalse['cota_min'];
         $this->cota_nor = $embalse['cota_nor'];
         $this->cota_max = $embalse['cota_max'];
@@ -63,7 +65,7 @@ class Batimetria
         WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual 
         FROM embalses e
         LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-        WHERE e.estatus = 'activo' AND e.id_embalse = $id_embalse
+        WHERE e.estatus = 'activo' AND e.id_embalse = '$id_embalse'
         GROUP BY id_embalse;";
         $result = mysqli_query($this->conn, $query);
 
@@ -103,9 +105,12 @@ class Batimetria
     public function getByCota($año, $cota)
     {
         if ($cota == null) {
-            return array(0,0);
+            return array(0, 0);
         }
         $año = $this->getCloseYear($año);
+        if (!array_key_exists($año, $this->batimetria)) {
+            return array(0, 0);
+        }
         $cota = number_format(floatval($cota), 3, ".", "");
         // return (array_key_exists((string)$cota, $this->batimetria[$año])) ? explode("-", $this->batimetria[$año][(string)$cota]) : $this->getCloseCota($this->batimetria[$año], $cota, 0.001);
         return $this->interpolacionLineal($cota, $this->batimetria[$año]);
@@ -118,7 +123,8 @@ class Batimetria
         $step = ($step > 0) ? (($step + 0.001) * -1) : (($step * -1) + 0.001);
 
         if (array_key_exists((string)$cota, $batimetria)) {
-            return explode("-", $batimetria[(string)$cota]);
+            // return explode("-", $batimetria[(string)$cota]);
+            return $this->explodeBat($batimetria[(string)$cota]);
         } else {
             return $this->getCloseCota($batimetria, $cota, $step);
         }
@@ -126,7 +132,6 @@ class Batimetria
 
     public function getCloseYear($año_recibido = null)
     {
-
         if ($año_recibido == null) {
             return reset($this->años);
         }
@@ -188,13 +193,18 @@ class Batimetria
 
     public function interpolacionLineal($x, $tabla)
     {
+        if ($tabla == null) {
+            return array(0, 0);
+        }
         $x_values = array_keys($tabla);
         sort($x_values);
 
         if ($x < min($x_values)) {
-            return explode("-", reset($tabla));
+            // return explode("-", reset($tabla));
+            return $this->explodeBat(reset($tabla));
         } elseif ($x > max($x_values)) {
-            return explode("-", end($tabla));
+            // return explode("-", end($tabla));
+            return $this->explodeBat(end($tabla));
         }
 
         $puntoAnterior = null;
@@ -208,13 +218,25 @@ class Batimetria
             }
         }
 
+        //VERSION VIEJA DA ERRORES CUANDO HAY VALORES NEGATIVOS.
         // Realizar la interpolación lineal
-        $Sup_min = explode("-", $tabla[$puntoAnterior])[0];
-        $Sup_max = explode("-", $tabla[$puntoSiguiente])[0];
+        // $Sup_min = explode("-", $tabla[$puntoAnterior])[0];
+        // $Sup_max = explode("-", $tabla[$puntoSiguiente])[0];
+        // $Sup = $Sup_min + (($Sup_max - $Sup_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
+
+        // $Vol_min = explode("-", $tabla[$puntoAnterior])[1];
+        // $Vol_max = explode("-", $tabla[$puntoSiguiente])[1];
+        // $Vol = $Vol_min + (($Vol_max - $Vol_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
+
+        //VERSION NUEVA USANDO UNA FUNCION CON EXPRESION REGULAR.
+        // Realizar la interpolación lineal
+        // var_dump( $tabla[$puntoAnterior]);
+        $Sup_min = $this->explodeBat($tabla[$puntoAnterior], 0);
+        $Sup_max = $this->explodeBat($tabla[$puntoSiguiente], 0);
         $Sup = $Sup_min + (($Sup_max - $Sup_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
 
-        $Vol_min = explode("-", $tabla[$puntoAnterior])[1];
-        $Vol_max = explode("-", $tabla[$puntoSiguiente])[1];
+        $Vol_min = $this->explodeBat($tabla[$puntoAnterior], 1);
+        $Vol_max = $this->explodeBat($tabla[$puntoSiguiente], 1);
         $Vol = $Vol_min + (($Vol_max - $Vol_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
 
         return array($Sup, $Vol);
@@ -260,7 +282,7 @@ class Batimetria
 
     public function volumenMinimo()
     {
-        if ($this->batimetria != "") { 
+        if ($this->batimetria != "") {
             return $this->getByCota($this->getCloseYear(), $this->cotaMinima())[1];
         } else {
             return $this->vol_min != "" ? $this->vol_min : 0;
@@ -338,6 +360,29 @@ class Batimetria
         return $this->ultima_carga;
     }
 
+    public function explodeBat($value, $i = null)
+    {
+
+        $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
+
+        if (preg_match($pattern, $value, $matches)) {
+            $valores = [$matches[1], $matches[2]]; // Valores capturados
+    
+            if ($i !== null) {
+                return $valores[$i];
+            } else {
+                return $valores;    
+            }
+        } else {
+            $valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+    
+            if ($i !== null) {
+                return $valores[$i];
+            } else {
+                return $valores;    
+            }
+        }
+    }
     // public function AuxGetCloseCota($año, $cota)
     // {
     // $intervalo = 0.010;

@@ -17,11 +17,11 @@ if (isset($_SESSION['id_embalse'])) {
   echo $id_embalse;
 }
 
-$bat_emb = new Batimetria($id_embalse, $conn);
 // var_dump($id_embalse);
+$bat_emb = new Batimetria($id_embalse, $conn);
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User';");
-$queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = $id_embalse");
+$queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id_embalse'");
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
 $queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
 $queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
@@ -105,6 +105,30 @@ function stringFloat($num, $dec = 2)
   $numero = floatval($num);
   return number_format($numero, $dec, ",", ".");
 }
+
+function explodeBat($value, $i = null)
+    {
+
+        $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
+
+        if (preg_match($pattern, $value, $matches)) {
+            $valores = [$matches[1], $matches[2]]; // Valores capturados
+    
+            if ($i !== null) {
+                return $valores[$i];
+            } else {
+                return $valores;    
+            }
+        } else {
+            $valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+    
+            if ($i !== null) {
+                return $valores[$i];
+            } else {
+                return $valores;    
+            }
+        }
+    }
 ?>
 
 <link rel="stylesheet" href="./assets/css/nice-select2.css">
@@ -125,7 +149,7 @@ function stringFloat($num, $dec = 2)
     text-align: center;
   }
 
-  #modal-body {
+  #modal-body, #modal-pre-body {
     overflow-x: auto;
   }
 
@@ -274,7 +298,7 @@ function stringFloat($num, $dec = 2)
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 100 !important;
+    z-index: 999999 !important;
   }
 
   #show-map {
@@ -1523,18 +1547,19 @@ function stringFloat($num, $dec = 2)
               <h3> <?php echo $key ?> </h3>
               <table class="align-items-center mb-0 table-cota" border="1">
                 <tr>
-                  <th>Cota</th>
-                  <th>Área</th>
-                  <th>Capacidad</th>
+                  <th style="background-color: #5e72e4; color:white">Cota</th>
+                  <th style="background-color: #5e72e4; color:white">Área</th>
+                  <th style="background-color: #5e72e4; color:white">Capacidad</th>
                 </tr>
                 <?php
                 foreach ($anio as $key => $value) {
-                  $partes = explode("-", $value);
+                  // $partes = explode("-", $value);
+                  $partes = explodeBat($value);
                 ?>
                   <tr>
-                    <td><?php echo $key ?></td>
-                    <td><?php echo $partes[0] ?></td>
-                    <td><?php echo $partes[1] ?></td>
+                    <td ><?php echo $key ?></td>
+                    <td ><?php echo number_format($partes[0],2,",","") ?></td>
+                    <td ><?php echo number_format($partes[1],2,",","") ?></td>
                   </tr>
                 <?php }
                 ?>
@@ -1677,18 +1702,22 @@ function stringFloat($num, $dec = 2)
             //   if (row > range.e.r) {
             //     break;
             //   }
-            var cota = worksheet[XLSX.utils.encode_cell({
+            let celda;
+            celda = worksheet[XLSX.utils.encode_cell({
               r: row,
               c: 0
-            })].v.toFixed(3);
-            var area = worksheet[XLSX.utils.encode_cell({
+            })];
+            var cota = celda ? celda.v.toFixed(3) : "";
+            celda = worksheet[XLSX.utils.encode_cell({
               r: row,
               c: 1
-            })].v;
-            var capacidad = worksheet[XLSX.utils.encode_cell({
+            })];
+            var area = celda ? celda.v : "";
+            celda = worksheet[XLSX.utils.encode_cell({
               r: row,
               c: 2
-            })].v;
+            })];
+            var capacidad = celda ? celda.v : "";
             cotaEmbalse[cota] = area + '-' + capacidad;
             row++;
             // }
@@ -1785,11 +1814,12 @@ function stringFloat($num, $dec = 2)
 
   function construirTabla(embalse, data) {
     var tabla = '<table class="align-items-center mb-0 table-cota" border="1">';
-    tabla += '<tr><th>Cota</th><th>Área</th><th>Capacidad</th></tr>';
+    tabla += '<tr><th style="background-color: #5e72e4; color:white">Cota</th><th style="background-color: #5e72e4; color:white">Área</th><th style="background-color: #5e72e4; color:white">Capacidad</th></tr>';
 
     for (var cota in data) {
-      var partes = data[cota].split('-');
-      tabla += '<tr><td>' + cota + '</td><td>' + partes[0] + '</td><td>' + partes[1] + '</td></tr>';
+      // var partes = data[cota].split('-');
+      var partes = explodeBat(data[cota]);
+      tabla += '<tr><td>' + cota + '</td><td>' + parseFloat(partes[0]).toFixed(2) + '</td><td>' + parseFloat(partes[1]).toFixed(2) + '</td></tr>';
     }
 
     tabla += '</table>';
@@ -1813,6 +1843,30 @@ function stringFloat($num, $dec = 2)
 
 
   }
+
+  function explodeBat(value, i = null) {
+    // Expresión regular para manejar ambos formatos
+    const pattern = /^(-?[\d,.]+)-(-?[\d,.]+)$/;
+    const matches = value.match(pattern);
+
+    if (matches) {
+        const valores = [matches[1], matches[2]]; // Valores capturados
+
+        if (i !== null) {
+            return valores[i];
+        } else {
+            return valores;
+        }
+    } else {
+        const valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+
+        if (i !== null) {
+            return valores[i];
+        } else {
+            return valores;
+        }
+    }
+}
 
 
   $("#proposito").on("click", function() {
@@ -2107,7 +2161,7 @@ function stringFloat($num, $dec = 2)
 
   // MAPA PARA EXTRAER EL NORTE, ESTE, HUSO
   var map = L.map('map').setView([8, -66], 6);
-  map.scrollWheelZoom.disable();
+  // map.scrollWheelZoom.disable();
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);

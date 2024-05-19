@@ -244,7 +244,7 @@ header('Content-Type: text/html; charset=UTF-8');
             }
             ?>
             <li class="nav-item pe-3 d-flex align-items-center">
-              <a href="?page=cerrar_sesion" class="nav-link text-white p-0 text-lg off">
+              <a href="" class="nav-link text-white p-0 text-lg off">
                 <i class="fa fa-power-off cursor-pointer"></i>
               </a>
             </li>

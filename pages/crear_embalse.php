@@ -199,7 +199,7 @@ date_default_timezone_set("America/Caracas");
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 100 !important;
+    z-index: 999999 !important;
   }
 
   #show-map {
@@ -1261,18 +1261,22 @@ date_default_timezone_set("America/Caracas");
             //   if (row > range.e.r) {
             //     break;
             //   }
-            var cota = worksheet[XLSX.utils.encode_cell({
+            let celda;
+            celda = worksheet[XLSX.utils.encode_cell({
               r: row,
               c: 0
-            })].v.toFixed(3);
-            var area = worksheet[XLSX.utils.encode_cell({
+            })];
+            var cota = celda ? celda.v.toFixed(3) : "";
+            celda = worksheet[XLSX.utils.encode_cell({
               r: row,
               c: 1
-            })].v;
-            var capacidad = worksheet[XLSX.utils.encode_cell({
+            })];
+            var area = celda ? celda.v : "";
+            celda = worksheet[XLSX.utils.encode_cell({
               r: row,
               c: 2
-            })].v;
+            })];
+            var capacidad = celda ? celda.v : "";
             cotaEmbalse[cota] = area + '-' + capacidad;
             // row++;
             // }
@@ -1351,11 +1355,12 @@ date_default_timezone_set("America/Caracas");
 
   function construirTabla(embalse, data) {
     var tabla = '<table class="align-items-center mb-0 table-cota" border="1">';
-    tabla += '<tr><th>Cota</th><th>Área</th><th>Capacidad</th></tr>';
+    tabla += '<tr><th style="background-color: #5e72e4; color:white">Cota</th><th style="background-color: #5e72e4; color:white">Área</th><th style="background-color: #5e72e4; color:white">Capacidad</th></tr>';
 
     for (var cota in data) {
-      var partes = data[cota].split('-');
-      tabla += '<tr><td>' + cota + '</td><td>' + partes[0] + '</td><td>' + partes[1] + '</td></tr>';
+      // var partes = data[cota].split('-');
+      var partes = explodeBat(data[cota]);
+      tabla += '<tr><td>' + cota + '</td><td>' + parseFloat(partes[0]).toFixed(2) + '</td><td>' + parseFloat(partes[1]).toFixed(2) + '</td></tr>';
     }
 
     tabla += '</table>';
@@ -1377,6 +1382,30 @@ date_default_timezone_set("America/Caracas");
       // modal_body.innerHTML += tablaHTML;
     }
   }
+
+  function explodeBat(value, i = null) {
+    // Expresión regular para manejar ambos formatos
+    const pattern = /^(-?[\d,.]+)-(-?[\d,.]+)$/;
+    const matches = value.match(pattern);
+
+    if (matches) {
+        const valores = [matches[1], matches[2]]; // Valores capturados
+
+        if (i !== null) {
+            return valores[i];
+        } else {
+            return valores;
+        }
+    } else {
+        const valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+
+        if (i !== null) {
+            return valores[i];
+        } else {
+            return valores;
+        }
+    }
+}
 
   function previewImage(id) {
     document.querySelector("#" + id).addEventListener("change", function(e) {
@@ -1525,7 +1554,7 @@ date_default_timezone_set("America/Caracas");
 
   // MAPA PARA EXTRAER EL NORTE, ESTE, HUSO
   var map = L.map('map').setView([8, -66], 6);
-  map.scrollWheelZoom.disable();
+  // map.scrollWheelZoom.disable();
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);

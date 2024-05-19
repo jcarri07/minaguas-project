@@ -49,6 +49,30 @@ function stringFloat($num, $dec = 2)
   return $numero;
 }
 
+function explodeBat($value, $i = null)
+    {
+
+        $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
+
+        if (preg_match($pattern, $value, $matches)) {
+            $valores = [$matches[1], $matches[2]]; // Valores capturados
+    
+            if ($i !== null) {
+                return $valores[$i];
+            } else {
+                return $valores;    
+            }
+        } else {
+            $valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+    
+            if ($i !== null) {
+                return $valores[$i];
+            } else {
+                return $valores;    
+            }
+        }
+    }
+
 closeConection($conn);
 ?>
 
@@ -482,15 +506,16 @@ closeConection($conn);
                         <table id="tabla<?php echo $key ?>" class="align-items-center mb-0 table-cota ">
                           <thead>
                             <tr>
-                              <th>Cota <span class="text-sm">(m s.n.m.)</span></th>
-                              <th>Área <span></span class="text-sm">(m²)</th>
-                              <th>Capacidad <span class="text-sm">(hm³)</span></th>
+                              <th style="font-size: 12px; text-align:center">Cota <span >(m s.n.m.)</span></th>
+                              <th style="font-size: 12px; text-align:center">Área <span></span >(ha)</th>
+                              <th style="font-size: 12px; text-align:center">Capacidad <span >(hm³)</span></th>
                             </tr>
                           </thead>
                           <tbody>
                             <?php
                             foreach ($anio as $key => $value) {
-                              $partes = explode("-", $value);
+                              // $partes = explode("-", $value);
+                              $partes = explodeBat($value);
                             ?>
                               <tr>
                                 <td><?php echo number_format(floatval($key), 3, ',', '.') ?></td>
@@ -517,7 +542,7 @@ closeConection($conn);
             <div class="w-full embalse-caracteristicas">
               <div style="display: grid; grid-template-columns: 25% 25%; justify-content: end; justify-items:center;">
                 <div class="w-100 text-center b-l b-t">Diseño</div>
-                <div class="w-100 text-center b-l b-t b-r">Actual</div>
+                <div class="w-100 text-center b-l b-t b-r"><?php echo $embalse->getCloseYear(); ?></div>
               </div>
               <div style="display: grid; grid-template-columns: 25% 25% 50%; justify-items:center; align-items: center">
                 <div class="border-cell w-100 h-100 d-flex flex-column justify-content-center">
