@@ -39,6 +39,7 @@ closeConection($conn);
         <div class="card card-plain">
           <div class="card-header pb-0 text-left">
             <h3 class="font-weight-bolder text-primary text-gradient">Nuevo Usuario</h3>
+            <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
             <!--<p class="mb-0">Enter your email and password to register</p>-->
           </div>
           <div class="card-body pb-3">
@@ -119,6 +120,7 @@ closeConection($conn);
         <div class="card card-plain">
           <div class="card-header pb-0 text-left">
             <h3 class="font-weight-bolder text-primary text-gradient">Editar</h3>
+            <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
             <!--<p class="mb-0">Enter your email and password to register</p>-->
           </div>
           <div class="card-body pb-3">
@@ -593,7 +595,7 @@ closeConection($conn);
         values.append("cedula", $("[name='cedula']").prop("value"));
         values.append("email", $("[name='email']").prop("value"));
         values.append("ident", 'editarU');
-        values.append("tipo", <?php if($_SESSION["Tipo"] == "SuperAdmin"){ ?>$("[name='Etipo'] option:selected").val()<?php }else{ ?>"User"<?php } ?>);
+        values.append("tipo", <?php if($_SESSION["Tipo"] == "SuperAdmin"){ ?>$("[name='tipo'] option:selected").val()<?php }else{ ?>"User"<?php } ?>);
         
         values.append("usuario", $("[name='usuario']").prop("value"));
         values.append("pass", $("[name='password']").prop("value"));
