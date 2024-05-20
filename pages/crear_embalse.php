@@ -1397,7 +1397,7 @@ date_default_timezone_set("America/Caracas");
             return valores;
         }
     } else {
-        const valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+        const valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
 
         if (i !== null) {
             return valores[i];

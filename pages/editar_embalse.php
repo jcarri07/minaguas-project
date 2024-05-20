@@ -120,7 +120,7 @@ function explodeBat($value, $i = null)
                 return $valores;    
             }
         } else {
-            $valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+            $valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
     
             if ($i !== null) {
                 return $valores[$i];
@@ -1858,7 +1858,7 @@ function explodeBat($value, $i = null)
             return valores;
         }
     } else {
-        const valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+        const valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
 
         if (i !== null) {
             return valores[i];

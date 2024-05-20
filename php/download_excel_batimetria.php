@@ -135,7 +135,7 @@ function explodeBat($value, $i = null)
             return $valores;
         }
     } else {
-        $valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+        $valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
 
         if ($i !== null) {
             return $valores[$i];
