@@ -105,7 +105,7 @@
                     $valores = implode(', ', array_map(function($value) use ($conn, $nombre_tabla) {
                         //return is_null($value) ? 'NULL' : "'" . $conn->real_escape_string($value) . "'";
                         //if(is_numeric($value) && $nombre_tabla != "embalses")
-                        if(is_numeric($value))
+                        if(is_numeric($value)&&(strlen($value)<8||strlen($value)>11))
                             return $value;
                         else
                             if(is_null($value))
