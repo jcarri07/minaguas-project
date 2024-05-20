@@ -214,9 +214,12 @@ if (isset($_POST["Guardar"])) {
 
                 for ($row = 2; $row <= $highestRow; $row++) {
                     $num++;
-                    $cota = number_format($sheet->getCell('A' . $row)->getValue(), 3, '.', '');
-                    $area = $sheet->getCell('B' . $row)->getValue();
-                    $capacidad = $sheet->getCell('C' . $row)->getValue();
+                    // $cota = number_format($sheet->getCell('A' . $row)->getValue(), 3, '.', '');
+                    // $area = $sheet->getCell('B' . $row)->getValue();
+                    // $capacidad = $sheet->getCell('C' . $row)->getValue();
+                    $cota = number_format($sheet->getCell('A' . $row)->getCalculatedValue(), 3, '.', '');
+                    $area = $sheet->getCell('B' . $row)->getCalculatedValue();
+                    $capacidad = $sheet->getCell('C' . $row)->getCalculatedValue();
                     $cota_embalse[$cota] = $area . "-" . $capacidad;
                 }
 
@@ -491,9 +494,12 @@ if (isset($_POST["Update"])) {
 
                 for ($row = 2; $row <= $highestRow; $row++) {
                     $num++;
-                    $cota = number_format($sheet->getCell("A" . $row)->getValue(), 3, '.', '');
-                    $area = $sheet->getCell("B" . $row)->getValue();
-                    $capacidad = $sheet->getCell("C" . $row)->getValue();
+                    // $cota = number_format($sheet->getCell("A" . $row)->getValue(), 3, '.', '');
+                    // $area = $sheet->getCell("B" . $row)->getValue();
+                    // $capacidad = $sheet->getCell("C" . $row)->getValue();
+                    $cota = number_format($sheet->getCell("A" . $row)->getCalculatedValue(), 3, '.', '');
+                    $area = $sheet->getCell("B" . $row)->getCalculatedValue();
+                    $capacidad = $sheet->getCell("C" . $row)->getCalculatedValue();
                     $cota_embalse[$cota] = $area . "-" . $capacidad;
                 }
 
