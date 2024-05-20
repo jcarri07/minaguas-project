@@ -203,9 +203,18 @@ foreach ($data as $row) {
   $idE = $row['id_estado'];
   $idM = $row['id_municipio'];
   $idP = $row['id_parroquia'];
-  $ESTADO = implode(" - ", array_column( mysqli_fetch_all( mysqli_query($conn, "SELECT estado FROM estados WHERE id_estado IN ($idE)"),MYSQLI_ASSOC ), 'estado' ));
-  $MUNICIPIO = implode(" - ", array_column( mysqli_fetch_all(mysqli_query($conn, "SELECT municipio FROM municipios WHERE id_municipio IN ($idM)"),MYSQLI_ASSOC ), 'municipio' ));
-  $PARROQUIA = implode(" - ", array_column( mysqli_fetch_all(mysqli_query($conn, "SELECT parroquia FROM parroquias WHERE id_parroquia IN ($idP)"),MYSQLI_ASSOC ), 'parroquia' ));
+  $ESTADO = "";
+  $MUNICIPIO = "";
+  $PARROQUIA = "";
+  if ($idE != "") {
+    $ESTADO = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT estado FROM estados WHERE id_estado IN ($idE)"), MYSQLI_ASSOC), 'estado'));
+  }
+  if ($idM != "") {
+    $MUNICIPIO = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT municipio FROM municipios WHERE id_municipio IN ($idM)"), MYSQLI_ASSOC), 'municipio'));
+  }
+  if ($idP != "") {
+    $PARROQUIA = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT parroquia FROM parroquias WHERE id_parroquia IN ($idP)"), MYSQLI_ASSOC), 'parroquia'));
+  }
   //INFO CUENCA
   $ESTE = $row['este'];
   $NORTE = $row['norte'];
@@ -219,7 +228,7 @@ foreach ($data as $row) {
   $ORGANO_RECTOR = $row['organo_rector'];
   $PERSONAL_ENCARGADO = $row['personal_encargado'];
   $OPERADOR_ID = $row['operador'];
-  $OPERADOR = mysqli_fetch_assoc( mysqli_query($conn, "SELECT operador FROM operadores WHERE id_operador = '$OPERADOR_ID'"))['operador'];
+  $OPERADOR = mysqli_fetch_assoc(mysqli_query($conn, "SELECT operador FROM operadores WHERE id_operador = '$OPERADOR_ID'"))['operador'];
   $AUTORIDAD_RESPONSABLE = $row['autoridad_responsable'];
   $PROYECTISTA = $row['proyectista'];
   $CONSTRUCTOR = $row['constructor'];
@@ -293,18 +302,33 @@ foreach ($data as $row) {
   $TIPO_OBRA_2 = $row['tipo_de_obra'];
   $ACCION_REQUERIDA = $row['accion_requerida'];
   //BENEFICIOS
-  $PROPOSITO_ID = implode(",",explode(" - ",$row['proposito']));
-  $USO_ACTUAL_ID = implode(",",explode(" - ",$row['uso_actual']));
-  $PROPOSITO = implode(" - ", array_column( mysqli_fetch_all( mysqli_query($conn, "SELECT proposito FROM propositos WHERE id_proposito IN ($PROPOSITO_ID)"),MYSQLI_ASSOC ), 'proposito' ));
-  $USO_ACTUAL = implode(" - ", array_column( mysqli_fetch_all( mysqli_query($conn, "SELECT proposito FROM propositos WHERE id_proposito IN ($USO_ACTUAL_ID)"),MYSQLI_ASSOC ), 'proposito' ));
+  $PROPOSITO_ID = implode(",", explode(" - ", $row['proposito']));
+  $USO_ACTUAL_ID = implode(",", explode(" - ", $row['uso_actual']));
+  $PROPOSITO = "";
+  $USO_ACTUAL = "";
+  if ($PROPOSITO_ID != "") {
+    $PROPOSITO = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT proposito FROM propositos WHERE id_proposito IN ($PROPOSITO_ID)"), MYSQLI_ASSOC), 'proposito'));
+  }
+  if ($USO_ACTUAL_ID != "") {
+    $USO_ACTUAL = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT proposito FROM propositos WHERE id_proposito IN ($USO_ACTUAL_ID)"), MYSQLI_ASSOC), 'proposito'));
+  }
   // $SECTOR_BENEFICIADO = $row['sectores_beneficiados'];
   $sec_est = $row['sectores_estado'];
   $sec_mun = $row['sectores_municipio'];
   $sec_par = $row['sectores_parroquia'];
-  $estados_ben = implode(" - ", array_column( mysqli_fetch_all( mysqli_query($conn, "SELECT estado FROM estados WHERE id_estado IN ($sec_est)"),MYSQLI_ASSOC ), 'estado' ));
-  $municipios_ben = implode(" - ", array_column( mysqli_fetch_all(mysqli_query($conn, "SELECT municipio FROM municipios WHERE id_municipio IN ($sec_mun)"),MYSQLI_ASSOC ), 'municipio' ));
-  $parroquias_ben = implode(" - ", array_column( mysqli_fetch_all(mysqli_query($conn, "SELECT parroquia FROM parroquias WHERE id_parroquia IN ($sec_par)"),MYSQLI_ASSOC ), 'parroquia' ));
-  $SECTOR_BENEFICIADO = "<b>Estados:</b> ".$estados_ben.". <br><b>Municipios:</b> ".$municipios_ben.". <br><b>Parroquias:</b> ". $parroquias_ben ;
+  $estados_ben = "";
+  $municipios_ben = "";
+  $parroquias_ben = "";
+  if ($sec_est != "") {
+    $estados_ben = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT estado FROM estados WHERE id_estado IN ($sec_est)"), MYSQLI_ASSOC), 'estado'));
+  }
+  if ($sec_mun != "") {
+    $municipios_ben = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT municipio FROM municipios WHERE id_municipio IN ($sec_mun)"), MYSQLI_ASSOC), 'municipio'));
+  }
+  if ($sec_par != "") {
+    $parroquias_ben = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT parroquia FROM parroquias WHERE id_parroquia IN ($sec_par)"), MYSQLI_ASSOC), 'parroquia'));
+  }
+  $SECTOR_BENEFICIADO = "<b>Estados:</b> " . $estados_ben . ". <br><b>Municipios:</b> " . $municipios_ben . ". <br><b>Parroquias:</b> " . $parroquias_ben;
   $POBLACION = $row['poblacion_beneficiada'];
   $AREA_RIEGO = $row['area_de_riego_beneficiada'];
   //FUNCIONARIO RESPONSABLE
@@ -664,32 +688,32 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.2.1.- Ubicación</td>
-      <td><?php echo $UBICACION2 
+      <td><?php echo $UBICACION2
           ?></td>
     </tr>
     <tr>
       <td class=" subtitle">4.2.2.- Tipo</td>
-      <td style="width: 200px;"><?php echo $TIPO2 
+      <td style="width: 200px;"><?php echo $TIPO2
                                 ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.3.- N° de compuertas</td>
-      <td><?php echo $NUMERO_COMPUERTAS; 
+      <td><?php echo $NUMERO_COMPUERTAS;
           ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.4.- Carga Sobre el Vertedero (m)</td>
-      <td><?php  echo $CARGA_VERTEDERO; 
+      <td><?php echo $CARGA_VERTEDERO;
           ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.5.- Descarga máxima (m³/s)</td>
-      <td><?php echo $DESCARGA_MAXIMA; 
+      <td><?php echo $DESCARGA_MAXIMA;
           ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.5.- Descarga máxima (m³/s)</td>
-      <td><?php echo $LONGITUD; 
+      <td><?php echo $LONGITUD;
           ?></td>
     </tr>
   </table>
@@ -788,8 +812,8 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">5.3.- Parroquia(s) y/o sector(es) beneficiado(s)</td>
-      <td colspan="3" style="width: 400px;"><?php echo $SECTOR_BENEFICIADO 
-                      ?></td>
+      <td colspan="3" style="width: 400px;"><?php echo $SECTOR_BENEFICIADO
+                                            ?></td>
     </tr>
     <tr>
       <td class="subtitle">5.4.- Población beneficiada (hab.)</td>
