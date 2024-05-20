@@ -50,28 +50,28 @@ function stringFloat($num, $dec = 2)
 }
 
 function explodeBat($value, $i = null)
-    {
+{
 
-        $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
+  $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
 
-        if (preg_match($pattern, $value, $matches)) {
-            $valores = [$matches[1], $matches[2]]; // Valores capturados
-    
-            if ($i !== null) {
-                return $valores[$i];
-            } else {
-                return $valores;    
-            }
-        } else {
-            $valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
-    
-            if ($i !== null) {
-                return $valores[$i];
-            } else {
-                return $valores;    
-            }
-        }
+  if (preg_match($pattern, $value, $matches)) {
+    $valores = [$matches[1], $matches[2]]; // Valores capturados
+
+    if ($i !== null) {
+      return $valores[$i];
+    } else {
+      return $valores;
     }
+  } else {
+    $valores = [1, 1]; // Valores predeterminados en caso de no coincidencia
+
+    if ($i !== null) {
+      return $valores[$i];
+    } else {
+      return $valores;
+    }
+  }
+}
 
 closeConection($conn);
 ?>
@@ -416,6 +416,16 @@ closeConection($conn);
       transform: rotate(360deg);
     }
   }
+
+  .title-edit {
+    position: relative;
+  }
+
+  .icon-edit {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 </style>
 
 <div class="container-loader">
@@ -433,8 +443,9 @@ closeConection($conn);
             <div class="nombre-embalse text-dark fw-bold">Ubicación geográfica</div>
           </div>
           <div class="embalse-card embalse-datos rounded px-3 d-flex flex-column gap-2">
-            <div class="text-center" style="font-size: 32px;">
-              <?php echo mb_strtoupper(mb_substr($embalse_datos["nombre_embalse"], 0), 'UTF-8') ?>
+            <div class="text-center title-edit" style="font-size: 32px;">
+              <div><?php echo mb_strtoupper(mb_substr($embalse_datos["nombre_embalse"], 0), 'UTF-8') ?></div>
+              <div class="icon-edit"><a data-id="<?php echo $embalse_datos['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-pencil-alt text-dark text-md me-2" aria-hidden="true"></i></a></div>
             </div>
             <div class="w-100 d-flex gap-4 card-flex">
               <div class="w-100 h-100 rounded mini-card-info">
@@ -506,9 +517,9 @@ closeConection($conn);
                         <table id="tabla<?php echo $key ?>" class="align-items-center mb-0 table-cota ">
                           <thead>
                             <tr>
-                              <th style="font-size: 12px; text-align:center">Cota <span >(m s.n.m.)</span></th>
-                              <th style="font-size: 12px; text-align:center">Área <span></span >(ha)</th>
-                              <th style="font-size: 12px; text-align:center">Capacidad <span >(hm³)</span></th>
+                              <th style="font-size: 12px; text-align:center">Cota <span>(m s.n.m.)</span></th>
+                              <th style="font-size: 12px; text-align:center">Área <span></span>(ha)</th>
+                              <th style="font-size: 12px; text-align:center">Capacidad <span>(hm³)</span></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -798,6 +809,22 @@ closeConection($conn);
       behavior: 'smooth' // Desplazamiento suave
     });
   }
+
+  $(".editar-embalse").click(function(e) {
+    e.preventDefault();
+    console.log("EDITAR")
+    var id = $(this).data("id");
+    $.ajax({
+      type: "POST",
+      url: "pages/session_variable.php",
+      data: {
+        valor: id
+      },
+      success: function(response) {
+        window.location.href = "?page=editar_embalse";
+      }
+    });
+  });
 
   // Llamar a la función de auto scroll después de que la página se haya cargado completamente
   window.onload = function() {
