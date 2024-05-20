@@ -147,7 +147,7 @@ closeConection($conn);
 
               </div>
               <div class="">
-                <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="Ecedula2" hidden>
+                <input type="text" class="" placeholder="Cedula" aria-label="cedula" name="Ecedula2" hidden>
               </div>
               <!--div class="mb-3">
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
