@@ -105,13 +105,19 @@
                     $valores = implode(', ', array_map(function($value) use ($conn, $nombre_tabla) {
                         //return is_null($value) ? 'NULL' : "'" . $conn->real_escape_string($value) . "'";
                         //if(is_numeric($value) && $nombre_tabla != "embalses")
+                        
                         if(is_numeric($value))
+                        if((str_contains($value,',')||str_contains($value,'.'))||(strlen($value)<8||strlen($value)>11)){
                             return $value;
+                        }else
+                            return "'" . $conn->real_escape_string($value) . "'";  
                         else
                             if(is_null($value))
                                 return 'NULL';
                             else
                                 return "'" . $conn->real_escape_string($value) . "'";
+                            
+                                
                     }, array_values($fila_datos)));
 
                     //$consulta_fila
