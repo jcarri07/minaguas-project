@@ -259,14 +259,14 @@ while ($row < count($datos_embalses)) {
     var mapa_portada = L.map('mapa-portada').setView([9, -66.5], 7);
     mapa_portada.scrollWheelZoom.disable();
 
-    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //     attribution: '© OpenStreetMap contributors'
-    // }).addTo(mapa_portada);
-
-    L.tileLayer('https://{s}.tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', {
-        attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.thunderforest.com/transport/">Andy Allan</a>',
-        apikey: '38db809be13a400c8c5061e304ba99cd' // Reemplaza esto con tu clave de API de Thunderforest
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
     }).addTo(mapa_portada);
+
+    // L.tileLayer('https://{s}.tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', {
+    //     attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.thunderforest.com/transport/">Andy Allan</a>',
+    //     apikey: '38db809be13a400c8c5061e304ba99cd' // Reemplaza esto con tu clave de API de Thunderforest
+    // }).addTo(mapa_portada);
 
     var ubicacion;
 
@@ -280,7 +280,8 @@ while ($row < count($datos_embalses)) {
             }).addTo(mapa_portada).bindPopup("<b><?php echo $emb[3] ?></b> <b><?php echo $emb[5] ?> %</b>", {
                 autoClose: false,
                 closeOnClick: false
-            }).openPopup();
+            });
+            // }).openPopup();
         <?php } else { ?>
     <?php }
     }

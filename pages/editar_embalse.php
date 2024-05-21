@@ -1523,6 +1523,30 @@ function explodeBat($value, $i = null)
   </div>
 </div>
 
+<div class="modal fade px-5" id="modal-formato" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 450px !important;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Formato de batimería.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-body-formato d-flex flex-col justify-content-center" class="text-sm">
+          <div class="text-center">
+            <img width="400" height="500" src="./assets/img/FormatoBatimetría.png">
+          </div>
+          <div class="text-center" style="color:#000000">
+            <b>En cada hoja colocar cada Batimetría, e identificar cada hoja con el año de la Batimetría correspondiente.</b>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="aceptar-formato" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="show-pre-batimetria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div id="modal-show" class="modal-dialog" role="document">
     <div class="modal-content">
@@ -2325,4 +2349,22 @@ function explodeBat($value, $i = null)
       $('#modal-validate').modal('show');
     }
   });
+
+  let cargar = false;
+
+$("#batimetria").on("click", function(e) {
+  console.log("HOLA")
+  if (!cargar) {
+    e.preventDefault();
+    $('#modal-formato').modal('show');
+  } else {
+    cargar = false;
+  }
+});
+
+$("#aceptar-formato").on("click", function() {
+  console.log("Boton")
+  cargar = true;
+  $("#batimetria").click();
+})
 </script>

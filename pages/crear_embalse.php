@@ -406,7 +406,7 @@ date_default_timezone_set("America/Caracas");
                       <?php
                       while ($row1 = mysqli_fetch_array($queryResponsable)) {
                       ?>
-                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre'] . " " . $row1['S_Nombre'] . " " . $row1['P_Apellido'] . " " . $row1['S_Apellido']. " - (" . $row1['Tipo'].")"; ?></option>
+                        <option value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre'] . " " . $row1['S_Nombre'] . " " . $row1['P_Apellido'] . " " . $row1['S_Apellido'] . " - (" . $row1['Tipo'] . ")"; ?></option>
                       <?php
                       }
                       ?>
@@ -486,43 +486,43 @@ date_default_timezone_set("America/Caracas");
 
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
-                    <label for="cota_min">Cota mínima (m s.m.n.)</label>
+                    <label for="cota_min">Cota mínima (m s.m.n.)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
                   </div>
                   <div class=" form-group">
-                    <label for="vol_min">Volumen mínimo (hm³)</label>
+                    <label for="vol_min">Volumen mínimo (hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                   </div>
                   <div class=" form-group">
-                    <label for="sup_min">Superficie mínima (ha)</label>
+                    <label for="sup_min">Superficie mínima (ha)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
-                    <label for="cota_nor">Cota normal (m s.m.n.)</label>
+                    <label for="cota_nor">Cota normal (m s.m.n.)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                   </div>
                   <div class=" form-group">
-                    <label for="vol_nor">Volumen normal (hm³)</label>
+                    <label for="vol_nor">Volumen normal (hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                   </div>
                   <div class=" form-group">
-                    <label for="sup_nor">Superficie normal (ha)</label>
+                    <label for="sup_nor">Superficie normal (ha)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
-                    <label for="cota_max">Cota máxima (m s.m.n.)</label>
+                    <label for="cota_max">Cota máxima (m s.m.n.)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                   </div>
                   <div class=" form-group">
-                    <label for="vol_max">Volumen máximo (hm³)</label>
+                    <label for="vol_max">Volumen máximo (hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                   </div>
                   <div class=" form-group">
-                    <label for="sup_max">Superficie máxima (ha)</label>
+                    <label for="sup_max">Superficie máxima (ha)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
                   </div>
                 </div>
@@ -1178,6 +1178,30 @@ date_default_timezone_set("America/Caracas");
   </div>
 </div>
 
+<div class="modal fade px-5" id="modal-formato" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 450px !important;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Formato de batimería.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-body-formato d-flex flex-col justify-content-center" class="text-sm">
+          <div class="text-center">
+            <img width="400" height="500" src="./assets/img/FormatoBatimetría.png">
+          </div>
+          <div class="text-center" style="color:#000000">
+            <b>En cada hoja colocar cada Batimetría, e identificar cada hoja con el año de la Batimetría correspondiente.</b>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="aceptar-formato" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>
 
 
@@ -1389,23 +1413,23 @@ date_default_timezone_set("America/Caracas");
     const matches = value.match(pattern);
 
     if (matches) {
-        const valores = [matches[1], matches[2]]; // Valores capturados
+      const valores = [matches[1], matches[2]]; // Valores capturados
 
-        if (i !== null) {
-            return valores[i];
-        } else {
-            return valores;
-        }
+      if (i !== null) {
+        return valores[i];
+      } else {
+        return valores;
+      }
     } else {
-        const valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
+      const valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
 
-        if (i !== null) {
-            return valores[i];
-        } else {
-            return valores;
-        }
+      if (i !== null) {
+        return valores[i];
+      } else {
+        return valores;
+      }
     }
-}
+  }
 
   function previewImage(id) {
     document.querySelector("#" + id).addEventListener("change", function(e) {
@@ -1539,7 +1563,7 @@ date_default_timezone_set("America/Caracas");
     let vol_nor = $("#vol_nor").val();
     let vol_min = $("#vol_min").val();
 
-    
+
     if (vol_min != "" && vol_nor != "") {
       vol_nor = parseFloat(vol_nor.replace(/\./g, '').replace(',', '.'));
       vol_min = parseFloat(vol_min.replace(/\./g, '').replace(',', '.'));
@@ -1696,4 +1720,22 @@ date_default_timezone_set("America/Caracas");
       $('#modal-validate').modal('show');
     }
   });
+
+  let cargar = false;
+
+  $("#batimetria").on("click", function(e) {
+    console.log("HOLA")
+    if (!cargar) {
+      e.preventDefault();
+      $('#modal-formato').modal('show');
+    } else {
+      cargar = false;
+    }
+  });
+
+  $("#aceptar-formato").on("click", function() {
+    console.log("Boton")
+    cargar = true;
+    $("#batimetria").click();
+  })
 </script>
