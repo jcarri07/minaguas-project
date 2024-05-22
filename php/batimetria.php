@@ -60,9 +60,9 @@ class Batimetria
         $this->vol_max = $embalse['vol_max'];
 
         // $query = "SELECT fecha, hora, cota_actual FROM datos_embalse WHERE id_embalse = $id_embalse ORDER BY fecha DESC, hora DESC LIMIT 1";
-        $query = " SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+        $query = " SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
         FROM datos_embalse h 
-        WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual 
+        WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND h.estatus = 'activo' AND cota_actual <> 0 LIMIT 1) AS cota_actual 
         FROM embalses e
         LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
         WHERE e.estatus = 'activo' AND e.id_embalse = '$id_embalse'
