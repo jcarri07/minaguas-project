@@ -4,7 +4,20 @@ date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
 
 $id_encargado = $_POST['id_encargado'];
-
+$meses = array(
+    1 => 'Enero',
+    2 => 'Febrero',
+    3 => 'Marzo',
+    4 => 'Abril',
+    5 => 'Mayo',
+    6 => 'Junio',
+    7 => 'Julio',
+    8 => 'Agosto',
+    9 => 'Septiembre',
+    10 => 'Octubre',
+    11 => 'Noviembre',
+    12 => 'Diciembre'
+);
 function buscarPosicion($array, $valorABuscar, $columna) {
     //$columna = 'codigo'; // Columna en la que deseas buscar
     $posicion = array_search($valorABuscar, array_column($array, $columna));

@@ -5,7 +5,9 @@ use LDAP\Result;
 require_once "../Conexion.php";
 //$user = $_POST["usuario"];
 $ident = $_POST["ident"];
-
+if (!isset($_SESSION)) {
+    session_start();
+}
 switch ($ident) {
     case 'editar':
         editar($conn);
@@ -64,7 +66,7 @@ function editar($conn)
                            FROM usuarios 
                            WHERE Correo='$email' AND estatus = 'activo';");
     $obj = mysqli_fetch_object($r);
-    if(password_verify($contre, $obj->Contrasena)){
+    
     if ($cedula == $cedula2) {
         if ($email == $result->Correo) {
 
@@ -89,7 +91,7 @@ function editar($conn)
         } else {
             $num = 1;
 
-            if ($email == $result["Correo"]) {
+            if ($email == $result->Correo) {
 
                 $num = 1;
             } else {
@@ -112,7 +114,19 @@ function editar($conn)
         if($contra == ""){
             
             $res = mysqli_query($conn, "UPDATE usuarios SET `P_Nombre`='$nombre1',`S_Nombre`='$nombre2',`P_Apellido`='$apellido1',`S_Apellido`='$apellido2',`Cedula`='$cedula',`Correo`='$email',`Telefono`='$telefono',`Tipo`='$tipo' WHERE Cedula = '$cedula2';");
-    
+            $res = mysqli_query($conn, "SELECT * 
+                           FROM usuarios 
+                           WHERE Correo='$email' AND estatus = 'activo';");
+            $obj = mysqli_fetch_object($res);               
+            $_SESSION["Id_usuario"] = $obj->Id_usuario;
+            $_SESSION["P_Nombre"] = $obj->P_Nombre;
+            $_SESSION["S_Nombre"] = $obj->S_Nombre;
+            $_SESSION["P_Apellido"] = $obj->P_Apellido;
+            $_SESSION["S_Apellido"] = $obj->S_Apellido;
+            $_SESSION["Cedula"] = $obj->Cedula;
+            $_SESSION["Correo"] = $obj->Correo;
+            $_SESSION["Telefono"] = $obj->Telefono;
+            $_SESSION["Tipo"] = $obj->Tipo;
             if ($res) {
                 echo "si";
             } else {
@@ -121,7 +135,19 @@ function editar($conn)
         }else{
             $password = password_hash($contra, PASSWORD_DEFAULT,['cost' => 5]);
             $res = mysqli_query($conn, "UPDATE usuarios SET `Contrasena`='$password',`P_Nombre`='$nombre1',`S_Nombre`='$nombre2',`P_Apellido`='$apellido1',`S_Apellido`='$apellido2',`Cedula`='$cedula',`Correo`='$email',`Telefono`='$telefono',`Tipo`='$tipo' WHERE Cedula = '$cedula2';");
-    
+            $res = mysqli_query($conn, "SELECT * 
+                           FROM usuarios 
+                           WHERE Correo='$email' AND estatus = 'activo';");
+            $obj = mysqli_fetch_object($res);
+            $_SESSION["Id_usuario"] = $obj->Id_usuario;
+            $_SESSION["P_Nombre"] = $obj->P_Nombre;
+            $_SESSION["S_Nombre"] = $obj->S_Nombre;
+            $_SESSION["P_Apellido"] = $obj->P_Apellido;
+            $_SESSION["S_Apellido"] = $obj->S_Apellido;
+            $_SESSION["Cedula"] = $obj->Cedula;
+            $_SESSION["Correo"] = $obj->Correo;
+            $_SESSION["Telefono"] = $obj->Telefono;
+            $_SESSION["Tipo"] = $obj->Tipo;
             if ($res) {
                 echo "si";
             } else {
@@ -130,8 +156,8 @@ function editar($conn)
         }
 
     }
-    }else{echo "no";}
 }
+
 
 function editarU($conn)
 {
