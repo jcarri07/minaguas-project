@@ -210,10 +210,12 @@ function editarU($conn)
 
     if ($num) {
 
-
+        if($contra == ""){
+            $res = mysqli_query($conn, "UPDATE usuarios SET `P_Nombre`='$nombre1',`S_Nombre`='$nombre2',`P_Apellido`='$apellido1',`S_Apellido`='$apellido2',`Cedula`='$cedula',`Correo`='$email',`Telefono`='$telefono',`Tipo`='$tipo' WHERE Cedula = '$cedula2';");
+        }else{
         $password = password_hash($contra, PASSWORD_DEFAULT,['cost' => 5]);
         $res = mysqli_query($conn, "UPDATE usuarios SET `Contrasena`='$password',`P_Nombre`='$nombre1',`S_Nombre`='$nombre2',`P_Apellido`='$apellido1',`S_Apellido`='$apellido2',`Cedula`='$cedula',`Correo`='$email',`Telefono`='$telefono',`Tipo`='$tipo' WHERE Cedula = '$cedula2';");
-
+    }
         if ($res) {
             echo "si";
         } else {
