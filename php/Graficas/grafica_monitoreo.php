@@ -292,7 +292,7 @@ $j = 0;
             title: 'grafica',
             data: {
                 datasets: [{
-                        label: 'Volúmen inicial (Hm³)',
+                        label: 'Volumeninicial (Hm³)',
                         borderColor: '#4472c4',
                         backgroundColor: '#4472c4',
                         data: [<?php
@@ -318,7 +318,7 @@ $j = 0;
                                                                                                                                                                                     ?>],
                     },
                     {
-                        label: 'Volúmen final (Hm³)',
+                        label: 'Volumen final (Hm³)',
                         tension: 0.4,
                         borderColor: '#ed7d31',
                         backgroundColor: '#ed7d31',
@@ -436,7 +436,7 @@ ticks: {
                     y: {
                         title: {
                             display: true,
-                            text: 'Volúmen (Hm³)',
+                            text: 'Volumen(Hm³)',
                             font: {
                                 size: 16,
                                 family:'Arial',
@@ -650,19 +650,19 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
-                            cota: "Volúmen mínimo",
+                            cota: "Volumenmínimo",
                             color: 'black',
                             h: -15,
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_nor"])[1]; ?>,
-                            cota: "Volúmen normal",
+                            cota: "Volumennormal",
                             color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
-                            cota: "Volúmen máximo",
+                            cota: "Volumenmáximo",
                             color: 'black',
                             h: -15,
                         }
@@ -733,7 +733,7 @@ ticks: {
                 y: {
                     title: {
                         display: true,
-                        text: 'Volúmen (Hm³)',
+                        text: 'Volumen(Hm³)',
                         font: {
                             size: 20,
                             family:'Arial',
@@ -838,20 +838,20 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
-                            cota: "Volúmen mínimo",
+                            cota: "Volumenmínimo",
                             color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
-                            cota: "Volúmen normal",
+                            cota: "Volumennormal",
                             color: 'black',
                             h: 15,
 
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
-                            cota: "Volúmen máximo",
+                            cota: "Volumenmáximo",
                             color: 'black',
                             h: -15,
                         }
@@ -922,7 +922,7 @@ ticks: {
                 y: {
                     title: {
                         display: true,
-                        text: 'Volúmen (Hm³)',
+                        text: 'Volumen(Hm³)',
                         font: {
                             size: 20,
                             family:'Arial',
@@ -1031,19 +1031,19 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
-                            cota: "Volúmen mínimo",
+                            cota: "Volumenmínimo",
                             color: 'black',
                             h: -15,
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_nor"])[1]; ?>,
-                            cota: "Volúmen normal",
+                            cota: "Volumennormal",
                             color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
-                            cota: "Volúmen máximo",
+                            cota: "Volumenmáximo",
                             color: 'black',
                             h: -15,
                         }
@@ -1116,7 +1116,7 @@ ticks: {
                 y: {
                     title: {
                         display: true,
-                        text: 'Volúmen (Hm³)',
+                        text: 'Volumen(Hm³)',
                         font: {
                             size: 20,
                             family:'Arial',

@@ -224,7 +224,7 @@ if ($count >= 1) {
                             stacked: false,
                             title: {
                                 display: true,
-                                text: 'Volúmen (Hm³)',
+                                text: 'Volumen (Hm³)',
                                 font: {
 
                                     size: 14,
