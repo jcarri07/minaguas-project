@@ -70,9 +70,9 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
 
 // var_dump($condiciones);
 
-$condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, e.operador, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_sequia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+$condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, e.operador, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_sequia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_sequia' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_sequia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
+    WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_sequia' AND h.estatus = 'activo' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_sequia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
     LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_sequia'
     WHERE e.estatus = 'activo' 
@@ -108,9 +108,9 @@ while ($row = mysqli_fetch_array($condiciones_actuales1)) {
     array_push($variacion_sequia, $array);
 }
 
-$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_lluvia' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
+    WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_lluvia' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
     LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_lluvia'
     WHERE e.estatus = 'activo' 
