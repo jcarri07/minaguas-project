@@ -112,7 +112,7 @@ if (mysqli_num_rows($query) > 0) {
                     $caudal = "";
 
                     $extraccion = 0;
-                    $extraccion_array = explode(";", $row['extraccion']);
+                    $extraccion_array = $row['extraccion'] != null ? explode(";", $row['extraccion']) : [];
                     for($j = 0 ; $j < count($extraccion_array) ; $j++) {
                         if($extraccion_array[$j] !== "") {
                             $fila = explode("&", $extraccion_array[$j]);
