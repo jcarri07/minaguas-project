@@ -92,7 +92,7 @@ if (mysqli_num_rows($query) > 0) {
                 $i = 0;
                 while($row = mysqli_fetch_array($query)){
                     $i++;
-                    $fecha = strftime("%d/%b/%Y", strtotime($row['fecha']));
+                    $fecha = date('d', strtotime($row['fecha'])) . "/" . substr($meses[date('n', strtotime($row['fecha']))],0,3) . "./" . date('Y', strtotime($row['fecha']));
                     $hora = date("g:i a", strtotime($row['hora']));
 
                     $abertura = "";
