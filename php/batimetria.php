@@ -231,12 +231,24 @@ class Batimetria
         //VERSION NUEVA USANDO UNA FUNCION CON EXPRESION REGULAR.
         // Realizar la interpolación lineal
         // var_dump( $tabla[$puntoAnterior]);
-        $Sup_min = $this->explodeBat($tabla[$puntoAnterior], 0);
-        $Sup_max = $this->explodeBat($tabla[$puntoSiguiente], 0);
-        $Sup = $Sup_min + (($Sup_max - $Sup_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
+        // var_dump("PA:".$tabla[$puntoAnterior]);
+        if (array_key_exists($puntoAnterior, $tabla)) {
+            $Sup_min = $this->explodeBat($tabla[$puntoAnterior], 0);
+            $Vol_min = $this->explodeBat($tabla[$puntoAnterior], 1);
+        } else {
+            $Sup_min = 0;
+            $Vol_min = 0;
+        }
 
-        $Vol_min = $this->explodeBat($tabla[$puntoAnterior], 1);
-        $Vol_max = $this->explodeBat($tabla[$puntoSiguiente], 1);
+        if (array_key_exists($puntoSiguiente, $tabla)) {
+            $Sup_max = $this->explodeBat($tabla[$puntoSiguiente], 0);
+            $Vol_max = $this->explodeBat($tabla[$puntoSiguiente], 1);
+        } else {
+            $Sup_max = 0;
+            $Vol_max = 0;
+        }
+
+        $Sup = $Sup_min + (($Sup_max - $Sup_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
         $Vol = $Vol_min + (($Vol_max - $Vol_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
 
         return array($Sup, $Vol);
@@ -362,24 +374,24 @@ class Batimetria
 
     public function explodeBat($value, $i = null)
     {
-
+        $value = strval($value);
         $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
 
         if (preg_match($pattern, $value, $matches)) {
             $valores = [$matches[1], $matches[2]]; // Valores capturados
-    
+
             if ($i !== null) {
                 return $valores[$i];
             } else {
-                return $valores;    
+                return $valores;
             }
         } else {
             $valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
-    
+
             if ($i !== null) {
                 return $valores[$i];
             } else {
-                return $valores;    
+                return $valores;
             }
         }
     }

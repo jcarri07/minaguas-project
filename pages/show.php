@@ -51,7 +51,7 @@ function stringFloat($num, $dec = 2)
 
 function explodeBat($value, $i = null)
 {
-
+  $value = strval($value);
   $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
 
   if (preg_match($pattern, $value, $matches)) {

@@ -123,7 +123,7 @@ if ($type == "plantilla") {
 
 function explodeBat($value, $i = null)
 {
-
+    $value = strval($value);
     $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
 
     if (preg_match($pattern, $value, $matches)) {

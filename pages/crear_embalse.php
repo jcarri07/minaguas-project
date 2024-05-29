@@ -1641,7 +1641,7 @@ date_default_timezone_set("America/Caracas");
     $("#este").val(este);
     $("#huso").val(huso);
 
-    console.log("Norte: " + norte + ", Este: " + este + ", Huso: " + huso);
+    // console.log("Norte: " + norte + ", Este: " + este + ", Huso: " + huso);
 
   });
 
