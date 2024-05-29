@@ -4,7 +4,20 @@ date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
 
 $id_encargado = $_POST['id_encargado'];
-
+$meses = array(
+    1 => 'Enero',
+    2 => 'Febrero',
+    3 => 'Marzo',
+    4 => 'Abril',
+    5 => 'Mayo',
+    6 => 'Junio',
+    7 => 'Julio',
+    8 => 'Agosto',
+    9 => 'Septiembre',
+    10 => 'Octubre',
+    11 => 'Noviembre',
+    12 => 'Diciembre'
+);
 function buscarPosicion($array, $valorABuscar, $columna) {
     //$columna = 'codigo'; // Columna en la que deseas buscar
     $posicion = array_search($valorABuscar, array_column($array, $columna));
@@ -92,14 +105,14 @@ if (mysqli_num_rows($query) > 0) {
                 $i = 0;
                 while($row = mysqli_fetch_array($query)){
                     $i++;
-                    $fecha = strftime("%d/%b/%Y", strtotime($row['fecha']));
+                    $fecha = date('d', strtotime($row['fecha'])) . "/" . substr($meses[date('n', strtotime($row['fecha']))],0,3) . "./" . date('Y', strtotime($row['fecha']));
                     $hora = date("g:i a", strtotime($row['hora']));
 
                     $abertura = "";
                     $caudal = "";
 
                     $extraccion = 0;
-                    $extraccion_array = explode(";", $row['extraccion']);
+                    $extraccion_array = $row['extraccion'] != null ? explode(";", $row['extraccion']) : [];
                     for($j = 0 ; $j < count($extraccion_array) ; $j++) {
                         if($extraccion_array[$j] !== "") {
                             $fila = explode("&", $extraccion_array[$j]);

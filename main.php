@@ -227,15 +227,20 @@ header('Content-Type: text/html; charset=UTF-8');
                 </div>
               </a>
             </li>
+            <li class="nav-item ps-3 d-flex align-items-center">
+              <a href="./docs/MANUAL_DE_USUARIO_SIMA.pdf" class="nav-link text-white p-0 text-lg" title="Manual de Usuario" target="_blank">
+                <i class="fa fa-question cursor-pointer"></i> <!--fixed-plugin-button-nav (esta clase despliega el menu de configuracion lateral)-->
+              </a>
+            </li>
             <li class="nav-item px-3 d-flex align-items-center">
-              <a href="?page=perfil" class="nav-link text-white p-0 text-lg">
+              <a href="?page=perfil" class="nav-link text-white p-0 text-lg" title="Editar Perfil">
                 <i class="fa fa-user cursor-pointer"></i> <!--fixed-plugin-button-nav (esta clase despliega el menu de configuracion lateral)-->
               </a>
             </li>
             <?php
-            if ($_SESSION["Tipo"] == "Admin") {
+            if ($_SESSION["Tipo"] == "Admin"||$_SESSION["Tipo"] == "SuperAdmin") {
             ?>
-              <li class="nav-item pe-3 d-flex align-items-center">
+              <li class="nav-item pe-3 d-flex align-items-center" title="Configuraciones">
                 <a href="?page=configuraciones" class="nav-link text-white p-0 text-lg">
                   <i class="fa fa-cog cursor-pointer"></i>
                 </a>
@@ -244,7 +249,7 @@ header('Content-Type: text/html; charset=UTF-8');
             }
             ?>
             <li class="nav-item pe-3 d-flex align-items-center">
-              <a href="" class="nav-link text-white p-0 text-lg off">
+              <a href="" class="nav-link text-white p-0 text-lg off" title="Cerrar Sesión">
                 <i class="fa fa-power-off cursor-pointer"></i>
               </a>
             </li>

@@ -19,7 +19,7 @@ $año = $y;
 if ($tipo == "bar") {
     $aux = "SELECT id_registro, d.fecha, (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND id_embalse = d.id_embalse) AS hora, (SELECT cota_actual 
     FROM datos_embalse 
-    WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND cota_actual <> 0 AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
+    WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND cota_actual <> 0 AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
 FROM datos_embalse d, embalses e 
 WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id' AND YEAR(d.fecha) = '$y'  
 GROUP BY d.fecha 
@@ -160,7 +160,7 @@ if ($count >= 1) {
 
                                 $fech = $año;
                                 while ($pivote <= $fech) {
-                                    echo "{label:'Volúmen del año " . $fech . "',pointRadius: 0,data: [";
+                                    echo "{label:'Volumen del año " . $fech . "',pointRadius: 0,data: [";
 
                                     $j = 0;
 
@@ -216,20 +216,20 @@ if ($count >= 1) {
 
                                 lines: [{
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_min"])[1], 2); ?>,
-                                        cota: "Volúmen mínimo",
+                                        cota: "Volumen mínimo",
                                         color: 'red',
                                         h: -15,
                                     },
                                     {
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_nor"])[1], 2); ?>,
-                                        cota: "Volúmen normal",
+                                        cota: "Volumen normal",
                                         color: 'green',
                                         h: 15,
 
                                     },
                                     {
                                         yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_max"])[1], 2); ?>,
-                                        cota: "Volúmen máximo",
+                                        cota: "Volumen máximo",
                                         color: 'blue',
                                         h: -15,
                                     }
@@ -300,7 +300,7 @@ if ($count >= 1) {
                             y: {
                                 title: {
                                     display: true,
-                                    text: 'Volúmen (Hm³)',
+                                    text: 'Volumen (Hm³)',
                                     font: {
                                         size: 16,
                                         family: 'Arial',

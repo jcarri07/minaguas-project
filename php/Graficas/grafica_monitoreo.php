@@ -150,7 +150,7 @@ $aux = 0;
 
 $r = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT MAX(cota_actual) 
                                                                 FROM datos_embalse 
-                                                                WHERE id_embalse = e.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
+                                                                WHERE id_embalse = e.id_embalse AND estatus = 'activo' AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
                           FROM  datos_embalse d
                           RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
                           WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 2 OR ( fecha = '$fecha1' AND DAYOFWEEK('$fecha1') != 2))
@@ -159,14 +159,14 @@ $r = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT MAX(cota_
 
 $res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT MAX(cota_actual) 
                                                                   FROM datos_embalse 
-                                                                  WHERE id_embalse = e.id_embalse AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
+                                                                  WHERE id_embalse = e.id_embalse AND estatus = 'activo' AND fecha = d.fecha AND hora = MAX(d.hora)) AS cota_actual,WEEK(fecha,3) semana , MAX(CONCAT(fecha, ' ', hora)) AS fecha_hora, d.id_embalse
                             FROM  datos_embalse d
                             RIGHT JOIN embalses e ON e.id_embalse = d.id_embalse AND e.id_embalse = '$id'
                             WHERE fecha BETWEEN '$fecha1' AND '$fecha2' AND d.estatus = 'activo' AND (DAYOFWEEK(fecha) = 1 OR ( fecha = '$fecha2' AND DAYOFWEEK('$fecha2') != 1))
                             GROUP BY fecha 
                             ORDER BY fecha;");
 
-$emb = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id';");
+$emb = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id' AND estatus = 'activo';");
 
 $an = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND YEAR(fecha) = '$anio' AND id_embalse = '$id' AND cota_actual <> 0 GROUP BY fecha ORDER BY fecha ASC;");
 
@@ -292,7 +292,7 @@ $j = 0;
             title: 'grafica',
             data: {
                 datasets: [{
-                        label: 'Volúmen inicial (Hm³)',
+                        label: 'Volumeninicial (Hm³)',
                         borderColor: '#4472c4',
                         backgroundColor: '#4472c4',
                         data: [<?php
@@ -318,7 +318,7 @@ $j = 0;
                                                                                                                                                                                     ?>],
                     },
                     {
-                        label: 'Volúmen final (Hm³)',
+                        label: 'Volumen final (Hm³)',
                         tension: 0.4,
                         borderColor: '#ed7d31',
                         backgroundColor: '#ed7d31',
@@ -436,7 +436,7 @@ ticks: {
                     y: {
                         title: {
                             display: true,
-                            text: 'Volúmen (Hm³)',
+                            text: 'Volumen(Hm³)',
                             font: {
                                 size: 16,
                                 family:'Arial',
@@ -650,19 +650,19 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
-                            cota: "Volúmen mínimo",
+                            cota: "Volumenmínimo",
                             color: 'black',
                             h: -15,
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_nor"])[1]; ?>,
-                            cota: "Volúmen normal",
+                            cota: "Volumennormal",
                             color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
-                            cota: "Volúmen máximo",
+                            cota: "Volumenmáximo",
                             color: 'black',
                             h: -15,
                         }
@@ -733,7 +733,7 @@ ticks: {
                 y: {
                     title: {
                         display: true,
-                        text: 'Volúmen (Hm³)',
+                        text: 'Volumen(Hm³)',
                         font: {
                             size: 20,
                             family:'Arial',
@@ -838,20 +838,20 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
-                            cota: "Volúmen mínimo",
+                            cota: "Volumenmínimo",
                             color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
-                            cota: "Volúmen normal",
+                            cota: "Volumennormal",
                             color: 'black',
                             h: 15,
 
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
-                            cota: "Volúmen máximo",
+                            cota: "Volumenmáximo",
                             color: 'black',
                             h: -15,
                         }
@@ -922,7 +922,7 @@ ticks: {
                 y: {
                     title: {
                         display: true,
-                        text: 'Volúmen (Hm³)',
+                        text: 'Volumen(Hm³)',
                         font: {
                             size: 20,
                             family:'Arial',
@@ -1031,19 +1031,19 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
-                            cota: "Volúmen mínimo",
+                            cota: "Volumenmínimo",
                             color: 'black',
                             h: -15,
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_nor"])[1]; ?>,
-                            cota: "Volúmen normal",
+                            cota: "Volumennormal",
                             color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
-                            cota: "Volúmen máximo",
+                            cota: "Volumenmáximo",
                             color: 'black',
                             h: -15,
                         }
@@ -1116,7 +1116,7 @@ ticks: {
                 y: {
                     title: {
                         display: true,
-                        text: 'Volúmen (Hm³)',
+                        text: 'Volumen(Hm³)',
                         font: {
                             size: 20,
                             family:'Arial',

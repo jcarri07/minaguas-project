@@ -44,7 +44,7 @@ $count = mysqli_num_rows($re);
                         <div class="col-6 col-sm-2" style="padding: 0px auto;margin-bottom:5px;">
                             <label id="" class="form-label">Ver por:</label>
                             <select id="ver" class="form-select" required>
-                                <option value="volumen">Volúmen</option>
+                                <option value="volumen">Volumen</option>
                                 <option value="cota">Cota</option>
                             </select>
                         </div>

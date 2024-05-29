@@ -182,6 +182,7 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin" ) {
         values.append("viejo", $("[name='confirmar']").prop("value"));
         values.append("pass", $("[name='password']").prop("value"));
         values.append("ident", 'editar');
+        values.append("tipo", '<?php echo $_SESSION["Tipo"];?>');
 
 
         $.ajax({

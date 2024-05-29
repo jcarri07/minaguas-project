@@ -6,6 +6,8 @@ $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'Us
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
 $queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
 $queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
+$nombresEmbalses = array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT nombre_embalse FROM embalses WHERE estatus = 'activo' OR estatus = 'inactivo'"), MYSQLI_ASSOC), 'nombre_embalse');
+
 ?>
 
 
@@ -150,6 +152,12 @@ date_default_timezone_set("America/Caracas");
     font-weight: normal;
   }
 
+  .label-founded{
+    text-align: right;
+    color: #ff8f8f;
+    font-weight: normal;
+  }
+
   .nice-select {
     margin-top: 0px;
     padding-top: 0px;
@@ -253,6 +261,18 @@ date_default_timezone_set("America/Caracas");
     bottom: 100px;
     left: 50%;
   }
+
+  .founded{
+    border-color: #ff8f8f;
+    outline: none;
+    color: #ff8f8f
+  }
+  .founded:focus{
+    color:red;
+    border-color: red;
+  }
+
+
 </style>
 
 
@@ -393,7 +413,8 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-4 col-sm-12">
                   <div class="form-group">
                     <label for="embalse_nombre">Nombre del embalse</label>
-                    <input type="text" class="form-control Vrequerido" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nombre del embalse">
+                    <input type="text" class="form-control Vrequerido Viguales" id="embalse_nombre" name="embalse_nombre" placeholder="Ingrese el nombre del embalse">
+                    <label class="label-founded no-visible">Nombre ya registrado.</label>
                   </div>
                   <div class="form-group">
                     <label for="presa_nombre">Nombre de la presa</label>
@@ -1178,6 +1199,25 @@ date_default_timezone_set("America/Caracas");
   </div>
 </div>
 
+<div class="modal fade px-5" id="modal-repetido" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Errores de campos.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-body-repetido" class="text-sm">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primari" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade px-5" id="modal-formato" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 450px !important;">
@@ -1668,7 +1708,7 @@ date_default_timezone_set("America/Caracas");
     // var regex = /^-?\d{1,3}(?:([,.])\d{3})*(?:\1\d*)?$/
     // var regex = /^\d{1,3}(\.\d{3})*(,\d+)?$/;
     var regex = /^(\d{1,3}(\.\d{3})*|\d+)(,\d+)?$/; //PERFECTA
-    var campos = document.querySelectorAll('.Vnumero, .Vrequerido, .Varchivo');
+    var campos = document.querySelectorAll('.Vnumero, .Vrequerido, .Varchivo, .Viguales');
     var errorMessages = [];
 
     campos.forEach(function(campo) {
@@ -1700,7 +1740,6 @@ date_default_timezone_set("America/Caracas");
       }
 
       if (campo.classList.contains('Varchivo')) {
-        +
         console.log("archivooo")
         if (campo.files.length === 0) {
           errorMessages.push("Debe seleccionar un archivo para el campo '<b>" + label + "</b>'.");
@@ -1710,6 +1749,17 @@ date_default_timezone_set("America/Caracas");
         }
       }
 
+      if (campo.classList.contains('Viguales')) {
+        let nombre_input = $(campo).val().trim().toLocaleLowerCase();
+
+        let busqueda = nombresEmbalses.filter((nombre) => { return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase() });
+        if (busqueda.length > 0){
+          errorMessages.push("El nombre del Embalse '<b>" + nombre_input.charAt(0).toUpperCase() + nombre_input.slice(1) + "</b>'  ya está registrado.");
+          if (!campo.classList.contains('input-error')) {
+            campo.className += " input-error";
+          }
+        }
+      }
     });
 
     if (errorMessages.length > 0) {
@@ -1737,5 +1787,26 @@ date_default_timezone_set("America/Caracas");
     console.log("Boton")
     cargar = true;
     $("#batimetria").click();
+  })
+
+  let nombresEmbalses = <?php echo json_encode($nombresEmbalses) ?>;
+  console.log(nombresEmbalses)
+
+  $("#embalse_nombre").on('input', function(){
+    let nombre_input = $(this).val().trim().toLocaleLowerCase();
+
+    let busqueda = nombresEmbalses.filter((nombre) => { return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase() });
+    if (busqueda.length > 0){
+      if(!$(this).hasClass("founded")){
+        $(this).toggleClass("founded")
+        $(".label-founded").toggleClass("no-visible")
+      }
+    } else {
+      if($(this).hasClass("founded")){
+        $(this).toggleClass("founded")
+        $(".label-founded").toggleClass("no-visible")
+      }
+    }
+    // console.log($(this).val().trim().toLocaleLowerCase())
   })
 </script>

@@ -1,6 +1,7 @@
 <script src="./assets/js/Chart.js"></script>
 <script src="./assets/js/date-fns.js"></script>
 <script src="./assets/js/jquery/jquery.min.js"></script>
+<script src="./assets/js/chartjs-plugin-datalabels@2.js"></script>
 <?php
 
 require_once '../Conexion.php';
@@ -16,10 +17,10 @@ $año = date('Y');
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
-    $res = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
+    $res = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND estatus = 'activo' AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
     e.nombre_embalse, (SELECT cota_actual 
                        FROM datos_embalse h 
-                       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
+                       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
 WHERE e.estatus = 'activo'
@@ -138,6 +139,21 @@ ORDER BY id_embalse ASC;");
                                     size: 30
                                 }
                             },
+                            datalabels: {
+                        anchor: 'end',
+                        align: 'end',
+                        formatter: function(value, context) {
+                        return Math.round(value.y*100)/100;
+                        },
+                        labels: {
+                            title: {
+                                font: {
+                                    weight: 'bold',
+                                    family:'Arial',
+                                }
+                            },
+                        },
+                    },
 
                         },
                         scales: {
@@ -175,6 +191,7 @@ ORDER BY id_embalse ASC;");
 
                         },
                     },
+                    plugins: [ChartDataLabels],
                 });
             });
         </script>
