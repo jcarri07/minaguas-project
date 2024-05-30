@@ -6,10 +6,12 @@
 
 $vol_original = number_format($embalse->volumenDisponibleOriginal(),2,".","");
 $vol_batimetria = number_format($embalse->volumenDisponible(),2,".","");
-$vol_actual = number_format($embalse->volumenActualDisponible(),2,".","");
+// $vol_actual = number_format($embalse->volumenActualDisponible(),2,".","");
 
-$porcentaje = $vol_batimetria != 0 ? ($vol_actual * 100) / $vol_batimetria : 0;
-$porcentaje = number_format($porcentaje,2,",",".");
+// $porcentaje = $vol_batimetria != 0 ? ($vol_actual * 100) / $vol_batimetria : 0;
+// $porcentaje = number_format($porcentaje,2,",",".");
+
+
 
 ?>
 
@@ -20,18 +22,19 @@ $porcentaje = number_format($porcentaje,2,",",".");
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: [['Diseño','(hm³)'], ['Batimetría','(hm³)'], ['Actual (<?php echo $porcentaje."%" ?>)','(hm³)']],
+                // labels: [['Diseño','(hm³)'], ['Batimetría','(hm³)'], ['Actual (<?php //echo $porcentaje."%" ?>)','(hm³)']],
+                labels: [['Diseño','(hm³)'], ['Batimetría (<?php echo $embalse->getCloseYear() ?>)','(hm³)']],
                 datasets: [{
-                    data: [<?php echo $vol_original . "," . $vol_batimetria . "," . $vol_actual ?>],
+                    data: [<?php echo $vol_original . "," . $vol_batimetria ?>],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.6)',
                         'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 205, 86, 0.6)'
+                        // 'rgba(255, 205, 86, 0.6)'
                     ],
                     borderColor: [
                         'rgba(54, 162, 235)',
                         'rgba(54, 162, 235)',
-                        'rgba(255, 205, 86)'
+                        // 'rgba(255, 205, 86)'
                     ],
                     borderWidth: 1
                 }]
