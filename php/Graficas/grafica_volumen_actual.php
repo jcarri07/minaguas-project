@@ -36,15 +36,34 @@ ORDER BY id_embalse ASC;");
         <script>
             $(document).ready(function() {
                 <?php $bati = new Batimetria($datos_embalses[1]["id_embalse"], $conn);
-                                    $batimetria = $bati->getBatimetria();
-                                    
-                                    $x = $bati->getByCota($año, $datos_embalses[1]["cota_actual"])[1]; 
-                                    echo "console.log('volúmen:".$x.",cota:".$datos_embalses[1]["cota_actual"]."');";
-                                    ?>
+                $batimetria = $bati->getBatimetria();
+
+                $x = $bati->getByCota($año, $datos_embalses[1]["cota_actual"])[1];
+                echo "console.log('volúmen:" . $x . ",cota:" . $datos_embalses[1]["cota_actual"] . "');";
+                ?>
+                const maxValues = [
+                    <?php
+
+                            $j = 0;
+
+                            while ($j < count($datos_embalses)) { 
+                                $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+                                $batimetria = $bati->getBatimetria();
+                                $min = $bati->volumenMinimo();
+                                $nor = $bati->volumenNormal();
+                                $max = ($nor - $min);
+                                echo $max;
+                                $j++;
+                                if ($j < count($datos_embalses)) {
+                                    echo ",";
+                                };
+                                
+                            }?>
+                            ];
                 let cha = new Chart(chart, {
                     type: 'bar',
                     title: 'grafica',
-                    label:'Embalses',
+                    label: 'Embalses',
                     data: {
                         datasets: [
 
@@ -61,9 +80,9 @@ ORDER BY id_embalse ASC;");
                                     $min = $bati->volumenMinimo();
                                     $max = $bati->volumenMaximo();
                                     $nor = $bati->volumenNormal();
-                                    if(($x - $min) <= 0){
+                                    if (($x - $min) <= 0) {
                                         $sum = 0;
-                                    }else{
+                                    } else {
                                         $sum = $x - $min;
                                     }
                                     if ($x == 0 || ((abs(($sum)) * (100 / ($nor - $min))) >= 0 && (abs(($sum)) * (100 / ($nor - $min))) < 30)) {
@@ -86,8 +105,8 @@ ORDER BY id_embalse ASC;");
                                     }; //rojo
                                     echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs(($sum)) * (100 / ($nor - $min))), 0) . "%)',
                                         data: [";
-                                    
-                            ?>      {
+
+                            ?> {
                                         x: '',
                                         y: <?php echo ($sum); ?>,
                                     },
@@ -109,13 +128,13 @@ ORDER BY id_embalse ASC;");
                     },
 
                     options: {
-                        
+
                         responsive: true,
                         maintainAspectRatio: false,
                         interaction: {
-                                intersect: false,
-                                axis: 'x',
-                            },
+                            intersect: false,
+                            axis: 'x',
+                        },
                         plugins: {
 
                             legend: {
@@ -123,7 +142,7 @@ ORDER BY id_embalse ASC;");
                                 align: 'start',
                                 display: false,
                                 labels: {
-                                    
+
                                     // This more specific font property overrides the global property
                                     font: {
                                         size: 10
@@ -140,28 +159,37 @@ ORDER BY id_embalse ASC;");
                                 }
                             },
                             datalabels: {
-                        anchor: 'end',
-                        align: 'end',
-                        formatter: function(value, context) {
-                        return Math.round(value.y*100)/100;
-                        },
-                        labels: {
-                            title: {
-                                font: {
-                                    weight: 'bold',
-                                    family:'Arial',
-                                }
+                                anchor: 'end',
+                                align: 'end',
+                                formatter: function(value, context) {
+                                    return Math.round(value.y * 100) / 100;
+                                },
+                                labels: {
+                                    title: {
+                                        font: {
+                                            weight: 'bold',
+                                            family: 'Arial',
+                                        },
+                                        color: function(context) {
+                                            // Obtén el valor actual del dato y su valor máximo correspondiente
+                                            const value = context.dataset.data[context.dataIndex].y;
+                                            const maxValue = maxValues[context.datasetIndex];
+                                            // Calcula el porcentaje
+                                            const percentage = (value / maxValue) * 100;
+                                            // Si el porcentaje es menor que 30, cambia el color a rojo
+                                            return percentage < 30 ? '#fd0200' : 'black';
+                                        },
+                                    },
+                                },
                             },
-                        },
-                    },
 
                         },
                         scales: {
 
                             x: {
-                                
+
                                 ticks: {
-                                    
+
                                     font: {
                                         size: 14
                                     },
