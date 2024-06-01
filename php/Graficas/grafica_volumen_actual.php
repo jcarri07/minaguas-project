@@ -50,7 +50,7 @@ ORDER BY id_embalse ASC;");
                                 $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
                                 $batimetria = $bati->getBatimetria();
                                 $min = $bati->volumenMinimo();
-                                $nor = $bati->volumenNormal();
+                                $nor = $bati->volumenNormal() != 0? $bati->volumenNormal():1;
                                 $max = ($nor - $min);
                                 echo $max;
                                 $j++;
@@ -79,7 +79,7 @@ ORDER BY id_embalse ASC;");
                                     $x = $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];
                                     $min = $bati->volumenMinimo();
                                     $max = $bati->volumenMaximo();
-                                    $nor = $bati->volumenNormal();
+                                    $nor = $bati->volumenNormal() != 0? $bati->volumenNormal():1;
                                     if (($x - $min) <= 0) {
                                         $sum = 0;
                                     } else {
@@ -175,7 +175,7 @@ ORDER BY id_embalse ASC;");
                                             const value = context.dataset.data[context.dataIndex].y;
                                             const maxValue = maxValues[context.datasetIndex];
                                             // Calcula el porcentaje
-                                            const percentage = (value / maxValue) * 100;
+                                            const percentage = ((value / maxValue) * 100);
                                             // Si el porcentaje es menor que 30, cambia el color a rojo
                                             return percentage < 30 ? '#fd0200' : 'black';
                                         },
