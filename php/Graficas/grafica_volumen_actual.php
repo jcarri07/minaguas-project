@@ -176,6 +176,7 @@ ORDER BY id_embalse ASC;");
                                             const maxValue = maxValues[context.datasetIndex];
                                             // Calcula el porcentaje
                                             const percentage = ((value / maxValue) * 100);
+                                            console.log(value+" "+maxValue+""+percentage);
                                             // Si el porcentaje es menor que 30, cambia el color a rojo
                                             return percentage < 30 ? '#fd0200' : 'black';
                                         },
