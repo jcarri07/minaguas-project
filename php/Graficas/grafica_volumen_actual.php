@@ -50,7 +50,7 @@ ORDER BY id_embalse ASC;");
                                 $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
                                 $batimetria = $bati->getBatimetria();
                                 $min = $bati->volumenMinimo();
-                                $nor = $bati->volumenNormal() != 0? $bati->volumenNormal():1;
+                                $nor = $bati->volumenNormal() != 0? $bati->volumenNormal():100;
                                 $max = ($nor - $min);
                                 echo $max;
                                 $j++;
