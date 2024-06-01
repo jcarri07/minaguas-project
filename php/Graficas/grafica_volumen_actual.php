@@ -79,7 +79,7 @@ ORDER BY id_embalse ASC;");
                                     $x = $bati->getByCota($año, $datos_embalses[$j]["cota_actual"])[1];
                                     $min = $bati->volumenMinimo();
                                     $max = $bati->volumenMaximo();
-                                    $nor = $bati->volumenNormal() != 0? $bati->volumenNormal():1;
+                                    $nor = $bati->volumenNormal() != 0? $bati->volumenNormal():100;
                                     if (($x - $min) <= 0) {
                                         $sum = 0;
                                     } else {
