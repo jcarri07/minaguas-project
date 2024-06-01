@@ -605,7 +605,7 @@ function explodeBat($value, $i = null)
               </div>
             </div>
 
-            <h3 class="pb-3 pt-3">Características de los embalses:</h3>
+            <h3 class="pb-3 pt-3">Características de diseño de los embalses:</h3>
 
             <div class="row">
               <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">

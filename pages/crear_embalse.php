@@ -487,7 +487,7 @@ date_default_timezone_set("America/Caracas");
               </div>
 
 
-              <h3 class="pb-3 pt-3">Características del embalse:</h3>
+              <h3 class="pb-3 pt-3">Características de diseño del embalse:</h3>
 
               <div class="row">
                 <div style="display:flex; flex-direction:column;" class="col-md-3 col-sm-12 justify-content-between">
