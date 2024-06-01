@@ -73,7 +73,7 @@ function explodeBat($value, $i = null)
   }
 }
 
-closeConection($conn);
+
 ?>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -468,8 +468,13 @@ closeConection($conn);
               </div>
               <div class="w-100 h-100 rounded mini-card-info">
                 <div>
+                  <?php 
+                  $OPERADOR_ID = $embalse_datos["operador"];
+                  $OPERADOR = mysqli_fetch_assoc(mysqli_query($conn, "SELECT operador FROM operadores WHERE id_operador = '$OPERADOR_ID'"))['operador'];
+                  closeConection($conn);
+                  ?>
                   <span class="fw-bold" for="">Operador:</span>
-                  <p><?php echo $embalse_datos["operador"] ?></p>
+                  <p><?php echo $OPERADOR ?></p>
                 </div>
                 <div>
                   <span class="fw-bold" for="">Vida útil:</span>
@@ -628,7 +633,7 @@ closeConection($conn);
           </div>
           <div class="embalse-card rounded p-3 d-flex flex-column justify-content-around">
             <!-- <div class="ct-chart ct-perfect-fourth" style="width: 100%; height: 100%"></div> -->
-            <div class="text-center text-sm text-dark">Volúmenes - Embalse <?php echo $embalse_datos['nombre_embalse'] ?></div>
+            <div class="text-center text-sm text-dark">Volúmenes Disponibles - Embalse <?php echo $embalse_datos['nombre_embalse'] ?></div>
             <div class="chart-js" style="width: 100%; height: 80%">
               <canvas id="chart-vol">
 
