@@ -553,6 +553,14 @@ if (1) {
       border: 1px solid #707273;
     }
 
+    .celd-table-2 {
+      vertical-align: middle;
+      width: 80px;
+      text-align: center;
+      font-size: 12px;
+      border: 1px solid #707273;
+    }
+
     .text-big {
       height: 100px;
       font-size: 16px;
@@ -1799,7 +1807,7 @@ if (1) {
   <!-- PAGINA 15 -->
 
   <?php
-  $A_region = 120;
+  $A_operador = 120;
   $A_tabla = 120;
   $incremento = 0;
   $acumulado = 0;
@@ -1858,7 +1866,7 @@ if (1) {
         $A_operador = 85;
         $A_tabla = 120;
         $incremento = 0;
-        $disponible = 25;
+        // $disponible = 25;
 
         if ($right == false) {
           $margin_left = 550;
@@ -1875,13 +1883,13 @@ if (1) {
           $A_tabla = 120;
           $incremento = 0;
           $acumulado = 0;
-          $disponible = 25;
           $inicial = true;
-          $right = true;
           $margin_left = 20;
         }
+        if ($right == true && ((($countReg[$region] + 4)) > $disponible) ) {
+          $disponible = 25;
+          $right = false;
 
-        if ($right == true && (($countReg[$region] + 4)) > $disponible) {
       ?>
 
           <div style="page-break-before: always;"></div>
@@ -1916,7 +1924,7 @@ if (1) {
           <th class="celd-table">DESCRIPCION</th>
           <th class="celd-table">EMBALSE</th>
           <th class="celd-table">MESES DE <br>ABAST.</th>
-          <th class="celd-table">HIDROLÓGICA</th>
+          <th class="celd-table-2">HIDROLÓGICA</th>
         </tr>
         <?php foreach ($embalse_abast as $abast) {
           if (strtolower(trim($abast[0])) == strtolower(trim($region))) {
