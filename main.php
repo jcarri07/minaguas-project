@@ -92,6 +92,7 @@ header('Content-Type: text/html; charset=UTF-8');
     <div class="relative" id="map">
     </div>
     <a href="" id="close-map"><i style="font-size: 40px; color:black;" class="fa fa-window-close"></i></a>
+    <div id="text-map">Indique la ubicación del embalse</div>
   </div>
 
   <div class="min-height-300 bg-primary position-absolute w-100 rectangle-back"></div>

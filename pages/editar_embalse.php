@@ -217,7 +217,10 @@ function explodeBat($value, $i = null)
   #operador,
   #proposito,
   #uso,
-  #cap-util {
+  #cap-util,
+  #norte,
+  #este,
+  #huso {
     background: white;
   }
 
@@ -277,7 +280,7 @@ function explodeBat($value, $i = null)
   }
 
   #mapa {
-    height: 400px;
+    height: 600px;
     width: 80%;
     position: absolute;
     /* top: 0;
@@ -286,7 +289,7 @@ function explodeBat($value, $i = null)
   }
 
   #map {
-    height: 400px;
+    height: 600px;
     width: 100%;
     /* position: absolute; */
     /* top: 50%;
@@ -320,6 +323,19 @@ function explodeBat($value, $i = null)
     right: 20px;
     /* transform: translate(-50%, -50%); */
     z-index: 99999999;
+  }
+  #text-map {
+    position: absolute;
+    top: -55px;
+    left: 20px;
+    /* transform: translate(-50%, -50%); */
+    z-index: 99999999;
+    font-size: 32px;
+    border-radius: 0.5rem;
+    background-color: white;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: 1px solid #c4c4c4;
   }
 
   #show-map:hover {
@@ -533,17 +549,17 @@ function explodeBat($value, $i = null)
                   <label for="norte">Norte</label>
                   <div class="input-group">
                     <!-- echo number_format(floatval($embalse["norte"]), 2, ',', '.'); -->
-                    <input value="<?php echo $embalse["norte"] ?>" type="text" class="form-control" id="norte" name="norte" placeholder="Norte">
-                    <span id="show-map" class="input-group-text  cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
+                    <input readonly value="<?php echo $embalse["norte"] ?>" type="text" class="form-control show-map" id="norte" name="norte" placeholder="Norte">
+                    <span id="show-map" class="input-group-text show-map cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
                   </div>
                 </div>
                 <div class=" form-group">
                   <label for="este">Este</label>
-                  <input value="<?php echo $embalse["este"]; ?>" type="text" class="form-control" id="este" name="este" placeholder="Este">
+                  <input readonly value="<?php echo $embalse["este"]; ?>" type="text" class="form-control show-map" id="este" name="este" placeholder="Este">
                 </div>
                 <div class=" form-group">
                   <label for="huso">Huso</label>
-                  <input value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control" id="huso" name="huso" placeholder="Huso">
+                  <input readonly value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control show-map" id="huso" name="huso" placeholder="Huso">
                 </div>
               </div>
 
@@ -2276,7 +2292,7 @@ function explodeBat($value, $i = null)
 
   });
 
-  $("#show-map").on('click', function() {
+  $(".show-map").on('click', function() {
     // $("#modal-map").modal('show');
     removerClase($("#mapa"), "map-no-visible")
     agregarClase($("#mapa"), "map-visible")

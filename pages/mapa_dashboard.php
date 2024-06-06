@@ -274,7 +274,6 @@ while ($row < count($datos_embalses)) {
     foreach ($embalses_abast as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
             ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
-
             var marker = L.marker([ubicacion[0], ubicacion[1]], {
                 icon: <?php echo $emb[4] ?>
             }).addTo(mapa_portada).bindPopup("<b><?php echo $emb[3] ?></b> <b><?php echo $emb[5] ?> %</b>", {
