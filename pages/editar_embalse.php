@@ -549,17 +549,17 @@ function explodeBat($value, $i = null)
                   <label for="norte">Norte</label>
                   <div class="input-group">
                     <!-- echo number_format(floatval($embalse["norte"]), 2, ',', '.'); -->
-                    <input readonly value="<?php echo $embalse["norte"] ?>" type="text" class="form-control show-map" id="norte" name="norte" placeholder="Norte">
+                    <input  value="<?php echo $embalse["norte"] ?>" type="text" class="form-control show-map" id="norte" name="norte" placeholder="Norte">
                     <span id="show-map" class="input-group-text show-map cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
                   </div>
                 </div>
                 <div class=" form-group">
                   <label for="este">Este</label>
-                  <input readonly value="<?php echo $embalse["este"]; ?>" type="text" class="form-control show-map" id="este" name="este" placeholder="Este">
+                  <input  value="<?php echo $embalse["este"]; ?>" type="text" class="form-control show-map" id="este" name="este" placeholder="Este">
                 </div>
                 <div class=" form-group">
                   <label for="huso">Huso</label>
-                  <input readonly value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control show-map" id="huso" name="huso" placeholder="Huso">
+                  <input  value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control show-map" id="huso" name="huso" placeholder="Huso">
                 </div>
               </div>
 
