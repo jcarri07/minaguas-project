@@ -455,17 +455,17 @@ date_default_timezone_set("America/Caracas");
                   <div class=" form-group">
                     <label for="norte">Norte</label>
                     <div class="input-group">
-                      <input readonly type="text" class="form-control show-map" id="norte" name="norte" placeholder="Norte">
+                      <input readonly type="text" class="form-control " id="norte" name="norte" placeholder="Norte">
                       <span id="show-map" class="input-group-text show-map cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
                     </div>
                   </div>
                   <div class=" form-group">
                     <label for="este">Este</label>
-                    <input readonly type="text" class="form-control show-map" id="este" name="este" placeholder="Este">
+                    <input readonly type="text" class="form-control " id="este" name="este" placeholder="Este">
                   </div>
                   <div class=" form-group">
                     <label for="huso">Huso</label>
-                    <input readonly type="text" class="form-control show-map" id="huso" name="huso" placeholder="Huso">
+                    <input readonly type="text" class="form-control " id="huso" name="huso" placeholder="Huso">
                   </div>
                 </div>
 
