@@ -649,20 +649,20 @@ ticks: {
 
 
                     lines: [{
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
-                            cota: "Volumenmínimo",
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],2); ?>,
+                            cota: "Volumen mínimo",
                             color: 'black',
                             h: -15,
                         },
                         {
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_nor"])[1]; ?>,
-                            cota: "Volumennormal",
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1],2); ?>,
+                            cota: "Volumen normal",
                             color: 'black',
                             h: 15,
                         },
                         {
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
-                            cota: "Volumenmáximo",
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1],2); ?>,
+                            cota: "Volumen máximo",
                             color: 'black',
                             h: -15,
                         }
@@ -838,20 +838,20 @@ ticks: {
 
                     lines: [{
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
-                            cota: "Volumenmínimo",
+                            cota: "Volumen mínimo",
                             color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
-                            cota: "Volumennormal",
+                            cota: "Volumen normal",
                             color: 'black',
                             h: 15,
 
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
-                            cota: "Volumenmáximo",
+                            cota: "Volumen máximo",
                             color: 'black',
                             h: -15,
                         }
@@ -1030,20 +1030,20 @@ ticks: {
 
 
                     lines: [{
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1]; ?>,
-                            cota: "Volumenmínimo",
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],2); ?>,
+                            cota: "Volumen mínimo",
                             color: 'black',
                             h: -15,
                         },
                         {
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_nor"])[1]; ?>,
-                            cota: "Volumennormal",
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1],2); ?>,
+                            cota: "Volumen normal",
                             color: 'black',
                             h: 15,
                         },
                         {
-                            yvalue: <?php echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1]; ?>,
-                            cota: "Volumenmáximo",
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1],2); ?>,
+                            cota: "Volumen máximo",
                             color: 'black',
                             h: -15,
                         }
