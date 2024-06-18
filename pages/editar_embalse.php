@@ -23,8 +23,8 @@ $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User' OR tipo = 'Admin';");
 $queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id_embalse'");
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
-$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
-$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
+$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo' ORDER BY operador asc");
+$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo' ORDER BY region asc");
 $nombresEmbalses = array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT nombre_embalse FROM embalses WHERE estatus = 'activo' OR estatus = 'inactivo'"), MYSQLI_ASSOC), 'nombre_embalse');
 
 
