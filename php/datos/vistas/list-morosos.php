@@ -117,7 +117,7 @@
         for($i = 1 ; $i <= $dias_del_mes ; $i++){
             $aux_dia = $i < 10 ? ("0" . $i) : $i;
             $fecha_a_buscar = "$anio-$mes-$aux_dia";
-            if(buscarPosicion($events, $fecha_a_buscar, 'start') == -1) {
+            if(buscarPosicion($events, $fecha_a_buscar, 'start') == -1 && $fecha_a_buscar <= date("Y-m-d")) {
                 $array_aux = [];
                 $array_aux['id'] = "";
                 $array_aux['start'] = $fecha_a_buscar;
