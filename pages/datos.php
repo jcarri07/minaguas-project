@@ -114,6 +114,11 @@
                     Exportar Extracciones en Excel
                     <i class="fa fa-file-excel-o" style="margin-left: 5px; font-size: 18px;"></i>
                   </button>
+
+                  <button type="button" class="btn btn-danger" onclick="morosos('no', '');">
+                    Morosos por Reportar
+                    <i class="fa fa-exclamation-triangle" style="margin-left: 5px; font-size: 18px;"></i>
+                  </button>
                 </div>
 <?php
               }
@@ -591,9 +596,9 @@
       </div>
     </div>
 
-
-
-  
+<?php
+    require_once 'php/datos/vistas/morosos.php';
+?>
 
 
     <div id="id_embalse_aux" style="display: none;"></div>
