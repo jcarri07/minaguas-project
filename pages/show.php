@@ -513,7 +513,7 @@ function explodeBat($value, $i = null)
 
 
                 ?>
-                    <div class="tab-pane <?php if ($count == 0) {
+                    <div class="tab-pane <?php if ($key == $embalse->getCloseYear()) {
                                             echo "active";
                                             $count++;
                                           } ?>" id="simple-tabpanel-<?php echo $key ?>" role="tabpanel" aria-labelledby="simple-tab-<?php echo $key ?>">

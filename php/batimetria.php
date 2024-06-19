@@ -251,6 +251,9 @@ class Batimetria
         $Sup = $Sup_min + (($Sup_max - $Sup_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
         $Vol = $Vol_min + (($Vol_max - $Vol_min) / ($puntoSiguiente - $puntoAnterior)) * ($x - $puntoAnterior);
 
+        $Sup < 0 ? $Sup = 0 : $Sup = $Sup;
+        $Vol < 0 ? $Vol = 0 : $Vol = $Vol;
+
         return array($Sup, $Vol);
     }
 
