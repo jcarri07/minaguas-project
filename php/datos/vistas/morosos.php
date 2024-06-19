@@ -39,7 +39,7 @@
                                     <select class="form-select" name="anio_morosos" id="anio_morosos">
         <?php
                                 $anio = date("Y");
-                                $limit = 2023;
+                                $limit = 2022;
                                 $selected = 'selected';
                                 while($anio >= $limit) {
         ?>
