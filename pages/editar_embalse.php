@@ -408,6 +408,11 @@ function explodeBat($value, $i = null)
     /* padding-left: 3px !important; */
     background-color: #e6e6e6 !important;
   }
+
+  .expanded {
+    height: 150px;
+    /* padding: 10px; */
+  }
 </style>
 
 
@@ -1464,6 +1469,31 @@ function explodeBat($value, $i = null)
         inputs[nextIndex].focus();
       }
     });
+
+    $(input).on('dblclick', function() {
+        var $input = $(this);
+        var $div = $('<div contenteditable="true" class="editable-div"></div>')
+            .text($input.val())
+            .insertAfter($input)
+            .addClass($input.attr('class'));
+
+        $input.hide();
+        $div.show().focus().addClass('expanded');
+
+        $div.on('blur', function() {
+            $input.val($div.text());
+            $div.remove();
+            $input.show().removeClass('expanded');
+        });
+
+        $div.on('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                $div.blur();
+            }
+        });
+    });
+    
   });
 </script>
 
