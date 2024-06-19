@@ -88,8 +88,8 @@
                 $add_select
             FROM embalses e
             JOIN dates d
-            LEFT JOIN datos_embalse de ON e.id_embalse = de.id_embalse AND d.fecha = de.fecha
-            WHERE de.id_registro IS NULL $add_where
+            LEFT JOIN datos_embalse de ON e.id_embalse = de.id_embalse AND d.fecha = de.fecha AND de.estatus = 'activo'
+            WHERE de.id_registro IS NULL AND e.estatus = 'activo' $add_where
             GROUP BY e.id_embalse $add_group_by
             ORDER BY e.id_embalse $add_order_by;";
     $query = mysqli_query($conn, $sql);
