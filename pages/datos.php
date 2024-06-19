@@ -651,10 +651,10 @@
         $("#fecha").attr("disabled", false);
         $("#hora").attr("disabled", false);
       }
-    });
 
-    $('#add-data-old').modal({backdrop: 'static', keyboard: false});
-    $('#modal-generic').modal({backdrop: 'static', keyboard: false});
+      $('#add-data-old').modal({backdrop: 'static', keyboard: false});
+      $('#modal-generic').modal({backdrop: 'static', keyboard: false});
+    });
 
     var array_codigos = <?php echo json_encode($array_codigos);?>
 
