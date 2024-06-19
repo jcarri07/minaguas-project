@@ -151,7 +151,10 @@
                   <td class="hide-cell" style="white-space: normal !important;">
                     <?php 
                       //echo $row['estado'] . ", " . $row['municipio'] . ", " . $row['parroquia'];
-                      echo str_replace(",", ", ", $row['municipio']);
+                      $municipio = str_replace(",", ", ", $row['municipio']);
+                      if(strlen($municipio) > 200)
+                        $municipio = substr($municipio, 0, 200) . "...";
+                      echo $municipio;
                     ?>
                   </td>
                   <td>
