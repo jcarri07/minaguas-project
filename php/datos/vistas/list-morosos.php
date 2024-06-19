@@ -67,7 +67,7 @@
     if($anio != "") {
         $anio_inicio = $anio;
         if($anio != date("Y"))
-            $fecha_limite = "$anio-12-31";
+            $fecha_limite = "'$anio-12-31'";
         else
             $fecha_limite = "CURDATE()";
     }
