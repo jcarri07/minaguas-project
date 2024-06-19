@@ -186,7 +186,7 @@ $j = 0;
                 maintainAspectRatio: false,
                 interaction: {
                     intersect: false,
-                    axis: 'x',
+                    axis: 'y',
                 },
                 layout: {
                     padding: {
