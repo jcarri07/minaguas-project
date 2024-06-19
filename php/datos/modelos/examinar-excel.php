@@ -4,6 +4,8 @@
 require_once '../../../vendor/autoload.php';
 require_once '../../Conexion.php';
 
+ini_set('memory_limit', '1024M');
+
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
