@@ -185,8 +185,8 @@ $j = 0;
                 responsive: true,
                 maintainAspectRatio: false,
                 interaction: {
-                    intersect: true,
-                    axis: 'x',
+                    intersect: false,
+                    axis: 'y',
                 },
                 layout: {
                     padding: {
