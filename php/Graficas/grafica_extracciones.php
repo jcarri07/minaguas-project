@@ -185,7 +185,7 @@ $j = 0;
                 responsive: true,
                 maintainAspectRatio: false,
                 interaction: {
-                    intersect: true,
+                    intersect: false,
                     axis: 'x',
                 },
                 layout: {
