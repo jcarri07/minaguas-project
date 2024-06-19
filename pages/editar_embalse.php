@@ -578,17 +578,17 @@ function explodeBat($value, $i = null)
                   <label for="norte">Norte</label>
                   <div class="input-group">
                     <!-- echo number_format(floatval($embalse["norte"]), 2, ',', '.'); -->
-                    <input value="<?php echo $embalse["norte"] ?>" type="text" class="form-control " id="norte" name="norte" placeholder="Norte">
+                    <input value="<?php echo $embalse["norte"] ?>" type="text" class="form-control numero" id="norte" name="norte" placeholder="Norte">
                     <span id="show-map" class="input-group-text show-map cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
                   </div>
                 </div>
                 <div class=" form-group">
                   <label for="este">Este</label>
-                  <input value="<?php echo $embalse["este"]; ?>" type="text" class="form-control " id="este" name="este" placeholder="Este">
+                  <input value="<?php echo $embalse["este"]; ?>" type="text" class="form-control numero" id="este" name="este" placeholder="Este">
                 </div>
                 <div class=" form-group">
                   <label for="huso">Huso</label>
-                  <input value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control " id="huso" name="huso" placeholder="Huso">
+                  <input value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control numero" id="huso" name="huso" placeholder="Huso">
                 </div>
               </div>
 
@@ -2156,25 +2156,36 @@ function explodeBat($value, $i = null)
     inputs[i].addEventListener("keydown", function(event) {
       validarNumero(event, inputs[i]);
     });
-    inputs[i].addEventListener("change", function(event) {
-      formatoNumero(inputs[i]);
-    });
+    // inputs[i].addEventListener("change", function(event) {
+    //   formatoNumero(inputs[i]);
+    // });
     // formatoNumero(inputs[i]);
   }
 
   function validarNumero(event, input) {
     let valorInput = input.value;
     const codigoTecla = event.key;
-
+    console.log(input.id)
+    if(input.id == "huso" && (codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== 'Backspace'){
+      event.preventDefault();
+    }
     // Permitir solo números y una coma
-    if ((codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== ',' && codigoTecla !== 'Backspace') {
+    if ((codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== '.' && codigoTecla !== 'Backspace') {
       event.preventDefault();
     }
 
     // Permitir solo una coma
-    if (codigoTecla === ',' && valorInput.includes(',')) {
+    // if (codigoTecla === ',' && valorInput.includes(',')) {
+    //   event.preventDefault();
+    // }
+    if (codigoTecla === '.' && valorInput == "") {
       event.preventDefault();
     }
+
+    if (codigoTecla === '.' && valorInput.includes('.')) {
+      event.preventDefault();
+    }
+    
   }
 
   function formatearNumero(input) {
