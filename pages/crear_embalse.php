@@ -4,8 +4,8 @@ include 'php/Conexion.php';
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User' OR tipo = 'Admin';");
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
-$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
-$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
+$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo' ORDER BY operador asc");
+$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo' ORDER BY region asc");
 $nombresEmbalses = array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT nombre_embalse FROM embalses WHERE estatus = 'activo' OR estatus = 'inactivo'"), MYSQLI_ASSOC), 'nombre_embalse');
 
 ?>
@@ -288,6 +288,25 @@ date_default_timezone_set("America/Caracas");
     border-color: red;
   }
 
+#modal-operador, #modal-region{
+  /* width: 450px; */
+  width: auto;
+  height: 400px;
+  overflow-y: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.div-opcion{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.div-opcion:hover{
+  border-radius: 0.125rem !important;
+  /* padding-left: 3px !important; */
+  background-color: #e6e6e6 !important;
+}
 
 </style>
 
@@ -570,16 +589,16 @@ date_default_timezone_set("America/Caracas");
                   <label for="operador">Operador</label>
                   <textarea readonly class="form-control Vrequerido" name="" id="operador" cols="30" rows="1" placeholder="Operador"></textarea>
                   <input readonly hidden type="text" class="form-control" id="operador-input" name="operador" placeholder="">
-                  <div id="modal-operador" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+                  <div id="modal-operador" class="bg-gray-200 rounded p-3 modal-absolute" style="">
 
                     <?php
                     while ($operador = mysqli_fetch_array($queryOperador)) {
                     ?>
-                      <div class="form-check opcion">
+                      <div class="form-check opcion div-opcion">
                         <!-- <input type="radio" name="" id="<?php //echo $operador['id_proposito'] 
                                                               ?>-prop" class="prop-opcion form-check-input opcion"> -->
                         <input id="<?php echo $operador['id_operador'] ?>-ope" type="radio" value="" name="ope-radio" class="ope-opcion form-check-input opcion">
-                        <label for="<?php echo $operador['id_operador'] ?>-ope" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 opcion-<?php echo $operador['id_operador'] ?>-ope opcion"><?php echo $operador['operador'] ?></label>
+                        <label for="<?php echo $operador['id_operador'] ?>-ope" class="cursor-pointer ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 opcion-<?php echo $operador['id_operador'] ?>-ope opcion"><?php echo $operador['operador'] ?></label>
                       </div>
                     <?php
                     }
@@ -597,7 +616,7 @@ date_default_timezone_set("America/Caracas");
                     <?php
                     while ($region = mysqli_fetch_array($queryRegion)) {
                     ?>
-                      <div class="form-check opcion">
+                      <div class="form-check opcion div-opcion">
                         <!-- <input type="radio" name="" id="<?php //echo $region['id_proposito'] 
                                                               ?>-prop" class="prop-opcion form-check-input opcion"> -->
                         <input id="<?php echo $region['id_region'] ?>-reg" type="radio" value="" name="reg-radio" class="reg-opcion form-check-input opcion">

@@ -25,7 +25,7 @@
 
 
 
-  // $embalseBat = new Batimetria(1, $conn);
+  // $embalseBat = new Batimetria(53, $conn);
   // $variable = $embalseBat->volumenMinimo();
   // $volumen_normal = $embalseBat->volumenNormal();
   // $volumen_minimo = $embalseBat->volumenMinimo();
