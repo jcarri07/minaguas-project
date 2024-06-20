@@ -86,7 +86,7 @@ date_default_timezone_set("America/Caracas");
                     <td class="d-flex justify-content-center align-items-center">
                       <div class="d-flex align-items-center justify-content-center w-80 gap-2 ">
                         <div class="d-flex flex-row w-100">
-                          <a id="openModal" class="text-secondary font-weight-bold text-xs w-100" data-toggle="tooltip" data-original-title="Edit user">
+                          <a id="openModal" class="openModal text-secondary font-weight-bold text-xs w-100" data-toggle="tooltip" data-original-title="Edit user">
                             <button type="button" title="Generar pdf de monitoreo del embalse" class="py-1 btn mb-0 btn-outline-secondary btn-block border-2 w-100 btn-monitoreo" data-id="<?php echo $row['id_embalse']; ?>">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20">
                                 <path d="M32 32c17.7 0 32 14.3 32 32V400c0 8.8 7.2 16 16 16H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H80c-44.2 0-80-35.8-80-80V64C0 46.3 14.3 32 32 32zM160 224c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm128-64V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V160c0-17.7 14.3-32 32-32s32 14.3 32 32zm64 32c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V224c0-17.7 14.3-32 32-32zM480 96V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32z" />
@@ -136,27 +136,7 @@ date_default_timezone_set("America/Caracas");
   </div>
 </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const btnsMonitoreo = document.querySelectorAll('.btn-monitoreo');
-    const id = document.getElementById('embalse_id');
 
-
-    btnsMonitoreo.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const embalseId = this.getAttribute('data-id');
-        id.innerHTML = `${embalseId}`;
-        const embalseNombre = this.getAttribute('data-nombre');
-
-        document.getElementById('modal').style.display = 'block';
-      });
-    });
-
-    document.querySelector('.close').addEventListener('click', function() {
-      document.getElementById('modal').style.display = 'none';
-    });
-  });
-</script>
 </div>
 
 <div id="modal" class="modal" data-id_embalse="">
@@ -283,10 +263,38 @@ date_default_timezone_set("America/Caracas");
   }
 </style>
 <!--   Core JS Files   -->
+
 <script>
-  document.getElementById('openModal').addEventListener('click', function() {
+  // document.addEventListener('DOMContentLoaded', function() {
+    const btnsMonitoreo = document.querySelectorAll('.btn-monitoreo');
+    const id = document.getElementById('embalse_id');
+
+
+    btnsMonitoreo.forEach(btn => {
+      console.log(btn)
+      btn.addEventListener('click', function() {
+        const embalseId = this.getAttribute('data-id');
+        id.innerHTML = `${embalseId}`;
+        const embalseNombre = this.getAttribute('data-nombre');
+
+        document.getElementById('modal').style.display = 'block';
+      });
+    });
+
+    document.querySelector('.close').addEventListener('click', function() {
+      document.getElementById('modal').style.display = 'none';
+    });
+  // });
+</script>
+
+<script>
+  // document.getElementById('openModal').addEventListener('click', function() {
+  //   document.getElementById('modal').style.display = 'block';
+  // });
+
+  $(".openModal").on("click",function(e){
     document.getElementById('modal').style.display = 'block';
-  });
+  })
 
   document.querySelector('.close').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'none';

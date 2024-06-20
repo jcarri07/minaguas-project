@@ -513,9 +513,9 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">1.3.- Área de la cuenca (ha)</td>
-      <td class="value"><?php echo number_format($AREA_CUENCA, 2, ',', '.'); ?></td>
+      <td class="value"><?php echo $AREA_CUENCA ?></td>
       <td class="subtitle">1.4.- Escurrimiento medio (hm³)</td>
-      <td class="value"><?php echo number_format(floatval($ESCURRIMIENTO), 2, ',', '.'); ?></td>
+      <td class="value"><?php echo $ESCURRIMIENTO ?></td>
     </tr>
   </table>
   <table style="padding-top: 10px;">
