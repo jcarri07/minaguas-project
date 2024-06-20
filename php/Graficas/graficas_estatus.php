@@ -158,7 +158,7 @@ if ($count >= 1) {
                 $sum = $x - $min;
                 $volumen_fechas[1] += $sum;
             }
-            $div = ($nor - $min) != 0? ($nor - $min):1;
+            $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
             if ($x == 0 || ((abs(($sum)) * (100 / $div)) >= 0 && (abs(($sum)) * (100 / $div)) < 30)) {
                 $lista[0]++;
             };
@@ -173,8 +173,8 @@ if ($count >= 1) {
             };
 
             //cuenta de dias//
-
-            $suma_extracciones[] = round(($sum / (($datos_embalses[$j]['extraccion'] + $evaporacion + $filtracion) / 1000)));
+            $dat = $datos_embalses[$j]['extraccion'] != 0 ? $datos_embalses[$j]['extraccion'] : 1;
+            $suma_extracciones[] = round(($sum / (($dat + $evaporacion + $filtracion) / 1000)));
             //----//
 
         } else {
