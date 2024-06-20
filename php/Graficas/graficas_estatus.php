@@ -158,22 +158,23 @@ if ($count >= 1) {
                 $sum = $x - $min;
                 $volumen_fechas[1] += $sum;
             }
-            if ($x == 0 || ((abs(($sum)) * (100 / ($nor - $min))) >= 0 && (abs(($sum)) * (100 / ($nor - $min))) < 30)) {
+            $div = ($nor - $min) != 0? ($nor - $min):1;
+            if ($x == 0 || ((abs(($sum)) * (100 / $div)) >= 0 && (abs(($sum)) * (100 / $div)) < 30)) {
                 $lista[0]++;
             };
-            if ((abs(($sum)) * (100 / ($nor - $min))) >= 30 && (abs(($sum)) * (100 / ($nor - $min))) < 60) {
+            if ((abs(($sum)) * (100 / $div)) >= 30 && (abs(($sum)) * (100 / $div)) < 60) {
                 $lista[1]++;
             };
-            if ((abs(($sum)) * (100 / ($nor - $min))) >= 60 && (abs(($sum)) * (100 / ($nor - $min))) < 90) {
+            if ((abs(($sum)) * (100 / $div)) >= 60 && (abs(($sum)) * (100 / $div)) < 90) {
                 $lista[2]++;
             };
-            if ((abs(($sum)) * (100 / ($nor - $min))) >= 90 && (abs(($sum)) * (100 / ($nor - $min))) >= 100) {
+            if ((abs(($sum)) * (100 / $div)) >= 90 && (abs(($sum)) * (100 / $div)) >= 100) {
                 $lista[3]++;
             };
 
             //cuenta de dias//
 
-            $suma_extracciones[] = round(($sum / (($datos_embalses[$j]['extraccion'] + $evaporacion + $filtracion)/1000)));
+            $suma_extracciones[] = round(($sum / (($datos_embalses[$j]['extraccion'] + $evaporacion + $filtracion) / 1000)));
             //----//
 
         } else {
@@ -208,15 +209,14 @@ if ($count >= 1) {
         };
         if ($suma_extracciones[$j] >= 150 && $suma_extracciones[$j] < 240) {
             $condicion[1]++;
-        };        
+        };
         if ($suma_extracciones[$j] >= 270 && $suma_extracciones[$j] < 360) {
             $condicion[2]++;
-        };        
+        };
         if ($suma_extracciones[$j] >= 360) {
             $condicion[3]++;
         };
         $j++;
-
     }
 
 
@@ -336,7 +336,7 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 12,
-                                family:'Arial',
+                                family: 'Arial',
                             },
 
                         }
@@ -356,6 +356,8 @@ if ($count >= 1) {
                             const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
                                 return accumulator + currentValue
                             }, 0);
+                            value = value != 0 ? value : 1;
+                            totalSum = totalSum != 0 ? totalSum : 1;
                             porcentaje = value / totalSum * 100
                             return `${porcentaje.toFixed(1)}%`;
                         }),
@@ -363,9 +365,9 @@ if ($count >= 1) {
                             title: {
                                 font: {
                                     weight: 'bold',
-                                    family:'Arial',
+                                    family: 'Arial',
                                 },
-                                color:'#000000',
+                                color: '#000000',
                             },
                         },
                     }
@@ -457,7 +459,7 @@ if ($count >= 1) {
                             title: {
                                 font: {
                                     weight: 'bold',
-                                    family:'Arial',
+                                    family: 'Arial',
                                 }
                             },
                         },
@@ -472,7 +474,7 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 10,
-                                family:'Arial',
+                                family: 'Arial',
                             },
                         },
                     },
@@ -484,13 +486,13 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 14,
-                                family:'Arial',
+                                family: 'Arial',
                             },
                         },
-                        ticks:{
-                            font:{
-                                size:12,
-                                family:'Arial',
+                        ticks: {
+                            font: {
+                                size: 12,
+                                family: 'Arial',
                             },
                         },
                     },
@@ -583,7 +585,7 @@ if ($count >= 1) {
                             title: {
                                 font: {
                                     weight: 'bold',
-                                    family:'Arial',
+                                    family: 'Arial',
                                 }
                             },
                         },
@@ -598,7 +600,7 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 10,
-                                family:'Arial',
+                                family: 'Arial',
                             },
                         },
                     },
@@ -610,13 +612,13 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 14,
-                                family:'Arial',
+                                family: 'Arial',
                             },
                         },
-                        ticks:{
-                            font:{
-                                size:12,
-                                family:'Arial',
+                        ticks: {
+                            font: {
+                                size: 12,
+                                family: 'Arial',
                             },
                         },
                     },
@@ -694,7 +696,7 @@ if ($count >= 1) {
                             font: {
                                 weight: 'bold',
                                 size: 12,
-                                family:'Arial',
+                                family: 'Arial',
                             },
 
                         }
@@ -714,16 +716,19 @@ if ($count >= 1) {
                             const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
                                 return accumulator + currentValue
                             }, 0);
+                            value = value != 0 ? value : 1;
+                            totalSum = totalSum != 0 ? totalSum : 1;
                             porcentaje = value / totalSum * 100
                             return `${porcentaje.toFixed(1)}%`;
                         }),
                         labels: {
                             title: {
                                 font: {
-                                    size:20,
-                                    family:'Arial',
-                                    weight:'bold',
-                                },color:'#000000',
+                                    size: 20,
+                                    family: 'Arial',
+                                    weight: 'bold',
+                                },
+                                color: '#000000',
                             },
                         },
                     }
@@ -745,7 +750,7 @@ if ($count >= 1) {
         $json_datos = json_encode($volumen_fechas);
 
         // Codificar el JSON en base64
-        $volumenes = base64_encode($json_datos);?>
+        $volumenes = base64_encode($json_datos); ?>
 
 
         const x = document.querySelector("#barra1");
@@ -827,8 +832,8 @@ if ($count >= 1) {
             });
 
         });
-        console.log("<?php echo$volumen_fechas[1].', '.$volumen_fechas[2].', '.$volumen_fechas[3].', '.$volumen_fechas[4].', '.$volumen_fechas[5]?>");
-        // console.log("<?php echo$fechaFormateada2?>");
+        console.log("<?php echo $volumen_fechas[1] . ', ' . $volumen_fechas[2] . ', ' . $volumen_fechas[3] . ', ' . $volumen_fechas[4] . ', ' . $volumen_fechas[5] ?>");
+        // console.log("<?php echo $fechaFormateada2 ?>");
     </script>
 
 <?php };
