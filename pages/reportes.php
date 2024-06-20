@@ -139,7 +139,7 @@ date_default_timezone_set("America/Caracas");
 
 </div>
 
-<div id="modal" class="modal" data-id_embalse="">
+<div id="modal" class="modal" data-id_embalse="" style="z-index: 999;">
   <div class="d-flex modal-content">
     <div class="d-flex flex-row justify-content-between">
       <h4>Generar Monitoreo</h4>
