@@ -42,7 +42,7 @@ if ($pri) {
     $text = "AND id_embalse IN ($stringPrioritarios)";
 }
 
-$re = mysqli_query($conn, "SELECT id_embalse,cota_min,cota_nor,cota_max FROM embalses WHERE estatus = 'activo' $text;");
+$re = mysqli_query($conn, "SELECT id_embalse,cota_min,cota_nor,cota_max,nombre_embalse FROM embalses WHERE estatus = 'activo' $text;");
 $count = mysqli_num_rows($re);
 if ($count >= 1) {
 
