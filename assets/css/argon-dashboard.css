@@ -5573,7 +5573,7 @@ fieldset:disabled .btn {
 }
 
 .page-link:focus {
-  z-index: 3;
+  z-index: 1;
   color: var(--bs-pagination-focus-color);
   background-color: var(--bs-pagination-focus-bg);
   outline: 0;
