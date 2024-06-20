@@ -5573,7 +5573,7 @@ fieldset:disabled .btn {
 }
 
 .page-link:focus {
-  z-index: 1;
+  z-index: 3;
   color: var(--bs-pagination-focus-color);
   background-color: var(--bs-pagination-focus-bg);
   outline: 0;
@@ -5582,7 +5582,7 @@ fieldset:disabled .btn {
 
 .page-link.active,
 .active>.page-link {
-  z-index: 1;
+  z-index: 3;
   color: var(--bs-pagination-active-color);
   background-color: var(--bs-pagination-active-bg);
   border-color: var(--bs-pagination-active-border-color);
