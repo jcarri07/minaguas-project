@@ -357,7 +357,7 @@ if ($count >= 1) {
                                 return accumulator + currentValue
                             }, 0);
                             value = value != 0 ? value : 1;
-                            totalSum = totalSum != 0 ? totalSum : 1;
+                            
                             porcentaje = value / totalSum * 100
                             return `${porcentaje.toFixed(1)}%`;
                         }),
@@ -717,7 +717,7 @@ if ($count >= 1) {
                                 return accumulator + currentValue
                             }, 0);
                             value = value != 0 ? value : 1;
-                            totalSum = totalSum != 0 ? totalSum : 1;
+                            
                             porcentaje = value / totalSum * 100
                             return `${porcentaje.toFixed(1)}%`;
                         }),
