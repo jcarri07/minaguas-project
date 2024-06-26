@@ -378,6 +378,12 @@ foreach ($data as $row) {
       text-align: right;
     }
 
+    .value-2 {
+      text-align: right;
+      width: 100px;
+      font-size: 12px;
+    }
+
     th {
       text-align: left;
       background-color: #f2f2f2;
@@ -503,13 +509,13 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle" colspan="2">1.2.- Afluente(s) principal(es)</td>
-      <td class="value" colspan="2"><?php echo $AFLUENTES ?></td>
+      <td class="value-2" colspan="2"><?php echo $AFLUENTES ?></td>
     </tr>
     <tr>
       <td class="subtitle">1.3.- Área de la cuenca (ha)</td>
-      <td class="value"><?php echo number_format($AREA_CUENCA, 2, ',', '.'); ?></td>
+      <td class="value"><?php echo $AREA_CUENCA ?></td>
       <td class="subtitle">1.4.- Escurrimiento medio (hm³)</td>
-      <td class="value"><?php echo number_format(floatval($ESCURRIMIENTO), 2, ',', '.'); ?></td>
+      <td class="value"><?php echo $ESCURRIMIENTO ?></td>
     </tr>
   </table>
   <table style="padding-top: 10px;">

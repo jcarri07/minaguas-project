@@ -114,6 +114,11 @@
                     Exportar Extracciones en Excel
                     <i class="fa fa-file-excel-o" style="margin-left: 5px; font-size: 18px;"></i>
                   </button>
+
+                  <button type="button" class="btn btn-danger" onclick="morosos('no', '');">
+                    Morosos por Reportar
+                    <i class="fa fa-exclamation-triangle" style="margin-left: 5px; font-size: 18px;"></i>
+                  </button>
                 </div>
 <?php
               }
@@ -143,10 +148,13 @@
                         </div>
                     </div>
                   </th>
-                  <td class="hide-cell">
+                  <td class="hide-cell" style="white-space: normal !important;">
                     <?php 
                       //echo $row['estado'] . ", " . $row['municipio'] . ", " . $row['parroquia'];
-                      echo str_replace(",", ", ", $row['municipio']);
+                      $municipio = str_replace(",", ", ", $row['municipio']);
+                      if(strlen($municipio) > 150)
+                        $municipio = substr($municipio, 0, 150) . "...";
+                      echo $municipio;
                     ?>
                   </td>
                   <td>
@@ -591,9 +599,9 @@
       </div>
     </div>
 
-
-
-  
+<?php
+    require_once 'php/datos/vistas/morosos.php';
+?>
 
 
     <div id="id_embalse_aux" style="display: none;"></div>
@@ -643,6 +651,9 @@
         $("#fecha").attr("disabled", false);
         $("#hora").attr("disabled", false);
       }
+
+      $('#add-data-old').modal({backdrop: 'static', keyboard: false});
+      $('#modal-generic').modal({backdrop: 'static', keyboard: false});
     });
 
     var array_codigos = <?php echo json_encode($array_codigos);?>

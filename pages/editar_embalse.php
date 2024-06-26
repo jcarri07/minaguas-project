@@ -23,8 +23,8 @@ $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User' OR tipo = 'Admin';");
 $queryEmbalse = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id_embalse'");
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
-$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
-$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
+$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo' ORDER BY operador asc");
+$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo' ORDER BY region asc");
 $nombresEmbalses = array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT nombre_embalse FROM embalses WHERE estatus = 'activo' OR estatus = 'inactivo'"), MYSQLI_ASSOC), 'nombre_embalse');
 
 
@@ -108,28 +108,28 @@ function stringFloat($num, $dec = 2)
 }
 
 function explodeBat($value, $i = null)
-    {
-        $value = strval($value);
-        $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
+{
+  $value = strval($value);
+  $pattern = "/^(-?[\d,.]+)-(-?[\d,.]+)$/";
 
-        if (preg_match($pattern, $value, $matches)) {
-            $valores = [$matches[1], $matches[2]]; // Valores capturados
-    
-            if ($i !== null) {
-                return $valores[$i];
-            } else {
-                return $valores;    
-            }
-        } else {
-            $valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
-    
-            if ($i !== null) {
-                return $valores[$i];
-            } else {
-                return $valores;    
-            }
-        }
+  if (preg_match($pattern, $value, $matches)) {
+    $valores = [$matches[1], $matches[2]]; // Valores capturados
+
+    if ($i !== null) {
+      return $valores[$i];
+    } else {
+      return $valores;
     }
+  } else {
+    $valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
+
+    if ($i !== null) {
+      return $valores[$i];
+    } else {
+      return $valores;
+    }
+  }
+}
 ?>
 
 <link rel="stylesheet" href="./assets/css/nice-select2.css">
@@ -150,7 +150,8 @@ function explodeBat($value, $i = null)
     text-align: center;
   }
 
-  #modal-body, #modal-pre-body {
+  #modal-body,
+  #modal-pre-body {
     overflow-x: auto;
   }
 
@@ -268,7 +269,7 @@ function explodeBat($value, $i = null)
     font-weight: normal;
   }
 
-  .label-founded{
+  .label-founded {
     text-align: right;
     color: #ff8f8f;
     font-weight: normal;
@@ -324,6 +325,7 @@ function explodeBat($value, $i = null)
     /* transform: translate(-50%, -50%); */
     z-index: 99999999;
   }
+
   #text-map {
     position: absolute;
     top: -55px;
@@ -375,14 +377,41 @@ function explodeBat($value, $i = null)
     left: 50%;
   }
 
-  .founded{
+  .founded {
     border-color: #ff8f8f;
     outline: none;
     color: #ff8f8f
   }
-  .founded:focus{
-    color:red;
+
+  .founded:focus {
+    color: red;
     border-color: red;
+  }
+
+  #modal-operador,
+  #modal-region {
+    /* width: 450px; */
+    width: auto;
+    height: 400px;
+    overflow-y: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .div-opcion {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .div-opcion:hover {
+    border-radius: 0.125rem !important;
+    /* padding-left: 3px !important; */
+    background-color: #e6e6e6 !important;
+  }
+
+  .expanded {
+    height: 150px;
+    /* padding: 10px; */
   }
 </style>
 
@@ -536,7 +565,7 @@ function explodeBat($value, $i = null)
                     <?php
                     while ($row1 = mysqli_fetch_array($queryResponsable)) {
                     ?>
-                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre'] . " " . $row1['S_Nombre'] . " " . $row1['P_Apellido'] . " " . $row1['S_Apellido'] . " - (" . $row1['Tipo'].")"; ?></option>
+                      <option <?php if ($row1['Id_usuario'] == $embalse['id_encargado']) echo "selected"; ?> value="<?php echo $row1['Id_usuario']; ?>"><?php echo $row1['P_Nombre'] . " " . $row1['S_Nombre'] . " " . $row1['P_Apellido'] . " " . $row1['S_Apellido'] . " - (" . $row1['Tipo'] . ")"; ?></option>
                     <?php
                     }
                     ?>
@@ -549,17 +578,17 @@ function explodeBat($value, $i = null)
                   <label for="norte">Norte</label>
                   <div class="input-group">
                     <!-- echo number_format(floatval($embalse["norte"]), 2, ',', '.'); -->
-                    <input readonly value="<?php echo $embalse["norte"] ?>" type="text" class="form-control show-map" id="norte" name="norte" placeholder="Norte">
+                    <input value="<?php echo $embalse["norte"] ?>" type="text" class="form-control numero" id="norte" name="norte" placeholder="Norte">
                     <span id="show-map" class="input-group-text show-map cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
                   </div>
                 </div>
                 <div class=" form-group">
                   <label for="este">Este</label>
-                  <input readonly value="<?php echo $embalse["este"]; ?>" type="text" class="form-control show-map" id="este" name="este" placeholder="Este">
+                  <input value="<?php echo $embalse["este"]; ?>" type="text" class="form-control numero" id="este" name="este" placeholder="Este">
                 </div>
                 <div class=" form-group">
                   <label for="huso">Huso</label>
-                  <input readonly value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control show-map" id="huso" name="huso" placeholder="Huso">
+                  <input value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control numero" id="huso" name="huso" placeholder="Huso">
                 </div>
               </div>
 
@@ -734,7 +763,7 @@ function explodeBat($value, $i = null)
                   <?php
                   while ($operador = mysqli_fetch_array($queryOperador)) {
                   ?>
-                    <div class="form-check opcion">
+                    <div class="form-check opcion div-opcion">
                       <!-- <input type="radio" name="" id="<?php //echo $operador['id_proposito'] 
                                                             ?>-prop" class="prop-opcion form-check-input opcion"> -->
                       <input <?php if ($operador['id_operador'] == $embalse["operador"]) echo "checked" ?> id="<?php echo $operador['id_operador'] ?>-ope" type="radio" value="" name="ope-radio" class="ope-opcion form-check-input opcion">
@@ -756,7 +785,7 @@ function explodeBat($value, $i = null)
                   <?php
                   while ($region = mysqli_fetch_array($queryRegion)) {
                   ?>
-                    <div class="form-check opcion">
+                    <div class="form-check opcion div-opcion">
                       <!-- <input type="radio" name="" id="<?php //echo $region['id_proposito'] 
                                                             ?>-prop" class="prop-opcion form-check-input opcion"> -->
                       <input <?php if ($region['id_region'] == $embalse["region"]) echo "checked" ?> id="<?php echo $region['id_region'] ?>-reg" type="radio" value="" name="reg-radio" class="reg-opcion form-check-input opcion">
@@ -1440,6 +1469,31 @@ function explodeBat($value, $i = null)
         inputs[nextIndex].focus();
       }
     });
+
+    $(input).on('dblclick', function() {
+        var $input = $(this);
+        var $div = $('<div contenteditable="true" class="editable-div"></div>')
+            .text($input.val())
+            .insertAfter($input)
+            .addClass($input.attr('class'));
+
+        $input.hide();
+        $div.show().focus().addClass('expanded');
+
+        $div.on('blur', function() {
+            $input.val($div.text());
+            $div.remove();
+            $input.show().removeClass('expanded');
+        });
+
+        $div.on('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                $div.blur();
+            }
+        });
+    });
+    
   });
 </script>
 
@@ -1615,9 +1669,9 @@ function explodeBat($value, $i = null)
                   $partes = explodeBat($value);
                 ?>
                   <tr>
-                    <td ><?php echo $key ?></td>
-                    <td ><?php echo number_format($partes[0],2,",","") ?></td>
-                    <td ><?php echo number_format($partes[1],2,",","") ?></td>
+                    <td><?php echo $key ?></td>
+                    <td><?php echo number_format($partes[0], 2, ",", "") ?></td>
+                    <td><?php echo number_format($partes[1], 2, ",", "") ?></td>
                   </tr>
                 <?php }
                 ?>
@@ -1908,23 +1962,23 @@ function explodeBat($value, $i = null)
     const matches = value.match(pattern);
 
     if (matches) {
-        const valores = [matches[1], matches[2]]; // Valores capturados
+      const valores = [matches[1], matches[2]]; // Valores capturados
 
-        if (i !== null) {
-            return valores[i];
-        } else {
-            return valores;
-        }
+      if (i !== null) {
+        return valores[i];
+      } else {
+        return valores;
+      }
     } else {
-        const valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
+      const valores = [0, 0]; // Valores predeterminados en caso de no coincidencia
 
-        if (i !== null) {
-            return valores[i];
-        } else {
-            return valores;
-        }
+      if (i !== null) {
+        return valores[i];
+      } else {
+        return valores;
+      }
     }
-}
+  }
 
 
   $("#proposito").on("click", function() {
@@ -2102,25 +2156,36 @@ function explodeBat($value, $i = null)
     inputs[i].addEventListener("keydown", function(event) {
       validarNumero(event, inputs[i]);
     });
-    inputs[i].addEventListener("change", function(event) {
-      formatoNumero(inputs[i]);
-    });
+    // inputs[i].addEventListener("change", function(event) {
+    //   formatoNumero(inputs[i]);
+    // });
     // formatoNumero(inputs[i]);
   }
 
   function validarNumero(event, input) {
     let valorInput = input.value;
     const codigoTecla = event.key;
-
+    console.log(input.id)
+    if(input.id == "huso" && (codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== 'Backspace'){
+      event.preventDefault();
+    }
     // Permitir solo números y una coma
-    if ((codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== ',' && codigoTecla !== 'Backspace') {
+    if ((codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== '.' && codigoTecla !== 'Backspace') {
       event.preventDefault();
     }
 
     // Permitir solo una coma
-    if (codigoTecla === ',' && valorInput.includes(',')) {
+    // if (codigoTecla === ',' && valorInput.includes(',')) {
+    //   event.preventDefault();
+    // }
+    if (codigoTecla === '.' && valorInput == "") {
       event.preventDefault();
     }
+
+    if (codigoTecla === '.' && valorInput.includes('.')) {
+      event.preventDefault();
+    }
+    
   }
 
   function formatearNumero(input) {
@@ -2376,8 +2441,10 @@ function explodeBat($value, $i = null)
       if (campo.classList.contains('Viguales')) {
         let nombre_input = $(campo).val().trim().toLocaleLowerCase();
 
-        let busqueda = nombresEmbalses.filter((nombre) => { return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase() && nombre.trim().toLocaleLowerCase() != embalseActual.trim().toLocaleLowerCase()});
-        if (busqueda.length > 0){
+        let busqueda = nombresEmbalses.filter((nombre) => {
+          return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase() && nombre.trim().toLocaleLowerCase() != embalseActual.trim().toLocaleLowerCase()
+        });
+        if (busqueda.length > 0) {
           errorMessages.push("El nombre del Embalse '<b>" + nombre_input.charAt(0).toUpperCase() + nombre_input.slice(1) + "</b>'  ya está registrado.");
           if (!campo.classList.contains('input-error')) {
             campo.className += " input-error";
@@ -2398,37 +2465,39 @@ function explodeBat($value, $i = null)
 
   let cargar = false;
 
-$("#batimetria").on("click", function(e) {
-  console.log("HOLA")
-  if (!cargar) {
-    e.preventDefault();
-    $('#modal-formato').modal('show');
-  } else {
-    cargar = false;
-  }
-});
+  $("#batimetria").on("click", function(e) {
+    console.log("HOLA")
+    if (!cargar) {
+      e.preventDefault();
+      $('#modal-formato').modal('show');
+    } else {
+      cargar = false;
+    }
+  });
 
-$("#aceptar-formato").on("click", function() {
-  console.log("Boton")
-  cargar = true;
-  $("#batimetria").click();
-})
+  $("#aceptar-formato").on("click", function() {
+    console.log("Boton")
+    cargar = true;
+    $("#batimetria").click();
+  })
 
-let nombresEmbalses = <?php echo json_encode($nombresEmbalses) ?>;
-let embalseActual = <?php echo json_encode($embalse["nombre_embalse"])?>;
+  let nombresEmbalses = <?php echo json_encode($nombresEmbalses) ?>;
+  let embalseActual = <?php echo json_encode($embalse["nombre_embalse"]) ?>;
   console.log(nombresEmbalses)
 
-  $("#embalse_nombre").on('input', function(){
+  $("#embalse_nombre").on('input', function() {
     let nombre_input = $(this).val().trim().toLocaleLowerCase();
 
-    let busqueda = nombresEmbalses.filter((nombre) => { return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase() && nombre.trim().toLocaleLowerCase() != embalseActual.trim().toLocaleLowerCase() });
-    if (busqueda.length > 0){
-      if(!$(this).hasClass("founded")){
+    let busqueda = nombresEmbalses.filter((nombre) => {
+      return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase() && nombre.trim().toLocaleLowerCase() != embalseActual.trim().toLocaleLowerCase()
+    });
+    if (busqueda.length > 0) {
+      if (!$(this).hasClass("founded")) {
         $(this).toggleClass("founded")
         $(".label-founded").toggleClass("no-visible")
       }
     } else {
-      if($(this).hasClass("founded")){
+      if ($(this).hasClass("founded")) {
         $(this).toggleClass("founded")
         $(".label-founded").toggleClass("no-visible")
       }

@@ -693,7 +693,8 @@ if (1) {
               } else {
                 $sum = $x - $min;
               }
-              if (((abs(($sum)) * (100 / ($nor - $min))) >= 0 && (abs(($sum)) * (100 / ($nor - $min))) < 30)) {
+              $div = ($nor - $min) != 0? ($nor - $min):1;
+              if (((abs(($sum)) * (100 / $div)) >= 0 && (abs(($sum)) * (100 / $div)) < 30)) {
                 $cuenta++; ?>
                 <tr>
                   <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
@@ -746,7 +747,8 @@ if (1) {
               } else {
                 $sum = $x - $min;
               }
-              if ((abs(($sum)) * (100 / ($nor - $min))) >= 30 && (abs(($sum)) * (100 / ($nor - $min))) < 60) {
+              $div = ($nor - $min) != 0? ($nor - $min):1;
+              if ((abs(($sum)) * (100 / $div)) >= 30 && (abs(($sum)) * (100 / $div)) < 60) {
                 $cuenta++; ?>
 
                 <tr>
@@ -796,7 +798,8 @@ if (1) {
               } else {
                 $sum = $x - $min;
               }
-              if ((abs(($sum)) * (100 / ($nor - $min))) >= 60 && (abs(($sum)) * (100 / ($nor - $min))) < 90) {
+              $div = ($nor - $min) != 0? ($nor - $min):1;
+              if ((abs(($sum)) * (100 / $div)) >= 60 && (abs(($sum)) * (100 / $div)) < 90) {
                 $cuenta++; ?>
 
                 <tr>
@@ -852,7 +855,8 @@ if (1) {
               } else {
                 $sum = $x - $min;
               }
-              if ((abs(($sum)) * (100 / ($nor - $min))) >= 90 && (abs(($sum)) * (100 / ($nor - $min))) <= 100) {
+              $div = ($nor - $min) != 0? ($nor - $min):1;
+              if ((abs(($sum)) * (100 / $div)) >= 90 && (abs(($sum)) * (100 / $div)) <= 100) {
                 $cuenta++; ?>
 
                 <tr>
@@ -897,7 +901,8 @@ if (1) {
           } else {
             $sum = $x - $min;
           }
-          if ((abs(($sum)) * (100 / ($nor - $min))) > 100) {
+          $div = ($nor - $min) != 0? ($nor - $min):1;
+          if ((abs(($sum)) * (100 / $div)) > 100) {
             $cuenta++; ?>
 
             <tr>

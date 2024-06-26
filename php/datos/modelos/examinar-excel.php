@@ -4,6 +4,8 @@
 require_once '../../../vendor/autoload.php';
 require_once '../../Conexion.php';
 
+ini_set('memory_limit', '1024M');
+
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -151,7 +153,8 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
         $res = mysqli_query($conn, $sql);
 
         if($res == 1){
-            sleep(0.02);
+            //sleep(0.02);
+            usleep(20000); // 0.03 segundos = 20000 microsegundos
 
             $sql = "SELECT id_registro FROM datos_embalse WHERE id_embalse = '$id_embalse' AND id_encargado = '$id_encargado' ORDER BY id_registro DESC LIMIT 1;";
             $query = mysqli_query($conn, $sql);

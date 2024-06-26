@@ -4,8 +4,8 @@ include 'php/Conexion.php';
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryResponsable = mysqli_query($conn, "SELECT * FROM usuarios WHERE tipo = 'User' OR tipo = 'Admin';");
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo'");
-$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo'");
-$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
+$queryOperador = mysqli_query($conn, "SELECT * FROM operadores WHERE estatus = 'activo' ORDER BY operador asc");
+$queryRegion = mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo' ORDER BY region asc");
 $nombresEmbalses = array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT nombre_embalse FROM embalses WHERE estatus = 'activo' OR estatus = 'inactivo'"), MYSQLI_ASSOC), 'nombre_embalse');
 
 ?>
@@ -288,6 +288,31 @@ date_default_timezone_set("America/Caracas");
     border-color: red;
   }
 
+#modal-operador, #modal-region{
+  /* width: 450px; */
+  width: auto;
+  height: 400px;
+  overflow-y: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.div-opcion{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.div-opcion:hover{
+  border-radius: 0.125rem !important;
+  /* padding-left: 3px !important; */
+  background-color: #e6e6e6 !important;
+}
+
+
+.expanded {
+    height: 150px;
+    /* padding: 10px; */
+}
 
 </style>
 
@@ -455,17 +480,17 @@ date_default_timezone_set("America/Caracas");
                   <div class=" form-group">
                     <label for="norte">Norte</label>
                     <div class="input-group">
-                      <input readonly type="text" class="form-control show-map" id="norte" name="norte" placeholder="Norte">
+                      <input  type="text" class="form-control numero" id="norte" name="norte" placeholder="Norte">
                       <span id="show-map" class="input-group-text show-map cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
                     </div>
                   </div>
                   <div class=" form-group">
                     <label for="este">Este</label>
-                    <input readonly type="text" class="form-control show-map" id="este" name="este" placeholder="Este">
+                    <input  type="text" class="form-control numero" id="este" name="este" placeholder="Este">
                   </div>
                   <div class=" form-group">
                     <label for="huso">Huso</label>
-                    <input readonly type="text" class="form-control show-map" id="huso" name="huso" placeholder="Huso">
+                    <input  type="text" class="form-control numero" id="huso" name="huso" placeholder="Huso">
                   </div>
                 </div>
 
@@ -570,16 +595,16 @@ date_default_timezone_set("America/Caracas");
                   <label for="operador">Operador</label>
                   <textarea readonly class="form-control Vrequerido" name="" id="operador" cols="30" rows="1" placeholder="Operador"></textarea>
                   <input readonly hidden type="text" class="form-control" id="operador-input" name="operador" placeholder="">
-                  <div id="modal-operador" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
+                  <div id="modal-operador" class="bg-gray-200 rounded p-3 modal-absolute" style="">
 
                     <?php
                     while ($operador = mysqli_fetch_array($queryOperador)) {
                     ?>
-                      <div class="form-check opcion">
+                      <div class="form-check opcion div-opcion">
                         <!-- <input type="radio" name="" id="<?php //echo $operador['id_proposito'] 
                                                               ?>-prop" class="prop-opcion form-check-input opcion"> -->
                         <input id="<?php echo $operador['id_operador'] ?>-ope" type="radio" value="" name="ope-radio" class="ope-opcion form-check-input opcion">
-                        <label for="<?php echo $operador['id_operador'] ?>-ope" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 opcion-<?php echo $operador['id_operador'] ?>-ope opcion"><?php echo $operador['operador'] ?></label>
+                        <label for="<?php echo $operador['id_operador'] ?>-ope" class="cursor-pointer ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 opcion-<?php echo $operador['id_operador'] ?>-ope opcion"><?php echo $operador['operador'] ?></label>
                       </div>
                     <?php
                     }
@@ -597,7 +622,7 @@ date_default_timezone_set("America/Caracas");
                     <?php
                     while ($region = mysqli_fetch_array($queryRegion)) {
                     ?>
-                      <div class="form-check opcion">
+                      <div class="form-check opcion div-opcion">
                         <!-- <input type="radio" name="" id="<?php //echo $region['id_proposito'] 
                                                               ?>-prop" class="prop-opcion form-check-input opcion"> -->
                         <input id="<?php echo $region['id_region'] ?>-reg" type="radio" value="" name="reg-radio" class="reg-opcion form-check-input opcion">
@@ -1077,6 +1102,31 @@ date_default_timezone_set("America/Caracas");
         inputs[nextIndex].focus();
       }
     });
+
+    $(input).on('dblclick', function() {
+        var $input = $(this);
+        var $div = $('<div contenteditable="true" class="editable-div"></div>')
+            .text($input.val())
+            .insertAfter($input)
+            .addClass($input.attr('class'));
+
+        $input.hide();
+        $div.show().focus().addClass('expanded');
+
+        $div.on('blur', function() {
+            $input.val($div.text());
+            $div.remove();
+            $input.show().removeClass('expanded');
+        });
+
+        $div.on('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                $div.blur();
+            }
+        });
+    });
+
   });
 </script>
 
@@ -1825,4 +1875,42 @@ date_default_timezone_set("America/Caracas");
     }
     // console.log($(this).val().trim().toLocaleLowerCase())
   })
+
+  var inputs = $(".numero");
+
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("keydown", function(event) {
+      validarNumero(event, inputs[i]);
+    });
+    // inputs[i].addEventListener("change", function(event) {
+    //   formatoNumero(inputs[i]);
+    // });
+    // formatoNumero(inputs[i]);
+  }
+
+  function validarNumero(event, input) {
+    let valorInput = input.value;
+    const codigoTecla = event.key;
+    console.log(input.id)
+    if(input.id == "huso" && (codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== 'Backspace'){
+      event.preventDefault();
+    }
+    // Permitir solo números y una coma
+    if ((codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== '.' && codigoTecla !== 'Backspace') {
+      event.preventDefault();
+    }
+
+    // Permitir solo una coma
+    // if (codigoTecla === ',' && valorInput.includes(',')) {
+    //   event.preventDefault();
+    // }
+    if (codigoTecla === '.' && valorInput == "") {
+      event.preventDefault();
+    }
+
+    if (codigoTecla === '.' && valorInput.includes('.')) {
+      event.preventDefault();
+    }
+    
+  }
 </script>
