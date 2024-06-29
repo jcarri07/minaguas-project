@@ -376,12 +376,13 @@ foreach ($data as $row) {
 
     .value {
       text-align: right;
+      font-size: 10px;
     }
 
     .value-2 {
       text-align: right;
       width: 100px;
-      font-size: 12px;
+      font-size: 10px;
     }
 
     th {
@@ -393,6 +394,7 @@ foreach ($data as $row) {
     .subtitle {
       text-align: left;
       font-weight: bold;
+      font-size: 10px;
     }
 
     .image-logo {
@@ -445,6 +447,10 @@ foreach ($data as $row) {
     .title-info {
       text-align: left;
       font-weight: bold;
+      font-size: 10px;
+    }
+
+    td {
       font-size: 10px;
     }
   </style>
@@ -552,7 +558,7 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">2.8.- Año de inicio de construcción</td>
-      <td class="value"><?php echo $AÑO_INICIO ?></td>
+      <td class="value-2" style="font-size: 8px; text-align: left; width: 60px;"><?php echo $AÑO_INICIO ?></td>
       <td class="subtitle">2.9.- Duración de construcción</td>
       <td class="value"><?php echo $DURACION_CONSTRUCCION ?></td>
     </tr>
@@ -694,28 +700,30 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class="subtitle">4.2.1.- Ubicación</td>
-      <td><?php echo $UBICACION2
-          ?></td>
+      <td style="width: 100px;">
+        <?php echo $UBICACION2
+        ?>
+      </td>
     </tr>
     <tr>
       <td class=" subtitle">4.2.2.- Tipo</td>
-      <td style="width: 200px;"><?php echo $TIPO2
+      <td style="width: 100px;"><?php echo $TIPO2
                                 ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.3.- N° de compuertas</td>
-      <td><?php echo $NUMERO_COMPUERTAS;
-          ?></td>
+      <td style="width: 100px;"><?php echo $NUMERO_COMPUERTAS;
+                                ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.4.- Carga Sobre el Vertedero (m)</td>
-      <td><?php echo $CARGA_VERTEDERO;
-          ?></td>
+      <td style="width: 100px;"><?php echo $CARGA_VERTEDERO;
+                                ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.5.- Descarga máxima (m³/s)</td>
-      <td><?php echo $DESCARGA_MAXIMA;
-          ?></td>
+      <td style="width: 100px;"><?php echo $DESCARGA_MAXIMA;
+                                ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.5.- Descarga máxima (m³/s)</td>
@@ -736,23 +744,23 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class=" subtitle">4.2.2.- Tipo</td>
-      <td style="width: 200px;"><?php echo $TIPO_ALIVIADERO ?></td>
+      <td style="width: 100px;"><?php echo $TIPO_ALIVIADERO ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.3.- N° de compuertas</td>
-      <td><?php echo $COMPUERTAS_ALIVIADERO; ?></td>
+      <td style="width: 100px;"><?php echo $COMPUERTAS_ALIVIADERO; ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.4.- Carga Sobre el Vertedero (m)</td>
-      <td><?php echo $CARGA_ALIVIADERO ?></td>
+      <td style="width: 100px;"><?php echo $CARGA_ALIVIADERO ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.5.- Descarga máxima (m³/s)</td>
-      <td><?php echo $DESCARGA_ALIVIADERO ?></td>
+      <td style="width: 100px;"><?php echo $DESCARGA_ALIVIADERO ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.2.6.- Longitud (m)</td>
-      <td><?php echo $LONGITUD_ALIVIADERO; ?></td>
+      <td style="width: 100px;"><?php echo $LONGITUD_ALIVIADERO; ?></td>
     </tr>
   </table>
   <table>
@@ -768,27 +776,27 @@ foreach ($data as $row) {
     </tr>
     <tr>
       <td class=" subtitle">4.3.2.- Tipo</td>
-      <td style="width: 200px;"><?php echo $TIPO_OBRA ?></td>
+      <td style="width: 100px;"><?php echo $TIPO_OBRA ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.3.3.- N° de compuertas</td>
-      <td><?php echo $NUMERO_COMPUERTAS_OBRA ?></td>
+      <td style="width: 100px;"><?php echo $NUMERO_COMPUERTAS_OBRA ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.3.4.- Mecanismos de emergencia</td>
-      <td><?php echo $MECANISMO_EMERGENCIA ?></td>
+      <td style="width: 100px;"><?php echo $MECANISMO_EMERGENCIA ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.3.5.- Mecanismos de regulación</td>
-      <td><?php echo $MECANISMO_REGULACION ?></td>
+      <td style="width: 100px;"><?php echo $MECANISMO_REGULACION ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.3.6.- Gasto máximo (m3/s)</td>
-      <td><?php echo $GASTO_MAXIMO; ?></td>
+      <td style="width: 100px;"><?php echo $GASTO_MAXIMO; ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.3.7.- Descarga de fondo</td>
-      <td><?php echo $DESCARGA_FONDO ?></td>
+      <td style="width: 100px;"><?php echo $DESCARGA_FONDO ?></td>
     </tr>
   </table>
   <table style="padding-top: 10px;">
