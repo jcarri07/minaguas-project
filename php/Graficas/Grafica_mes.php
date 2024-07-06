@@ -295,9 +295,9 @@ ORDER BY d.fecha ASC;";
                                             }
                                         }; ?>,
                                 max: <?php if ($max > $embalses[0]["cota_max"]) {
-                                            echo $bati->getByCota($año, $max)[1] + 200;
+                                            echo $bati->getByCota($año, $max)[1] + 10;
                                         } else {
-                                            echo $bati->getByCota($año, $embalses[0]["cota_max"])[1] + 50;
+                                            echo $bati->getByCota($año, $embalses[0]["cota_max"])[1] +10;
                                         }; ?>,
                                 border: {
                                     display: false,
