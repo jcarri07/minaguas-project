@@ -4,7 +4,7 @@
 <script src="./assets/js/sweetalerts.js"></script>
 <?php
 include "./php/Conexion.php";
-$re = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
+$re = mysqli_query($conn, "SELECT id_embalse, nombre_embalse FROM embalses WHERE estatus = 'activo' ORDER BY nombre_embalse ASC;");
 $count = mysqli_num_rows($re);
 ?>
 <!-- <script src="../../assets/js/jquery/jquery.min.js"></script> -->
