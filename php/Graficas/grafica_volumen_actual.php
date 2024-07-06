@@ -25,7 +25,7 @@ FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
 WHERE e.estatus = 'activo'
 GROUP BY id_embalse 
-ORDER BY id_embalse ASC;");
+ORDER BY e.nombre_embalse ASC;");
     $count = mysqli_num_rows($res);
     if ($count >= 1) {
         $datos_embalses = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -107,18 +107,18 @@ ORDER BY id_embalse ASC;");
                                         data: [";
 
                             ?> {
-                                        x: '',
-                                        y: <?php echo ($sum); ?>,
+                                        y: '',
+                                        x: <?php echo ($sum); ?>,
                                     },
                             <?php
 
 
                                     $j++;
-                                    echo "],borderWidth:1,categoryPercentage:1,},";
+                                    echo "],borderWidth:1,categoryPercentage:1,barPercentage: 0.7,},";
                                 } else {
                                     echo "{backgroundColor: '#fd0200',";
                                     echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (0%)',
-                                    data: [{x: '',y:0,}],borderWidth:1,categoryPercentage:1,},";
+                                    data: [{y: '',x:0,}],borderWidth:1,categoryPercentage:1,barPercentage: 0.7,},";
                                     $j++;
                                 }
                             };
@@ -131,9 +131,13 @@ ORDER BY id_embalse ASC;");
 
                         responsive: true,
                         maintainAspectRatio: false,
+                        indexAxis:'y',
                         interaction: {
                             intersect: false,
-                            axis: 'x',
+                            axis: 'y',
+                        },
+                        elements:{
+                            borderWidth:5,
                         },
                         plugins: {
 
@@ -162,7 +166,7 @@ ORDER BY id_embalse ASC;");
                                 anchor: 'end',
                                 align: 'end',
                                 formatter: function(value, context) {
-                                    return Math.round(value.y * 100) / 100;
+                                    return Math.round(value.x * 100) / 100;
                                 },
                                 labels: {
                                     title: {
@@ -172,7 +176,7 @@ ORDER BY id_embalse ASC;");
                                         },
                                         color: function(context) {
                                             // Obtén el valor actual del dato y su valor máximo correspondiente
-                                            const value = context.dataset.data[context.dataIndex].y;
+                                            const value = context.dataset.data[context.dataIndex].x;
                                             const maxValue = maxValues[context.datasetIndex] != 0 ? maxValues[context.datasetIndex] : 100;
                                             // Calcula el porcentaje
                                             const percentage = value * 100 / maxValue;
@@ -187,7 +191,15 @@ ORDER BY id_embalse ASC;");
                         scales: {
 
                             x: {
-
+                                
+                                title: {
+                                    display: true,
+                                    text: 'Volumen (Hm³)',
+                                    
+                                    font: {
+                                        size: 16
+                                    },
+                                },
                                 ticks: {
 
                                     font: {
@@ -197,14 +209,8 @@ ORDER BY id_embalse ASC;");
 
                             },
                             y: {
-                                title: {
-                                    display: true,
-                                    text: 'Volumen (Hm³)',
-                                    font: {
-                                        size: 16
-                                    },
-                                },
 
+                                
                                 border: {
                                     display: false,
                                 },
@@ -212,6 +218,7 @@ ORDER BY id_embalse ASC;");
                                     font: {
                                         size: 14
                                     },
+                                    
                                 },
 
                             },
