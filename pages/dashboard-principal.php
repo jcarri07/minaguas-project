@@ -369,7 +369,7 @@ closeConection($conn);*/
             <p class="text-sm">Monitoreo del Volumen Útil Actual de los embalses registrados</p>
           </div>
           <hr class="dark horizontal">
-          <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:350px !important;">
+          <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:600px !important;">
             <div class="border border-radius-lg h-100">
               <div class="col-12 pb-2 pt-1">
                 <!-- Ejemplo de leyenda -->
@@ -397,7 +397,7 @@ closeConection($conn);*/
                 </div>
               </div>
               <div class="table-responsive col-12 h-90 h-sm-90">
-                <div id="cont" class="h-100" style="min-width:1000px !important;"></div>
+                <div id="cont" class="h-100" style="min-width:1000px !important;min-height:1300px !important;"></div>
               </div>
             </div>
           </div>
