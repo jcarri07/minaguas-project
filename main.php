@@ -34,9 +34,9 @@ header('Content-Type: text/html; charset=UTF-8');
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="./assets/img/logos/cropped-mminaguas.webp">
+  <link rel="icon" type="image/png" href="./assets/img/logos/logo_sima.png">
   <title>
-    Minaguas
+    SIMA
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -345,13 +345,13 @@ header('Content-Type: text/html; charset=UTF-8');
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6 mb-lg-0 mb-4">
             <div class="copyright text-center text-sm text-muted text-lg-start">
-              © <script>
+              <!-- © <script>
                 document.write(new Date().getFullYear())
               </script>,
               desarrollado por
               <a href="JavaScript:Void(0)" class="font-weight-bold">Dirección de Investigación e Innovación - ABAE
               </a>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
