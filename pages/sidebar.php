@@ -8,7 +8,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "";
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="navbar-brand m-2" href="#" >
       <!-- <img src="./assets/img/logos/logo_sima.png" class="navbar-brand-img" style="width: 60px; height: 100px;" alt="main_title"> -->
-      <img src="./assets/img/logos/letras_sima_juntos.png" class="navbar-brand-img " style="width: 220px;" alt="main_title">
+      <!--<img src="./assets/img/logos/letras_sima_juntos.png" class="navbar-brand-img " style="width: 220px;" alt="main_title">-->
+      <img src="./assets/img/logos/logo1.png" class="navbar-brand-img " style="width: 220px;" alt="main_title">
     </a>
   </div>
 
