@@ -644,27 +644,30 @@ ticks: {
                 intersect: false,
                 axis: 'x',
             },
+            layout: {
+                        padding: 10,
+                    },
             plugins: {
                 arbitra: {
 
 
                     lines: [{
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],2); ?>,
+                        yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],2); ?>,
                             cota: "Volumen mínimo",
-                            color: 'black',
-                            h: -15,
+                            color: 'red',
+                            h: -10,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1],2); ?>,
                             cota: "Volumen normal",
-                            color: 'black',
+                            color: 'green',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1],2); ?>,
                             cota: "Volumen máximo",
-                            color: 'black',
-                            h: -15,
+                            color: 'blue',
+                            h: -8,
                         }
                         // Agrega más líneas según sea necesario
                     ]
@@ -746,9 +749,9 @@ ticks: {
                                 echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
                             }; ?>,
                     max: <?php if ($max > $embalse[0]["cota_max"]) {
-                                echo $bati->getByCota($anio, $max)[1] + 10;
+                                echo $bati->getByCota($anio, $max)[1] + 20;
                             } else {
-                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 10;
+                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 20;
                             }; ?>,
                     border: {
                         display: false,
@@ -832,6 +835,9 @@ ticks: {
                 intersect: false,
                 axis: 'x',
             },
+            layout: {
+                        padding: 10,
+                    },
             plugins: {
                 arbitra: {
 
@@ -839,21 +845,20 @@ ticks: {
                     lines: [{
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
                             cota: "Volumen mínimo",
-                            color: 'black',
+                            color: 'red',
                             h: 15,
                         },
                         {
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1],2); ?>,
                             cota: "Volumen normal",
-                            color: 'black',
+                            color: 'green',
                             h: 15,
-
                         },
                         {
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1],2); ?>,
                             cota: "Volumen máximo",
-                            color: 'black',
-                            h: -15,
+                            color: 'blue',
+                            h: -8,
                         }
                         // Agrega más líneas según sea necesario
                     ]
@@ -940,9 +945,9 @@ ticks: {
                                 }
                             }; ?>,
                     max: <?php if ($max > $embalse[0]["cota_max"]) {
-                                echo $bati->getByCota($anio, $max)[1] + 10;
+                                echo $bati->getByCota($anio, $max)[1] + 20;
                             } else {
-                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] +10;
+                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 20;
                             }; ?>,
                     border: {
                         display: false,
@@ -1025,6 +1030,9 @@ ticks: {
                 intersect: false,
                 axis: 'x',
             },
+            layout: {
+                        padding: 10,
+                    },
             plugins: {
                 arbitra: {
 
@@ -1032,20 +1040,20 @@ ticks: {
                     lines: [{
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],2); ?>,
                             cota: "Volumen mínimo",
-                            color: 'black',
-                            h: -15,
+                            color: 'red',
+                            h: -10,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1],2); ?>,
                             cota: "Volumen normal",
-                            color: 'black',
+                            color: 'green',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1],2); ?>,
                             cota: "Volumen máximo",
-                            color: 'black',
-                            h: -15,
+                            color: 'blue',
+                            h: -8,
                         }
                         // Agrega más líneas según sea necesario
                     ]
@@ -1129,9 +1137,9 @@ ticks: {
                                 echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
                             }; ?>,
                     max: <?php if ($max > $embalse[0]["cota_max"]) {
-                                echo $bati->getByCota($anio, $max)[1] + 10;
+                                echo $bati->getByCota($anio, $max)[1] + 20;
                             } else {
-                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 10;
+                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 20;
                             }; ?>,
                     border: {
                         display: false,
