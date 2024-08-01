@@ -316,7 +316,7 @@ $variacion_mensual = getMonthName();
           ?>
         </tr>
         <tr>
-          <td class="text-celd">VOLUMENN
+          <td class="text-celd">VOLUMEN
             (Hm3
             )</td>
           <?php
@@ -324,7 +324,7 @@ $variacion_mensual = getMonthName();
           for ($i = 2; $i < 9; $i++) {
             if (array_key_exists((string)$i, $cotas)) {
               //explode("-", $cotas[$i])[0]
-              echo "<td>" . $batimetria->getByCota('2012', explode("-", $cotas[$i])[0])[1] . "</td>";
+              echo "<td>" . number_format($batimetria->getByCota('2012', explode("-", $cotas[$i])[0])[1], 2) . "</td>";
             } else {
               echo "<td>N/A</td>";
             }
@@ -436,7 +436,7 @@ $variacion_mensual = getMonthName();
             ?>
           </tr>
           <tr>
-            <td class="text-celd">VOLUMENS
+            <td class="text-celd">VOLUMEN
               (Hm3
               )</td>
             <?php
@@ -444,7 +444,7 @@ $variacion_mensual = getMonthName();
             for ($i = 2; $i < 9; $i++) {
               if (array_key_exists((string)$i, $cotas)) {
                 //explode("-", $cotas[$i])[0]
-                echo "<td>" . $batimetria->getByCota('2012', explode("-", $cotas[$i])[0])[1] . "</td>";
+                echo "<td>" . number_format($batimetria->getByCota('2012', explode("-", $cotas[$i])[0])[1], 2) . "</td>";
               } else {
                 echo "<td>N/A</td>";
               }
