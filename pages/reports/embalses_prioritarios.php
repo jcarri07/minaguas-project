@@ -316,7 +316,7 @@ $variacion_mensual = getMonthName();
           ?>
         </tr>
         <tr>
-          <td class="text-celd">VOLUMEN
+          <td class="text-celd">VOLUMENN
             (Hm3
             )</td>
           <?php
