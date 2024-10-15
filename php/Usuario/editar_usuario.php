@@ -216,7 +216,7 @@ function editarU($conn)
         } else {
             $num = 1;
 
-            if ($email == $result["Correo"]) {
+            if ($email == $result->Correo) {
 
                 $num = 1;
             } else {
