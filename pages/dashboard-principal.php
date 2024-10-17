@@ -74,6 +74,7 @@ require_once 'php/Conexion.php';
 $sql_embalses = "SELECT id_embalse, nombre_embalse FROM embalses";
 $result_embalses = $conn->query($sql_embalses);
 
+
 // Procesar los resultados de la consulta
 
 /*
@@ -416,7 +417,9 @@ closeConection($conn);*/
                 <?php
                 while ($row_embalse = $result_embalses->fetch_assoc()) {
                   echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
+                  
                 }
+                
                 ?>
               </select>
 

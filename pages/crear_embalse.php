@@ -1020,6 +1020,7 @@ date_default_timezone_set("America/Caracas");
                                           ?></option>
                     <?php
                     //}
+                    closeConection($conn);
                     ?>
                   </select>
                 </div>

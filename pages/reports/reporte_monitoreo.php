@@ -296,3 +296,4 @@ $TITULO6 = "Gráfico 6";
 </body>
 
 </html>
+<?php closeConection($conn); ?>
