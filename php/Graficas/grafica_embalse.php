@@ -69,6 +69,7 @@ $count = mysqli_num_rows($re);
                                         }
                                         echo '>' . $i . '</option>';
                                     }
+                                    closeConection($conn);
                                     ?>
 
                                 </select>
