@@ -188,4 +188,5 @@ if (mysqli_num_rows($query) > 0) {
                 <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">No hay información</h2>
 <?php                  
             }
+            closeConection($conn);
 ?>
