@@ -292,7 +292,7 @@ $j = 0;
             title: 'grafica',
             data: {
                 datasets: [{
-                        label: 'Volumeninicial (Hm³)',
+                        label: 'Volumen inicial (Hm³)',
                         borderColor: '#4472c4',
                         backgroundColor: '#4472c4',
                         data: [<?php
@@ -436,7 +436,7 @@ ticks: {
                     y: {
                         title: {
                             display: true,
-                            text: 'Volumen(Hm³)',
+                            text: 'Volumen (Hm³)',
                             font: {
                                 size: 16,
                                 family:'Arial',
@@ -1071,7 +1071,7 @@ ticks: {
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde el" . $fechaFormateada2 . " al " . $fechaFormateada." del ".date('Y'); ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde el " . $fechaFormateada2 . " al " . $fechaFormateada." del ".date('Y'); ?>',
                     fullSize: true,
                     font: {
                         size: 26,
