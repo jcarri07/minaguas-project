@@ -20,7 +20,7 @@
 
   $sql = "SELECT DISTINCT em.id_embalse, 
             em.nombre_embalse,
-            GROUP_CONCAT(DISTINCT e.estado) AS estado,
+            /*GROUP_CONCAT(DISTINCT e.estado) AS estado,*/
             GROUP_CONCAT(DISTINCT m.municipio) AS municipio,
             /*GROUP_CONCAT(DISTINCT p.parroquia) AS parroquia,*/
             em.id_encargado, (SELECT IF(COUNT(id_registro) > 0, 'si', 'no')
@@ -30,7 +30,7 @@
               fecha = '$fecha'
             ) AS reportado_hoy
           FROM embalses em 
-          LEFT JOIN estados e ON FIND_IN_SET(e.id_estado, em.id_estado) OR em.id_estado = '' 
+          /*LEFT JOIN estados e ON FIND_IN_SET(e.id_estado, em.id_estado) OR em.id_estado = '' */
           LEFT JOIN municipios m ON FIND_IN_SET(m.id_municipio, em.id_municipio) OR em.id_municipio = '' 
           /*LEFT JOIN parroquias p ON FIND_IN_SET(p.id_parroquia, em.id_parroquia) OR em.id_parroquia = '' */
           WHERE em.estatus = 'activo' $add_where
