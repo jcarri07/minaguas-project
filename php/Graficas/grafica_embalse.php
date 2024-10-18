@@ -237,6 +237,6 @@ $count = mysqli_num_rows($re);
                 }
             });
         };
-        setInterval(ajax, 60000);
+        setInterval(ajax, 1800000);
     });
 </script>
