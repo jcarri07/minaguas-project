@@ -918,5 +918,5 @@ closeConection($conn);*/
     });
   }
 
-  setInterval(actual, 60000);
+  setInterval(actual, 1800000);
 </script>
