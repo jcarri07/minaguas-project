@@ -17,8 +17,8 @@ $año = date('Y');
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
-    $res = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND estatus = 'activo' AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
-    e.nombre_embalse, (SELECT cota_actual 
+    $res = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),e.nombre_embalse, 
+                    (SELECT cota_actual 
                        FROM datos_embalse h 
                        WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
 FROM embalses e
