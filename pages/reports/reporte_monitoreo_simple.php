@@ -49,7 +49,7 @@ $VOLUMEN_NIVEL_MINIMO = "76,28 hm3 (Cota 285,00 m s.n.m.)";
 $TITULO = "Gráfico de Monitoreo.";
 
 
-
+closeConection($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">

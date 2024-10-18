@@ -32,7 +32,7 @@ closeConection($conn);
 
 
 <!-- Modal-New -->
-<div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true">
+<div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -113,7 +113,7 @@ closeConection($conn);
   </div>
 </div>
 <!-- Modal-Edit -->
-<div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
+<div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -197,7 +197,7 @@ closeConection($conn);
   </div>
 </div>
 <!-- Modal-historial -->
-<div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -221,7 +221,7 @@ closeConection($conn);
   </div>
 </div>
 <!-- Modal-historial-detalles -->
-<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">

@@ -450,7 +450,7 @@ $variacion_mensual = getMonthName();
         <?php }
         ?>
     <?php
-    } ?>
+    } closeConection($conn);?>
 </body>
 
 </html>

@@ -68,11 +68,11 @@
 
 
 <?php
-require_once 'php/Conexion.php';
 
+//require_once 'php/Conexion.php';
 // Obtén la lista de embalses para el menú desplegable
-$sql_embalses = "SELECT id_embalse, nombre_embalse FROM embalses";
-$result_embalses = $conn->query($sql_embalses);
+
+
 
 // Procesar los resultados de la consulta
 
@@ -414,9 +414,14 @@ closeConection($conn);*/
               <select style="width: 180px;" class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
                 <option style="display:none">Seleccione...</option>
                 <?php
+                $sql_embalses = "SELECT id_embalse, nombre_embalse FROM embalses";
+                $result_embalses = $conn->query($sql_embalses);
                 while ($row_embalse = $result_embalses->fetch_assoc()) {
                   echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
+                  
                 }
+                closeConection($conn);
+                
                 ?>
               </select>
 
@@ -913,5 +918,5 @@ closeConection($conn);*/
     });
   }
 
-  setInterval(actual, 60000);
+  setInterval(actual, 1800000);
 </script>

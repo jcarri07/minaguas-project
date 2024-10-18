@@ -32,9 +32,9 @@ date_default_timezone_set("America/Caracas");
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="./assets/img/logos/cropped-mminaguas.webp">
+  <link rel="icon" type="image/png" href="./assets/img/logos/icon.png">
   <title>
-    Minaguas
+    SIMA
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -117,10 +117,10 @@ date_default_timezone_set("America/Caracas");
             <div class="col-xl-6 col-lg-6 col-md-9 col-sm-8 col-xs-5 d-flex flex-column mx-lg-0 justify-content-center">
               <div class="px-xl-6 px-md-4">
                 <div class="card card-plain" style="background-color: white;">
-                  <div class="card-header pb-0 text-start">
-                    <h4 class="font-weight-bolder">Inicie Sesion</h4>
-                    <!--p class="mb-0">Enter your email and password to sign in</p-->
-                  </div>
+                <div class="card-header pb-0 text-center">
+                    <img src="./assets/img/logos/logo1.png" style="width: 215px; height: 75px;">
+                    <!-- <h4 class="font-weight-bolder mb-0 ms-2" style="text-align: center;">Inicie Sesión</h4> -->
+                </div>
                   <div class="card-body">
                     <form role="form" id="form">
                       <div class="mb-3">

@@ -181,7 +181,7 @@ $TITULO6 = "Gráfico 6";
             <tbody>
                 <tr>
                     <th style="text-align: left;">Cota inicial de Monitoreo:</th>
-                    <td style="text-align: right;"><?php echo number_format($cota_inicial, 2, ".", "") . " m s.n.m (" . $volumen_inicial . " hm3)" ?></td>
+                    <td style="text-align: right;"><?php echo number_format($cota_inicial, 2, ".", "") . " m s.n.m (" . number_format($volumen_inicial, 3, ".", "") . " hm3)" ?></td>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Fecha:</th>
@@ -296,3 +296,4 @@ $TITULO6 = "Gráfico 6";
 </body>
 
 </html>
+<?php closeConection($conn); ?>
