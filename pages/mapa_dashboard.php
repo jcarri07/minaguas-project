@@ -317,4 +317,4 @@ while ($row < count($datos_embalses)) {
     // echo json_encode($embalses_porcentaje);
     ?>
 </script>
-<?php closeConection($conn); ?>
+<?php  ?>
