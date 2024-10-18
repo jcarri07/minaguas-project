@@ -69,7 +69,7 @@
 
 <?php
 
-
+require_once 'php/Conexion.php';
 // Obtén la lista de embalses para el menú desplegable
 
 
@@ -353,7 +353,7 @@ closeConection($conn);*/
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 700px;">
             <!-- ]  <div id="mapa-container"> -->
             <!-- <div id="mapa-portada" style="width: 100%; height: 100%;"></div> -->
-            <?php include "mapa_dashboard.php" ?>
+            <?php //include "mapa_dashboard.php" ?>
           </div>
 
           <div class="row justify-content-center gap-sm-2 ">
