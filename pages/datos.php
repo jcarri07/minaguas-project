@@ -319,7 +319,9 @@
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
                 <h3 class="font-weight-bolder text-primary text-gradient text-title">Historial de Extracciones</h3>
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
               
                 <div class="text-center">
                   <button type="button" class="btn btn-success mt-4 mb-0" title="Historial de Todas la importaciones Datos de Excel (Parte Base)" data-bs-dismiss="modal" onclick="openModalHistoryAdjunciones($('#id_embalse_aux').text());">Historial de Adjunciones</button>
@@ -352,7 +354,9 @@
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
                 <h3 class="font-weight-bolder text-primary text-gradient title"></h3>
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
                 <!--<p class="mb-0">Enter your email and password to register</p>-->
               </div>
               <div class="card-body pb-3">
@@ -469,7 +473,9 @@
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#add').modal('show');">X</button>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#add').modal('show');">
+                  <i class="fa fa-times"></i>
+                </button>
                 <h3 class="font-weight-bolder text-primary text-gradient mt-5 text-center title">Adjuntar Excel de Reportes</h3>
               </div>
               <div class="card-body pb-3">
@@ -524,7 +530,9 @@
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
                 <h3 class="font-weight-bolder text-primary text-gradient title">Historial de Adjunciones del Embalse</h3>
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#modal-details').modal('show');">X</button>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#modal-details').modal('show');">
+                  <i class="fa fa-times"></i>
+                </button>
               </div>
               <div class="card-body pb-3" id="body-history-excel">
                 
@@ -550,7 +558,9 @@
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
                 <h3 class="font-weight-bolder text-primary text-gradient title"></h3>
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
               </div>
               <div class="card-body pb-3">
 
@@ -1344,7 +1354,9 @@
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-center">
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
               </div>
 
               <div class="card-body pb-0 text-center mt-3">
@@ -1374,7 +1386,9 @@
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-center">
-                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
               </div>
 
               <div class="card-body pb-0 text-center mt-3">
