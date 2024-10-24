@@ -19,19 +19,27 @@ $batimetria = $bati->getBatimetria();
 
 function getMonthName($numero_mes_aux)
 {
-    if($numero_mes_aux == "") {
+    if ($numero_mes_aux == "") {
         $fecha_actual = getdate();
 
         $numero_mes = $fecha_actual['mon'];
-    }
-    else{
+    } else {
         $numero_mes = $numero_mes_aux;
     }
 
     $nombres_meses = array(
-        1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril",
-        5 => "Mayo", 6 => "Junio", 7 => "Julio", 8 => "Agosto",
-        9 => "Septiembre", 10 => "Octubre", 11 => "Noviembre", 12 => "Diciembre"
+        1 => "Enero",
+        2 => "Febrero",
+        3 => "Marzo",
+        4 => "Abril",
+        5 => "Mayo",
+        6 => "Junio",
+        7 => "Julio",
+        8 => "Agosto",
+        9 => "Septiembre",
+        10 => "Octubre",
+        11 => "Noviembre",
+        12 => "Diciembre"
     );
 
     $nombre_mes = $nombres_meses[$numero_mes];
@@ -360,7 +368,7 @@ $j = 0;
                             // This more specific font property overrides the global property
                             font: {
                                 size: 18,
-                                family:'Arial',
+                                family: 'Arial',
                             },
 
                         }
@@ -371,7 +379,7 @@ $j = 0;
                         fullSize: true,
                         font: {
                             size: 30,
-                            family:'Arial',
+                            family: 'Arial',
                         }
                     },
                     datalabels: {
@@ -381,7 +389,7 @@ $j = 0;
                             title: {
                                 font: {
                                     weight: 'bold',
-                                    family:'Arial',
+                                    family: 'Arial',
                                 }
                             },
                         },
@@ -395,23 +403,25 @@ $j = 0;
                                         if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo 'Semana ' . ($k + 1); ?>', <?php }
                                                                                                                 } ?>],
 
-ticks: {
-                                font: {
-                                    size: 14,
-                                    family:'Arial',
-                                },
-                            },},
+                        ticks: {
+                            font: {
+                                size: 14,
+                                family: 'Arial',
+                            },
+                        },
+                    },
                     x2: {
                         labels: [<?php for ($k = $l; $k < ($t * $sem); $k++) {
                                         if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo $fsemanas[$k]['fechas']; ?>', <?php }
                                                                                                                     } ?>],
 
-ticks: {
-                                font: {
-                                    size: 14,
-                                    family:'Arial',
-                                },
-                            },},
+                        ticks: {
+                            font: {
+                                size: 14,
+                                family: 'Arial',
+                            },
+                        },
+                    },
 
                     x3: {
                         border: {
@@ -424,13 +434,14 @@ ticks: {
                                         if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo round($array2[$k] - $array1[$k], 2) . " Hm³"; ?>', <?php }
                                                                                                                                         } ?>],
 
-ticks: {
-                                font: {
-                                    size: 14,
-                                    family:'Arial',
-                                    weight: 'bold',
-                                },
-                            },},
+                        ticks: {
+                            font: {
+                                size: 14,
+                                family: 'Arial',
+                                weight: 'bold',
+                            },
+                        },
+                    },
 
 
                     y: {
@@ -439,7 +450,7 @@ ticks: {
                             text: 'Volumen (Hm³)',
                             font: {
                                 size: 16,
-                                family:'Arial',
+                                family: 'Arial',
                                 weight: 'bold',
                             },
                         },
@@ -463,7 +474,7 @@ ticks: {
                         ticks: {
                             font: {
                                 size: 14,
-                                family:'Arial',
+                                family: 'Arial',
                             },
                         },
 
@@ -483,10 +494,10 @@ ticks: {
     $fechaObjeto = DateTime::createFromFormat("Y-m-d", $fecha2);
     // Obtener el día, mes y año
     /*$dia = strftime("%d", $fechaObjeto->getTimestamp());
-    $mes = strftime("%B", $fechaObjeto->getTimestamp()); */// Nombre completo del mes
+    $mes = strftime("%B", $fechaObjeto->getTimestamp()); */ // Nombre completo del mes
     $dia = date('d', $fechaObjeto->getTimestamp());
     //$mes = date('F', $fechaObjeto->getTimestamp());
-    $mes = getMonthName( $fechaObjeto->format('n') );
+    $mes = getMonthName($fechaObjeto->format('n'));
 
     //$anio = strftime("%A",$fechaObjeto->getTimestamp());
     // Formatear la fecha como "DÍA DE MES"
@@ -495,9 +506,9 @@ ticks: {
     $fechaObjeto = DateTime::createFromFormat("Y-m-d", date('Y-m-d', strtotime('-9 days', strtotime($fecha2))));
     // Obtener el día, mes y año
     /*$dia = strftime("%d", $fechaObjeto->getTimestamp());
-    $mes = strftime("%B", $fechaObjeto->getTimestamp()); */// Nombre completo del mes
+    $mes = strftime("%B", $fechaObjeto->getTimestamp()); */ // Nombre completo del mes
     $dia = date('d', $fechaObjeto->getTimestamp());
-    $mes = getMonthName( $fechaObjeto->format('n') );
+    $mes = getMonthName($fechaObjeto->format('n'));
 
     //$anio = strftime("%A",$fechaObjeto->getTimestamp());
     // Formatear la fecha como "DÍA DE MES"
@@ -525,7 +536,7 @@ ticks: {
                 ctx.moveTo(left, y.getPixelForValue(yvalue));
                 ctx.lineTo(right, y.getPixelForValue(yvalue));
                 ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                ctx.fillText(cota + ": " + yvalue + " (Hm³)", right*4.2/6, y.getPixelForValue(yvalue) + h);
+                ctx.fillText(cota + ": " + yvalue + " (Hm³)", right * 4.2 / 6, y.getPixelForValue(yvalue) + h);
                 ctx.stroke();
             });
 
@@ -645,26 +656,26 @@ ticks: {
                 axis: 'x',
             },
             layout: {
-                        padding: 10,
-                    },
+                padding: 10,
+            },
             plugins: {
                 arbitra: {
 
 
                     lines: [{
-                        yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
                             cota: "Volumen mínimo",
                             color: 'red',
                             h: -10,
                         },
                         {
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1],2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
                             cota: "Volumen normal",
                             color: 'green',
                             h: 15,
                         },
                         {
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1],2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
                             cota: "Volumen máximo",
                             color: 'blue',
                             h: -8,
@@ -689,7 +700,7 @@ ticks: {
                     fullSize: true,
                     font: {
                         size: 30,
-                        family:'Arial',
+                        family: 'Arial',
                     }
                 },
 
@@ -702,7 +713,7 @@ ticks: {
                         text: '',
                         font: {
                             size: 18,
-                            family:'Arial',
+                            family: 'Arial',
                         },
                     },
                     type: 'time',
@@ -724,7 +735,7 @@ ticks: {
                         },
                         font: {
                             size: 18,
-                            family:'Arial',
+                            family: 'Arial',
                         },
                     },
                     grid: {
@@ -739,7 +750,7 @@ ticks: {
                         text: 'Volumen(Hm³)',
                         font: {
                             size: 20,
-                            family:'Arial',
+                            family: 'Arial',
                             weight: 'bold',
                         },
                     },
@@ -759,7 +770,7 @@ ticks: {
                     ticks: {
                         font: {
                             size: 14,
-                            family:'Arial',
+                            family: 'Arial',
                         },
                     },
                 },
@@ -836,8 +847,8 @@ ticks: {
                 axis: 'x',
             },
             layout: {
-                        padding: 10,
-                    },
+                padding: 10,
+            },
             plugins: {
                 arbitra: {
 
@@ -849,13 +860,13 @@ ticks: {
                             h: 15,
                         },
                         {
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1],2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
                             cota: "Volumen normal",
                             color: 'green',
                             h: 15,
                         },
                         {
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1],2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
                             cota: "Volumen máximo",
                             color: 'blue',
                             h: -8,
@@ -876,11 +887,11 @@ ticks: {
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . getMonthName("")." del ".date('Y'); ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . getMonthName("") . " del " . date('Y'); ?>',
                     fullSize: true,
                     font: {
                         size: 30,
-                        family:'Arial',
+                        family: 'Arial',
                     }
                 },
 
@@ -915,7 +926,7 @@ ticks: {
                         },
                         font: {
                             size: 12,
-                            family:'Arial',
+                            family: 'Arial',
                         },
                     },
                     grid: {
@@ -930,7 +941,7 @@ ticks: {
                         text: 'Volumen(Hm³)',
                         font: {
                             size: 20,
-                            family:'Arial',
+                            family: 'Arial',
                             weight: 'bold',
                         },
                     },
@@ -955,7 +966,7 @@ ticks: {
                     ticks: {
                         font: {
                             size: 14,
-                            family:'Arial',
+                            family: 'Arial',
                         },
                     },
                 },
@@ -985,7 +996,7 @@ ticks: {
                             $max = $embalse[0]["cota_max"];
                             while ($j < count($datos_embalses)) {
 
-                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[0]["id_embalse"] == $datos_embalses[$j]["id_embalse"])&& (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M",strtotime($fecha2)))) {
+                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[0]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M", strtotime($fecha2)))) {
 
 
 
@@ -1031,26 +1042,26 @@ ticks: {
                 axis: 'x',
             },
             layout: {
-                        padding: 10,
-                    },
+                padding: 10,
+            },
             plugins: {
                 arbitra: {
 
 
                     lines: [{
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
                             cota: "Volumen mínimo",
                             color: 'red',
                             h: -10,
                         },
                         {
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1],2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
                             cota: "Volumen normal",
                             color: 'green',
                             h: 15,
                         },
                         {
-                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1],2); ?>,
+                            yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
                             cota: "Volumen máximo",
                             color: 'blue',
                             h: -8,
@@ -1071,11 +1082,11 @@ ticks: {
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde el " . $fechaFormateada2 . " al " . $fechaFormateada." del ".date('Y'); ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde el " . $fechaFormateada2 . " al " . $fechaFormateada . " del " . date('Y'); ?>',
                     fullSize: true,
                     font: {
                         size: 26,
-                        family:'Arial',
+                        family: 'Arial',
                     }
                 },
 
@@ -1088,7 +1099,7 @@ ticks: {
                         text: '',
                         font: {
                             size: 18,
-                            family:'Arial',
+                            family: 'Arial',
                         },
                     },
                     type: 'time',
@@ -1112,7 +1123,7 @@ ticks: {
                         },
                         font: {
                             size: 18,
-                            family:'Arial',
+                            family: 'Arial',
                         },
                     },
                     grid: {
@@ -1127,7 +1138,7 @@ ticks: {
                         text: 'Volumen(Hm³)',
                         font: {
                             size: 20,
-                            family:'Arial',
+                            family: 'Arial',
                             weight: 'bold',
                         },
                     },
@@ -1147,7 +1158,7 @@ ticks: {
                     ticks: {
                         font: {
                             size: 14,
-                            family:'Arial',
+                            family: 'Arial',
                         },
                     },
                 },

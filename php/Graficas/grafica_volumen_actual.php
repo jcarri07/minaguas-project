@@ -17,14 +17,22 @@ $año = date('Y');
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
-    $res = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha),(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND estatus = 'activo' AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
-    e.nombre_embalse, (SELECT cota_actual 
-                       FROM datos_embalse h 
-                       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
+    $res = mysqli_query($conn, "WITH ultimas_fechas AS (
+    SELECT id_embalse, MAX(fecha) AS max_fecha
+    FROM datos_embalse
+    WHERE estatus = 'activo' 
+    AND cota_actual <> 0
+    GROUP BY id_embalse
+    
+)
+SELECT e.id_embalse, 
+       e.nombre_embalse, 
+       d.cota_actual, 
+       uf.max_fecha
 FROM embalses e
-LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+LEFT JOIN ultimas_fechas uf ON e.id_embalse = uf.id_embalse
+LEFT JOIN datos_embalse d ON e.id_embalse = d.id_embalse AND d.fecha = uf.max_fecha AND d.estatus = 'activo'
 WHERE e.estatus = 'activo'
-GROUP BY id_embalse 
 ORDER BY e.nombre_embalse ASC;");
     $count = mysqli_num_rows($res);
     if ($count >= 1) {
@@ -65,11 +73,11 @@ ORDER BY e.nombre_embalse ASC;");
                     label: 'Embalses',
                     data: {
                         datasets: [
-
+                            
                             <?php
 
                             $j = 0;
-
+                            $sum = [];
                             while ($j < count($datos_embalses)) {
                                 if ($datos_embalses[$j]["cota_actual"] != NULL) {
                                     $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
@@ -80,41 +88,41 @@ ORDER BY e.nombre_embalse ASC;");
                                     $max = $bati->volumenMaximo();
                                     $nor = $bati->volumenNormal() != 0 ? $bati->volumenNormal() : 100;
                                     if (($x - $min) <= 0) {
-                                        $sum = 0;
+                                        $sum[$j] = 0;
                                     } else {
-                                        $sum = $x - $min;
+                                        $sum[$j] = $x - $min;
                                     }
-                                    $div = ($nor - $min) != 0? ($nor - $min):1;
-                                    if ($x == 0 || ((abs(($sum)) * (100 / $div)) >= 0 && (abs(($sum)) * (100 / $div)) < 30)) {
+                                    $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
+                                    if ($x == 0 || ((abs(($sum[$j])) * (100 / $div)) >= 0 && (abs(($sum[$j])) * (100 / $div)) < 30)) {
                                         echo "#fd0200',";
                                     }; //rojo
-                                    if ((abs(($sum)) * (100 / $div)) >= 30 && (abs(($sum)) * (100 / $div)) < 60) {
+                                    if ((abs(($sum[$j])) * (100 / $div)) >= 30 && (abs(($sum[$j])) * (100 / $div)) < 60) {
                                         echo "#72dffd',";
                                     }; //anaranjado
-                                    /*if ((abs(($sum)) * (100 / $div)) > 35 && (abs(($sum)) * (100 / $div)) <= 45) {
+                                    /*if ((abs(($sum[$j])) * (100 / $div)) > 35 && (abs(($sum[$j])) * (100 / $div)) <= 45) {
                                         echo "#f1d710',";
                                     };*/ //amarillo
-                                    if ((abs(($sum)) * (100 / $div)) >= 60 && (abs(($sum)) * (100 / $div)) < 90) {
+                                    if ((abs(($sum[$j])) * (100 / $div)) >= 60 && (abs(($sum[$j])) * (100 / $div)) < 90) {
                                         echo "#0066eb',";
                                     }; //verde
-                                    if ((abs(($sum)) * (100 / $div)) >= 90 && (abs(($sum)) * (100 / $div)) <= 100) {
+                                    if ((abs(($sum[$j])) * (100 / $div)) >= 90 && (abs(($sum[$j])) * (100 / $div)) <= 100) {
                                         echo "#3ba500',";
                                     }; //azul
-                                    if ((abs(($sum)) * (100 / $div)) > 100) {
+                                    if ((abs(($sum[$j])) * (100 / $div)) > 100) {
                                         echo "#55fe01',";
                                     }; //rojo
-                                    echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs(($sum)) * (100 / $div)), 0) . "%)',
+                                    echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs(($sum[$j])) * (100 / $div)), 0) . "%)',
                                         data: [";
 
                             ?> {
                                         y: '',
-                                        x: <?php echo ($sum); ?>,
+                                        x: <?php echo ($sum[$j]); ?>,
                                     },
                             <?php
 
 
                                     $j++;
-                                    echo "],borderWidth:1,categoryPercentage:1,barPercentage: 0.7,},";
+                                    echo "],borderWidth:1,categoryPercentage:1,barPercentage: 0.9,},";
                                 } else {
                                     echo "{backgroundColor: '#fd0200',";
                                     echo "label:'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (0%)',
@@ -131,13 +139,13 @@ ORDER BY e.nombre_embalse ASC;");
 
                         responsive: true,
                         maintainAspectRatio: false,
-                        indexAxis:'y',
+                        indexAxis: 'y',
                         interaction: {
                             intersect: false,
                             axis: 'y',
                         },
-                        elements:{
-                            borderWidth:5,
+                        elements: {
+                            borderWidth: 5,
                         },
                         plugins: {
 
@@ -191,11 +199,11 @@ ORDER BY e.nombre_embalse ASC;");
                         scales: {
 
                             x: {
-                                
+
                                 title: {
                                     display: true,
                                     text: 'Volumen (Hm³)',
-                                    
+
                                     font: {
                                         size: 16
                                     },
@@ -210,7 +218,7 @@ ORDER BY e.nombre_embalse ASC;");
                             },
                             y: {
 
-                                
+
                                 border: {
                                     display: false,
                                 },
@@ -218,7 +226,7 @@ ORDER BY e.nombre_embalse ASC;");
                                     font: {
                                         size: 14
                                     },
-                                    
+
                                 },
 
                             },
