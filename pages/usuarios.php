@@ -63,7 +63,7 @@ closeConection($conn);
                 </div>
                 <div class="mb-3 col-6">
                   <label>Cedula</label>
-                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula" required>
+                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{6-8}" name="cedula" required>
                 </div>
               </div>
               <label>Contraseña</label>
@@ -144,7 +144,7 @@ closeConection($conn);
                 </div>
                 <div class="mb-2 col-6">
                   <label>Cedula</label>
-                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="Ecedula" required>
+                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{6-8}" name="Ecedula" required>
                 </div>
 
               </div>
