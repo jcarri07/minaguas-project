@@ -310,7 +310,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -345,7 +345,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -465,7 +465,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 </div>
 
 
-<div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -521,7 +521,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="modal-history-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="modal-history-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -549,7 +549,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="select-anio-export-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="select-anio-export-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -773,6 +773,37 @@ require_once 'php/datos/vistas/morosos.php';
 
   $("#form").on("submit", function(event) {
     event.preventDefault();
+
+    var currentDateTime = new Date('<?php echo date("Y-m-d H:i:s"); ?>');
+    var fecha_input = $("#fecha").val();
+    var hora_input = $("#hora").val();
+
+    if (!fecha_input || !hora_input || !this.valor_cota.value) {
+      $("#modal-generic .message").text("Complete el formulario.");
+      $("#modal-generic").modal("show");
+      return false;
+    }
+
+    var inputDateTime = new Date(fecha_input + 'T' + hora_input);
+    var inputDateOnly = inputDateTime.toISOString().split('T')[0];
+    var currentDateOnly = currentDateTime.toISOString().split('T')[0];
+
+    if (inputDateOnly === currentDateOnly) {
+      if (inputDateTime > currentDateTime) {
+        $("#modal-generic .message").text("La hora no puede ser mayor a la actual.");
+        $("#modal-generic").modal("show");
+        return false; 
+      }
+    }
+    else {
+      if (inputDateTime > currentDateTime) {
+        $("#modal-generic .message").text("La fecha no puede ser mayor a la actual.");
+        $("#modal-generic").modal("show");
+        return false; 
+      }
+    }
+    console.log("aja");
+    return false;
 
     var tipo_extraccion = [];
     var valor_extraccion = [];
