@@ -312,7 +312,7 @@ closeConection($conn);*/
             </div>
             <div class="col-12 flex-column justify-content-center align-items-center rounded bg-white border" style="width:100%;height:45%">
               <h4 class="d-flex justify-content-center align-items-center">
-                Variación desde el año <?php echo date('Y')-1;?>
+                Variación desde el año <?php echo date('Y') - 1; ?>
               </h4>
               <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-3">
@@ -364,8 +364,7 @@ closeConection($conn);*/
       <div class="container py-3 px-2" style="padding-left:20px;">
         <div class="card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;">
           <div class="card-header pb-0">
-            <h4 class="mb-0">Embalses</h4>
-            <p class="text-sm">Monitoreo del Volumen Útil Actual de los embalses registrados</p>
+            <h4 class="mb-0">Monitoreo del Volumen Útil Actual de los embalses registrados</h4>
           </div>
           <hr class="dark horizontal">
           <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:600px !important;">
@@ -417,10 +416,9 @@ closeConection($conn);*/
                 $result_embalses = $conn->query($sql_embalses);
                 while ($row_embalse = $result_embalses->fetch_assoc()) {
                   echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
-                  
                 }
                 closeConection($conn);
-                
+
                 ?>
               </select>
 

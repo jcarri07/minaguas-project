@@ -1,15 +1,11 @@
-
-
-
-
 <div class="container-fluid py-4">
     <div class="row">
-        
+
         <div class="col-lg-12">
             <div class="card h-100 mb-3">
                 <div class="card-header pb-0">
-                    <h6 class="">Respaldo</h6>
-                        <!--<div class="col-6 text-end">
+                    <h4 class="">Respaldo</h4>
+                    <!--<div class="col-6 text-end">
                     <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
                     </div>-->
                 </div>
@@ -31,7 +27,7 @@
 </div>
 
 <script>
-    function respaldo(){
+    function respaldo() {
         window.open('php/backup/modelos/backup-process.php', '_blank');
     }
 </script>
