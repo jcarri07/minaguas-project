@@ -26,7 +26,7 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin" ) {
           </div>
         </div>
         <div class="card-body">
-          <p class="text-uppercase text-sm">User Information</p>
+          <p class="text-uppercase text-sm">Información de Usuario</p>
           <form id="form" role="form">
             <div class="mb-3">
               <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux;?>>

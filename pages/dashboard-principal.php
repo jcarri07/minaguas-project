@@ -346,9 +346,8 @@ closeConection($conn);*/
         <div class=" d-flex flex-row flex-wrap justify-content-around gap-2 pb-2" id="contain-charts">
           <div class="col-12 pb-2 pt-1">
 
-            <h4 class="mb-0">Mapa</h4>
-            <p class="text-sm">Indicador de Porcentaje y Abastecimiento de los embalses</p>
-
+            <h4 class="mb-0">MAPA DE CONDICIONES DE ALMACENAMIENTO Y TIEMPOS DE ABASTECIMIENTO</h4>
+            
           </div>
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 700px;">
             <!-- ]  <div id="mapa-container"> -->
