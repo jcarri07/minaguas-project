@@ -57,9 +57,11 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
                       </div-->
         <div id="con" class="row">
           <div class="mb-3 col-6">
+          <label>Contraseña</label>
             <input type="password" class="form-control" placeholder="Contraseña Anterior" aria-label="Password" name="confirmar" Value="" required>
           </div>
           <div class="mb-3 col-6">
+          <label>Nueva Contraseña</label>
             <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="confirmar" name="password" Value="" required>
           </div>
 
