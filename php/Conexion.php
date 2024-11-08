@@ -16,7 +16,7 @@ $fullPath = getcwd();
 if (contiene_subcadena($fullPath, "C:")) {
     $host = "localhost";
     $user = "root";
-    $pass = "root";
+    $pass = "";
     $dbname = "minagua_db";
 } else {
     $host = "localhost";
