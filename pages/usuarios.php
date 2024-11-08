@@ -148,11 +148,11 @@ closeConection($conn);
               </div>
               <div class="row ">
                 <div class="mb-2 col-6">
-                  <label>Telefono</label>
+                  <label>Teléfono</label>
                   <input type="text" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" name="Etelefono" required >
                 </div>
                 <div class="mb-2 col-6">
-                  <label>Cedula</label>
+                  <label>Cédula</label>
                   <input type="text" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" name="Ecedula" required>
                 </div>
 
