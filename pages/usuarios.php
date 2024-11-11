@@ -43,10 +43,10 @@ closeConection($conn);
             <!--<p class="mb-0">Enter your email and password to register</p>-->
           </div>
           <div class="card-body pb-3">
-            <form id="form" role="form">
+            <form id="form" role="form" >
               <div class="mb-3">
                 <label>Nombre(s)</label>
-                <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" required>
+                <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" required>
               </div>
               <div class="mb-3">
                 <label>Apellido(s)</label>
@@ -54,16 +54,16 @@ closeConection($conn);
               </div>
               <div class="mb-3">
                 <label>Correo</label>
-                <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required>
+                <input type="email" class="form-control" placeholder="usuario@correo.com" aria-label="Email" name="email"  required>
               </div>
               <div class="row ">
                 <div class="mb-3 col-6">
                   <label>Telefono</label>
-                  <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" name="telefono" required>
+                  <input type="text" class="form-control" id="telefono" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" name="telefono" required>
                 </div>
                 <div class="mb-3 col-6">
                   <label>Cedula</label>
-                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{6-8}" name="cedula" required>
+                  <input type="text" class="form-control" id="cedula" placeholder="12345678" aria-label="cedula" min="0" pattern="[0-9]{5,8}" name="cedula" required>
                 </div>
               </div>
               <label>Contraseña</label>
@@ -127,7 +127,7 @@ closeConection($conn);
             <form id="form2" role="form">
               <div class="mb-2">
                 <label>Nombre(s)</label>
-                <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="Enombres" required>
+                <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="Enombres" required>
               </div>
               <div class="mb-2">
                 <label>Apellido(s)</label>
@@ -135,16 +135,16 @@ closeConection($conn);
               </div>
               <div class="mb-2">
                 <label>Correo</label>
-                <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="Eemail" required>
+                <input type="email" class="form-control" placeholder="usuario@correo.com" aria-label="Email" name="Eemail" required>
               </div>
               <div class="row ">
                 <div class="mb-2 col-6">
                   <label>Telefono</label>
-                  <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" name="Etelefono" required>
+                  <input type="text" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" name="Etelefono" required >
                 </div>
                 <div class="mb-2 col-6">
                   <label>Cedula</label>
-                  <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{6-8}" name="Ecedula" required>
+                  <input type="text" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" name="Ecedula" required>
                 </div>
 
               </div>
@@ -684,6 +684,7 @@ closeConection($conn);
             console.log("err2");
           }
         });
+      
 
     });
 
