@@ -37,7 +37,7 @@ if ($count >= 1) {
                     <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Apellido(s)</th>
                     <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Email</th>
                     <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Tipo</th>
-                    <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Ultima Entrada</th>
+                    <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Última Entrada</th>
                     <th class="text-uppercase text-xxs font-weight-bolder  text-center">Opciones</th>
                   </tr>
                 </thead>
@@ -156,7 +156,7 @@ if ($count >= 1) {
               </div>
 
               <div class="dt-responsive table-responsive pb-3">
-                <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">Ningun Usuario Registrado</h2>
+                <h2 class="mb-1 text-dark font-weight-bold text-center mt-4">Ningún Usuario Registrado</h2>
               </div>
 
             </div>
@@ -198,7 +198,7 @@ if ($count >= 1) {
                       <th class="text-uppercase text-xxs font-weight-bolder  ps-2">Apellido(s)</th>
                       <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Email</th>
                       <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Tipo</th>
-                      <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Ultima Entrada</th>
+                      <th class="text-uppercase text-xxs font-weight-bolder  ps-2 hide-cell">Última Entrada</th>
                       <th class="text-uppercase text-xxs font-weight-bolder  text-center">Opciones</th>
                     </tr>
                   </thead>
