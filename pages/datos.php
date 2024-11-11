@@ -501,27 +501,6 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 </div>
 
 
-<<<<<<< HEAD
-<div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content">
-      <div class="modal-body p-0">
-        <div class="card card-plain">
-          <div class="card-header pb-0 text-left">
-            <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#add').modal('show');">X</button>
-            <h3 class="font-weight-bolder text-primary text-gradient mt-5 text-center title">Adjuntar Excel de Reportes</h3>
-          </div>
-          <div class="card-body pb-3">
-
-            <form id="form-add-data-old">
-              <div class="form-group col-sm-12">
-                <span style="color: red; margin: 0 2px 0 -5px;">*</span><label for="file" class="form-label">Archivo</label>
-                <input type="file" id="file" accept=".xlsx, .xls" class="form-control input_file_oculto" oninvalid="setCustomValidity('Debe cargar un archivo')">
-                <div class="form-control button_fantasma">
-                  <span></span>
-                  <button type="button" class="btn btn-primary">Cargar Archivo</button>
-                </div>
-=======
     <div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -532,7 +511,6 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                   <i class="fa fa-times"></i>
                 </button>
                 <h3 class="font-weight-bolder text-primary text-gradient mt-5 text-center title">Adjuntar Excel de Reportes</h3>
->>>>>>> f65d46e8b823e27aebdf7a93b4a457bbe37298f5
               </div>
               <div class="text-center">
                 <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="$('#add').modal('show');">Atrás</button>
