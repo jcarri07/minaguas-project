@@ -155,7 +155,7 @@
           <div class="card-header pb-0">
             <!-- <div class="row"> -->
             <!-- <div class="col-6 d-flex align-items-center"> -->
-            <h6 class="">Embalses</h6>
+            <h4 class="">Embalses</h4>
             <!-- </div> -->
             <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
