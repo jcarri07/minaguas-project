@@ -4,7 +4,7 @@
         <div class="col-lg-12">
             <div class="card h-100 mb-3">
                 <div class="card-header pb-0">
-                    <h4 class="">Respaldo</h4>
+                    <h4 class="">RESPALDO</h4>
                     <!--<div class="col-6 text-end">
                     <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
                     </div>-->
