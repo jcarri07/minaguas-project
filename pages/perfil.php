@@ -20,7 +20,7 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
     <div class="card col-md-6">
       <div class="card-header pb-0">
         <div class="d-flex">
-          <p class="mb-0 mt-1">EDITAR PERFIL</p>
+          <h4 class="mb-0 mt-1">EDITAR PERFIL</h4>
           <button type="button" id="edit" class="btn btn-primary btn-sm ms-auto">Guardar</button>
 
         </div>
@@ -28,29 +28,29 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
           <p class="text-uppercase text-sm">Información de Usuario</p>
           <form id="form" role="form">
             <div class="mb-3">
-              <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux;?>>
+              <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux; ?>>
             </div>
             <div class="mb-3 col-6">
               <input type="text" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula" value="<?php echo $_SESSION["Cedula"] ?>" required <?php echo $aux; ?>>
             </div>
-          </div>
-          <div class="">
-            <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula2" value="<?php echo $_SESSION["Cedula"] ?>" hidden>
-          </div>
-          <!--div class="mb-3">
+        </div>
+        <div class="">
+          <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula2" value="<?php echo $_SESSION["Cedula"] ?>" hidden>
+        </div>
+        <!--div class="mb-3">
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
                       </div-->
-          <div id="con" class="row">
-            <div class="mb-3 col-6">
-              <input type="password" class="form-control" placeholder="Contraseña Anterior" aria-label="Password" name="confirmar" Value="" required>
-            </div>
-            <div class="mb-3 col-6">
-              <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="confirmar" name="password" Value="" required>
-            </div>
-
+        <div id="con" class="row">
+          <div class="mb-3 col-6">
+            <input type="password" class="form-control" placeholder="Contraseña Anterior" aria-label="Password" name="confirmar" Value="" required>
+          </div>
+          <div class="mb-3 col-6">
+            <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="confirmar" name="password" Value="" required>
           </div>
 
-          <!--div class="form-check form-check-info text-start">
+        </div>
+
+        <!--div class="form-check form-check-info text-start">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                   <label class="form-check-label" for="flexCheckDefault">
                     I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>

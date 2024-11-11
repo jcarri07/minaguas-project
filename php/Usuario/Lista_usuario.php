@@ -16,7 +16,7 @@ if ($count >= 1) {
 
         <div class="card h-auto pb-3">
           <div class="card-header pb-0">
-            <h6>USUARIOS REGISTRADOS</h6>
+            <h4>USUARIOS REGISTRADOS</h4>
           </div>
           <div class="card-body p-3 pb-0">
 
