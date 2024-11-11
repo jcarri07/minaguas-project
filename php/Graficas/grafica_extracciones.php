@@ -229,8 +229,9 @@ if ($count >= 1) {
                                     const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
                                         return accumulator + currentValue
                                     }, 0);
-                                    porcentaje = value / totalSum * 100
-                                    return `${porcentaje.toFixed(1)}%`;
+                                    porcentaje = (value / totalSum * 100).toFixed(1);
+                                    porcentaje = porcentaje.toLocaleString('de_DE');
+                                    return `${porcentaje}%`;
                                 }),
                                 labels: {
                                     title: {
