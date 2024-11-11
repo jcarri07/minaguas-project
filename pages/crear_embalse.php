@@ -498,7 +498,7 @@ date_default_timezone_set("America/Caracas");
 
                 <div class=" d-flex flex-column justify-content-between col-md-4 col-sm-12 ">
                   <div class="form-group group-estados d-flex flex-column">
-                    <label for="estado">Estados</label>
+                    <label for="estado">Estado</label>
                     <select multiple class="border wide" id="estado" name="estado[]">
                       <option value=""></option>
                       <?php
@@ -512,14 +512,14 @@ date_default_timezone_set("America/Caracas");
                     <label class="label-estados"></label>
                   </div>
                   <div class="form-group group-municipios d-flex flex-column">
-                    <label for="municipio">Municipios</label>
+                    <label for="municipio">Municipio</label>
                     <select multiple class="border wide" id="municipio" name="municipio[]">
                       <option value=""></option>
                     </select>
                     <label class="label-municipios"></label>
                   </div>
                   <div class="form-group group-parroquias d-flex flex-column">
-                    <label for="parroquia">Parroquias</label>
+                    <label for="parroquia">Parroquia</label>
                     <select multiple class="border wide" id="parroquia" name="parroquia[]">
                       <option value=""></option>
                     </select>
@@ -703,7 +703,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Ingrese el constructor">
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
-                  <label for="inicio_construccion">Año de inicio de construccion</label>
+                  <label for="inicio_construccion">Año de inicio de construcción</label>
                   <input type="text" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
@@ -761,7 +761,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="ancho_base">Ancho maximo de base (m)</label>
+                  <label for="ancho_base">Ancho máximo de base (m)</label>
                   <input type="text" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
                 </div>
               </div>
@@ -770,7 +770,7 @@ date_default_timezone_set("America/Caracas");
 
               <div class="row">
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="ubicacion_aliviadero">Ubicacion del aliviadero</label>
+                  <label for="ubicacion_aliviadero">Ubicación del aliviadero</label>
                   <input type="text" class="form-control" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicación del aliviadero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -778,7 +778,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="tipo_aliviadero" name="tipo_aliviadero" placeholder="Ingrese el tipo de aliviadero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="numero_compuertas_aliviadero">Numero de compuertas del aliviadero</label>
+                  <label for="numero_compuertas_aliviadero">Número de compuertas del aliviadero</label>
                   <input type="text" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el numero de compuertas del aliviadero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -786,7 +786,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="descarga_aliviadero">Descarga maxima (m³/s)</label>
+                  <label for="descarga_aliviadero">Descarga máxima (m³/s)</label>
                   <input type="text" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -807,7 +807,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="tipo_toma" name="tipo_toma" placeholder="Ingrese el tipo de obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="numero_compuertas_toma">Numero de compuertas de la obra de toma</label>
+                  <label for="numero_compuertas_toma">Número de compuertas de la obra de toma</label>
                   <input type="text" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el número de compuertas de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -815,7 +815,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="emergencia_toma" name="emergencia_toma" placeholder="Ingrese los mecanismos de emergencia de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="regulacion_toma">Mecanismos de regulacion de la obra de toma</label>
+                  <label for="regulacion_toma">Mecanismos de regulación de la obra de toma</label>
                   <input type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulación de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
@@ -828,7 +828,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
               </div>
 
-              <h3 class="pb-3 pt-3">Obra hidraulica:</h3>
+              <h3 class="pb-3 pt-3">Obra hidráulica:</h3>
 
               <div class="row">
                 <div class="col-xl-4 col-lg-6 form-group">
@@ -840,7 +840,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="tipo_conduccion" name="tipo_conduccion" placeholder="Ingrese el tipo de obra">
                 </div>
                 <div class="col-xl-4 col-lg-6 form-group">
-                  <label for="accion_conduccion">Accion requerida</label>
+                  <label for="accion_conduccion">Acción requerida</label>
                   <input type="text" class="form-control" id="accion_conduccion" name="accion_conduccion" placeholder="Ingrese la accion requerida">
                 </div>
               </div>
@@ -898,7 +898,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="poblacion_prote" name="poblacion_prote" placeholder="Ingrese la población protegida">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="area_riego">producción hidroeléctreica (MW)</label>
+                  <label for="area_riego">Producción hidroeléctrica (MW)</label>
                   <input type="text" class="form-control" id="produccion_hidro" name="produccion_hidro" placeholder="Ingrese la producción hifroelectrica">
                 </div>
                 <?php
@@ -994,7 +994,7 @@ date_default_timezone_set("America/Caracas");
                   <input style="display: none;" type="file" accept="image/png,image/jpeg" class="form-control" id="imagen_dos" name="imagen_dos" placeholder="Ingrese el nombre del archivo de imagenes o N/A si no aplica">
                 </div>
                 <div class="col-xl-4 col-md-6 col-lg-12 form-group">
-                  <label style="width: 100%;" for="imagen_tres" class="text-center">Area de la cuenca<br>
+                  <label style="width: 100%;" for="imagen_tres" class="text-center">Área de la cuenca<br>
                     <div style="width:100%; display:flex; justify-content:center;">
                       <div style="height: 250px; width:300px;" class="my-3"><img src="./assets/img/default-img.png" id="imagen_tres-preview" alt="" style="object-fit: cover;" width="100%" height="100%"></div>
                     </div>

@@ -53,7 +53,7 @@ date_default_timezone_set("America/Caracas");
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h4>Reportes - Embalses</h4>
+          <h4>REPORTES - EMBALSES</h4>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-4">
@@ -77,8 +77,8 @@ date_default_timezone_set("America/Caracas");
                     </td>
                     <?php
                     $OPERADOR_ID = $row['operador'];
-                    $OPERADOR = mysqli_fetch_assoc( mysqli_query($conn, "SELECT operador FROM operadores WHERE id_operador = '$OPERADOR_ID'"))['operador'];
-                    
+                    $OPERADOR = mysqli_fetch_assoc(mysqli_query($conn, "SELECT operador FROM operadores WHERE id_operador = '$OPERADOR_ID'"))['operador'];
+
                     ?>
                     <td class="align-middle text-center hide-cell">
                       <span class="mb-0 text-sm font-weight-bolder"><?php echo $OPERADOR ?></span>
@@ -266,24 +266,24 @@ date_default_timezone_set("America/Caracas");
 
 <script>
   // document.addEventListener('DOMContentLoaded', function() {
-    const btnsMonitoreo = document.querySelectorAll('.btn-monitoreo');
-    const id = document.getElementById('embalse_id');
+  const btnsMonitoreo = document.querySelectorAll('.btn-monitoreo');
+  const id = document.getElementById('embalse_id');
 
 
-    btnsMonitoreo.forEach(btn => {
-      console.log(btn)
-      btn.addEventListener('click', function() {
-        const embalseId = this.getAttribute('data-id');
-        id.innerHTML = `${embalseId}`;
-        const embalseNombre = this.getAttribute('data-nombre');
+  btnsMonitoreo.forEach(btn => {
+    console.log(btn)
+    btn.addEventListener('click', function() {
+      const embalseId = this.getAttribute('data-id');
+      id.innerHTML = `${embalseId}`;
+      const embalseNombre = this.getAttribute('data-nombre');
 
-        document.getElementById('modal').style.display = 'block';
-      });
+      document.getElementById('modal').style.display = 'block';
     });
+  });
 
-    document.querySelector('.close').addEventListener('click', function() {
-      document.getElementById('modal').style.display = 'none';
-    });
+  document.querySelector('.close').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'none';
+  });
   // });
 </script>
 
@@ -292,7 +292,7 @@ date_default_timezone_set("America/Caracas");
   //   document.getElementById('modal').style.display = 'block';
   // });
 
-  $(".openModal").on("click",function(e){
+  $(".openModal").on("click", function(e) {
     document.getElementById('modal').style.display = 'block';
   })
 

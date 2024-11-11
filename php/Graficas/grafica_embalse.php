@@ -15,7 +15,7 @@ $count = mysqli_num_rows($re);
     <div class="row">
         <div class="col-12 card">
         <div class="card-header pb-0">
-          <h4>Monitoreo de Carga de Datos</h4>
+          <h4>MONITOREO DE CARGA DE DATOS</h4>
         </div>
             <div class="row card-body">
                 <div id="prin" class="col-12">
