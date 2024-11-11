@@ -3,7 +3,8 @@ require_once '../Conexion.php';
 require_once '../batimetria.php';
 
 
-function getRandomColor() {
+function getRandomColor()
+{
     $letters = str_split('0123456789ABCDEF');
     $color = '#';
 
@@ -37,10 +38,11 @@ $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
-    $hace_30_dias = date("Y-m-d", strtotime(date("Y-m-d")."- 30 days"));
+    $hace_30_dias = date("Y-m-d", strtotime(date("Y-m-d") . "- 30 days"));
 
-    $almacenamiento_actual = mysqli_query($conn, 
-    "SELECT tce.nombre AS 'tipo_extraccion', 
+    $almacenamiento_actual = mysqli_query(
+        $conn,
+        "SELECT tce.nombre AS 'tipo_extraccion', 
         COALESCE(ROUND(suma_extracciones, 5), 0) AS 'suma'
             FROM (
             SELECT tce.id, tce.nombre
@@ -56,206 +58,205 @@ if ($count >= 1) {
             WHERE dem.fecha >= '$hace_30_dias' AND dem.estatus = 'activo'
             GROUP BY ce.id_tipo_codigo_extraccion
         ) AS sumas ON tce.id = sumas.id_tipo_codigo_extraccion
-        ORDER BY tce.id;");
+        ORDER BY tce.id;"
+    );
 
 
-$datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
+    $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 
 
 
-$colores_fixed_array = array(
-    "6" => "#109F2D",
-    "5" => "#7091DC",
-    "4" => "#703374",
-    "3" => "#F17900",
-    "2" => "#F5CD5A",
-    "1" => "#A6B748",
-    "0" => "#F28894",
-);
+    $colores_fixed_array = array(
+        "6" => "#109F2D",
+        "5" => "#7091DC",
+        "4" => "#703374",
+        "3" => "#F17900",
+        "2" => "#F5CD5A",
+        "1" => "#A6B748",
+        "0" => "#F28894",
+    );
 
-$colors = array();
+    $colors = array();
 
-$j = 0;
-$sumatoria_pa_condicion = 0;
-while ($j < count($datos_embalses)) {
-    $sumatoria_pa_condicion += $datos_embalses[$j]['suma'];
-    $color = getRandomColor();
-    $colors[$datos_embalses[$j]['tipo_extraccion']] = $colores_fixed_array[$j];
-    $j++;
-}
+    $j = 0;
+    $sumatoria_pa_condicion = 0;
+    while ($j < count($datos_embalses)) {
+        $sumatoria_pa_condicion += $datos_embalses[$j]['suma'];
+        $color = getRandomColor();
+        $colors[$datos_embalses[$j]['tipo_extraccion']] = $colores_fixed_array[$j];
+        $j++;
+    }
 
-$j = 0;
+    $j = 0;
 
 
-    if($sumatoria_pa_condicion > 0) {
+    if ($sumatoria_pa_condicion > 0) {
 ?>
-                
-    <canvas id="extracciones" class="border border-radius-lg"></canvas>
-    <script src="./assets/js/chartjs-plugin-datalabels@2.js"></script>
-            
 
-    <script>
-        $(document).ready(function() {
-            let extra = new Chart(extracciones, {
-            type: 'pie',
-            title: 'grafica',
+        <canvas id="extracciones" class="border border-radius-lg"></canvas>
+        <script src="./assets/js/chartjs-plugin-datalabels@2.js"></script>
 
-            data: {
-                labels: [<?php $j = 0; while ($j < count($datos_embalses)) {
-                    if($datos_embalses[$j]['suma'] >0){
-                echo '"'.$datos_embalses[$j]['tipo_extraccion'].'"';
-                $j++;
-                if ($j < count($datos_embalses)) {
-            echo ",";
-            };
-                    }else{
-                        $j++;
-                    }
 
-                    }; ?>],
-                datasets: [
+        <script>
+            $(document).ready(function() {
+                let extra = new Chart(extracciones, {
+                    type: 'pie',
+                    title: 'grafica',
 
-                    <?php
-                    $j = 0;
-                    
-                    echo '{
+                    data: {
+                        labels: [<?php $j = 0;
+                                    while ($j < count($datos_embalses)) {
+                                        if ($datos_embalses[$j]['suma'] > 0) {
+                                            echo '"' . $datos_embalses[$j]['tipo_extraccion'] . '"';
+                                            $j++;
+                                            if ($j < count($datos_embalses)) {
+                                                echo ",";
+                                            };
+                                        } else {
+                                            $j++;
+                                        }
+                                    }; ?>],
+                        datasets: [
+
+                            <?php
+                            $j = 0;
+
+                            echo '{
                             
                             label:[';
                             while ($j < count($datos_embalses)) {
-                                if($datos_embalses[$j]['suma'] >0){
-                                echo '"'.$datos_embalses[$j]['tipo_extraccion'].'"';
-                                $j++;
-                                if ($j < count($datos_embalses)) {
-                            echo ",";
-                            };
-                                    }else{
-                                        $j++;
-                                    }
-                            };
-                            $j = 0;
-                        echo'],
-                            data:[';
-                    while ($j < count($datos_embalses)) {
-                        if($datos_embalses[$j]['suma'] >0){
-                            echo $datos_embalses[$j]['suma'];
-                            $j++;
-                            if ($j < count($datos_embalses)) {
-                        echo ",";
-                        };
-                                }else{
+                                if ($datos_embalses[$j]['suma'] > 0) {
+                                    echo '"' . $datos_embalses[$j]['tipo_extraccion'] . '"';
+                                    $j++;
+                                    if ($j < count($datos_embalses)) {
+                                        echo ",";
+                                    };
+                                } else {
                                     $j++;
                                 }
-                    };
-                    echo "],
+                            };
+                            $j = 0;
+                            echo '],
+                            data:[';
+                            while ($j < count($datos_embalses)) {
+                                if ($datos_embalses[$j]['suma'] > 0) {
+                                    echo $datos_embalses[$j]['suma'];
+                                    $j++;
+                                    if ($j < count($datos_embalses)) {
+                                        echo ",";
+                                    };
+                                } else {
+                                    $j++;
+                                }
+                            };
+                            echo "],
                     backgroundColor:[";
-                $j = 0;
-                /*while ($j < count($colores)) {
+                            $j = 0;
+                            /*while ($j < count($colores)) {
                     echo "'" . $colores[$j] . "'";
                     $j++;
                     if ($j < count($colores)) {
                         echo ",";
                     };
                 }*/
-                while($j < count($datos_embalses)) {
-                    //$color = getRandomColor();
-                    //$colors = [$color];
-                    if($datos_embalses[$j]['suma'] >0){
-                        echo "'" . $colors[$datos_embalses[$j]['tipo_extraccion']] . "'";
-                        $j++;
-                        if ($j < count($datos_embalses)) {
-                    echo ",";
-                    };
-                            }else{
-                                $j++;
+                            while ($j < count($datos_embalses)) {
+                                //$color = getRandomColor();
+                                //$colors = [$color];
+                                if ($datos_embalses[$j]['suma'] > 0) {
+                                    echo "'" . $colors[$datos_embalses[$j]['tipo_extraccion']] . "'";
+                                    $j++;
+                                    if ($j < count($datos_embalses)) {
+                                        echo ",";
+                                    };
+                                } else {
+                                    $j++;
+                                }
                             }
-                }
-                echo "]},";
+                            echo "]},";
 
 
-                ?>
+                            ?>
 
 
 
 
-                ],
-            },
-
-            options: {
-                animations: true,
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    intersect: false,
-                    axis: 'y',
-                },
-                layout: {
-                    padding: {
-                        top: 25,
-                        bottom: 25,
+                        ],
                     },
-                },
-                plugins: {
 
-                    legend: {
-                        position: 'bottom',
-
-                        labels: {
-                            padding: 5,
-                            display: true,
-                            // This more specific font property overrides the global property
-                            font: {
-                                weight: 'bold',
-                                size: 9,
-                            },
-
+                    options: {
+                        animations: true,
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {
+                            intersect: false,
+                            axis: 'y',
                         },
-                        display: false,
-                    },
-                    title: {
-                        display: false,
-                        text: 'Embalse',
-                        fullSize: true,
-                        font: {
-                            size: 30
-                        }
-                    },
-                    datalabels: {
-                        anchor: 'end',
-                        align: 'end',
-                        formatter: ((value, ctx) => {
-                            const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
-                                return accumulator + currentValue
-                            }, 0);
-                            porcentaje = value / totalSum * 100
-                            return `${porcentaje.toFixed(1)}%`;
-                        }),
-                        labels: {
+                        layout: {
+                            padding: {
+                                top: 25,
+                                bottom: 25,
+                            },
+                        },
+                        plugins: {
+
+                            legend: {
+                                position: 'bottom',
+
+                                labels: {
+                                    padding: 5,
+                                    display: true,
+                                    // This more specific font property overrides the global property
+                                    font: {
+                                        weight: 'bold',
+                                        size: 9,
+                                    },
+
+                                },
+                                display: false,
+                            },
                             title: {
+                                display: false,
+                                text: 'Embalse',
+                                fullSize: true,
                                 font: {
-                                    weight: 'bold',
-                                    size: 12,
-                                    family: 'Arial',
+                                    size: 30
                                 }
                             },
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'end',
+                                formatter: ((value, ctx) => {
+                                    const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
+                                        return accumulator + currentValue
+                                    }, 0);
+                                    porcentaje = value / totalSum * 100
+                                    return `${porcentaje.toFixed(1)}%`;
+                                }),
+                                labels: {
+                                    title: {
+                                        font: {
+                                            weight: 'bold',
+                                            size: 12,
+                                            family: 'Arial',
+                                        }
+                                    },
+                                },
+                            }
+
                         },
-                    }
 
-                },
+                    },
+                    plugins: [ChartDataLabels],
 
-            },
-            plugins: [ChartDataLabels],
+                });
 
-        });
-            
-        });
-        
-    </script>
-<?php 
+            });
+        </script>
+<?php
     } else {
         echo "<h4 class='text-center' style='margin: 118px 0;'>No hay cargas de extracciones <br> recientes.</h4>";
     }
-
-}//Fin if de inameh
+} //Fin if de inameh
 
 
 
@@ -264,12 +265,12 @@ closeConection($conn); ?>
 
 
 <script>
-    var datos_embalse = <?php echo json_encode($datos_embalses);?>;
-    var colors2 = <?php echo json_encode ($colors);?>;
+    var datos_embalse = <?php echo json_encode($datos_embalses); ?>;
+    var colors2 = <?php echo json_encode($colors); ?>;
 
     var string = "";
     var suma = 0;
-    for(var i = 0 ; i < datos_embalse.length ; i++) {
+    for (var i = 0; i < datos_embalse.length; i++) {
         string += '<div class="d-flex flex-row" style="margin-bottom: 2px;">';
         string += '     <div style="width: 20px; height: 10px; background:' + colors2[datos_embalse[i]['tipo_extraccion']] + ';">';
         string += '     </div>';
@@ -283,6 +284,5 @@ closeConection($conn); ?>
 
 
 
-    $("#title-4").html("<span class='text-center'>Extracciones de los Últimos 30 días <br> (" + new Intl.NumberFormat("de-DE").format(suma.toFixed(2)) + " x10<sup>3</sup>m<sup>3</sup>) </span>");
-
+    $("#title-4").html("<span class='text-center'>EXTRACCIONES DE LOS ÚLTIMOS 30 DÍAS<br> (" + new Intl.NumberFormat("de-DE").format(suma.toFixed(2)) + " x10<sup>3</sup>m<sup>3</sup>) </span>");
 </script>
