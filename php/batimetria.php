@@ -263,7 +263,7 @@ class Batimetria
     }
     public function cotaNormal()
     {
-        return number_format(floatval($this->cota_nor), 3, ".", ",");
+        return number_format(floatval($this->cota_nor), 3, ",", ".");
     }
     public function cotaMaxima()
     {
