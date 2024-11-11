@@ -254,7 +254,7 @@ if ($count >= 1) {
         </script>
 <?php
     } else {
-        echo "<h4 class='text-center' style='margin: 118px 0;'>No hay cargas de extracciones <br> recientes.</h4>";
+        echo "<h4 class='text-center' style='margin: 118px 0;'>NO HAY CARGAS DE EXTRACCIONES<br> recientes.</h4>";
     }
 } //Fin if de inameh
 
