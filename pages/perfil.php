@@ -26,27 +26,27 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin" ) {
           </div>
         </div>
         <div class="card-body">
-          <p class="text-uppercase text-sm">User Information</p>
+          <p class="text-uppercase text-sm">Información de Usuario</p>
           <form id="form" role="form">
             <div class="mb-3">
-              <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux;?>>
+              <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux;?>>
             </div>
             <div class="mb-3">
               <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" value="<?php echo $_SESSION["P_Apellido"] . ' ' . $_SESSION["S_Apellido"] ?>" required <?php echo $aux;?>>
             </div>
             <div class="mb-3">
-              <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" value="<?php echo $_SESSION["Correo"] ?>" required <?php echo $aux; ?>>
+              <input type="email" class="form-control" placeholder="usuario@correo.com" aria-label="Email" name="email" value="<?php echo $_SESSION["Correo"] ?>" required <?php echo $aux; ?>>
             </div>
             <div class="row ">
               <div class="mb-3 col-6">
-                <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="telefono" value="<?php echo $_SESSION["Telefono"] ?>" required>
+                <input type="text" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="telefono" value="<?php echo $_SESSION["Telefono"] ?>" required>
               </div>
               <div class="mb-3 col-6">
-                <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula" value="<?php echo $_SESSION["Cedula"] ?>" required <?php echo $aux; ?>>
+                <input type="text" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula" value="<?php echo $_SESSION["Cedula"] ?>" required <?php echo $aux; ?>>
               </div>
             </div>
             <div class="">
-              <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{8}" name="cedula2" value="<?php echo $_SESSION["Cedula"] ?>" hidden>
+              <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula2" value="<?php echo $_SESSION["Cedula"] ?>" hidden>
             </div>
             <!--div class="mb-3">
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
