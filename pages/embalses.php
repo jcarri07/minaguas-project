@@ -194,13 +194,15 @@
                           <!-- class="d-flex flex-column px-3 mt-2 mb-2" style="height: 100%;" -->
                           <div class="px-3">
                             <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
-                            <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; ?> </span> -->
+                            <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; 
+                                                        ?> </span> -->
                           </div>
                         </td>
                         <td style="vertical-align: middle;" class="hide-cell">
                           <div class="d-flex flex-column px-3">
-                            <?php $embal = new Batimetria($row["id_embalse"], $conn);  //$acumulativo += $embal->volumenDisponible();?>
-                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo number_format($embal->volumenDisponible(), 3,',','.') ?> <span style="font-size: 12px">hm</span>³</h6>
+                            <?php $embal = new Batimetria($row["id_embalse"], $conn);  //$acumulativo += $embal->volumenDisponible();
+                            ?>
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?> <span style="font-size: 12px">Hm</span>³</h6>
                             <!-- <span class="text-xs">20/12/2023</span> -->
                           </div>
                         </td>
@@ -220,7 +222,7 @@
                         <td>
                           <div class="d-flex align-items-center justify-content-center text-sm">
                             <a data-id="<?php echo $row['id_embalse']; ?>" class="show-embalse btn btn-link text-dark px-2 mb-0" href="?page=show"><i class="fas fa-eye text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Ver</span></a>
-                            <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0" ><i class="fas fa-pencil-alt text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
+                            <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-pencil-alt text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
                             <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-trash text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Eliminar</span></a>
                             <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
                           </div>
@@ -231,7 +233,8 @@
                     ?>
                   </tbody>
                 </table>
-                <div><?php // echo $acumulativo?></div>
+                <div><?php // echo $acumulativo
+                      ?></div>
               <?php
               } else {
               ?>
@@ -291,13 +294,14 @@
                           <td>
                             <div style="vertical-align: middle;" class="d-flex flex-column px-3">
                               <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['nombre_embalse'] ?> </h6>
-                              <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; ?> </span> -->
+                              <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; 
+                                                          ?> </span> -->
                             </div>
                           </td>
                           <td class="hide-cell">
                             <div class="d-flex flex-column px-3">
                               <?php $embal = new Batimetria($row["id_embalse"], $conn) ?>
-                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 3,',','.') ?><span style="font-size: 12px">hm</span>³</h6>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?> <span style="font-size: 12px">Hm</span>³</h6>
                               <!-- <span class="text-xs">20/12/2023</span> -->
                             </div>
                           </td>
@@ -341,7 +345,8 @@
         </div>
 
       <?php
-      } closeConection($conn);
+      }
+      closeConection($conn);
       ?>
     </div>
     <!--<div class="row">

@@ -259,15 +259,15 @@ class Batimetria
 
     public function cotaMinima()
     {
-        return number_format(floatval($this->cota_min), 3, ".", "");
+        return number_format(floatval($this->cota_min), 3, ",", ".");
     }
     public function cotaNormal()
     {
-        return number_format(floatval($this->cota_nor), 3, ".", "");
+        return number_format(floatval($this->cota_nor), 3, ".", ",");
     }
     public function cotaMaxima()
     {
-        return number_format(floatval($this->cota_max), 3, ".", "");
+        return number_format(floatval($this->cota_max), 3, ",", ".");
     }
 
     public function superficieMinima()

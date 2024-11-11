@@ -155,7 +155,7 @@ date_default_timezone_set("America/Caracas");
     font-weight: normal;
   }
 
-  .label-founded{
+  .label-founded {
     text-align: right;
     color: #ff8f8f;
     font-weight: normal;
@@ -226,6 +226,7 @@ date_default_timezone_set("America/Caracas");
     /* transform: translate(-50%, -50%); */
     z-index: 99999999;
   }
+
   #text-map {
     position: absolute;
     top: -55px;
@@ -278,42 +279,43 @@ date_default_timezone_set("America/Caracas");
     left: 50%;
   }
 
-  .founded{
+  .founded {
     border-color: #ff8f8f;
     outline: none;
     color: #ff8f8f
   }
-  .founded:focus{
-    color:red;
+
+  .founded:focus {
+    color: red;
     border-color: red;
   }
 
-#modal-operador, #modal-region{
-  /* width: 450px; */
-  width: auto;
-  height: 400px;
-  overflow-y: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-}
+  #modal-operador,
+  #modal-region {
+    /* width: 450px; */
+    width: auto;
+    height: 400px;
+    overflow-y: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 
-.div-opcion{
-  margin-left: 5px;
-  margin-right: 5px;
-}
+  .div-opcion {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 
-.div-opcion:hover{
-  border-radius: 0.125rem !important;
-  /* padding-left: 3px !important; */
-  background-color: #e6e6e6 !important;
-}
+  .div-opcion:hover {
+    border-radius: 0.125rem !important;
+    /* padding-left: 3px !important; */
+    background-color: #e6e6e6 !important;
+  }
 
 
-.expanded {
+  .expanded {
     height: 150px;
     /* padding: 10px; */
-}
-
+  }
 </style>
 
 
@@ -480,17 +482,17 @@ date_default_timezone_set("America/Caracas");
                   <div class=" form-group">
                     <label for="norte">Norte</label>
                     <div class="input-group">
-                      <input  type="text" class="form-control numero" id="norte" name="norte" placeholder="Norte">
+                      <input type="text" class="form-control numero" id="norte" name="norte" placeholder="Norte">
                       <span id="show-map" class="input-group-text show-map cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
                     </div>
                   </div>
                   <div class=" form-group">
                     <label for="este">Este</label>
-                    <input  type="text" class="form-control numero" id="este" name="este" placeholder="Este">
+                    <input type="text" class="form-control numero" id="este" name="este" placeholder="Este">
                   </div>
                   <div class=" form-group">
                     <label for="huso">Huso</label>
-                    <input  type="text" class="form-control numero" id="huso" name="huso" placeholder="Huso">
+                    <input type="text" class="form-control numero" id="huso" name="huso" placeholder="Huso">
                   </div>
                 </div>
 
@@ -552,7 +554,7 @@ date_default_timezone_set("America/Caracas");
                     <input type="text" class="form-control Vnumero" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
                   </div>
                   <div class=" form-group">
-                    <label for="vol_min">Volumen mínimo (hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
+                    <label for="vol_min">Volumen mínimo (Hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                   </div>
                   <div class=" form-group">
@@ -566,7 +568,7 @@ date_default_timezone_set("America/Caracas");
                     <input type="text" class="form-control Vnumero" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                   </div>
                   <div class=" form-group">
-                    <label for="vol_nor">Volumen normal (hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
+                    <label for="vol_nor">Volumen normal (Hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                   </div>
                   <div class=" form-group">
@@ -580,7 +582,7 @@ date_default_timezone_set("America/Caracas");
                     <input type="text" class="form-control Vnumero" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                   </div>
                   <div class=" form-group">
-                    <label for="vol_max">Volumen máximo (hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
+                    <label for="vol_max">Volumen máximo (Hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
                     <input type="text" class="form-control Vnumero" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                   </div>
                   <div class=" form-group">
@@ -595,7 +597,7 @@ date_default_timezone_set("America/Caracas");
                   <label for="operador">Operador</label>
                   <textarea readonly class="form-control Vrequerido" name="" id="operador" cols="30" rows="1" placeholder="Operador"></textarea>
                   <input readonly hidden type="text" class="form-control" id="operador-input" name="operador" placeholder="">
-                  <div id="modal-operador" class="bg-gray-200 rounded p-3 modal-absolute" style="">
+                  <div id="modal-operador" class="bg-gray-200 rounded p-3 modal-absolute">
 
                     <?php
                     while ($operador = mysqli_fetch_array($queryOperador)) {
@@ -637,7 +639,7 @@ date_default_timezone_set("America/Caracas");
 
                 <div class="col-md-3 col-sm-12">
                   <div class=" form-group">
-                    <label for="cap-util">Capacidad útil (hm³)</label>
+                    <label for="cap-util">Capacidad útil (Hm³)</label>
                     <input readonly type="text" class="form-control" id="cap-util" value="0">
                   </div>
                 </div>
@@ -659,7 +661,7 @@ date_default_timezone_set("America/Caracas");
                   <input type="text" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
-                  <label for="escurrimiento">Escurrimiento medio (hm³)</label>
+                  <label for="escurrimiento">Escurrimiento medio (Hm³)</label>
                   <input type="text" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
                 </div>
               </div>
@@ -1105,27 +1107,27 @@ date_default_timezone_set("America/Caracas");
     });
 
     $(input).on('dblclick', function() {
-        var $input = $(this);
-        var $div = $('<div contenteditable="true" class="editable-div"></div>')
-            .text($input.val())
-            .insertAfter($input)
-            .addClass($input.attr('class'));
+      var $input = $(this);
+      var $div = $('<div contenteditable="true" class="editable-div"></div>')
+        .text($input.val())
+        .insertAfter($input)
+        .addClass($input.attr('class'));
 
-        $input.hide();
-        $div.show().focus().addClass('expanded');
+      $input.hide();
+      $div.show().focus().addClass('expanded');
 
-        $div.on('blur', function() {
-            $input.val($div.text());
-            $div.remove();
-            $input.show().removeClass('expanded');
-        });
+      $div.on('blur', function() {
+        $input.val($div.text());
+        $div.remove();
+        $input.show().removeClass('expanded');
+      });
 
-        $div.on('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                $div.blur();
-            }
-        });
+      $div.on('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          $div.blur();
+        }
+      });
     });
 
   });
@@ -1819,8 +1821,10 @@ date_default_timezone_set("America/Caracas");
       if (campo.classList.contains('Viguales')) {
         let nombre_input = $(campo).val().trim().toLocaleLowerCase();
 
-        let busqueda = nombresEmbalses.filter((nombre) => { return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase() });
-        if (busqueda.length > 0){
+        let busqueda = nombresEmbalses.filter((nombre) => {
+          return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase()
+        });
+        if (busqueda.length > 0) {
           errorMessages.push("El nombre del Embalse '<b>" + nombre_input.charAt(0).toUpperCase() + nombre_input.slice(1) + "</b>'  ya está registrado.");
           if (!campo.classList.contains('input-error')) {
             campo.className += " input-error";
@@ -1859,17 +1863,19 @@ date_default_timezone_set("America/Caracas");
   let nombresEmbalses = <?php echo json_encode($nombresEmbalses) ?>;
   console.log(nombresEmbalses)
 
-  $("#embalse_nombre").on('input', function(){
+  $("#embalse_nombre").on('input', function() {
     let nombre_input = $(this).val().trim().toLocaleLowerCase();
 
-    let busqueda = nombresEmbalses.filter((nombre) => { return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase() });
-    if (busqueda.length > 0){
-      if(!$(this).hasClass("founded")){
+    let busqueda = nombresEmbalses.filter((nombre) => {
+      return nombre.trim().toLocaleLowerCase() == nombre_input.trim().toLocaleLowerCase()
+    });
+    if (busqueda.length > 0) {
+      if (!$(this).hasClass("founded")) {
         $(this).toggleClass("founded")
         $(".label-founded").toggleClass("no-visible")
       }
     } else {
-      if($(this).hasClass("founded")){
+      if ($(this).hasClass("founded")) {
         $(this).toggleClass("founded")
         $(".label-founded").toggleClass("no-visible")
       }
@@ -1893,7 +1899,7 @@ date_default_timezone_set("America/Caracas");
     let valorInput = input.value;
     const codigoTecla = event.key;
     console.log(input.id)
-    if(input.id == "huso" && (codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== 'Backspace'){
+    if (input.id == "huso" && (codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== 'Backspace') {
       event.preventDefault();
     }
     // Permitir solo números y una coma
@@ -1912,6 +1918,6 @@ date_default_timezone_set("America/Caracas");
     if (codigoTecla === '.' && valorInput.includes('.')) {
       event.preventDefault();
     }
-    
+
   }
 </script>

@@ -42,7 +42,7 @@ while ($row < count($datos_embalses)) {
 
     array_push($array, $datos_embalses[$row]["nombre_embalse"]);
 
-    $porcentaje = $emb->volumenDisponible() != 0 ? (($emb->volumenActualDisponible() * 100) / $emb->volumenDisponible()) : 0 ;
+    $porcentaje = $emb->volumenDisponible() != 0 ? (($emb->volumenActualDisponible() * 100) / $emb->volumenDisponible()) : 0;
 
     $icono = "i_";
 
@@ -51,13 +51,13 @@ while ($row < count($datos_embalses)) {
     // $abastecimiento = intval($abastecimiento);
     if (intval($abastecimiento) < 5) {
         $icono .= "rojo_";
-    } 
-     if (intval($abastecimiento) > 4 && intval($abastecimiento) < 9) {
+    }
+    if (intval($abastecimiento) > 4 && intval($abastecimiento) < 9) {
         $icono .= "naranja_";
-    } 
-     if (intval($abastecimiento) > 8 && intval($abastecimiento) < 13) {
+    }
+    if (intval($abastecimiento) > 8 && intval($abastecimiento) < 13) {
         $icono .= "amarillo_";
-    } 
+    }
     if (intval($abastecimiento) > 12) {
         $icono .= "verde_";
     }
@@ -76,7 +76,7 @@ while ($row < count($datos_embalses)) {
     }
 
     array_push($array, $icono);
-    array_push($array, number_format($porcentaje,2,",","."));
+    array_push($array, number_format($porcentaje, 2, ",", "."));
     // var_dump($array[3]);
     // Guardo el nombre del embalse
     // array_push($array, $row["nombre_embalse"]);
@@ -104,9 +104,9 @@ while ($row < count($datos_embalses)) {
         height: 700px;
     }
 
-    .leaflet-top.leaflet-left {
-        /* display: none; */
-    }
+    /* .leaflet-top.leaflet-left {
+        display: none;
+    } */
 
     .leaflet-popup-content-wrapper {
         text-align: center !important;

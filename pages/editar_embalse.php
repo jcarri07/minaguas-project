@@ -14,7 +14,7 @@ if (!isset($_SESSION["Id_usuario"])) {
 $id_embalse = "";
 if (isset($_SESSION['id_embalse'])) {
   $id_embalse = $_SESSION['id_embalse'];
-  echo $id_embalse;
+  // echo $id_embalse;
 }
 
 // var_dump($id_embalse);
@@ -695,7 +695,7 @@ function explodeBat($value, $i = null)
                   <input value="<?php echo stringFloat($embalse["cota_min"]) ?>" type="text" class="form-control Vnumero" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
                 </div>
                 <div class=" form-group">
-                  <label for="vol_min">Volumen mínimo (hm³)</label>
+                  <label for="vol_min">Volumen mínimo (Hm³)</label>
                   <input value="<?php echo stringFloat($embalse["vol_min"]) ?>" type="text" class="form-control Vnumero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                 </div>
                 <div class=" form-group">
@@ -709,7 +709,7 @@ function explodeBat($value, $i = null)
                   <input value="<?php echo stringFloat($embalse["cota_nor"]) ?>" type="text" class="form-control Vnumero" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                 </div>
                 <div class=" form-group">
-                  <label for="vol_nor">Volumen normal (hm³)</label>
+                  <label for="vol_nor">Volumen normal (Hm³)</label>
                   <input value="<?php echo stringFloat($embalse["vol_nor"]) ?>" type="text" class="form-control Vnumero" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                 </div>
                 <div class=" form-group">
@@ -723,7 +723,7 @@ function explodeBat($value, $i = null)
                   <input value="<?php echo stringFloat($embalse["cota_max"]) ?>" type="text" class="form-control Vnumero" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                 </div>
                 <div class=" form-group">
-                  <label for="vol_max">Volumen máximo (hm³)</label>
+                  <label for="vol_max">Volumen máximo (Hm³)</label>
                   <input value="<?php echo stringFloat($embalse["vol_max"]) ?>" type="text" class="form-control Vnumero" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                 </div>
                 <div class=" form-group">
@@ -800,7 +800,7 @@ function explodeBat($value, $i = null)
 
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
-                  <label for="cap-util">Capacidad útil (hm³)</label>
+                  <label for="cap-util">Capacidad útil (Hm³)</label>
                   <input readonly type="text" class="form-control" id="cap-util" value="0">
                 </div>
               </div>
@@ -822,7 +822,7 @@ function explodeBat($value, $i = null)
                 <input value="<?php echo $embalse["area_cuenca"]; ?>" type="text" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
-                <label for="escurrimiento">Escurrimiento medio (hm³)</label>
+                <label for="escurrimiento">Escurrimiento medio (Hm³)</label>
                 <input value="<?php echo $embalse["escurrimiento_medio"]; ?>" type="text" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
               </div>
             </div>
@@ -1471,29 +1471,29 @@ function explodeBat($value, $i = null)
     });
 
     $(input).on('dblclick', function() {
-        var $input = $(this);
-        var $div = $('<div contenteditable="true" class="editable-div"></div>')
-            .text($input.val())
-            .insertAfter($input)
-            .addClass($input.attr('class'));
+      var $input = $(this);
+      var $div = $('<div contenteditable="true" class="editable-div"></div>')
+        .text($input.val())
+        .insertAfter($input)
+        .addClass($input.attr('class'));
 
-        $input.hide();
-        $div.show().focus().addClass('expanded');
+      $input.hide();
+      $div.show().focus().addClass('expanded');
 
-        $div.on('blur', function() {
-            $input.val($div.text());
-            $div.remove();
-            $input.show().removeClass('expanded');
-        });
+      $div.on('blur', function() {
+        $input.val($div.text());
+        $div.remove();
+        $input.show().removeClass('expanded');
+      });
 
-        $div.on('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                $div.blur();
-            }
-        });
+      $div.on('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          $div.blur();
+        }
+      });
     });
-    
+
   });
 </script>
 
@@ -1678,7 +1678,8 @@ function explodeBat($value, $i = null)
               </table>
             </div>
         <?php }
-        }closeConection($conn); ?>
+        }
+        closeConection($conn); ?>
 
       </div>
       <div class="modal-footer">
@@ -2166,7 +2167,7 @@ function explodeBat($value, $i = null)
     let valorInput = input.value;
     const codigoTecla = event.key;
     console.log(input.id)
-    if(input.id == "huso" && (codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== 'Backspace'){
+    if (input.id == "huso" && (codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== 'Backspace') {
       event.preventDefault();
     }
     // Permitir solo números y una coma
@@ -2185,7 +2186,7 @@ function explodeBat($value, $i = null)
     if (codigoTecla === '.' && valorInput.includes('.')) {
       event.preventDefault();
     }
-    
+
   }
 
   function formatearNumero(input) {
