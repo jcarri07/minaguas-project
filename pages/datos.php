@@ -20,9 +20,9 @@ $fecha = date("Y-m-d");
 
 $sql = "SELECT DISTINCT em.id_embalse, 
             em.nombre_embalse,
-            GROUP_CONCAT(DISTINCT e.estado) AS estado,
+            /*GROUP_CONCAT(DISTINCT e.estado) AS estado,*/
             GROUP_CONCAT(DISTINCT m.municipio) AS municipio,
-            GROUP_CONCAT(DISTINCT p.parroquia) AS parroquia,
+            /*GROUP_CONCAT(DISTINCT p.parroquia) AS parroquia,*/
             em.id_encargado, (SELECT IF(COUNT(id_registro) > 0, 'si', 'no')
           FROM datos_embalse de
           WHERE FIND_IN_SET(de.id_embalse, em.id_embalse) AND
@@ -30,9 +30,9 @@ $sql = "SELECT DISTINCT em.id_embalse,
               fecha = '$fecha'
             ) AS reportado_hoy
           FROM embalses em 
-          LEFT JOIN estados e ON FIND_IN_SET(e.id_estado, em.id_estado) OR em.id_estado = '' 
+          /*LEFT JOIN estados e ON FIND_IN_SET(e.id_estado, em.id_estado) OR em.id_estado = '' */
           LEFT JOIN municipios m ON FIND_IN_SET(m.id_municipio, em.id_municipio) OR em.id_municipio = '' 
-          LEFT JOIN parroquias p ON FIND_IN_SET(p.id_parroquia, em.id_parroquia) OR em.id_parroquia = '' 
+          /*LEFT JOIN parroquias p ON FIND_IN_SET(p.id_parroquia, em.id_parroquia) OR em.id_parroquia = '' */
           WHERE em.estatus = 'activo' $add_where
           GROUP BY em.id_embalse, em.nombre_embalse, em.id_encargado;";
 
@@ -310,6 +310,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
+<<<<<<< HEAD
 <div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
@@ -318,6 +319,22 @@ while ($row = mysqli_fetch_array($query_codigos)) {
           <div class="card-header pb-0 text-left">
             <h3 class="font-weight-bolder text-primary text-gradient text-title">Historial de Extracciones</h3>
             <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+=======
+    <div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-primary text-gradient text-title">Historial de Extracciones</h3>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
+              
+                <div class="text-center">
+                  <button type="button" class="btn btn-success mt-4 mb-0" title="Historial de Todas la importaciones Datos de Excel (Parte Base)" data-bs-dismiss="modal" onclick="openModalHistoryAdjunciones($('#id_embalse_aux').text());">Historial de Adjunciones</button>
+                </div>
+>>>>>>> f65d46e8b823e27aebdf7a93b4a457bbe37298f5
 
             <div class="text-center">
               <button type="button" class="btn btn-success mt-4 mb-0" title="Historial de Todas la importaciones Datos de Excel (Parte Base)" data-bs-dismiss="modal" onclick="openModalHistoryAdjunciones($('#id_embalse_aux').text());">Historial de Adjunciones</button>
@@ -343,6 +360,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
+<<<<<<< HEAD
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
@@ -360,6 +378,28 @@ while ($row = mysqli_fetch_array($query_codigos)) {
               <div class="row">
                 <div class="col-md-12 text-center">
                   <button class="btn btn-success" data-bs-dismiss="modal" id="btn-open-modal-import-data" onclick="openModalAddDataOld();" type="button">Adjuntar Historial de Extracciones</button>
+=======
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-primary text-gradient title"></h3>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
+                <!--<p class="mb-0">Enter your email and password to register</p>-->
+              </div>
+              <div class="card-body pb-3">
+    <?php
+              if($_SESSION["Tipo"] == "Admin"||$_SESSION["Tipo"] == "SuperAdmin"){
+    ?>
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                      <button class="btn btn-success" data-bs-dismiss="modal" id="btn-open-modal-import-data" onclick="openModalAddDataOld();" type="button">Adjuntar Historial de Extracciones</button>
+                  </div>
+>>>>>>> f65d46e8b823e27aebdf7a93b4a457bbe37298f5
                 </div>
               </div>
             <?php
@@ -461,6 +501,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 </div>
 
 
+<<<<<<< HEAD
 <div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
@@ -480,6 +521,18 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                   <span></span>
                   <button type="button" class="btn btn-primary">Cargar Archivo</button>
                 </div>
+=======
+    <div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#add').modal('show');">
+                  <i class="fa fa-times"></i>
+                </button>
+                <h3 class="font-weight-bolder text-primary text-gradient mt-5 text-center title">Adjuntar Excel de Reportes</h3>
+>>>>>>> f65d46e8b823e27aebdf7a93b4a457bbe37298f5
               </div>
               <div class="text-center">
                 <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal" onclick="$('#add').modal('show');">Atrás</button>
@@ -590,6 +643,100 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                   Already have an account?
                   <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
                 </p>--->
+<<<<<<< HEAD
+=======
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="modal fade" id="modal-history-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-primary text-gradient title">Historial de Adjunciones del Embalse</h3>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal" onclick="$('#modal-details').modal('show');">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+              <div class="card-body pb-3" id="body-history-excel">
+                
+              </div>
+              <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="modal fade" id="select-anio-export-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-primary text-gradient title"></h3>
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+              <div class="card-body pb-3">
+
+                <form id="form-export-excel">
+                  <div class="row">
+                    <div class="col">
+                      <label>Seleccione el Año</label>
+                      <div class="input-group mb-4">
+                        <select class="form-select" name="anio_export_excel" id="anio_export_excel" required>
+                          <option value="">Seleccione</option>
+  <?php
+                        while($row = mysqli_fetch_array($query_anios)) {
+  ?>
+                          <option value="<?php echo $row['anio'];?>"><?php echo $row['anio'];?></option>
+  <?php
+                        }
+  ?>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 loaderParent">
+                      <div class="loader">
+                      </div>
+                      Por favor, espere
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="button" class="btn btn-secondary mt-4 mb-0 btn-edit" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn bg-gradient-primary mt-4 mb-0 btn-submit">Descargar</button>
+                  </div>
+                </form>
+              </div>
+              <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                <!--<p class="mb-4 mx-auto">
+                  Already have an account?
+                  <a href="javascrpt:;" class="text-primary text-gradient font-weight-bold">Guardar</a>
+                </p>--->
+              </div>
+            </div>
+>>>>>>> f65d46e8b823e27aebdf7a93b4a457bbe37298f5
           </div>
         </div>
       </div>
@@ -1319,6 +1466,7 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
     </div>
 -->
 
+<<<<<<< HEAD
 <div class="modal fade" id="modal-action" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
   <div class="modal-dialog modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -1327,6 +1475,18 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
           <div class="card-header pb-0 text-center">
             <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
           </div>
+=======
+    <div class="modal fade" id="modal-action" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-center">
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+>>>>>>> f65d46e8b823e27aebdf7a93b4a457bbe37298f5
 
           <div class="card-body pb-0 text-center mt-3">
             <h3 class="font-weight-bolder text-primary text-gradient message"></h3>
@@ -1349,6 +1509,7 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
   </div>
 </div>
 
+<<<<<<< HEAD
 <div class="modal fade" id="modal-generic" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
   <div class="modal-dialog modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -1357,6 +1518,18 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
           <div class="card-header pb-0 text-center">
             <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
           </div>
+=======
+    <div class="modal fade" id="modal-generic" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+      <div class="modal-dialog modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-center">
+                <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+>>>>>>> f65d46e8b823e27aebdf7a93b4a457bbe37298f5
 
           <div class="card-body pb-0 text-center mt-3">
             <h3 class="font-weight-bolder text-primary text-gradient message"></h3>

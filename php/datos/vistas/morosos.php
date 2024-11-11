@@ -29,7 +29,9 @@
                 <div class="card card-plain">
                     <div class="card-header pb-0 text-left">
                         <h3 class="font-weight-bolder text-primary text-gradient text-title">Morosos en Reportar</h3>
-                        <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+                        <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                        </button>
                     </div>
                     <div class="card-body pb-3">
                         <div class="row">

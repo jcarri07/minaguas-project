@@ -76,6 +76,7 @@ function editar($conn)
             $num_r = mysqli_num_rows($res);
             if ($num_r >= 1) {
                 echo 'existe_usuario';
+                closeConection($conn);
                 return;
             } else {
                 $num = 1;
@@ -87,6 +88,7 @@ function editar($conn)
         $num_r = mysqli_num_rows($res);
         if ($num_r >= 1) {
             echo 'existe_cedula';
+            closeConection($conn);
             return;
         } else {
             $num = 1;
@@ -99,6 +101,7 @@ function editar($conn)
                 $num_r = mysqli_num_rows($res);
                 if ($num_r >= 1) {
                     echo 'existe_usuario';
+                    closeConection($conn);
                     return;
                 } else {
                     $num = 1;
@@ -201,6 +204,7 @@ function editarU($conn)
             $num_r = mysqli_num_rows($res);
             if ($num_r >= 1) {
                 echo 'existe_usuario';
+                closeConection($conn);
                 return;
             } else {
                 $num = 1;
@@ -212,11 +216,12 @@ function editarU($conn)
         $num_r = mysqli_num_rows($res);
         if ($num_r >= 1) {
             echo 'existe_cedula';
+            closeConection($conn);
             return;
         } else {
             $num = 1;
 
-            if ($email == $result["Correo"]) {
+            if ($email == $result->Correo) {
 
                 $num = 1;
             } else {
@@ -224,6 +229,7 @@ function editarU($conn)
                 $num_r = mysqli_num_rows($res);
                 if ($num_r >= 1) {
                     echo 'existe_usuario';
+                    closeConection($conn);
                     return;
                 } else {
                     $num = 1;

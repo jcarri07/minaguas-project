@@ -355,20 +355,20 @@ if ($count >= 1) {
                             lines: [{
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
                                     cota: "Volumen mínimo",
-                                    color: 'black',
+                                    color: 'red',
                                     h: -10,
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
                                     cota: "Volumen normal",
-                                    color: 'black',
+                                    color: 'green',
                                     h: 15,
 
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
                                     cota: "Volumen máximo",
-                                    color: 'black',
+                                    color: 'blue',
                                     h: -5,
                                 }
                                 // Agrega más líneas según sea necesario
@@ -454,9 +454,9 @@ if ($count >= 1) {
                                         }
                                     }; ?>,
                             max: <?php if ($max > $embalses[$t]["cota_max"]) {
-                                        echo $bati->getByCota($año, $max)[1] + 200;
+                                        echo $bati->getByCota($año, $max)[1] + 10;
                                     } else {
-                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
+                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] +10;
                                     }; ?>,
                             border: {
                                 display: false,
@@ -576,20 +576,20 @@ if ($count >= 1) {
                             lines: [{
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
                                     cota: "Volumen mínimo",
-                                    color: 'black',
+                                    color: 'red',
                                     h: -10,
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
                                     cota: "Volumen normal",
-                                    color: 'black',
+                                    color: 'green',
                                     h: 15,
 
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
                                     cota: "Volumen máximo",
-                                    color: 'black',
+                                    color: 'blue',
                                     h: -5,
                                 }
                                 // Agrega más líneas según sea necesario
@@ -676,9 +676,9 @@ if ($count >= 1) {
                                         }
                                     }; ?>,
                             max: <?php if ($max > $embalses[$t]["cota_max"]) {
-                                        echo $bati->getByCota($año, $max)[1] + 200;
+                                        echo $bati->getByCota($año, $max)[1] + 10;
                                     } else {
-                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
+                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] +10;
                                     }; ?>,
                             border: {
                                 display: false,
@@ -799,20 +799,20 @@ if ($count >= 1) {
                             lines: [{
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_min"])[1], 2); ?>,
                                     cota: "Volumen mínimo",
-                                    color: 'black',
+                                    color: 'red',
                                     h: -10,
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_nor"])[1], 2); ?>,
                                     cota: "Volumen normal",
-                                    color: 'black',
+                                    color: 'green',
                                     h: 15,
 
                                 },
                                 {
                                     yvalue: <?php echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1], 2); ?>,
                                     cota: "Volumen máximo",
-                                    color: 'black',
+                                    color: 'blue',
                                     h: -5,
                                 }
                                 // Agrega más líneas según sea necesario
@@ -895,9 +895,9 @@ if ($count >= 1) {
                                         }
                                     }; ?>,
                             max: <?php if ($max > $embalses[$t]["cota_max"]) {
-                                        echo $bati->getByCota($año, $max)[1] + 200;
+                                        echo $bati->getByCota($año, $max)[1] + 10;
                                     } else {
-                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] + 50;
+                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] +10;
                                     }; ?>,
                             border: {
                                 display: false,

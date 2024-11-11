@@ -11,7 +11,7 @@ $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,regio
             FROM detalles_extraccion dex, codigo_extraccion ce
             WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
                FROM datos_embalse h 
-               WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
+               WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
           ) AS 'extraccion',
           e.nombre_embalse, (SELECT cota_actual 
                FROM datos_embalse h 
@@ -317,4 +317,4 @@ while ($row < count($datos_embalses)) {
     // echo json_encode($embalses_porcentaje);
     ?>
 </script>
-<?php closeConection($conn); ?>
+<?php  ?>

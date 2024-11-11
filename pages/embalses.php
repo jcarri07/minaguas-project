@@ -341,7 +341,7 @@
         </div>
 
       <?php
-      }
+      } closeConection($conn);
       ?>
     </div>
     <!--<div class="row">

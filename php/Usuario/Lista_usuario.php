@@ -275,5 +275,4 @@ if ($count >= 1) {
 
     <?php
     };
-    //closeConection($conn);
     ?>

@@ -345,7 +345,7 @@ foreach ($data as $row) {
   $imagen_mapa_dibujo =  "/" . $projectName . "/pages/reports_images/" . $IMAGEN_DOS;
   $imagen_mapa = "/" . $projectName . "/pages/reports_images/" . $IMAGEN_UNO;
 }
-
+closeConection($conn);
 ?>
 <!DOCTYPE html>
 <html lang="es">

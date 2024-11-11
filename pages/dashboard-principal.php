@@ -68,11 +68,11 @@
 
 
 <?php
-require_once 'php/Conexion.php';
 
+//require_once 'php/Conexion.php';
 // Obtén la lista de embalses para el menú desplegable
-$sql_embalses = "SELECT id_embalse, nombre_embalse FROM embalses";
-$result_embalses = $conn->query($sql_embalses);
+
+
 
 // Procesar los resultados de la consulta
 
@@ -312,7 +312,7 @@ closeConection($conn);*/
             </div>
             <div class="col-12 flex-column justify-content-center align-items-center rounded bg-white border" style="width:100%;height:45%">
               <h4 class="d-flex justify-content-center align-items-center">
-                Variación desde el año <?php echo date('Y')-1;?>
+                Variación desde el año <?php echo date('Y') - 1; ?>
               </h4>
               <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-3">
@@ -365,11 +365,10 @@ closeConection($conn);*/
       <div class="container py-3 px-2" style="padding-left:20px;">
         <div class="card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;">
           <div class="card-header pb-0">
-            <h4 class="mb-0">Embalses</h4>
-            <p class="text-sm">Monitoreo del Volumen Útil Actual de los embalses registrados</p>
+            <h4 class="mb-0">Monitoreo del Volumen Útil Actual de los embalses registrados</h4>
           </div>
           <hr class="dark horizontal">
-          <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:350px !important;">
+          <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:600px !important;">
             <div class="border border-radius-lg h-100">
               <div class="col-12 pb-2 pt-1">
                 <!-- Ejemplo de leyenda -->
@@ -397,7 +396,7 @@ closeConection($conn);*/
                 </div>
               </div>
               <div class="table-responsive col-12 h-90 h-sm-90">
-                <div id="cont" class="h-100" style="min-width:1000px !important;"></div>
+                <div id="cont" class="h-100" style="min-width:1000px !important;min-height:1300px !important;"></div>
               </div>
             </div>
           </div>
@@ -414,9 +413,13 @@ closeConection($conn);*/
               <select style="width: 180px;" class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
                 <option style="display:none">Seleccione...</option>
                 <?php
+                $sql_embalses = "SELECT id_embalse, nombre_embalse FROM embalses";
+                $result_embalses = $conn->query($sql_embalses);
                 while ($row_embalse = $result_embalses->fetch_assoc()) {
                   echo '<option value="' . $row_embalse['id_embalse'] . '">' . $row_embalse['nombre_embalse'] . '</option>';
                 }
+                closeConection($conn);
+
                 ?>
               </select>
 
@@ -913,5 +916,5 @@ closeConection($conn);*/
     });
   }
 
-  setInterval(actual, 60000);
+  setInterval(actual, 1800000);
 </script>

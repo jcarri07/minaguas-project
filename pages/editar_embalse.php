@@ -1678,7 +1678,7 @@ function explodeBat($value, $i = null)
               </table>
             </div>
         <?php }
-        } ?>
+        }closeConection($conn); ?>
 
       </div>
       <div class="modal-footer">
