@@ -19,9 +19,18 @@ function getMonthName()
     $numero_mes = $fecha_actual['mon'];
 
     $nombres_meses = array(
-        1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril",
-        5 => "Mayo", 6 => "Junio", 7 => "Julio", 8 => "Agosto",
-        9 => "Septiembre", 10 => "Octubre", 11 => "Noviembre", 12 => "Diciembre"
+        1 => "Enero",
+        2 => "Febrero",
+        3 => "Marzo",
+        4 => "Abril",
+        5 => "Mayo",
+        6 => "Junio",
+        7 => "Julio",
+        8 => "Agosto",
+        9 => "Septiembre",
+        10 => "Octubre",
+        11 => "Noviembre",
+        12 => "Diciembre"
     );
 
     $nombre_mes = $nombres_meses[$numero_mes];
@@ -36,9 +45,18 @@ function getShortName()
     $numero_mes = $fecha_actual['mon'];
 
     $nombres_meses_abreviados = array(
-        1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr",
-        5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Ago",
-        9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dic"
+        1 => "Ene",
+        2 => "Feb",
+        3 => "Mar",
+        4 => "Abr",
+        5 => "May",
+        6 => "Jun",
+        7 => "Jul",
+        8 => "Ago",
+        9 => "Sep",
+        10 => "Oct",
+        11 => "Nov",
+        12 => "Dic"
     );
 
     $nombre_mes_abreviado = $nombres_meses_abreviados[$numero_mes];
@@ -240,7 +258,7 @@ $variacion_mensual = getMonthName();
                 <div style="position: absolute; left: 5px; top: 2px; background-color: orange;
           height: 3px; width: 30px;"></div>Cota <?php echo $año_pasado ?></p>
                 <p style="position: absolute; top: 40px;
-        text-align: center; text-justify: left;">N. Maximo:</p>
+        text-align: center; text-justify: left;">N. Máximo:</p>
                 <p style="position: absolute; top: 40px;
         text-align: right; padding-right: 10px;"><?php echo $maximo ?> msnm</p>
 
@@ -251,7 +269,7 @@ $variacion_mensual = getMonthName();
                 <p style="position: absolute; top: 70px;
         text-align: center; text-justify: left;">N. Normal:</p>
                 <p style="position: absolute; top: 90px;
-        text-align: center; text-justify: left;">N. Minimo:</p>
+        text-align: center; text-justify: left;">N. Mínimo:</p>
                 <p style="position: absolute; top: 70px;
         text-align: right; padding-right: 10px;"><?php echo $normal ?> msnm</p>
                 <p style="position: absolute; top: 90px;
@@ -364,7 +382,7 @@ $variacion_mensual = getMonthName();
                     <div style="position: absolute; left: 5px; top: 2px; background-color: orange;
           height: 3px; width: 30px;"></div>Cota <?php echo $año_pasado ?></p>
                     <p style="position: absolute; top: 40px;
-        text-align: center; text-justify: left;">N. Maximo:</p>
+        text-align: center; text-justify: left;">N. Máximo:</p>
                     <p style="position: absolute; top: 40px;
         text-align: right; padding-right: 10px;"><?php echo $maximo ?> msnm</p>
 
@@ -375,7 +393,7 @@ $variacion_mensual = getMonthName();
                     <p style="position: absolute; top: 70px;
         text-align: center; text-justify: left;">N. Normal:</p>
                     <p style="position: absolute; top: 90px;
-        text-align: center; text-justify: left;">N. Minimo:</p>
+        text-align: center; text-justify: left;">N. Mínimo:</p>
                     <p style="position: absolute; top: 70px;
         text-align: right; padding-right: 10px;"><?php echo $normal ?> msnm</p>
                     <p style="position: absolute; top: 90px;
@@ -383,7 +401,7 @@ $variacion_mensual = getMonthName();
                 </div>
 
                 <div style="position: absolute; left: 450px; top: 410px;">
-                    <h5 style="color: #2E86C1;"><?php echo 'VARIACION ANUAL ' . $año_pasado . " - " . $año_actual ?></h5>
+                    <h5 style="color: #2E86C1;"><?php echo 'VARIACIÓN ANUAL ' . $año_pasado . " - " . $año_actual ?></h5>
                 </div>
 
                 <div style="position: absolute; height: 290px; width: 915px; left: 65px; top: 450px; border: gray 1px solid;">
@@ -450,7 +468,8 @@ $variacion_mensual = getMonthName();
         <?php }
         ?>
     <?php
-    } closeConection($conn);?>
+    }
+    closeConection($conn); ?>
 </body>
 
 </html>

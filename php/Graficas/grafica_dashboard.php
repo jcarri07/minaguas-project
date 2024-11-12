@@ -115,7 +115,7 @@ if ($count >= 1) {
                         ctx.moveTo(left, y.getPixelForValue(yvalue));
                         ctx.lineTo(right, y.getPixelForValue(yvalue));
                         ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?> + "%", right * 1.65 / 3, y.getPixelForValue(yvalue) + h);
+                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?>.toLocaleString("de-DE") + "%", right * 1.65 / 3, y.getPixelForValue(yvalue) + h);
                         //ctx.stroke();
                     });
                     ctx.restore();
@@ -237,6 +237,9 @@ if ($count >= 1) {
                                 font: {
                                     size: 12,
                                     family: 'Arial',
+                                },
+                                callback: function(valor, index, valores) {
+                                    return valor.toLocaleString("de-DE");
                                 },
                             },
                         },

@@ -292,9 +292,9 @@ closeConection($conn);*/
       <div class="col-12 pt-2" id="container-div">
         <div class=" d-flex flex-row flex-wrap justify-content-around align-items-center gap-2 mb-2" id="contain-charts">
           <div class="d-flex flex-column justify-content-center align-items-center shadow rounded p-3 border bg-white">
-            <h4 class="d-flex justify-content-center align-items-center rounded">
-              Volumen Total Disponible
-            </h4>
+            <h5 class="d-flex justify-content-center align-items-center rounded">
+              VOLUMEN TOTAL DISPONIBLE
+            </h5>
             <div class="d-flex justify-content-center align-items-center rounded">
               <div style="height:380px" id="contenedor-1">
               </div>
@@ -302,18 +302,18 @@ closeConection($conn);*/
           </div>
           <div class="d-flex flex-column gap-5 p-2 justify-content-center align-items-center shadow border rounded bg-white" id="container-cards" style="width: 350px; height:450px;">
             <div class="col-12 flex-column justify-content-center align-items-center rounded border" style="width:100%;height:45%">
-              <h4 class="d-flex justify-content-center align-items-center">
-                Variación desde hace 7 Días
-              </h4>
+              <h5 class="d-flex justify-content-center align-items-center">
+                VARIACIÓN DESDE HACE 7 DIAS
+              </h5>
               <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-2">
                 </div>
               </div>
             </div>
             <div class="col-12 flex-column justify-content-center align-items-center rounded bg-white border" style="width:100%;height:45%">
-              <h4 class="d-flex justify-content-center align-items-center">
-                Variación desde el año <?php echo date('Y') - 1; ?>
-              </h4>
+              <h5 class="d-flex justify-content-center align-items-center">
+                VARIACIÓN DESDE EL AÑO <?php echo date('Y') - 1; ?>
+              </h5>
               <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-3">
                 </div>
@@ -347,7 +347,7 @@ closeConection($conn);*/
           <div class="col-12 pb-2 pt-1">
 
             <h4 class="mb-0">MAPA DE CONDICIONES DE ALMACENAMIENTO Y TIEMPOS DE ABASTECIMIENTO</h4>
-            
+
           </div>
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 700px;">
             <!-- ]  <div id="mapa-container"> -->
@@ -364,7 +364,7 @@ closeConection($conn);*/
       <div class="container py-3 px-2" style="padding-left:20px;">
         <div class="card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;">
           <div class="card-header pb-0">
-            <h4 class="mb-0">Monitoreo del Volumen Útil Actual de los embalses registrados</h4>
+            <h4 class="mb-0">MONITOREO DEL VOLUMEN ÚTIL ACTUAL DE LOS EMBALSES REGISTRADOS</h4>
           </div>
           <hr class="dark horizontal">
           <div class="card-body col-12 h-100 pt-0" id="contenedor" style="height:600px !important;">

@@ -58,21 +58,12 @@ closeConection($conn);
               </div>
               <div class="row ">
                 <div class="mb-3 col-6">
-<<<<<<< HEAD
                   <label>Teléfono</label>
                   <input type="text" class="form-control" placeholder="Telefono" aria-label="telefono" pattern="[0-9]{1,11}" name="telefono" required>
                 </div>
                 <div class="mb-3 col-6">
                   <label>Cédula</label>
                   <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{6-8}" name="cedula" required>
-=======
-                  <label>Telefono</label>
-                  <input type="text" class="form-control" id="telefono" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" name="telefono" required>
-                </div>
-                <div class="mb-3 col-6">
-                  <label>Cedula</label>
-                  <input type="text" class="form-control" id="cedula" placeholder="12345678" aria-label="cedula" min="0" pattern="[0-9]{5,8}" name="cedula" required>
->>>>>>> 58454f2ddcd60b392f90bdd2b4a437e6dd7f88e4
                 </div>
               </div>
               <label>Contraseña</label>
@@ -148,11 +139,11 @@ closeConection($conn);
               </div>
               <div class="row ">
                 <div class="mb-2 col-6">
-                  <label>Telefono</label>
+                  <label>Teléfono</label>
                   <input type="text" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" name="Etelefono" required >
                 </div>
                 <div class="mb-2 col-6">
-                  <label>Cedula</label>
+                  <label>Cédula</label>
                   <input type="text" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" name="Ecedula" required>
                 </div>
 
