@@ -140,6 +140,13 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
             $fila--;
             break;
         }
+        
+        //Con esto evito el error de que añadan una fila de mas al membrete del excel
+        //y el $valorCelda no sea una fecha sino un string con el valor 'FECHA'
+        if(strtoupper($valorCelda) == 'FECHA'){
+            $fila++;
+            continue;
+        }
 
         //if ($valorCelda instanceof Date) {
         $fecha_obj = Date::excelToDateTimeObject($valorCelda);
