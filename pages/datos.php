@@ -310,7 +310,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -345,7 +345,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -465,7 +465,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 </div>
 
 
-<div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -521,7 +521,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="modal-history-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="modal-history-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -549,7 +549,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="select-anio-export-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="select-anio-export-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
