@@ -66,15 +66,17 @@ closeConection($conn);
                   <input type="text" class="form-control" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{6-8}" name="cedula" required>
                 </div>
               </div>
-              <label>Contraseña</label>
+              
               <!--div class="mb-3">
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
                       </div-->
               <div class="row ">
                 <div class="mb-3 col-6">
+                <label>Contraseña</label>
                   <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
                 </div>
                 <div class="mb-3 col-6">
+                <label>Nueva Contraseña</label>
                   <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
                 </div>
 
@@ -156,7 +158,7 @@ closeConection($conn);
                       </div-->
 
               <div class="mb-2">
-                <label>Contraseña</label>
+                <label>Nueva Contraseña</label>
                 <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" value="">
               </div>
 

@@ -668,7 +668,7 @@
 
 
 
-  <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">
@@ -701,7 +701,7 @@
 
 
   <!-- Modal -->
-  <div class="modal fade" id="edit-embalse" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true">
+  <div class="modal fade" id="edit-embalse" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">

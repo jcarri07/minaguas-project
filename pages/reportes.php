@@ -139,7 +139,7 @@ date_default_timezone_set("America/Caracas");
 
 </div>
 
-<div id="modal" class="modal" data-id_embalse="" style="z-index: 999;">
+<div id="modal" class="modal" style="z-index: 999;" data-bs-backdrop="static">
   <div class="d-flex modal-content">
     <div class="d-flex flex-row justify-content-between">
       <h4>Generar Monitoreo</h4>
@@ -147,7 +147,7 @@ date_default_timezone_set("America/Caracas");
       <span class="d-flex align-items-start close">&times;</span>
     </div>
     <div class="pt-4">
-      <label for="range1" class="form-label">
+      <label class="form-label">
         <h5>Seleccione fecha</h5>
       </label>
     </div>
@@ -348,5 +348,5 @@ date_default_timezone_set("America/Caracas");
     }
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
-  <?php require_once "../php/Graficas/graficas.php" ?>
+  
 </script>

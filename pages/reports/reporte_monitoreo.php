@@ -5,7 +5,7 @@ require_once '../../php/batimetria.php';
 $id = $_GET['id'];
 $index = $_GET['index'];
 $semanas = $_GET['semanas'];
-$fecha_inicio = $_GET['fecha'];
+$fecha_inicio = date("d/m/Y",strtotime($_GET['fecha']));
 $sql = "SELECT * FROM embalses WHERE id_embalse = $id";
 $volumen_inicial = $_GET['volumen'];
 $cota_inicial = $_GET['cota'];

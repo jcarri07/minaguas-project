@@ -1500,7 +1500,7 @@ function explodeBat($value, $i = null)
 
 
 <!-- Modal -->
-<div class="modal fade" id="edit-embalse" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true">
+<div class="modal fade" id="edit-embalse" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -1570,7 +1570,7 @@ function explodeBat($value, $i = null)
   </div>
 </div>
 
-<div class="modal fade" id="show-batimetria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="show-batimetria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-bs-backdrop="static">
   <div id="modal-show" class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -1592,7 +1592,7 @@ function explodeBat($value, $i = null)
   </div>
 </div>
 
-<div class="modal fade px-5" id="modal-validate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade px-5" id="modal-validate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -1611,7 +1611,7 @@ function explodeBat($value, $i = null)
   </div>
 </div>
 
-<div class="modal fade px-5" id="modal-formato" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade px-5" id="modal-formato" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 450px !important;">
       <div class="modal-header">
@@ -1635,7 +1635,7 @@ function explodeBat($value, $i = null)
   </div>
 </div>
 
-<div class="modal fade" id="show-pre-batimetria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="show-pre-batimetria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-bs-backdrop="static">
   <div id="modal-show" class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
