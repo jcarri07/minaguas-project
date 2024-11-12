@@ -398,7 +398,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                 <div class="col">
                   <label>Cota (01)</label>
                   <div class="input-group mb-3">
-                    <input type="number" step="0.00001" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
+                    <input type="text" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
                   </div>
                 </div>
               </div>
@@ -421,7 +421,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                   <div class="col">
                     <label>Valor</label> <!-- (1000 m<sup>3</sup>)-->
                     <div class="input-group mb-4">
-                      <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" required>
+                      <input type="text" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" required>
                     </div>
                   </div>
                 </div>
@@ -717,7 +717,7 @@ require_once 'php/datos/vistas/morosos.php';
       $("#valor_extraccion_" + row).attr("type", "text");
     } else {
       label_valor.html("Valor (1000 m<sup>3</sup>)");
-      $("#valor_extraccion_" + row).attr("type", "number");
+      $("#valor_extraccion_" + row).attr("type", "text");
     }
 
 
@@ -938,10 +938,15 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
       $(".removeRow").each(function(index) {
         $(this).trigger("click");
       });
-
+      // console.log();
       $("#fecha").val(fecha);
       $("#hora").val(hora);
-      $("#valor_cota").val(cota);
+      let valor_cota = parseFloat(cota).toFixed(3);
+      let cota_formateado = new Intl.NumberFormat('de-DE', {
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 3
+      }).format(valor_cota);
+      $("#valor_cota").val(cota_formateado);
       var extraccion_array = extraccion.split(";");
       if (extraccion_array.length > 1) {
         for (var i = 0; i < extraccion_array.length - 1; i++) {
@@ -973,8 +978,12 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
             valor_extraccion = Number(extraccion_aux[1]).toFixed(4);
         }
         if (this.value != "30" && this.value != "31" && $.isNumeric(extraccion_aux[1]))
-          valor_extraccion = Number(extraccion_aux[1]).toFixed(3);
-        $("#valor_extraccion_" + row).val(valor_extraccion);
+          valor_extraccion = Number(extraccion_aux[1]).toFixed(2);
+        let valor_formateado = new Intl.NumberFormat('de-DE', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(valor_extraccion);
+        $("#valor_extraccion_" + row).val(valor_formateado);
 
         $(this).attr("disabled", true);
         $("#valor_extraccion_" + row).attr("disabled", true);

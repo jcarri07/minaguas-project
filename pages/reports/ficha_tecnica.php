@@ -676,7 +676,7 @@ closeConection($conn);
     </tr>
     <tr>
       <td class="subtitle">4.1.7.- Cota de la cresta (m s.n.m)</td>
-      <td><?php echo $COTA_CRESTA ?></td>
+      <td><?php echo number_format(floatval($COTA_CRESTA), 2, ',', '.') ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.1.8.- Ancho de Cresta (m)</td>
@@ -684,7 +684,7 @@ closeConection($conn);
     </tr>
     <tr>
       <td class="subtitle">4.1.9.- Volumen del terraplén (m³)</td>
-      <td><?php echo $VOLUMEN_TERRAPLEN ?></td>
+      <td><?php echo number_format(floatval($VOLUMEN_TERRAPLEN), 2, ',', '.') ?></td>
     </tr>
     <tr>
       <td class="subtitle">4.1.10.- Ancho max de base (m)</td>
@@ -831,9 +831,9 @@ closeConection($conn);
     </tr>
     <tr>
       <td class="subtitle">5.4.- Población beneficiada (hab.)</td>
-      <td style="width: 70px;"><?php echo $POBLACION ?></td>
+      <td style="width: 70px;"><?php echo number_format(floatval($POBLACION), 0, '', '.') ?></td>
       <td class="subtitle">5.5.- Área de riego beneficiada (ha)</td>
-      <td style="width: 70px;"><?php echo $AREA_RIEGO ?></td>
+      <td style="width: 70px;"><?php echo number_format(floatval($AREA_RIEGO), 2, ',', '.') ?></td>
     </tr>
   </table>
   <table style="padding-top: 10px;">
