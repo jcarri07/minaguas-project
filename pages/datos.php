@@ -774,6 +774,12 @@ require_once 'php/datos/vistas/morosos.php';
   $("#form").on("submit", function(event) {
     event.preventDefault();
 
+    if (new Date($("#fecha").val()) > new Date('<?php echo date("Y-m-d"); ?>')) {
+      $("#modal-generic .message").text("La fecha no puede ser mayor a la actual.");
+      $("#modal-generic").modal("show");
+      return false; // La fecha ingresada es mayor que la fecha actual
+    } 
+
     var tipo_extraccion = [];
     var valor_extraccion = [];
     $("select[name='tipo_extraccion[]']").each(function(i) {
