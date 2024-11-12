@@ -774,11 +774,36 @@ require_once 'php/datos/vistas/morosos.php';
   $("#form").on("submit", function(event) {
     event.preventDefault();
 
-    if (new Date($("#fecha").val()) > new Date('<?php echo date("Y-m-d"); ?>')) {
-      $("#modal-generic .message").text("La fecha no puede ser mayor a la actual.");
+    var currentDateTime = new Date('<?php echo date("Y-m-d H:i:s"); ?>');
+    var fecha_input = $("#fecha").val();
+    var hora_input = $("#hora").val();
+
+    if (!fecha_input || !hora_input || !this.valor_cota.value) {
+      $("#modal-generic .message").text("Complete el formulario.");
       $("#modal-generic").modal("show");
-      return false; // La fecha ingresada es mayor que la fecha actual
-    } 
+      return false;
+    }
+
+    var inputDateTime = new Date(fecha_input + 'T' + hora_input);
+    var inputDateOnly = inputDateTime.toISOString().split('T')[0];
+    var currentDateOnly = currentDateTime.toISOString().split('T')[0];
+
+    if (inputDateOnly === currentDateOnly) {
+      if (inputDateTime > currentDateTime) {
+        $("#modal-generic .message").text("La hora no puede ser mayor a la actual.");
+        $("#modal-generic").modal("show");
+        return false; 
+      }
+    }
+    else {
+      if (inputDateTime > currentDateTime) {
+        $("#modal-generic .message").text("La fecha no puede ser mayor a la actual.");
+        $("#modal-generic").modal("show");
+        return false; 
+      }
+    }
+    console.log("aja");
+    return false;
 
     var tipo_extraccion = [];
     var valor_extraccion = [];
