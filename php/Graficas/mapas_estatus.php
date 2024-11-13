@@ -159,9 +159,9 @@ $valores = json_encode($valores, true);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
+    <link rel="stylesheet" href="../../assets/css/leaflet.css" />
+    <script src="../../assets/js/leaflet.js"></script>
+    <script src="../../assets/js/proj4.js"></script>
     <script src="../../assets/js/html2canvas.min.js"></script>
     <link href="../../assets/css/style-spinner.css" rel="stylesheet" />
     <title>Mapas Estatus</title>
