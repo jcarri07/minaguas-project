@@ -1,7 +1,7 @@
 <?php
 
-require_once 'php/Conexion.php';
-require_once 'php/batimetria.php';
+require_once '../php/Conexion.php';
+require_once '../php/batimetria.php';
 
 //EMBALSES - PORCENTAJE Y VARIACION
 
@@ -42,7 +42,7 @@ while ($row < count($datos_embalses)) {
 
     array_push($array, $datos_embalses[$row]["nombre_embalse"]);
 
-    $porcentaje = $emb->volumenDisponible() != 0 ? (($emb->volumenActualDisponible() * 100) / $emb->volumenDisponible()) : 0 ;
+    $porcentaje = $emb->volumenDisponible() != 0 ? (($emb->volumenActualDisponible() * 100) / $emb->volumenDisponible()) : 0;
 
     $icono = "i_";
 
@@ -51,13 +51,13 @@ while ($row < count($datos_embalses)) {
     // $abastecimiento = intval($abastecimiento);
     if (intval($abastecimiento) < 5) {
         $icono .= "rojo_";
-    } 
-     if (intval($abastecimiento) > 4 && intval($abastecimiento) < 9) {
+    }
+    if (intval($abastecimiento) > 4 && intval($abastecimiento) < 9) {
         $icono .= "naranja_";
-    } 
-     if (intval($abastecimiento) > 8 && intval($abastecimiento) < 13) {
+    }
+    if (intval($abastecimiento) > 8 && intval($abastecimiento) < 13) {
         $icono .= "amarillo_";
-    } 
+    }
     if (intval($abastecimiento) > 12) {
         $icono .= "verde_";
     }
@@ -76,7 +76,7 @@ while ($row < count($datos_embalses)) {
     }
 
     array_push($array, $icono);
-    array_push($array, number_format($porcentaje,2,",","."));
+    array_push($array, number_format($porcentaje, 2, ",", "."));
     // var_dump($array[3]);
     // Guardo el nombre del embalse
     // array_push($array, $row["nombre_embalse"]);
@@ -88,7 +88,7 @@ while ($row < count($datos_embalses)) {
 // var_dump($embalses_abast);
 ?>
 
-<head>
+<!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
@@ -96,16 +96,24 @@ while ($row < count($datos_embalses)) {
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
     <script src="./assets/js/jquery/jquery.min.js"></script>
-</head>
+</head> -->
 
 <style>
     #mapa-portada {
-        width: 1500px;
+        width: 1272px;
         height: 700px;
     }
 
-    .leaflet-top.leaflet-left {
-        /* display: none; */
+    /* .leaflet-top.leaflet-left {
+        display: none;
+    } */
+    .leaflet-popup {
+        margin-bottom: 0px !important;
+        bottom: 7px !important;
+    }
+
+    .leaflet-popup-tip {
+        pointer-events: none !important;
     }
 
     .leaflet-popup-content-wrapper {
@@ -120,7 +128,8 @@ while ($row < count($datos_embalses)) {
 
     .leaflet-popup-content {
         background-color: rgba(0, 0, 0, 0) !important;
-        margin: 8px 10px !important;
+        margin: 0px !important;
+        /* margin: 8px 10px !important; */
     }
 
     .leaflet-popup-close-button {
@@ -128,7 +137,7 @@ while ($row < count($datos_embalses)) {
     }
 
     .leaflet-popup-tip-container {
-        margin-top: -8px !important;
+        /* margin-top: -8px !important; */
     }
 
     .leaflet-popup-tip {
@@ -138,7 +147,7 @@ while ($row < count($datos_embalses)) {
     }
 
     .leaflet-popup.leaflet-zoom-animated {
-        margin-bottom: 5.5px !important;
+        /* margin-bottom: 5.5px !important; */
     }
 </style>
 
@@ -154,8 +163,8 @@ while ($row < count($datos_embalses)) {
     var PointIcon = L.Icon.extend({
         options: {
             shadowUrl: 'assets/icons/i-sombra.png',
-            iconSize: [18, 18],
-            shadowSize: [15, 15],
+            iconSize: [12, 12],
+            shadowSize: [0, 0],
             shadowAnchor: [8, 8],
         }
     });
@@ -275,20 +284,52 @@ while ($row < count($datos_embalses)) {
 
     var ubicacion;
 
+    // <?php
+        // foreach ($embalses_abast as $emb) {
+        //     if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { 
+        ?>
+    // ubicacion = geoToUtm(<?php //echo $emb[0] . "," . $emb[1] . "," . $emb[2] 
+                            ?>)
+    //         var marker = L.marker([ubicacion[0], ubicacion[1]], {
+    // icon: <?php //echo $emb[4] 
+                ?>
+    // }).addTo(mapa_portada).bindPopup("<b><?php //echo $emb[3] 
+                                            ?></b> <b><?php //echo $emb[5] 
+                                                        ?> %</b>", {
+    //             autoClose: false,
+    //             closeOnClick: false
+    //         });
+    //         // }).openPopup();
+    // <?php //} else { 
+        ?>
+    // <?php //}
+        // }
+        // 
+        ?>
+
     <?php
     foreach ($embalses_abast as $emb) {
-        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
-            ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
+        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+    ?>
+            ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2]
+                                    ?>)
             var marker = L.marker([ubicacion[0], ubicacion[1]], {
-                icon: <?php echo $emb[4] ?>
-            }).addTo(mapa_portada).bindPopup("<b><?php echo $emb[3] ?></b> <b><?php echo $emb[5] ?> %</b>", {
-                autoClose: false,
-                closeOnClick: false
+                icon: <?php echo $emb[4]
+                        ?>
+            }).addTo(mapa_portada).on('mouseover', function(e) {
+                this.bindPopup("<b><?php echo $emb[3] ?></b> <b><?php echo $emb[5] ?> %</b>", {
+                    autoClose: false,
+                    closeOnClick: false
+                }).openPopup();
+            }).on('mouseout', function(e) {
+                this.closePopup();
             });
             // }).openPopup();
-        <?php } else { ?>
+        <?php } else {
+        ?>
     <?php }
     }
+
     ?>
 
     function geoToUtm(norte, este, huso) {

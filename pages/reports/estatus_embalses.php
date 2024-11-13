@@ -224,6 +224,9 @@ while ($row < count($datos_embalses)) {
   if ($datos_embalses[$row]["extraccion"] > 0) {
     $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
   }
+  if($datos_embalses[$row]["extraccion"] == NULL){
+    $abastecimiento = 0;
+  }
 
   if (!in_array($totalreg[$datos_embalses[$row]["region"]], $regiones)) {
     array_push($regiones, $totalreg[$datos_embalses[$row]["region"]]);

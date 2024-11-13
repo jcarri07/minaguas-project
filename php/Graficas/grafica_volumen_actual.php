@@ -73,7 +73,7 @@ ORDER BY e.nombre_embalse ASC;");
                     label: 'Embalses',
                     data: {
                         datasets: [
-                            
+
                             <?php
 
                             $j = 0;
@@ -174,7 +174,7 @@ ORDER BY e.nombre_embalse ASC;");
                                 anchor: 'end',
                                 align: 'end',
                                 formatter: function(value, context) {
-                                    return Math.round(value.x * 100) / 100;
+                                    return (Math.round(value.x * 100) / 100).toLocaleString("de-DE");
                                 },
                                 labels: {
                                     title: {

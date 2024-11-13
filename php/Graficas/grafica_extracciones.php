@@ -229,8 +229,13 @@ if ($count >= 1) {
                                     const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
                                         return accumulator + currentValue
                                     }, 0);
-                                    porcentaje = value / totalSum * 100
-                                    return `${porcentaje.toFixed(1)}%`;
+                                    // porcentaje = (value / totalSum * 100).toFixed(1);
+                                    // return porcentaje.toLocaleString('de_DE') + "%";
+                                    if((Math.round((value / totalSum) * 1000) / 10) <= 0){
+                                        return "";
+                                    }else{
+                                    return (Math.round((value / totalSum) * 1000) / 10).toLocaleString("de-DE") + "%";
+                                    }
                                 }),
                                 labels: {
                                     title: {
@@ -254,7 +259,7 @@ if ($count >= 1) {
         </script>
 <?php
     } else {
-        echo "<h4 class='text-center' style='margin: 118px 0;'>NO HAY CARGAS DE EXTRACCIONES<br> recientes.</h4>";
+        echo "<h6 class='text-center' style='margin: 118px 0;'>No hay carga de extracciones<br> recientes.</h4>";
     }
 } //Fin if de inameh
 
@@ -284,5 +289,5 @@ closeConection($conn); ?>
 
 
 
-    $("#title-4").html("<span class='text-center'>EXTRACCIONES DE LOS ÚLTIMOS 30 DÍAS<br> (" + new Intl.NumberFormat("de-DE").format(suma.toFixed(2)) + " x10<sup>3</sup>m<sup>3</sup>) </span>");
+    $("#title-4").html("<span class='text-center' style='font-size: 18px;'>EXTRACCIONES DE LOS ÚLTIMOS 30 DÍAS<br> (" + new Intl.NumberFormat("de-DE").format(suma.toFixed(2)) + " x10<sup>3</sup>m<sup>3</sup>) </span>");
 </script>

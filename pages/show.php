@@ -459,7 +459,7 @@ function explodeBat($value, $i = null)
                 </div>
                 <div>
                   <span class="fw-bold" for="">Área de la cuenca:</span>
-                  <p><?php echo $embalse_datos["area_cuenca"] ?> ha</p>
+                  <p><?php echo number_format(floatval($embalse_datos["area_cuenca"]), 2, ",", ".") ?> ha</p>
                 </div>
                 <div>
                   <span class="fw-bold" for="">Propósitos:</span>
@@ -468,7 +468,7 @@ function explodeBat($value, $i = null)
               </div>
               <div class="w-100 h-100 rounded mini-card-info">
                 <div>
-                  <?php 
+                  <?php
                   $OPERADOR_ID = $embalse_datos["operador"];
                   $OPERADOR = mysqli_fetch_assoc(mysqli_query($conn, "SELECT operador FROM operadores WHERE id_operador = '$OPERADOR_ID'"))['operador'];
                   closeConection($conn);
@@ -576,11 +576,11 @@ function explodeBat($value, $i = null)
                   </div>
                 </div>
                 <div class="w-100" style="display: grid; grid-template-columns: 50% 50%; justify-items:center;">
-                  <div class="w-100 text-center b-t b-l b-r" style="grid-column: span 2;"><?php echo $embalse->cotaMinima() ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_min"]), 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r" style="grid-column: span 2;"><?php echo $embalse->cotaMinima()  ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_min"]), 2, ",", ".") ?></div>
                   <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->volumenMinimo(), 2, ".", "") ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["sup_min"]), 2, ".", "") ?></div>
-                  <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->superficieMinima(), 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["sup_min"]), 2, ",", ".") ?></div>
+                  <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->superficieMinima(), 2, ",", ".") ?></div>
                 </div>
               </div>
               <div style="display: grid; grid-template-columns: 25% 25% 50%; justify-items:center; align-items: center">
@@ -600,10 +600,10 @@ function explodeBat($value, $i = null)
                 </div>
                 <div class="w-100" style="display: grid; grid-template-columns: 50% 50%; justify-items:center;">
                   <div class="w-100 text-center b-t b-l b-r" style="grid-column: span 2;"><?php echo $embalse->cotaNormal() ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_nor"]), 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_nor"]), 2, ",", ".") ?></div>
                   <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->volumenNormal(), 2, ".", "") ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["sup_nor"]), 2, ".", "") ?></div>
-                  <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->superficieNormal(), 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["sup_nor"]), 2, ",", ".") ?></div>
+                  <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->superficieNormal(), 2, ",", ".") ?></div>
                 </div>
               </div>
               <div style="display: grid; grid-template-columns: 25% 25% 50%; justify-items:center; align-items: center">
@@ -623,10 +623,10 @@ function explodeBat($value, $i = null)
                 </div>
                 <div class="w-100" style="display: grid; grid-template-columns: 50% 50%; justify-items:center;">
                   <div class="w-100 text-center b-t b-l b-r" style="grid-column: span 2;"><?php echo $embalse->cotaMaxima() ?></div>
-                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_max"]), 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_max"]), 2, ",", ".") ?></div>
                   <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->volumenMaximo(), 2, ".", "") ?></div>
-                  <div class="w-100 text-center b-t b-l b-r b-b"><?php echo number_format(floatval($embalse_datos["sup_max"]), 2, ".", "") ?></div>
-                  <div class="w-100 text-center b-t b-r b-b"><?php echo number_format($embalse->superficieMaxima(), 2, ".", "") ?></div>
+                  <div class="w-100 text-center b-t b-l b-r b-b"><?php echo number_format(floatval($embalse_datos["sup_max"]), 2, ",", ".") ?></div>
+                  <div class="w-100 text-center b-t b-r b-b"><?php echo number_format($embalse->superficieMaxima(), 2, ",", ".") ?></div>
                 </div>
               </div>
             </div>

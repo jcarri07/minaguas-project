@@ -202,7 +202,7 @@
                           <div class="d-flex flex-column px-3">
                             <?php $embal = new Batimetria($row["id_embalse"], $conn);  //$acumulativo += $embal->volumenDisponible();
                             ?>
-                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo number_format($embal->volumenDisponible(), 3, ',', '.') ?> <span style="font-size: 12px">hm</span>³</h6>
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?> <span style="font-size: 12px">Hm</span>³</h6>
                             <!-- <span class="text-xs">20/12/2023</span> -->
                           </div>
                         </td>
@@ -301,7 +301,7 @@
                           <td class="hide-cell">
                             <div class="d-flex flex-column px-3">
                               <?php $embal = new Batimetria($row["id_embalse"], $conn) ?>
-                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 3, ',', '.') ?><span style="font-size: 12px">hm</span>³</h6>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?> <span style="font-size: 12px">Hm</span>³</h6>
                               <!-- <span class="text-xs">20/12/2023</span> -->
                             </div>
                           </td>
@@ -668,7 +668,7 @@
 
 
 
-  <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">
@@ -701,7 +701,7 @@
 
 
   <!-- Modal -->
-  <div class="modal fade" id="edit-embalse" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true">
+  <div class="modal fade" id="edit-embalse" tabindex="-1" role="dialog" aria-labelledby="edit-embalse" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">

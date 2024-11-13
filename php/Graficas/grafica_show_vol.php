@@ -4,8 +4,8 @@
 
 <?php
 
-$vol_original = number_format($embalse->volumenDisponibleOriginal(),2,".","");
-$vol_batimetria = number_format($embalse->volumenDisponible(),2,".","");
+$vol_original = number_format($embalse->volumenDisponibleOriginal(), 2, ".", "");
+$vol_batimetria = number_format($embalse->volumenDisponible(), 2, ".", "");
 // $vol_actual = number_format($embalse->volumenActualDisponible(),2,".","");
 
 // $porcentaje = $vol_batimetria != 0 ? ($vol_actual * 100) / $vol_batimetria : 0;
@@ -22,8 +22,12 @@ $vol_batimetria = number_format($embalse->volumenDisponible(),2,".","");
         new Chart(ctx, {
             type: 'bar',
             data: {
-                // labels: [['Diseño','(hm³)'], ['Batimetría','(hm³)'], ['Actual (<?php //echo $porcentaje."%" ?>)','(hm³)']],
-                labels: [['Diseño','(hm³)'], ['Batimetría (<?php echo $embalse->getCloseYear() ?>)','(hm³)']],
+                // labels: [['Diseño','(hm³)'], ['Batimetría','(hm³)'], ['Actual (<?php //echo $porcentaje."%" 
+                                                                                    ?>)','(hm³)']],
+                labels: [
+                    ['Diseño', '(hm³)'],
+                    ['Batimetría (<?php echo $embalse->getCloseYear() ?>)', '(hm³)']
+                ],
                 datasets: [{
                     data: [<?php echo $vol_original . "," . $vol_batimetria ?>],
                     backgroundColor: [
@@ -50,9 +54,19 @@ $vol_batimetria = number_format($embalse->volumenDisponible(),2,".","");
                             display: false
                         },
                     },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y.toLocaleString("de-DE");
+                            }
+                        }
+                    },
                     datalabels: {
                         anchor: 'start',
                         align: 'end',
+                        formatter: function(value, context) {
+                            return value.toLocaleString("de-DE");
+                        },
                         labels: {
                             title: {
                                 font: {
@@ -75,6 +89,9 @@ $vol_batimetria = number_format($embalse->volumenDisponible(),2,".","");
                         ticks: {
                             fonts: {
                                 size: 18
+                            },
+                            callback: function(valor, index, valores) {
+                                return valor.toLocaleString("de-DE");
                             }
                         }
                     }

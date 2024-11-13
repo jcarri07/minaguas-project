@@ -30,61 +30,31 @@ $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
-    $almacenamiento_actual = mysqli_query($conn, "WITH ultimas_fechas AS (
-    SELECT id_embalse, MAX(fecha) AS max_fecha
-    FROM datos_embalse
-    WHERE estatus = 'activo' 
-    AND cota_actual <> 0
-    GROUP BY id_embalse
-    
-)
-SELECT e.id_embalse, 
-       e.nombre_embalse, 
-       d.cota_actual, 
-       uf.max_fecha
-FROM embalses e
-LEFT JOIN ultimas_fechas uf ON e.id_embalse = uf.id_embalse
-LEFT JOIN datos_embalse d ON e.id_embalse = d.id_embalse AND d.fecha = uf.max_fecha AND d.estatus = 'activo'
-WHERE e.estatus = 'activo'
-ORDER BY e.nombre_embalse ASC;");
+    $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,MAX(d.fecha) AS fech,
+  e.nombre_embalse, (SELECT cota_actual 
+       FROM datos_embalse h 
+       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND h.estatus = 'activo' AND cota_actual <> 0 LIMIT 1) AS cota_actual
+  FROM embalses e
+  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+  WHERE e.estatus = 'activo'
+  GROUP BY id_embalse 
+  ORDER BY id_embalse ASC;");
 
-    $condiciones_dias = mysqli_query($conn, "WITH ultimas_fechas AS (
-    SELECT id_embalse, MAX(fecha) AS max_fecha
-    FROM datos_embalse
-    WHERE estatus = 'activo' 
-    AND cota_actual <> 0
-    AND fecha <= '$fecha_dia'
-    GROUP BY id_embalse
-    
-)
-SELECT e.id_embalse, 
-       e.nombre_embalse, 
-       d.cota_actual, 
-       uf.max_fecha
-FROM embalses e
-LEFT JOIN ultimas_fechas uf ON e.id_embalse = uf.id_embalse
-LEFT JOIN datos_embalse d ON e.id_embalse = d.id_embalse AND d.fecha = uf.max_fecha AND d.estatus = 'activo'
-WHERE e.estatus = 'activo'
-ORDER BY e.nombre_embalse ASC;");
+    $condiciones_dias = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
+    FROM datos_embalse h 
+    WHERE h.id_embalse = e.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha_dia') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha_dia' AND estatus = 'activo' AND id_embalse = d.id_embalse) AND h.estatus = 'activo' AND cota_actual <> 0 LIMIT 1) AS cota_actual  
+  FROM embalses e
+  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_dia'
+  WHERE e.estatus = 'activo'
+  GROUP BY id_embalse;;");
 
-    $condiciones_anio = mysqli_query($conn, "WITH ultimas_fechas AS (
-    SELECT id_embalse, MAX(fecha) AS max_fecha
-    FROM datos_embalse
-    WHERE estatus = 'activo' 
-    AND cota_actual <> 0
-    AND fecha <= '$fecha_anio'
-    GROUP BY id_embalse
-    
-)
-SELECT e.id_embalse, 
-       e.nombre_embalse, 
-       d.cota_actual, 
-       uf.max_fecha
-FROM embalses e
-LEFT JOIN ultimas_fechas uf ON e.id_embalse = uf.id_embalse
-LEFT JOIN datos_embalse d ON e.id_embalse = d.id_embalse AND d.fecha = uf.max_fecha AND d.estatus = 'activo'
-WHERE e.estatus = 'activo'
-ORDER BY e.nombre_embalse ASC;");
+    $condiciones_anio = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
+    FROM datos_embalse h 
+    WHERE h.id_embalse = e.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha_anio') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha_anio' AND estatus = 'activo' AND id_embalse = d.id_embalse) AND h.estatus = 'activo' AND cota_actual <> 0 LIMIT 1) AS cota_actual
+   FROM embalses e
+   LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_anio'
+   WHERE e.estatus = 'activo'
+   GROUP BY id_embalse;");
 
     $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
     $volumen_dias = mysqli_fetch_all($condiciones_dias, MYSQLI_ASSOC);
@@ -99,7 +69,7 @@ ORDER BY e.nombre_embalse ASC;");
         $nor = $bati->volumenNormal();
         if ($datos_embalses[$j]["cota_actual"] != NULL) {
 
-            $x = $bati->getByCota(date('Y', strtotime($datos_embalses[$j]["max_fecha"])), $datos_embalses[$j]["cota_actual"])[1];
+            $x = $bati->getByCota(date('Y', strtotime($datos_embalses[$j]["fech"])), $datos_embalses[$j]["cota_actual"])[1];
 
             //$bati->getByCota($anio, $datos_embalses[$j]["cota_max"])[1]-$bati->getByCota($anio, $datos_embalses[$j]["cota_min"])[1];
             if (($x - $min) <= 0) {
@@ -111,10 +81,10 @@ ORDER BY e.nombre_embalse ASC;");
         }
         $volumen_fechas[0] += $bati->volumenDisponible();
         if ($volumen_dias[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_dias[$j]["max_fecha"])), $volumen_dias[$j]["cota_actual"]);
+            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_dias[$j]["fecha"])), $volumen_dias[$j]["cota_actual"]);
         }
         if ($volumen_anio[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_anio[$j]["max_fecha"])), $volumen_anio[$j]["cota_actual"]);
+            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_anio[$j]["fecha"])), $volumen_anio[$j]["cota_actual"]);
         }
         $j++;
     };
@@ -145,7 +115,7 @@ ORDER BY e.nombre_embalse ASC;");
                         ctx.moveTo(left, y.getPixelForValue(yvalue));
                         ctx.lineTo(right, y.getPixelForValue(yvalue));
                         ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?> + "%", right * 1.65 / 3, y.getPixelForValue(yvalue) + h);
+                        ctx.fillText(<?php echo round($volumen_fechas[1] * 100 / $volumen_fechas[0], 2) ?>.toLocaleString("de-DE") + "%", right * 1.65 / 3, y.getPixelForValue(yvalue) + h);
                         //ctx.stroke();
                     });
                     ctx.restore();
@@ -248,7 +218,6 @@ ORDER BY e.nombre_embalse ASC;");
                                     size: 16,
                                     family: 'Arial',
                                 },
-
                             },
                         },
                         y: {
@@ -281,33 +250,35 @@ ORDER BY e.nombre_embalse ASC;");
         });
         $("#contenedor-2").html('<?php
                                     $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[1]);
+                                    $valorFormat = number_format(abs($valor), 2, ",", ".");
                                     if ($valor > 0) {
 
-                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
                                     };
                                     if ($valor == 0) {
 
-                                        echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
                                     };
                                     if ($valor < 0) {
 
-                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
                                     };
 
                                     ?>');
         $("#contenedor-3").html('<?php
                                     $valor = -100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[1]);
+                                    $valorFormat = number_format(abs($valor), 2, ",", ".");
                                     if ($valor > 0) {
 
-                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
                                     };
                                     if ($valor == 0) {
 
-                                        echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
                                     };
                                     if ($valor < 0) {
 
-                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . round(abs($valor), 2) . '%</span></h1>';
+                                        echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
                                     };
 
                                     ?>');

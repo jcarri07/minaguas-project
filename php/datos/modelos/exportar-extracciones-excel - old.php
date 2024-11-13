@@ -109,134 +109,11 @@
         array_push($array_codigos, $array_aux);
     }
 
-
-    function styles($hoja, $fila_inicio_color_fecha, $fila_fin_color_fecha){
-        //el uno
-        $hoja->freezePane('D9');
-
-        $hoja->getDefaultColumnDimension()->setWidth(12.56);
-        $hoja->getColumnDimension('A')->setWidth(11.11);
-        $hoja->getColumnDimension('B')->setWidth(13.89);
-        $hoja->getColumnDimension('C')->setWidth(11.11);
-        $hoja->getColumnDimension('D')->setWidth(12.89);
-        $hoja->getColumnDimension('T')->setWidth(48.89);
-        $hoja->getColumnDimension('U')->setWidth(16.89);
-        $hoja->getColumnDimension('V')->setWidth(32.22);
-
-
-        $hoja->mergeCells('A1:B1');
-        $hoja->mergeCells('A2:B2');
-        $hoja->mergeCells('A3:B3');
-        $hoja->mergeCells('A4:B4');
-        $hoja->mergeCells('A7:B7');
-        /*$hoja->mergeCells('E7:H7');
-        $hoja->mergeCells('I7:L7');
-        $hoja->mergeCells('M7:P7');
-        $hoja->mergeCells('Q7:S7');
-        $hoja->mergeCells('T7:U7');
-        $hoja->mergeCells('V7:W7');*/
-
-        $hoja->mergeCells('C7:C8');
-        $hoja->mergeCells('D7:D8');
-
-        $hoja->getRowDimension(8)->setRowHeight(53.40);
-
-
-
-        $color = '5B9BD5'; 
-        $hoja->getStyle("A7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-        $hoja->getStyle("A8")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-        $hoja->getStyle("B8")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-        $hoja->getStyle("C7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        $color = 'DDEBF7';
-        $hoja->getStyle("D7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        /*$color = "2F75B5";
-        $hoja->getStyle("E7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        $color = "A9D08E";
-        $hoja->getStyle("I7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        $color = "92D050";
-        $hoja->getStyle("M7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        $color = "ED7D31";
-        $hoja->getStyle("Q7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);*/
-        
-
-
-
-        //el dos
-        $hoja->setCellValue('A1', '% De información faltante hasta la fecha:');
-        $hoja->setCellValue('A2', 'Información Faltante (días):');
-        $hoja->setCellValue('A3', 'Días Transcurridos:');
-        $hoja->setCellValue('A4', 'Información Faltante del Año:');
-        $hoja->setCellValue('A5', 'Embalse:');
-        //aqui va lo del nombre del embalse
-        $hoja->setCellValue("A7", 'FECHA');
-
-        $styleCell = $hoja->getStyle("A7");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
-
-
-        $hoja->setCellValue("A8", 'DIA');
-        $styleCell = $hoja->getStyle("A8");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
-
-        $hoja->setCellValue("B8", 'FECHA');
-        $styleCell = $hoja->getStyle("B8");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
-
-        $hoja->setCellValue("C7", 'Cota Actual (msnm)');
-        $styleCell = $hoja->getStyle("C7");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
-
-        $hoja->setCellValue("D7", 'Dias de Reserva de Agua');
-        $styleCell = $hoja->getStyle("D7");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-
-
-
-        //el tres
-        $hoja->getStyle("C1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $hoja->getStyle("C2")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $hoja->getStyle("C3")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $hoja->getStyle("C4")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-
-
-        //el cinco
-        $hoja->getStyle("B" . $fila_inicio_color_fecha . ":B" . $fila_fin_color_fecha)
-        ->getFill()
-        ->setFillType(Fill::FILL_SOLID)
-        ->getStartColor()
-        ->setARGB('DDEBF7');
-    }
-
     if(mysqli_num_rows($query) > 0) {
 
         $spreadsheet = new Spreadsheet();
 
-        $global_iterator = 0;
+        $i = 0;
         while($row = mysqli_fetch_array($query)) {
 
             //Reseteando las cantidades y sumatorias a 0 para cada embalse
@@ -249,34 +126,72 @@
 
 
 
-            if($global_iterator == 0) {
+            if($i == 0) {
                 $hoja = $spreadsheet->getActiveSheet();
                 $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
             }
             else {
-                //$hoja = $spreadsheet->createSheet();
-                //$hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
-
-                $hojaAnterior = $spreadsheet->getSheet(0); // Obtiene la primera hoja
-                $hoja = clone $hojaAnterior; // Clona la hoja
+                $hoja = $spreadsheet->createSheet();
                 $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
-
-                // Añadir la hoja clonada al libro de trabajo
-                $spreadsheet->addSheet($hoja);
             }
 
+            $i++;
 
             /*for ($i = 1; $i <= 100; $i++) {
                 $hoja->setCellValue('A' . $i, 'Dato ' . $i);
             }*/
 
-            
+            $hoja->freezePane('D9');
+
+            $hoja->getDefaultColumnDimension()->setWidth(12.56);
+            $hoja->getColumnDimension('A')->setWidth(11.11);
+            $hoja->getColumnDimension('B')->setWidth(13.89);
+            $hoja->getColumnDimension('C')->setWidth(11.11);
+            $hoja->getColumnDimension('D')->setWidth(12.89);
+            $hoja->getColumnDimension('T')->setWidth(48.89);
+            $hoja->getColumnDimension('U')->setWidth(16.89);
+            $hoja->getColumnDimension('V')->setWidth(32.22);
+
+
+            $hoja->mergeCells('A1:B1');
+            $hoja->mergeCells('A2:B2');
+            $hoja->mergeCells('A3:B3');
+            $hoja->mergeCells('A4:B4');
+            $hoja->mergeCells('A7:B7');
+            /*$hoja->mergeCells('E7:H7');
+            $hoja->mergeCells('I7:L7');
+            $hoja->mergeCells('M7:P7');
+            $hoja->mergeCells('Q7:S7');
+            $hoja->mergeCells('T7:U7');
+            $hoja->mergeCells('V7:W7');*/
+
+            $hoja->mergeCells('C7:C8');
+            $hoja->mergeCells('D7:D8');
+
+            $hoja->getRowDimension(8)->setRowHeight(53.40);
+
 
             
-            //el uno
-            
+            $color = '5B9BD5'; 
+            $hoja->getStyle("A7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+            $hoja->getStyle("A8")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+            $hoja->getStyle("B8")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+            $hoja->getStyle("C7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
 
+            $color = 'DDEBF7';
+            $hoja->getStyle("D7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
 
+            /*$color = "2F75B5";
+            $hoja->getStyle("E7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+
+            $color = "A9D08E";
+            $hoja->getStyle("I7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+
+            $color = "92D050";
+            $hoja->getStyle("M7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
+
+            $color = "ED7D31";
+            $hoja->getStyle("Q7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);*/
 
             $tipo_extraccion = "";
             $cont = 0;
@@ -383,8 +298,53 @@
 
 
             //Añadiendo membrete
-            //el dos
+            $hoja->setCellValue('A1', '% De información faltante hasta la fecha:');
+            $hoja->setCellValue('A2', 'Información Faltante (días):');
+            $hoja->setCellValue('A3', 'Días Transcurridos:');
+            $hoja->setCellValue('A4', 'Información Faltante del Año:');
+            $hoja->setCellValue('A5', 'Embalse:');
             $hoja->setCellValue('B5', mb_strtoupper($row['nombre_embalse']));
+            $hoja->setCellValue("A7", 'FECHA');
+
+            $styleCell = $hoja->getStyle("A7");
+            $styleCell->getFont()->setBold(true);
+            $styleCell->getAlignment()->setWrapText(true);
+            $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+            $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
+
+
+            $hoja->setCellValue("A8", 'DIA');
+            $styleCell = $hoja->getStyle("A8");
+            $styleCell->getFont()->setBold(true);
+            $styleCell->getAlignment()->setWrapText(true);
+            $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+            $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
+
+            $hoja->setCellValue("B8", 'FECHA');
+            $styleCell = $hoja->getStyle("B8");
+            $styleCell->getFont()->setBold(true);
+            $styleCell->getAlignment()->setWrapText(true);
+            $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+            $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
+
+            $hoja->setCellValue("C7", 'Cota Actual (msnm)');
+            $styleCell = $hoja->getStyle("C7");
+            $styleCell->getFont()->setBold(true);
+            $styleCell->getAlignment()->setWrapText(true);
+            $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+            $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
+
+            $hoja->setCellValue("D7", 'Dias de Reserva de Agua');
+            $styleCell = $hoja->getStyle("D7");
+            $styleCell->getFont()->setBold(true);
+            $styleCell->getAlignment()->setWrapText(true);
+            $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+
 
 
             //Filas de extracciones
@@ -425,27 +385,15 @@
             $dia_actual = "$anio-01-01";
             $fila_actual = 9;
             $cant_registros = 0;
-            $fila_inicio_color_fecha = $fila_actual;
             //$columna_actual = "A";
             for($i = 0 ; $i < $numberOfDays ; $i++) {
-
-                //new - dejar en blanco las celdas de a fila
-                if($global_iterator > 0) {
-                    $hoja->setCellValue("C" . $fila_actual, ""); //Dejando en blanco la cota anterior
-                    foreach($array_codigos as &$codigo) {
-                        $hoja->setCellValue($codigo['columna'] . $fila_actual, "");
-                    }
-                    unset($codigo);
-                }
-
 
                 $hoja->setCellValue("A" . $fila_actual, $diasSemanaEspañol[date('l', strtotime($dia_actual))]);
                 $hoja->getStyle("A" . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
 
                 $hoja->setCellValue("B" . $fila_actual, date("d/m/Y",strtotime($dia_actual)));
                 $hoja->getStyle("B" . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-                //el cinco
-                //$hoja->getStyle("B", $fila_actual)->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('DDEBF7');
+                $hoja->getStyle("B", $fila_actual)->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('DDEBF7');
 
 
                 //$filasEncontradas = [];
@@ -550,34 +498,21 @@
                 $fila_actual++;
 
             }
-            $fila_fin_color_fecha = $fila_actual - 1;
 
 
             //Añadiendo valores de estadisticas a la cabecera de la hoja
             $dia_del_anio_aux = (date("Y") == $anio) ? (date('z') + 1) : $numberOfDays;
             $hoja->setCellValue('C1', number_format(100 - ($cant_registros * 100 / $dia_del_anio_aux), 2, ".", "") . "%"); // % de informacion faltante hasta la fecha
-            
+            $hoja->getStyle("C1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             //$hoja->setCellValue('D1', date('z') );
             $hoja->setCellValue('C2', $numberOfDays - $cant_registros); // Información Faltante (días)
+            $hoja->getStyle("C2")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
             $hoja->setCellValue('C3', $dia_del_anio_aux); // Días transcurridos
+            $hoja->getStyle("C3")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
             $hoja->setCellValue('C4', number_format(100 - ($cant_registros * 100 / $numberOfDays), 2, ".", "") . "%"); // % de informacion faltante del año 
-            
-
-
-            //el tres
-
-
-
-
-            //Añadiendo estilos a la hoja
-            if($global_iterator == 0)
-                styles($hoja, $fila_inicio_color_fecha, $fila_fin_color_fecha);
-
-            $global_iterator++;
-
-
-
-
+            $hoja->getStyle("C4")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
 
             //Añadiendo los promedios a los codigos
@@ -596,16 +531,10 @@
                 else
                     $hoja->setCellValue($codigo['columna'] . "8", $codigo['name'] . " (" . $codigo['codigo'] . ")");
             }
-
-
-
-
-
         }
 
         closeConection($conn);
 
-        $spreadsheet->setActiveSheetIndex(0);
 
         //Generar el documento excel
         $writer = new Xlsx($spreadsheet);

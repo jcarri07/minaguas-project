@@ -22,7 +22,7 @@
 ?>
 
 
-<div class="modal fade" id="modal-morosos" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="modal-morosos" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
@@ -98,7 +98,7 @@
             mes = i;
             if(i < 10)
                 mes = "0" + i;
-                var fecha_seleccionada = new Date($("#anio_morosos").val(), mes, 01);
+                var fecha_seleccionada = new Date($("#anio_morosos").val(), mes, 0o1);
                 if(fecha_seleccionada <= fecha_hoy) {
                     $("#mes_morosos").append('<option value="' + mes + '">' + meses[i-1] + '</option>');
                 }

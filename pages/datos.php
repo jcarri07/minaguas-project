@@ -310,7 +310,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -345,7 +345,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -398,7 +398,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                 <div class="col">
                   <label>Cota (01)</label>
                   <div class="input-group mb-3">
-                    <input type="number" step="0.00001" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
+                    <input type="text" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
                   </div>
                 </div>
               </div>
@@ -421,7 +421,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                   <div class="col">
                     <label>Valor</label> <!-- (1000 m<sup>3</sup>)-->
                     <div class="input-group mb-4">
-                      <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" required>
+                      <input type="text" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" required>
                     </div>
                   </div>
                 </div>
@@ -465,7 +465,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 </div>
 
 
-<div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="add-data-old" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -521,7 +521,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="modal-history-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="modal-history-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -549,7 +549,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 
 
-<div class="modal fade" id="select-anio-export-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+<div class="modal fade" id="select-anio-export-excel" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -717,7 +717,7 @@ require_once 'php/datos/vistas/morosos.php';
       $("#valor_extraccion_" + row).attr("type", "text");
     } else {
       label_valor.html("Valor (1000 m<sup>3</sup>)");
-      $("#valor_extraccion_" + row).attr("type", "number");
+      $("#valor_extraccion_" + row).attr("type", "text");
     }
 
 
@@ -773,6 +773,37 @@ require_once 'php/datos/vistas/morosos.php';
 
   $("#form").on("submit", function(event) {
     event.preventDefault();
+
+    var currentDateTime = new Date('<?php echo date("Y-m-d H:i:s"); ?>');
+    var fecha_input = $("#fecha").val();
+    var hora_input = $("#hora").val();
+
+    if (!fecha_input || !hora_input || !this.valor_cota.value) {
+      $("#modal-generic .message").text("Complete el formulario.");
+      $("#modal-generic").modal("show");
+      return false;
+    }
+
+    var inputDateTime = new Date(fecha_input + 'T' + hora_input);
+    var inputDateOnly = inputDateTime.toISOString().split('T')[0];
+    var currentDateOnly = currentDateTime.toISOString().split('T')[0];
+
+    if (inputDateOnly === currentDateOnly) {
+      if (inputDateTime > currentDateTime) {
+        $("#modal-generic .message").text("La hora no puede ser mayor a la actual.");
+        $("#modal-generic").modal("show");
+        return false; 
+      }
+    }
+    else {
+      if (inputDateTime > currentDateTime) {
+        $("#modal-generic .message").text("La fecha no puede ser mayor a la actual.");
+        $("#modal-generic").modal("show");
+        return false; 
+      }
+    }
+    console.log("aja");
+    return false;
 
     var tipo_extraccion = [];
     var valor_extraccion = [];
@@ -938,10 +969,15 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
       $(".removeRow").each(function(index) {
         $(this).trigger("click");
       });
-
+      // console.log();
       $("#fecha").val(fecha);
       $("#hora").val(hora);
-      $("#valor_cota").val(cota);
+      let valor_cota = parseFloat(cota).toFixed(3);
+      let cota_formateado = new Intl.NumberFormat('de-DE', {
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 3
+      }).format(valor_cota);
+      $("#valor_cota").val(cota_formateado);
       var extraccion_array = extraccion.split(";");
       if (extraccion_array.length > 1) {
         for (var i = 0; i < extraccion_array.length - 1; i++) {
@@ -973,8 +1009,12 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
             valor_extraccion = Number(extraccion_aux[1]).toFixed(4);
         }
         if (this.value != "30" && this.value != "31" && $.isNumeric(extraccion_aux[1]))
-          valor_extraccion = Number(extraccion_aux[1]).toFixed(3);
-        $("#valor_extraccion_" + row).val(valor_extraccion);
+          valor_extraccion = Number(extraccion_aux[1]).toFixed(2);
+        let valor_formateado = new Intl.NumberFormat('de-DE', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(valor_extraccion);
+        $("#valor_extraccion_" + row).val(valor_formateado);
 
         $(this).attr("disabled", true);
         $("#valor_extraccion_" + row).attr("disabled", true);

@@ -171,7 +171,7 @@ if ($count >= 1) {
                     ctx.moveTo(left, y.getPixelForValue(yvalue));
                     ctx.lineTo(right, y.getPixelForValue(yvalue));
                     ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                    ctx.fillText(cota + ": " + yvalue + " (Hm³)", right * 4.2 / 6, y.getPixelForValue(yvalue) + h);
+                    ctx.fillText(cota + ": " + yvalue.toLocaleString("de-DE") + " (Hm³)", right * 4.2 / 6, y.getPixelForValue(yvalue) + h);
                     ctx.stroke();
                 });
 
@@ -222,7 +222,12 @@ if ($count >= 1) {
                     ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
                     ctx.fillStyle = 'black';
                     total = dataset.data[dataset.data.length - 1].y;
-                    ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
+                    tot = parseFloat(total);
+                    formateado = new Intl.NumberFormat('de-DE', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }).format(tot);
+                    ctx.fillText(formateado, lastElement.x, lastElement.y - 5);
                 }
                 ctx.restore();
             },
@@ -454,9 +459,9 @@ if ($count >= 1) {
                                         }
                                     }; ?>,
                             max: <?php if ($max > $embalses[$t]["cota_max"]) {
-                                        echo $bati->getByCota($año, $max)[1] + 10;
+                                        echo round($bati->getByCota($año, $max)[1] + 10,0);
                                     } else {
-                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] +10;
+                                        echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1] +10,0);
                                     }; ?>,
                             border: {
                                 display: false,
@@ -465,6 +470,9 @@ if ($count >= 1) {
                                 font: {
                                     size: 14,
                                     family: 'Arial',
+                                },
+                                callback: function(valor, index, valores) {
+                                        return valor.toLocaleString("de-DE");
                                 },
                             },
                         },
@@ -676,9 +684,9 @@ if ($count >= 1) {
                                         }
                                     }; ?>,
                             max: <?php if ($max > $embalses[$t]["cota_max"]) {
-                                        echo $bati->getByCota($año, $max)[1] + 10;
+                                        echo round($bati->getByCota($año, $max)[1] + 10,0);
                                     } else {
-                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] +10;
+                                        echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1] +10,0);
                                     }; ?>,
                             border: {
                                 display: false,
@@ -687,6 +695,9 @@ if ($count >= 1) {
                                 font: {
                                     size: 14,
                                     family: 'Arial',
+                                },
+                                callback: function(valor, index, valores) {
+                                        return valor.toLocaleString("de-DE");
                                 },
                             },
                         },
@@ -895,9 +906,9 @@ if ($count >= 1) {
                                         }
                                     }; ?>,
                             max: <?php if ($max > $embalses[$t]["cota_max"]) {
-                                        echo $bati->getByCota($año, $max)[1] + 10;
+                                        echo round($bati->getByCota($año, $max)[1] + 10,0);
                                     } else {
-                                        echo $bati->getByCota($año, $embalses[$t]["cota_max"])[1] +10;
+                                        echo round($bati->getByCota($año, $embalses[$t]["cota_max"])[1] +10,0);
                                     }; ?>,
                             border: {
                                 display: false,
@@ -906,6 +917,9 @@ if ($count >= 1) {
                                 font: {
                                     size: 14,
                                     family: 'Arial',
+                                },
+                                callback: function(valor, index, valores) {
+                                        return valor.toLocaleString("de-DE");
                                 },
                             },
                         },

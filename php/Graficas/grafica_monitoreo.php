@@ -385,9 +385,13 @@ $j = 0;
                     datalabels: {
                         anchor: 'end',
                         align: 'end',
+                        formatter: function(value, context) {
+                            return (Math.round(value * 100) / 100).toLocaleString("de-DE");
+                        },
                         labels: {
                             title: {
                                 font: {
+                                    size: 11,
                                     weight: 'bold',
                                     family: 'Arial',
                                 }
@@ -431,8 +435,8 @@ $j = 0;
                             display: false,
                         },
                         labels: [<?php for ($k = $l; $k < ($t * $sem); $k++) {
-                                        if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo round($array2[$k] - $array1[$k], 2) . " Hm³"; ?>', <?php }
-                                                                                                                                        } ?>],
+                                        if (isset($fsemanas[$k]['fechas'])) { ?> '<?php echo number_format(round($array2[$k] - $array1[$k], 2), "2", ",", ".") . " Hm³"; ?>', <?php }
+                                                                                                                                                                        } ?>],
 
                         ticks: {
                             font: {
@@ -475,6 +479,14 @@ $j = 0;
                             font: {
                                 size: 14,
                                 family: 'Arial',
+                            },
+                            callback: (value) => {
+                                let newValue = parseFloat(value).toFixed(2);
+                                let formatedValue = new Intl.NumberFormat('de-DE', {
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0
+                                }).format(newValue);
+                                return formatedValue;
                             },
                         },
 
@@ -536,7 +548,7 @@ $j = 0;
                 ctx.moveTo(left, y.getPixelForValue(yvalue));
                 ctx.lineTo(right, y.getPixelForValue(yvalue));
                 ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                ctx.fillText(cota + ": " + yvalue + " (Hm³)", right * 4.2 / 6, y.getPixelForValue(yvalue) + h);
+                ctx.fillText(cota + ": " + yvalue.toLocaleString("de-DE") + " (Hm³)", right * 4.2 / 6, y.getPixelForValue(yvalue) + h);
                 ctx.stroke();
             });
 
@@ -586,7 +598,12 @@ $j = 0;
                 ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
                 ctx.fillStyle = 'blue';
                 total = dataset.data[dataset.data.length - 1].y;
-                ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
+                tot = parseFloat(total);
+                formateado = new Intl.NumberFormat('de-DE', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }).format(tot);
+                ctx.fillText(formateado, lastElement.x, lastElement.y - 5);
             }
             ctx.restore();
         },
@@ -771,6 +788,14 @@ $j = 0;
                         font: {
                             size: 14,
                             family: 'Arial',
+                        },
+                        callback: (value) => {
+                            let newValue = parseFloat(value).toFixed(2);
+                            let formatedValue = new Intl.NumberFormat('de-DE', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            }).format(newValue);
+                            return formatedValue;
                         },
                     },
                 },
@@ -968,6 +993,14 @@ $j = 0;
                             size: 14,
                             family: 'Arial',
                         },
+                        callback: (value) => {
+                            let newValue = parseFloat(value).toFixed(2);
+                            let formatedValue = new Intl.NumberFormat('de-DE', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            }).format(newValue);
+                            return formatedValue;
+                        },
                     },
                 },
             },
@@ -1159,6 +1192,14 @@ $j = 0;
                         font: {
                             size: 14,
                             family: 'Arial',
+                        },
+                        callback: (value) => {
+                            let newValue = parseFloat(value).toFixed(2);
+                            let formatedValue = new Intl.NumberFormat('de-DE', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            }).format(newValue);
+                            return formatedValue;
                         },
                     },
                 },
