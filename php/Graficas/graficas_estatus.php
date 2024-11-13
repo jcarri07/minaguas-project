@@ -168,13 +168,22 @@ if ($count >= 1) {
             if ((abs(($sum)) * (100 / $div)) >= 60 && (abs(($sum)) * (100 / $div)) < 90) {
                 $lista[2]++;
             };
-            if ((abs(($sum)) * (100 / $div)) >= 90 && (abs(($sum)) * (100 / $div)) >= 100) {
+            if ((abs(($sum)) * (100 / $div)) >= 90 || (abs(($sum)) * (100 / $div)) >= 100) {
                 $lista[3]++;
             };
 
             //cuenta de dias//
-            $dat = $datos_embalses[$j]['extraccion'] != 0 ? $datos_embalses[$j]['extraccion'] : 1;
-            $suma_extracciones[] = round(($sum / (($dat + $evaporacion + $filtracion) / 1000)));
+            if($datos_embalses[$j]['extraccion'] != NULL){
+                $dat = $datos_embalses[$j]['extraccion'] != 0 ? $datos_embalses[$j]['extraccion'] : 1;
+                if($dat == 1){
+                    $suma_extracciones[] = 0;
+                }else{
+                    $suma_extracciones[] = ($bati->volumenActualDisponible() * 1000 / (($dat + $evaporacion + $filtracion) ))/30;
+                }
+                
+            }else{
+                $suma_extracciones[] = 0;
+            }
             //----//
 
         } else {
@@ -204,16 +213,16 @@ if ($count >= 1) {
     };
     $j = 0;
     while ($j < count($suma_extracciones)) {
-        if ($suma_extracciones[$j] < 150 && $suma_extracciones[$j] >= 0) {
+        if ($suma_extracciones[$j] < 5 && $suma_extracciones[$j] >= 0) {
             $condicion[0]++;
         };
-        if ($suma_extracciones[$j] >= 150 && $suma_extracciones[$j] < 240) {
+        if ($suma_extracciones[$j] > 4 && $suma_extracciones[$j] < 9) {
             $condicion[1]++;
         };
-        if ($suma_extracciones[$j] >= 270 && $suma_extracciones[$j] < 360) {
+        if ($suma_extracciones[$j] > 8 && $suma_extracciones[$j] < 13) {
             $condicion[2]++;
         };
-        if ($suma_extracciones[$j] >= 360) {
+        if ($suma_extracciones[$j] > 12) {
             $condicion[3]++;
         };
         $j++;
@@ -358,8 +367,7 @@ if ($count >= 1) {
                             }, 0);
                             value = value != 0 ? value : 1;
                             
-                            porcentaje = value / totalSum * 100
-                            return `${porcentaje.toFixed(1)}%`;
+                            return (Math.round((value / totalSum) * 1000) / 10).toLocaleString("de-DE") + "%";
                         }),
                         labels: {
                             title: {
@@ -455,6 +463,9 @@ if ($count >= 1) {
                     datalabels: {
                         anchor: 'end',
                         align: 'end',
+                        formatter: function(value, context) {
+                            return (Math.round(value * 100) / 100).toLocaleString("de-DE");
+                        },
                         labels: {
                             title: {
                                 font: {
@@ -494,6 +505,9 @@ if ($count >= 1) {
                                 size: 12,
                                 family: 'Arial',
                             },
+                            callback: function(valor, index, valores) {
+                                return valor.toLocaleString("de-DE");
+                            }
                         },
                     },
                 },
@@ -581,6 +595,9 @@ if ($count >= 1) {
                     datalabels: {
                         anchor: 'end',
                         align: 'end',
+                        formatter: function(value, context) {
+                            return (Math.round(value * 100) / 100).toLocaleString("de-DE");
+                        },
                         labels: {
                             title: {
                                 font: {
@@ -620,6 +637,9 @@ if ($count >= 1) {
                                 size: 12,
                                 family: 'Arial',
                             },
+                            callback: function(valor, index, valores) {
+                                return valor.toLocaleString("de-DE");
+                            }
                         },
                     },
                 },
@@ -716,10 +736,9 @@ if ($count >= 1) {
                             const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
                                 return accumulator + currentValue
                             }, 0);
-                            value = value != 0 ? value : 1;
+                            value = value != 0 ? parseFloat(value) : 1;
                             
-                            porcentaje = value / totalSum * 100
-                            return `${porcentaje.toFixed(1)}%`;
+                            return (Math.round((value / totalSum) * 1000) / 10).toLocaleString("de-DE") + "%";
                         }),
                         labels: {
                             title: {
