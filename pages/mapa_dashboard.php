@@ -107,6 +107,14 @@ while ($row < count($datos_embalses)) {
     /* .leaflet-top.leaflet-left {
         display: none;
     } */
+    .leaflet-popup {
+        margin-bottom: 0px !important;
+        bottom: 7px !important;
+    }
+
+    .leaflet-popup-tip {
+        pointer-events: none !important;
+    }
 
     .leaflet-popup-content-wrapper {
         text-align: center !important;
@@ -120,7 +128,8 @@ while ($row < count($datos_embalses)) {
 
     .leaflet-popup-content {
         background-color: rgba(0, 0, 0, 0) !important;
-        margin: 8px 10px !important;
+        margin: 0px !important;
+        /* margin: 8px 10px !important; */
     }
 
     .leaflet-popup-close-button {
@@ -128,7 +137,7 @@ while ($row < count($datos_embalses)) {
     }
 
     .leaflet-popup-tip-container {
-        margin-top: -8px !important;
+        /* margin-top: -8px !important; */
     }
 
     .leaflet-popup-tip {
@@ -138,7 +147,7 @@ while ($row < count($datos_embalses)) {
     }
 
     .leaflet-popup.leaflet-zoom-animated {
-        margin-bottom: 5.5px !important;
+        /* margin-bottom: 5.5px !important; */
     }
 </style>
 
