@@ -5,7 +5,7 @@ require_once '../../php/batimetria.php';
 $id = $_GET['id'];
 $index = $_GET['index'];
 $semanas = $_GET['semanas'];
-$fecha_inicio = date("d/m/Y",strtotime($_GET['fecha']));
+$fecha_inicio = date("d/m/Y", strtotime($_GET['fecha']));
 $sql = "SELECT * FROM embalses WHERE id_embalse = $id";
 $volumen_inicial = $_GET['volumen'];
 $cota_inicial = $_GET['cota'];
@@ -181,7 +181,7 @@ $TITULO6 = "Gráfico 6";
             <tbody>
                 <tr>
                     <th style="text-align: left;">Cota inicial de Monitoreo:</th>
-                    <td style="text-align: right;"><?php echo number_format($cota_inicial, 2, ".", "") . " m s.n.m (" . number_format($volumen_inicial, 3, ".", "") . " hm3)" ?></td>
+                    <td style="text-align: right;"><?php echo number_format($cota_inicial, 3, ",", ".") . " m s.n.m (" . number_format($volumen_inicial, 3, ",", ".") . " hm3)" ?></td>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Fecha:</th>
@@ -190,11 +190,11 @@ $TITULO6 = "Gráfico 6";
                 <tr>
                     <th style="text-align: left;">Volumen Nivel Normal:</th>
                     <?php $batimetria = new Batimetria($id, $conn); ?>
-                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenNormal(), 4, ".", "") . " hm3 (Cota " . $batimetria->cotaNormal() . " m s.n.m)" ?></td>
+                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenNormal(), 2, ",", ".") . " hm3 (Cota " . $batimetria->cotaNormal() . " m s.n.m)" ?></td>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Volumen Nivel Minimo:</th>
-                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenMinimo(), 4, ".", "") . " hm3 (Cota " . $batimetria->cotaMinima() . " m s.n.m)" ?></td>
+                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenMinimo(), 2, ",", ".") . " hm3 (Cota " . $batimetria->cotaMinima() . " m s.n.m)" ?></td>
                 </tr>
             </tbody>
         </table>
