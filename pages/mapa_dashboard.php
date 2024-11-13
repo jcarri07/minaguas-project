@@ -284,48 +284,53 @@ while ($row < count($datos_embalses)) {
 
     var ubicacion;
 
-    <?php
-    foreach ($embalses_abast as $emb) {
-        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
-            ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
-            var marker = L.marker([ubicacion[0], ubicacion[1]], {
-                icon: <?php echo $emb[4] ?>
-            }).addTo(mapa_portada).bindPopup("<b><?php echo $emb[3] ?></b> <b><?php echo $emb[5] ?> %</b>", {
-                autoClose: false,
-                closeOnClick: false
-            });
-            // }).openPopup();
-        <?php } else { ?>
-    <?php }
-    }
-    ?>
-
     // <?php
-        //     foreach ($embalses_abast as $emb) {
-        //         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { 
+        // foreach ($embalses_abast as $emb) {
+        //     if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { 
         ?>
-    //             ubicacion = geoToUtm(<?php //echo $emb[0] . "," . $emb[1] . "," . $emb[2] 
-                                        ?>)
-    //             var marker = L.marker([ubicacion[0], ubicacion[1]], {
-    //                 icon: <?php //echo $emb[4] 
-                                ?>
-    //             }).addTo(mapa_portada).on('mouseover', function(e) {
-    //                 this.bindPopup("<b><?php //echo $emb[3] 
+    // ubicacion = geoToUtm(<?php //echo $emb[0] . "," . $emb[1] . "," . $emb[2] 
+                            ?>)
+    //         var marker = L.marker([ubicacion[0], ubicacion[1]], {
+    // icon: <?php //echo $emb[4] 
+                ?>
+    // }).addTo(mapa_portada).bindPopup("<b><?php //echo $emb[3] 
                                             ?></b> <b><?php //echo $emb[5] 
                                                         ?> %</b>", {
-    //                     autoClose: false,
-    //                     closeOnClick: false
-    //                 }).openPopup();
-    //             }).on('mouseout', function(e) {
-    //                 this.closePopup();
-    //             });
-    //             // }).openPopup();
-    //         <?php //} else { 
-                ?>
-    //     <?php //}
-            //     }
-            //     
-            ?>
+    //             autoClose: false,
+    //             closeOnClick: false
+    //         });
+    //         // }).openPopup();
+    // <?php //} else { 
+        ?>
+    // <?php //}
+        // }
+        // 
+        ?>
+
+    <?php
+    foreach ($embalses_abast as $emb) {
+        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+    ?>
+            ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2]
+                                    ?>)
+            var marker = L.marker([ubicacion[0], ubicacion[1]], {
+                icon: <?php echo $emb[4]
+                        ?>
+            }).addTo(mapa_portada).on('mouseover', function(e) {
+                this.bindPopup("<b><?php echo $emb[3] ?></b> <b><?php echo $emb[5] ?> %</b>", {
+                    autoClose: false,
+                    closeOnClick: false
+                }).openPopup();
+            }).on('mouseout', function(e) {
+                this.closePopup();
+            });
+            // }).openPopup();
+        <?php } else {
+        ?>
+    <?php }
+    }
+
+    ?>
 
     function geoToUtm(norte, este, huso) {
         norte = parseFloat(norte);
