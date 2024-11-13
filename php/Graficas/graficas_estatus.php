@@ -357,7 +357,7 @@ if ($count >= 1) {
                                 return accumulator + currentValue
                             }, 0);
                             value = value != 0 ? value : 1;
-                            
+
                             porcentaje = value / totalSum * 100
                             return `${porcentaje.toFixed(1)}%`;
                         }),
@@ -389,7 +389,7 @@ if ($count >= 1) {
                     ["Volumen", "Útil", "total(VUT)"],
                     ["Volumen", "Disponible", "Actual"],
                     ["Volumen", "Disponible", "<?php echo date('d/m/y', strtotime($fecha1)); ?>"],
-                    ["Variacion de", "Volumen", "Hasta Hoy"]
+                    ["Variación  de", "Volumen", "Hasta Hoy"]
                 ],
                 datasets: [
 
@@ -512,7 +512,7 @@ if ($count >= 1) {
                     ["Volumen", "Útil", "total(VUT)"],
                     ["Volumen", "Disponible", "Actual"],
                     ["Volumen", "Disponible", "<?php echo date('d/m/y', strtotime($fecha2)); ?>"],
-                    ["Variacion de", "Volumen", "Hasta Hoy"]
+                    ["Variación  de", "Volumen", "Hasta Hoy"]
                 ],
                 datasets: [
 
@@ -717,7 +717,7 @@ if ($count >= 1) {
                                 return accumulator + currentValue
                             }, 0);
                             value = value != 0 ? value : 1;
-                            
+
                             porcentaje = value / totalSum * 100
                             return `${porcentaje.toFixed(1)}%`;
                         }),
