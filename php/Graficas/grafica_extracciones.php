@@ -231,7 +231,11 @@ if ($count >= 1) {
                                     }, 0);
                                     // porcentaje = (value / totalSum * 100).toFixed(1);
                                     // return porcentaje.toLocaleString('de_DE') + "%";
+                                    if((Math.round((value / totalSum) * 1000) / 10) <= 0){
+                                        return "";
+                                    }else{
                                     return (Math.round((value / totalSum) * 1000) / 10).toLocaleString("de-DE") + "%";
+                                    }
                                 }),
                                 labels: {
                                     title: {
