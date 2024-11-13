@@ -1,5 +1,3 @@
+/assets/img/temp
 .DS_Store
 
-# ignore all files in any directory named build
-/assets/img/temp
-/assets/img/temp
