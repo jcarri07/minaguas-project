@@ -1,7 +1,7 @@
 <?php
 
-require_once 'php/Conexion.php';
-require_once 'php/batimetria.php';
+require_once '../php/Conexion.php';
+require_once '../php/batimetria.php';
 
 //EMBALSES - PORCENTAJE Y VARIACION
 
@@ -88,7 +88,7 @@ while ($row < count($datos_embalses)) {
 // var_dump($embalses_abast);
 ?>
 
-<head>
+<!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
@@ -96,11 +96,11 @@ while ($row < count($datos_embalses)) {
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
     <script src="./assets/js/jquery/jquery.min.js"></script>
-</head>
+</head> -->
 
 <style>
     #mapa-portada {
-        width: 1500px;
+        width: 1100px;
         height: 700px;
     }
 

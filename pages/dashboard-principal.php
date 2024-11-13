@@ -94,8 +94,8 @@ $nombreEmbalse = $row1['nombre_embalse'];
 
 closeConection($conn);*/
 ?>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="./assets/js/jquery/jquery.min.js"></script>
 
 
 <div class="container-fluid py-5">
@@ -287,9 +287,9 @@ closeConection($conn);*/
   </style>
 
 
-  <div class="container">
+  <div class="container px-3">
     <div class="row">
-      <div class="col-12 pt-2" id="container-div">
+      <div class="col-12 pt-2 px-0" id="container-div">
         <div class=" d-flex flex-row flex-wrap justify-content-around align-items-center gap-2 mb-2" id="contain-charts">
           <div class="d-flex flex-column justify-content-center align-items-center shadow rounded p-3 border bg-white">
             <h5 class="d-flex justify-content-center align-items-center rounded">
@@ -307,6 +307,10 @@ closeConection($conn);*/
               </h5>
               <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-2">
+                  <link href="./assets/css/style-spinner.css" rel="stylesheet" />
+                  <div class="loaderPDF">
+                    <div class="lds-dual-ring"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -316,6 +320,10 @@ closeConection($conn);*/
               </h5>
               <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-3">
+                  <link href="./assets/css/style-spinner.css" rel="stylesheet" />
+                  <div class="loaderPDF">
+                    <div class="lds-dual-ring"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -350,9 +358,9 @@ closeConection($conn);*/
 
           </div>
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 700px;">
-            <!-- ]  <div id="mapa-container"> -->
+            <div id="mapa-container" class="d-flex" style="height: 700px;"></div>
             <!-- <div id="mapa-portada" style="width: 100%; height: 100%;"></div> -->
-            <?php include "mapa_dashboard.php" ?>
+
           </div>
 
           <div class="row justify-content-center gap-sm-2 ">
@@ -361,7 +369,7 @@ closeConection($conn);*/
         </div>
       </div>
 
-      <div class="container py-3 px-2" style="padding-left:20px;">
+      <div class="container py-3 px-0" style="padding-left:20px;">
         <div class="card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;">
           <div class="card-header pb-0">
             <h4 class="mb-0">MONITOREO DEL VOLUMEN ÚTIL ACTUAL DE LOS EMBALSES REGISTRADOS</h4>
@@ -412,6 +420,7 @@ closeConection($conn);*/
               <select style="width: 180px;" class="form-control form-select" id="embalseSelect" onchange="cargarGrafico()">
                 <option style="display:none">Seleccione...</option>
                 <?php
+                require_once 'php/Conexion.php';
                 $sql_embalses = "SELECT id_embalse, nombre_embalse FROM embalses";
                 $result_embalses = $conn->query($sql_embalses);
                 while ($row_embalse = $result_embalses->fetch_assoc()) {
@@ -675,9 +684,9 @@ closeConection($conn);*/
 <script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="./assets/js/plugins/chartjs.min.js"></script>
 <script src="./assets/js/jquery/jquery.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
+<link rel="stylesheet" href="./assets/css/leaflet.css" />
+<script src="./assets/js/leaflet.js"></script>
+<script src="./assets/js/proj4.js"></script>
 
 
 
@@ -711,8 +720,8 @@ closeConection($conn);*/
   var ctx = document.getElementById('myChart').getContext('2d');
 
 
-  function actual() {
-    $("#contenedor-1").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
+  function volumen_actual() {
+    $("#cont").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
 
     $.ajax({
       url: 'php/Graficas/grafica_volumen_actual.php',
@@ -730,6 +739,10 @@ closeConection($conn);*/
 
       }
     });
+  }
+
+  function grafica_dashboard() {
+    $("#contenedor-1").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
     $.ajax({
       url: 'php/Graficas/grafica_dashboard.php',
       cache: false,
@@ -746,6 +759,30 @@ closeConection($conn);*/
 
       }
     });
+  }
+
+  function mapa_dashboard() {
+    $("#mapa-container").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF" style="top:-100%;"><div class="lds-dual-ring"></div></div>');
+    $.ajax({
+      url: 'pages/mapa_dashboard.php',
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        //$("#contenedor").html("");
+        $("#mapa-container").html(response);
+
+      },
+      error: function(response) {
+
+        alertify.error("Error inesperado.");
+
+      }
+    });
+  };
+
+  function grafica_extraccion() {
+    $("#contenedor-4").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
     $.ajax({
       url: 'php/Graficas/grafica_extracciones.php',
       cache: false,
@@ -762,14 +799,15 @@ closeConection($conn);*/
 
       }
     });
+  }
 
-
-  };
-
-  actual();
+  volumen_actual();
+  mapa_dashboard();
+  grafica_dashboard();
+  grafica_extraccion();
   $(document).ready(function() {
 
-    cargarGrafico();
+    //cargarGrafico();
 
     // $.ajax({
     //   url: './php/obtener_datos_embalses.php?id=inicial',
@@ -915,5 +953,8 @@ closeConection($conn);*/
     });
   }
 
-  setInterval(actual, 1800000);
+  setInterval(volumen_actual, 1800000);
+  setInterval(mapa_dashboard, 1800000);
+  setInterval(grafica_dashboard, 1800000);
+  setInterval(grafica_extraccion, 1800000);
 </script>
