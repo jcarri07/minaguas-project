@@ -100,7 +100,7 @@ while ($row < count($datos_embalses)) {
 
 <style>
     #mapa-portada {
-        width: 1100px;
+        width: 1272px;
         height: 700px;
     }
 

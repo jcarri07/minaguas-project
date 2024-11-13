@@ -358,7 +358,7 @@ closeConection($conn);*/
 
           </div>
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 700px;">
-            <div id="mapa-container" class="d-flex" style="height: 700px;"></div>
+            <div id="mapa-container" class="d-flex rounded" style="height: 700px; overflow: hidden !important;"></div>
             <!-- <div id="mapa-portada" style="width: 100%; height: 100%;"></div> -->
 
           </div>
