@@ -25,11 +25,11 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
 
           </div>
       <div class="card-body">
-        <p class="text-uppercase text-sm">User Information</p>
+        <p class="text-uppercase text-sm">Información de Usuario</p>
         <form id="form" role="form">
           <div class="mb-3">
           <label>Nombre(s)</label>
-            <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux; ?>>
+          <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux; ?>>
           </div>
           <div class="mb-3">
           <label>Apellido(s)</label>
@@ -52,18 +52,17 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
         <div class="">
           <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula2" value="<?php echo $_SESSION["Cedula"] ?>" hidden>
         </div>
-        
         <!--div class="mb-3">
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
                       </div-->
         <div id="con" class="row">
           <div class="mb-3 col-6">
-          <label>Contraseña</label>
-            <input type="password" class="form-control" placeholder="Contraseña Anterior" aria-label="Password" name="confirmar" Value="" required>
+          <label>Nueva Contraseña</label>
+            <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="Password" name="confirmar" Value="" required>
           </div>
           <div class="mb-3 col-6">
-          <label>Nueva Contraseña</label>
-            <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="confirmar" name="password" Value="" required>
+          <label>Confirmar Contraseña</label>
+            <input type="password" class="form-control" placeholder="Confirmar Contraseña" aria-label="confirmar" name="password" Value="" required>
           </div>
 
         </div>
