@@ -259,14 +259,17 @@ class Batimetria
 
     public function cotaMinima()
     {
+        return floatval($this->cota_min);
         return number_format(floatval($this->cota_min), 3, ",", ".");
     }
     public function cotaNormal()
     {
+        return floatval($this->cota_nor);
         return number_format(floatval($this->cota_nor), 3, ",", ".");
     }
     public function cotaMaxima()
     {
+        return floatval($this->cota_max);
         return number_format(floatval($this->cota_max), 3, ",", ".");
     }
 
@@ -306,6 +309,7 @@ class Batimetria
     public function volumenNormal()
     {
         if ($this->batimetria != "") {
+            // return floatval($this->cotaNormal());
             return $this->getByCota($this->getCloseYear(), $this->cotaNormal())[1];
         } else {
             return $this->vol_nor != "" ? $this->vol_nor : 0;
