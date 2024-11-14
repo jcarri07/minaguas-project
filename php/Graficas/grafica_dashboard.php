@@ -46,7 +46,7 @@ if ($count >= 1) {
   FROM embalses e
   LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_dia'
   WHERE e.estatus = 'activo'
-  GROUP BY id_embalse;;");
+  GROUP BY id_embalse;");
 
     $condiciones_anio = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
     FROM datos_embalse h 
@@ -81,10 +81,10 @@ if ($count >= 1) {
         }
         $volumen_fechas[0] += $bati->volumenDisponible();
         if ($volumen_dias[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[2] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_dias[$j]["fecha"])), $volumen_dias[$j]["cota_actual"]);
+            $volumen_fechas[2] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_dias[$j]["fecha"])), $volumen_dias[$j]["cota_actual"])- $min);
         }
         if ($volumen_anio[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[3] += $bati->volumenDisponibleByCota(date('Y', strtotime($volumen_anio[$j]["fecha"])), $volumen_anio[$j]["cota_actual"]);
+            $volumen_fechas[3] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_anio[$j]["fecha"])), $volumen_anio[$j]["cota_actual"])- $min);
         }
         $j++;
     };
