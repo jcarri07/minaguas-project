@@ -397,7 +397,7 @@ if ($count >= 1) {
                     ["Volumen", "Útil", "total(VUT)"],
                     ["Volumen", "Disponible", "Actual"],
                     ["Volumen", "Disponible", "<?php echo date('d/m/y', strtotime($fecha1)); ?>"],
-                    ["Variacion de", "Volumen", "Hasta Hoy"]
+                    ["Variación  de", "Volumen", "Hasta Hoy"]
                 ],
                 datasets: [
 
@@ -526,7 +526,7 @@ if ($count >= 1) {
                     ["Volumen", "Útil", "total(VUT)"],
                     ["Volumen", "Disponible", "Actual"],
                     ["Volumen", "Disponible", "<?php echo date('d/m/y', strtotime($fecha2)); ?>"],
-                    ["Variacion de", "Volumen", "Hasta Hoy"]
+                    ["Variación  de", "Volumen", "Hasta Hoy"]
                 ],
                 datasets: [
 

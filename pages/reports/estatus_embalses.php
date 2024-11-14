@@ -313,9 +313,18 @@ function getMonthName()
   $numero_mes = $fecha_actual['mon'];
 
   $nombres_meses = array(
-    1 => "ENERO", 2 => "FEBRERO", 3 => "MARZO", 4 => "ABRIL",
-    5 => "MAYO", 6 => "JUNIO", 7 => "JULIO", 8 => "AGOSTO",
-    9 => "SEPTIEMBRE", 10 => "OCTUBRE", 11 => "NOVIEMBRE", 12 => "DICIEMBRE"
+    1 => "ENERO",
+    2 => "FEBRERO",
+    3 => "MARZO",
+    4 => "ABRIL",
+    5 => "MAYO",
+    6 => "JUNIO",
+    7 => "JULIO",
+    8 => "AGOSTO",
+    9 => "SEPTIEMBRE",
+    10 => "OCTUBRE",
+    11 => "NOVIEMBRE",
+    12 => "DICIEMBRE"
   );
 
   $nombre_mes = $nombres_meses[$numero_mes];
@@ -330,9 +339,18 @@ function getShortName()
   $numero_mes = $fecha_actual['mon'];
 
   $nombres_meses_abreviados = array(
-    1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr",
-    5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Ago",
-    9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dic"
+    1 => "Ene",
+    2 => "Feb",
+    3 => "Mar",
+    4 => "Abr",
+    5 => "May",
+    6 => "Jun",
+    7 => "Jul",
+    8 => "Ago",
+    9 => "Sep",
+    10 => "Oct",
+    11 => "Nov",
+    12 => "Dic"
   );
 
   $nombre_mes_abreviado = $nombres_meses_abreviados[$numero_mes];
@@ -603,6 +621,7 @@ if (1) {
     }
   </style>
 </head>
+
 <body>
 
   <!-- PAGINA 1 -->
@@ -696,7 +715,7 @@ if (1) {
               } else {
                 $sum = $x - $min;
               }
-              $div = ($nor - $min) != 0? ($nor - $min):1;
+              $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
               if (((abs(($sum)) * (100 / $div)) >= 0 && (abs(($sum)) * (100 / $div)) < 30)) {
                 $cuenta++; ?>
                 <tr>
@@ -720,7 +739,7 @@ if (1) {
 
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),2,",",".") . "%)" ?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></td>
           </tr>
         </table>
 
@@ -750,7 +769,7 @@ if (1) {
               } else {
                 $sum = $x - $min;
               }
-              $div = ($nor - $min) != 0? ($nor - $min):1;
+              $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
               if ((abs(($sum)) * (100 / $div)) >= 30 && (abs(($sum)) * (100 / $div)) < 60) {
                 $cuenta++; ?>
 
@@ -767,7 +786,7 @@ if (1) {
           ?>
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),"2",",",".") . "%)" ?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), "2", ",", ".") . "%)" ?></td>
           </tr>
         </table>
 
@@ -801,7 +820,7 @@ if (1) {
               } else {
                 $sum = $x - $min;
               }
-              $div = ($nor - $min) != 0? ($nor - $min):1;
+              $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
               if ((abs(($sum)) * (100 / $div)) >= 60 && (abs(($sum)) * (100 / $div)) < 90) {
                 $cuenta++; ?>
 
@@ -818,7 +837,7 @@ if (1) {
           ?>
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),"2",",",".") . "%)" ?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), "2", ",", ".") . "%)" ?></td>
           </tr>
         </table>
 
@@ -858,7 +877,7 @@ if (1) {
               } else {
                 $sum = $x - $min;
               }
-              $div = ($nor - $min) != 0? ($nor - $min):1;
+              $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
               if ((abs(($sum)) * (100 / $div)) >= 90 && (abs(($sum)) * (100 / $div)) <= 100) {
                 $cuenta++; ?>
 
@@ -875,7 +894,7 @@ if (1) {
           ?>
           <tr>
             <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),"2",",",".") . "%)" ?></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), "2", ",", ".") . "%)" ?></td>
           </tr>
         </table>
   </div>
@@ -904,7 +923,7 @@ if (1) {
           } else {
             $sum = $x - $min;
           }
-          $div = ($nor - $min) != 0? ($nor - $min):1;
+          $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
           if ((abs(($sum)) * (100 / $div)) > 100) {
             $cuenta++; ?>
 
@@ -921,7 +940,7 @@ if (1) {
       ?>
       <tr>
         <td class="text-celd total"><b> TOTAL </b></td>
-        <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)),"2",",",".") . "%)" ?></td>
+        <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), "2", ",", ".") . "%)" ?></td>
       </tr>
     </table>
   </div>
@@ -958,11 +977,11 @@ if (1) {
         <tr>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[1] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[2] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[2] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
           <td class="tablaDos" style="font-size: 12px;"><?php echo $values[3] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ($values[3] * 100) / $values[0]), 2, '.', '') ) : 0 ?>%</td>
+          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[3] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
         </tr>
       <?php
       } ?>
@@ -988,9 +1007,9 @@ if (1) {
 
       <tr>
         <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[1] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[2] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? ( number_format( ( ($CT[3] * 100) / $CT[0]), 2, '.', '' ) ) : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[1] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[2] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
+        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[3] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
       </tr>
 
     </table>
@@ -1008,7 +1027,8 @@ if (1) {
 
         <tr>
           <th class="tablaDos">90% < A < 100% </th>
-          <th class="tablaDos"> < 100 %</th>
+          <th class="tablaDos">
+            < 100 %</th>
         </tr>
 
         <?php foreach ($condiciones as $key => $values) { ?>
@@ -1017,7 +1037,7 @@ if (1) {
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? ( number_format( ( ( ( $values[4] + $values[5]) * 100) / $values[0] ), 2, '.', '' ) ) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format(((($values[4] + $values[5]) * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
           </tr>
         <?php
         } ?>
@@ -1039,7 +1059,7 @@ if (1) {
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? ( number_format( ( ( ( $CT[4] + $CT[5]) * 100) / $CT[0] ), 2, '.', '' ) ) : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (number_format(((($CT[4] + $CT[5]) * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
         </tr>
 
 
@@ -1233,7 +1253,7 @@ if (1) {
   </div>
 
   <h4 style="position: absolute; top: 640px; text-align: right; text-justify: right;"> DESDE EL <?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?></h4>
-<!--aqui-->
+  <!--aqui-->
   <!-- PAGINA 9 -->
 
   <?php
@@ -1722,13 +1742,13 @@ if (1) {
             <p>VOLUMEN DISPONIBLE (HM3)</p>
           </th>
           <th style=" width: 90px;" class="text-celdas" colspan="2">
-            <p style="padding-top: 25px;">VARIACION DEL VOLUMEN DISPONIBLE (HM3)</p>
+            <p style="padding-top: 25px;">VARIACIÓN DEL VOLUMEN DISPONIBLE (HM3)</p>
           </th>
           <th style=" width: 90px;" class="text-celdas" colspan="2">
-            <p style=" padding-top: 36px;">VARIACION PORCENTUAL DE VOLUMEN HASTA HOY (%)</p>
+            <p style=" padding-top: 36px;">VARIACIÓN PORCENTUAL DE VOLUMEN HASTA HOY (%)</p>
           </th>
-          <th style=" width: 90px;" class="text-celdas">VARIACION DE VOLUMEN HACE UNA SEMANA</th>
-          <th style=" width: 90px;" class="text-celdas">VARIACION PORCENTUAL DE VOLUMEN HACE UNA SEMANA</th>
+          <th style=" width: 90px;" class="text-celdas">VARIACIÓN DE VOLUMEN HACE UNA SEMANA</th>
+          <th style=" width: 90px;" class="text-celdas">VARIACIÓN PORCENTUAL DE VOLUMEN HACE UNA SEMANA</th>
 
         </tr>
         <tr>
@@ -1894,7 +1914,7 @@ if (1) {
           $inicial = true;
           $margin_left = 20;
         }
-        if ($right == true && ((($countReg[$region] + 4)) > $disponible) ) {
+        if ($right == true && ((($countReg[$region] + 4)) > $disponible)) {
           $disponible = 25;
           $right = false;
 
@@ -2130,7 +2150,7 @@ if (1) {
             </tr>
             <tr>
               <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
-              <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)),"2",",",".") . "%" ?></b></td>
+              <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)), "2", ",", ".") . "%" ?></b></td>
             </tr>
           </table>
   </div>
@@ -2166,7 +2186,7 @@ if (1) {
             </tr>
             <tr>
               <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
-              <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)),"2",",",".") . "%" ?></b></td>
+              <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)), "2", ",", ".") . "%" ?></b></td>
             </tr>
           </table>
   </div>
@@ -2214,7 +2234,7 @@ if (1) {
             </tr>
             <tr>
               <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
-              <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)),"2",",",".") . "%" ?></b></td>
+              <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)), "2", ",", ".") . "%" ?></b></td>
             </tr>
           </table>
   </div>
