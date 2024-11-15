@@ -81,10 +81,10 @@ if ($count >= 1) {
         }
         $volumen_fechas[0] += $bati->volumenDisponible();
         if ($volumen_dias[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[2] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_dias[$j]["fecha"])), $volumen_dias[$j]["cota_actual"])- $min);
+            $volumen_fechas[2] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_dias[$j]["fecha"])), $volumen_dias[$j]["cota_actual"]));
         }
         if ($volumen_anio[$j]['cota_actual'] != NULL) {
-            $volumen_fechas[3] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_anio[$j]["fecha"])), $volumen_anio[$j]["cota_actual"])- $min);
+            $volumen_fechas[3] += ($bati->volumenDisponibleByCota(date('Y', strtotime($volumen_anio[$j]["fecha"])), $volumen_anio[$j]["cota_actual"]));
         }
         $j++;
     };
@@ -249,8 +249,8 @@ if ($count >= 1) {
             });
         });
         $("#contenedor-2").html('<?php
-                                    $valor = 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[1]);
-                                    $valorFormat = number_format(abs($valor), 2, ",", ".");
+                                    $valor = $volumen_fechas[2] != 0 ? 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[2]) : 0;
+                                    $valorFormat = number_format(($valor), 2, ",", ".");
                                     if ($valor > 0) {
 
                                         echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
@@ -266,8 +266,8 @@ if ($count >= 1) {
 
                                     ?>');
         $("#contenedor-3").html('<?php
-                                    $valor = -100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[1]);
-                                    $valorFormat = number_format(abs($valor), 2, ",", ".");
+                                    $valor = $volumen_fechas[3] != 0 ? 100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[3]) : 0;
+                                    $valorFormat = number_format(($valor), 2, ",", ".");
                                     if ($valor > 0) {
 
                                         echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
