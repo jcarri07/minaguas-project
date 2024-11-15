@@ -178,7 +178,7 @@ if ($count >= 1) {
                 if($dat == 1){
                     $suma_extracciones[] = 0;
                 }else{
-                    $suma_extracciones[] = ($bati->volumenActualDisponible() * 1000 / (($dat + $evaporacion + $filtracion) ))/30;
+                    $suma_extracciones[] = round(($bati->volumenActualDisponible() * 1000 / (($dat + $evaporacion + $filtracion) ))/30);
                 }
                 
             }else{
@@ -211,22 +211,23 @@ if ($count >= 1) {
         }
         $j++;
     };
+
     $j = 0;
     while ($j < count($suma_extracciones)) {
-        if ($suma_extracciones[$j] < 5 && $suma_extracciones[$j] >= 0) {
+        if ($suma_extracciones[$j] <= 4 && $suma_extracciones[$j] >= 0) {
             $condicion[0]++;
         };
-        if ($suma_extracciones[$j] > 4 && $suma_extracciones[$j] < 9) {
+        if ($suma_extracciones[$j] > 4 && $suma_extracciones[$j] <= 8) {
             $condicion[1]++;
         };
-        if ($suma_extracciones[$j] > 8 && $suma_extracciones[$j] < 13) {
+        if ($suma_extracciones[$j] > 8 && $suma_extracciones[$j] <= 12) {
             $condicion[2]++;
         };
         if ($suma_extracciones[$j] > 12) {
             $condicion[3]++;
         };
         $j++;
-    }
+    };
 
 
 
