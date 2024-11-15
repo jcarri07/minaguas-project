@@ -121,19 +121,19 @@ while ($num < count($volumen_primer_periodo)) {
   $final = $bat->volumenActualDisponible();
   $inicial = $bat->volumenDisponibleByCota($anio, $row["cota_actual"]);
   $variacion = $final - $inicial;
-  $porcentaje = $inicial != 0 ? (100 * (($final - $inicial) / abs($inicial))) : 0;
+  $porcentaje = $inicial != 0 ? (100 * (($final - $inicial) / ($inicial))) : 0;
 
   $anio2 = date("Y", strtotime($row2['fecha']));
   $final2 = $bat->volumenActualDisponible();
   $inicial2 = $bat->volumenDisponibleByCota($anio2, $row2["cota_actual"]);
   $variacion2 = $final2 - $inicial2;
-  $porcentaje2 = $inicial2 != 0 ? (100 * (($final2 - $inicial2) / abs($inicial2))) : 0;
+  $porcentaje2 = $inicial2 != 0 ? (100 * (($final2 - $inicial2) / ($inicial2))) : 0;
 
   $anio3 = date("Y", strtotime($row3['fecha']));
   $final3 = $bat->volumenActualDisponible();
   $inicial3 = $bat->volumenDisponibleByCota($anio3, $row3["cota_actual"]);
   $variacion3 = $final3 - $inicial3;
-  $porcentaje3 = $inicial3 != 0 ? (100 * (($final3 - $inicial3) / abs($inicial3))) : 0;
+  $porcentaje3 = $inicial3 != 0 ? (100 * (($final3 - $inicial3) / ($inicial3))) : 0;
 
 
   if (!in_array($totalop[$row["operador"]], $operadores)) {
