@@ -398,7 +398,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                 <div class="col">
                   <label>Cota (01)</label>
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
+                    <input type="number" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
                   </div>
                 </div>
               </div>
@@ -421,7 +421,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                   <div class="col">
                     <label>Valor</label> <!-- (1000 m<sup>3</sup>)-->
                     <div class="input-group mb-4">
-                      <input type="text" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" required>
+                      <input type="number" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" required>
                     </div>
                   </div>
                 </div>
@@ -717,7 +717,7 @@ require_once 'php/datos/vistas/morosos.php';
       $("#valor_extraccion_" + row).attr("type", "text");
     } else {
       label_valor.html("Valor (1000 m<sup>3</sup>)");
-      $("#valor_extraccion_" + row).attr("type", "text");
+      $("#valor_extraccion_" + row).attr("type", "number");
     }
 
 
@@ -768,6 +768,11 @@ require_once 'php/datos/vistas/morosos.php';
     $("#add .btn-edit").attr("onclick", "");
     $("#add .btn-edit").text("Cerrar");
     $('#add').modal('show');
+
+
+
+    $("#valor_extraccion_1").attr("type", "number");
+    $("#valor_cota").attr("type", "number");
   }
 
 
@@ -802,8 +807,8 @@ require_once 'php/datos/vistas/morosos.php';
         return false; 
       }
     }
-    console.log("aja");
-    return false;
+    //console.log("aja");
+    //return false;
 
     var tipo_extraccion = [];
     var valor_extraccion = [];
@@ -885,7 +890,10 @@ require_once 'php/datos/vistas/morosos.php';
         string_error += '</div>';
         $("#msg-error").html("");
 
+        valor = response[3];
+
         //Cota minima
+        //console.log(parseFloat(valor) + " y " + parseFloat(response[1]));
         if (parseFloat(valor) < parseFloat(response[1])) {
           $("#msg-error").html(string_error);
 
@@ -960,6 +968,7 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
 
     function openModalDetalles(id_registro, fecha, hora, cota, extraccion) {
       $("#id_aux").text(id_registro);
+      $("#valor_cota").attr("type", "text");
       //$("#opc_aux").text("edit");
 
       $(".removeRow").attr("disabled", false);
@@ -973,11 +982,13 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
       $("#fecha").val(fecha);
       $("#hora").val(hora);
       let valor_cota = parseFloat(cota).toFixed(3);
+      
       let cota_formateado = new Intl.NumberFormat('de-DE', {
         minimumFractionDigits: 3,
         maximumFractionDigits: 3
       }).format(valor_cota);
       $("#valor_cota").val(cota_formateado);
+      $("#valor_cota").trigger("blur");
       var extraccion_array = extraccion.split(";");
       if (extraccion_array.length > 1) {
         for (var i = 0; i < extraccion_array.length - 1; i++) {
@@ -995,6 +1006,9 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
         $(this).trigger("change");
         var row = this.id.replace("tipo_extraccion_", "");
 
+        $("#valor_extraccion_" + row).attr("type", "text");
+
+
         var valor_extraccion = extraccion_aux[1];
         if (this.value == "30") {
           if ($.isNumeric(extraccion_aux[1])) {
@@ -1010,11 +1024,23 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
         }
         if (this.value != "30" && this.value != "31" && $.isNumeric(extraccion_aux[1]))
           valor_extraccion = Number(extraccion_aux[1]).toFixed(2);
-        let valor_formateado = new Intl.NumberFormat('de-DE', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }).format(valor_extraccion);
-        $("#valor_extraccion_" + row).val(valor_formateado);
+
+
+        let valor_formateado = "";
+        valor_extraccion = valor_extraccion.replace(",", ".");
+
+        if(this.value != "30") {
+          valor_formateado = new Intl.NumberFormat('de-DE', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }).format(valor_extraccion);
+
+          if(this.value == "31" && !$.isNumeric(valor_extraccion)) {
+            valor_formateado = "";
+          }
+        }
+
+        $("#valor_extraccion_" + row).val( (valor_formateado != '') ? valor_formateado : valor_extraccion);
 
         $(this).attr("disabled", true);
         $("#valor_extraccion_" + row).attr("disabled", true);

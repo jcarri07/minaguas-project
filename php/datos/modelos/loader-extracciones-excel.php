@@ -1,10 +1,32 @@
+<?php
+    require_once '../../Conexion.php';
+    $sql = "SELECT DISTINCT id_embalse, nombre_embalse
+            FROM embalses em
+            WHERE em.estatus = 'activo';";
+    $query = mysqli_query($conn, $sql);
+
+    closeConection($conn);
+
+
+    $array_embalses = array();
+    while($row = mysqli_fetch_array($query)){
+        $array_aux = [];
+        $array_aux['id_embalse'] = $row['id_embalse'];
+        $array_aux['nombre_embalse'] = $row['nombre_embalse'];
+        array_push($array_embalses, $array_aux);
+    }
+?>
+
 <link href="../../../assets/css/style-spinner.css" rel="stylesheet" />
 <link id="pagestyle" href="../../../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
 
 <div class="loaderPDF" id="box-loader">
-    <div style="height: 90% !important; display: flex; align-items:center !important;">
-        <div class="lds-dual-ring">
+    <div class="text-center">
+        <h3 id="wait-text"></h3>
+        <div> <!--style="height: 90% !important; display: flex; align-items:center !important;"-->
+            <div class="lds-dual-ring">
+            </div>
         </div>
     </div>
 </div>
@@ -23,6 +45,20 @@
 ?>
 
 <script>
+
+    var array_embalses = <?php echo json_encode($array_embalses); ?>;
+
+    let i = 0;
+
+    setInterval(() => {
+        if(i < array_embalses.length) {
+            document.getElementById('wait-text').textContent = 'Generando ' + array_embalses[i].nombre_embalse + '...';
+            i++;
+        }
+        else {
+            document.getElementById('wait-text').textContent = 'Generando Archivo...';
+        }
+    }, 1700); // Cambia el texto cada 3 segundos (3000 ms)
 
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'blob'; // Se espera una respuesta binaria (archivo)

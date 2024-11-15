@@ -25,6 +25,17 @@
         return $posicion !== false ? $posicion : -1;
     }
 
+    function convertirValor($valor) {
+        $valor = str_replace(',', '.', $valor);
+
+        if (is_numeric($valor)) {
+            return floatval($valor);
+        }
+        
+        return null;
+    }
+    
+
     $diasSemanaEspañol = [
         'Monday' => 'Lunes',
         'Tuesday' => 'Martes',
@@ -46,7 +57,9 @@
 
     $sql = "SELECT DISTINCT id_embalse, nombre_embalse, estado, municipio, parroquia, id_encargado
             FROM embalses em, estados e, municipios m, parroquias p
-            WHERE em.id_estado = e.id_estado AND em.id_municipio = m.id_municipio AND em.id_parroquia = p.id_parroquia AND m.id_estado = e.id_estado AND p.id_municipio = m.id_municipio AND em.estatus = 'activo';";
+            WHERE em.id_estado = e.id_estado AND em.id_municipio = m.id_municipio AND em.id_parroquia = p.id_parroquia AND m.id_estado = e.id_estado AND p.id_municipio = m.id_municipio AND em.estatus = 'activo'
+            /*AND em.id_embalse = '32'*/
+            /*limit 25*/;";
     $query = mysqli_query($conn, $sql);
 
     $sql = "SELECT  tce.id AS 'id_tipo_extraccion', COUNT(tce.id) AS 'cant', nombre, cantidad_primaria, unidad
@@ -58,7 +71,7 @@
             tce.id <> '7' AND
             ce.concepto <> 'Subtotal'
             GROUP BY tce.id
-            ORDER BY codigo ASC;";
+            ORDER BY id_tipo_extraccion ASC;";
     $query_tipos_de_extraccion = mysqli_query($conn, $sql);
 
     $array_tipos_de_extraccion = array();
@@ -495,8 +508,27 @@
                                     $fila[1] != 0 && 
                                     $fila[1] != "0"
                                 ) {
-                                    $array_codigos[$index_extraccion]['sumatoria'] += $fila[1];
-                                    $array_codigos[$index_extraccion]['cantidad']++;
+                                    /*$array_codigos[$index_extraccion]['sumatoria'] += $fila[1];
+                                    $array_codigos[$index_extraccion]['cantidad']++;*/
+                                    $tiene_formato_para_sumarse = false;
+                                    if (is_numeric($fila[1])) {
+                                        $tiene_formato_para_sumarse = true;
+                                    }
+                                    if (!is_numeric($fila[1])) {
+                                        //echo "fecha: " . $dia_actual . " - Name: " . $array_codigos[$index_extraccion]['name'] . " id: " . $extraccion['id_registro'] . " valor: " . $fila[1] . "<br>";
+                                        $fila[1] = convertirValor($fila[1]);
+                                        if ($fila[1] !== null) {
+                                            //echo "ahora si <br>";
+                                            $tiene_formato_para_sumarse = true;
+                                        }
+                                        else
+                                            echo "malo <br>";
+                                    }
+
+                                    if($tiene_formato_para_sumarse) {
+                                        $array_codigos[$index_extraccion]['sumatoria'] += $fila[1];
+                                        $array_codigos[$index_extraccion]['cantidad']++;
+                                    }
                                 }
 
                                 $valor_extraccion = $fila[1];
@@ -603,7 +635,7 @@
 
         }
 
-        closeConection($conn);
+        //closeConection($conn);
 
         $spreadsheet->setActiveSheetIndex(0);
 
