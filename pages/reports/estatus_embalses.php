@@ -222,7 +222,7 @@ while ($row < count($datos_embalses)) {
 
   $abastecimiento = 0;
   if ($datos_embalses[$row]["extraccion"] > 0) {
-    $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
+    $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
   }
   if($datos_embalses[$row]["extraccion"] == NULL){
     $abastecimiento = 0;
@@ -236,25 +236,25 @@ while ($row < count($datos_embalses)) {
   }
 
   if (array_key_exists($totalop[$datos_embalses[$row]["operador"]], $operador_abast)) {
-    if (intval($abastecimiento) < 5) {
+    if (($abastecimiento) <= 4) {
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][0] += 1;
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
       $t_op_a[0] += 1;
       $t_op_a[4] += 1;
     }
-    if (intval($abastecimiento) > 4 && intval($abastecimiento) < 9) {
+    if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][1] += 1;
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
       $t_op_a[1] += 1;
       $t_op_a[4] += 1;
     }
-    if (intval($abastecimiento) > 8 && intval($abastecimiento) < 13) {
+    if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][2] += 1;
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
       $t_op_a[2] += 1;
       $t_op_a[4] += 1;
     }
-    if (intval($abastecimiento) > 12) {
+    if (($abastecimiento) > 12) {
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][3] += 1;
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
       $t_op_a[3] += 1;
@@ -263,25 +263,25 @@ while ($row < count($datos_embalses)) {
   } else {
     $operador_abast[$totalop[$datos_embalses[$row]["operador"]]] = [0, 0, 0, 0, 0];
 
-    if (intval($abastecimiento) < 5) {
+    if (($abastecimiento) <= 4) {
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][0] += 1;
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
       $t_op_a[0] += 1;
       $t_op_a[4] += 1;
     }
-    if (intval($abastecimiento) > 4 && intval($abastecimiento) < 9) {
+    if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][1] += 1;
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
       $t_op_a[1] += 1;
       $t_op_a[4] += 1;
     }
-    if (intval($abastecimiento) > 8 && intval($abastecimiento) < 13) {
+    if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][2] += 1;
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
       $t_op_a[2] += 1;
       $t_op_a[4] += 1;
     }
-    if (intval($abastecimiento) > 12) {
+    if (($abastecimiento) > 12) {
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][3] += 1;
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
       $t_op_a[3] += 1;
@@ -1851,9 +1851,9 @@ if (1) {
   {
     $meses = intval($meses);
     // if ($meses < 1) return "0 meses";
-    if ($meses < 5) return ["0-4 meses", "#ff0000"];
-    if ($meses > 4 && $meses < 9) return ["5-8 meses", "#ffaa00"];
-    if ($meses > 8 && $meses < 13) return ["9-12", "#ffff00"];
+    if ($meses <= 4) return ["0-4 meses", "#ff0000"];
+    if ($meses > 4 && $meses <= 8) return ["5-8 meses", "#ffaa00"];
+    if ($meses > 8 && $meses <= 12) return ["9-12", "#ffff00"];
     if ($meses > 12) return ["+12 meses", "#70ad47"];
   }
 
@@ -2132,7 +2132,7 @@ if (1) {
             <?php
             $cant = 0;
             foreach ($embalse_abast as $value) {
-              if (intval($value[3]) < 5) {
+              if (($value[3]) <= 4) {
                 $cant++;
             ?>
                 <tr>
@@ -2168,7 +2168,7 @@ if (1) {
             <?php
             $cant = 0;
             foreach ($embalse_abast as $value) {
-              if (intval($value[3]) > 4 && intval($value[3]) < 9) {
+              if (($value[3]) > 4 && ($value[3]) <= 8) {
                 $cant++;
             ?>
                 <tr>
@@ -2216,7 +2216,7 @@ if (1) {
             <?php
             $cant = 0;
             foreach ($embalse_abast as $value) {
-              if (intval($value[3]) > 8 && intval($value[3]) < 13) {
+              if (($value[3]) >= 8 && ($value[3]) < 12) {
                 $cant++;
             ?>
                 <tr>
@@ -2252,7 +2252,7 @@ if (1) {
       <?php
       $cant = 0;
       foreach ($embalse_abast as $value) {
-        if (intval($value[3]) > 12) {
+        if (($value[3]) >= 12) {
           $cant++;
       ?>
           <tr>
