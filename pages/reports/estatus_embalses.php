@@ -58,7 +58,7 @@ ORDER BY id_embalse ASC;");
 
 $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
 FROM datos_embalse h 
-WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha1') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha1' AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual 
+WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha1') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
 WHERE e.estatus = 'activo' 
@@ -66,7 +66,7 @@ GROUP BY id_embalse;");
 
 $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
 FROM datos_embalse h 
-WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha2') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha2' AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual 
+WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha2') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
 WHERE e.estatus = 'activo'
@@ -74,7 +74,7 @@ GROUP BY id_embalse;");
 
 $condiciones_actuales3 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha3' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
 FROM datos_embalse h 
-WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha3') AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha <= '$fecha3' AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual 
+WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha3') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha3'
 WHERE e.estatus = 'activo'
