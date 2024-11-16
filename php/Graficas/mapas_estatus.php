@@ -52,6 +52,7 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
 
     // Guardo el nombre del embalse
     array_push($array, $row["nombre_embalse"]);
+    array_push($array, $row["id_embalse"]);
     array_push($embalses_porcentaje, $array);
 }
 
@@ -105,6 +106,7 @@ while ($row = mysqli_fetch_array($condiciones_actuales1)) {
     array_push($array, $row["nombre_embalse"]);
     array_push($array, $row["operador"]);
     array_push($array, $variacion);
+    array_push($array, $row["id_embalse"]);
     array_push($variacion_sequia, $array);
 }
 
@@ -139,8 +141,13 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
     }
 
     array_push($array, $row["nombre_embalse"]);
+    array_push($array, $row["id_embalse"]);
     array_push($variacion_lluvia, $array);
 }
+
+$positions_query = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'marks_posiciones'");
+$positions_markers = mysqli_fetch_assoc($positions_query);
+$positions_markers = json_decode($positions_markers["configuracion"], true);
 
 $valores = array($cantidades_p, $cantidades_sequia, $cantidades_lluvia);
 $valores = json_encode($valores, true);
@@ -183,7 +190,7 @@ $valores = json_encode($valores, true);
         height: 600px;
     }
 
-    .leaflet-top.leaflet-left {
+    /* .leaflet-top.leaflet-left {
         display: none;
     }
 
@@ -217,9 +224,106 @@ $valores = json_encode($valores, true);
     }
 
     .leaflet-popup.leaflet-zoom-animated {
-        /* bottom: -23px; */
-        /* opacity: 1; */
         margin-bottom: 5.5px;
+    } */
+
+    .leaflet-popup {
+        margin-bottom: 0px !important;
+        /* bottom: 7px !important; */
+    }
+
+    .leaflet-popup-tip {
+        pointer-events: none !important;
+    }
+
+    .leaflet-popup-content-wrapper {
+        text-align: center !important;
+        /* background-color: rgba(255, 255, 255, 1) !important; */
+        background: rgba(255, 255, 255, 0) !important;
+        color: black !important;
+        font-size: 8px !important;
+        padding: 0 !important;
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0) !important;
+    }
+
+
+    .leaflet-popup-content {
+        background-color: rgba(0, 0, 0, 0) !important;
+        margin: 0px !important;
+        width: 100% !important;
+        position: relative !important;
+        /* margin: 8px 10px !important; */
+    }
+
+    .leaflet-popup-close-button {
+        display: none !important;
+    }
+
+    .leaflet-popup-tip-container {
+        /* margin-top: -8px !important; */
+    }
+
+    .leaflet-popup-tip {
+        background-color: rgba(0, 0, 0, 0) !important;
+        color: rgba(0, 0, 0, 0) !important;
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0) !important;
+    }
+
+    .leaflet-popup.leaflet-zoom-animated {
+        /* margin-bottom: 5.5px !important; */
+    }
+
+    .markleaflet {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+        text-wrap: nowrap;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 10px;
+        /* width: 60px; */
+    }
+
+    .mark-t {
+        transform: translateX(-50%);
+        top: -22px
+    }
+
+    .mark-tr {
+        top: -22px;
+        /* left: 4px; */
+    }
+
+    .mark-r {
+        left: 7px;
+        top: -11px;
+    }
+
+    .mark-br {
+        /* left: 4px; */
+    }
+
+    .mark-b {
+        transform: translateX(-50%);
+    }
+
+    .mark-bl {
+        transform: translateX(-100%);
+        /* left: -4px; */
+    }
+
+    .mark-l {
+        transform: translateX(-100%);
+        left: -7px;
+        top: -11px;
+    }
+
+    .mark-tl {
+        transform: translateX(-100%);
+        top: -22px;
+        /* left: -4px; */
     }
 </style>
 
@@ -243,15 +347,15 @@ $valores = json_encode($valores, true);
     var PointIcon = L.Icon.extend({
         options: {
             shadowUrl: '../../assets/icons/i-sombra.png',
-            iconSize: [15, 15],
-            shadowSize: [15, 15],
+            iconSize: [12, 12],
+            shadowSize: [0, 0],
             shadowAnchor: [8, 8],
         }
     });
 
     var ArrowIcon = L.Icon.extend({
         options: {
-            iconSize: [20, 15],
+            iconSize: [15, 10],
         }
     });
 
@@ -299,13 +403,19 @@ $valores = json_encode($valores, true);
 
     <?php
     foreach ($embalses_porcentaje as $emb) {
-        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
+        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+
+            $posicion = "t";
+            if ($positions_markers[$emb[6]]) {
+                $posicion = $positions_markers[$emb[6]];
+            }
+    ?>
             // console.log("Prueba");
             ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
 
             var marker = L.marker([ubicacion[0], ubicacion[1]], {
                 icon: <?php echo $emb[4] ?>
-            }).addTo(mapa_portada).bindPopup("<b><?php echo $emb[5] ?></b>", {
+            }).addTo(mapa_portada).bindPopup('<div class="markleaflet mark-<?php echo $posicion ?>"><b><?php echo $emb[5] ?></b></div>', {
                 autoClose: false,
                 closeOnClick: false
             }).openPopup();
@@ -337,13 +447,18 @@ $valores = json_encode($valores, true);
 
     <?php
     foreach ($variacion_sequia as $emb) {
-        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
+        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+            $posicion = "t";
+            if ($positions_markers[$emb[7]]) {
+                $posicion = $positions_markers[$emb[7]];
+            }
+    ?>
 
             ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
 
             var marker = L.marker([ubicacion[0], ubicacion[1]], {
                 icon: <?php echo $emb[3] ?>
-            }).addTo(mapa_per_uno).bindPopup("<b><?php echo $emb[4] ?></b>", {
+            }).addTo(mapa_per_uno).bindPopup('<div class="markleaflet mark-<?php echo $posicion ?>"><b><?php echo $emb[4] ?></b></div>', {
                 autoClose: false,
                 closeOnClick: false
             }).openPopup();
@@ -365,13 +480,18 @@ $valores = json_encode($valores, true);
 
     <?php
     foreach ($variacion_lluvia as $emb) {
-        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { ?>
+        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+            $posicion = "t";
+            if ($positions_markers[$emb[5]]) {
+                $posicion = $positions_markers[$emb[5]];
+            }
+    ?>
 
             ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
 
             var marker = L.marker([ubicacion[0], ubicacion[1]], {
                 icon: <?php echo $emb[3] ?>
-            }).addTo(mapa_per_dos).bindPopup("<b><?php echo $emb[4] ?></b>", {
+            }).addTo(mapa_per_dos).bindPopup('<div class="markleaflet mark-<?php echo $posicion ?>"><b><?php echo $emb[4] ?></b></div>', {
                 autoClose: false,
                 closeOnClick: false
             }).openPopup();

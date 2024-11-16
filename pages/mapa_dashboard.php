@@ -23,6 +23,10 @@ $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,regio
     ORDER BY id_embalse ASC;");
 
 
+$positions_query = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'marks_posiciones'");
+$positions_markers = mysqli_fetch_assoc($positions_query);
+$positions_markers = json_decode($positions_markers["configuracion"], true);
+
 $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 
 $embalses_abast = [];
@@ -77,6 +81,7 @@ while ($row < count($datos_embalses)) {
 
     array_push($array, $icono);
     array_push($array, number_format($porcentaje, 2, ",", "."));
+    array_push($array, $datos_embalses[$row]["id_embalse"]);
     // var_dump($array[3]);
     // Guardo el nombre del embalse
     // array_push($array, $row["nombre_embalse"]);
@@ -109,7 +114,7 @@ while ($row < count($datos_embalses)) {
     } */
     .leaflet-popup {
         margin-bottom: 0px !important;
-        bottom: 7px !important;
+        /* bottom: 7px !important; */
     }
 
     .leaflet-popup-tip {
@@ -118,17 +123,20 @@ while ($row < count($datos_embalses)) {
 
     .leaflet-popup-content-wrapper {
         text-align: center !important;
-        background-color: rgba(255, 255, 255, 1) !important;
+        /* background-color: rgba(255, 255, 255, 1) !important; */
+        background: rgba(255, 255, 255, 0) !important;
         color: black !important;
         font-size: 8px !important;
         padding: 0 !important;
-        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0) !important;
     }
 
 
     .leaflet-popup-content {
         background-color: rgba(0, 0, 0, 0) !important;
         margin: 0px !important;
+        width: 100% !important;
+        position: relative !important;
         /* margin: 8px 10px !important; */
     }
 
@@ -143,11 +151,64 @@ while ($row < count($datos_embalses)) {
     .leaflet-popup-tip {
         background-color: rgba(0, 0, 0, 0) !important;
         color: rgba(0, 0, 0, 0) !important;
-        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0) !important;
     }
 
     .leaflet-popup.leaflet-zoom-animated {
         /* margin-bottom: 5.5px !important; */
+    }
+
+    .markleaflet {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+        text-wrap: nowrap;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 10px;
+        /* width: 60px !important; */
+    }
+
+    .mark-t {
+        transform: translateX(-50%);
+        top: -22px
+    }
+
+    .mark-tr {
+        top: -22px;
+        /* left: 4px; */
+    }
+
+    .mark-r {
+        left: 7px;
+        top: -11px;
+    }
+
+    .mark-br {
+        /* left: 4px; */
+    }
+
+    .mark-b {
+        transform: translateX(-50%);
+    }
+
+    .mark-bl {
+        transform: translateX(-100%);
+        /* left: -4px; */
+    }
+
+    .mark-l {
+        transform: translateX(-100%);
+        left: -7px;
+        top: -11px;
+    }
+
+    .mark-tl {
+        transform: translateX(-100%);
+        top: -22px;
+        /* left: -4px; */
     }
 </style>
 
@@ -282,55 +343,33 @@ while ($row < count($datos_embalses)) {
     //     apikey: '38db809be13a400c8c5061e304ba99cd' // Reemplaza esto con tu clave de API de Thunderforest
     // }).addTo(mapa_portada);
 
-    var ubicacion;
-
-    // <?php
-        // foreach ($embalses_abast as $emb) {
-        //     if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") { 
-        ?>
-    // ubicacion = geoToUtm(<?php //echo $emb[0] . "," . $emb[1] . "," . $emb[2] 
-                            ?>)
-    //         var marker = L.marker([ubicacion[0], ubicacion[1]], {
-    // icon: <?php //echo $emb[4] 
-                ?>
-    // }).addTo(mapa_portada).bindPopup("<b><?php //echo $emb[3] 
-                                            ?></b> <b><?php //echo $emb[5] 
-                                                        ?> %</b>", {
-    //             autoClose: false,
-    //             closeOnClick: false
-    //         });
-    //         // }).openPopup();
-    // <?php //} else { 
-        ?>
-    // <?php //}
-        // }
-        // 
-        ?>
+    let ubicacion;
+    let posicion;
 
     <?php
     foreach ($embalses_abast as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+            $posicion = "t";
+            if ($positions_markers[$emb[6]]) {
+                $posicion = $positions_markers[$emb[6]];
+            }
     ?>
             ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2]
                                     ?>)
             var marker = L.marker([ubicacion[0], ubicacion[1]], {
                 icon: <?php echo $emb[4]
                         ?>
-            }).addTo(mapa_portada).on('mouseover', function(e) {
-                this.bindPopup("<b><?php echo $emb[3] ?></b> <b><?php echo $emb[5] ?> %</b>", {
-                    autoClose: false,
-                    closeOnClick: false
-                }).openPopup();
-            }).on('mouseout', function(e) {
-                this.closePopup();
-            });
-            // }).openPopup();
+            }).addTo(mapa_portada).bindPopup('<div class="markleaflet mark-<?php echo $posicion ?>"><b><?php echo $emb[3] ?></b> <b><?php echo $emb[5] ?> </b><span>%</span></div>', {
+                autoClose: false,
+                closeOnClick: false
+            }).openPopup();
         <?php } else {
         ?>
     <?php }
     }
-
     ?>
+
+
 
     function geoToUtm(norte, este, huso) {
         norte = parseFloat(norte);

@@ -17,7 +17,7 @@ if (contiene_subcadena($fullPath, "C:")) {
     $host = "localhost";
     $user = "root";
     $pass = "";
-    $dbname = "minaguas_2";
+    $dbname = "minagua_db";
 } else {
     $host = "localhost";
     $user = "sbtebpav_minaguas_user";
