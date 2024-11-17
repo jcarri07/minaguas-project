@@ -239,15 +239,18 @@ if (mysqli_num_rows($query) > 0) {
                             </th>
                             <td>
                                 <?php echo number_format($row['cota_actual'], 3, ',', '.'); ?>
+                                <span style="display:none"><?php echo number_format($row['cota_actual'], 3, ',', ''); ?></span>
                             </td>
                             <td>
                                 <?php echo number_format($extraccion, 2, ",", "."); ?>
+                                <span style="display:none"><?php echo number_format($extraccion, 2, ",", ""); ?></span>
                             </td>
                             <td>
                                 <?php echo $abertura; ?>
                             </td>
                             <td>
                                 <?php echo is_numeric($caudal) ? number_format($extraccion, 2, ",", ".") : $caudal; ?>
+                                <span style="display:none"><?php echo is_numeric($caudal) ? number_format($extraccion, 2, ",", "") : $caudal; ?></span>
                             </td>
                             <td>
                                 <?php echo ($row['encargado'] != "" && $row['encargado'] != NULL) ? $row['encargado'] : "-"; ?>

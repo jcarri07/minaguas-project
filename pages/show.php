@@ -534,9 +534,9 @@ function explodeBat($value, $i = null)
                               $partes = explodeBat($value);
                             ?>
                               <tr>
-                                <td><?php echo number_format(floatval($key), 3, ',', '.') ?></td>
-                                <td><?php echo number_format(floatval($partes[0]), 2, ',', '.') ?></td>
-                                <td><?php echo number_format(floatval($partes[1]), 2, ',', '.') ?></td>
+                                <td><?php echo number_format(floatval($key), 3, ',', '.') ?><span style="display:none"><?php echo number_format(floatval($key), 3, ',', '') ?></span></td>
+                                <td><?php echo number_format(floatval($partes[0]), 2, ',', '.') ?><span style="display:none"><?php echo number_format(floatval($partes[0]), 2, ',', '') ?></span></td>
+                                <td><?php echo number_format(floatval($partes[1]), 2, ',', '.') ?><span style="display:none"><?php echo number_format(floatval($partes[1]), 2, ',', '') ?></span></td>
                               </tr>
                             <?php }
                             ?>
@@ -667,14 +667,14 @@ function explodeBat($value, $i = null)
 
 
   var tablas = $(".table-cota");
-
   for (let i = 0; i < tablas.length; i++) {
     console.log($(tablas[i])[0].id)
     // iniciarTabla($(tablas[i])[0].id);
     id = $(tablas[i])[0].id;
-    console.log($(tablas[i]))
 
-    $("#" + id).DataTable({
+    // dom: "<'top'<'d-flex align-items-center justify-content-between'f>>rt<'bottom'<'d-flex flex-column align-items-center'p>><'clear'>",
+
+    tabla = $("#" + id).DataTable({
       dom: "<'top'<'d-flex align-items-center justify-content-between'f>>rt<'bottom'<'d-flex flex-column align-items-center'p>><'clear'>",
       language: {
         "decimal": "",

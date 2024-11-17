@@ -1,6 +1,6 @@
 
 
-function iniciarTabla(id_tabla){
+function iniciarTabla(id_tabla) {
     $('#' + id_tabla).DataTable({
         language: {
             "decimal": "",

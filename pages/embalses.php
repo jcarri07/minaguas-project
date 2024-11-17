@@ -172,6 +172,10 @@
             </div>
 
             <div class="dt-responsive table-responsive">
+              <!-- <div class="d-flex justify-content-end align-items-center gap-2">
+                <div>Buscar:</div>
+                <div><input type="text" id="table-embalses_filter_input" class="form-control py-1" placeholder="Buscar en las tablas"></div>
+              </div> -->
               <?php
               if (mysqli_num_rows($queryEmbalses) > 0) {
               ?>
@@ -198,11 +202,13 @@
                                                         ?> </span> -->
                           </div>
                         </td>
+                        <?php $embal = new Batimetria($row["id_embalse"], $conn);  //$acumulativo += $embal->volumenDisponible();
+                        ?>
                         <td style="vertical-align: middle;" class="hide-cell">
                           <div class="d-flex flex-column px-3">
-                            <?php $embal = new Batimetria($row["id_embalse"], $conn);  //$acumulativo += $embal->volumenDisponible();
-                            ?>
+
                             <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?> <span style="font-size: 12px">Hm</span>³</h6>
+                            <span style="display:none"><?php echo number_format($embal->volumenDisponible(), 2, ',', '') ?></span>
                             <!-- <span class="text-xs">20/12/2023</span> -->
                           </div>
                         </td>
@@ -302,6 +308,7 @@
                             <div class="d-flex flex-column px-3">
                               <?php $embal = new Batimetria($row["id_embalse"], $conn) ?>
                               <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?> <span style="font-size: 12px">Hm</span>³</h6>
+                              <span style="display:none"><?php echo number_format($embal->volumenDisponible(), 2, ',', '') ?></span>
                               <!-- <span class="text-xs">20/12/2023</span> -->
                             </div>
                           </td>
