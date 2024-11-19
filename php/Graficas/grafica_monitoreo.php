@@ -820,12 +820,12 @@ $j = 0;
 
                     data: [<?php
                             $j = 0;
-                            $pivote = date("Y");
+                            $pivote = date("Y",strtotime($fecha2));
                             $min = $embalse[0]["cota_min"];
                             $max = $embalse[0]["cota_max"];
                             while ($j < count($datos_embalses)) {
 
-                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[0]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M"))) {
+                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[0]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M",strtotime($fecha2)))) {
 
 
 
@@ -912,7 +912,7 @@ $j = 0;
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . getMonthName("") . " del " . date('Y'); ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . getMonthName(date('n',strtotime($fecha2))) . " del " . date('Y',strtotime($fecha2)); ?>',
                     fullSize: true,
                     font: {
                         size: 30,
@@ -935,8 +935,8 @@ $j = 0;
                     time: {
                         unit: 'day'
                     },
-                    min: '<?php echo date('Y-m') . '-01';  ?>',
-                    max: '<?php echo date('Y-m') . '-' . date('t') ?>',
+                    min: '<?php echo date('Y-m',strtotime($fecha2)) . '-01';  ?>',
+                    max: '<?php echo date('Y-m',strtotime($fecha2)) . '-' . date('t',strtotime($fecha2)) ?>',
 
                     ticks: {
                         callback: (value, index, ticks) => {
@@ -1115,7 +1115,7 @@ $j = 0;
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde el " . $fechaFormateada2 . " al " . $fechaFormateada . " del " . date('Y'); ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde el " . $fechaFormateada2 . " al " . $fechaFormateada . " del " . date('Y',strtotime($fecha2)); ?>',
                     fullSize: true,
                     font: {
                         size: 26,
