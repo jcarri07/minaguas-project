@@ -18,6 +18,7 @@ $fecha = date("Y-m-d");
           FROM embalses em, estados e, municipios m, parroquias p
           WHERE em.id_estado = e.id_estado AND em.id_municipio = m.id_municipio AND em.id_parroquia = p.id_parroquia AND m.id_estado = e.id_estado AND p.id_municipio = m.id_municipio AND em.estatus = 'activo' $add_where;";*/
 
+
 $sql = "SELECT DISTINCT em.id_embalse, 
             em.nombre_embalse,
             /*GROUP_CONCAT(DISTINCT e.estado) AS estado,*/
@@ -35,6 +36,29 @@ $sql = "SELECT DISTINCT em.id_embalse,
           /*LEFT JOIN parroquias p ON FIND_IN_SET(p.id_parroquia, em.id_parroquia) OR em.id_parroquia = '' */
           WHERE em.estatus = 'activo' $add_where
           GROUP BY em.id_embalse, em.nombre_embalse, em.id_encargado;";
+
+//invalidando la consulta anterior
+$sql = "WITH reporte_hoy AS (
+          SELECT 
+            id_embalse,
+            IF(COUNT(id_registro) > 0, 'si', 'no') AS reportado_hoy
+          FROM datos_embalse
+          WHERE estatus = 'activo' AND fecha = '$fecha'
+          GROUP BY id_embalse
+        )
+        SELECT DISTINCT 
+          em.id_embalse, 
+          em.nombre_embalse,
+          GROUP_CONCAT(DISTINCT m.municipio) AS municipio,
+          em.id_encargado,
+          COALESCE(rh.reportado_hoy, 'no') AS reportado_hoy
+        FROM embalses em
+        LEFT JOIN municipios m 
+          ON FIND_IN_SET(m.id_municipio, em.id_municipio) OR em.id_municipio = ''
+        LEFT JOIN reporte_hoy rh
+          ON rh.id_embalse = em.id_embalse
+        WHERE em.estatus = 'activo' $add_where
+        GROUP BY em.id_embalse, em.nombre_embalse, em.id_encargado;";
 
 $query = mysqli_query($conn, $sql);
 
