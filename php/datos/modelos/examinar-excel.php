@@ -136,9 +136,13 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     //for($i = $fila_inicial; $i < 400 ; $i++){
 
         $valorCelda = $spreadsheet->getActiveSheet()->getCell('B' . $fila)->getValue();
-        if($valorCelda == "" && $fecha != ""){
-            $fila--;
-            break;
+        if($valorCelda == "") {
+            //Si el valor es blanco y ademas no hay fecha o ha recorrido mas de 10 filas y no ha encontrado nada se sale del ciclo
+            //esto se hace para evitar que se haga un ciclo infitino
+            if($fecha != "" || $fila >= 19){
+                $fila--;
+                break;
+            }
         }
         
         //Con esto evito el error de que añadan una fila de mas al membrete del excel
