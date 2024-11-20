@@ -130,27 +130,45 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     print_r($array_codigos_consulta);
     echo '</pre>';*/
 
-
+    $fecha = "";
     $fila = 9;
     while($fila){
     //for($i = $fila_inicial; $i < 400 ; $i++){
 
         $valorCelda = $spreadsheet->getActiveSheet()->getCell('B' . $fila)->getValue();
-        if($valorCelda == ""){
+        if($valorCelda == "" && $fecha != ""){
             $fila--;
             break;
         }
         
         //Con esto evito el error de que añadan una fila de mas al membrete del excel
         //y el $valorCelda no sea una fecha sino un string con el valor 'FECHA'
-        if(strtoupper($valorCelda) == 'FECHA'){
+        /*if(strtoupper($valorCelda) == 'FECHA'){
+            $fila++;
+            continue;
+        }*/
+
+        try {
+
+            //if ($valorCelda instanceof Date) {
+            if (is_numeric($valorCelda)) {
+                $fecha_obj = Date::excelToDateTimeObject($valorCelda);
+                $fecha = $fecha_obj->format('Y-m-d');
+            }
+            else {
+                $fila++;
+                continue;
+            }
+
+
+        } catch (\Exception $e) {
+            // Maneja valores no válidos y pasa a la siguiente fila
+            //echo "Fila {$row->getRowIndex()}: Error procesando celda: {$valorCelda} - {$e->getMessage()}\n";
+            //continue;
+
             $fila++;
             continue;
         }
-
-        //if ($valorCelda instanceof Date) {
-        $fecha_obj = Date::excelToDateTimeObject($valorCelda);
-        $fecha = $fecha_obj->format('Y-m-d');
 
         //echo "Celda B$fila: " . $fecha . "<br>";
 
