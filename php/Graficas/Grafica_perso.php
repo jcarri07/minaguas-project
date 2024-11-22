@@ -17,7 +17,7 @@ $array_aux = explode("-", $fecha1);
 $anio = $array_aux["0"];
 $me = $array_aux["1"];
 $y = $anio;
-$año = $anio;
+$anio = $anio;
 $ver = $_POST['ver'];
 
 if ($tipo == "bar") {
@@ -53,32 +53,36 @@ if ($count >= 1) {
     <script>
         $(document).ready(function() {
             const point = {
-        id: 'point',
-        afterDatasetsDraw: function(chart, arg, options) {
-            const {
-                ctx
-            } = chart;
-            const dataset = chart.data.datasets[0];
-            const meta = chart.getDatasetMeta(0);
+                id: 'point',
+                afterDatasetsDraw: function(chart, arg, options) {
+                    const {
+                        ctx
+                    } = chart;
+                    const dataset = chart.data.datasets[0];
+                    const meta = chart.getDatasetMeta(0);
 
-            if (meta.hidden) return;
+                    if (meta.hidden) return;
 
-            const lastElement = meta.data[meta.data.length - 1];
-            const fontSize = 13;
-            const fontStyle = 'bold';
-            const fontFamily = 'Arial';
-            if (dataset.data.length > 0) {
-                ctx.save();
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'bottom';
-                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
-                ctx.fillStyle = 'blue';
-                total = dataset.data[dataset.data.length - 1].y;
-                ctx.fillText(parseFloat(total.toFixed(3)), lastElement.x, lastElement.y - 5);
-            }
-            ctx.restore();
-        },
-    };
+                    const lastElement = meta.data[meta.data.length - 1];
+                    const fontSize = 13;
+                    const fontStyle = 'bold';
+                    const fontFamily = 'Arial';
+                    if (dataset.data.length > 0) {
+                        ctx.save();
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                        ctx.fillStyle = 'blue';
+                        total = dataset.data[dataset.data.length - 1].y;
+                        formateado = new Intl.NumberFormat('de-DE', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }).format(tot);
+                        ctx.fillText(formateado, lastElement.x, lastElement.y - 5);
+                    }
+                    ctx.restore();
+                },
+            };
             if ('<?php echo $ver; ?>' == 'volumen') {
 
                 const arbitra = {
@@ -99,7 +103,7 @@ if ($count >= 1) {
                             ctx.moveTo(left, y.getPixelForValue(yvalue));
                             ctx.lineTo(right, y.getPixelForValue(yvalue));
                             ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                            ctx.fillText(cota + ": " + yvalue + " (Hm³)", right*4.2/6, y.getPixelForValue(yvalue) + h);
+                            ctx.fillText(cota + ": " + yvalue.toLocaleString("de-DE") + " (Hm³)", right * 4.2 / 6, y.getPixelForValue(yvalue) + h);
                             ctx.stroke();
                         });
 
@@ -143,19 +147,19 @@ if ($count >= 1) {
 
                                 if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
 
-                                    
 
-                                    if($count){?> {
-                                        x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
-                                        y: <?php echo $bati->getByCota(date("Y", strtotime($datos_embalses[$j]["fecha"])), $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                    },
-                                    <?php
-                                    if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                        $max = $datos_embalses[$j]["cota_actual"];
-                                    }
-                                    if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                        $min = $datos_embalses[$j]["cota_actual"];
-                                    } ?>
+
+                                    if ($count) { ?> {
+                                            x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
+                                            y: <?php echo $bati->getByCota(date("Y", strtotime($datos_embalses[$j]["fecha"])), $datos_embalses[$j]["cota_actual"])[1];  ?>
+                                        },
+                                        <?php
+                                        if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                            $max = $datos_embalses[$j]["cota_actual"];
+                                        }
+                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                            $min = $datos_embalses[$j]["cota_actual"];
+                                        } ?>
 
                             <?php
                                     }
@@ -183,24 +187,36 @@ if ($count >= 1) {
                             padding: 23,
                         },
                         plugins: {
+
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.dataset.label || '';
+                                        const value = context.raw;
+                                        const labelName = context.label; // Muestra el nombre de la etiqueta única
+                                        return label + ': ' + value.y.toLocaleString("de-DE");
+                                    }
+                                }
+                            },
+
                             arbitra: {
 
 
                                 lines: [{
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_min"])[1], 2); ?>,
+                                        yvalue: <?php echo round($bati->getByCota($anio, $embalses[0]["cota_min"])[1], 2); ?>,
                                         cota: "Volumen mínimo",
                                         color: 'red',
                                         h: -15,
                                     },
                                     {
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_nor"])[1], 2); ?>,
+                                        yvalue: <?php echo round($bati->getByCota($anio, $embalses[0]["cota_nor"])[1], 2); ?>,
                                         cota: "Volumen normal",
                                         color: 'green',
                                         h: 15,
 
                                     },
                                     {
-                                        yvalue: <?php echo round($bati->getByCota($año, $embalses[0]["cota_max"])[1], 2); ?>,
+                                        yvalue: <?php echo round($bati->getByCota($anio, $embalses[0]["cota_max"])[1], 2); ?>,
                                         cota: "Volumen máximo",
                                         color: 'blue',
                                         h: -15,
@@ -216,7 +232,7 @@ if ($count >= 1) {
                                     // This more specific font property overrides the global property
                                     font: {
                                         size: 18,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
 
                                 }
@@ -262,7 +278,7 @@ if ($count >= 1) {
                                     },
                                     font: {
                                         size: 18,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
                                 },
                                 grid: {
@@ -277,23 +293,23 @@ if ($count >= 1) {
                                     text: 'Volumen (Hm³)',
                                     font: {
                                         size: 16,
-                                        family:'Arial',
+                                        family: 'Arial',
                                         weight: 'bold',
                                     },
                                 },
                                 min: <?php if ($min < $embalses[0]["cota_min"]) {
-                                            echo $bati->getByCota($año, $min)[1];
+                                            echo $bati->getByCota($anio, $min)[1];
                                         } else {
-                                            if ($bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200 < 0) {
+                                            if ($bati->getByCota($anio, $embalses[0]["cota_min"])[1] - 200 < 0) {
                                                 echo 0;
                                             } else {
-                                                echo $bati->getByCota($año, $embalses[0]["cota_min"])[1] - 200;
+                                                echo $bati->getByCota($anio, $embalses[0]["cota_min"])[1] - 200;
                                             }
                                         }; ?>,
                                 max: <?php if ($max > $embalses[0]["cota_max"]) {
-                                            echo $bati->getByCota($año, $max)[1] + 10;
+                                            echo round($bati->getByCota($anio, $max)[1] + 10,0);
                                         } else {
-                                            echo $bati->getByCota($año, $embalses[0]["cota_max"])[1] +10;
+                                            echo round($bati->getByCota($anio, $embalses[0]["cota_max"])[1] + 10,0);
                                         }; ?>,
                                 border: {
                                     display: false,
@@ -301,7 +317,10 @@ if ($count >= 1) {
                                 ticks: {
                                     font: {
                                         size: 14,
-                                        family:'Arial',
+                                        family: 'Arial',
+                                    },
+                                    callback: function(valor, index, valores) {
+                                        return valor.toLocaleString("de-DE");
                                     },
                                 },
 
@@ -310,7 +329,7 @@ if ($count >= 1) {
 
                         },
                     },
-                    plugins: [arbitra,point],
+                    plugins: [arbitra, point],
 
                 });
 
@@ -336,7 +355,7 @@ if ($count >= 1) {
                             ctx.moveTo(left, y.getPixelForValue(yvalue));
                             ctx.lineTo(right, y.getPixelForValue(yvalue));
                             ctx.strokeStyle = color; // Cambiar color según tus preferencias
-                            ctx.fillText(cota + ": " + yvalue + " (m.s.n.m)", right - 250, y.getPixelForValue(yvalue) + h);
+                            ctx.fillText(cota + ": " + yvalue.toLocaleString("de-DE") + " (m.s.n.m)", right - 250, y.getPixelForValue(yvalue) + h);
                             ctx.stroke();
                         });
 
@@ -380,19 +399,19 @@ if ($count >= 1) {
 
                                 if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote)) {
 
-                                    
 
-                                    if($datos_embalses[$j]["cota_actual"] != NULL){?> {
-                                        x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
-                                        y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
-                                    },
-                                    <?php
-                                    if ($max < $datos_embalses[$j]["cota_actual"]) {
-                                        $max = $datos_embalses[$j]["cota_actual"];
-                                    }
-                                    if ($min > $datos_embalses[$j]["cota_actual"]) {
-                                        $min = $datos_embalses[$j]["cota_actual"];
-                                    } ?>
+
+                                    if ($datos_embalses[$j]["cota_actual"] != NULL) { ?> {
+                                            x: '<?php echo $datos_embalses[$j]["fecha"] . " " . $datos_embalses[$j]["hora"];  ?>',
+                                            y: <?php echo $datos_embalses[$j]["cota_actual"];  ?>
+                                        },
+                                        <?php
+                                        if ($max < $datos_embalses[$j]["cota_actual"]) {
+                                            $max = $datos_embalses[$j]["cota_actual"];
+                                        }
+                                        if ($min > $datos_embalses[$j]["cota_actual"]) {
+                                            $min = $datos_embalses[$j]["cota_actual"];
+                                        } ?>
 
                             <?php
                                     }
@@ -420,6 +439,18 @@ if ($count >= 1) {
                             padding: 23,
                         },
                         plugins: {
+
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.dataset.label || '';
+                                        const value = context.raw;
+                                        const labelName = context.label; // Muestra el nombre de la etiqueta única
+                                        return label + ': ' + value.y.toLocaleString("de-DE");
+                                    }
+                                }
+                            },
+
                             arbitra: {
 
 
@@ -453,7 +484,7 @@ if ($count >= 1) {
                                     // This more specific font property overrides the global property
                                     font: {
                                         size: 18,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
 
                                 }
@@ -499,7 +530,7 @@ if ($count >= 1) {
                                     },
                                     font: {
                                         size: 18,
-                                        family:'Arial',
+                                        family: 'Arial',
                                     },
                                 },
                                 grid: {
@@ -514,7 +545,7 @@ if ($count >= 1) {
                                     text: 'Cota (m.s.n.m)',
                                     font: {
                                         size: 16,
-                                        family:'Arial',
+                                        family: 'Arial',
                                         weight: 'bold',
                                     },
                                 },
@@ -538,7 +569,10 @@ if ($count >= 1) {
                                 ticks: {
                                     font: {
                                         size: 14,
-                                        family:'Arial',
+                                        family: 'Arial',
+                                    },
+                                    callback: function(valor, index, valores) {
+                                        return valor.toLocaleString("de-DE");
                                     },
                                 },
 
@@ -547,7 +581,7 @@ if ($count >= 1) {
 
                         },
                     },
-                    plugins: [arbitra,point],
+                    plugins: [arbitra, point],
 
                 });
 
