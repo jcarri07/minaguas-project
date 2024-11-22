@@ -214,20 +214,17 @@ $operador_abast = [];
 $t_op_a = [0, 0, 0, 0, 0];
 $regiones = [];
 $countReg = [];
-$embalses_condiciones = [[], [], [], [], []];
 
 $row = 0;
 
 while ($row < count($datos_embalses)) {
   $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
 
-  // CALCULO DE ABASTECIMIENTO!!
-
   $abastecimiento = 0;
   if ($datos_embalses[$row]["extraccion"] > 0) {
     $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
   }
-  if ($datos_embalses[$row]["extraccion"] == NULL) {
+  if($datos_embalses[$row]["extraccion"] == NULL){
     $abastecimiento = 0;
   }
 
@@ -294,46 +291,6 @@ while ($row < count($datos_embalses)) {
 
   $array = [$totalreg[$datos_embalses[$row]["region"]], $totalop[$datos_embalses[$row]["operador"]], $datos_embalses[$row]["nombre_embalse"], $abastecimiento];
   array_push($embalse_abast, $array);
-
-  // CALCULO DE CONDICION ACTUAL!!
-  if ($datos_embalses[$row]["cota_actual"] != NULL) {
-    $x = $emb->getByCota($anio, $datos_embalses[$row]["cota_actual"])[1];
-
-    $min = $emb->volumenMinimo();
-    $max = $emb->volumenMaximo();
-    $nor = $emb->volumenNormal();
-
-    if (($x - $min) <= 0) {
-      $sum = 0;
-    } else {
-      $sum = $x - $min;
-    }
-    $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
-    if (((abs(($sum)) * (100 / $div)) >= 0 && (abs(($sum)) * (100 / $div)) < 30)) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
-      array_push($embalses_condiciones[0], $array_condicion);
-    }
-    if ((abs(($sum)) * (100 / $div)) >= 30 && (abs(($sum)) * (100 / $div)) < 60) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
-      array_push($embalses_condiciones[1], $array_condicion);
-    }
-    if ((abs(($sum)) * (100 / $div)) >= 60 && (abs(($sum)) * (100 / $div)) < 90) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
-      array_push($embalses_condiciones[2], $array_condicion);
-    }
-    if ((abs(($sum)) * (100 / $div)) >= 90 && (abs(($sum)) * (100 / $div)) <= 100) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
-      array_push($embalses_condiciones[3], $array_condicion);
-    }
-    if ((abs(($sum)) * (100 / $div)) > 100) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
-      array_push($embalses_condiciones[4], $array_condicion);
-    }
-  } else {
-    $array_condicion = [$datos_embalses[$row]["nombre_embalse"], 0, $totalop[$datos_embalses[$row]['operador']]];
-    array_push($embalses_condiciones[0], $array_condicion);
-  }
-
   $row++;
 }
 
@@ -724,63 +681,167 @@ if (1) {
 
   <!-- PAGINA 2 -->
 
-  <?php
-  $inicial = true;
-  $titulos_condiciones = [
-    "Bajo (< 30 %)",
-    "Normal Bajo (30 % < A < 60%)",
-    "Normal Alto (60 % < A < 90 %)",
-    "Buena ( 90 % < A < 100 %)",
-    "Condición de Alivio"
-  ]
-  ?>
+  <div class="header">
+    <hr style="top: 55px; color:#1B569D">
+    <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+  </div>
 
-  <?php foreach ($embalses_condiciones as $key => $embalses_condicion) { ?>
+  <div style="position: absolute; top: 70px; left: 20px; font-size: 18px; color:#000000;"><b>Bajo (< 30 %)</b>
 
-    <?php if (!$inicial) { ?> <div style="page-break-before: always;"></div> <?php } ?>
-    <div class="header">
-      <hr style="top: 55px; color:#1B569D">
-      <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
-      <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-      <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-    </div>
-
-    <div style="position: absolute; top: 70px; left: 20px; font-size: 18px; color:#000000; margin-bottom:5px;"><b><?php echo $titulos_condiciones[$key] ?> </b>
-
-      <table>
-        <tr>
-          <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">VOL. DISP. (HM3)</th>
-          <th class="text-celd">HIDROLÓGICA</th>
-        </tr>
-
-        <?php
-        $j = 0;
-        $cuenta = 0;
-        while ($j < count($embalses_condicion)) {
-          $cuenta++; ?>
+        <table>
           <tr>
-            <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][0]; ?> </td>
-            <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][1]; ?></td>
-            <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][2]; ?> </td>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">HIDROLÓGICA</th>
           </tr>
 
-        <?php
-          $j++;
-        }
-        ?>
+          <?php
+          $j = 0;
+          $cuenta = 0;
+          while ($j < count($datos_embalses)) {
+            if ($datos_embalses[$j]["cota_actual"] != NULL) {
+              $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+              $batimetria = $bati->getBatimetria();
+              $x = $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
 
-        <tr style="height: 10px;">
-          <td class="" style="font-size: 16px; background-color: #DAE3F3; border: 1px solid #707273;"><b> TOTAL </b></td>
-          <td class="" style="font-size:12px; background-color: #DAE3F3; border: 1px solid #707273;" colspan="2"><b><?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></b> </td>
-        </tr>
-      </table>
+              $min = $bati->volumenMinimo();
+              $max = $bati->volumenMaximo();
+              $nor = $bati->volumenNormal();
 
-    </div>
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
+              if (((abs(($sum)) * (100 / $div)) >= 0 && (abs(($sum)) * (100 / $div)) < 30)) {
+                $cuenta++; ?>
+                <tr>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
+                </tr>
 
-  <?php
-    $inicial = false;
-  } ?>
+              <?php }
+            } else {
+              $cuenta++; ?>
+              <tr>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
+                <td class="text-celd" style="font-size: 12px;"><?php echo 0 ?></td>
+                <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
+              </tr>
+          <?php }
+            $j++;
+          }
+          ?>
+
+          <tr>
+            <td class="text-celd total"><b> TOTAL </b></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></td>
+          </tr>
+        </table>
+
+
+        <div style="font-size: 18px; color:#000000;  margin-top: 40px;"><b>Normal Bajo (30 % < A < 60%)</b>
+        </div>
+
+        <table>
+          <tr>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">HIDROLÓGICA</th>
+          </tr>
+          <?php
+          $j = 0;
+          $cuenta = 0;
+          while ($j < count($datos_embalses)) {
+            if ($datos_embalses[$j]["cota_actual"] != NULL) {
+              $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+              $batimetria = $bati->getBatimetria();
+              $x = $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
+              $min = $bati->volumenMinimo();
+              $max = $bati->volumenMaximo();
+              $nor = $bati->volumenNormal();
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
+              if ((abs(($sum)) * (100 / $div)) >= 30 && (abs(($sum)) * (100 / $div)) < 60) {
+                $cuenta++; ?>
+
+                <tr>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
+                </tr>
+
+          <?php }
+            }
+            $j++;
+          }
+          ?>
+          <tr>
+            <td class="text-celd total"><b> TOTAL </b></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), "2", ",", ".") . "%)" ?></td>
+          </tr>
+        </table>
+
+        <!-- <div class="box-note"> Nota:</div> -->
+
+  </div>
+
+
+
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 560px;"><b>Normal Alto (60 % < A < 90 %) </b>
+
+        <table>
+          <tr>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">HIDROLÓGICA</th>
+          </tr>
+          <?php
+          $j = 0;
+          $cuenta = 0;
+          while ($j < count($datos_embalses)) {
+            if ($datos_embalses[$j]["cota_actual"] != NULL) {
+              $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+              $batimetria = $bati->getBatimetria();
+              $x = $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
+              $min = $bati->volumenMinimo();
+              $max = $bati->volumenMaximo();
+              $nor = $bati->volumenNormal();
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
+              if ((abs(($sum)) * (100 / $div)) >= 60 && (abs(($sum)) * (100 / $div)) < 90) {
+                $cuenta++; ?>
+
+                <tr>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
+                </tr>
+
+          <?php }
+            }
+            $j++;
+          }
+          ?>
+          <tr>
+            <td class="text-celd total"><b> TOTAL </b></td>
+            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), "2", ",", ".") . "%)" ?></td>
+          </tr>
+        </table>
+
+  </div>
 
 
   <!-- PAGINA 3 -->
@@ -803,15 +864,31 @@ if (1) {
           <?php
           $j = 0;
           $cuenta = 0;
-          while ($j < count($embalses_condiciones[3])) {
-            $cuenta++; ?>
-            <tr>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[3][$j][0]; ?> </td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[3][$j][1]; ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[3][$j][2]; ?> </td>
-            </tr>
+          while ($j < count($datos_embalses)) {
+            if ($datos_embalses[$j]["cota_actual"] != NULL) {
+              $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+              $batimetria = $bati->getBatimetria();
+              $x = $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
+              $min = $bati->volumenMinimo();
+              $max = $bati->volumenMaximo();
+              $nor = $bati->volumenNormal();
+              if (($x - $min) <= 0) {
+                $sum = 0;
+              } else {
+                $sum = $x - $min;
+              }
+              $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
+              if ((abs(($sum)) * (100 / $div)) >= 90 && (abs(($sum)) * (100 / $div)) <= 100) {
+                $cuenta++; ?>
 
-          <?php
+                <tr>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
+                  <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
+                </tr>
+
+          <?php }
+            }
             $j++;
           }
           ?>
@@ -833,15 +910,31 @@ if (1) {
       <?php
       $j = 0;
       $cuenta = 0;
-      while ($j < count($embalses_condiciones[4])) {
-        $cuenta++; ?>
-        <tr>
-          <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[4][$j][0]; ?> </td>
-          <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[4][$j][1]; ?></td>
-          <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[4][$j][2]; ?> </td>
-        </tr>
+      while ($j < count($datos_embalses)) {
+        if ($datos_embalses[$j]["cota_actual"] != NULL) {
+          $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+          $batimetria = $bati->getBatimetria();
+          $x = $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
+          $min = $bati->volumenMinimo();
+          $max = $bati->volumenMaximo();
+          $nor = $bati->volumenNormal();
+          if (($x - $min) <= 0) {
+            $sum = 0;
+          } else {
+            $sum = $x - $min;
+          }
+          $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
+          if ((abs(($sum)) * (100 / $div)) > 100) {
+            $cuenta++; ?>
 
-      <?php
+            <tr>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $datos_embalses[$j]["nombre_embalse"]; ?> </td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo round($sum, 2) ?></td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $totalop[$datos_embalses[$j]['operador']]; ?> </td>
+            </tr>
+
+      <?php }
+        }
         $j++;
       }
       ?>
@@ -1176,22 +1269,78 @@ if (1) {
   <?php foreach ($operadores as $operador) { ?>
 
 
-    <?php //if ($inicial) { 
-    ?>
-    <div style="page-break-before: always;"></div>
-    <div class="header">
-      <hr style="top: 55px; color:#1B569D">
-      <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-      <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-    </div>
-    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
-    </div>
+    <?php if ($inicial) { ?>
+      <div style="page-break-before: always;"></div>
+      <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+      </div>
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+      </div>
 
-    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?></b></div>
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?></b></div>
+      <?php
+
+      if (($disponible - ($countOp[$operador] + 5)) > 5) {
+        $disponible -= ($countOp[$operador] + 5);
+        $acumulado += (150 + ($countOp[$operador] * 30));
+        $inicial = false;
+      } else {
+        $A_operador = 85;
+        $A_tabla = 130;
+        $incremento = 0;
+        $acumulado = 0;
+        $disponible = 24;
+        $inicial = true;
+      }
+    } else {
+
+      $incremento += $acumulado;
+      $acumulado = 0;
+      if ((($countOp[$operador] + 5)) > $disponible) {
+
+        $A_operador = 85;
+        $A_tabla = 130;
+        $incremento = 0;
+        $disponible = 24;
+
+        if (($disponible - ($countOp[$operador] + 5)) > 5) {
+          $disponible -= ($countOp[$operador] + 5);
+          $acumulado += (150 + ($countOp[$operador] * 30));
+          $inicial = false;
+        } else {
+          $A_operador = 85;
+          $A_tabla = 130;
+          $incremento = 0;
+          $acumulado = 0;
+          $disponible = 24;
+          $inicial = true;
+        }
+      ?>
+
+        <div style="page-break-before: always;"></div>
+        <div class="header">
+          <hr style="top: 55px; color:#1B569D">
+          <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+          <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+        <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
+        </div>
+
+        <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?></b></div>
+      <?php } else {
+        $disponible -= ($countOp[$operador] + 5);
+        $acumulado += (150 + ($countOp[$operador] * 30));
+        $inicial = false; ?>
+
+        <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador + $incremento; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?></b>
+        </div>
+
     <?php
-    // } else {
-    // } 
-    ?>
+
+      }
+    } ?>
 
 
 
@@ -1203,7 +1352,7 @@ if (1) {
   <div style="width: 520px; height: 320px; background-color: lightgray; position: absolute; margin-top: 120px; margin-left: 560px;">
   </div> -->
 
-    <div style="position: absolute; margin-top: <?php echo $A_tabla ?>px; margin-left: 10px; width: 95%; height: 100px;">
+    <div style="position: absolute; margin-top: <?php echo $A_tabla + $incremento; ?>px; margin-left: 10px; width: 95%; height: 100px;">
       <div style="position: absolute; font-size: 18px; text-align: right;"> <b><?php echo date("d/m/Y", strtotime($fecha1)); ?></b>
         <table>
           <tr>
