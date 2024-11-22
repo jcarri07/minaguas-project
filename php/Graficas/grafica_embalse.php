@@ -14,9 +14,9 @@ $count = mysqli_num_rows($re);
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-12 card">
-        <div class="card-header pb-0">
-          <h4>MONITOREO DE CARGA DE DATOS</h4>
-        </div>
+            <div class="card-header pb-0">
+                <h4>MONITOREO DE CARGA DE DATOS</h4>
+            </div>
             <div class="row card-body">
                 <div id="prin" class="col-12">
                     <div class="row mb-2">
@@ -58,7 +58,7 @@ $count = mysqli_num_rows($re);
 
                         </div>
                         <div id="formato" class="row col-md-4" style="padding: 0px; margin-left: 0px;">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label class="form-label">Año:</label>
                                 <select id="anio" class="form-select " style="padding: 0px auto; margin-bottom:5px;">
                                     <?php
@@ -69,16 +69,34 @@ $count = mysqli_num_rows($re);
                                         }
                                         echo '>' . $i . '</option>';
                                     }
+
+                                    ?>
+
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Hasta:</label>
+                                <select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;">
+                                    <?php
+                                    for ($i = (date('Y') - 1); $i >= 1980; $i--) {
+                                        echo '<option value="' . $i . '"';
+                                        if ($i == (date('Y') - 1)) {
+                                            echo 'selected';
+                                        }
+                                        echo '>' . $i . '</option>';
+                                    }
                                     closeConection($conn);
                                     ?>
 
                                 </select>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
-                <div class="table-responsive col-12" style="height:610px;"><div id="contenedor" class="" style="height:600px;min-width:1000px"><canvas id="chart" class="border border-radius-lg"></canvas></div></div>
+                <div class="table-responsive col-12" style="height:610px;">
+                    <div id="contenedor" class="" style="height:600px;min-width:1000px"><canvas id="chart" class="border border-radius-lg"></canvas></div>
+                </div>
                 <div class="col-12 pt-1">
                     <div id="" class="row align-items-center">
 
@@ -86,7 +104,7 @@ $count = mysqli_num_rows($re);
                         <div class="col-md-2">
                             <div class="row justify-content-end">
                                 <div class="col-lg-12 col-md-7">
-                                    
+
                                     <button type="button" id="grafica" title="Generar pdf de grafica de este embalse" class=" btn btn-outline-secondary btn-block w-100 mb-0">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                                             <path fill="#d42b34" d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z" />
@@ -115,8 +133,14 @@ $count = mysqli_num_rows($re);
         $("#tipo").change(function() {
             ajax();
         });
-        $("#anio").change(function() {
+        $("#periodo").change(function() {
             ajax();
+        });
+        $("#anio").change(function() {
+            select($("#anio option:selected").val())
+                .then(() => {
+                    ajax(); // Esto se ejecutará después de que select() termine.
+                });
         });
         $("#ver").change(function() {
             ajax();
@@ -151,18 +175,33 @@ $count = mysqli_num_rows($re);
 
                 case "Grafica_anio.php":
                     var fechaActual = new Date();
-                    $("#formato").html('<div class="col-md-12"><label class="form-label">Año:</label><select id="anio" class="form-control " style="padding: 0px auto; margin-bottom:5px;"><?php for ($i = 1980; $i <= date('Y'); $i++) {                                                                                                                                                                      echo '<option value="' . $i . '"';                                                                                                                                                                  if ($i == date('Y')) {                                                                                                                                                                     echo'selected';};                                                                                                                                                      echo '>' . $i . '</option>';}; ?></select></div></div>');
+                    $("#formato").html('<div class="col-md-6"><label class="form-label">Año:</label><select id="anio" class="form-control " style="padding: 0px auto; margin-bottom:5px;"><?php for ($i = 1980; $i <= date('Y'); $i++) {
+                                            echo '<option value="' . $i . '"';
+                                            if ($i == date('Y')) {
+                                                echo 'selected';
+                                            };
+                                            echo '>' . $i . '</option>';
+                                        }; ?></select></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y')-1?>"><?php echo date('Y')-1?></option></select></div>');
                     $("#anio").change(function() {
+                        select($("#anio option:selected").val())
+                            .then(() => {
+                                ajax(); // Esto se ejecutará después de que select() termine.
+                            });
+                    });
+                    $("#periodo").change(function() {
                         ajax();
                     });
 
-                    ajax();
+                    select($("#anio option:selected").val())
+                        .then(() => {
+                            ajax(); // Esto se ejecutará después de que select() termine.
+                        });
                     break;
 
                 case "Grafica_mes.php":
                     var fechaActual = new Date();
                     //console.log(fechaActual);
-                    $("#formato").html('<div class="col-md-12"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="1988-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div>');
+                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="1988-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y')?>"><?php echo date('Y')-1?></option></select></div>');
 
                     // Obtener el año y mes actual como cadenas de texto
                     var anioActual = fechaActual.getFullYear().toString();
@@ -171,12 +210,22 @@ $count = mysqli_num_rows($re);
                     // Establecer el valor del input de tipo month
                     var valorMesActual = anioActual + '-' + mesActual;
                     $('#mes').val(valorMesActual);
-                    ajax();
                     $("#mes").on('change', function() {
-                        ajax();
-
-
+                        const mes = $("#mes").val();
+                        const year = new Date(mes + "-01").getFullYear()+1;
+                        console.log(year);
+                        select(year)
+                            .then(() => {
+                                ajax(); // Esto se ejecutará después de que select() termine.
+                            });
                     });
+                    $("#periodo").change(function() {
+                        ajax();
+                    });
+                    select(anioActual)
+                        .then(() => {
+                            ajax(); // Esto se ejecutará después de que select() termine.
+                        });
                     break;
 
                 case "Grafica_perso.php":
@@ -202,6 +251,45 @@ $count = mysqli_num_rows($re);
             }
         });
 
+        function select(x) {
+            return new Promise((resolve) => {
+                if ($("#periodo option:selected").val() >= x) {
+                    const $select = $("#periodo");
+                    $select.html("");
+                    for (i = (x - 1); i >= 1980; i--) {
+                        $select.append($("<option>", {
+                            value: i,
+                            text: i
+                        }));
+                        if (i == (x - 1)) {
+                            $("#periodo > option[value=" + i + "]").attr("selected", true);
+                        }
+
+
+                    }
+                };
+                if ((x - $("#periodo option:selected").val()) > 1) {
+                    const l = $("#periodo option:selected").val();
+                    const $select = $("#periodo");
+                    $select.html("");
+                    for (i = (x - 1); i >= 1980; i--) {
+                        $select.append($("<option>", {
+                            value: i,
+                            text: i
+                        }));
+                        if (i == l) {
+                            $("#periodo > option[value=" + i + "]").attr("selected", true);
+                        }
+
+
+                    }
+                };
+                resolve();
+            });
+
+
+        };
+
         function ajax() {
 
             $("#contenedor").html('<div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
@@ -209,6 +297,7 @@ $count = mysqli_num_rows($re);
             values.append("id_embalse", $("#embalses option:selected").val());
             values.append("tipo", $("#tipo option:selected").val());
             values.append("anio", $("#anio option:selected").val());
+            values.append("periodo", $("#periodo option:selected").val());
             values.append("ver", $("#ver option:selected").val());
             //values.append("id_unidad", "");
             values.append("t", $("#tipo option:selected").val());

@@ -15,8 +15,8 @@ $mes = $_POST['mes'];
 $array_aux = explode("-", $mes);
 $anio = $array_aux["0"];
 $me = $array_aux["1"];
+$periodo = $_POST['periodo'];
 $y = $anio;
-$anio = $anio;
 $ver = $_POST['ver'];
 
 $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
@@ -35,7 +35,7 @@ ORDER BY d.fecha ASC;";
     if ($tipo == "line") {
         $aux = "SELECT id_registro, d.fecha,d.hora, cota_actual
 FROM datos_embalse d, embalses e
-WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id'  AND cota_actual <> 0 AND MONTH(d.fecha) = '$me'   
+WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id'  AND cota_actual <> 0 AND MONTH(d.fecha) = '$me' AND YEAR(d.fecha) >= '$periodo'
 ORDER BY d.fecha ASC;";
     }
     $bati = new Batimetria($id, $conn);
@@ -144,8 +144,16 @@ ORDER BY d.fecha ASC;";
                                 $pivote = $pivote = date("Y", strtotime($datos_embalses[0]['fecha']));
 
                                 $fech = $anio;
-                                while (($pivote <= $fech) && ($y - $fech) <= 4) {
-                                    echo "{label:'Volumen del año " . $fech . "',pointRadius: 0,data: [";
+                                while (($pivote <= $fech)) {
+
+                                    $aux = 0;
+                                    while ($aux < count($datos_embalses)) {
+                                        if ($datos_embalses[$aux]["cota_actual"] != NULL && $fech == date("Y", strtotime($datos_embalses[$aux]['fecha']))) { 
+                                            echo "{label:'Volumen del año " . $fech . "',pointRadius: 0,data: [";
+                                            $aux = 0;
+                                            break;
+                                         }else{$aux++;}
+                                    } 
 
                                     $j = 0;
 
@@ -169,7 +177,22 @@ ORDER BY d.fecha ASC;";
 
                                         $j++;
                                     };
-                                    echo "],categoryPercentage:1,},";
+                                    if($aux==0){
+                                        echo "],";
+                                        if($fech == $anio){
+                                            echo "pointBackgroundColor: function(context) {
+                                            var index = context.dataIndex;
+                                            var value = context.dataset.data[index];
+                                            return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
+                                            },
+                                            pointRadius: function(context) {
+                                            var index = context.dataIndex;
+                                            var value = context.dataset.data[index];
+                                            return index === context.dataset.data.length - 1 ? '6' : '0';
+                                            },";
+                                        };
+                                        echo "categoryPercentage:1,},";
+                                        };
                                     $fech--;
                                 }
                             }
@@ -401,8 +424,16 @@ ORDER BY d.fecha ASC;";
                                 $pivote = $pivote = date("Y", strtotime($datos_embalses[0]['fecha']));
 
                                 $fech = $anio;
-                                while (($pivote <= $fech) && ($y - $fech) <= 4) {
-                                    echo "{label:'Cota del año " . $fech . "',pointRadius: 0,data: [";
+                                while (($pivote <= $fech)) {
+
+                                    $aux = 0;
+                                    while ($aux < count($datos_embalses)) {
+                                        if ($datos_embalses[$aux]["cota_actual"] != NULL && $fech == date("Y", strtotime($datos_embalses[$aux]['fecha']))) { 
+                                            echo "{label:'Cota del año " . $fech . "',pointRadius: 0,data: [";
+                                            $aux = 0;
+                                            break;
+                                         }else{$aux++;}
+                                    } 
 
                                     $j = 0;
 
@@ -426,7 +457,22 @@ ORDER BY d.fecha ASC;";
 
                                         $j++;
                                     };
-                                    echo "],categoryPercentage:1,},";
+                                    if($aux==0){
+                                        echo "],";
+                                        if($fech == $anio){
+                                            echo "pointBackgroundColor: function(context) {
+                                            var index = context.dataIndex;
+                                            var value = context.dataset.data[index];
+                                            return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
+                                            },
+                                            pointRadius: function(context) {
+                                            var index = context.dataIndex;
+                                            var value = context.dataset.data[index];
+                                            return index === context.dataset.data.length - 1 ? '6' : '0';
+                                            },";
+                                        };
+                                        echo "categoryPercentage:1,},";
+                                        };
                                     $fech--;
                                 }
                             }
