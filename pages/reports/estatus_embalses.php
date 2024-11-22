@@ -599,6 +599,16 @@ if (1) {
 
     }
 
+    .text-celd-variacion {
+      vertical-align: middle;
+      width: 75px;
+      text-align: center;
+      font-size: 16px;
+      border: 1px solid #707273;
+
+
+    }
+
     .text-celdas {
       vertical-align: middle;
       width: 130px;
@@ -667,6 +677,7 @@ if (1) {
 
 <body>
 
+
   <!-- PAGINA 1 -->
   <div class="header">
     <hr style="top: 55px; color:#1B569D">
@@ -674,53 +685,53 @@ if (1) {
     <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
   </div>
 
-  <div>
-    <h1 style="position: absolute; top: 70px; left: 50px; text-align:center; color:#2E86C1; font-size: 23px;">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-    <h2 style="position: absolute; top: 100px; text-align: center; text-justify: center; color:#021568">Estatus de Fuentes Hídricas para Consumo Humano</h2>
-    <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
-      <!-- Mapa --> <img style="width:1000px ; height: 535px;" src="<?php echo $mapa ?>" />
-    </div>
-    <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 540px; border: gray 1px solid; background-color: #FFFFFF">
-      <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
-      <p style="position: absolute; top: 25px;
+  <!-- <div> -->
+  <h1 style="position: absolute; top: 45px; left: 50px; text-align:center; color:#2E86C1; font-size: 23px;">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+  <h2 style="position: absolute; top: 85px; text-align: center; text-justify: center; color:#021568">Estatus de Fuentes Hídricas para Consumo Humano</h2>
+  <div style="width: 1000px; height: 535px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
+    <!-- Mapa --> <img style="width:1000px ; height: 535px;" src="<?php echo $mapa ?>" />
+  </div>
+  <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 525px; border: gray 1px solid; background-color: #FFFFFF">
+    <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
+    <p style="position: absolute; top: 20px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-      <div style="position: absolute; left: 20px; top: 2px; background-color: red;
+    <div style="position: absolute; left: 20px; top: 2px; background-color: red;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición baja (< 30%) <b> <?php echo $valores[0][0] ?> Embalses</b></p>
 
 
-        <p style="position: absolute; top: 45px;
+      <p style="position: absolute; top: 40px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-        <div style="position: absolute; left: 20px; top: 2px; background-color: #44BEF0;
+      <div style="position: absolute; left: 20px; top: 2px; background-color: #44BEF0;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Bajo (30% < A> 60%) <b> <?php echo $valores[0][1] ?> Embalses</b></p>
 
 
-          <p style="position: absolute; top: 65px;
+        <p style="position: absolute; top: 60px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-          <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
+        <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Alto (60% < A> 90%) <b> <?php echo $valores[0][2] ?> Embalses</b></p>
 
 
-            <p style="position: absolute; top: 85px;
+          <p style="position: absolute; top: 80px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-            <div style="position: absolute; left: 20px; top: 2px; background-color: green;
+          <div style="position: absolute; left: 20px; top: 2px; background-color: green;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición Buena (> 90%) <b> <?php echo $valores[0][3] ?> Embalses</b></p>
 
 
-            <p style="position: absolute; top: 105px;
+          <p style="position: absolute; top: 100px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-            <div style="position: absolute; left: 20px; top: 2px; background-color: #58F558;
+          <div style="position: absolute; left: 20px; top: 2px; background-color: #58F558;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición de Alivio <b> <?php echo $valores[0][4] ?> Embalses</b></p>
 
 
-            <p style="position: absolute; top: 125px;
+          <p style="position: absolute; top: 120px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-            <div style="position: absolute; left: 20px; top: 2px; width: 0; height: 0;
+          <div style="position: absolute; left: 20px; top: 2px; width: 0; height: 0;
         border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 10px solid black;"></div> EDC (Embalse de Compensación)</p>
 
-    </div>
-
-    <h4 style="position: absolute; top: 720px; text-align: center; text-justify: center;"><?php echo "$dia_actual DE " . getMonthName() . " $año_actual" ?></h4>
   </div>
+  <h4 style="position: absolute; top: 690px; text-align: center; text-justify: center;"><?php echo "$dia_actual DE " . getMonthName() . " $año_actual" ?></h4>
+
+  <!-- </div> -->
 
   <!-- PAGINA 2 -->
 
@@ -737,47 +748,48 @@ if (1) {
 
   <?php foreach ($embalses_condiciones as $key => $embalses_condicion) { ?>
 
-    <?php if (!$inicial) { ?> <div style="page-break-before: always;"></div> <?php } ?>
-    <div class="header">
-      <hr style="top: 55px; color:#1B569D">
-      <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
-      <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-      <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-    </div>
+    <page orientation="portrait">
+      <?php if (!$inicial) { ?> <?php } ?>
+      <div class="header">
+        <hr style="top: 55px; color:#1B569D">
+        <h1 style="position: absolute; top: 45px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+      </div>
 
-    <div style="position: absolute; top: 70px; left: 20px; font-size: 18px; color:#000000; margin-bottom:5px;"><b><?php echo $titulos_condiciones[$key] ?> </b>
+      <div style="position: absolute; top: 80px; left: 20px; font-size: 18px; color:#000000; margin-bottom:5px;"><b><?php echo $titulos_condiciones[$key] ?> </b>
 
-      <table>
-        <tr>
-          <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">VOL. DISP. (HM3)</th>
-          <th class="text-celd">HIDROLÓGICA</th>
-        </tr>
-
-        <?php
-        $j = 0;
-        $cuenta = 0;
-        while ($j < count($embalses_condicion)) {
-          $cuenta++; ?>
+        <table>
           <tr>
-            <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][0]; ?> </td>
-            <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][1]; ?></td>
-            <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][2]; ?> </td>
+            <th class="text-celd">EMBALSE</th>
+            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">HIDROLÓGICA</th>
           </tr>
 
-        <?php
-          $j++;
-        }
-        ?>
+          <?php
+          $j = 0;
+          $cuenta = 0;
+          while ($j < count($embalses_condicion)) {
+            $cuenta++; ?>
+            <tr>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][0]; ?> </td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][1]; ?></td>
+              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][2]; ?> </td>
+            </tr>
 
-        <tr style="height: 10px;">
-          <td class="" style="font-size: 16px; background-color: #DAE3F3; border: 1px solid #707273;"><b> TOTAL </b></td>
-          <td class="" style="font-size:12px; background-color: #DAE3F3; border: 1px solid #707273;" colspan="2"><b><?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></b> </td>
-        </tr>
-      </table>
+          <?php
+            $j++;
+          }
+          ?>
 
-    </div>
+          <tr style="height: 10px;">
+            <td class="" style="font-size: 16px; background-color: #DAE3F3; border: 1px solid #707273;"><b> TOTAL </b></td>
+            <td class="" style="font-size:12px; background-color: #DAE3F3; border: 1px solid #707273;" colspan="2"><b><?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></b> </td>
+          </tr>
+        </table>
 
+      </div>
+    </page>
   <?php
     $inicial = false;
   } ?>
@@ -785,196 +797,131 @@ if (1) {
 
   <!-- PAGINA 3 -->
 
-  <div style="page-break-before: always;"></div>
-  <div class="header">
-    <hr style="top: 55px; color:#1B569D">
-    <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
-    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-  </div>
-
-  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 20px;"><b>Buena ( 90 % < A < 100 %) </b>
-        <table>
-          <tr>
-            <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VOL. DISP. (HM3)</th>
-            <th class="text-celd">HIDROLÓGICA</th>
-          </tr>
-          <?php
-          $j = 0;
-          $cuenta = 0;
-          while ($j < count($embalses_condiciones[3])) {
-            $cuenta++; ?>
-            <tr>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[3][$j][0]; ?> </td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[3][$j][1]; ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[3][$j][2]; ?> </td>
-            </tr>
-
-          <?php
-            $j++;
-          }
-          ?>
-          <tr>
-            <td class="text-celd total"><b> TOTAL </b></td>
-            <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), "2", ",", ".") . "%)" ?></td>
-          </tr>
-        </table>
-  </div>
-
-  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 560px;"><b>Condición de Alivio </b>
-
-    <table>
-      <tr>
-        <th class="text-celd">EMBALSE</th>
-        <th class="text-celd">VOL. DISP. (HM3)</th>
-        <th class="text-celd">HIDROLÓGICA</th>
-      </tr>
-      <?php
-      $j = 0;
-      $cuenta = 0;
-      while ($j < count($embalses_condiciones[4])) {
-        $cuenta++; ?>
-        <tr>
-          <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[4][$j][0]; ?> </td>
-          <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[4][$j][1]; ?></td>
-          <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[4][$j][2]; ?> </td>
-        </tr>
-
-      <?php
-        $j++;
-      }
-      ?>
-      <tr>
-        <td class="text-celd total"><b> TOTAL </b></td>
-        <td class="text-celd total" colspan="2"><b></b> <?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), "2", ",", ".") . "%)" ?></td>
-      </tr>
-    </table>
-  </div>
+  <!-- ESTA PAGINA SE ELIMINÓ, YA QUE EN LA PAGINA DOS SE USÓ UN CICLO DE PÁGINAS -->
 
   <!-- PAGINA 4 -->
+  <page orientation="landscape">
+    <!-- <div style="page-break-before: always;"></div> -->
+    <div class="header">
+      <hr style="top: 55px; color:#1B569D">
+      <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+      <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+      <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+    </div>
+    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES POR HIDROLÓGICA </b>
 
-  <div style="page-break-before: always;"></div>
-  <div class="header">
-    <hr style="top: 55px; color:#1B569D">
-    <h1 style="position: absolute; top: 10px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
-    <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-    <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-  </div>
-  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES POR HIDROLÓGICA </b>
-
-    <table style="margin-top: 20px;">
-      <tr>
-        <th class="tablaDos" rowspan="2">HIDROLÓGICA</th>
-        <th class="tablaDos">BAJA</th>
-        <th class="tablaDos" rowspan="2">% TOTAL</th>
-        <th class="tablaDos">NORMAL- <br> BAJO</th>
-        <th class="tablaDos" rowspan="2">% TOTAL</th>
-        <th class="tablaDos">NORMAL- <br> ALTO</th>
-        <th class="tablaDos" rowspan="2">% TOTAL</th>
-      </tr>
-
-      <tr>
-        <th class="tablaDos">
-          < 30 %</th>
-        <th class="tablaDos">30% < A < 60% </th>
-        <th class="tablaDos">60% < A < 90% </th>
-      </tr>
-      <?php foreach ($condiciones as $key => $values) { ?>
+      <table style="margin-top: 20px;">
         <tr>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[2] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[3] . "/" . $values[0] ?></td>
-          <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[3] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
-        </tr>
-      <?php
-      } ?>
-
-      <tr>
-        <th class="spazio" colspan="7"></th>
-      </tr>
-
-      <tr>
-        <th class="spazio" style="border-bottom: 1px solid #707273; border-right: 1px solid #707273;"><b></b></th>
-        <th class="tablaDos" colspan="2"><b> BAJA </b></th>
-        <th class="tablaDos" colspan="2"><b></b> NORMAL-BAJO</th>
-        <th class="tablaDos" colspan="2"><b></b> NORMAL-ALTO</th>
-      </tr>
-
-
-      <tr>
-        <td class="text-celdas total" style="font-size: 12px;"><b>TOTAL</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[1] . "/" . $CT[0] ?></b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[2] . "/" . $CT[0] ?></b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[3] . "/" . $CT[0] ?></b></td>
-      </tr>
-
-      <tr>
-        <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[1] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[2] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
-        <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[3] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
-      </tr>
-
-    </table>
-
-    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 39px; margin-left: 620px;"><b> </b>
-
-      <table>
-        <tr>
-          <th style="height: 38px;" class="tablaDos" rowspan="2">HIDROLÓGICA</th>
-          <th class="tablaDos">BUENA</th>
-          <th class="tablaDos">ALIVIANDO</th>
-          <th class="tablaDos" rowspan="2"> TOTAL</th>
+          <th class="tablaDos" rowspan="2">HIDROLÓGICA</th>
+          <th class="tablaDos">BAJA</th>
+          <th class="tablaDos" rowspan="2">% TOTAL</th>
+          <th class="tablaDos">NORMAL- <br> BAJO</th>
+          <th class="tablaDos" rowspan="2">% TOTAL</th>
+          <th class="tablaDos">NORMAL- <br> ALTO</th>
           <th class="tablaDos" rowspan="2">% TOTAL</th>
         </tr>
 
         <tr>
-          <th class="tablaDos">90% < A < 100% </th>
           <th class="tablaDos">
-            < 100 %</th>
+            < 30 %</th>
+          <th class="tablaDos">30% < A < 60% </th>
+          <th class="tablaDos">60% < A < 90% </th>
         </tr>
-
         <?php foreach ($condiciones as $key => $values) { ?>
           <tr>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format(((($values[4] + $values[5]) * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[2] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[3] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[3] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
           </tr>
         <?php
         } ?>
 
         <tr>
-          <th class="spazio" colspan="5"></th> <!--antes era  colspan="7"-->
+          <th class="spazio" colspan="7"></th>
         </tr>
 
         <tr>
           <th class="spazio" style="border-bottom: 1px solid #707273; border-right: 1px solid #707273;"><b></b></th>
-          <th class="tablaDos"><b> BUENA </b></th>
-          <th class="tablaDos"><b></b> ALIVIANDO</th>
-          <th class="tablaDos"><b></b> TOTAL</th>
-          <th class="tablaDos"><b></b> % </th>
+          <th class="tablaDos" colspan="2"><b> BAJA </b></th>
+          <th class="tablaDos" colspan="2"><b></b> NORMAL-BAJO</th>
+          <th class="tablaDos" colspan="2"><b></b> NORMAL-ALTO</th>
+        </tr>
+
+
+        <tr>
+          <td class="text-celdas total" style="font-size: 12px;"><b>TOTAL</b></td>
+          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[1] . "/" . $CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[2] . "/" . $CT[0] ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[3] . "/" . $CT[0] ?></b></td>
         </tr>
 
         <tr>
-          <td class="text-celdas total" style="font-size: 12px; height: 27px;"><b>TOTAL</b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (number_format(((($CT[4] + $CT[5]) * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
+          <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[1] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[2] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[3] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
         </tr>
 
-
       </table>
+
+      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 39px; margin-left: 620px;"><b> </b>
+
+        <table>
+          <tr>
+            <th style="height: 38px;" class="tablaDos" rowspan="2">HIDROLÓGICA</th>
+            <th class="tablaDos">BUENA</th>
+            <th class="tablaDos">ALIVIANDO</th>
+            <th class="tablaDos" rowspan="2"> TOTAL</th>
+            <th class="tablaDos" rowspan="2">% TOTAL</th>
+          </tr>
+
+          <tr>
+            <th class="tablaDos">90% < A < 100% </th>
+            <th class="tablaDos">
+              < 100 %</th>
+          </tr>
+
+          <?php foreach ($condiciones as $key => $values) { ?>
+            <tr>
+              <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
+              <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
+              <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
+              <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
+              <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format(((($values[4] + $values[5]) * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            </tr>
+          <?php
+          } ?>
+
+          <tr>
+            <th class="spazio" colspan="5"></th> <!--antes era  colspan="7"-->
+          </tr>
+
+          <tr>
+            <th class="spazio" style="border-bottom: 1px solid #707273; border-right: 1px solid #707273;"><b></b></th>
+            <th class="tablaDos"><b> BUENA </b></th>
+            <th class="tablaDos"><b></b> ALIVIANDO</th>
+            <th class="tablaDos"><b></b> TOTAL</th>
+            <th class="tablaDos"><b></b> % </th>
+          </tr>
+
+          <tr>
+            <td class="text-celdas total" style="font-size: 12px; height: 27px;"><b>TOTAL</b></td>
+            <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
+            <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
+            <td class="tablaDos" style="font-size: 12px;"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
+            <td class="tablaDos" style="font-size: 12px;"><b><?php echo $CT[0] != 0 ? (number_format(((($CT[4] + $CT[5]) * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
+          </tr>
+
+
+        </table>
+      </div>
+
     </div>
-
-  </div>
-
+  </page>
   <!-- PAGINA 5 -->
 
   <div style="page-break-before: always;"></div>
@@ -1204,95 +1151,76 @@ if (1) {
   </div> -->
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla ?>px; margin-left: 10px; width: 95%; height: 100px;">
-      <div style="position: absolute; font-size: 18px; text-align: right;"> <b><?php echo date("d/m/Y", strtotime($fecha1)); ?></b>
+
+
+      <div style="position: absolute; margin-left: 525px; font-size: 18px; text-align: right;"><b><?php echo date("d/m/Y", strtotime($fecha2)); ?></b>
         <table>
           <tr>
-            <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VAR. VOL. <br>(HM3)</th>
-            <th class="text-celd">% VAR. VOL.</th>
+            <th class="text-celd" style="width: 125px;">EMBALSE</th>
+            <th class="text-celd-variacion">VAR. VOL. <br>(HM3)</th>
+            <th class="text-celd-variacion">% VAR. VOL.</th>
+            <th class="text-celd-variacion">VAR. VOL. <br>(HM3)</th>
+            <th class="text-celd-variacion">% VAR. VOL.</th>
           </tr>
           <?php
-          $tot_vol = 0;
-          $tot_por = 0;
+          $tot_vol_1 = 0;
+          $tot_por_1 = 0;
+          $tot_vol_2 = 0;
+          $tot_por_2 = 0;
           foreach ($embalses_variacion as $value) {
             if (strtolower(trim($value[0])) == strtolower(trim($operador))) {
-              $tot_vol += $value[2];
-              $tot_por += $value[3];
+              $tot_vol_1 += $value[2];
+              $tot_por_1 += $value[3];
+              $tot_vol_2 += $value[4];
+              $tot_por_2 += $value[5];
           ?>
               <tr>
-                <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
-                <td class="text-celd" style="font-size: 12px; color:<?php if ($value[2] < 0) {
-                                                                      echo "red";
-                                                                    } else {
-                                                                      echo "green";
-                                                                    } ?>"><?php echo number_format($value[2], 2, ",", "") ?></td>
-                <td class="text-celd" style="font-size: 12px; color:<?php if ($value[3] < 0) {
-                                                                      echo "red";
-                                                                    } else {
-                                                                      echo "green";
-                                                                    } ?>"><?php echo number_format($value[3], 2, ",", "") ?>%</td>
+                <td class="text-celd" style="font-size: 12px; width: 125px;"><?php echo $value[1] ?></td>
+                <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($value[2] < 0) {
+                                                                                echo "red";
+                                                                              } else {
+                                                                                echo "green";
+                                                                              } ?>"><?php echo number_format($value[2], 2, ",", ".") ?></td>
+                <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($value[3] < 0) {
+                                                                                echo "red";
+                                                                              } else {
+                                                                                echo "green";
+                                                                              } ?>"><?php echo number_format($value[3], 2, ",", ".") ?>%</td>
+                <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($value[4] < 0) {
+                                                                                echo "red";
+                                                                              } else {
+                                                                                echo "green";
+                                                                              } ?>"><?php echo number_format($value[4], 2, ",", "."); ?></td>
+                <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($value[5] < 0) {
+                                                                                echo "red";
+                                                                              } else {
+                                                                                echo "green";
+                                                                              } ?>"><?php echo number_format($value[5], 2, ",", "."); ?>%</td>
               </tr>
           <?php }
           } ?>
           <tr>
-            <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
-            <td class="text-celd" style="font-size: 16px; color:<?php if ($tot_vol < 0) {
-                                                                  echo "red";
-                                                                } else {
-                                                                  echo "green";
-                                                                } ?>"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
-            <td class="text-celd" style="font-size: 16px; color:<?php if ($tot_por < 0) {
-                                                                  echo "red";
-                                                                } else {
-                                                                  echo "green";
-                                                                } ?>"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
-          </tr>
-        </table>
-
-      </div>
-
-      <div style="position: absolute; margin-left: 550px; font-size: 18px; text-align: right;"><b><?php echo date("d/m/Y", strtotime($fecha2)); ?></b>
-        <table>
-          <tr>
-            <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VAR. VOL. <br>(HM3)</th>
-            <th class="text-celd">% VAR. VOL.</th>
-          </tr>
-          <?php
-          $tot_vol = 0;
-          $tot_por = 0;
-          foreach ($embalses_variacion as $value) {
-            if (strtolower(trim($value[0])) == strtolower(trim($operador))) {
-              $tot_vol += $value[4];
-              $tot_por += $value[5];
-          ?>
-              <tr>
-                <td class="text-celd" style="font-size: 12px;"><?php echo $value[1] ?></td>
-                <td class="text-celd" style="font-size: 12px; color:<?php if ($value[4] < 0) {
-                                                                      echo "red";
-                                                                    } else {
-                                                                      echo "green";
-                                                                    } ?>"><?php echo number_format($value[4], 2, ",", ""); ?></td>
-                <td class="text-celd" style="font-size: 12px; color:<?php if ($value[5] < 0) {
-                                                                      echo "red";
-                                                                    } else {
-                                                                      echo "green";
-                                                                    } ?>"><?php echo number_format($value[5], 2, ",", ""); ?>%</td>
-              </tr>
-          <?php }
-          } ?>
-          <tr>
-            <td class="text-celd" style="font-size: 16px;"><b>TOTAL</b></td>
-            <td class="text-celd" style="font-size: 16px; color:<?php if ($tot_vol < 0) {
-                                                                  echo "red";
-                                                                } else {
-                                                                  echo "green";
-                                                                } ?>"><b><?php echo number_format($tot_vol, 2, ",", ""); ?></b></td>
-            <td class="text-celd" style="font-size: 16px; color:<?php if ($tot_por < 0) {
-                                                                  echo "red";
-                                                                } else {
-                                                                  echo "green";
-                                                                } ?>"><b><?php echo number_format($tot_por, 2, ",", ""); ?>%</b></td>
+            <td class="text-celd" style="font-size: 16px; width: 125px;"><b>TOTAL</b></td>
+            <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($tot_vol_1 < 0) {
+                                                                            echo "red";
+                                                                          } else {
+                                                                            echo "green";
+                                                                          } ?>"><b><?php echo number_format($tot_vol_1, 2, ",", "."); ?></b></td>
+            <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($tot_por_1 < 0) {
+                                                                            echo "red";
+                                                                          } else {
+                                                                            echo "green";
+                                                                          } ?>"><b><?php echo number_format($tot_por_1, 2, ",", "."); ?>%</b></td>
+            <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($tot_vol_2 < 0) {
+                                                                            echo "red";
+                                                                          } else {
+                                                                            echo "green";
+                                                                          } ?>"><b><?php echo number_format($tot_vol_2, 2, ",", "."); ?></b></td>
+            <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($tot_por_2 < 0) {
+                                                                            echo "red";
+                                                                          } else {
+                                                                            echo "green";
+                                                                          } ?>"><b><?php echo number_format($tot_por_2, 2, ",", "."); ?>%</b></td>
           </tr>
         </table>
 
