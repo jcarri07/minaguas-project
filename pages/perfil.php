@@ -42,11 +42,11 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
           <div class="row ">
             <div class="mb-3 col-6">
             <label>Teléfono</label>
-              <input type="text" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="telefono" value="<?php echo $_SESSION["Telefono"] ?>" required>
+              <input type="number" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="telefono" value="<?php echo $_SESSION["Telefono"] ?>" required>
             </div>
             <div class="mb-3 col-6">
             <label>Cédula</label>
-              <input type="text" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula" value="<?php echo $_SESSION["Cedula"] ?>" required <?php echo $aux; ?>>
+              <input type="number" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula" value="<?php echo $_SESSION["Cedula"] ?>" required <?php echo $aux; ?>>
             </div>
         </div>
         <div class="">
