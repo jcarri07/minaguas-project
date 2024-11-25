@@ -32,7 +32,8 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                                     <option value="<?php echo $array[$i]['id_embalse']; ?>"><?php echo $array[$i]['nombre_embalse']; ?></option>
                                 <?php
                                     $i++;
-                                };closeConection($conn);
+                                };
+                                closeConection($conn);
                                 ?>
                             </select>
                         </div>
@@ -64,14 +65,14 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                             <div class="col-md-6">
                                 <label class="form-label">Año:</label>
                                 <select id="anio" class="form-select " style="padding: 0px auto; margin-bottom:5px;">
-                                <option value="2024" selected>2024</option>
+                                    <option value="2024" selected>2024</option>
 
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Hasta:</label>
                                 <select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;">
-                                <option value="2024" selected>2024</option>
+                                    <option value="2024" selected>2024</option>
 
                                 </select>
                             </div>
@@ -117,7 +118,7 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
             while ($i < $count) {
                 echo $array[$i]['fecha'];
                 $i++;
-                if ($i < ($count-1)) {
+                if ($i < ($count - 1)) {
                     echo ",";
                 }
             };
@@ -131,7 +132,7 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
             while ($i < $count) {
                 echo $array[$i]['id_embalse'];
                 $i++;
-                if ($i < ($count-1)) {
+                if ($i < ($count - 1)) {
                     echo ",";
                 }
             };
@@ -140,53 +141,54 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
         ];
         let menor = 1960;
         i = 0;
-            while(i < embalse.length){
+        while (i < embalse.length) {
 
-                if(embalse[i] == $("#embalses option:selected").val()){
-                    menor = anios[i];
-                    
-                }
+            if (embalse[i] == $("#embalses option:selected").val()) {
+                menor = anios[i];
+
+            }
 
             i++;
-            };
-            anio();
-            select($("#anio option:selected").val())
-                .then(() => {
-                    ajax(); // Esto se ejecutará después de que select() termine.
+        };
+        anio();
+        select($("#anio option:selected").val())
+            .then(() => {
+                ajax(); // Esto se ejecutará después de que select() termine.
             });
 
         $("#embalses").change(function() {
             i = 0;
-            while(i < embalse.length){
+            while (i < embalse.length) {
 
-                if(embalse[i] == $("#embalses option:selected").val()){
+                if (embalse[i] == $("#embalses option:selected").val()) {
                     menor = anios[i];
+                    if(!menor){menor = "<?php echo date('Y')?>";}
                     //console.log(menor);
                 }
 
-            i++;
+                i++;
             };
             a = 0;
             switch ($("#fe option:selected").val()) {
 
                 case "Grafica_anio.php":
                     anio();
-                    a = $("#anio option:selected").val(); 
+                    a = $("#anio option:selected").val();
                     break;
 
                 case "Grafica_mes.php":
                     var fechaActual = new Date();
                     //console.log(fechaActual);
-                    
+
                     // Obtener el año y mes actual como cadenas de texto
                     var anioActual = fechaActual.getFullYear().toString();
                     var mesActual = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
 
                     // Establecer el valor del input de tipo month
                     var valorMesActual = anioActual + '-' + mesActual;
-                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="'+menor+'-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
+                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="' + menor + '-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
                     $('#mes').val(valorMesActual);
-                    a = anioActual; 
+                    a = anioActual;
 
                     $("#mes").on('change', function() {
                         const mes = $("#mes").val();
@@ -201,16 +203,16 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                         ajax();
                     });
 
-                    console.log("a: "+a);
+                    console.log("a: " + a);
                     break;
 
             }
-            
+
 
             select(a)
                 .then(() => {
                     ajax(); // Esto se ejecutará después de que select() termine.
-            });
+                });
         });
         $("#tipo").change(function() {
             ajax();
@@ -258,7 +260,7 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                 case "Grafica_anio.php":
                     var fechaActual = new Date();
                     $("#formato").html('<div class="col-md-6"><label class="form-label">Año:</label><select id="anio" class="form-control " style="padding: 0px auto; margin-bottom:5px;"><option value="<?php echo date('Y') ?>" selected><?php echo date('Y') ?></option></select></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y') - 1 ?>"><?php echo date('Y') - 1 ?></option></select></div>');
-                    
+
                     $("#anio").change(function() {
                         select($("#anio option:selected").val())
                             .then(() => {
@@ -278,16 +280,16 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                 case "Grafica_mes.php":
                     var fechaActual = new Date();
                     //console.log(fechaActual);
-                    
+
                     // Obtener el año y mes actual como cadenas de texto
                     var anioActual = fechaActual.getFullYear().toString();
                     var mesActual = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
 
                     // Establecer el valor del input de tipo month
                     var valorMesActual = anioActual + '-' + mesActual;
-                    
 
-                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="'+menor+'-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
+
+                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="' + menor + '-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
                     $('#mes').val(valorMesActual);
                     select(anioActual)
                         .then(() => {
@@ -333,6 +335,7 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
         });
 
         function select(x) {
+
             return new Promise((resolve) => {
                 if ($("#periodo option:selected").val() > x) {
                     const $select = $("#periodo");
@@ -370,21 +373,24 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
 
 
         };
-        function anio(){
+
+        function anio() {
             const $anio = $("#anio");
             const k = $("#anio option:selected").val();
-                    $anio.html("");
-                    for (i = <?php echo date('Y')?>; i >= menor; i--) {
-                        $anio.append($("<option>", {
-                            value: i,
-                            text: i
-                        }));
-                        if (i == <?php echo (date('Y'))?>) {
-                            $("#anio > option[value=" + i + "]").attr("selected", true);
-                        }
-
-
+            if (menor) {
+                $anio.html("");
+                for (i = <?php echo date('Y') ?>; i >= menor; i--) {
+                    $anio.append($("<option>", {
+                        value: i,
+                        text: i
+                    }));
+                    if (i == <?php echo (date('Y')) ?>) {
+                        $("#anio > option[value=" + i + "]").attr("selected", true);
                     }
+
+
+                };
+            };
         }
 
         function ajax() {
