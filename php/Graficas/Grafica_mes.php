@@ -208,10 +208,10 @@ ORDER BY d.fecha ASC;";
                         animations: true,
                         responsive: true,
                         maintainAspectRatio: false,
-                        interaction: {
-                            intersect: false,
-                            axis: 'x',
-                        },
+                        // interaction: {
+                        //     intersect: false,
+                        //     axis: 'x',
+                        // },
                         layout: {
                             padding: 23,
                         },
@@ -488,10 +488,10 @@ ORDER BY d.fecha ASC;";
                         animations: true,
                         responsive: true,
                         maintainAspectRatio: false,
-                        interaction: {
-                            intersect: false,
-                            axis: 'x',
-                        },
+                        // interaction: {
+                        //     intersect: false,
+                        //     axis: 'x',
+                        // },
                         layout: {
                             padding: 23,
                         },
