@@ -187,23 +187,23 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
   $porcentaje = $bat->volumenDisponible() != 0 ? (($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible()) : 0;
 
   if ($porcentaje < 30) {
-    agregarACondiciones($row["operador"], $condiciones, 1);
+    agregarACondiciones($row["operador"], $condiciones, 1, $totalop);
     $CT[0] += 1;
     $CT[1] += 1;
   } else if ($porcentaje >= 30 && $porcentaje < 60) {
-    agregarACondiciones($row["operador"], $condiciones, 2);
+    agregarACondiciones($row["operador"], $condiciones, 2, $totalop);
     $CT[0] += 1;
     $CT[2] += 1;
   } else if ($porcentaje >= 60 && $porcentaje < 90) {
-    agregarACondiciones($row["operador"], $condiciones, 3);
+    agregarACondiciones($row["operador"], $condiciones, 3, $totalop);
     $CT[0] += 1;
     $CT[3] += 1;
   } else if ($porcentaje >= 90 && $porcentaje <= 100) {
-    agregarACondiciones($row["operador"], $condiciones, 4);
+    agregarACondiciones($row["operador"], $condiciones, 4, $totalop);
     $CT[0] += 1;
     $CT[4] += 1;
   } else {
-    agregarACondiciones($row["operador"], $condiciones, 5);
+    agregarACondiciones($row["operador"], $condiciones, 5, $totalop);
     $CT[0] += 1;
     $CT[5] += 1;
   }
@@ -337,15 +337,15 @@ while ($row < count($datos_embalses)) {
   $row++;
 }
 
-function agregarACondiciones($operador, &$array, $porcentaje)
+function agregarACondiciones($operador, &$array, $porcentaje, $totalop)
 {
   if (array_key_exists($operador, $array)) {
     $array[$operador][0] += 1;
     $array[$operador][$porcentaje] += 1;
     return;
   } else {
-    $array[$operador] = [0, 0, 0, 0, 0, 0];
-    agregarACondiciones($operador, $array, $porcentaje);
+    $array[$operador] = [0, 0, 0, 0, 0, 0, $totalop[$operador]];
+    agregarACondiciones($operador, $array, $porcentaje, $totalop);
   }
 }
 
@@ -746,7 +746,19 @@ if (1) {
   ]
   ?>
 
-  <?php foreach ($embalses_condiciones as $key => $embalses_condicion) { ?>
+  <?php foreach ($embalses_condiciones as $key => $embalses_condicion) {
+
+    usort($embalses_condicion, function ($a, $b) {
+      return strcmp($a[2], $b[2]); // Comparar las cadenas en el índice 2 (tipo)
+    });
+
+    $typeCount = array_reduce($embalses_condicion, function ($counts, $item) {
+      $tipo = $item[2]; // Índice del tipo
+      $counts[$tipo] = ($counts[$tipo] ?? 0) + 1; // Incrementar el conteo para este tipo
+      return $counts;
+    }, []);
+
+  ?>
 
     <page orientation="portrait">
       <?php if (!$inicial) { ?> <?php } ?>
@@ -757,13 +769,13 @@ if (1) {
         <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
       </div>
 
-      <div style="position: absolute; top: 80px; left: 20px; font-size: 18px; color:#000000; margin-bottom:5px;"><b><?php echo $titulos_condiciones[$key] ?> </b>
+      <div style="position: absolute; top: 80px; left: 115px; font-size: 18px; color:#000000; margin-bottom:5px;"><b><?php echo $titulos_condiciones[$key]; ?> </b>
 
         <table>
           <tr>
-            <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VOL. DISP. (HM3)</th>
-            <th class="text-celd">HIDROLÓGICA</th>
+            <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">EMBALSE</th>
+            <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">VOL. DISP. (HM3)</th>
+            <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">HIDROLÓGICA</th>
           </tr>
 
           <?php
@@ -772,9 +784,12 @@ if (1) {
           while ($j < count($embalses_condicion)) {
             $cuenta++; ?>
             <tr>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][0]; ?> </td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][1]; ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][2]; ?> </td>
+              <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][0]; ?> </td>
+              <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][1]; ?></td>
+              <?php if ($j == 0 || $embalses_condicion[$j][2] != $embalses_condicion[$j - 1][2]) { ?>
+                <td class="text-celd" rowspan="<?php echo $typeCount[$embalses_condicion[$j][2]] ?>" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][2]; ?> </td>
+              <?php } else { ?>
+              <?php } ?>
             </tr>
 
           <?php
@@ -827,9 +842,15 @@ if (1) {
           <th class="tablaDos">30% < A < 60% </th>
           <th class="tablaDos">60% < A < 90% </th>
         </tr>
-        <?php foreach ($condiciones as $key => $values) { ?>
+        <?php
+
+        usort($condiciones, function ($a, $b) {
+          return strcmp($a[6], $b[6]); // Comparar las cadenas en el índice 2 (tipo)
+        });
+
+        foreach ($condiciones as $key => $values) { ?>
           <tr>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[6] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
@@ -887,7 +908,7 @@ if (1) {
 
           <?php foreach ($condiciones as $key => $values) { ?>
             <tr>
-              <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
+              <td class="tablaDos" style="font-size: 12px;"><?php echo $values[6] ?></td>
               <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
               <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
               <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
@@ -1540,7 +1561,10 @@ if (1) {
           <th class="text-celdas" style="font-size: 12px; width: 90px;">(Hm3)</th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">(%)</th>
         </tr>
-        <?php foreach ($variacion_total_op as $key => $value) { ?>
+        <?php
+        ksort($variacion_total_op);
+
+        foreach ($variacion_total_op as $key => $value) { ?>
           <tr>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $key ?></td>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[0], 2, ",", ""); ?></td>
@@ -1632,7 +1656,7 @@ if (1) {
     // if ($meses < 1) return "0 meses";
     if ($meses <= 4) return ["0-4 meses", "#ff0000"];
     if ($meses > 4 && $meses <= 8) return ["5-8 meses", "#ffaa00"];
-    if ($meses > 8 && $meses <= 12) return ["9-12", "#ffff00"];
+    if ($meses > 8 && $meses <= 12) return ["9-12 meses", "#ffff00"];
     if ($meses > 12) return ["+12 meses", "#70ad47"];
   }
 
@@ -1733,7 +1757,13 @@ if (1) {
           <th class="celd-table">MESES DE <br>ABAST.</th>
           <th class="celd-table-2">HIDROLÓGICA</th>
         </tr>
-        <?php foreach ($embalse_abast as $abast) {
+        <?php
+
+        usort($embalse_abast, function ($a, $b) {
+          return $a[3] <=> $b[3]; // Comparar las cadenas en el índice 2 (tipo)
+        });
+
+        foreach ($embalse_abast as $abast) {
           if (strtolower(trim($abast[0])) == strtolower(trim($region))) {
         ?>
             <tr>
@@ -1838,7 +1868,11 @@ if (1) {
             <div style="background-color: #70ad47; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
           </td>
         </tr>
-        <?php foreach ($operador_abast as $key => $value) {
+        <?php
+
+        ksort($operador_abast);
+
+        foreach ($operador_abast as $key => $value) {
         ?>
           <tr>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $key; ?></td>
