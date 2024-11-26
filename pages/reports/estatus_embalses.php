@@ -1647,7 +1647,7 @@ if (1) {
   $inicial = true;
   $tituloini = true;
   $right = false;
-  $margin_left = 20;
+  $margin_left = 550;
   $espacio = 90;
 
   function descripcion($meses)
@@ -1664,88 +1664,17 @@ if (1) {
 
   <?php foreach ($regiones as $region) { ?>
 
-    <?php if ($inicial) { ?>
-      <div style="page-break-before: always;"></div>
-      <div class="header">
-        <hr style="top: 55px; color:#1B569D">
-        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-      </div>
 
-      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
-      </div>
-      <?php
-      if (($disponible - ($countReg[$region] + 4)) > 4) {
-        $disponible -= ($countReg[$region] + 4);
-        $acumulado += ($espacio + ($countReg[$region] * 30));
-        $inicial = false;
-      } else {
-        $A_operador = 85;
-        $A_tabla = 120;
-        $incremento = 0;
-        $acumulado = 0;
-        $disponible = 25;
-        $disponible_right = 25;
-        $inicial = true;
-      }
-    } else {
+    <div style="page-break-before: always;"></div>
+    <div class="header">
+      <hr style="top: 55px; color:#1B569D">
+      <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+      <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+    </div>
 
-      $incremento += $acumulado;
-      $acumulado = 0;
-      if ((($countReg[$region] + 4)) > $disponible) {
+    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
+    </div>
 
-        $A_operador = 85;
-        $A_tabla = 120;
-        $incremento = 0;
-        // $disponible = 25;
-
-        if ($right == false) {
-          $margin_left = 550;
-          $disponible = $disponible_right;
-          $right = true;
-        }
-
-        if (($disponible - ($countReg[$region] + 4)) > 4) {
-          $disponible -= ($countReg[$region] + 4);
-          $acumulado += ($espacio + ($countReg[$region] * 30));
-          $inicial = false;
-        } else {
-          $A_operador = 85;
-          $A_tabla = 120;
-          $incremento = 0;
-          $acumulado = 0;
-          $inicial = true;
-          $margin_left = 20;
-        }
-        if ($right == true && ((($countReg[$region] + 4)) > $disponible)) {
-          $disponible = 25;
-          $right = false;
-
-      ?>
-
-          <div style="page-break-before: always;"></div>
-          <div class="header">
-            <hr style="top: 55px; color:#1B569D">
-            <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-            <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-          </div>
-
-          <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
-          </div>
-
-        <?php }
-      } else {
-        $disponible -= ($countReg[$region] + 4);
-        $acumulado += ($espacio + ($countReg[$region] * 30));
-        $inicial = false; ?>
-
-
-    <?php
-
-      }
-    }
-    ?>
-    <!-- <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?> OPERADOR</b></div> -->
 
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla + $incremento; ?>px; margin-left: <?php echo $margin_left; ?>px; font-size: 18px; text-align: right;"><b>Región <?php echo $region ?></b>
