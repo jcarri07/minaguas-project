@@ -187,23 +187,23 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
   $porcentaje = $bat->volumenDisponible() != 0 ? (($bat->volumenActualDisponible() * 100) / $bat->volumenDisponible()) : 0;
 
   if ($porcentaje < 30) {
-    agregarACondiciones($row["operador"], $condiciones, 1);
+    agregarACondiciones($row["operador"], $condiciones, 1, $totalop);
     $CT[0] += 1;
     $CT[1] += 1;
   } else if ($porcentaje >= 30 && $porcentaje < 60) {
-    agregarACondiciones($row["operador"], $condiciones, 2);
+    agregarACondiciones($row["operador"], $condiciones, 2, $totalop);
     $CT[0] += 1;
     $CT[2] += 1;
   } else if ($porcentaje >= 60 && $porcentaje < 90) {
-    agregarACondiciones($row["operador"], $condiciones, 3);
+    agregarACondiciones($row["operador"], $condiciones, 3, $totalop);
     $CT[0] += 1;
     $CT[3] += 1;
   } else if ($porcentaje >= 90 && $porcentaje <= 100) {
-    agregarACondiciones($row["operador"], $condiciones, 4);
+    agregarACondiciones($row["operador"], $condiciones, 4, $totalop);
     $CT[0] += 1;
     $CT[4] += 1;
   } else {
-    agregarACondiciones($row["operador"], $condiciones, 5);
+    agregarACondiciones($row["operador"], $condiciones, 5, $totalop);
     $CT[0] += 1;
     $CT[5] += 1;
   }
@@ -337,15 +337,15 @@ while ($row < count($datos_embalses)) {
   $row++;
 }
 
-function agregarACondiciones($operador, &$array, $porcentaje)
+function agregarACondiciones($operador, &$array, $porcentaje, $totalop)
 {
   if (array_key_exists($operador, $array)) {
     $array[$operador][0] += 1;
     $array[$operador][$porcentaje] += 1;
     return;
   } else {
-    $array[$operador] = [0, 0, 0, 0, 0, 0];
-    agregarACondiciones($operador, $array, $porcentaje);
+    $array[$operador] = [0, 0, 0, 0, 0, 0, $totalop[$operador]];
+    agregarACondiciones($operador, $array, $porcentaje, $totalop);
   }
 }
 
@@ -738,6 +738,7 @@ if (1) {
 
   <?php
   $inicial = true;
+  $total_filas = 40;
   $titulos_condiciones = [
     "Bajo (< 30 %)",
     "Normal Bajo (30 % < A < 60%)",
@@ -747,10 +748,23 @@ if (1) {
   ]
   ?>
 
-  <?php foreach ($embalses_condiciones as $key => $embalses_condicion) { ?>
+  <?php foreach ($embalses_condiciones as $key => $embalses_condicion) {
 
-    <page orientation="portrait">
-      <?php if (!$inicial) { ?> <?php } ?>
+    usort($embalses_condicion, function ($a, $b) {
+      return strcmp($a[2], $b[2]); // Comparar las cadenas en el índice 2 (tipo)
+    });
+
+    $typeCount = array_reduce($embalses_condicion, function ($counts, $item) {
+      $tipo = $item[2]; // Índice del tipo
+      $counts[$tipo] = ($counts[$tipo] ?? 0) + 1; // Incrementar el conteo para este tipo
+      return $counts;
+    }, []);
+
+  ?>
+
+    <?php if ($inicial) { ?>
+      <page orientation="portrait">
+      <?php } ?>
       <div class="header">
         <hr style="top: 55px; color:#1B569D">
         <h1 style="position: absolute; top: 45px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
@@ -758,13 +772,13 @@ if (1) {
         <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
       </div>
 
-      <div style="position: absolute; top: 80px; left: 20px; font-size: 18px; color:#000000; margin-bottom:5px;"><b><?php echo $titulos_condiciones[$key] ?> </b>
+      <div style="position: absolute; top: 80px; left: 115px; font-size: 18px; color:#000000; margin-bottom:5px;"><b><?php echo $titulos_condiciones[$key]; ?> </b>
 
         <table>
           <tr>
-            <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VOL. DISP. (HM3)</th>
-            <th class="text-celd">HIDROLÓGICA</th>
+            <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">EMBALSE</th>
+            <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">VOL. DISP. (HM3)</th>
+            <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">HIDROLÓGICA</th>
           </tr>
 
           <?php
@@ -773,9 +787,12 @@ if (1) {
           while ($j < count($embalses_condicion)) {
             $cuenta++; ?>
             <tr>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][0]; ?> </td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][1]; ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condiciones[$key][$j][2]; ?> </td>
+              <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][0]; ?> </td>
+              <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][1]; ?></td>
+              <?php if ($j == 0 || $embalses_condicion[$j][2] != $embalses_condicion[$j - 1][2]) { ?>
+                <td class="text-celd" rowspan="<?php echo $typeCount[$embalses_condicion[$j][2]] ?>" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][2]; ?> </td>
+              <?php } else { ?>
+              <?php } ?>
             </tr>
 
           <?php
@@ -790,9 +807,11 @@ if (1) {
         </table>
 
       </div>
-    </page>
+      <?php if ($inicial) { ?>
+      </page>
+    <?php } ?>
   <?php
-    $inicial = false;
+    // $inicial = false;
   } ?>
 
 
@@ -828,9 +847,15 @@ if (1) {
           <th class="tablaDos">30% < A < 60% </th>
           <th class="tablaDos">60% < A < 90% </th>
         </tr>
-        <?php foreach ($condiciones as $key => $values) { ?>
+        <?php
+
+        usort($condiciones, function ($a, $b) {
+          return strcmp($a[6], $b[6]); // Comparar las cadenas en el índice 2 (tipo)
+        });
+
+        foreach ($condiciones as $key => $values) { ?>
           <tr>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
+            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[6] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
             <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
@@ -888,7 +913,7 @@ if (1) {
 
           <?php foreach ($condiciones as $key => $values) { ?>
             <tr>
-              <td class="tablaDos" style="font-size: 12px;"><?php echo $totalop[$key] ?></td>
+              <td class="tablaDos" style="font-size: 12px;"><?php echo $values[6] ?></td>
               <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
               <td class="tablaDos" style="font-size: 12px;"><?php echo $values[5] . "/" . $values[0] ?></td>
               <td class="tablaDos" style="font-size: 12px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
@@ -1548,7 +1573,10 @@ if (1) {
           <th class="text-celdas" style="font-size: 12px; width: 90px;">(Hm3)</th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">(%)</th>
         </tr>
-        <?php foreach ($variacion_total_op as $key => $value) { ?>
+        <?php
+        ksort($variacion_total_op);
+
+        foreach ($variacion_total_op as $key => $value) { ?>
           <tr>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $key ?></td>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[0], 2, ",", ""); ?></td>
@@ -1631,7 +1659,7 @@ if (1) {
   $inicial = true;
   $tituloini = true;
   $right = false;
-  $margin_left = 20;
+  $margin_left = 550;
   $espacio = 90;
 
   function descripcion($meses)
@@ -1640,7 +1668,7 @@ if (1) {
     // if ($meses < 1) return "0 meses";
     if ($meses <= 4) return ["0-4 meses", "#ff0000"];
     if ($meses > 4 && $meses <= 8) return ["5-8 meses", "#ffaa00"];
-    if ($meses > 8 && $meses <= 12) return ["9-12", "#ffff00"];
+    if ($meses > 8 && $meses <= 12) return ["9-12 meses", "#ffff00"];
     if ($meses > 12) return ["+12 meses", "#70ad47"];
   }
 
@@ -1648,88 +1676,17 @@ if (1) {
 
   <?php foreach ($regiones as $region) { ?>
 
-    <?php if ($inicial) { ?>
-      <div style="page-break-before: always;"></div>
-      <div class="header">
-        <hr style="top: 55px; color:#1B569D">
-        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-      </div>
 
-      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
-      </div>
-      <?php
-      if (($disponible - ($countReg[$region] + 4)) > 4) {
-        $disponible -= ($countReg[$region] + 4);
-        $acumulado += ($espacio + ($countReg[$region] * 30));
-        $inicial = false;
-      } else {
-        $A_operador = 85;
-        $A_tabla = 120;
-        $incremento = 0;
-        $acumulado = 0;
-        $disponible = 25;
-        $disponible_right = 25;
-        $inicial = true;
-      }
-    } else {
+    <div style="page-break-before: always;"></div>
+    <div class="header">
+      <hr style="top: 55px; color:#1B569D">
+      <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+      <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+    </div>
 
-      $incremento += $acumulado;
-      $acumulado = 0;
-      if ((($countReg[$region] + 4)) > $disponible) {
+    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
+    </div>
 
-        $A_operador = 85;
-        $A_tabla = 120;
-        $incremento = 0;
-        // $disponible = 25;
-
-        if ($right == false) {
-          $margin_left = 550;
-          $disponible = $disponible_right;
-          $right = true;
-        }
-
-        if (($disponible - ($countReg[$region] + 4)) > 4) {
-          $disponible -= ($countReg[$region] + 4);
-          $acumulado += ($espacio + ($countReg[$region] * 30));
-          $inicial = false;
-        } else {
-          $A_operador = 85;
-          $A_tabla = 120;
-          $incremento = 0;
-          $acumulado = 0;
-          $inicial = true;
-          $margin_left = 20;
-        }
-        if ($right == true && ((($countReg[$region] + 4)) > $disponible)) {
-          $disponible = 25;
-          $right = false;
-
-      ?>
-
-          <div style="page-break-before: always;"></div>
-          <div class="header">
-            <hr style="top: 55px; color:#1B569D">
-            <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-            <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-          </div>
-
-          <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
-          </div>
-
-        <?php }
-      } else {
-        $disponible -= ($countReg[$region] + 4);
-        $acumulado += ($espacio + ($countReg[$region] * 30));
-        $inicial = false; ?>
-
-
-    <?php
-
-      }
-    }
-    ?>
-    <!-- <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?> OPERADOR</b></div> -->
 
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla + $incremento; ?>px; margin-left: <?php echo $margin_left; ?>px; font-size: 18px; text-align: right;"><b>Región <?php echo $region ?></b>
@@ -1741,7 +1698,13 @@ if (1) {
           <th class="celd-table">MESES DE <br>ABAST.</th>
           <th class="celd-table-2">HIDROLÓGICA</th>
         </tr>
-        <?php foreach ($embalse_abast as $abast) {
+        <?php
+
+        usort($embalse_abast, function ($a, $b) {
+          return $a[3] <=> $b[3]; // Comparar las cadenas en el índice 2 (tipo)
+        });
+
+        foreach ($embalse_abast as $abast) {
           if (strtolower(trim($abast[0])) == strtolower(trim($region))) {
         ?>
             <tr>
@@ -1846,7 +1809,11 @@ if (1) {
             <div style="background-color: #70ad47; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
           </td>
         </tr>
-        <?php foreach ($operador_abast as $key => $value) {
+        <?php
+
+        ksort($operador_abast);
+
+        foreach ($operador_abast as $key => $value) {
         ?>
           <tr>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo $key; ?></td>

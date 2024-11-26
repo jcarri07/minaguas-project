@@ -71,6 +71,9 @@ $positions = [
     64 => "b",
     65 => "r",
     66 => "br",
+    68 => "t",
+    69 => "t",
+    70 => "t",
 ];
 
 $encode_positions = json_encode($positions);
