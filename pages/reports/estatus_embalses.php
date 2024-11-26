@@ -575,7 +575,7 @@ if (1) {
       vertical-align: middle;
       text-align: center;
       padding: 5px;
-      border: 1px solid #707273;
+      border: 1px solid #141414;
       /*width: fit-content;*/
       font-size: 10px;
     }
@@ -587,6 +587,7 @@ if (1) {
       text-align: center;
       background-color: #0070C0;
       color: #FFFFFF;
+      border: 1px solid #141414; 
     }
 
     .text-celd {
@@ -594,7 +595,7 @@ if (1) {
       width: 150px;
       text-align: center;
       font-size: 16px;
-      border: 1px solid #707273;
+      border: 1px solid #141414;
 
 
     }
@@ -604,7 +605,7 @@ if (1) {
       width: 75px;
       text-align: center;
       font-size: 16px;
-      border: 1px solid #707273;
+      border: 1px solid #141414;
 
 
     }
@@ -614,7 +615,7 @@ if (1) {
       width: 130px;
       text-align: center;
       font-size: 16px;
-      border: 1px solid #707273;
+      border: 1px solid #141414;
 
 
     }
@@ -624,7 +625,7 @@ if (1) {
       width: 80px;
       text-align: center;
       font-size: 14px;
-      border: 1px solid #707273;
+      border: 1px solid #141414;
     }
 
     .celd-table-2 {
@@ -632,7 +633,7 @@ if (1) {
       width: 80px;
       text-align: center;
       font-size: 12px;
-      border: 1px solid #707273;
+      border: 1px solid #141414;
     }
 
     .text-big {
@@ -645,7 +646,7 @@ if (1) {
 
       font-size: 16px;
       background-color: #DAE3F3;
-      border: 1px solid #707273;
+      border: 1px solid #141414;
 
     }
 
@@ -1144,24 +1145,31 @@ if (1) {
 
 
 
-    <!-- <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px;">
+     <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px;">
   </div>
 
   <div style="width: 520px; height: 320px; background-color: lightgray; position: absolute; margin-top: 120px; margin-left: 560px;">
-  </div> -->
+  </div>
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla ?>px; margin-left: 10px; width: 95%; height: 100px;">
 
 
-      <div style="position: absolute; margin-left: 525px; font-size: 18px; text-align: right;"><b><?php echo date("d/m/Y", strtotime($fecha2)); ?></b>
+      <div style="position: absolute; margin-left: 525px; font-size: 18px; text-align: right;">
         <table>
           <tr>
-            <th class="text-celd" style="width: 125px;">EMBALSE</th>
-            <th class="text-celd-variacion">VAR. VOL. <br>(HM3)</th>
-            <th class="text-celd-variacion">% VAR. VOL.</th>
-            <th class="text-celd-variacion">VAR. VOL. <br>(HM3)</th>
+            <th style="height: 38px;" class="text-celd-variacion" rowspan="2">EMBALSE</th>
+            <th class="text-celd-variacion" colspan="2"><b><?php echo date("d/m/Y", strtotime($fecha1)); ?></b></th>
+            <th class="text-celd-variacion" colspan="2"><b><?php echo date("d/m/Y", strtotime($fecha2)); ?></b></th>
+          </tr>
+
+          <tr>
+          <th class="text-celd-variacion">VAR. VOL.(HM3)</th>
+          <th class="text-celd-variacion">% VAR. VOL.</th>
+          <th class="text-celd-variacion">VAR. VOL.(HM3)</th>
             <th class="text-celd-variacion">% VAR. VOL.</th>
           </tr>
+
+
           <?php
           $tot_vol_1 = 0;
           $tot_por_1 = 0;
