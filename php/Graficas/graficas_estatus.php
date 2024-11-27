@@ -149,7 +149,7 @@ if ($count >= 1) {
 
             $x = $bati->getByCota(date('Y', strtotime($datos_embalses[$j]["fech"])), $datos_embalses[$j]["cota_actual"])[1];
             $min = $bati->volumenMinimo();
-            $max = $bati->volumenMaximo();
+            //$max = $bati->volumenMaximo();
             $nor = $bati->volumenNormal();
             //$bati->getByCota($anio, $datos_embalses[$j]["cota_max"])[1]-$bati->getByCota($anio, $datos_embalses[$j]["cota_min"])[1];
             if (($x - $min) <= 0) {

@@ -682,19 +682,19 @@ $j = 0;
                     lines: [{
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
                             cota: "Volumen mínimo",
-                            color: 'red',
+                            color: 'black',
                             h: -10,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
                             cota: "Volumen normal",
-                            color: 'green',
+                            color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
                             cota: "Volumen máximo",
-                            color: 'blue',
+                            color: 'black',
                             h: -8,
                         }
                         // Agrega más líneas según sea necesario
@@ -745,10 +745,12 @@ $j = 0;
 
                             const date = new Date(value);
                             //console.log(date);
-                            return new Intl.DateTimeFormat('es-ES', {
+                            const f = new Intl.DateTimeFormat('es-ES', {
                                 month: 'short',
 
                             }).format(value);
+                            str = f.charAt(0).toUpperCase();
+                            return str + f.slice(1);
                         },
                         font: {
                             size: 18,
@@ -820,12 +822,12 @@ $j = 0;
 
                     data: [<?php
                             $j = 0;
-                            $pivote = date("Y",strtotime($fecha2));
+                            $pivote = date("Y", strtotime($fecha2));
                             $min = $embalse[0]["cota_min"];
                             $max = $embalse[0]["cota_max"];
                             while ($j < count($datos_embalses)) {
 
-                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[0]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M",strtotime($fecha2)))) {
+                                if ((date("Y", strtotime($datos_embalses[$j]["fecha"])) == $pivote) && ($embalse[0]["id_embalse"] == $datos_embalses[$j]["id_embalse"]) && (date("M", strtotime($datos_embalses[$j]["fecha"])) == date("M", strtotime($fecha2)))) {
 
 
 
@@ -881,19 +883,19 @@ $j = 0;
                     lines: [{
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
                             cota: "Volumen mínimo",
-                            color: 'red',
+                            color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
                             cota: "Volumen normal",
-                            color: 'green',
+                            color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
                             cota: "Volumen máximo",
-                            color: 'blue',
+                            color: 'black',
                             h: -8,
                         }
                         // Agrega más líneas según sea necesario
@@ -912,7 +914,7 @@ $j = 0;
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . getMonthName(date('n',strtotime($fecha2))) . " del " . date('Y',strtotime($fecha2)); ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " - Mes de " . getMonthName(date('n', strtotime($fecha2))) . " del " . date('Y', strtotime($fecha2)); ?>',
                     fullSize: true,
                     font: {
                         size: 30,
@@ -935,19 +937,23 @@ $j = 0;
                     time: {
                         unit: 'day'
                     },
-                    min: '<?php echo date('Y-m',strtotime($fecha2)) . '-01';  ?>',
-                    max: '<?php echo date('Y-m',strtotime($fecha2)) . '-' . date('t',strtotime($fecha2)) ?>',
+                    min: '<?php echo date('Y-m', strtotime($fecha2)) . '-01';  ?>',
+                    max: '<?php echo date('Y-m', strtotime($fecha2)) . '-' . date('t', strtotime($fecha2)) ?>',
 
                     ticks: {
                         callback: (value, index, ticks) => {
 
                             const date = new Date(value);
                             //console.log(date);
-                            return new Intl.DateTimeFormat('es-ES', {
-                                month: 'short',
+                            const x = new Intl.DateTimeFormat('es-ES', {
                                 day: 'numeric',
-
                             }).format(value);
+                            const y = new Intl.DateTimeFormat('es-ES', {
+                                month: 'short',
+                            }).format(value);
+                            str = y.charAt(0).toUpperCase();
+
+                            return x + " " + str + y.slice(1);
                         },
                         font: {
                             size: 12,
@@ -1084,19 +1090,19 @@ $j = 0;
                     lines: [{
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1], 2); ?>,
                             cota: "Volumen mínimo",
-                            color: 'red',
+                            color: 'black',
                             h: -10,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_nor"])[1], 2); ?>,
                             cota: "Volumen normal",
-                            color: 'green',
+                            color: 'black',
                             h: 15,
                         },
                         {
                             yvalue: <?php echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1], 2); ?>,
                             cota: "Volumen máximo",
-                            color: 'blue',
+                            color: 'black',
                             h: -8,
                         }
                         // Agrega más líneas según sea necesario
@@ -1115,7 +1121,7 @@ $j = 0;
                 },
                 title: {
                     display: true,
-                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde el " . $fechaFormateada2 . " al " . $fechaFormateada . " del " . date('Y',strtotime($fecha2)); ?>',
+                    text: '<?php echo "Movimiento " . $embalse[0]['nombre_embalse'] . " desde el " . $fechaFormateada2 . " al " . $fechaFormateada . " del " . date('Y', strtotime($fecha2)); ?>',
                     fullSize: true,
                     font: {
                         size: 26,
@@ -1147,12 +1153,19 @@ $j = 0;
 
                             const date = new Date(value);
                             //console.log(date);
-                            return new Intl.DateTimeFormat('es-ES', {
+                            const x = new Intl.DateTimeFormat('es-ES', {
                                 day: 'numeric',
-                                month: "numeric",
-                                year: "2-digit",
-
                             }).format(value);
+                            const y = new Intl.DateTimeFormat('es-ES', {
+                                month: 'short',
+                            }).format(value);
+                            const z = new Intl.DateTimeFormat('es-ES', {
+                                year: '2-digit',
+                            }).format(value);
+
+                            str = y.charAt(0).toUpperCase();
+
+                            return x + " " + str + y.slice(1) + " " + z;
                         },
                         font: {
                             size: 18,

@@ -250,7 +250,7 @@ if ($count >= 1) {
 
         <?php
         $count = 0;
-        
+
         for ($t = 0; $t <  count($embalses); $t++) {
             $start_time = microtime(true);
             $bati = new Batimetria($embalses[$t]["id_embalse"], $conn);
@@ -295,9 +295,9 @@ if ($count >= 1) {
 
                                 };
 
-                                
+
                                 $j++;
-                            };//array_splice($datos_embalses, 0, $splice + 1);$splice = 0;
+                            }; //array_splice($datos_embalses, 0, $splice + 1);$splice = 0;
                             ?>
                         ],
                     },
@@ -330,7 +330,7 @@ if ($count >= 1) {
 
                                     };
                                     $j++;
-                                };//array_splice($datos_embalses, 0, $splice + 1);$splice = 0;
+                                }; //array_splice($datos_embalses, 0, $splice + 1);$splice = 0;
                             ?>
                         ],
                         pointBackgroundColor: function(context) {
@@ -394,20 +394,20 @@ if ($count >= 1) {
                 lines: [{
                         yvalue: <?php echo round($bati->getByCota($anio, $embalses[$t]["cota_min"])[1], 2); ?>,
                         cota: "Volumen mínimo",
-                        color: 'red',
+                        color: 'black',
                         h: -10,
                     },
                     {
                         yvalue: <?php echo round($bati->getByCota($anio, $embalses[$t]["cota_nor"])[1], 2); ?>,
                         cota: "Volumen normal",
-                        color: 'green',
+                        color: 'black',
                         h: 15,
 
                     },
                     {
                         yvalue: <?php echo round($bati->getByCota($anio, $embalses[$t]["cota_max"])[1], 2); ?>,
                         cota: "Volumen máximo",
-                        color: 'blue',
+                        color: 'black',
                         h: -5,
                     }
                     // Agrega más líneas según sea necesario
@@ -477,10 +477,12 @@ if ($count >= 1) {
 
                                     const date = new Date(value);
                                     //console.log(date);
-                                    return new Intl.DateTimeFormat('es-ES', {
+                                    const f = new Intl.DateTimeFormat('es-ES', {
                                         month: 'short',
 
                                     }).format(value);
+                                    str = f.charAt(0).toUpperCase();
+                                    return str + f.slice(1);
                                 },
                                 font: {
                                     size: 18,
@@ -561,11 +563,15 @@ if ($count >= 1) {
 
                                     const date = new Date(value);
                                     //console.log(date);
-                                    return new Intl.DateTimeFormat('es-ES', {
-                                        month: 'short',
+                                    const x = new Intl.DateTimeFormat('es-ES', {
                                         day: 'numeric',
-
                                     }).format(value);
+                                    const y = new Intl.DateTimeFormat('es-ES', {
+                                        month: 'short',
+                                    }).format(value);
+                                    str = y.charAt(0).toUpperCase();
+
+                                    return x + " " + str + y.slice(1);
                                 },
                                 font: {
                                     size: 18,
@@ -647,10 +653,15 @@ if ($count >= 1) {
 
                                     const date = new Date(value);
                                     //console.log(date);
-                                    return new Intl.DateTimeFormat('es-ES', {
+                                    const x = new Intl.DateTimeFormat('es-ES', {
                                         day: 'numeric',
+                                    }).format(value);
+                                    const y = new Intl.DateTimeFormat('es-ES', {
                                         month: 'short',
                                     }).format(value);
+                                    str = y.charAt(0).toUpperCase();
+
+                                    return x + " " + str + y.slice(1);
                                 },
                                 font: {
                                     size: 14,
@@ -672,15 +683,15 @@ if ($count >= 1) {
 
 
         <?php
-                $end_time = microtime(true);
-                $execution_time = ($end_time - $start_time);
-                echo "console.log('Script Execution Time = " . $execution_time . " sec');";
+            $end_time = microtime(true);
+            $execution_time = ($end_time - $start_time);
+            echo "console.log('Script Execution Time = " . $execution_time . " sec');";
         }
- ?>
+        ?>
         $(document).ready(function() {
             <?php
             closeConection($conn);
-            
+
             for ($t = 0; $t <  count($embalses); $t++) {
             ?>
                 const x<?php echo $t; ?> = document.querySelector("#ano<?php echo $t; ?>");
@@ -690,7 +701,7 @@ if ($count >= 1) {
                 var i = 1;
                 html2canvas(x<?php echo $t; ?>).then(function(canvas) { //PROBLEMAS
                     //$("#ca").append(canvas);
-                    
+
                     // Convertir a dataURL con el nuevo canvas
                     dataURL = canvas.toDataURL("image/jpeg", 0.9);
                     var xhr = new XMLHttpRequest();
@@ -710,7 +721,7 @@ if ($count >= 1) {
                 });
                 html2canvas(y<?php echo $t; ?>).then(function(canvas) { //PROBLEMAS
                     //$("#ca").append(canvas);
-                    
+
                     // Convertir a dataURL con el nuevo canvas
                     dataURL = canvas.toDataURL("image/jpeg", 0.9);
                     var xhr = new XMLHttpRequest();
@@ -730,7 +741,7 @@ if ($count >= 1) {
                 });
                 html2canvas(z<?php echo $t; ?>).then(function(canvas) { //PROBLEMAS
                     //$("#ca").append(canvas);
-                    
+
                     // Convertir a dataURL con el nuevo canvas
                     dataURL = canvas.toDataURL("image/jpeg", 0.9);
                     var xhr = new XMLHttpRequest();
@@ -743,7 +754,7 @@ if ($count >= 1) {
                                                                                                                             $count++; ?> + '%');
                             console.log("listo");
                             <?php if ($t == (count($embalses) - 1)) {
-                                echo "location.href = '../../pages/reports/print_embalses_prioritarios.php?pri=" . $pri . "';"; 
+                                echo "location.href = '../../pages/reports/print_embalses_prioritarios.php?pri=" . $pri . "';";
                             }
                             ?> //AQUI CARRIZALES
 
