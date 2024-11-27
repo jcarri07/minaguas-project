@@ -1027,7 +1027,7 @@ if (1) {
     <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió
         <?php
         if (abs(($volumenes[5] - $volumenes[2])) != 0) {
-          echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[5] - $volumenes[2])) * 100 / abs($volumenes[5] - $volumenes[2]), 2);
+          echo round(($volumenes[5] - $volumenes[2]) * 100 /  $volumenes[2], 2);
         } else {
           echo 0;
         };
@@ -1035,7 +1035,7 @@ if (1) {
         ?>% comparado con la semana pasada y <br>
         <?php
         if (abs(($volumenes[4] - $volumenes[2])) != 0) {
-          echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[4] - $volumenes[2])) * 100 / abs(($volumenes[4] - $volumenes[2])), 2);
+          echo round(($volumenes[4] - $volumenes[2]) * 100 / $volumenes[2], 2);
         } else {
           echo 0;
         };
@@ -1045,14 +1045,14 @@ if (1) {
         <?php
 
         if (abs(($volumenes[5] - $volumenes[3])) != 0) {
-          echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[5] - $volumenes[3])) * 100 / abs(($volumenes[5] - $volumenes[3])), 2);
+          echo round(($volumenes[5] - $volumenes[3]) * 100 / $volumenes[3], 2);
         } else {
           echo 0;
         };
         ?>% comparado con la semana pasada y <br>
         <?php
         if (abs(($volumenes[4] - $volumenes[3])) != 0) {
-          echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[4] - $volumenes[3])) * 100 / abs(($volumenes[4] - $volumenes[3])), 2);
+          echo round(($volumenes[4] - $volumenes[3]) * 100 / $volumenes[3], 2);
         } else {
           echo 0;
         };
