@@ -77,7 +77,7 @@ if ($count >= 1) {
                             ctx
                         } = chart;
                         const dataset = chart.data.datasets[0];
-                        const meta = chart.getDatasetMeta(0);
+                        const meta = chart.getDatasetMeta(chart.data.datasets.length-1);
 
                         if (meta.hidden) return;
 
