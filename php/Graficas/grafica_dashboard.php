@@ -65,7 +65,7 @@ if ($count >= 1) {
     while ($j < count($datos_embalses)) {
         $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
         $min = $bati->volumenMinimo();
-        $max = $bati->volumenMaximo();
+        //$max = $bati->volumenMaximo();
         $nor = $bati->volumenNormal();
         if ($datos_embalses[$j]["cota_actual"] != NULL) {
 
