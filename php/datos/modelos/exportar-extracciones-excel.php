@@ -645,7 +645,7 @@
         $writer = new Xlsx($spreadsheet);
 
         // Guardar el archivo en el servidor o enviarlo al navegador para descarga
-        $nombreArchivo = __DIR__ . "/temp/EXTRACCIONES $anio.xlsx";
+        $nombreArchivo = __DIR__ . "/temp/EXTRACCIONES_$anio.xlsx";
         $writer->save($nombreArchivo);
 
         if (file_exists($nombreArchivo)) {
