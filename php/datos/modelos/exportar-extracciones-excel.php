@@ -1,5 +1,6 @@
 <?php
     ini_set('memory_limit', '4G');
+    ini_set('max_execution_time', 400);
     require_once '../../Conexion.php';
 
     $anio = "";
