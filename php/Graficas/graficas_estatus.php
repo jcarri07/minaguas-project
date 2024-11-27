@@ -257,13 +257,13 @@ if ($count >= 1) {
         <!--div style=" width: 1200px;"-->
         <div>
 
-            <div style="width:550px !important; height:450px;position:absolute; top:-100%;"><canvas id="chart" class="border border-radius-lg"></canvas></div>
-            <div style="width:450px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra1" class="border border-radius-lg"></canvas></div>
-            <div style="width:450px !important; height:450px;position:absolute; top:-100%;"><canvas id="barra2" class="border border-radius-lg"></canvas></div>
-            <div style="width:520px !important; height:620px;position:absolute; top:-100%;"><canvas id="abastecimiento" class="border border-radius-lg"></canvas></div>
+            <div style="width:1100px !important; height:900px;position:absolute; top:-100%;z-index: -1;"><canvas id="chart" class="border border-radius-lg"></canvas></div>
+            <div style="width:900px !important; height:900px;position:absolute; top:-100%;z-index: -1;"><canvas id="barra1" class="border border-radius-lg"></canvas></div>
+            <div style="width:900px !important; height:900px;position:absolute; top:-100%;z-index: -1;"><canvas id="barra2" class="border border-radius-lg"></canvas></div>
+            <div style="width:1040px !important; height:1240px;position:absolute; top:-100%;z-index: -1;"><canvas id="abastecimiento" class="border border-radius-lg"></canvas></div>
 
         </div>
-        <div class="row justify-content-center h-100">
+        <div class="row justify-content-center h-100" style = "background-color: white;">
             <div class="col-7">
                 <div class="loaderPDF " style="height: 90% !important;align-items:end !important;">
 
@@ -345,7 +345,7 @@ if ($count >= 1) {
                             // This more specific font property overrides the global property
                             font: {
                                 weight: 'bold',
-                                size: 12,
+                                size: 24,
                                 family: 'Arial',
                             },
 
@@ -356,12 +356,12 @@ if ($count >= 1) {
                         text: 'Embalse',
                         fullSize: true,
                         font: {
-                            size: 30
+                            size: 60
                         }
                     },
                     datalabels: {
-                        anchor: 'end',
-                        align: 'end',
+                        anchor: 'middle',
+                        align: 'middle',
                         formatter: ((value, ctx) => {
                             const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
                                 return accumulator + currentValue
@@ -375,6 +375,7 @@ if ($count >= 1) {
                                 font: {
                                     weight: 'bold',
                                     family: 'Arial',
+                                    size: 26,
                                 },
                                 color: '#000000',
                             },
@@ -448,7 +449,7 @@ if ($count >= 1) {
                             // This more specific font property overrides the global property
                             font: {
                                 weight: 'bold',
-                                size: 12,
+                                size: 24,
                             },
 
                         }
@@ -458,7 +459,7 @@ if ($count >= 1) {
                         text: 'Embalse',
                         fullSize: true,
                         font: {
-                            size: 30
+                            size: 60
                         }
                     },
                     datalabels: {
@@ -472,6 +473,7 @@ if ($count >= 1) {
                                 font: {
                                     weight: 'bold',
                                     family: 'Arial',
+                                    size: 26,
                                 }
                             },
                         },
@@ -485,7 +487,7 @@ if ($count >= 1) {
 
                             font: {
                                 weight: 'bold',
-                                size: 10,
+                                size: 20,
                                 family: 'Arial',
                             },
                         },
@@ -497,13 +499,13 @@ if ($count >= 1) {
                             text: 'Volumen (Hm³)',
                             font: {
                                 weight: 'bold',
-                                size: 14,
+                                size: 28,
                                 family: 'Arial',
                             },
                         },
                         ticks: {
                             font: {
-                                size: 12,
+                                size: 24,
                                 family: 'Arial',
                             },
                             callback: function(valor, index, valores) {
@@ -580,7 +582,7 @@ if ($count >= 1) {
                             // This more specific font property overrides the global property
                             font: {
                                 weight: 'bold',
-                                size: 12,
+                                size: 24,
                             },
 
                         }
@@ -590,7 +592,7 @@ if ($count >= 1) {
                         text: 'Embalse',
                         fullSize: true,
                         font: {
-                            size: 30
+                            size: 60
                         }
                     },
                     datalabels: {
@@ -604,6 +606,7 @@ if ($count >= 1) {
                                 font: {
                                     weight: 'bold',
                                     family: 'Arial',
+                                    size: 26,
                                 }
                             },
                         },
@@ -617,7 +620,7 @@ if ($count >= 1) {
 
                             font: {
                                 weight: 'bold',
-                                size: 10,
+                                size: 20,
                                 family: 'Arial',
                             },
                         },
@@ -629,13 +632,13 @@ if ($count >= 1) {
                             text: 'Volumen (Hm³)',
                             font: {
                                 weight: 'bold',
-                                size: 14,
+                                size: 24,
                                 family: 'Arial',
                             },
                         },
                         ticks: {
                             font: {
-                                size: 12,
+                                size: 24,
                                 family: 'Arial',
                             },
                             callback: function(valor, index, valores) {
@@ -716,7 +719,7 @@ if ($count >= 1) {
                             // This more specific font property overrides the global property
                             font: {
                                 weight: 'bold',
-                                size: 12,
+                                size: 32,
                                 family: 'Arial',
                             },
 
@@ -727,7 +730,7 @@ if ($count >= 1) {
                         text: 'Embalse',
                         fullSize: true,
                         font: {
-                            size: 30
+                            size: 60
                         }
                     },
                     datalabels: {
@@ -744,7 +747,7 @@ if ($count >= 1) {
                         labels: {
                             title: {
                                 font: {
-                                    size: 20,
+                                    size: 40,
                                     family: 'Arial',
                                     weight: 'bold',
                                 },
