@@ -17,12 +17,21 @@ if (contiene_subcadena($fullPath, "C:")) {
     $host = "localhost";
     $user = "root";
     $pass = "";
-    $dbname = "minagua_db";
+    $dbname = "minaguas_2";
 } else {
-    $host = "localhost";
+
+    /*NameCheap*/
+    /*$host = "localhost";
     $user = "sbtebpav_minaguas_user";
     $pass = "Minaguasroot#";
-    $dbname = "sbtebpav_minagua_db";
+    $dbname = "sbtebpav_minagua_db";*/
+
+    /*AWS*/
+    //$host = "54.232.118.19";
+    $host = "localhost";
+    $user = "root";
+    $pass = "xsM6U1teIzPGP6g";
+    $dbname = "sima_db";
 }
 
 
