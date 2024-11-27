@@ -737,6 +737,7 @@ if (1) {
 
   <?php
   $inicial = true;
+  $total_filas = 40;
   $titulos_condiciones = [
     "Bajo (< 30 %)",
     "Normal Bajo (30 % < A < 60%)",
@@ -760,8 +761,9 @@ if (1) {
 
   ?>
 
-    <page orientation="portrait">
-      <?php if (!$inicial) { ?> <?php } ?>
+    <?php if ($inicial) { ?>
+      <page orientation="portrait">
+      <?php } ?>
       <div class="header">
         <hr style="top: 55px; color:#1B569D">
         <h1 style="position: absolute; top: 45px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
@@ -804,9 +806,11 @@ if (1) {
         </table>
 
       </div>
-    </page>
+      <?php if ($inicial) { ?>
+      </page>
+    <?php } ?>
   <?php
-    $inicial = false;
+    // $inicial = false;
   } ?>
 
 
