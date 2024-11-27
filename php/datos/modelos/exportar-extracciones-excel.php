@@ -1,5 +1,5 @@
 <?php
-    ini_set('memory_limit', '512M');
+    ini_set('memory_limit', '1G');
     require_once '../../Conexion.php';
 
     $anio = "";
