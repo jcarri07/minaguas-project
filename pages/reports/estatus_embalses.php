@@ -575,7 +575,7 @@ if (1) {
       vertical-align: middle;
       text-align: center;
       padding: 5px;
-      border: 1px solid #141414;
+      border: 1px solid #707273;
       /*width: fit-content;*/
       font-size: 10px;
     }
@@ -587,7 +587,6 @@ if (1) {
       text-align: center;
       background-color: #0070C0;
       color: #FFFFFF;
-      border: 1px solid #141414; 
     }
 
     .text-celd {
@@ -595,7 +594,7 @@ if (1) {
       width: 150px;
       text-align: center;
       font-size: 16px;
-      border: 1px solid #141414;
+      border: 1px solid #707273;
 
 
     }
@@ -605,7 +604,7 @@ if (1) {
       width: 75px;
       text-align: center;
       font-size: 16px;
-      border: 1px solid #141414;
+      border: 1px solid #707273;
 
 
     }
@@ -615,7 +614,7 @@ if (1) {
       width: 130px;
       text-align: center;
       font-size: 16px;
-      border: 1px solid #141414;
+      border: 1px solid #707273;
 
 
     }
@@ -625,7 +624,7 @@ if (1) {
       width: 80px;
       text-align: center;
       font-size: 14px;
-      border: 1px solid #141414;
+      border: 1px solid #707273;
     }
 
     .celd-table-2 {
@@ -633,7 +632,7 @@ if (1) {
       width: 80px;
       text-align: center;
       font-size: 12px;
-      border: 1px solid #141414;
+      border: 1px solid #707273;
     }
 
     .text-big {
@@ -646,7 +645,7 @@ if (1) {
 
       font-size: 16px;
       background-color: #DAE3F3;
-      border: 1px solid #141414;
+      border: 1px solid #707273;
 
     }
 
@@ -737,8 +736,9 @@ if (1) {
   <!-- PAGINA 2 -->
 
   <?php
-  $inicial = true;
-  $total_filas = 40;
+  $inicial = false;
+  $total_filas = 60;
+  $extras = 5; //cabecera y total
   $acumulado = 0;
   $top_margin = 0;
   $titulos_condiciones = [
@@ -763,6 +763,22 @@ if (1) {
     }, []);
 
     $filas_tablas = count($embalses_condicion);
+
+    if (($filas_tablas + $extras) <= ($total_filas - $acumulado)) {
+      if ($acumulado == 0) {
+        if (!$inicial) {
+          $inicial = true;
+        } else {
+          $inicial = false;
+        }
+      } else {
+        $inicial = false;
+      }
+      $acumulado = $acumulado + $filas_tablas + $extras;
+    } else {
+      $inicial = true;
+      $acumulado = 0;
+    }
   ?>
 
     <?php if ($inicial) { ?>
@@ -774,46 +790,49 @@ if (1) {
           <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
           <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
         </div>
+        <!-- <div style="position: absolute; top: 80px; left: 115px; font-size: 18px; color:#000000; margin-bottom:5px;"> -->
       <?php } ?>
-      <div style="position: absolute; top: 80px; left: 115px; font-size: 18px; color:#000000; margin-bottom:5px;"><b><?php echo $titulos_condiciones[$key]; ?> </b>
 
-        <table>
+      <b style="margin-left: 115px;"><?php echo $titulos_condiciones[$key]; ?> </b>
+
+      <table style="margin-bottom: 10px; margin-left: 115px;">
+        <tr>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">EMBALSE</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">VOL. DISP. (HM3)</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">HIDROLÓGICA</th>
+        </tr>
+
+        <?php
+        $j = 0;
+        $cuenta = 0;
+        while ($j < count($embalses_condicion)) {
+          $cuenta++; ?>
           <tr>
-            <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">EMBALSE</th>
-            <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">VOL. DISP. (HM3)</th>
-            <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">HIDROLÓGICA</th>
+            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][0]; ?> </td>
+            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][1]; ?></td>
+            <?php if ($j == 0 || $embalses_condicion[$j][2] != $embalses_condicion[$j - 1][2]) { ?>
+              <td class="text-celd" rowspan="<?php echo $typeCount[$embalses_condicion[$j][2]] ?>" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][2]; ?> </td>
+            <?php } else { ?>
+            <?php } ?>
           </tr>
 
-          <?php
-          $j = 0;
-          $cuenta = 0;
-          while ($j < count($embalses_condicion)) {
-            $cuenta++; ?>
-            <tr>
-              <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][0]; ?> </td>
-              <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][1]; ?></td>
-              <?php if ($j == 0 || $embalses_condicion[$j][2] != $embalses_condicion[$j - 1][2]) { ?>
-                <td class="text-celd" rowspan="<?php echo $typeCount[$embalses_condicion[$j][2]] ?>" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][2]; ?> </td>
-              <?php } else { ?>
-              <?php } ?>
-            </tr>
+        <?php
+          $j++;
+        }
+        ?>
 
-          <?php
-            $j++;
-          }
-          ?>
+        <tr style="height: 10px;">
+          <td class="" style="font-size: 16px; background-color: #DAE3F3; border: 1px solid #707273;"><b> TOTAL </b></td>
+          <td class="" style="font-size:12px; background-color: #DAE3F3; border: 1px solid #707273;" colspan="2"><b><?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></b> </td>
+        </tr>
+      </table>
 
-          <tr style="height: 10px;">
-            <td class="" style="font-size: 16px; background-color: #DAE3F3; border: 1px solid #707273;"><b> TOTAL </b></td>
-            <td class="" style="font-size:12px; background-color: #DAE3F3; border: 1px solid #707273;" colspan="2"><b><?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></b> </td>
-          </tr>
-        </table>
-
-      </div>
       <?php if ($inicial) { ?>
+        <!-- </div> -->
       </page>
     <?php } ?>
   <?php
+
     // $inicial = false;
   } ?>
 
@@ -1173,31 +1192,24 @@ if (1) {
 
 
 
-     <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px;">
+    <!-- <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px;">
   </div>
 
   <div style="width: 520px; height: 320px; background-color: lightgray; position: absolute; margin-top: 120px; margin-left: 560px;">
-  </div>
+  </div> -->
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla ?>px; margin-left: 10px; width: 95%; height: 100px;">
 
 
-      <div style="position: absolute; margin-left: 525px; font-size: 18px; text-align: right;">
+      <div style="position: absolute; margin-left: 525px; font-size: 18px; text-align: right;"><b><?php echo date("d/m/Y", strtotime($fecha2)); ?></b>
         <table>
           <tr>
-            <th style="height: 38px;" class="text-celd-variacion" rowspan="2">EMBALSE</th>
-            <th class="text-celd-variacion" colspan="2"><b><?php echo date("d/m/Y", strtotime($fecha1)); ?></b></th>
-            <th class="text-celd-variacion" colspan="2"><b><?php echo date("d/m/Y", strtotime($fecha2)); ?></b></th>
-          </tr>
-
-          <tr>
-          <th class="text-celd-variacion">VAR. VOL.(HM3)</th>
-          <th class="text-celd-variacion">% VAR. VOL.</th>
-          <th class="text-celd-variacion">VAR. VOL.(HM3)</th>
+            <th class="text-celd" style="width: 125px;">EMBALSE</th>
+            <th class="text-celd-variacion">VAR. VOL. <br>(HM3)</th>
+            <th class="text-celd-variacion">% VAR. VOL.</th>
+            <th class="text-celd-variacion">VAR. VOL. <br>(HM3)</th>
             <th class="text-celd-variacion">% VAR. VOL.</th>
           </tr>
-
-
           <?php
           $tot_vol_1 = 0;
           $tot_por_1 = 0;
