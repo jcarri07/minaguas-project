@@ -739,6 +739,8 @@ if (1) {
   <?php
   $inicial = true;
   $total_filas = 40;
+  $acumulado = 0;
+  $top_margin = 0;
   $titulos_condiciones = [
     "Bajo (< 30 %)",
     "Normal Bajo (30 % < A < 60%)",
@@ -760,18 +762,19 @@ if (1) {
       return $counts;
     }, []);
 
+    $filas_tablas = count($embalses_condicion);
   ?>
 
     <?php if ($inicial) { ?>
       <page orientation="portrait">
-      <?php } ?>
-      <div class="header">
-        <hr style="top: 55px; color:#1B569D">
-        <h1 style="position: absolute; top: 45px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
-        <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
-        <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
-      </div>
 
+        <div class="header">
+          <hr style="top: 55px; color:#1B569D">
+          <h1 style="position: absolute; top: 45px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+          <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+          <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+      <?php } ?>
       <div style="position: absolute; top: 80px; left: 115px; font-size: 18px; color:#000000; margin-bottom:5px;"><b><?php echo $titulos_condiciones[$key]; ?> </b>
 
         <table>
