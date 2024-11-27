@@ -1160,7 +1160,7 @@ if (1) {
 
   <?php
   $A_operador = 85;
-  $A_tabla = 130;
+  $A_tabla = 120;
   $incremento = 0;
   $acumulado = 0;
   $disponible = 24;
@@ -1192,11 +1192,11 @@ if (1) {
 
 
 
-    <!-- <div style="width: 520px; height: 320px; background-color: lightgray; margin-top: 20px; margin-left: 10px;">
-  </div>
+    <div style="width: 500px; height: 280px; background-color: lightgray; margin-top: 20px; margin-left: 10px;"><?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?>
+    </div>
 
-  <div style="width: 520px; height: 320px; background-color: lightgray; position: absolute; margin-top: 120px; margin-left: 560px;">
-  </div> -->
+    <div style="width: 500px; height: 280px; background-color: lightgray; position: absolute; margin-top: 430px; margin-left: 10px;"><?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?>
+    </div>
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla ?>px; margin-left: 10px; width: 95%; height: 100px;">
 
@@ -1204,10 +1204,15 @@ if (1) {
       <div style="position: absolute; margin-left: 525px; font-size: 18px; text-align: right;"><b><?php echo date("d/m/Y", strtotime($fecha2)); ?></b>
         <table>
           <tr>
-            <th class="text-celd" style="width: 125px;">EMBALSE</th>
-            <th class="text-celd-variacion">VAR. VOL. <br>(HM3)</th>
+            <th style="height: 38px;" class="text-celd-variacion" rowspan="2">EMBALSE</th>
+            <th class="text-celd-variacion" colspan="2"><b><?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?></b></th>
+            <th class="text-celd-variacion" colspan="2"><b><?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?></b></th>
+          </tr>
+
+          <tr>
+            <th class="text-celd-variacion">VAR. VOL.(HM3)</th>
             <th class="text-celd-variacion">% VAR. VOL.</th>
-            <th class="text-celd-variacion">VAR. VOL. <br>(HM3)</th>
+            <th class="text-celd-variacion">VAR. VOL.(HM3)</th>
             <th class="text-celd-variacion">% VAR. VOL.</th>
           </tr>
           <?php
@@ -1666,7 +1671,7 @@ if (1) {
 
   <?php
   $A_operador = 120;
-  $A_tabla = 120;
+  $A_tabla = 100;
   $incremento = 0;
   $acumulado = 0;
   $disponible = 25;
@@ -1702,7 +1707,8 @@ if (1) {
     <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
     </div>
 
-
+    <div style="width: 500px; height: 280px; background-color: lightgray; margin-top: 20px; margin-left: 10px;"><?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?>
+    </div>
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla + $incremento; ?>px; margin-left: <?php echo $margin_left; ?>px; font-size: 18px; text-align: right;"><b>Región <?php echo $region ?></b>
       <table>
