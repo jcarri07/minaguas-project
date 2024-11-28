@@ -736,7 +736,109 @@ $ruta_mapas = "../../assets/img/temp/";
 
   <!-- PAGINA 2 -->
 
+  <?php
+  $inicial = false;
+  $total_filas = 60;
+  $extras = 5; //cabecera y total
+  $acumulado = 0;
+  $top_margin = 0;
+  $titulos_condiciones = [
+    "Bajo (< 30 %)",
+    "Normal Bajo (30 % < A < 60%)",
+    "Normal Alto (60 % < A < 90 %)",
+    "Buena ( 90 % < A < 100 %)",
+    "Condición de Alivio"
+  ]
+  ?>
 
+  <?php foreach ($embalses_condiciones as $key => $embalses_condicion) {
+
+    usort($embalses_condicion, function ($a, $b) {
+      return strcmp($a[2], $b[2]); // Comparar las cadenas en el índice 2 (tipo)
+    });
+
+    $typeCount = array_reduce($embalses_condicion, function ($counts, $item) {
+      $tipo = $item[2]; // Índice del tipo
+      $counts[$tipo] = ($counts[$tipo] ?? 0) + 1; // Incrementar el conteo para este tipo
+      return $counts;
+    }, []);
+
+    $filas_tablas = count($embalses_condicion);
+
+    if (($filas_tablas + $extras) <= ($total_filas - $acumulado)) {
+      if ($acumulado == 0) {
+        if (!$inicial) {
+          $inicial = true;
+        } else {
+          $inicial = false;
+        }
+      } else {
+        $inicial = false;
+      }
+      $acumulado = $acumulado + $filas_tablas + $extras;
+    } else {
+      $inicial = true;
+      $acumulado = 0;
+    }
+  ?>
+
+    <?php if ($inicial) { ?>
+      <page orientation="portrait">
+
+        <div class="header">
+          <hr style="top: 55px; color:#1B569D">
+          <h1 style="position: absolute; top: 45px; font-size: 16px; text-align: left; text-justify: center; color:#000000">CONDICIONES ACTUALES DE ALMACENAMIENTO</h1>
+          <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
+          <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
+        </div>
+        <!-- <div style="position: absolute; top: 80px; left: 115px; font-size: 18px; color:#000000; margin-bottom:5px;"> -->
+      <?php } ?>
+
+      <b style="margin-left: 100px;"><?php echo $titulos_condiciones[$key]; ?> </b>
+
+      <table style="margin-bottom: 10px; margin-left: 100px;">
+        <tr>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">EMBALSE</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; width:100px; font-size: 12px;">VOL. DISP. (HM3)</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; width:60px; ">%</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">HIDROLÓGICA</th>
+        </tr>
+
+        <?php
+        $j = 0;
+        $cuenta = 0;
+        while ($j < count($embalses_condicion)) {
+          $cuenta++; ?>
+          <tr>
+            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][0]; ?> </td>
+            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px; width:100px; "><?php echo number_format($embalses_condicion[$j][1], 2, ",", "."); ?></td>
+            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px; width:60px; "><?php echo number_format($embalses_condicion[$j][3], 2, ",", "."); ?>%</td>
+
+            <?php if ($j == 0 || $embalses_condicion[$j][2] != $embalses_condicion[$j - 1][2]) { ?>
+              <td class="text-celd" rowspan="<?php echo $typeCount[$embalses_condicion[$j][2]] ?>" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][2]; ?> </td>
+            <?php } else { ?>
+            <?php } ?>
+          </tr>
+
+        <?php
+          $j++;
+        }
+        ?>
+
+        <tr style="height: 10px;">
+          <td class="" style="font-size: 16px; background-color: #DAE3F3; border: 1px solid #707273;"><b> TOTAL </b></td>
+          <td class="" style="font-size:12px; background-color: #DAE3F3; border: 1px solid #707273;" colspan="3"><b><?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></b> </td>
+        </tr>
+      </table>
+
+      <?php if ($inicial) { ?>
+        <!-- </div> -->
+      </page>
+    <?php } ?>
+  <?php
+
+    // $inicial = false;
+  } ?>
 
 
   <!-- PAGINA 3 -->
