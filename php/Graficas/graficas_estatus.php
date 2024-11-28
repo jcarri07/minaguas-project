@@ -396,9 +396,9 @@ if ($count >= 1) {
 
             data: {
                 labels: [
-                    ["Volumen", "Útil", "total(VUT)"],
-                    ["Volumen", "Disponible", "Actual"],
-                    ["Volumen", "Disponible", "<?php echo date('d/m/y', strtotime($fecha1)); ?>"],
+                    ["Volumen", "Útil", "Total(VUT)"],
+                    ["Volumen", "Total", "Actual"],
+                    ["Volumen", "Total", "<?php echo date('d/m/y', strtotime($fecha1)); ?>"],
                     ["Variación  de", "Volumen", "Hasta Hoy"]
                 ],
                 datasets: [
@@ -526,9 +526,9 @@ if ($count >= 1) {
 
             data: {
                 labels: [
-                    ["Volumen", "Útil", "total(VUT)"],
-                    ["Volumen", "Disponible", "Actual"],
-                    ["Volumen", "Disponible", "<?php echo date('d/m/y', strtotime($fecha2)); ?>"],
+                    ["Volumen", "Útil", "Total(VUT)"],
+                    ["Volumen", "Total", "Actual"],
+                    ["Volumen", "Total", "<?php echo date('d/m/y', strtotime($fecha2)); ?>"],
                     ["Variación  de", "Volumen", "Hasta Hoy"]
                 ],
                 datasets: [

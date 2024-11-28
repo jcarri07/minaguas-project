@@ -738,7 +738,7 @@ $ruta_mapas = "../../assets/img/temp/";
 
   <?php
   $inicial = false;
-  $total_filas = 60;
+  $total_filas = 35;
   $extras = 5; //cabecera y total
   $acumulado = 0;
   $top_margin = 0;
@@ -798,10 +798,10 @@ $ruta_mapas = "../../assets/img/temp/";
 
       <table style="margin-bottom: 10px; margin-left: 100px;">
         <tr>
-          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">EMBALSE</th>
-          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; width:100px; font-size: 12px;">VOL. DISP. (HM3)</th>
-          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; width:60px; ">%</th>
-          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">HIDROLÓGICA</th>
+          <th class="text-celd" style="">EMBALSE</th>
+          <th class="text-celd" style=" width:100px; font-size: 12px;">VOL. DISP. (Hm³)</th>
+          <th class="text-celd" style=" width:60px; ">%</th>
+          <th class="text-celd" style="">HIDROLÓGICA</th>
         </tr>
 
         <?php
@@ -810,12 +810,12 @@ $ruta_mapas = "../../assets/img/temp/";
         while ($j < count($embalses_condicion)) {
           $cuenta++; ?>
           <tr>
-            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][0]; ?> </td>
-            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px; width:100px; "><?php echo number_format($embalses_condicion[$j][1], 2, ",", "."); ?></td>
-            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px; width:60px; "><?php echo number_format($embalses_condicion[$j][3], 2, ",", "."); ?>%</td>
+            <td class="text-celd" style="font-size: 12px;"><?php echo $embalses_condicion[$j][0]; ?> </td>
+            <td class="text-celd" style="font-size: 12px; width:100px; "><?php echo number_format($embalses_condicion[$j][1], 2, ",", "."); ?></td>
+            <td class="text-celd" style="font-size: 12px; width:60px; "><?php echo number_format($embalses_condicion[$j][3], 2, ",", "."); ?></td>
 
             <?php if ($j == 0 || $embalses_condicion[$j][2] != $embalses_condicion[$j - 1][2]) { ?>
-              <td class="text-celd" rowspan="<?php echo $typeCount[$embalses_condicion[$j][2]] ?>" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][2]; ?> </td>
+              <td class="text-celd" rowspan="<?php echo $typeCount[$embalses_condicion[$j][2]] ?>" style="font-size: 12px;"><?php echo $embalses_condicion[$j][2]; ?> </td>
             <?php } else { ?>
             <?php } ?>
           </tr>
@@ -891,17 +891,17 @@ $ruta_mapas = "../../assets/img/temp/";
 
         foreach ($condiciones as $key => $values) { ?>
           <tr>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[6] ?></td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[1] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[2] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[0] != 0 ? (number_format((($values[2] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[3] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[0] != 0 ? (number_format((($values[3] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[4] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[5] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[0] != 0 ? (number_format(((($values[4] + $values[5]) * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[6] ?></td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[1] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[2] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format((($values[2] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[3] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format((($values[3] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[4] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[5] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format(((($values[4] + $values[5]) * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
 
           </tr>
         <?php
@@ -1243,9 +1243,9 @@ $ruta_mapas = "../../assets/img/temp/";
           </tr>
 
           <tr>
-            <th class="text-celd-variacion">VAR. VOL.(HM3)</th>
+            <th class="text-celd-variacion">VAR. VOL.(Hm³)</th>
             <th class="text-celd-variacion">% VAR. VOL.</th>
-            <th class="text-celd-variacion">VAR. VOL.(HM3)</th>
+            <th class="text-celd-variacion">VAR. VOL.(Hm³)</th>
             <th class="text-celd-variacion">% VAR. VOL.</th>
           </tr>
           <?php
@@ -1339,7 +1339,7 @@ $ruta_mapas = "../../assets/img/temp/";
       <table>
         <tr>
           <th class="text-celd text-big">EMBALSE</th>
-          <th class="text-celd text-big">VAR. VOL. <br><br><br> (HM3)</th>
+          <th class="text-celd text-big">VAR. VOL. <br><br><br> (Hm³)</th>
           <th class="text-celd text-big">% VAR. VOL.</th>
         </tr>
         <tr>
@@ -1389,7 +1389,7 @@ $ruta_mapas = "../../assets/img/temp/";
           <th class="text-celd" colspan="2">DESDE fecha</th>
         </tr>
         <tr>
-          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(HM3)</th>
+          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(Hm³)</th>
           <th class="text-celd" rowspan="">% VAR. <br> VOL.</th>
         </tr>
         <?php foreach ($embalses_variacion as $value) {
@@ -1604,10 +1604,10 @@ $ruta_mapas = "../../assets/img/temp/";
         <tr>
           <th style=" width: 100px;" class="text-celdas" rowspan="2">HIDROLÓGICA</th>
           <th style=" width: 90px; " class="text-celdas" colspan="2">
-            <p>VOLUMEN DISPONIBLE (HM3)</p>
+            <p>VOLUMEN DISPONIBLE (Hm³)</p>
           </th>
           <th style=" width: 90px;" class="text-celdas" colspan="2">
-            <p style="padding-top: 25px;">VARIACIÓN DEL VOLUMEN DISPONIBLE (HM3)</p>
+            <p style="padding-top: 25px;">VARIACIÓN DEL VOLUMEN DISPONIBLE (Hm³)</p>
           </th>
           <th style=" width: 90px;" class="text-celdas" colspan="2">
             <p style=" padding-top: 36px;">VARIACIÓN PORCENTUAL DE VOLUMEN HASTA HOY (%)</p>
@@ -1623,7 +1623,7 @@ $ruta_mapas = "../../assets/img/temp/";
           <th class="text-celdas" style="font-size: 12px; width: 90px;">Desde<?php echo date("d/m/Y", strtotime($fecha2)); ?></th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">Desde<?php echo date("d/m/Y", strtotime($fecha1)); ?></th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">Desde<?php echo date("d/m/Y", strtotime($fecha2)); ?></th>
-          <th class="text-celdas" style="font-size: 12px; width: 90px;">(Hm3)</th>
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">(Hm³)</th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">(%)</th>
         </tr>
         <?php
