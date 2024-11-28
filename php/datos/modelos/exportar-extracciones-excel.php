@@ -1,4 +1,6 @@
 <?php
+    ini_set('memory_limit', '4G');
+    ini_set('max_execution_time', 400);
     require_once '../../Conexion.php';
 
     $anio = "";
@@ -643,7 +645,7 @@
         $writer = new Xlsx($spreadsheet);
 
         // Guardar el archivo en el servidor o enviarlo al navegador para descarga
-        $nombreArchivo = "EXTRACCIONES $anio.xlsx";
+        $nombreArchivo = __DIR__ . "/temp/EXTRACCIONES_$anio.xlsx";
         $writer->save($nombreArchivo);
 
         if (file_exists($nombreArchivo)) {

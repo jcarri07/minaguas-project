@@ -310,27 +310,27 @@ while ($row < count($datos_embalses)) {
     }
     $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
     if (((abs(($sum)) * (100 / $div)) >= 0 && (abs(($sum)) * (100 / $div)) < 30)) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']],(abs(($sum)) * (100 / $div))];
       array_push($embalses_condiciones[0], $array_condicion);
     }
     if ((abs(($sum)) * (100 / $div)) >= 30 && (abs(($sum)) * (100 / $div)) < 60) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']],(abs(($sum)) * (100 / $div))];
       array_push($embalses_condiciones[1], $array_condicion);
     }
     if ((abs(($sum)) * (100 / $div)) >= 60 && (abs(($sum)) * (100 / $div)) < 90) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']],(abs(($sum)) * (100 / $div))];
       array_push($embalses_condiciones[2], $array_condicion);
     }
     if ((abs(($sum)) * (100 / $div)) >= 90 && (abs(($sum)) * (100 / $div)) <= 100) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']],(abs(($sum)) * (100 / $div))];
       array_push($embalses_condiciones[3], $array_condicion);
     }
     if ((abs(($sum)) * (100 / $div)) > 100) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']]];
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']],(abs(($sum)) * (100 / $div))];
       array_push($embalses_condiciones[4], $array_condicion);
     }
   } else {
-    $array_condicion = [$datos_embalses[$row]["nombre_embalse"], 0, $totalop[$datos_embalses[$row]['operador']]];
+    $array_condicion = [$datos_embalses[$row]["nombre_embalse"], 0, $totalop[$datos_embalses[$row]['operador']], 0];
     array_push($embalses_condiciones[0], $array_condicion);
   }
 
@@ -794,12 +794,13 @@ $ruta_mapas = "../../assets/img/temp/";
         <!-- <div style="position: absolute; top: 80px; left: 115px; font-size: 18px; color:#000000; margin-bottom:5px;"> -->
       <?php } ?>
 
-      <b style="margin-left: 115px;"><?php echo $titulos_condiciones[$key]; ?> </b>
+      <b style="margin-left: 100px;"><?php echo $titulos_condiciones[$key]; ?> </b>
 
-      <table style="margin-bottom: 10px; margin-left: 115px;">
+      <table style="margin-bottom: 10px; margin-left: 100px;">
         <tr>
           <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">EMBALSE</th>
-          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">VOL. DISP. (HM3)</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; width:100px; font-size: 12px;">VOL. DISP. (HM3)</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; width:60px; ">%</th>
           <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">HIDROLÓGICA</th>
         </tr>
 
@@ -810,7 +811,9 @@ $ruta_mapas = "../../assets/img/temp/";
           $cuenta++; ?>
           <tr>
             <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][0]; ?> </td>
-            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][1]; ?></td>
+            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px; width:100px; "><?php echo number_format($embalses_condicion[$j][1],2,",","."); ?></td>
+            <td class="text-celd" style="font-size: 12px; padding-top:1px; padding-bottom:1px; width:60px; "><?php echo number_format($embalses_condicion[$j][3],2,",","."); ?>%</td>
+
             <?php if ($j == 0 || $embalses_condicion[$j][2] != $embalses_condicion[$j - 1][2]) { ?>
               <td class="text-celd" rowspan="<?php echo $typeCount[$embalses_condicion[$j][2]] ?>" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $embalses_condicion[$j][2]; ?> </td>
             <?php } else { ?>
@@ -824,7 +827,7 @@ $ruta_mapas = "../../assets/img/temp/";
 
         <tr style="height: 10px;">
           <td class="" style="font-size: 16px; background-color: #DAE3F3; border: 1px solid #707273;"><b> TOTAL </b></td>
-          <td class="" style="font-size:12px; background-color: #DAE3F3; border: 1px solid #707273;" colspan="2"><b><?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></b> </td>
+          <td class="" style="font-size:12px; background-color: #DAE3F3; border: 1px solid #707273;" colspan="3"><b><?php echo $cuenta . " "; ?>Embalses<?php echo " (" . number_format(($cuenta * 100 / count($datos_embalses)), 2, ",", ".") . "%)" ?></b> </td>
         </tr>
       </table>
 
@@ -851,7 +854,10 @@ $ruta_mapas = "../../assets/img/temp/";
       <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
       <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
     </div>
-    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES POR HIDROLÓGICA </b>
+    <h1 style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;">CONDICIONES ACTUALES DE ALMACENAMIENTO DE EMBALSES POR HIDROLÓGICA</h1>
+
+    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 100px; margin-left: 100px;"><b></b>
+
 
       <table style="margin-top: 20px;">
         <tr>
@@ -862,6 +868,10 @@ $ruta_mapas = "../../assets/img/temp/";
           <th class="tablaDos" rowspan="2">% TOTAL</th>
           <th class="tablaDos">NORMAL- <br> ALTO</th>
           <th class="tablaDos" rowspan="2">% TOTAL</th>
+          <th class="tablaDos">BUENA</th>
+          <th class="tablaDos">ALIVIANDO</th>
+          <th class="tablaDos" rowspan="2"> TOTAL</th>
+          <th class="tablaDos" rowspan="2">% TOTAL</th>
         </tr>
 
         <tr>
@@ -869,6 +879,9 @@ $ruta_mapas = "../../assets/img/temp/";
             < 30 %</th>
           <th class="tablaDos">30% < A < 60% </th>
           <th class="tablaDos">60% < A < 90% </th>
+          <th class="tablaDos">90% < A < 100% </th>
+          <th class="tablaDos">
+            < 100 %</th>
         </tr>
         <?php
 
@@ -878,13 +891,18 @@ $ruta_mapas = "../../assets/img/temp/";
 
         foreach ($condiciones as $key => $values) { ?>
           <tr>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[6] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[1] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[2] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[2] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[3] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format((($values[3] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[6] ?></td>
+            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[1] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[2] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[0] != 0 ? (number_format((($values[2] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[3] . "/" . $values[0] ?></td>
+            <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[0] != 0 ? (number_format((($values[3] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+              <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[4] . "/" . $values[0] ?></td>
+              <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[5] . "/" . $values[0] ?></td>
+              <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
+              <td class="tablaDos" style="font-size: 12px; padding-top:1px; padding-bottom:1px;"><?php echo $values[0] != 0 ? (number_format(((($values[4] + $values[5]) * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+
           </tr>
         <?php
         } ?>
@@ -898,6 +916,10 @@ $ruta_mapas = "../../assets/img/temp/";
           <th class="tablaDos" colspan="2"><b> BAJA </b></th>
           <th class="tablaDos" colspan="2"><b></b> NORMAL-BAJO</th>
           <th class="tablaDos" colspan="2"><b></b> NORMAL-ALTO</th>
+          <th class="tablaDos"><b> BUENA </b></th>
+          <th class="tablaDos"><b></b> ALIVIANDO</th>
+          <th class="tablaDos"><b></b> TOTAL</th>
+          <th class="tablaDos"><b></b> % </th>
         </tr>
 
 
@@ -906,6 +928,10 @@ $ruta_mapas = "../../assets/img/temp/";
           <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[1] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[2] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[3] . "/" . $CT[0] ?></b></td>
+            <td class="tablaDos" style="font-size: 12px;" rowspan="2"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
+            <td class="tablaDos" style="font-size: 12px;" rowspan="2"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
+            <td class="tablaDos" style="font-size: 12px;" rowspan="2"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
+            <td class="tablaDos" style="font-size: 12px;" rowspan="2"><b><?php echo $CT[0] != 0 ? (number_format(((($CT[4] + $CT[5]) * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
         </tr>
 
         <tr>
@@ -917,7 +943,7 @@ $ruta_mapas = "../../assets/img/temp/";
 
       </table>
 
-      <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 39px; margin-left: 620px;"><b> </b>
+       <!-- <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 39px; margin-left: 620px;"><b> </b>
 
         <table>
           <tr>
@@ -934,7 +960,7 @@ $ruta_mapas = "../../assets/img/temp/";
               < 100 %</th>
           </tr>
 
-          <?php foreach ($condiciones as $key => $values) { ?>
+         <?php foreach ($condiciones as $key => $values) { ?>
             <tr>
               <td class="tablaDos" style="font-size: 12px;"><?php echo $values[6] ?></td>
               <td class="tablaDos" style="font-size: 12px;"><?php echo $values[4] . "/" . $values[0] ?></td>
@@ -943,11 +969,11 @@ $ruta_mapas = "../../assets/img/temp/";
               <td class="tablaDos" style="font-size: 12px;"><?php echo $values[0] != 0 ? (number_format(((($values[4] + $values[5]) * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
             </tr>
           <?php
-          } ?>
+          } ?> 
 
           <tr>
-            <th class="spazio" colspan="5"></th> <!--antes era  colspan="7"-->
-          </tr>
+            <th class="spazio" colspan="5"></th> antes era  colspan="7" 
+           </tr>
 
           <tr>
             <th class="spazio" style="border-bottom: 1px solid #707273; border-right: 1px solid #707273;"><b></b></th>
@@ -967,7 +993,7 @@ $ruta_mapas = "../../assets/img/temp/";
 
 
         </table>
-      </div>
+      </div> -->
 
     </div>
   </page>
@@ -1028,7 +1054,7 @@ $ruta_mapas = "../../assets/img/temp/";
     <div style="position: absolute; font-size: 18px; color:red; text-align: center;"> <b> (Varió
         <?php
         if (abs(($volumenes[5] - $volumenes[2])) != 0) {
-          echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[5] - $volumenes[2])) * 100 / abs($volumenes[5] - $volumenes[2]), 2);
+          echo round(($volumenes[5] - $volumenes[2]) * 100 /  $volumenes[2], 2);
         } else {
           echo 0;
         };
@@ -1036,7 +1062,7 @@ $ruta_mapas = "../../assets/img/temp/";
         ?>% comparado con la semana pasada y <br>
         <?php
         if (abs(($volumenes[4] - $volumenes[2])) != 0) {
-          echo round((abs($volumenes[1] - $volumenes[2]) - abs($volumenes[4] - $volumenes[2])) * 100 / abs(($volumenes[4] - $volumenes[2])), 2);
+          echo round(($volumenes[4] - $volumenes[2]) * 100 / $volumenes[2], 2);
         } else {
           echo 0;
         };
@@ -1046,14 +1072,14 @@ $ruta_mapas = "../../assets/img/temp/";
         <?php
 
         if (abs(($volumenes[5] - $volumenes[3])) != 0) {
-          echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[5] - $volumenes[3])) * 100 / abs(($volumenes[5] - $volumenes[3])), 2);
+          echo round(($volumenes[5] - $volumenes[3]) * 100 / $volumenes[3], 2);
         } else {
           echo 0;
         };
         ?>% comparado con la semana pasada y <br>
         <?php
         if (abs(($volumenes[4] - $volumenes[3])) != 0) {
-          echo round((abs($volumenes[1] - $volumenes[3]) - abs($volumenes[4] - $volumenes[3])) * 100 / abs(($volumenes[4] - $volumenes[3])), 2);
+          echo round(($volumenes[4] - $volumenes[3]) * 100 / $volumenes[3], 2);
         } else {
           echo 0;
         };
@@ -1189,6 +1215,7 @@ $ruta_mapas = "../../assets/img/temp/";
     // } 
     ?>
 
+<<<<<<< HEAD
 
 
 
@@ -1203,6 +1230,12 @@ $ruta_mapas = "../../assets/img/temp/";
       <img style="position: absolute; top:0; width:500px ; height: 280px;" src="<?php echo $ruta_mapas . "imagen-hidro-mapa-" . $operador . "-lluvia.png" ?>" />
       <p style="position: absolute; top:-10px; left:5px; margin-left:3px;"><?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?></p>
       <!-- MAPAS HIDROLOGICOS -->
+=======
+    <div style="width: 500px; height: 280px; background-color: lightgray; margin-top: 40px; margin-left: 10px;"><?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?>
+    </div>
+
+    <div style="width: 500px; height: 280px; background-color: lightgray; position: absolute; margin-top: 450px; margin-left: 10px;"><?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?>
+>>>>>>> 6cf19b6baa1f72c0950e17123295db87392a863d
     </div>
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla ?>px; margin-left: 10px; width: 95%; height: 100px;">

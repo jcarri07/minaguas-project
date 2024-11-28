@@ -215,20 +215,20 @@ if ($count >= 1) {
                                     lines: [{
                                             yvalue: <?php echo round($bati->getByCota($anio, $embalses[0]["cota_min"])[1], 2); ?>,
                                             cota: "Volumen mínimo",
-                                            color: 'red',
+                                            color: 'black',
                                             h: -15,
                                         },
                                         {
                                             yvalue: <?php echo round($bati->getByCota($anio, $embalses[0]["cota_nor"])[1], 2); ?>,
                                             cota: "Volumen normal",
-                                            color: 'green',
+                                            color: 'black',
                                             h: 15,
 
                                         },
                                         {
                                             yvalue: <?php echo round($bati->getByCota($anio, $embalses[0]["cota_max"])[1], 2); ?>,
                                             cota: "Volumen máximo",
-                                            color: 'blue',
+                                            color: 'black',
                                             h: -15,
                                         }
                                         // Agrega más líneas según sea necesario
@@ -279,12 +279,19 @@ if ($count >= 1) {
 
                                             const date = new Date(value);
                                             //console.log(date);
-                                            return new Intl.DateTimeFormat('es-ES', {
+                                            const x =new Intl.DateTimeFormat('es-ES', {
                                                 day: 'numeric',
-                                                month: 'short',
-                                                year: '2-digit',
-
                                             }).format(value);
+                                            const y = new Intl.DateTimeFormat('es-ES', {
+                                                month: 'short',
+                                            }).format(value);
+                                            const z = new Intl.DateTimeFormat('es-ES', {
+                                                year: '2-digit',
+                                            }).format(value);
+                                            
+                                            str = y.charAt(0).toUpperCase();
+                                            
+                                            return x + " "+ str + y.slice(1) +" "+ z;
                                         },
                                         font: {
                                             size: 18,
@@ -476,20 +483,20 @@ if ($count >= 1) {
                                     lines: [{
                                             yvalue: <?php echo $embalses[0]["cota_min"]; ?>,
                                             cota: "Cota minima",
-                                            color: 'red',
+                                            color: 'black',
                                             h: -15,
                                         },
                                         {
                                             yvalue: <?php echo $embalses[0]["cota_nor"]; ?>,
                                             cota: "Cota normal",
-                                            color: 'green',
+                                            color: 'black',
                                             h: 15,
 
                                         },
                                         {
                                             yvalue: <?php echo $embalses[0]["cota_max"]; ?>,
                                             cota: "Cota maxima",
-                                            color: 'blue',
+                                            color: 'black',
                                             h: -15,
                                         }
                                         // Agrega más líneas según sea necesario
@@ -540,12 +547,19 @@ if ($count >= 1) {
 
                                             const date = new Date(value);
                                             //console.log(date);
-                                            return new Intl.DateTimeFormat('es-ES', {
+                                            const x =new Intl.DateTimeFormat('es-ES', {
                                                 day: 'numeric',
-                                                month: 'short',
-                                                year: '2-digit',
-
                                             }).format(value);
+                                            const y = new Intl.DateTimeFormat('es-ES', {
+                                                month: 'short',
+                                            }).format(value);
+                                            const z = new Intl.DateTimeFormat('es-ES', {
+                                                year: '2-digit',
+                                            }).format(value);
+                                            
+                                            str = y.charAt(0).toUpperCase();
+
+                                            return x + " "+ str + y.slice(1) +" "+ z;
                                         },
                                         font: {
                                             size: 18,
