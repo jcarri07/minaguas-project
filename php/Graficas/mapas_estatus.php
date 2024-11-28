@@ -110,7 +110,15 @@ while ($row = mysqli_fetch_array($condiciones_actuales1)) {
     array_push($variacion_sequia, $array);
 }
 
-$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+$mapas_hidrologicas_sequia = array_reduce($variacion_sequia, function ($counts, $item) {
+    $tipo = $item[5]; // Índice del tipo
+    $counts[$tipo] = ($counts[$tipo] ?? 0) + 1; // Incrementar el conteo para este tipo
+    return $counts;
+}, []);
+
+
+
+$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, e.operador, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
     FROM datos_embalse h 
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_lluvia' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
@@ -142,8 +150,15 @@ while ($row = mysqli_fetch_array($condiciones_actuales2)) {
 
     array_push($array, $row["nombre_embalse"]);
     array_push($array, $row["id_embalse"]);
+    array_push($array, $row["operador"]);
     array_push($variacion_lluvia, $array);
 }
+
+$mapas_hidrologicas_lluvia = array_reduce($variacion_lluvia, function ($counts, $item) {
+    $tipo = $item[6]; // Índice del tipo
+    $counts[$tipo] = ($counts[$tipo] ?? 0) + 1; // Incrementar el conteo para este tipo
+    return $counts;
+}, []);
 
 $positions_query = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'marks_posiciones'");
 $positions_markers = mysqli_fetch_assoc($positions_query);
@@ -188,6 +203,13 @@ $valores = json_encode($valores, true);
     #mapa-periodo-dos {
         width: 1200px;
         height: 600px;
+    }
+
+    .map-container-hidros {
+        width: 900px;
+        height: 400px;
+        position: absolute;
+        top: -100%;
     }
 
     /* .leaflet-top.leaflet-left {
@@ -327,7 +349,7 @@ $valores = json_encode($valores, true);
     }
 </style>
 
-<body style="height:800px">
+<body id="body-mapas" style="height:800px">
 
     <!-- Cantidades de embalse por porcentaje de volumen -->
     <div id="mapa-portada" style="position:absolute; top:-100%;"></div>
@@ -386,7 +408,9 @@ $valores = json_encode($valores, true);
 
     // Creación de los mapas
 
-    var mapa_portada = L.map('mapa-portada').setView([9, -67], 7);
+    var mapa_portada = L.map('mapa-portada', {
+        zoomControl: false,
+    }).setView([9, -67], 7);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -431,7 +455,9 @@ $valores = json_encode($valores, true);
     //     closeOnClick: false
     // }).openPopup();
 
-    var mapa_per_uno = L.map('mapa-periodo-uno').setView([9, -67], 7);
+    var mapa_per_uno = L.map('mapa-periodo-uno', {
+        zoomControl: false,
+    }).setView([9, -67], 7);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -466,7 +492,9 @@ $valores = json_encode($valores, true);
     }
     ?>
 
-    var mapa_per_dos = L.map('mapa-periodo-dos').setView([9, -67], 7);
+    var mapa_per_dos = L.map('mapa-periodo-dos', {
+        zoomControl: false,
+    }).setView([9, -67], 7);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -496,6 +524,51 @@ $valores = json_encode($valores, true);
                 closeOnClick: false
             }).openPopup();
     <?php }
+    }
+    ?>
+
+    const mapsContainer = document.getElementById('body-mapas');
+    let mapDiv = null;
+    let map = null;
+    <?php
+    foreach ($mapas_hidrologicas_sequia as $key => $value) { ?>
+        mapDiv = document.createElement('div');
+        mapDiv.id = "<?php echo $key . "-sequia" ?>";
+        mapDiv.className = 'map-container-hidros';
+        mapsContainer.appendChild(mapDiv);
+
+        // Inicializar el mapa en el div creado
+        map = L.map(mapDiv.id, {
+            zoomControl: false,
+        }).setView([9, -67], 8);
+
+        // Agregar un tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+        }).addTo(map);
+
+    <?php
+    }
+    ?>
+
+    <?php
+    foreach ($mapas_hidrologicas_lluvia as $key => $value) { ?>
+        mapDiv = document.createElement('div');
+        mapDiv.id = "<?php echo $key . "-lluvia" ?>";
+        mapDiv.className = 'map-container-hidros';
+        mapsContainer.appendChild(mapDiv);
+
+        // Inicializar el mapa en el div creado
+        map = L.map(mapDiv.id, {
+            zoomControl: false,
+        }).setView([9, -67], 8);
+
+        // Agregar un tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+        }).addTo(map);
+
+    <?php
     }
     ?>
 
@@ -593,6 +666,39 @@ $valores = json_encode($valores, true);
                     }
                 }
             });
+
+            //CICLOS DE MAPAS POR HIDROLOGICA
+
+            const mapContainers = document.querySelectorAll('.map-container-hidros'); // Asegúrate de que tus mapas tengan esta clase
+
+            mapContainers.forEach((mapContainer, index) => {
+                // Capturar cada mapa con html2canvas
+                console.log(mapContainer);
+                html2canvas(mapContainer, {
+                    useCORS: true,
+                    width: mapContainer.offsetWidth,
+                    height: mapContainer.offsetHeight,
+                }).then(function(canvas) {
+                    // Convertir a dataURL
+                    const dataURL = canvas.toDataURL("image/jpeg", 0.9);
+
+                    // Enviar la imagen al servidor
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', '../guardar-imagen.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send(`imagen=${dataURL}&nombre=hidro-mapa&numero=${mapContainer.id}`);
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            console.log(`Mapa ${mapContainer.id} listo`);
+                        } else {
+                            console.error(`Error al procesar el mapa ${mapContainer.id}`);
+                        }
+                    }
+                }).catch(err => {
+                    console.error(`Error capturando el mapa ${mapContainer.id}:`, err);
+                });
+            });
+
         }, 5000);
     });
     // });

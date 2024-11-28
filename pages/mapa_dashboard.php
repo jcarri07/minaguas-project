@@ -329,7 +329,7 @@ while ($row < count($datos_embalses)) {
     var mapa_portada = L.map('mapa-portada').setView([9, -66.5], 7);
     mapa_portada.scrollWheelZoom.disable();
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(mapa_portada);
 
@@ -342,6 +342,26 @@ while ($row < count($datos_embalses)) {
     //     attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.thunderforest.com/transport/">Andy Allan</a>',
     //     apikey: '38db809be13a400c8c5061e304ba99cd' // Reemplaza esto con tu clave de API de Thunderforest
     // }).addTo(mapa_portada);
+
+    // Cargar el archivo GeoJSON usando fetch
+
+    var highlightStyle = {
+        "color": "#9c9c9c", //Color de delineado
+        "weight": 1, //Ancho de delineado
+        "opacity": 0.6, //Opacidad del delineado
+        "fillColor": "#ffd700", // Color de relleno
+        "fillOpacity": 0 //Opacidad de relleno
+    };
+
+    fetch('./pages/venezuela.geojson')
+        .then(response => response.json())
+        .then(data => {
+            // Crear el layer GeoJSON y añadirlo al mapa
+            L.geoJSON(data, {
+                style: highlightStyle
+            }).addTo(mapa_portada);
+        })
+        .catch(err => console.error('Error al cargar el archivo GeoJSON:', err));
 
     let ubicacion;
     let posicion;

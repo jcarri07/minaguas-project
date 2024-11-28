@@ -136,8 +136,8 @@ while ($num < count($volumen_primer_periodo)) {
   $porcentaje3 = $inicial3 != 0 ? (100 * (($final3 - $inicial3) / ($inicial3))) : 0;
 
 
-  if (!in_array($totalop[$row["operador"]], $operadores)) {
-    array_push($operadores, $totalop[$row["operador"]]);
+  if (!in_array($row["operador"], $operadores)) {
+    array_push($operadores, $row["operador"]);
     $countOp[$totalop[$row["operador"]]] = 1;
     $variacion_total_op[$totalop[$row["operador"]]] = [$inicial, $inicial2, $variacion, $variacion2, $porcentaje, $porcentaje2, $variacion3, $porcentaje3];
   } else {
@@ -460,6 +460,7 @@ if (1) {
   $status_mapa = "../../assets/img/temp/imagen-estatus-mapa-2.png";
   $status_mapa_3 = "../../assets/img/temp/imagen-estatus-mapa-3.png";
 }
+$ruta_mapas = "../../assets/img/temp/";
 
 // $codigo = "08RHL0101";
 // $titulo = "EMBALSE CAMATAGUA - ESTADO ARAGUA";
@@ -1182,7 +1183,7 @@ if (1) {
     <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 50px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
     </div>
 
-    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($operador); ?></b></div>
+    <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: <?php echo $A_operador; ?>px; margin-left: 500px;"><b><?php echo strtoupper($totalop[$operador]); ?></b></div>
     <?php
     // } else {
     // } 
@@ -1192,16 +1193,22 @@ if (1) {
 
 
 
-    <div style="width: 500px; height: 280px; background-color: lightgray; margin-top: 20px; margin-left: 10px;"><?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?>
+    <div style="width: 500px; height: 280px; background-color: lightgray; margin-top: 20px; margin-left: 10px; position: relative;">
+      <!-- MAPAS HIDROLOGICOS -->
+      <img style="position: absolute; top:0; width:500px ; height: 280px;" src="<?php echo $ruta_mapas . "imagen-hidro-mapa-" . $operador . "-sequia.png" ?>" />
+      <p style="position: absolute; top:-10px; left:5px; margin-left:3px;"><?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?></p>
     </div>
 
-    <div style="width: 500px; height: 280px; background-color: lightgray; position: absolute; margin-top: 430px; margin-left: 10px;"><?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?>
+    <div style="width: 500px; height: 280px; background-color: lightgray; position: absolute; margin-top: 430px; margin-left: 10px;">
+      <img style="position: absolute; top:0; width:500px ; height: 280px;" src="<?php echo $ruta_mapas . "imagen-hidro-mapa-" . $operador . "-lluvia.png" ?>" />
+      <p style="position: absolute; top:-10px; left:5px; margin-left:3px;"><?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?></p>
+      <!-- MAPAS HIDROLOGICOS -->
     </div>
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla ?>px; margin-left: 10px; width: 95%; height: 100px;">
 
 
-      <div style="position: absolute; margin-left: 525px; font-size: 18px; text-align: right;"><b><?php echo date("d/m/Y", strtotime($fecha2)); ?></b>
+      <div style="position: absolute; margin-left: 525px; font-size: 18px; text-align: right;">
         <table>
           <tr>
             <th style="height: 38px;" class="text-celd-variacion" rowspan="2">EMBALSE</th>
@@ -1221,7 +1228,7 @@ if (1) {
           $tot_vol_2 = 0;
           $tot_por_2 = 0;
           foreach ($embalses_variacion as $value) {
-            if (strtolower(trim($value[0])) == strtolower(trim($operador))) {
+            if (strtolower(trim($value[0])) == strtolower(trim($totalop[$operador]))) {
               $tot_vol_1 += $value[2];
               $tot_por_1 += $value[3];
               $tot_vol_2 += $value[4];
