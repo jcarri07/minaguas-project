@@ -297,6 +297,7 @@ while ($row < count($datos_embalses)) {
 
   // CALCULO DE CONDICION ACTUAL!!
   if ($datos_embalses[$row]["cota_actual"] != NULL) {
+    $anio = date("Y", strtotime($datos_embalses[$row]["fech"]));
     $x = $emb->getByCota($anio, $datos_embalses[$row]["cota_actual"])[1];
 
     $min = $emb->volumenMinimo();
@@ -309,24 +310,25 @@ while ($row < count($datos_embalses)) {
       $sum = $x - $min;
     }
     $div = ($nor - $min) != 0 ? ($nor - $min) : 1;
-    if (((abs(($sum)) * (100 / $div)) >= 0 && (abs(($sum)) * (100 / $div)) < 30)) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], (abs(($sum)) * (100 / $div))];
+    $porcentaje = (abs(($sum)) * (100 / $div));
+    if (($porcentaje >= 0 && $porcentaje < 30)) {
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], $porcentaje < 100 ? $porcentaje : 100];
       array_push($embalses_condiciones[0], $array_condicion);
     }
-    if ((abs(($sum)) * (100 / $div)) >= 30 && (abs(($sum)) * (100 / $div)) < 60) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], (abs(($sum)) * (100 / $div))];
+    if ($porcentaje >= 30 && $porcentaje < 60) {
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], $porcentaje < 100 ? $porcentaje : 100];
       array_push($embalses_condiciones[1], $array_condicion);
     }
-    if ((abs(($sum)) * (100 / $div)) >= 60 && (abs(($sum)) * (100 / $div)) < 90) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], (abs(($sum)) * (100 / $div))];
+    if ($porcentaje >= 60 && $porcentaje < 90) {
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], $porcentaje < 100 ? $porcentaje : 100];
       array_push($embalses_condiciones[2], $array_condicion);
     }
-    if ((abs(($sum)) * (100 / $div)) >= 90 && (abs(($sum)) * (100 / $div)) <= 100) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], (abs(($sum)) * (100 / $div))];
+    if ($porcentaje >= 90 && $porcentaje <= 100) {
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], $porcentaje < 100 ? $porcentaje : 100];
       array_push($embalses_condiciones[3], $array_condicion);
     }
-    if ((abs(($sum)) * (100 / $div)) > 100) {
-      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], (abs(($sum)) * (100 / $div))];
+    if ($porcentaje > 100) {
+      $array_condicion = [$datos_embalses[$row]["nombre_embalse"], round($sum, 2), $totalop[$datos_embalses[$row]['operador']], $porcentaje < 100 ? $porcentaje : 100];
       array_push($embalses_condiciones[4], $array_condicion);
     }
   } else {
@@ -798,10 +800,10 @@ $ruta_mapas = "../../assets/img/temp/";
 
       <table style="margin-bottom: 10px; margin-left: 100px;">
         <tr>
-          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">EMBALSE</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; font-size: 12px;">EMBALSE</th>
           <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; width:100px; font-size: 12px;">VOL. DISP. (HM3)</th>
-          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; width:60px; ">%</th>
-          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px;">HIDROLÓGICA</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; width:60px;  font-size: 12px;">%</th>
+          <th class="text-celd" style=" padding-top:1px; padding-bottom:1px; font-size: 12px;">HIDROLÓGICA</th>
         </tr>
 
         <?php
@@ -1253,6 +1255,11 @@ $ruta_mapas = "../../assets/img/temp/";
           $tot_por_1 = 0;
           $tot_vol_2 = 0;
           $tot_por_2 = 0;
+
+          usort($embalses_variacion, function ($a, $b) {
+            return $a[3] <=> $b[3];
+          });
+
           foreach ($embalses_variacion as $value) {
             if (strtolower(trim($value[0])) == strtolower(trim($totalop[$operador]))) {
               $tot_vol_1 += $value[2];
