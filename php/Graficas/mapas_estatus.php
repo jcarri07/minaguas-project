@@ -160,7 +160,7 @@ $mapas_hidrologicas_lluvia = array_reduce($variacion_lluvia, function ($counts, 
     return $counts;
 }, []);
 
-$positions_query = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'marks_posiciones'");
+$positions_query = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'marks_posiciones_estatus'");
 $positions_markers = mysqli_fetch_assoc($positions_query);
 $positions_markers = json_decode($positions_markers["configuracion"], true);
 

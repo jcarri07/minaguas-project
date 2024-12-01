@@ -25,7 +25,7 @@
 
 
 
-  $embalseBat = new Batimetria(19, $conn);
+  // $embalseBat = new Batimetria(19, $conn);
   // $variable = $embalseBat->volumenMinimo();
   // $volumen_normal = $embalseBat->volumenNormal();
   // $volumen_minimo = $embalseBat->volumenMinimo();
@@ -34,10 +34,10 @@
   // $minima = $embalseBat->cotaMinima();
   // $año = implode("-", $embalseBat->getYears());
   // $closeYear = $embalseBat->getCloseYear();
-  $volMin = $embalseBat->volumenMinimo();
+  // $volMin = $embalseBat->volumenMinimo();
   // $ultima = $embalseBat->volumenActualDisponible();
   // $year = $embalseBat->getCloseYear("2015");
-  $prueba = $embalseBat->getByCota("2024", 202.34);
+  // $prueba = $embalseBat->getByCota("2024", 202.34);
 
   // $prueba = $embalseBat->getCloseCota("2001","210.206");
 
@@ -155,7 +155,7 @@
           <div class="card-header pb-0">
             <!-- <div class="row"> -->
             <!-- <div class="col-6 d-flex align-items-center"> -->
-            <h4 class="">EMBALSES <?php echo $volMin . "/" . $prueba[1] ?></h4>
+            <h4 class="">EMBALSES</h4>
             <!-- </div> -->
             <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
