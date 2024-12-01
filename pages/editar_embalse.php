@@ -2286,7 +2286,7 @@ function explodeBat($value, $i = null)
   // MAPA PARA EXTRAER EL NORTE, ESTE, HUSO
   var map = L.map('map').setView([8, -66], 6);
   // map.scrollWheelZoom.disable();
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 

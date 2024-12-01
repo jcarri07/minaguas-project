@@ -192,22 +192,22 @@ $valores = json_encode($valores, true);
 <style>
     #mapa-portada {
         width: 1200px;
-        height: 600px;
+        height: 642px;
     }
 
     #mapa-periodo-uno {
         width: 1200px;
-        height: 600px;
+        height: 642px;
     }
 
     #mapa-periodo-dos {
         width: 1200px;
-        height: 600px;
+        height: 642px;
     }
 
     .map-container-hidros {
         width: 900px;
-        height: 400px;
+        height: 504px;
         position: absolute;
         top: -100%;
     }
@@ -347,6 +347,67 @@ $valores = json_encode($valores, true);
         top: -22px;
         /* left: -4px; */
     }
+
+    /* clases para los popups large */
+    .mark-t-large {
+        transform: translateX(-50%);
+        top: -32px;
+        font-size: 14px;
+    }
+
+    .mark-tr-large {
+        top: -32px;
+        font-size: 14px;
+        /* left: 4px; */
+    }
+
+    .mark-r-large {
+        left: 15px;
+        top: -16px;
+        font-size: 14px;
+    }
+
+    .mark-br-large {
+        /* left: 4px; */
+        font-size: 14px;
+    }
+
+    .mark-b-large {
+        transform: translateX(-50%);
+        font-size: 14px;
+    }
+
+    .mark-bl-large {
+        transform: translateX(-100%);
+        font-size: 14px;
+        /* left: -4px; */
+    }
+
+    .mark-l-large {
+        transform: translateX(-100%);
+        left: -15px;
+        top: -16px;
+        font-size: 14px;
+    }
+
+    .mark-tl-large {
+        transform: translateX(-100%);
+        top: -32px;
+        font-size: 14px;
+        /* left: -4px; */
+    }
+
+    .nombre-estado {
+        font-size: 8px;
+        padding: 1px;
+        background-color: transparent;
+    }
+
+    .leaflet-tooltip {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
 </style>
 
 <body id="body-mapas" style="height:800px">
@@ -381,6 +442,21 @@ $valores = json_encode($valores, true);
         }
     });
 
+    var PointIconLarge = L.Icon.extend({
+        options: {
+            shadowUrl: '../../assets/icons/i-sombra.png',
+            iconSize: [24, 24],
+            shadowSize: [0, 0],
+            shadowAnchor: [8, 8],
+        }
+    });
+
+    var ArrowIconLarge = L.Icon.extend({
+        options: {
+            iconSize: [30, 20],
+        }
+    });
+
     var i_rojo = new PointIcon({
         iconUrl: '../../assets/icons/i-rojo.png'
     })
@@ -406,13 +482,65 @@ $valores = json_encode($valores, true);
         iconUrl: '../../assets/icons/f-igual.png'
     })
 
+    var i_rojo_large = new PointIconLarge({
+        iconUrl: '../../assets/icons/i-rojo.png'
+    })
+    var i_azulclaro_large = new PointIconLarge({
+        iconUrl: '../../assets/icons/i-azulclaro.png'
+    })
+    var i_azul_large = new PointIconLarge({
+        iconUrl: '../../assets/icons/i-azul.png'
+    })
+    var i_verde_large = new PointIconLarge({
+        iconUrl: '../../assets/icons/i-verde.png'
+    })
+    var i_verdeclaro_large = new PointIconLarge({
+        iconUrl: '../../assets/icons/i-verdeclaro.png'
+    })
+    var f_arriba_large = new ArrowIconLarge({
+        iconUrl: '../../assets/icons/f-arriba.png'
+    })
+    var f_abajo_large = new ArrowIconLarge({
+        iconUrl: '../../assets/icons/f-abajo.png'
+    })
+    var f_igual_large = new ArrowIconLarge({
+        iconUrl: '../../assets/icons/f-igual.png'
+    })
+
+
+    // Cargar el archivo GeoJSON usando fetch
+
+    var highlightStyle = {
+        "color": "#9c9c9c", //Color de delineado
+        "weight": 2, //Ancho de delineado
+        "opacity": 0.6, //Opacidad del delineado
+        "fillColor": "#ffd700", // Color de relleno
+        "fillOpacity": 0 //Opacidad de relleno
+    };
+
+    //Funcion para mostrar etiquetas con los nombres de los Estados
+    function onEachFeature(feature, layer) {
+        if (feature.properties && feature.properties.ESTADO) {
+            layer.bindPopup(feature.properties.ESTADO); // Muestra el nombre en un popup
+            layer.bindTooltip(feature.properties.ESTADO, {
+                permanent: true,
+                className: "nombre-estado",
+                direction: "center",
+                interactive: true
+            }); // Muestra el nombre como una etiqueta
+        }
+    }
+
+
+
+
     // Creación de los mapas
 
     var mapa_portada = L.map('mapa-portada', {
         zoomControl: false,
     }).setView([9, -67], 7);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(mapa_portada);
 
@@ -459,7 +587,7 @@ $valores = json_encode($valores, true);
         zoomControl: false,
     }).setView([9, -67], 7);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(mapa_per_uno);
 
@@ -496,9 +624,82 @@ $valores = json_encode($valores, true);
         zoomControl: false,
     }).setView([9, -67], 7);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(mapa_per_dos);
+
+
+    fetch('../../pages/venezuela.geojson')
+        .then(response => response.json())
+        .then(data => {
+
+            // Aplicar offset manual a las coordenadas del GeoJSON
+            const offsetLat = -1.4; // Offset en latitud
+            const offsetLng = 2.65; // Offset en longitud
+
+            const applyOffset = (coordinates) => {
+                // Recursivamente ajusta las coordenadas dependiendo del nivel de anidación
+                if (typeof coordinates[0] === 'number') {
+                    // Es un punto [lng, lat]
+                    return [coordinates[0] + offsetLng, coordinates[1] + offsetLat];
+                } else {
+                    // Es una colección de puntos o polígonos
+                    return coordinates.map(applyOffset);
+                }
+            };
+
+            const geoJsonWithOffset = {
+                ...data,
+                features: data.features.map(feature => ({
+                    ...feature,
+                    geometry: {
+                        ...feature.geometry,
+                        coordinates: applyOffset(feature.geometry.coordinates),
+                    },
+                })),
+            };
+
+            // Crear el layer GeoJSON y añadirlo al mapa
+            L.geoJSON(geoJsonWithOffset, {
+                style: highlightStyle,
+                // onEachFeature: onEachFeature,
+            }).addTo(mapa_portada);
+
+            L.geoJSON(geoJsonWithOffset, {
+                style: highlightStyle,
+                // onEachFeature: onEachFeature,
+            }).addTo(mapa_per_uno);
+
+            L.geoJSON(geoJsonWithOffset, {
+                style: highlightStyle,
+                // onEachFeature: onEachFeature,
+            }).addTo(mapa_per_dos);
+
+            L.geoJSON(data, {
+                style: {
+                    ...highlightStyle,
+                    opacity: 0,
+                },
+                onEachFeature: onEachFeature,
+            }).addTo(mapa_portada);
+
+            L.geoJSON(data, {
+                style: {
+                    ...highlightStyle,
+                    opacity: 0,
+                },
+                onEachFeature: onEachFeature,
+            }).addTo(mapa_per_uno);
+
+            L.geoJSON(data, {
+                style: {
+                    ...highlightStyle,
+                    opacity: 0,
+                },
+                onEachFeature: onEachFeature,
+            }).addTo(mapa_per_dos);
+        })
+        .catch(err => console.error('Error al cargar el archivo GeoJSON:', err));
 
     // L.tileLayer('https://{s}.tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', {
     //     maxZoom: 19,
@@ -530,22 +731,58 @@ $valores = json_encode($valores, true);
     const mapsContainer = document.getElementById('body-mapas');
     let mapDiv = null;
     let map = null;
+    let marker_embalses = [];
+    let bounds = null;
     <?php
     foreach ($mapas_hidrologicas_sequia as $key => $value) { ?>
         mapDiv = document.createElement('div');
         mapDiv.id = "<?php echo $key . "-sequia" ?>";
         mapDiv.className = 'map-container-hidros';
         mapsContainer.appendChild(mapDiv);
-
+        marker_embalses = [];
         // Inicializar el mapa en el div creado
         map = L.map(mapDiv.id, {
             zoomControl: false,
         }).setView([9, -67], 8);
 
+
+
         // Agregar un tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
 
         }).addTo(map);
+
+        <?php
+
+        $filter_array = array_filter($variacion_sequia, function ($k) use ($key) {
+            return $k[5] == $key;
+        });
+
+        foreach ($filter_array as $emb) {
+            if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+                $posicion = "t";
+                if ($positions_markers[$emb[7]]) {
+                    $posicion = $positions_markers[$emb[7]];
+                }
+        ?>
+
+                ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
+                marker_embalses.push(ubicacion);
+
+                var marker = L.marker([ubicacion[0], ubicacion[1]], {
+                    icon: <?php echo $emb[3] . "_large" ?>
+                }).addTo(map).bindPopup('<div class="markleaflet mark-<?php echo $posicion . "-large" ?>"><b><?php echo $emb[4] ?></b></div>', {
+                    autoClose: false,
+                    closeOnClick: false
+                }).openPopup();
+        <?php }
+        } ?>
+
+        bounds = L.latLngBounds(marker_embalses);
+        map.fitBounds(bounds);
+        if (marker_embalses.length == 1) {
+            map.setZoom(8);
+        }
 
     <?php
     }
@@ -557,6 +794,7 @@ $valores = json_encode($valores, true);
         mapDiv.id = "<?php echo $key . "-lluvia" ?>";
         mapDiv.className = 'map-container-hidros';
         mapsContainer.appendChild(mapDiv);
+        marker_embalses = [];
 
         // Inicializar el mapa en el div creado
         map = L.map(mapDiv.id, {
@@ -564,9 +802,41 @@ $valores = json_encode($valores, true);
         }).setView([9, -67], 8);
 
         // Agregar un tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
 
         }).addTo(map);
+
+        <?php
+
+        $filter_array = array_filter($variacion_lluvia, function ($k) use ($key) {
+            return $k[6] == $key;
+        });
+
+        foreach ($filter_array as $emb) {
+            if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+                $posicion = "t";
+                if ($positions_markers[$emb[5]]) {
+                    $posicion = $positions_markers[$emb[5]];
+                }
+        ?>
+
+                ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
+                marker_embalses.push(ubicacion);
+
+                var marker = L.marker([ubicacion[0], ubicacion[1]], {
+                    icon: <?php echo $emb[3] . "_large" ?>
+                }).addTo(map).bindPopup('<div class="markleaflet mark-<?php echo $posicion . "-large" ?>"><b><?php echo $emb[4] ?></b></div>', {
+                    autoClose: false,
+                    closeOnClick: false
+                }).openPopup();
+        <?php }
+        } ?>
+
+        bounds = L.latLngBounds(marker_embalses);
+        map.fitBounds(bounds);
+        if (marker_embalses.length == 1) {
+            map.setZoom(8);
+        }
 
     <?php
     }

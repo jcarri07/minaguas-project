@@ -726,7 +726,7 @@ function explodeBat($value, $i = null)
 
     var map = L.map('embalse-mapa').setView([latitud, longitud], 12);
     map.scrollWheelZoom.disable();
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
       maxZoom: 18,
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
@@ -736,7 +736,7 @@ function explodeBat($value, $i = null)
   } else {
     var map = L.map('embalse-mapa').setView([8, -66], 6);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
   }
