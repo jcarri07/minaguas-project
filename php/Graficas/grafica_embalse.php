@@ -247,16 +247,16 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                         //let response = JSON.parse(this.responseText);
                         if (this.responseText == "si") {
                             console.log(this.responseText);
-                            window.open(
-                                "./pages/reports/print_monitoreo_simple.php?id=" +
-                                $("#embalses option:selected").val() +
-                                "&name=" + $("#embalses option:selected").html() +
-                                "&fecha1=" + $("#fecha1").val() +
-                                "&fecha2=" + $("#fecha2").val() +
-                                "&anio=" + $("#anio option:selected").val() +
-                                "&mes=" + $("#mes").val(),
-                                '_blank'
-                            );
+                            // window.open(
+                            //     "./pages/reports/print_monitoreo_simple.php?id=" +
+                            //     $("#embalses option:selected").val() +
+                            //     "&name=" + $("#embalses option:selected").html() +
+                            //     "&fecha1=" + $("#fecha1").val() +
+                            //     "&fecha2=" + $("#fecha2").val() +
+                            //     "&anio=" + $("#anio option:selected").val() +
+                            //     "&mes=" + $("#mes").val(),
+                            //     '_blank'
+                            // );
                         };
                         if (this.responseText == "no") {
                             console.log("Error al guardar la imagen: " + this.responseText);
