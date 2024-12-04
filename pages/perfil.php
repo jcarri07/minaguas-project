@@ -23,51 +23,51 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
           <h4 class="mb-0 mt-1">EDITAR PERFIL</h4>
           <button type="button" id="edit" class="btn btn-primary btn-sm ms-auto">Guardar</button>
 
-          </div>
-      <div class="card-body">
-        <p class="text-uppercase text-sm">Información de Usuario</p>
-        <form id="form" role="form">
-          <div class="mb-3">
-          <label>Nombre(s)</label>
-          <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux; ?>>
-          </div>
-          <div class="mb-3">
-          <label>Apellido(s)</label>
-            <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" value="<?php echo $_SESSION["P_Apellido"] . ' ' . $_SESSION["S_Apellido"] ?>" required <?php echo $aux; ?>>
-          </div>
-          <div class="mb-3">
-          <label>Correo</label>
-            <input type="email" class="form-control" placeholder="usuario@correo.com" aria-label="Email" name="email" value="<?php echo $_SESSION["Correo"] ?>" required <?php echo $aux; ?>>
-          </div>
-          <div class="row ">
-            <div class="mb-3 col-6">
-            <label>Teléfono</label>
-              <input type="number" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" name="telefono" value="<?php echo $_SESSION["Telefono"] ?>" required>
-            </div>
-            <div class="mb-3 col-6">
-            <label>Cédula</label>
-              <input type="number" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula" value="<?php echo $_SESSION["Cedula"] ?>" required <?php echo $aux; ?>>
-            </div>
         </div>
-        <div class="">
-          <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula2" value="<?php echo $_SESSION["Cedula"] ?>" hidden>
-        </div>
-        <!--div class="mb-3">
+        <div class="card-body">
+          <p class="text-uppercase text-sm">Información de Usuario</p>
+          <form id="form" role="form">
+            <div class="mb-3">
+              <label>Nombre(s)</label>
+              <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux; ?>>
+            </div>
+            <div class="mb-3">
+              <label>Apellido(s)</label>
+              <input type="text" class="form-control" placeholder="Apellidos" aria-label="apellidos" name="apellidos" value="<?php echo $_SESSION["P_Apellido"] . ' ' . $_SESSION["S_Apellido"] ?>" required <?php echo $aux; ?>>
+            </div>
+            <div class="mb-3">
+              <label>Correo</label>
+              <input type="email" class="form-control" placeholder="usuario@correo.com" aria-label="Email" name="email" value="<?php echo $_SESSION["Correo"] ?>" required <?php echo $aux; ?>>
+            </div>
+            <div class="row ">
+              <div class="mb-3 col-6">
+                <label>Teléfono</label>
+                <input type="number" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" id="telefono" maxlength="11" name="telefono" value="<?php echo $_SESSION["Telefono"] ?>" required>
+              </div>
+              <div class="mb-3 col-6">
+                <label>Cédula</label>
+                <input type="text" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" id="cedula" maxlength="8" name="cedula" value="<?php echo $_SESSION["Cedula"] ?>" required <?php echo $aux; ?>>
+              </div>
+            </div>
+            <div class="">
+              <input type="text" class="" placeholder="Cedula" aria-label="cedula" pattern="[0-9]{5,8}" name="cedula2" value="<?php echo $_SESSION["Cedula"] ?>" hidden>
+            </div>
+            <!--div class="mb-3">
                         <input type="text" class="form-control" placeholder="usuario" aria-label="usuario" name="usuario" required>
                       </div-->
-        <div id="con" class="row">
-          <div class="mb-3 col-6">
-          <label>Nueva Contraseña</label>
-            <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="Password" name="confirmar" Value="" required>
-          </div>
-          <div class="mb-3 col-6">
-          <label>Confirmar Contraseña</label>
-            <input type="password" class="form-control" placeholder="Confirmar Contraseña" aria-label="confirmar" name="password" Value="" required>
-          </div>
+            <div id="con" class="row">
+              <div class="mb-3 col-6">
+                <label>Nueva Contraseña</label>
+                <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="Password" name="confirmar" Value="" required>
+              </div>
+              <div class="mb-3 col-6">
+                <label>Confirmar Contraseña</label>
+                <input type="password" class="form-control" placeholder="Confirmar Contraseña" aria-label="confirmar" name="password" Value="" required>
+              </div>
 
-        </div>
+            </div>
 
-        <!--div class="form-check form-check-info text-start">
+            <!--div class="form-check form-check-info text-start">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                   <label class="form-check-label" for="flexCheckDefault">
                     I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
@@ -75,12 +75,12 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
                 </div-->
 
 
-        </form>
+          </form>
+        </div>
       </div>
+      <div class=col-md-3></div>
     </div>
-    <div class=col-md-3></div>
-  </div>
-  <!--div class="col-md-4">
+    <!--div class="col-md-4">
           <div class="card card-profile">
             <img src="assets/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
             <div class="row justify-content-center">
@@ -137,7 +137,7 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
           </div>
         </div-->
 
-  <!-- <footer class="footer pt-3  ">
+    <!-- <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
@@ -169,108 +169,132 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
           </div>
         </div>
       </footer> -->
-</div>
+  </div>
 
-<script>
-  $(Document).ready(function() {
+  <script>
+    $(Document).ready(function() {
 
-    $("#edit").click(function() {
-
-
-      var values = new FormData();
-
-      values.append("nombre", $("[name='nombres']").prop("value"));
-      values.append("apellido", $("[name='apellidos']").prop("value"));
-      values.append("telefono", $("[name='telefono']").prop("value"));
-      values.append("cedula", $("[name='cedula']").prop("value"));
-      values.append("cedula2", $("[name='cedula2']").prop("value"));
-      values.append("email", $("[name='email']").prop("value"));
-      values.append("viejo", $("[name='confirmar']").prop("value"));
-      values.append("pass", $("[name='password']").prop("value"));
-      values.append("ident", 'editar');
-      values.append("tipo", '<?php echo $_SESSION["Tipo"]; ?>');
+      $("#edit").click(function() {
 
 
-      $.ajax({
-        url: 'php/Usuario/editar_usuario.php',
-        type: 'POST',
-        data: values,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(response) {
+        var values = new FormData();
 
-          switch (response) {
-            case "si":
+        values.append("nombre", $("[name='nombres']").prop("value"));
+        values.append("apellido", $("[name='apellidos']").prop("value"));
+        values.append("telefono", $("[name='telefono']").prop("value"));
+        values.append("cedula", $("[name='cedula']").prop("value"));
+        values.append("cedula2", $("[name='cedula2']").prop("value"));
+        values.append("email", $("[name='email']").prop("value"));
+        values.append("viejo", $("[name='confirmar']").prop("value"));
+        values.append("pass", $("[name='password']").prop("value"));
+        values.append("ident", 'editar');
+        values.append("tipo", '<?php echo $_SESSION["Tipo"]; ?>');
 
-              Swal.fire({
-                icon: 'success',
-                title: 'Usuario Editado',
-                showConfirmButton: false,
-                timer: 1500
-              }); //CUANDO REGISTRA EXITOSAMENTE
-              setTimeout(function() {
-                window.location.reload();
-              }, 1500);
-              break;
-            case "no":
 
-              Swal.fire({
-                icon: 'error',
-                title: 'Usuario no Editado',
-                text: 'Problema de comunicación con el servidor, intente más tarde',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#01a9ac',
-              }); //ERROR AL REGISTRAR
-              console.log("no");
-              break;
-            case "existe_cedula":
+        $.ajax({
+          url: 'php/Usuario/editar_usuario.php',
+          type: 'POST',
+          data: values,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(response) {
 
-              Swal.fire({
-                icon: 'warning',
-                title: 'Usuario no Editado',
-                text: 'El número de cédula ya existe',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#01a9ac',
-              }); //CEDULA EXISTENTE
-              console.log("no ced");
-              break;
-            case "existe_usuario":
+            switch (response) {
+              case "si":
 
-              Swal.fire({
-                icon: 'warning',
-                title: 'Usuario no Editado',
-                text: 'El nombre de usuario ya existe',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#01a9ac',
-              }); //NOMBRE DE USUARIO EXISTENTE
-              console.log("no usu");
-              break;
-            default:
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Usuario Editado',
+                  showConfirmButton: false,
+                  timer: 1500
+                }); //CUANDO REGISTRA EXITOSAMENTE
+                setTimeout(function() {
+                  window.location.reload();
+                }, 1500);
+                break;
+              case "no":
 
-              Swal.fire({
-                icon: 'error',
-                title: 'Error Inesperado',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#01a9ac',
-              });
-              console.log(response);
-              break;
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Usuario no Editado',
+                  text: 'Problema de comunicación con el servidor, intente más tarde',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //ERROR AL REGISTRAR
+                console.log("no");
+                break;
+              case "existe_cedula":
+
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Usuario no Editado',
+                  text: 'El número de cédula ya existe',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //CEDULA EXISTENTE
+                console.log("no ced");
+                break;
+              case "existe_usuario":
+
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Usuario no Editado',
+                  text: 'El nombre de usuario ya existe',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                }); //NOMBRE DE USUARIO EXISTENTE
+                console.log("no usu");
+                break;
+              default:
+
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error Inesperado',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#01a9ac',
+                });
+                console.log(response);
+                break;
+            }
+
+          },
+          error: function(response) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error Inesperado',
+              text: toString(response),
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#01a9ac',
+            });
+            console.log("err2");
           }
+        });
 
-        },
-        error: function(response) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error Inesperado',
-            text: toString(response),
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#01a9ac',
-          });
-          console.log("err2");
-        }
       });
 
+      function permitirSoloNumeros(inputId) {
+        const input = document.getElementById(inputId);
+
+        if (!input) {
+          console.error(`No se encontró un elemento con el ID: ${inputId}`);
+          return;
+        }
+
+        // Detectar cambios en tiempo real
+        input.addEventListener('input', function() {
+          // Eliminar cualquier carácter que no sea un número
+          this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // Evitar que el usuario pegue contenido no válido
+        input.addEventListener('paste', function(event) {
+          event.preventDefault();
+          const pasteData = (event.clipboardData || window.clipboardData).getData('text');
+          this.value += pasteData.replace(/[^0-9]/g, '');
+        });
+      };
+      $("[name='cedula']").change(permitirSoloNumeros("cedula"));
+      $("[name='telefono']").change(permitirSoloNumeros("telefono"));
     });
-  });
-</script>
+  </script>
