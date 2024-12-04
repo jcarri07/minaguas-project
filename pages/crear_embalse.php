@@ -490,21 +490,21 @@ date_default_timezone_set("America/Caracas");
                   </div>
                 </div>
 
-                <div class="col-md-4 col-sm-12">
-                  <div class=" form-group">
-                    <label for="norte">Norte</label>
+                <div class="col-md-4 col-sm-12 d-flex flex-column align-items-center justify-content-center gap-3">
+                  <span id="show-map" style="width: 70px; height: 70px" class="input-group-text show-map cursor-pointer text-bold px-3 d-flex justify-content-center"><i class="fas fa-map-marker-alt" style="font-size: 32px;"></i></span>
+                  <div class="d-flex align-items-center gap-2">
+                    <label for="norte">Norte:</label>
                     <div class="input-group">
-                      <input type="text" class="form-control numero" id="norte" name="norte" placeholder="Norte">
-                      <span id="show-map" class="input-group-text show-map cursor-pointer text-bold px-3"><i class="fas fa-map-marker-alt text-sm"></i></span>
+                      <input style="border: 0px; padding-top: 0px;" type="text" class="form-control numero" id="norte" name="norte" placeholder="No seleccionado aún" disabled>
                     </div>
                   </div>
-                  <div class=" form-group">
-                    <label for="este">Este</label>
-                    <input type="text" class="form-control numero" id="este" name="este" placeholder="Este">
+                  <div class="d-flex align-items-center gap-2">
+                    <label for="este">Este:</label>
+                    <input style="border: 0px; padding-top: 0px;" type="text" class="form-control numero" id="este" name="este" placeholder="No seleccionado aún" disabled>
                   </div>
-                  <div class=" form-group">
-                    <label for="huso">Huso</label>
-                    <input type="text" class="form-control numero" id="huso" name="huso" placeholder="Huso">
+                  <div class="d-flex align-items-center gap-2">
+                    <label for="huso">Huso:</label>
+                    <input style="border: 0px; padding-top: 0px;" type="text" class="form-control numero" id="huso" name="huso" placeholder="No seleccionado aún" disabled>
                   </div>
                 </div>
 
@@ -1716,12 +1716,12 @@ date_default_timezone_set("America/Caracas");
   //Funcion para mostrar etiquetas con los nombres de los Estados
   function onEachFeature(feature, layer) {
     if (feature.properties && feature.properties.ESTADO) {
-      layer.bindPopup(feature.properties.ESTADO); // Muestra el nombre en un popup
+      // layer.bindPopup(feature.properties.ESTADO); // Muestra el nombre en un popup
       layer.bindTooltip(feature.properties.ESTADO, {
         permanent: true,
         className: "nombre-estado",
         direction: "center",
-        interactive: true
+        interactive: false
       }); // Muestra el nombre como una etiqueta
     }
   }
@@ -1737,6 +1737,43 @@ date_default_timezone_set("America/Caracas");
     })
     .catch(err => console.error('Error al cargar el archivo GeoJSON:', err));
 
+
+  const coordDisplay = L.control({
+    position: 'bottomright'
+  });
+
+  coordDisplay.onAdd = function() {
+    const div = L.DomUtil.create('div', 'coord-display');
+    div.style.padding = '8px';
+    div.style.backgroundColor = 'white';
+    div.style.border = '1px solid #ccc';
+    div.style.fontSize = '12px';
+    div.innerText = 'Mueve el mouse sobre el mapa';
+    this._div = div;
+    return div;
+  };
+
+  coordDisplay.addTo(map);
+
+  // Actualizar las coordenadas al mover el mouse
+  map.on('mousemove', function(event) {
+    const {
+      lat,
+      lng
+    } = event.latlng;
+
+    proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
+
+    var zonaUTM = Math.floor((lng + 180) / 6) + 1;
+    proj4.defs("EPSG:326" + zonaUTM, "+proj=utm +zone=" + zonaUTM + " +datum=WGS84 +units=m +no_defs");
+    var coordenadasUTM = proj4("EPSG:4326", "EPSG:326" + zonaUTM, [lng, lat]);
+
+    var norte = coordenadasUTM[1];
+    var este = coordenadasUTM[0];
+    var huso = zonaUTM;
+
+    coordDisplay._div.innerText = `Norte: ${norte.toFixed(5)}, Este: ${este.toFixed(5)}, Huso: ${huso}`;
+  });
 
   // L.tileLayer('https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey={apikey}', {
   //   maxZoom: 19,
