@@ -210,6 +210,18 @@ while ($row < count($datos_embalses)) {
         top: -22px;
         /* left: -4px; */
     }
+
+    .nombre-estado {
+        font-size: 8px;
+        padding: 1px;
+        background-color: transparent;
+    }
+
+    .leaflet-tooltip {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
 </style>
 
 <!-- <body style="height:1500px"> -->
@@ -329,7 +341,7 @@ while ($row < count($datos_embalses)) {
     var mapa_portada = L.map('mapa-portada').setView([9, -66.5], 7);
     mapa_portada.scrollWheelZoom.disable();
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(mapa_portada);
 
@@ -342,6 +354,40 @@ while ($row < count($datos_embalses)) {
     //     attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.thunderforest.com/transport/">Andy Allan</a>',
     //     apikey: '38db809be13a400c8c5061e304ba99cd' // Reemplaza esto con tu clave de API de Thunderforest
     // }).addTo(mapa_portada);
+
+    // Cargar el archivo GeoJSON usando fetch
+
+    var highlightStyle = {
+        "color": "#9c9c9c", //Color de delineado
+        "weight": 2, //Ancho de delineado
+        "opacity": 0.6, //Opacidad del delineado
+        "fillColor": "#ffd700", // Color de relleno
+        "fillOpacity": 0 //Opacidad de relleno
+    };
+
+    //Funcion para mostrar etiquetas con los nombres de los Estados
+    function onEachFeature(feature, layer) {
+        if (feature.properties && feature.properties.ESTADO) {
+            layer.bindPopup(feature.properties.ESTADO); // Muestra el nombre en un popup
+            layer.bindTooltip(feature.properties.ESTADO, {
+                permanent: true,
+                className: "nombre-estado",
+                direction: "center",
+                interactive: true
+            }); // Muestra el nombre como una etiqueta
+        }
+    }
+
+    fetch('./pages/venezuela.geojson')
+        .then(response => response.json())
+        .then(data => {
+            // Crear el layer GeoJSON y añadirlo al mapa
+            L.geoJSON(data, {
+                style: highlightStyle,
+                onEachFeature: onEachFeature,
+            }).addTo(mapa_portada);
+        })
+        .catch(err => console.error('Error al cargar el archivo GeoJSON:', err));
 
     let ubicacion;
     let posicion;

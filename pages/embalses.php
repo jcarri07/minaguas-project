@@ -25,7 +25,7 @@
 
 
 
-  // $embalseBat = new Batimetria(53, $conn);
+  // $embalseBat = new Batimetria(19, $conn);
   // $variable = $embalseBat->volumenMinimo();
   // $volumen_normal = $embalseBat->volumenNormal();
   // $volumen_minimo = $embalseBat->volumenMinimo();
@@ -34,10 +34,10 @@
   // $minima = $embalseBat->cotaMinima();
   // $año = implode("-", $embalseBat->getYears());
   // $closeYear = $embalseBat->getCloseYear();
-  // $volMin = $embalseBat->volumenDisponible();
+  // $volMin = $embalseBat->volumenMinimo();
   // $ultima = $embalseBat->volumenActualDisponible();
   // $year = $embalseBat->getCloseYear("2015");
-  // $prueba = $embalseBat->getByCota("2001", 210.209);
+  // $prueba = $embalseBat->getByCota("2024", 202.34);
 
   // $prueba = $embalseBat->getCloseCota("2001","210.206");
 
@@ -164,11 +164,13 @@
           </div>
           <div class="card-body p-3 pb-0">
             <div class="text-center">
+              <?php if($_SESSION["Tipo"] != "Visitante"){?>
               <a href="?page=crear_embalse">
                 <button type="button" class="btn btn-primary btn-block">
                   Nuevo
                 </button>
               </a>
+              <?php }?>
             </div>
 
             <div class="dt-responsive table-responsive">
@@ -228,9 +230,11 @@
                         <td>
                           <div class="d-flex align-items-center justify-content-center text-sm">
                             <a data-id="<?php echo $row['id_embalse']; ?>" class="show-embalse btn btn-link text-dark px-2 mb-0" href="?page=show"><i class="fas fa-eye text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Ver</span></a>
+                            <?php if($_SESSION["Tipo"] != "Visitante"){?>
                             <a data-id="<?php echo $row['id_embalse']; ?>" class="editar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-pencil-alt text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
                             <a data-id="<?php echo $row['id_embalse']; ?>" class="eliminar-embalse btn btn-link text-dark px-2 mb-0"><i class="fas fa-trash text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Eliminar</span></a>
                             <!-- <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i><span class="hide-cell"> PDF</span></button> -->
+                             <?php }?>
                           </div>
                         </td>
                       </tr>
@@ -255,7 +259,7 @@
         </div>
       </div>
       <?php
-      if ($numEliminados > 0) {
+      if ($numEliminados > 0 && $_SESSION["Tipo"] != "Visitante") {
       ?>
 
         <div class="col-lg-12 mt-5">

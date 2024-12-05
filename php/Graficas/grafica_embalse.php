@@ -162,7 +162,9 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
 
                 if (embalse[i] == $("#embalses option:selected").val()) {
                     menor = anios[i];
-                    if(!menor){menor = "<?php echo date('Y')?>";}
+                    if (!menor) {
+                        menor = "<?php echo date('Y') ?>";
+                    }
                     //console.log(menor);
                 }
 
@@ -242,12 +244,26 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                 xhr.send('imagen=' + dataURL + '&nombre=grafica&numero=' + 0);
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-
-                        console.log("listo");
-                        window.open("./pages/reports/print_monitoreo_simple.php?id=" + $("#embalses option:selected").val() + "&name=" + $("#embalses option:selected").html() + "&fecha1=" + $("#fecha1").val() + "&fecha2=" + $("#fecha2").val() + "&anio=" + $("#anio option:selected").val() + "&mes=" + $("#mes").val(), '_blank');
-
-                    } else {
-
+                        //let response = JSON.parse(this.responseText);
+                        if (this.responseText == "si") {
+                            console.log(this.responseText);
+                            window.open(
+                                "./pages/reports/print_monitoreo_simple.php?id=" +
+                                $("#embalses option:selected").val() +
+                                "&name=" + $("#embalses option:selected").html() +
+                                "&fecha1=" + $("#fecha1").val() +
+                                "&fecha2=" + $("#fecha2").val() +
+                                "&anio=" + $("#anio option:selected").val() +
+                                "&mes=" + $("#mes").val(),
+                                '_blank'
+                            );
+                        } else {
+                            if (this.responseText == "no") {
+                                console.log("Error al guardar la imagen: " + this.responseText);
+                            } else {
+                                console.log(this.responseText);
+                            }
+                        };
                     }
                 }
             });

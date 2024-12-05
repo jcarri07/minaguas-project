@@ -37,11 +37,13 @@ closeConection($conn);
     <div class="modal-content">
       <div class="modal-body p-0">
         <div class="card card-plain">
+          
           <div class="card-header pb-0 text-left">
             <h3 class="font-weight-bolder text-primary text-gradient">Nuevo Usuario</h3>
             <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
             <!--<p class="mb-0">Enter your email and password to register</p>-->
           </div>
+          
           <div class="card-body pb-3">
             <form id="form" role="form" >
               <div class="mb-3">
@@ -59,11 +61,11 @@ closeConection($conn);
               <div class="row ">
                 <div class="mb-3 col-6">
                   <label>Teléfono</label>
-                  <input type="number" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" name="telefono" required>
+                  <input type="text" class="form-control" placeholder="00001234567" id="telefono" aria-label="telefono" pattern="[0-9]{1,11}" maxlength="11" name="telefono" required>
                 </div>
                 <div class="mb-3 col-6">
                   <label>Cédula</label>
-                  <input type="number" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{6-8}" name="cedula" required>
+                  <input type="text" class="form-control" placeholder="12345678" id="cedula" pattern="[0-9]{5,8}" aria-label="cedula" maxlength="8" name="cedula" required>
                 </div>
               </div>
               <label>Contraseña</label>
@@ -85,6 +87,7 @@ closeConection($conn);
                             <select name="tipo" class="form-select" required>
                                 <option value="Admin">Administrador</option>
                                 <option value="User">Usuario</option>
+                                <option value="Visitante">Visitante</option>
                             </select>
 
               <?php }?>
@@ -140,11 +143,11 @@ closeConection($conn);
               <div class="row ">
                 <div class="mb-2 col-6">
                   <label>Teléfono</label>
-                  <input type="number" class="form-control" placeholder="00001234567" aria-label="telefono" pattern="[0-9]{1,11}" name="Etelefono" required >
+                  <input type="text" class="form-control" placeholder="00001234567" id="Etelefono" aria-label="telefono" pattern="[0-9]{1,11}" maxlength="11" name="Etelefono" required >
                 </div>
                 <div class="mb-2 col-6">
                   <label>Cédula</label>
-                  <input type="number" class="form-control" placeholder="12345678" aria-label="cedula" pattern="[0-9]{5,8}" name="Ecedula" required>
+                  <input type="text" class="form-control" placeholder="12345678" id="Ecedula" aria-label="cedula" pattern="[0-9]{5,8}" maxlength="8" name="Ecedula" required>
                 </div>
 
               </div>
@@ -687,6 +690,32 @@ closeConection($conn);
       
 
     });
+
+    function permitirSoloNumeros(inputId) {
+    const input = document.getElementById(inputId);
+
+    if (!input) {
+        console.error(`No se encontró un elemento con el ID: ${inputId}`);
+        return;
+    }
+
+    // Detectar cambios en tiempo real
+    input.addEventListener('input', function () {
+        // Eliminar cualquier carácter que no sea un número
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // Evitar que el usuario pegue contenido no válido
+    input.addEventListener('paste', function (event) {
+        event.preventDefault();
+        const pasteData = (event.clipboardData || window.clipboardData).getData('text');
+        this.value += pasteData.replace(/[^0-9]/g, '');
+    });
+  }
+  $("[name='Ecedula']").change(permitirSoloNumeros("Ecedula"));
+  $("[name='cedula']").change(permitirSoloNumeros("cedula"));
+  $("[name='Etelefono']").change(permitirSoloNumeros("Etelefono"));
+  $("[name='telefono']").change(permitirSoloNumeros("telefono"));
 
     $("#form2").submit(function(e) {
       e.preventDefault();

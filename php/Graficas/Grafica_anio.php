@@ -23,11 +23,11 @@ if ($tipo == "bar") {
     FROM datos_embalse 
     WHERE id_embalse = d.id_embalse AND fecha = d.fecha AND hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND cota_actual <> 0 AND id_embalse = d.id_embalse) ORDER BY cota_actual DESC LIMIT 1) AS cota_actual
 FROM datos_embalse d, embalses e 
-WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id' AND YEAR(d.fecha) = '$y'  
+WHERE e.id_embalse = d.id_embalse AND e.estatus = 'activo' AND d.estatus = 'activo' AND d.id_embalse = '$id' AND YEAR(fecha) >= '$periodo'  
 GROUP BY d.fecha;";
 }
 if ($tipo == "line") {
-    $aux = "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND id_embalse = '$id' AND cota_actual <> 0 AND YEAR(fecha) >= '$periodo' ORDER BY fecha,hora ASC;";
+    $aux = "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND id_embalse = '$id' AND cota_actual <> 0 AND YEAR(fecha) >= '$periodo' ORDER BY fecha,hora DESC;";
 }
 
 $bati = new Batimetria($id, $conn);
@@ -77,7 +77,7 @@ if ($count >= 1) {
                             ctx
                         } = chart;
                         const dataset = chart.data.datasets[0];
-                        const meta = chart.getDatasetMeta(0);
+                        const meta = chart.getDatasetMeta(chart.data.datasets.length-1);
 
                         if (meta.hidden) return;
 
@@ -164,10 +164,10 @@ if ($count >= 1) {
                                 $min = $embalses[0]["cota_min"];
                                 $max = $embalses[0]["cota_max"];
                                 if ($count) {
-                                    $pivote = date("Y", strtotime($datos_embalses[0]['fecha']));
+                                    $fech = $periodo;
 
-                                    $fech = $anio;
-                                    while (($pivote <= $fech)) {
+                                    $pivote = $anio;
+                                    while (($pivote >= $fech)) {
 
                                         //echo "{label:'Volumen del año " . $fech . "',pointRadius: 0,data: [";
                                         $aux = 0;
@@ -218,7 +218,7 @@ if ($count >= 1) {
                                             };
                                             echo "categoryPercentage:1,},";
                                         }
-                                        $fech--;
+                                        $fech++;
                                     }
                                 }
                                 ?>
@@ -313,6 +313,7 @@ if ($count >= 1) {
                                             size: 18
                                         },
                                     },
+                                    stacked: true,
                                     type: 'time',
                                     time: {
                                         unit: 'month'
@@ -453,10 +454,10 @@ if ($count >= 1) {
                                 $min = $embalses[0]["cota_min"];
                                 $max = $embalses[0]["cota_max"];
                                 if ($count) {
-                                    $pivote = $pivote = date("Y", strtotime($datos_embalses[0]['fecha']));
+                                    $fech = $periodo;
 
-                                    $fech = $anio;
-                                    while (($pivote <= $fech)) {
+                                    $pivote = $anio;
+                                    while (($pivote >= $fech)) {
                                         $aux = 0;
                                         while ($aux < count($datos_embalses)) {
                                             if ($datos_embalses[$aux]["cota_actual"] != NULL && $fech == date("Y", strtotime($datos_embalses[$aux]['fecha']))) {
@@ -506,7 +507,7 @@ if ($count >= 1) {
                                             };
                                             echo "categoryPercentage:1,},";
                                         }
-                                        $fech--;
+                                        $fech++;
                                     }
                                 }
                                 ?>
@@ -599,6 +600,7 @@ if ($count >= 1) {
                                             size: 18
                                         },
                                     },
+                                    stacked: true,
                                     type: 'time',
                                     time: {
                                         unit: 'month'

@@ -426,6 +426,18 @@ function explodeBat($value, $i = null)
     right: 0;
     top: 0;
   }
+
+  .nombre-estado {
+    font-size: 8px;
+    padding: 1px;
+    background-color: transparent;
+  }
+
+  .leaflet-tooltip {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
 </style>
 
 <div class="container-loader">
@@ -725,20 +737,87 @@ function explodeBat($value, $i = null)
     var longitud = coordenadasGeograficas[0];
 
     var map = L.map('embalse-mapa').setView([latitud, longitud], 12);
+
+
+
     map.scrollWheelZoom.disable();
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
       maxZoom: 18,
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
+
+    var highlightStyle = {
+      "color": "#9c9c9c", //Color de delineado
+      "weight": 2, //Ancho de delineado
+      "opacity": 0.6, //Opacidad del delineado
+      "fillColor": "#ffd700", // Color de relleno
+      "fillOpacity": 0 //Opacidad de relleno
+    };
+
+    //Funcion para mostrar etiquetas con los nombres de los Estados
+    function onEachFeature(feature, layer) {
+      if (feature.properties && feature.properties.ESTADO) {
+        layer.bindPopup(feature.properties.ESTADO); // Muestra el nombre en un popup
+        layer.bindTooltip(feature.properties.ESTADO, {
+          permanent: true,
+          className: "nombre-estado",
+          direction: "center",
+          interactive: true
+        }); // Muestra el nombre como una etiqueta
+      }
+    }
+
+    fetch('./pages/venezuela.geojson')
+      .then(response => response.json())
+      .then(data => {
+        // Crear el layer GeoJSON y añadirlo al mapa
+        L.geoJSON(data, {
+          style: highlightStyle,
+          onEachFeature: onEachFeature,
+        }).addTo(map);
+      })
+      .catch(err => console.error('Error al cargar el archivo GeoJSON:', err));
 
     L.marker([latitud, longitud]).addTo(map);
 
   } else {
     var map = L.map('embalse-mapa').setView([8, -66], 6);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { // Utilizar un proveedor de azulejos de OpenStreetMap
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
+
+    var highlightStyle = {
+      "color": "#9c9c9c", //Color de delineado
+      "weight": 2, //Ancho de delineado
+      "opacity": 0.6, //Opacidad del delineado
+      "fillColor": "#ffd700", // Color de relleno
+      "fillOpacity": 0 //Opacidad de relleno
+    };
+
+    //Funcion para mostrar etiquetas con los nombres de los Estados
+    function onEachFeature(feature, layer) {
+      if (feature.properties && feature.properties.ESTADO) {
+        layer.bindPopup(feature.properties.ESTADO); // Muestra el nombre en un popup
+        layer.bindTooltip(feature.properties.ESTADO, {
+          permanent: true,
+          className: "nombre-estado",
+          direction: "center",
+          interactive: true
+        }); // Muestra el nombre como una etiqueta
+      }
+    }
+
+    fetch('./pages/venezuela.geojson')
+      .then(response => response.json())
+      .then(data => {
+        // Crear el layer GeoJSON y añadirlo al mapa
+        L.geoJSON(data, {
+          style: highlightStyle,
+          onEachFeature: onEachFeature,
+        }).addTo(map);
+      })
+      .catch(err => console.error('Error al cargar el archivo GeoJSON:', err));
   }
   // new Chartist.Bar('.ct-chart', {
   //   labels: ['Original', 'Batimetria', 'Actual'],
