@@ -585,22 +585,28 @@ function explodeBat($value, $i = null)
                 </div>
               </div>
 
+
+
+
+
               <div class="col-md-4 col-sm-12 d-flex flex-column align-items-center justify-content-center gap-3">
+
                 <span id="show-map" style="width: 70px; height: 70px" class="input-group-text show-map cursor-pointer text-bold px-3 d-flex justify-content-center"><i class="fas fa-map-marker-alt" style="font-size: 32px;"></i></span>
                 <div class="d-flex align-items-center gap-2">
                   <label for="norte">Norte:</label>
                   <div class="input-group">
-                    <input style="border: 0px; padding-top: 0px;" value="<?php echo $embalse["norte"] ?>" type="text" class="form-control numero" id="norte" name="norte" placeholder="No seleccionado aún" disabled>
+                    <input style="border: 0px; padding-top: 0px; pointer-events:none;" value="<?php echo $embalse["norte"] ?>" type="text" class="form-control numero" id="norte" name="norte" placeholder="No seleccionado aún">
                   </div>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                   <label for="este">Este:</label>
-                  <input style="border: 0px; padding-top: 0px;" value="<?php echo $embalse["este"]; ?>" type="text" class="form-control numero" id="este" name="este" placeholder="No seleccionado aún" disabled>
+                  <input style="border: 0px; padding-top: 0px; pointer-events:none;" value="<?php echo $embalse["este"]; ?>" type="text" class="form-control numero" id="este" name="este" placeholder="No seleccionado aún">
                 </div>
                 <div class="d-flex align-items-center gap-2">
                   <label for="huso">Huso:</label>
-                  <input style="border: 0px; padding-top: 0px;" value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control numero" id="huso" name="huso" placeholder="No seleccionado aún" disabled>
+                  <input style="border: 0px; padding-top: 0px; pointer-events:none;" value="<?php echo $embalse["huso"]; ?>" type="text" class="form-control numero" id="huso" name="huso" placeholder="No seleccionado aún">
                 </div>
+
               </div>
 
               <div class="d-flex flex-column justify-content-between col-md-4 col-sm-12">
