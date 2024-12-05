@@ -291,7 +291,7 @@ closeConection($conn);*/
     <div class="row">
       <div class="col-12 pt-2 px-0" id="container-div">
         <div class=" d-flex flex-row flex-wrap justify-content-around align-items-center gap-2 mb-2" id="contain-charts">
-          <div class="d-flex flex-column justify-content-center align-items-center shadow rounded p-3 border bg-white">
+          <div class="d-flex flex-column justify-content-center align-items-center shadow rounded p-3 border bg-white" style="width: 400px;">
             <h5 class="d-flex justify-content-center align-items-center rounded">
               VOLUMEN TOTAL DISPONIBLE
             </h5>
@@ -300,7 +300,7 @@ closeConection($conn);*/
               </div>
             </div>
           </div>
-          <div class="d-flex flex-column gap-5 p-2 justify-content-center align-items-center shadow border rounded bg-white" id="container-cards" style="width: 350px; height:450px;">
+          <div class="d-flex flex-column gap-5 p-2 justify-content-center align-items-center shadow border rounded bg-white" id="container-cards" style="width: 400px; height:450px;">
             <div class="col-12 flex-column justify-content-center align-items-center rounded border" style="width:100%;height:45%">
               <h5 class="d-flex justify-content-center align-items-center">
                 VARIACIÓN DESDE HACE 7 DIAS
@@ -328,7 +328,7 @@ closeConection($conn);*/
               </div>
             </div>
           </div>
-          <div class="d-flex flex-column shadow border rounded p-3  bg-white" style="min-height: 420px;">
+          <div class="d-flex flex-column shadow border rounded p-3  bg-white" style="min-height: 420px;width: 400px;height:450px;">
             <h6 class="d-flex justify-content-center align-items-center" id="title-4" style="margin-top: -15px; margin-bottom: -3px;">
               <!--Lo de Miguel-->
             </h6>
