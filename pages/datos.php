@@ -186,31 +186,31 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                       <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
                       Añadir Reporte
                     </a>-->
-                        <?php
+<?php
                         if ($row['reportado_hoy'] == "si") {
-                        ?>
+?>
                           <h6 class="mb-1 text-dark font-weight-bold text-sm">El reporte de hoy fue realizado <i class="fas fa-check text-lg text-green me-2"></i></h6>
-                        <?php
+<?php
                         }
 
                         if (($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") || ($_SESSION["Tipo"] == "User" && $row['reportado_hoy'] == "no")) {
-                        ?>
+?>
                           <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalAdd('<?php echo $row['id_embalse']; ?>', '<?php echo $row['nombre_embalse']; ?>');">
                             <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
                             <span class="hide-cell">Añadir Reporte</span>
                           </a>
-                        <?php
+<?php
                         }
 
-                        if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
-                        ?>
+                        //if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
+?>
                           <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" onclick="openModalHistory('<?php echo $row['id_embalse']; ?>', '<?php echo $row['nombre_embalse']; ?>', '', '');">
                             <i class="fas fa-history text-dark me-2" aria-hidden="true"></i>
                             <span class="hide-cell">Historial de Extracciones</span>
                           </a>
-                        <?php
-                        }
-                        ?>
+<?php
+                        //}
+?>
                       </td>
                     </tr>
                   <?php
@@ -344,11 +344,15 @@ while ($row = mysqli_fetch_array($query_codigos)) {
             <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">
               <i class="fa fa-times"></i>
             </button>
-
+<?php 
+          if($_SESSION['Tipo'] != 'Visitante') {
+?>
             <div class="text-center">
               <button type="button" class="btn btn-success mt-4 mb-0" title="Historial de Todas la importaciones Datos de Excel (Parte Base)" data-bs-dismiss="modal" onclick="openModalHistoryAdjunciones($('#id_embalse_aux').text());">Historial de Adjunciones</button>
             </div>
-
+<?php 
+          }
+?>
           </div>
           <div class="card-body pb-3" id="body-details">
 
@@ -958,7 +962,7 @@ require_once 'php/datos/vistas/morosos.php';
 
 
 <?php
-if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
+//if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
 ?>
 
   <script>
@@ -1051,7 +1055,7 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
 
 
         let valor_formateado = "";
-        valor_extraccion = valor_extraccion.replace(",", ".");
+        valor_extraccion = valor_extraccion ? valor_extraccion.replace(",", ".") : '';
 
         if(this.value != "30") {
           valor_formateado = new Intl.NumberFormat('de-DE', {
@@ -1322,7 +1326,7 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
   </script>
 
 <?php
-}
+//}
 ?>
 
 
