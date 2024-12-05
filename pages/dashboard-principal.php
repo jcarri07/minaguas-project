@@ -328,7 +328,7 @@ closeConection($conn);*/
               </div>
             </div>
           </div>
-          <div class="d-flex flex-column shadow border rounded p-3  bg-white" style="min-height: 420px;width: 400px;">
+          <div class="d-flex flex-column shadow border rounded p-3  bg-white" style="min-height: 420px;width: 400px;height:450px;">
             <h6 class="d-flex justify-content-center align-items-center" id="title-4" style="margin-top: -15px; margin-bottom: -3px;">
               <!--Lo de Miguel-->
             </h6>
