@@ -169,6 +169,7 @@ closeConection($conn);
                           <select name="Etipo" class="form-select" required>
                               <option value="Admin">Administrador</option>
                               <option value="User">Usuario</option>
+                              <option value="Visitante">Visitante</option>
                           </select>
 
             <?php }?>
