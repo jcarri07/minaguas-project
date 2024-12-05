@@ -1,8 +1,9 @@
 <?php
 include "php/Conexion.php";
-if ($_SESSION["Tipo"] == "SuperAdmin") {
+if ($_SESSION["Tipo"] == "SuperAdmin"||$_SESSION["Tipo"] == "Visitante") {
   $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'SuperAdmin' AND estatus = 'activo';");
 } else {
+  
   $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin' AND NOT Tipo = 'SuperAdmin'AND estatus = 'activo';");
 }
 $count = mysqli_num_rows($res);
@@ -21,11 +22,11 @@ if ($count >= 1) {
           <div class="card-body p-3 pb-0">
 
             <div class="text-center">
-
+            <?php if ($_SESSION["Tipo"] == "SuperAdmin") { ?>
               <button type="button" onclick="$('#new-user').modal('show');" class="btn btn-primary btn-block">
                 Nuevo
               </button>
-
+              <?php }?>
             </div>
 
             <div class="dt-responsive table-responsive p-0 pb-3">
@@ -100,18 +101,19 @@ if ($count >= 1) {
                           <i class="fas fa-clipboard-list text-dark me-1" aria-hidden="true"></i>
                           Historial
                         </a>
-                        <a type='button' onclick="Modaledit('<?php echo $val['P_Nombre']; ?>','<?php echo $val['S_Nombre']; ?>','<?php echo $val['P_Apellido']; ?>','<?php echo $val['S_Apellido']; ?>','<?php echo $val['Contrasena']; ?>','<?php echo $val['Cedula']; ?>','<?php echo $val['Correo']; ?>','<?php echo $val['Telefono'] ?>','<?php echo $val['Tipo'] ?>')" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="fas fa-pencil-alt text-dark me-1" aria-hidden="true"></i>
-                          Editar
-                        </a>
+                        <?php if ($_SESSION["Tipo"] != "Visitante") { ?>
+                          <a type='button' onclick="Modaledit('<?php echo $val['P_Nombre']; ?>','<?php echo $val['S_Nombre']; ?>','<?php echo $val['P_Apellido']; ?>','<?php echo $val['S_Apellido']; ?>','<?php echo $val['Contrasena']; ?>','<?php echo $val['Cedula']; ?>','<?php echo $val['Correo']; ?>','<?php echo $val['Telefono'] ?>','<?php echo $val['Tipo'] ?>')" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="fas fa-pencil-alt text-dark me-1" aria-hidden="true"></i>
+                            Editar
+                          </a>
 
 
 
-                        <a type='button' onclick="Modaldelete( <?php echo $val['Id_usuario']; ?>)" class="text-secondary font-weight-bold text-xs mx-2" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="fas fa-trash text-dark me-1" aria-hidden="true"></i>
-                          Eliminar
-                        </a>
-
+                          <a type='button' onclick="Modaldelete( <?php echo $val['Id_usuario']; ?>)" class="text-secondary font-weight-bold text-xs mx-2" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="fas fa-trash text-dark me-1" aria-hidden="true"></i>
+                            Eliminar
+                          </a>
+                        <?php } ?>
                       </td>
                     </tr>
                   <?php
@@ -175,7 +177,11 @@ if ($count >= 1) {
       if ($_SESSION["Tipo"] == "SuperAdmin") {
         $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'SuperAdmin' AND estatus = 'inactivo';");
       } else {
-        $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin' AND NOT Tipo = 'Admin' AND estatus = 'inactivo';");
+        if ($_SESSION["Tipo"] == "Admin") {
+          $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT Tipo = 'Admin' AND NOT Tipo = 'Admin' AND estatus = 'inactivo';");
+        } else {
+          $res = mysqli_query($conn, "SELECT * FROM usuarios WHERE NOT estatus = 'inactivo' AND NOT estatus = 'activo';");;
+        }
       }
       $count = mysqli_num_rows($res);
 

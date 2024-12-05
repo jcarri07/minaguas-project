@@ -37,11 +37,13 @@ closeConection($conn);
     <div class="modal-content">
       <div class="modal-body p-0">
         <div class="card card-plain">
+          
           <div class="card-header pb-0 text-left">
             <h3 class="font-weight-bolder text-primary text-gradient">Nuevo Usuario</h3>
             <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
             <!--<p class="mb-0">Enter your email and password to register</p>-->
           </div>
+          
           <div class="card-body pb-3">
             <form id="form" role="form" >
               <div class="mb-3">
@@ -85,6 +87,7 @@ closeConection($conn);
                             <select name="tipo" class="form-select" required>
                                 <option value="Admin">Administrador</option>
                                 <option value="User">Usuario</option>
+                                <option value="Visitante">Visitante</option>
                             </select>
 
               <?php }?>
