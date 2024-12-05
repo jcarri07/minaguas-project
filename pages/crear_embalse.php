@@ -495,16 +495,16 @@ date_default_timezone_set("America/Caracas");
                   <div class="d-flex align-items-center gap-2">
                     <label for="norte">Norte:</label>
                     <div class="input-group">
-                      <input style="border: 0px; padding-top: 0px;" type="text" class="form-control numero" id="norte" name="norte" placeholder="No seleccionado aún" disabled>
+                      <input style="border: 0px; padding-top: 0px; pointer-events:none;" type="text" class="form-control numero" id="norte" name="norte" placeholder="No seleccionado aún">
                     </div>
                   </div>
                   <div class="d-flex align-items-center gap-2">
                     <label for="este">Este:</label>
-                    <input style="border: 0px; padding-top: 0px;" type="text" class="form-control numero" id="este" name="este" placeholder="No seleccionado aún" disabled>
+                    <input style="border: 0px; padding-top: 0px; pointer-events:none;" type="text" class="form-control numero" id="este" name="este" placeholder="No seleccionado aún">
                   </div>
                   <div class="d-flex align-items-center gap-2">
                     <label for="huso">Huso:</label>
-                    <input style="border: 0px; padding-top: 0px;" type="text" class="form-control numero" id="huso" name="huso" placeholder="No seleccionado aún" disabled>
+                    <input style="border: 0px; padding-top: 0px; pointer-events:none;" type="text" class="form-control numero" id="huso" name="huso" placeholder="No seleccionado aún">
                   </div>
                 </div>
 
