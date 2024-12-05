@@ -3,6 +3,8 @@ require_once '../../Conexion.php';
 date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
 
+session_start();
+
 $id_embalse = $_POST['id_embalse'];
 $anio = $_POST['anio'];
 $mes = $_POST['mes'];
@@ -259,9 +261,15 @@ if (mysqli_num_rows($query) > 0) {
                                 <a class="btn btn-primary btn-sm px-3 mb-0" href="javascript:;" data-bs-dismiss="modal" onclick="openModalDetalles('<?php echo $row['id_registro']; ?>', '<?php echo $row['fecha']; ?>', '<?php echo $row['hora']; ?>', '<?php echo $row['cota_actual']; ?>', '<?php echo $row['extraccion']; ?>');">
                                     <i class="fas fa-list" title="Detalles" aria-hidden="true"></i>
                                 </a>
+<?php 
+                            if($_SESSION['Tipo'] != 'Visitante') {
+?>
                                 <a class="btn btn-danger btn-sm px-3 mb-0" href="javascript:;" onclick="openModalAction('<?php echo $row['id_registro']; ?>', 'delete');">
                                     <i class="fas fa-trash" title="Eliminar" aria-hidden="true"></i>
                                 </a>
+<?php
+                            }
+?>
                                 <?php
 
                                 ?>
