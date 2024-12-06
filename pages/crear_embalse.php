@@ -1223,7 +1223,7 @@ date_default_timezone_set("America/Caracas");
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">COTAS</h5>
-        <button type="button" class="btn btn-primary btn-rounded" data-bs-dismiss="modal" aria-label="Close">
+        <button type="button" style="color: #FFFFFF;" class="btn btn-primary btn-rounded" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">X</span>
         </button>
       </div>
