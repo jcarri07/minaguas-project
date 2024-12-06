@@ -1,4 +1,4 @@
-<script src="./assets/js/Chart.js"></script>
+<!-- <script src="./assets/js/Chart.js"></script> -->
 <script src="./assets/js/date-fns.js"></script>
 <!-- <script src="../../assets/js/jquery/jquery.min.js"></script> -->
 <?php

@@ -1,4 +1,4 @@
-<script src="./assets/js/Chart.js"></script>
+<!-- <script src="./assets/js/Chart.js"></script> -->
 <!--script src="../../assets/js/date-fns.js"></script-->
 <script src="./assets/js/date-fns.js"></script>
 <script src="./assets/js/sweetalerts.js"></script>
@@ -188,8 +188,9 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
 
                     // Establecer el valor del input de tipo month
                     var valorMesActual = anioActual + '-' + mesActual;
-                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="' + menor + '-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
-                    $('#mes').val(valorMesActual);
+                    var me = $("#mes").val();
+                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="' + menor + '-01" max="<?php echo date('Y-m') ?>" value="'+me+'" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
+                    // $('#mes').val(valorMesActual);
                     a = anioActual;
 
                     $("#mes").on('change', function() {
@@ -205,7 +206,7 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                         ajax();
                     });
 
-                    console.log("a: " + a);
+                    console.log("a: " + me);
                     break;
 
             }

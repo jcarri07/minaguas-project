@@ -21,40 +21,44 @@ $fechaActual->modify('-1 years');
 // Obtener un string de la fecha en formato deseado (por ejemplo, 'Y-m-d' para año-mes-día)
 $fecha_anio = $fechaActual->format('Y-m-d');
 
-$queryInameh = mysqli_query($conn, "SELECT nombre_config, configuracion FROM configuraciones WHERE nombre_config = 'fecha_sequia' OR nombre_config = 'fecha_lluvia' ORDER BY id_config ASC;");
-$fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
-$fecha1 = $fechas[0]['configuracion'];
-$fecha2 = $fechas[1]['configuracion'];
-$anio = date('Y', strtotime($fecha1));
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
+// $queryInameh = mysqli_query($conn, "SELECT nombre_config, configuracion FROM configuraciones WHERE nombre_config = 'fecha_sequia' OR nombre_config = 'fecha_lluvia' ORDER BY id_config ASC;");
+// $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
+// $fecha1 = $fechas[0]['configuracion'];
+// $fecha2 = $fechas[1]['configuracion'];
+//$anio = date('Y', strtotime($fecha1));
+$r = mysqli_query($conn, "SELECT id_embalse FROM embalses WHERE estatus = 'activo' LIMIT 1;");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
     $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,MAX(d.fecha) AS fech,
   e.nombre_embalse, (SELECT cota_actual 
        FROM datos_embalse h 
-       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND h.estatus = 'activo' AND cota_actual <> 0 LIMIT 1) AS cota_actual
+       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AND h.estatus = 'activo' AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
   FROM embalses e
   LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
   WHERE e.estatus = 'activo'
   GROUP BY id_embalse 
   ORDER BY id_embalse ASC;");
 
-    $condiciones_dias = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_dia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
-    FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha_dia') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
- FROM embalses e
- LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_dia'
- WHERE e.estatus = 'activo' 
- GROUP BY id_embalse;");
+    $condiciones_dias = mysqli_query($conn, " SELECT e.id_embalse,MAX(d.fecha) AS fecha,
+  e.nombre_embalse, (SELECT cota_actual 
+       FROM datos_embalse h 
+       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.fecha <= '$fecha_dia' AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AND h.estatus = 'activo' AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
+  FROM embalses e
+  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_dia'
+  WHERE e.estatus = 'activo'
+  GROUP BY id_embalse 
+  ORDER BY id_embalse ASC;");
 
-    $condiciones_anio = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_anio' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
-    FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha_anio') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
- FROM embalses e
- LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_anio'
- WHERE e.estatus = 'activo' 
- GROUP BY id_embalse;");
+    $condiciones_anio = mysqli_query($conn, "SELECT e.id_embalse,MAX(d.fecha) AS fecha,
+  e.nombre_embalse, (SELECT cota_actual 
+       FROM datos_embalse h 
+       WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.fecha <= '$fecha_anio' AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AND h.estatus = 'activo' AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
+  FROM embalses e
+  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_anio'
+  WHERE e.estatus = 'activo'
+  GROUP BY id_embalse 
+  ORDER BY id_embalse ASC;");
 
     $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
     $volumen_dias = mysqli_fetch_all($condiciones_dias, MYSQLI_ASSOC);

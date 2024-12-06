@@ -335,7 +335,7 @@ $variacion_mensual = getMonthName();
         </tr>
         <tr>
           <td class="text-celd">VOLUMEN
-            (Hm3
+            (Hm³
             )</td>
           <?php
           $batimetria = new Batimetria($id, $conn);
@@ -455,7 +455,7 @@ $variacion_mensual = getMonthName();
           </tr>
           <tr>
             <td class="text-celd">VOLUMEN
-              (Hm3
+              (Hm³
               )</td>
             <?php
             $batimetria = new Batimetria($id, $conn);
