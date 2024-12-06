@@ -42,10 +42,10 @@ if (1) {
 date_default_timezone_set('America/Caracas');
 $fecha_hora = date('j/n/Y g:i a');
 
-$COTA_INICIAL = " 303,55 m s.n.m. (185,15 hm3)";
+$COTA_INICIAL = " 303,55 m s.n.m. (185,15 Hm³)";
 $FECHA_MONITOREO = "15/05/2023";
-$VOLUMEN_NIVEL_NORMAL = "462,41 hm3 (Cota 328,80 m s.n.m.)";
-$VOLUMEN_NIVEL_MINIMO = "76,28 hm3 (Cota 285,00 m s.n.m.)";
+$VOLUMEN_NIVEL_NORMAL = "462,41 Hm³ (Cota 328,80 m s.n.m.)";
+$VOLUMEN_NIVEL_MINIMO = "76,28 Hm³ (Cota 285,00 m s.n.m.)";
 $TITULO = "Gráfico de Monitoreo.";
 
 

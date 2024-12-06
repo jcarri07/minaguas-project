@@ -219,7 +219,7 @@ $año_actual = date('Y');
                     <td style="font-weight: bold;">+104 cm</td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;">Variacion (hm3)</td>
+                    <td style="text-align: left;">Variacion (Hm³)</td>
                     <td>-37,57 cm</td>
                     <td>-52,54 cm</td>
                     <td>-56,24 cm</td>
@@ -328,7 +328,7 @@ $año_actual = date('Y');
             </table>
         </div>
         <div>
-            <h5>ACUMULADO- ESTACIÓN DE BOMBEO LA PUNTA Hm3
+            <h5>ACUMULADO- ESTACIÓN DE BOMBEO LA PUNTA Hm³
                 /mes</h5>
             <table border="1">
                 <tr>

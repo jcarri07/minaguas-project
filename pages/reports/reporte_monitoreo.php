@@ -41,10 +41,10 @@ if (1) {
 date_default_timezone_set('America/Caracas');
 $fecha_hora = date('j/n/Y g:i a');
 
-$COTA_INICIAL = " 303,55 m s.n.m. (185,15 hm3)";
+$COTA_INICIAL = " 303,55 m s.n.m. (185,15 Hm³)";
 $FECHA_MONITOREO = "15/05/2023";
-$VOLUMEN_NIVEL_NORMAL = "462,41 hm3 (Cota 328,80 m s.n.m.)";
-$VOLUMEN_NIVEL_MINIMO = "76,28 hm3 (Cota 285,00 m s.n.m.)";
+$VOLUMEN_NIVEL_NORMAL = "462,41 Hm³ (Cota 328,80 m s.n.m.)";
+$VOLUMEN_NIVEL_MINIMO = "76,28 Hm³ (Cota 285,00 m s.n.m.)";
 $titulo_reporte = "Gráfico";
 $TITULO = "Gráfico 1";
 $TITULO2 = "Gráfico 2. Monitoreo por semana 9-17.";
@@ -181,7 +181,7 @@ $TITULO6 = "Gráfico 6";
             <tbody>
                 <tr>
                     <th style="text-align: left;">Cota inicial de Monitoreo:</th>
-                    <td style="text-align: right;"><?php echo number_format($cota_inicial, 3, ",", ".") . " m s.n.m (" . number_format($volumen_inicial, 3, ",", ".") . " hm3)" ?></td>
+                    <td style="text-align: right;"><?php echo number_format($cota_inicial, 3, ",", ".") . " m s.n.m (" . number_format($volumen_inicial, 3, ",", ".") . " Hm³)" ?></td>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Fecha:</th>
@@ -190,11 +190,11 @@ $TITULO6 = "Gráfico 6";
                 <tr>
                     <th style="text-align: left;">Volumen Nivel Normal:</th>
                     <?php $batimetria = new Batimetria($id, $conn); ?>
-                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenNormal(), 2, ",", ".") . " hm3 (Cota " . $batimetria->cotaNormal() . " m s.n.m)" ?></td>
+                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenNormal(), 2, ",", ".") . " Hm³ (Cota " . $batimetria->cotaNormal() . " m s.n.m)" ?></td>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Volumen Nivel Minimo:</th>
-                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenMinimo(), 2, ",", ".") . " hm3 (Cota " . $batimetria->cotaMinima() . " m s.n.m)" ?></td>
+                    <td style="text-align: right;"><?php echo number_format($batimetria->volumenMinimo(), 2, ",", ".") . " Hm³ (Cota " . $batimetria->cotaMinima() . " m s.n.m)" ?></td>
                 </tr>
             </tbody>
         </table>

@@ -3,10 +3,11 @@
 
 ini_set('memory_limit', '4G');
 ini_set('max_execution_time', 400);
+
 require_once '../../../vendor/autoload.php';
 require_once '../../Conexion.php';
 
-ini_set('memory_limit', '1024M');
+//ini_set('memory_limit', '1024M');
 
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -235,26 +236,34 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     unlink("temp/" . $nombre_archivo);
 } else {
 
+    if (isset($_FILES['file'])) {
     if ($_FILES['file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['file']['tmp_name'])) {
 
         //Ubic temporal
         $nombre_temporal = $_FILES['file']['tmp_name'];
         $name = $_FILES['file']['name'];
         $ubicacion = 'temp/' . $name;
-        move_uploaded_file($nombre_temporal, $ubicacion);
+        //move_uploaded_file($nombre_temporal, $ubicacion);
 
         //$excel = PHPExcel_IOFactory::load($ubicacion);
 
-
-        $spreadsheet = IOFactory::load($ubicacion);
-        $hojas = $spreadsheet->getSheetNames();
+        if(move_uploaded_file($nombre_temporal, $ubicacion)) {
+            try {
+                $spreadsheet = IOFactory::load($ubicacion);
+                echo "abrio";
+            } catch (Exception $e) {
+                echo 'Error al cargar el archivo: ',  $e->getMessage();
+            }
+        }
+        
+        //$hojas = $spreadsheet->getSheetNames();
 
         //$excel = PHPExcel_IOFactory::load($ubicacion);
 
         // Hojas del archivo
         //$hojas = $excel->getSheetNames();
 
-
+/*
 ?>
         <div class="table-responsive mb-3 mt-5">
             <table class="table align-items-center text-sm text-center table-sm" id="hojas-excel-table">
@@ -295,10 +304,14 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
         </div>
 
 <?php
-
+*/
     } else {
         echo "<h3>Error al subir el archivo.</h3>";
     }
+}
+else {
+    echo "<h3>No hay archivo a subir.</h3>";
+}
 
     // Delete file temporal
     //unlink($ubicacion);

@@ -1,4 +1,4 @@
-<script src="./assets/js/Chart.js"></script>
+<!-- <script src="./assets/js/Chart.js"></script> -->
 <!--script src="../../assets/js/date-fns.js"></script-->
 <script src="./assets/js/date-fns.js"></script>
 <script src="./assets/js/sweetalerts.js"></script>
@@ -188,8 +188,9 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
 
                     // Establecer el valor del input de tipo month
                     var valorMesActual = anioActual + '-' + mesActual;
-                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="' + menor + '-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
-                    $('#mes').val(valorMesActual);
+                    var me = $("#mes").val();
+                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="' + menor + '-01" max="<?php echo date('Y-m') ?>" value="'+me+'" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
+                    // $('#mes').val(valorMesActual);
                     a = anioActual;
 
                     $("#mes").on('change', function() {
@@ -205,7 +206,7 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                         ajax();
                     });
 
-                    console.log("a: " + a);
+                    console.log("a: " + me);
                     break;
 
             }
@@ -258,193 +259,189 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                                 '_blank'
                             );
                         } else {
-                            if (this.responseText == "no") {
-                                console.log("Error al guardar la imagen: " + this.responseText);
-                            } else {
-                                console.log(this.responseText);
-                            }
-                        };
-                    }
+                            console.log(this.responseText);
+                        }
+                    };
                 }
             });
-        });
+    });
 
-        $("#fe").change(function() {
+    $("#fe").change(function() {
 
-            switch ($("#fe option:selected").val()) {
+        switch ($("#fe option:selected").val()) {
 
-                case "Grafica_anio.php":
-                    var fechaActual = new Date();
-                    $("#formato").html('<div class="col-md-6"><label class="form-label">Año:</label><select id="anio" class="form-control " style="padding: 0px auto; margin-bottom:5px;"><option value="<?php echo date('Y') ?>" selected><?php echo date('Y') ?></option></select></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y') - 1 ?>"><?php echo date('Y') - 1 ?></option></select></div>');
+            case "Grafica_anio.php":
+                var fechaActual = new Date();
+                $("#formato").html('<div class="col-md-6"><label class="form-label">Año:</label><select id="anio" class="form-control " style="padding: 0px auto; margin-bottom:5px;"><option value="<?php echo date('Y') ?>" selected><?php echo date('Y') ?></option></select></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y') - 1 ?>"><?php echo date('Y') - 1 ?></option></select></div>');
 
-                    $("#anio").change(function() {
-                        select($("#anio option:selected").val())
-                            .then(() => {
-                                ajax(); // Esto se ejecutará después de que select() termine.
-                            });
-                    });
-                    $("#periodo").change(function() {
-                        ajax();
-                    });
-
+                $("#anio").change(function() {
                     select($("#anio option:selected").val())
                         .then(() => {
                             ajax(); // Esto se ejecutará después de que select() termine.
                         });
-                    break;
+                });
+                $("#periodo").change(function() {
+                    ajax();
+                });
 
-                case "Grafica_mes.php":
-                    var fechaActual = new Date();
-                    //console.log(fechaActual);
+                select($("#anio option:selected").val())
+                    .then(() => {
+                        ajax(); // Esto se ejecutará después de que select() termine.
+                    });
+                break;
 
-                    // Obtener el año y mes actual como cadenas de texto
-                    var anioActual = fechaActual.getFullYear().toString();
-                    var mesActual = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+            case "Grafica_mes.php":
+                var fechaActual = new Date();
+                //console.log(fechaActual);
 
-                    // Establecer el valor del input de tipo month
-                    var valorMesActual = anioActual + '-' + mesActual;
+                // Obtener el año y mes actual como cadenas de texto
+                var anioActual = fechaActual.getFullYear().toString();
+                var mesActual = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+
+                // Establecer el valor del input de tipo month
+                var valorMesActual = anioActual + '-' + mesActual;
 
 
-                    $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="' + menor + '-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
-                    $('#mes').val(valorMesActual);
-                    select(anioActual)
+                $("#formato").html('<div class="col-md-6"><label class="form-label">Fecha:</label><input type="Month" id="mes" min="' + menor + '-01" max="<?php echo date('Y-m') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><select id="periodo" class="form-select " style="padding: 0px auto; margin-bottom:5px;"><option selected value="<?php echo date('Y-m') ?>"><?php echo date('Y') - 1 ?></option></select></div>');
+                $('#mes').val(valorMesActual);
+                select(anioActual)
+                    .then(() => {
+                        ajax(); // Esto se ejecutará después de que select() termine.
+                    });
+
+                $("#mes").on('change', function() {
+                    const mes = $("#mes").val();
+                    const year = new Date(mes + "-01").getFullYear();
+                    console.log(year);
+                    select(year + 1)
                         .then(() => {
                             ajax(); // Esto se ejecutará después de que select() termine.
                         });
-
-                    $("#mes").on('change', function() {
-                        const mes = $("#mes").val();
-                        const year = new Date(mes + "-01").getFullYear();
-                        console.log(year);
-                        select(year + 1)
-                            .then(() => {
-                                ajax(); // Esto se ejecutará después de que select() termine.
-                            });
-                    });
-                    $("#periodo").change(function() {
-                        ajax();
-                    });
-
-                    break;
-
-                case "Grafica_perso.php":
-                    var fechaActual = new Date();
-
-                    $("#formato").html('<div class="col-md-6"><label class="form-label">Desde:</label><input type="date" id="fecha1" value="<?php echo date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d')))); ?>" min="1988-01-01" max="<?php echo date('Y-m-d', strtotime('-1 day', strtotime(date('Y-m-d')))) ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><input type="date" id="fecha2" value="<?php echo date('Y-m-d') ?>" min="1988-01-01" max="<?php echo date('Y-m-d') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div>');
-
-
-                    //var anioActual = fechaActual.getFullYear().toString();
-                    //var mesActual = String(fechaActual.getMonth() + 1).padStart(2, '0');
-
-                    $("#fecha1").on('change', function() {
-                        ajax();
-                    });
-                    $("#fecha2").on('change', function() {
-                        ajax();
-                    });
+                });
+                $("#periodo").change(function() {
                     ajax();
-                    break;
-                default:
-                    $("#formato").html("");
-                    break;
-            }
-        });
+                });
 
-        function select(x) {
+                break;
 
-            return new Promise((resolve) => {
-                if ($("#periodo option:selected").val() > x) {
-                    const $select = $("#periodo");
-                    $select.html("");
-                    for (i = (x); i >= menor; i--) {
-                        $select.append($("<option>", {
-                            value: i,
-                            text: i
-                        }));
-                        if (i == (x - 1)) {
-                            $("#periodo > option[value=" + i + "]").attr("selected", true);
-                        }
+            case "Grafica_perso.php":
+                var fechaActual = new Date();
+
+                $("#formato").html('<div class="col-md-6"><label class="form-label">Desde:</label><input type="date" id="fecha1" value="<?php echo date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d')))); ?>" min="1988-01-01" max="<?php echo date('Y-m-d', strtotime('-1 day', strtotime(date('Y-m-d')))) ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div><div class="col-md-6"><label class="form-label">Hasta:</label><input type="date" id="fecha2" value="<?php echo date('Y-m-d') ?>" min="1988-01-01" max="<?php echo date('Y-m-d') ?>" class="form-control" style="padding: 0px auto; margin-bottom:5px;"></div>');
 
 
-                    }
-                };
-                if ((x - $("#periodo option:selected").val()) > 1 || $("#periodo option:selected").val() <= x) {
-                    const l = $("#periodo option:selected").val();
-                    const $select = $("#periodo");
-                    $select.html("");
-                    for (i = (x); i >= menor; i--) {
-                        $select.append($("<option>", {
-                            value: i,
-                            text: i
-                        }));
-                        if (i == l) {
-                            $("#periodo > option[value=" + i + "]").attr("selected", true);
-                        }
+                //var anioActual = fechaActual.getFullYear().toString();
+                //var mesActual = String(fechaActual.getMonth() + 1).padStart(2, '0');
 
+                $("#fecha1").on('change', function() {
+                    ajax();
+                });
+                $("#fecha2").on('change', function() {
+                    ajax();
+                });
+                ajax();
+                break;
+            default:
+                $("#formato").html("");
+                break;
+        }
+    });
 
-                    }
-                };
-                resolve();
-            });
+    function select(x) {
 
-
-        };
-
-        function anio() {
-            const $anio = $("#anio");
-            const k = $("#anio option:selected").val();
-            if (menor) {
-                $anio.html("");
-                for (i = <?php echo date('Y') ?>; i >= menor; i--) {
-                    $anio.append($("<option>", {
+        return new Promise((resolve) => {
+            if ($("#periodo option:selected").val() > x) {
+                const $select = $("#periodo");
+                $select.html("");
+                for (i = (x); i >= menor; i--) {
+                    $select.append($("<option>", {
                         value: i,
                         text: i
                     }));
-                    if (i == <?php echo (date('Y')) ?>) {
-                        $("#anio > option[value=" + i + "]").attr("selected", true);
+                    if (i == (x - 1)) {
+                        $("#periodo > option[value=" + i + "]").attr("selected", true);
                     }
 
 
-                };
+                }
             };
-        }
+            if ((x - $("#periodo option:selected").val()) > 1 || $("#periodo option:selected").val() <= x) {
+                const l = $("#periodo option:selected").val();
+                const $select = $("#periodo");
+                $select.html("");
+                for (i = (x); i >= menor; i--) {
+                    $select.append($("<option>", {
+                        value: i,
+                        text: i
+                    }));
+                    if (i == l) {
+                        $("#periodo > option[value=" + i + "]").attr("selected", true);
+                    }
 
-        function ajax() {
-
-            $("#contenedor").html('<div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
-            var values = new FormData();
-            values.append("id_embalse", $("#embalses option:selected").val());
-            values.append("tipo", $("#tipo option:selected").val());
-            values.append("anio", $("#anio option:selected").val());
-            values.append("periodo", $("#periodo option:selected").val());
-            values.append("ver", $("#ver option:selected").val());
-            //values.append("id_unidad", "");
-            values.append("t", $("#tipo option:selected").val());
-            values.append("mes", $("#mes").val());
-            values.append("fecha1", $("#fecha1").val());
-            values.append("fecha2", $("#fecha2").val());
-            //console.log($("#fecha1").val());
-            values.append("semana", $("#semana option:selected").val());
-
-            $.ajax({
-                url: 'php/Graficas/' + $("#fe option:selected").val(),
-                type: 'POST',
-                data: values,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    //$("#contenedor").html("");
-                    $("#contenedor").html(response);
-
-                },
-                error: function(response) {
-
-                    alertify.error("Error inesperado.");
 
                 }
-            });
+            };
+            resolve();
+        });
+
+
+    };
+
+    function anio() {
+        const $anio = $("#anio");
+        const k = $("#anio option:selected").val();
+        if (menor) {
+            $anio.html("");
+            for (i = <?php echo date('Y') ?>; i >= menor; i--) {
+                $anio.append($("<option>", {
+                    value: i,
+                    text: i
+                }));
+                if (i == <?php echo (date('Y')) ?>) {
+                    $("#anio > option[value=" + i + "]").attr("selected", true);
+                }
+
+
+            };
         };
-        setInterval(ajax, 1800000);
+    }
+
+    function ajax() {
+
+        $("#contenedor").html('<div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
+        var values = new FormData();
+        values.append("id_embalse", $("#embalses option:selected").val());
+        values.append("tipo", $("#tipo option:selected").val());
+        values.append("anio", $("#anio option:selected").val());
+        values.append("periodo", $("#periodo option:selected").val());
+        values.append("ver", $("#ver option:selected").val());
+        //values.append("id_unidad", "");
+        values.append("t", $("#tipo option:selected").val());
+        values.append("mes", $("#mes").val());
+        values.append("fecha1", $("#fecha1").val());
+        values.append("fecha2", $("#fecha2").val());
+        //console.log($("#fecha1").val());
+        values.append("semana", $("#semana option:selected").val());
+
+        $.ajax({
+            url: 'php/Graficas/' + $("#fe option:selected").val(),
+            type: 'POST',
+            data: values,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                //$("#contenedor").html("");
+                $("#contenedor").html(response);
+
+            },
+            error: function(response) {
+
+                alertify.error("Error inesperado.");
+
+            }
+        });
+    };
+    setInterval(ajax, 1800000);
     });
 </script>

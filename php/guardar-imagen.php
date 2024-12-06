@@ -8,7 +8,7 @@ $t = $_POST['numero'];
     $aux = $data;
     $nombre_archivo = "imagen-" . $i . "-" . $t . ".png"; // Nombre del archivo
     $ruta_archivo = "../assets/img/temp/$nombre_archivo"; // Ruta donde guardar el archivo
-
+    
     // Decodificación de la imagen
     $aux = explode(";", $aux)[1];
     $aux = explode(",", $aux)[1];

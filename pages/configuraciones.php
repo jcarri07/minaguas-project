@@ -99,7 +99,7 @@ closeConection($conn);
         <div class="card-header pb-4">
           <!-- <div class="row"> -->
           <!-- <div class="col-6 d-flex align-items-center"> -->
-          <h6 class="">Configuraciones</h6>
+          <h4 class="">CONFIGURACIONES</h4>
           <!-- </div> -->
           <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
@@ -193,7 +193,7 @@ closeConection($conn);
                     <div class="d-flex">
                       <div class="form-check">
                         <input <?php if (in_array($embalse["id_embalse"], $prioritarios)) echo "checked" ?> class="form-check-input check-prioritario" type="checkbox" value="<?php echo $embalse["id_embalse"]; ?>" id="<?php echo $embalse["id_embalse"]; ?>">
-                        <label class="label-embalse form-check-label " for="<?php echo $i; ?>">
+                        <label class="label-embalse form-check-label " for="">
                           <?php echo $embalse["nombre_embalse"]; ?>
                         </label>
                       </div>

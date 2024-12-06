@@ -10,7 +10,7 @@
             <table>
                 <tr>
                     <th class="text-celd">EMBALSE</th>
-                    <th class="text-celd">VOL. DISP. (HM3)</th>
+                    <th class="text-celd">VOL. DISP. (Hm³)</th>
                     <th class="text-celd">HIDROLÓGICA</th>
                 </tr>
 
@@ -43,7 +43,7 @@
             <table>
                 <tr>
                     <th class="text-celd">EMBALSE</th>
-                    <th class="text-celd">VOL. DISP. (HM3)</th>
+                    <th class="text-celd">VOL. DISP. (Hm³)</th>
                     <th class="text-celd">HIDROLÓGICA</th>
                 </tr>
                 <?php
@@ -78,7 +78,7 @@
             <table>
                 <tr>
                     <th class="text-celd">EMBALSE</th>
-                    <th class="text-celd">VOL. DISP. (HM3)</th>
+                    <th class="text-celd">VOL. DISP. (Hm³)</th>
                     <th class="text-celd">HIDROLÓGICA</th>
                 </tr>
                 <?php
