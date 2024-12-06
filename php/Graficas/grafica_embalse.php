@@ -257,10 +257,7 @@ $array = mysqli_fetch_all($re, MYSQLI_ASSOC);
                                 "&mes=" + $("#mes").val(),
                                 '_blank'
                             );
-                        } else {
-                            if (this.responseText == "no") {
-                                console.log("Error al guardar la imagen: " + this.responseText);
-                            } else {
+                        } else {                   
                                 console.log(this.responseText);
                             }
                         };
