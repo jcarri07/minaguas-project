@@ -14,6 +14,10 @@ require_once '../../php/batimetria.php';
 
 
 // Guardar la fecha de impresion del documento
+// Tiene problema, las imagenes quedan antiguas, y los datos de tablas mas actualizados.
+// Habria que sincronizar la fecha actual de las tablas con la fecha de impresion.
+// consultando la ultima carga de datos_embalse y comparando con la fecha de impresion.
+
 $old_estatus = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'old_estatus'");
 $fecha_hoy = date('Y-m-d H:i:s');
 
@@ -63,7 +67,7 @@ SELECT SUM(extraccion)
            WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
       FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-WHERE e.estatus = 'activo'
+WHERE e.estatus = 'activo' and 1 in (e.proposito)
 GROUP BY id_embalse 
 ORDER BY id_embalse ASC;");
 
@@ -72,7 +76,7 @@ FROM datos_embalse h
 WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha1') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
-WHERE e.estatus = 'activo' 
+WHERE e.estatus = 'activo' and 1 in (e.proposito)
 GROUP BY id_embalse;");
 
 $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
@@ -80,7 +84,7 @@ FROM datos_embalse h
 WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha2') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
-WHERE e.estatus = 'activo'
+WHERE e.estatus = 'activo' and 1 in (e.proposito)
 GROUP BY id_embalse;");
 
 $condiciones_actuales3 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha3' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
@@ -88,12 +92,12 @@ FROM datos_embalse h
 WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha3') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha3'
-WHERE e.estatus = 'activo'
+WHERE e.estatus = 'activo' and 1 in (e.proposito)
 GROUP BY id_embalse;");
 
 $hidro = mysqli_query($conn, "SELECT COUNT(e.id_embalse),e.operador
                 FROM embalses e
-                WHERE e.estatus = 'activo'
+                WHERE e.estatus = 'activo' and 1 in (e.proposito)
                 GROUP BY e.operador
                 ORDER BY id_embalse ASC;");
 
@@ -190,7 +194,7 @@ $meses = array(
 $condiciones = [];
 $CT = [0, 0, 0, 0, 0, 0];
 
-$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo';");
+$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo' and 1 in (proposito);");
 
 while ($row = mysqli_fetch_array($queryEmbalses)) {
 
@@ -350,6 +354,22 @@ while ($row < count($datos_embalses)) {
   $row++;
 }
 
+usort($embalse_abast, function ($a, $b) {
+  return $a[3] <=> $b[3];
+});
+
+$alerta_roja = array_filter($embalse_abast, function ($value) {
+  return $value[3] <= 4;
+});
+
+$alerta_naranja = array_filter($embalse_abast, function ($value) {
+  return $value[3] > 4 && $value[3] <= 8;
+});
+
+$alerta_amarilla = array_filter($embalse_abast, function ($value) {
+  return $value[3] > 8 && $value[3] <= 12;
+});
+
 function agregarACondiciones($operador, &$array, $porcentaje, $totalop)
 {
   if (array_key_exists($operador, $array)) {
@@ -457,6 +477,7 @@ if (1) {
   $status_barra_2 = "../../assets/img/temp/imagen-estatus-barra-2.png";
   $status_mapa = "../../assets/img/temp/imagen-estatus-mapa-2.png";
   $status_mapa_3 = "../../assets/img/temp/imagen-estatus-mapa-3.png";
+  $status_mapa_4 = "../../assets/img/temp/imagen-estatus-mapa-4.png";
 } else {
   $image_logo = "../../assets/img/logos/cropped-mminaguas.jpg";
   $logo_letters =  "../../assets/img/logos/MinaguasLetters.png";
@@ -472,6 +493,7 @@ if (1) {
   $status_barra_2 = "../../assets/img/temp/imagen-estatus-barra-2.png";
   $status_mapa = "../../assets/img/temp/imagen-estatus-mapa-2.png";
   $status_mapa_3 = "../../assets/img/temp/imagen-estatus-mapa-3.png";
+  $status_mapa_4 = "../../assets/img/temp/imagen-estatus-mapa-4.png";
 }
 $ruta_mapas = "../../assets/img/temp/";
 
@@ -751,8 +773,8 @@ $ruta_mapas = "../../assets/img/temp/";
 
   <?php
   $inicial = false;
-  $total_filas = 35;
-  $extras = 5; //cabecera y total
+  $total_filas = 40;
+  $extras = 4; //cabecera y total
   $acumulado = 0;
   $top_margin = 0;
   $titulos_condiciones = [
@@ -1677,44 +1699,26 @@ $ruta_mapas = "../../assets/img/temp/";
 
   <div>
     <div style="width: 1000px; height: 565px; background-color: lightgray; margin: 10px, 0, 0, 35px;">
-      <!-- Mapa --> <img style="width:1000px ; height: 565px;" src="<?php echo $mapa ?>" />
+      <!-- Mapa --> <img style="width:1000px ; height: 565px;" src="<?php echo $status_mapa_4 ?>" />
     </div>
-    <div style="position: absolute; height: 160px; width: 350px; left: 38px; top: 540px; border: gray 1px solid; background-color: #FFFFFF">
+    <div style="position: absolute; height: 110px; width: 350px; left: 38px; top: 540px; border: gray 1px solid; background-color: #FFFFFF">
       <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
       <p style="position: absolute; top: 25px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-      <div style="position: absolute; left: 20px; top: 2px; background-color: red;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición baja (< 30%) <b> <?php echo $valores[0][0] ?> Embalses</b></p>
+      <div style="position: absolute; left: 20px; top: 2px; background-color: #ff0000;
+         border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>0 - 4 Meses <b> <?php echo "( " . count($alerta_roja) ?> Embalses<?php echo " )" ?></b></p>
 
 
-        <p style="position: absolute; top: 45px;
+      <p style="position: absolute; top: 45px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-        <div style="position: absolute; left: 20px; top: 2px; background-color: #44BEF0;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Bajo (30% < A> 60%) <b> <?php echo $valores[0][1] ?> Embalses</b></p>
+      <div style="position: absolute; left: 20px; top: 2px; background-color: #ffaa00;
+         border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>5 - 8 Meses <b> <?php echo "( " . count($alerta_naranja) ?> Embalses<?php echo " )" ?></b></p>
 
 
-          <p style="position: absolute; top: 65px;
+      <p style="position: absolute; top: 65px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-          <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Alto (60% < A> 90%) <b> <?php echo $valores[0][2] ?> Embalses</b></p>
-
-
-            <p style="position: absolute; top: 85px;
-        text-align: left; padding-left: 40px; font-size: 12px;">
-            <div style="position: absolute; left: 20px; top: 2px; background-color: green;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición Buena (> 90%) <b> <?php echo $valores[0][3] ?> Embalses</b></p>
-
-
-            <p style="position: absolute; top: 105px;
-        text-align: left; padding-left: 40px; font-size: 12px;">
-            <div style="position: absolute; left: 20px; top: 2px; background-color: #58F558;
-         border-radius: 5; height: 10px; width: 10px;"></div>Condición de Alivio <b> <?php echo $valores[0][4] ?> Embalses</b></p>
-
-
-            <p style="position: absolute; top: 125px;
-        text-align: left; padding-left: 40px; font-size: 12px;">
-            <div style="position: absolute; left: 20px; top: 2px; width: 0; height: 0;
-        border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 10px solid black;"></div> EDC (Embalse de Compensación)</p>
+      <div style="position: absolute; left: 20px; top: 2px; background-color: #ffff00;
+         border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>9 - 12 Meses <b> <?php echo "( " . count($alerta_amarilla) ?> Embalses<?php echo " )" ?></b></p>
 
     </div>
   </div>
@@ -1944,9 +1948,7 @@ $ruta_mapas = "../../assets/img/temp/";
 
   <?php
 
-  usort($embalse_abast, function ($a, $b) {
-    return $a[3] <=> $b[3];
-  });
+
 
   $colores = [
     "0 Meses < Alerta <span style=\"color:red;\">Roja</span> < 4 Meses",
@@ -1954,18 +1956,6 @@ $ruta_mapas = "../../assets/img/temp/";
     "9 Meses < Alerta <span style=\"color:#ffc219;\">Amarilla</span> < 12 Meses"
   ];
   $ranges = [];
-
-  $alerta_roja = array_filter($embalse_abast, function ($value) {
-    return $value[3] <= 4;
-  });
-
-  $alerta_naranja = array_filter($embalse_abast, function ($value) {
-    return $value[3] > 4 && $value[3] <= 8;
-  });
-
-  $alerta_amarilla = array_filter($embalse_abast, function ($value) {
-    return $value[3] > 8 && $value[3] <= 12;
-  });
 
   array_push($ranges, $alerta_roja);
   array_push($ranges, $alerta_naranja);
