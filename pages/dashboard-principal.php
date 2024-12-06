@@ -682,7 +682,7 @@ closeConection($conn);*/
 <script src="./assets/js/core/bootstrap.min.js"></script>
 <script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
-<script src="./assets/js/plugins/chartjs.min.js"></script>
+<!-- <script src="./assets/js/plugins/chartjs.min.js"></script> -->
 <script src="./assets/js/jquery/jquery.min.js"></script>
 <link rel="stylesheet" href="./assets/css/leaflet.css" />
 <script src="./assets/js/leaflet.js"></script>
@@ -801,9 +801,10 @@ closeConection($conn);*/
     });
   }
 
-  volumen_actual();
+  
   mapa_dashboard();
   grafica_dashboard();
+  volumen_actual();
   grafica_extraccion();
   $(document).ready(function() {
 
