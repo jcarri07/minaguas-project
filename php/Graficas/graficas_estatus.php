@@ -843,12 +843,12 @@ if ($count >= 1) {
                 xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-pie'; ?>&numero=' + 1);
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        // if (this.responseText == "si") {
+                         if (this.responseText == "si") {
                         console.log(this.responseText);
-                        // location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&volumenes=<?php echo $volumenes; ?>&lista=<?php echo $datos_codificados; ?>&fecha2=<?php echo $fecha2; ?>&valores=<?php echo $valores; ?>";
-                    // } else {
-                    //         console.log(this.responseText);
-                    //     }
+                         location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&volumenes=<?php echo $volumenes; ?>&lista=<?php echo $datos_codificados; ?>&fecha2=<?php echo $fecha2; ?>&valores=<?php echo $valores; ?>";
+                     } else {
+                             console.log(this.responseText);
+                         }
                     } else {
 
                     }
