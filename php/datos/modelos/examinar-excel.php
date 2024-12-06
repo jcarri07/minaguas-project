@@ -236,7 +236,8 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     unlink("temp/" . $nombre_archivo);
 } else {
 
-    if (isset($_FILES['file']) && $_FILES['file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['file']['tmp_name'])) {
+    if (isset($_FILES['file'])) {
+    if ($_FILES['file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['file']['tmp_name'])) {
 
         //Ubic temporal
         $nombre_temporal = $_FILES['file']['tmp_name'];
@@ -307,6 +308,10 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     } else {
         echo "<h3>Error al subir el archivo.</h3>";
     }
+}
+else {
+    echo "<h3>No hay archivo a subir.</h3>";
+}
 
     // Delete file temporal
     //unlink($ubicacion);
