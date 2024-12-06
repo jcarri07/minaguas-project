@@ -693,7 +693,7 @@ if (1) {
         <table>
           <tr>
             <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">VOL. DISP. (Hm³)</th>
             <th class="text-celd">HIDROLÓGICA</th>
           </tr>
 
@@ -750,7 +750,7 @@ if (1) {
         <table>
           <tr>
             <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">VOL. DISP. (Hm³)</th>
             <th class="text-celd">HIDROLÓGICA</th>
           </tr>
           <?php
@@ -801,7 +801,7 @@ if (1) {
         <table>
           <tr>
             <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">VOL. DISP. (Hm³)</th>
             <th class="text-celd">HIDROLÓGICA</th>
           </tr>
           <?php
@@ -858,7 +858,7 @@ if (1) {
         <table>
           <tr>
             <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VOL. DISP. (HM3)</th>
+            <th class="text-celd">VOL. DISP. (Hm³)</th>
             <th class="text-celd">HIDROLÓGICA</th>
           </tr>
           <?php
@@ -904,7 +904,7 @@ if (1) {
     <table>
       <tr>
         <th class="text-celd">EMBALSE</th>
-        <th class="text-celd">VOL. DISP. (HM3)</th>
+        <th class="text-celd">VOL. DISP. (Hm³)</th>
         <th class="text-celd">HIDROLÓGICA</th>
       </tr>
       <?php
@@ -1357,7 +1357,7 @@ if (1) {
         <table>
           <tr>
             <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VAR. VOL. <br>(HM3)</th>
+            <th class="text-celd">VAR. VOL. <br>(Hm³)</th>
             <th class="text-celd">% VAR. VOL.</th>
           </tr>
           <?php
@@ -1404,7 +1404,7 @@ if (1) {
         <table>
           <tr>
             <th class="text-celd">EMBALSE</th>
-            <th class="text-celd">VAR. VOL. <br>(HM3)</th>
+            <th class="text-celd">VAR. VOL. <br>(Hm³)</th>
             <th class="text-celd">% VAR. VOL.</th>
           </tr>
           <?php
@@ -1474,7 +1474,7 @@ if (1) {
       <table>
         <tr>
           <th class="text-celd text-big">EMBALSE</th>
-          <th class="text-celd text-big">VAR. VOL. <br><br><br> (HM3)</th>
+          <th class="text-celd text-big">VAR. VOL. <br><br><br> (Hm³)</th>
           <th class="text-celd text-big">% VAR. VOL.</th>
         </tr>
         <tr>
@@ -1524,7 +1524,7 @@ if (1) {
           <th class="text-celd" colspan="2">DESDE fecha</th>
         </tr>
         <tr>
-          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(HM3)</th>
+          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(Hm³)</th>
           <th class="text-celd" rowspan="">% VAR. <br> VOL.</th>
         </tr>
         <?php foreach ($embalses_variacion as $value) {
@@ -1554,7 +1554,7 @@ if (1) {
           <th class="text-celd" colspan="2">DESDE fecha</th>
         </tr>
         <tr>
-          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(HM3)</th>
+          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(Hm³)</th>
           <th class="text-celd" rowspan="">% VAR. <br> VOL.</th>
         </tr>
 
@@ -1601,7 +1601,7 @@ if (1) {
       <table>
         <tr>
           <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">VAR. VOL. <br> (HM3)</th>
+          <th class="text-celd">VAR. VOL. <br> (Hm³)</th>
           <th class="text-celd">% VAR. VOL.</th>
         </tr>
         <tr>
@@ -1622,7 +1622,7 @@ if (1) {
       <table>
         <tr>
           <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">VAR. VOL. <br> (HM3)</th>
+          <th class="text-celd">VAR. VOL. <br> (Hm³)</th>
           <th class="text-celd">% VAR. VOL.</th>
         </tr>
         <tr>
@@ -1665,9 +1665,9 @@ if (1) {
         <th style="font-size: 12px" colspan="2">DESDE 01/JUN/2023</th>
       </tr>
       <tr>
-        <th class="celd-table">VAR. VOL. <br>(HM3)</th>
+        <th class="celd-table">VAR. VOL. <br>(Hm³)</th>
         <th class="celd-table">% VAR. VOL.</th>
-        <th class="celd-table">VAR. VOL. <br>(HM3)</th>
+        <th class="celd-table">VAR. VOL. <br>(Hm³)</th>
         <th class="celd-table">% VAR. VOL.</th>
       </tr>
       <tr>
@@ -1699,9 +1699,9 @@ if (1) {
           <th class="celd-table" rowspan="2">EMBALSE</th>
         </tr>
         <tr>
-          <th class="celd-table">VAR. VOL. <br>(HM3)</th>
+          <th class="celd-table">VAR. VOL. <br>(Hm³)</th>
           <th class="celd-table">% VAR. VOL.</th>
-          <th class="celd-table">VAR. VOL. <br>(HM3)</th>
+          <th class="celd-table">VAR. VOL. <br>(Hm³)</th>
           <th class="celd-table">% VAR. VOL.</th>
         </tr>
         <tr>
@@ -1739,10 +1739,10 @@ if (1) {
         <tr>
           <th style=" width: 100px;" class="text-celdas" rowspan="2">HIDROLÓGICA</th>
           <th style=" width: 90px; " class="text-celdas" colspan="2">
-            <p>VOLUMEN DISPONIBLE (HM3)</p>
+            <p>VOLUMEN DISPONIBLE (Hm³)</p>
           </th>
           <th style=" width: 90px;" class="text-celdas" colspan="2">
-            <p style="padding-top: 25px;">VARIACIÓN DEL VOLUMEN DISPONIBLE (HM3)</p>
+            <p style="padding-top: 25px;">VARIACIÓN DEL VOLUMEN DISPONIBLE (Hm³)</p>
           </th>
           <th style=" width: 90px;" class="text-celdas" colspan="2">
             <p style=" padding-top: 36px;">VARIACIÓN PORCENTUAL DE VOLUMEN HASTA HOY (%)</p>
@@ -1758,7 +1758,7 @@ if (1) {
           <th class="text-celdas" style="font-size: 12px; width: 90px;">Desde<?php echo date("d/m/Y", strtotime($fecha2)); ?></th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">Desde<?php echo date("d/m/Y", strtotime($fecha1)); ?></th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">Desde<?php echo date("d/m/Y", strtotime($fecha2)); ?></th>
-          <th class="text-celdas" style="font-size: 12px; width: 90px;">(Hm3)</th>
+          <th class="text-celdas" style="font-size: 12px; width: 90px;">(Hm³)</th>
           <th class="text-celdas" style="font-size: 12px; width: 90px;">(%)</th>
         </tr>
         <?php foreach ($variacion_total_op as $key => $value) { ?>

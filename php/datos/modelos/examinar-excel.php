@@ -248,14 +248,15 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
 
 
         $spreadsheet = IOFactory::load($ubicacion);
-        $hojas = $spreadsheet->getSheetNames();
+        echo "abrio";
+        //$hojas = $spreadsheet->getSheetNames();
 
         //$excel = PHPExcel_IOFactory::load($ubicacion);
 
         // Hojas del archivo
         //$hojas = $excel->getSheetNames();
 
-
+/*
 ?>
         <div class="table-responsive mb-3 mt-5">
             <table class="table align-items-center text-sm text-center table-sm" id="hojas-excel-table">
@@ -296,7 +297,7 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
         </div>
 
 <?php
-
+*/
     } else {
         echo "<h3>Error al subir el archivo.</h3>";
     }

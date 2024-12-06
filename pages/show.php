@@ -536,7 +536,7 @@ function explodeBat($value, $i = null)
                             <tr>
                               <th style="font-size: 12px; text-align:center">Cota <span>(m s.n.m.)</span></th>
                               <th style="font-size: 12px; text-align:center">Área <span></span>(ha)</th>
-                              <th style="font-size: 12px; text-align:center">Capacidad <span>(hm³)</span></th>
+                              <th style="font-size: 12px; text-align:center">Capacidad <span>(Hm³)</span></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -581,7 +581,7 @@ function explodeBat($value, $i = null)
                     <div class="px-2">Cota (m s.n.m)</div>
                   </div>
                   <div class="w-100 b-t">
-                    <div class="px-2">Volumen (hm³)</div>
+                    <div class="px-2">Volumen (Hm³)</div>
                   </div>
                   <div class="w-100 b-t">
                     <div class="px-2">Superficie (ha)</div>
@@ -604,7 +604,7 @@ function explodeBat($value, $i = null)
                     <div class="px-2">Cota (m s.n.m)</div>
                   </div>
                   <div class="w-100 b-t">
-                    <div class="px-2">Volumen (hm³)</div>
+                    <div class="px-2">Volumen (Hm³)</div>
                   </div>
                   <div class="w-100 b-t">
                     <div class="px-2">Superficie (ha)</div>
@@ -627,7 +627,7 @@ function explodeBat($value, $i = null)
                     <div class="px-2">Cota (m s.n.m)</div>
                   </div>
                   <div class="w-100 b-t">
-                    <div class="px-2">Volumen (hm³)</div>
+                    <div class="px-2">Volumen (Hm³)</div>
                   </div>
                   <div class="w-100 b-t b-b">
                     <div class="px-2">Superficie (ha)</div>

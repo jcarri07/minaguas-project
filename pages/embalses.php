@@ -1,4 +1,5 @@
-  <?php
+
+<?php
   require_once 'php/Conexion.php';
   require_once 'php/batimetria.php';
 
@@ -22,6 +23,7 @@
     $nombre = $row['P_Nombre'] . " " . $row['P_Apellido'];
     $encargados[$id] = $nombre;
   }
+
 
 
 
@@ -155,7 +157,8 @@
           <div class="card-header pb-0">
             <!-- <div class="row"> -->
             <!-- <div class="col-6 d-flex align-items-center"> -->
-            <h4 class="">EMBALSES</h4>
+            <!-- <h4 style="font-family: 'Calibri', sans-serif;">EMBALSES</h4> -->
+            <h4>EMBALSES</h4>
             <!-- </div> -->
             <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
