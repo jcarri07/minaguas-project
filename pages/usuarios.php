@@ -16,11 +16,11 @@ $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, conce
             tce.id <> '7' AND
             ce.concepto <> 'Subtotal'
           ORDER BY codigo ASC;";
-  $query_codigos = mysqli_query($conn, $sql);
+$query_codigos = mysqli_query($conn, $sql);
 
 $options_extraccion = '<option value="">Seleccione</option>';
 
-while($row = mysqli_fetch_array($query_codigos)){
+while ($row = mysqli_fetch_array($query_codigos)) {
   $options_extraccion .= '<option value="' . $row['id_codigo_extraccion'] . '"> ' . $row['name']  . ' (' . $row['codigo'] . ')</option>';
 }
 
@@ -37,15 +37,15 @@ closeConection($conn);
     <div class="modal-content">
       <div class="modal-body p-0">
         <div class="card card-plain">
-          
+
           <div class="card-header pb-0 text-left">
             <h3 class="font-weight-bolder text-primary text-gradient">Nuevo Usuario</h3>
             <button type="button" class="btn bg-gradient-primary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
             <!--<p class="mb-0">Enter your email and password to register</p>-->
           </div>
-          
+
           <div class="card-body pb-3">
-            <form id="form" role="form" >
+            <form id="form" role="form">
               <div class="mb-3">
                 <label>Nombre(s)</label>
                 <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" required>
@@ -56,7 +56,7 @@ closeConection($conn);
               </div>
               <div class="mb-3">
                 <label>Correo</label>
-                <input type="email" class="form-control" placeholder="usuario@correo.com" aria-label="Email" name="email"  required>
+                <input type="email" class="form-control" placeholder="usuario@correo.com" aria-label="Email" name="email" required>
               </div>
               <div class="row ">
                 <div class="mb-3 col-6">
@@ -74,23 +74,23 @@ closeConection($conn);
                       </div-->
               <div class="row ">
                 <div class="mb-3 col-6">
-                  <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="password" required>
+                  <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" autocomplete="new-password" name="password" required>
                 </div>
                 <div class="mb-3 col-6">
                   <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
                 </div>
 
               </div>
-              <?php if($_SESSION["Tipo"] == "SuperAdmin"){?>
-              
-                <label id="" class="form-label">Tipo</label>
-                            <select name="tipo" class="form-select" required>
-                                <option value="Admin">Administrador</option>
-                                <option value="User">Usuario</option>
-                                <option value="Visitante">Visitante</option>
-                            </select>
+              <?php if ($_SESSION["Tipo"] == "SuperAdmin") { ?>
 
-              <?php }?>
+                <label id="" class="form-label">Tipo</label>
+                <select name="tipo" class="form-select" required>
+                  <option value="Admin">Administrador</option>
+                  <option value="User">Usuario</option>
+                  <option value="Visitante">Visitante</option>
+                </select>
+
+              <?php } ?>
 
 
               <!--div class="form-check form-check-info text-start">
@@ -143,7 +143,7 @@ closeConection($conn);
               <div class="row ">
                 <div class="mb-2 col-6">
                   <label>Teléfono</label>
-                  <input type="text" class="form-control" placeholder="00001234567" id="Etelefono" aria-label="telefono" pattern="[0-9]{1,11}" maxlength="11" name="Etelefono" required >
+                  <input type="text" class="form-control" placeholder="00001234567" id="Etelefono" aria-label="telefono" pattern="[0-9]{1,11}" maxlength="11" name="Etelefono" required>
                 </div>
                 <div class="mb-2 col-6">
                   <label>Cédula</label>
@@ -163,16 +163,16 @@ closeConection($conn);
                 <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" value="">
               </div>
 
-              <?php if($_SESSION["Tipo"] == "SuperAdmin"){?>
-              
-              <label id="" class="form-label">Tipo</label>
-                          <select name="Etipo" class="form-select" required>
-                              <option value="Admin">Administrador</option>
-                              <option value="User">Usuario</option>
-                              <option value="Visitante">Visitante</option>
-                          </select>
+              <?php if ($_SESSION["Tipo"] == "SuperAdmin") { ?>
 
-            <?php }?>
+                <label id="" class="form-label">Tipo</label>
+                <select name="Etipo" class="form-select" required>
+                  <option value="Admin">Administrador</option>
+                  <option value="User">Usuario</option>
+                  <option value="Visitante">Visitante</option>
+                </select>
+
+              <?php } ?>
               <!--div class="mb-3 col-6">
                   <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="Econfirmar" required>
                 </div-->
@@ -353,14 +353,14 @@ closeConection($conn);
   });
 
 
-  function Modaledit(p_nom, s_nom, p_ape, s_ape, pass, ced, correo, telf,tipo) {
+  function Modaledit(p_nom, s_nom, p_ape, s_ape, pass, ced, correo, telf, tipo) {
     $("[name='Enombres']").val(p_nom + ' ' + s_nom);
     $("[name='Eapellidos']").val(p_ape + ' ' + s_ape);
     $("[name='Etelefono']").val(telf);
     $("[name='Ecedula']").val(ced);
     $("[name='Ecedula2']").val(ced);
     $("[name='Eemail']").val(correo);
-    $("[name='Etipo'] option[value="+tipo+"]").prop('selected', true);
+    $("[name='Etipo'] option[value=" + tipo + "]").prop('selected', true);
     // $("[name='Epassword']").val(pass);
     $("#edit-user").modal("show");
 
@@ -493,73 +493,73 @@ closeConection($conn);
   }
 
 
-  function openModalDetalles(id_registro, fecha, hora, cota, extraccion){
-      $("#id_aux").text(id_registro);
-      //$("#opc_aux").text("edit");
+  function openModalDetalles(id_registro, fecha, hora, cota, extraccion) {
+    $("#id_aux").text(id_registro);
+    //$("#opc_aux").text("edit");
 
-      $(".removeRow").attr("disabled", false);
-      $("#btn-open-modal-import-data").hide();
+    $(".removeRow").attr("disabled", false);
+    $("#btn-open-modal-import-data").hide();
 
-      $("#add .title").text("Detalles del Reporte de la Extracción");
-      $(".removeRow").each(function( index ) {
-        $(this).trigger("click");
-      });
+    $("#add .title").text("Detalles del Reporte de la Extracción");
+    $(".removeRow").each(function(index) {
+      $(this).trigger("click");
+    });
 
-      $("#fecha").val(fecha);
-      $("#hora").val(hora);
-      $("#valor_cota").val(cota);
-      var extraccion_array = extraccion.split(";");
-      if(extraccion_array.length > 1){
-        for(var i = 0 ; i < extraccion_array.length - 1 ; i++){
-          $("#addRows").trigger("click");
-        }
+    $("#fecha").val(fecha);
+    $("#hora").val(hora);
+    $("#valor_cota").val(cota);
+    var extraccion_array = extraccion.split(";");
+    if (extraccion_array.length > 1) {
+      for (var i = 0; i < extraccion_array.length - 1; i++) {
+        $("#addRows").trigger("click");
       }
+    }
 
-      $(".removeRow").attr("disabled", true);
+    $(".removeRow").attr("disabled", true);
 
-      //var ids_rows_extracciones = [];
-      $("select[name='tipo_extraccion[]']").each(function(i) {
-        var extraccion_aux = extraccion_array[i].split("&");
+    //var ids_rows_extracciones = [];
+    $("select[name='tipo_extraccion[]']").each(function(i) {
+      var extraccion_aux = extraccion_array[i].split("&");
 
-        this.value = extraccion_aux[0];
-        $(this).trigger("change");
-        var row = this.id.replace("tipo_extraccion_", "");
+      this.value = extraccion_aux[0];
+      $(this).trigger("change");
+      var row = this.id.replace("tipo_extraccion_", "");
 
-        var valor_extraccion = extraccion_aux[1];
-        if(this.value == "30") {
-          if($.isNumeric(extraccion_aux[1])) {
-            valor_extraccion = extraccion_aux[1] + "%";
-            if(extraccion_aux[1] < 1) {
-              valor_extraccion = (extraccion_aux[1] * 100) + "%";
-            }
+      var valor_extraccion = extraccion_aux[1];
+      if (this.value == "30") {
+        if ($.isNumeric(extraccion_aux[1])) {
+          valor_extraccion = extraccion_aux[1] + "%";
+          if (extraccion_aux[1] < 1) {
+            valor_extraccion = (extraccion_aux[1] * 100) + "%";
           }
         }
-        if(this.value == "31") {
-          if($.isNumeric(extraccion_aux[1])) 
-            valor_extraccion = Number(extraccion_aux[1]).toFixed(4);
-        }
-        if( this.value != "30" && this.value != "31" && $.isNumeric(extraccion_aux[1]) )
-          valor_extraccion = Number(extraccion_aux[1]).toFixed(3);
-        $("#valor_extraccion_" + row).val(valor_extraccion);
+      }
+      if (this.value == "31") {
+        if ($.isNumeric(extraccion_aux[1]))
+          valor_extraccion = Number(extraccion_aux[1]).toFixed(4);
+      }
+      if (this.value != "30" && this.value != "31" && $.isNumeric(extraccion_aux[1]))
+        valor_extraccion = Number(extraccion_aux[1]).toFixed(3);
+      $("#valor_extraccion_" + row).val(valor_extraccion);
 
-        $(this).attr("disabled", true);
-        $("#valor_extraccion_" + row).attr("disabled", true);
+      $(this).attr("disabled", true);
+      $("#valor_extraccion_" + row).attr("disabled", true);
 
-        //En este atributo se guarda el id del detalle de la extraccion en caso de editar
-        //$(this).attr("id_detalle_edit", extraccion_aux[2]);
-      });
+      //En este atributo se guarda el id del detalle de la extraccion en caso de editar
+      //$(this).attr("id_detalle_edit", extraccion_aux[2]);
+    });
 
-      $("#valor_cota").attr("disabled", true);
+    $("#valor_cota").attr("disabled", true);
 
-      $("#add .text-retraso").hide();
-      $("#add .btn-submit").hide();
-      $("#add .btn-add-extraccion").hide();
-      $("#add .btn-edit").show();
-      $("#add .btn-edit").attr("onclick", "$('#modal-details').modal('show')");
-      $("#add .btn-edit").text("Atrás");
-      $('#add').modal('show');
+    $("#add .text-retraso").hide();
+    $("#add .btn-submit").hide();
+    $("#add .btn-add-extraccion").hide();
+    $("#add .btn-edit").show();
+    $("#add .btn-edit").attr("onclick", "$('#modal-details').modal('show')");
+    $("#add .btn-edit").text("Atrás");
+    $('#add').modal('show');
 
-    }
+  }
 
   var count = 1;
   $(document).on('click', '#addRows', function() {
@@ -586,137 +586,290 @@ closeConection($conn);
   });
 
   $(document).ready(function() {
+    $("[name='nombres']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce un Nombre de usuario.');
+      } else if (this.validity.tooShort) {
+        this.setCustomValidity('El nombre de usuario debe tener al menos 5 caracteres.');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
+      this.setCustomValidity('');
+    });
+    $("[name='apellidos']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce un Apellido de usuario.');
+      } else if (this.validity.tooShort) {
+        this.setCustomValidity('El nombre de usuario debe tener al menos 5 caracteres.');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
+      this.setCustomValidity('');
+    });
+
+    // Validar "Correo electrónico"
+    $("[name='email']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce tu correo electrónico.');
+      } else if (this.validity.typeMismatch) {
+        this.setCustomValidity('Por favor, introduce un correo electrónico válido. (Ej: ejemplo@ejemplo.com)');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
+      this.setCustomValidity('');
+    });
+    $("[name='cedula']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce la cedula.');
+      } else if (this.validity.typeMismatch) {
+        this.setCustomValidity('Por favor, introduce una cedula con formato válido entre 5 y 8 caracteres.');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
+      this.setCustomValidity('');
+    });
+    $("[name='telefono']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce un numero de telefono.');
+      } else if (this.validity.typeMismatch) {
+        this.setCustomValidity('Por favor, introduce un numero de telefono válido de 11 caracteres. (Ej: 04121234567)');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
+      this.setCustomValidity('');
+    });
+    $("[name='password']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce una contraseña.');
+      } else if (this.validity.typeMismatch) {
+        this.setCustomValidity('Por favor, introduce un correo electrónico válido. (Ej: ejemplo@ejemplo.com)');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
+      this.setCustomValidity('');
+    });
+
+    $("[name='confirmar']").on('input', function() {
+      const password = $("[name='password']").val();
+      if ($(this).val() !== password) {
+        this.setCustomValidity('Las contraseñas no coinciden.');
+      } else {
+        this.setCustomValidity('');
+      }
+    });
 
     $("#form").submit(function(e) {
       e.preventDefault();
 
-      
-        var values = new FormData();
 
-        values.append("nombre", $("[name='nombres']").prop("value"));
-        values.append("apellido", $("[name='apellidos']").prop("value"));
-        values.append("telefono", $("[name='telefono']").prop("value"));
-        values.append("cedula", $("[name='cedula']").prop("value"));
-        values.append("email", $("[name='email']").prop("value"));
-        values.append("ident", 'editarU');
-        values.append("tipo", <?php if($_SESSION["Tipo"] == "SuperAdmin"){ ?>$("[name='tipo'] option:selected").val()<?php }else{ ?>"User"<?php } ?>);
-        
-        values.append("usuario", $("[name='usuario']").prop("value"));
-        values.append("pass", $("[name='password']").prop("value"));
-        console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
-          return n != ''
-        }).length);
+      var values = new FormData();
 
-        $.ajax({
-          url: 'php/login/nuevo-usuario.php',
-          type: 'POST',
-          data: values,
-          cache: false,
-          contentType: false,
-          processData: false,
-          success: function(response) {
+      values.append("nombre", $("[name='nombres']").prop("value"));
+      values.append("apellido", $("[name='apellidos']").prop("value"));
+      values.append("telefono", $("[name='telefono']").prop("value"));
+      values.append("cedula", $("[name='cedula']").prop("value"));
+      values.append("email", $("[name='email']").prop("value"));
+      values.append("ident", 'editarU');
+      values.append("tipo", <?php if ($_SESSION["Tipo"] == "SuperAdmin") { ?>$("[name='tipo'] option:selected").val() <?php } else { ?> "User"
+      <?php } ?>);
 
-            switch (response) {
-              case "si":
-                $('#new-user').modal('hide');
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Usuario Registrado',
-                  showConfirmButton: false,
-                  timer: 1500
-                }); //CUANDO REGISTRA EXITOSAMENTE
-                setTimeout(function() {
-                  window.location.reload();
-                }, 1500);
-                break;
-              case "no":
-                $('#new-user').modal('hide');
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Usuario no Registrado',
-                  text: 'Problema de comunicación con el servidor, intente más tarde',
-                  confirmButtonText: 'Aceptar',
-                  confirmButtonColor: '#01a9ac',
-                }); //ERROR AL REGISTRAR
-                console.log("no");
-                break;
-              case "existe_cedula":
-                $('#new-user').modal('hide');
-                Swal.fire({
-                  icon: 'warning',
-                  title: 'Usuario no Registrado',
-                  text: 'El número de cédula ya existe',
-                  confirmButtonText: 'Aceptar',
-                  confirmButtonColor: '#01a9ac',
-                }); //CEDULA EXISTENTE
-                console.log("no ced");
-                break;
-              case "existe_usuario":
-                $('#new-user').modal('hide');
-                Swal.fire({
-                  icon: 'warning',
-                  title: 'Usuario no Registrado',
-                  text: 'El nombre de usuario ya existe',
-                  confirmButtonText: 'Aceptar',
-                  confirmButtonColor: '#01a9ac',
-                }); //NOMBRE DE USUARIO EXISTENTE
-                console.log("no usu");
-                break;
-              default:
-                $('#new-user').modal('hide');
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Error Inesperado',
-                  text: toString(response),
-                  confirmButtonText: 'Aceptar',
-                  confirmButtonColor: '#01a9ac',
-                });
-                console.log(response);
-                break;
-            }
+      values.append("usuario", $("[name='usuario']").prop("value"));
+      values.append("pass", $("[name='password']").prop("value"));
+      console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
+        return n != ''
+      }).length);
 
-          },
-          error: function(response) {
-            $('#new-user').modal('hide');
-            Swal.fire({
-              icon: 'error',
-              title: 'Error Inesperado',
-              text: toString(response),
-              confirmButtonText: 'Aceptar',
-              confirmButtonColor: '#01a9ac',
-            });
-            console.log("err2");
+      $.ajax({
+        url: 'php/login/nuevo-usuario.php',
+        type: 'POST',
+        data: values,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+
+          switch (response) {
+            case "si":
+              //$('#new-user').modal('hide');
+              Swal.fire({
+                icon: 'success',
+                title: 'Usuario Registrado',
+                showConfirmButton: false,
+                timer: 1500
+
+              }); //CUANDO REGISTRA EXITOSAMENTE
+              setTimeout(function() {
+                window.location.reload();
+              }, 1500);
+              break;
+            case "no":
+              //$('#new-user').modal('hide');
+              Swal.fire({
+                icon: 'error',
+                title: 'Usuario no Registrado',
+                text: 'Problema de comunicación con el servidor, intente más tarde',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac'
+
+              }); //ERROR AL REGISTRAR
+              console.log("no");
+              break;
+            case "existe_cedula":
+              //$('#new-user').modal('hide');
+              Swal.fire({
+                icon: 'warning',
+                title: 'Usuario no Registrado',
+                text: 'El número de cédula ya existe',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac'
+
+              }); //CEDULA EXISTENTE
+              console.log("no ced");
+              break;
+            case "existe_usuario":
+              //$('#new-user').modal('hide');
+              Swal.fire({
+                icon: 'warning',
+                title: 'Usuario no Registrado',
+                text: 'El nombre de usuario ya existe',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac'
+
+              }); //NOMBRE DE USUARIO EXISTENTE
+              console.log("no usu");
+              break;
+            default:
+              //$('#new-user').modal('hide');
+              Swal.fire({
+                icon: 'error',
+                title: 'Error Inesperado',
+                text: toString(response),
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#01a9ac'
+
+              });
+              console.log(response);
+              break;
           }
-        });
-      
+
+        },
+        error: function(response) {
+          //$('#new-user').modal('hide');
+          Swal.fire({
+            icon: 'error',
+            title: 'Error Inesperado',
+            text: toString(response),
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#01a9ac'
+
+          });
+          console.log("err2");
+        }
+      });
+
+
+
 
     });
 
     function permitirSoloNumeros(inputId) {
-    const input = document.getElementById(inputId);
+      const input = document.getElementById(inputId);
 
-    if (!input) {
+      if (!input) {
         console.error(`No se encontró un elemento con el ID: ${inputId}`);
         return;
-    }
+      }
 
-    // Detectar cambios en tiempo real
-    input.addEventListener('input', function () {
+      // Detectar cambios en tiempo real
+      input.addEventListener('input', function() {
         // Eliminar cualquier carácter que no sea un número
         this.value = this.value.replace(/[^0-9]/g, '');
-    });
+      });
 
-    // Evitar que el usuario pegue contenido no válido
-    input.addEventListener('paste', function (event) {
+      // Evitar que el usuario pegue contenido no válido
+      input.addEventListener('paste', function(event) {
         event.preventDefault();
         const pasteData = (event.clipboardData || window.clipboardData).getData('text');
         this.value += pasteData.replace(/[^0-9]/g, '');
-    });
-  }
-  $("[name='Ecedula']").change(permitirSoloNumeros("Ecedula"));
-  $("[name='cedula']").change(permitirSoloNumeros("cedula"));
-  $("[name='Etelefono']").change(permitirSoloNumeros("Etelefono"));
-  $("[name='telefono']").change(permitirSoloNumeros("telefono"));
+      });
+    }
+    $("[name='Ecedula']").change(permitirSoloNumeros("Ecedula"));
+    $("[name='cedula']").change(permitirSoloNumeros("cedula"));
+    $("[name='Etelefono']").change(permitirSoloNumeros("Etelefono"));
+    $("[name='telefono']").change(permitirSoloNumeros("telefono"));
+
+    $("[name='Enombres']").on('invalid', function () {
+    if (this.validity.valueMissing) {
+      this.setCustomValidity('Por favor, introduce un Nombre de usuario.');
+    } else if (this.validity.tooShort) {
+      this.setCustomValidity('El nombre de usuario debe tener al menos 5 caracteres.');
+    } else {
+      this.setCustomValidity('');
+    }
+  }).on('input', function () {
+    this.setCustomValidity('');
+  });
+  $("[name='Eapellidos']").on('invalid', function () {
+    if (this.validity.valueMissing) {
+      this.setCustomValidity('Por favor, introduce un Apellido de usuario.');
+    } else if (this.validity.tooShort) {
+      this.setCustomValidity('El nombre de usuario debe tener al menos 5 caracteres.');
+    } else {
+      this.setCustomValidity('');
+    }
+  }).on('input', function () {
+    this.setCustomValidity('');
+  });
+
+  // Validar "Correo electrónico"
+  $("[name='Eemail']").on('invalid', function () {
+    if (this.validity.valueMissing) {
+      this.setCustomValidity('Por favor, introduce tu correo electrónico.');
+    } else if (this.validity.typeMismatch) {
+      this.setCustomValidity('Por favor, introduce un correo electrónico válido. (Ej: ejemplo@ejemplo.com)');
+    } else {
+      this.setCustomValidity('');
+    }
+  }).on('input', function () {
+    this.setCustomValidity('');
+  });
+  $("[name='Ecedula']").on('invalid', function () {
+    if (this.validity.valueMissing) {
+      this.setCustomValidity('Por favor, introduce la cedula.');
+    } else if (this.validity.typeMismatch) {
+      this.setCustomValidity('Por favor, introduce una cedula con formato válido entre 5 y 8 caracteres.');
+    } else {
+      this.setCustomValidity('');
+    }
+  }).on('input', function () {
+    this.setCustomValidity('');
+  });
+  $("[name='Etelefono']").on('invalid', function () {
+    if (this.validity.valueMissing) {
+      this.setCustomValidity('Por favor, introduce un numero de telefono.');
+    } else if (this.validity.typeMismatch) {
+      this.setCustomValidity('Por favor, introduce un numero de telefono válido de 11 caracteres. (Ej: 04121234567)');
+    } else {
+      this.setCustomValidity('');
+    }
+  }).on('input', function () {
+    this.setCustomValidity('');
+  });
+  $("[name='Epassword']").on('invalid', function () {
+    if (this.validity.valueMissing) {
+      this.setCustomValidity('Por favor, introduce una contraseña.');
+    } else {
+      this.setCustomValidity('');
+    }
+  }).on('input', function () {
+    this.setCustomValidity('');
+  });
 
     $("#form2").submit(function(e) {
       e.preventDefault();
@@ -732,9 +885,10 @@ closeConection($conn);
       //values.append("usuario", $("[name='usuario']").prop("value"));
       values.append("pass", $("[name='Epassword']").prop("value"));
       values.append("ident", 'editarU');
-      
-      values.append("tipo", <?php if($_SESSION["Tipo"] == "SuperAdmin"){ ?>$("[name='Etipo'] option:selected").val()<?php }else{ ?>"User"<?php } ?>);
-      
+
+      values.append("tipo", <?php if ($_SESSION["Tipo"] == "SuperAdmin") { ?>$("[name='Etipo'] option:selected").val() <?php } else { ?> "User"
+      <?php } ?>);
+
       /*console.log($("[name='nombres']").prop("value").split(' ').filter(function(n) {
         return n != ''
       }).length);*/
@@ -750,7 +904,7 @@ closeConection($conn);
 
           switch (response) {
             case "si":
-              $('#edit-user').modal('hide');
+              //$('#edit-user').modal('hide');
               Swal.fire({
                 icon: 'success',
                 title: 'Usuario Editado',
@@ -762,18 +916,18 @@ closeConection($conn);
               }, 1500);
               break;
             case "no":
-              $('#edit-user').modal('hide');
+              //$('#edit-user').modal('hide');
               Swal.fire({
                 icon: 'error',
                 title: 'Usuario no Editado',
                 text: 'Problema de comunicación con el servidor, intente más tarde',
                 confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#01a9ac',
+                confirmButtonColor: '#01a9ac', //
               }); //ERROR AL REGISTRAR
               console.log("no");
               break;
             case "existe_cedula":
-              $('#edit-user').modal('hide');
+              //$('#edit-user').modal('hide');
               Swal.fire({
                 icon: 'warning',
                 title: 'Usuario no Editado',
@@ -784,7 +938,7 @@ closeConection($conn);
               console.log("no ced");
               break;
             case "existe_usuario":
-              $('#edit-user').modal('hide');
+              //$('#edit-user').modal('hide');
               Swal.fire({
                 icon: 'warning',
                 title: 'Usuario no Editado',
@@ -795,7 +949,7 @@ closeConection($conn);
               console.log("no usu");
               break;
             default:
-              $('#edit-user').modal('hide');
+              //$('#edit-user').modal('hide');
               Swal.fire({
                 icon: 'error',
                 title: 'Error Inesperado',
