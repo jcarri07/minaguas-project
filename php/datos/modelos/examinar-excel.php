@@ -236,25 +236,33 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     unlink("temp/" . $nombre_archivo);
 } else {
 
-    if (isset($_FILES['file'])) {
+
     if ($_FILES['file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['file']['tmp_name'])) {
 
         //Ubic temporal
         $nombre_temporal = $_FILES['file']['tmp_name'];
         $name = $_FILES['file']['name'];
         $ubicacion = 'temp/' . $name;
-        //move_uploaded_file($nombre_temporal, $ubicacion);
+        move_uploaded_file($nombre_temporal, $ubicacion);
+
+        $reader = IOFactory::createReader('Xlsx');
+        $reader->setReadDataOnly(true); // Ignorar formato, leer solo datos
+        $spreadsheet = $reader->load($ubicacion);
+        echo 'abrio';
 
         //$excel = PHPExcel_IOFactory::load($ubicacion);
 
-        if(move_uploaded_file($nombre_temporal, $ubicacion)) {
+        /*if(move_uploaded_file($nombre_temporal, $ubicacion)) {
             try {
-                $spreadsheet = IOFactory::load($ubicacion);
+                //$spreadsheet = IOFactory::load($ubicacion);
+                $reader = IOFactory::createReader('Xlsx');
+                $reader->setReadDataOnly(true); // Ignorar formato, leer solo datos
+                $spreadsheet = $reader->load($ubicacion);
                 echo "abrio";
             } catch (Exception $e) {
                 echo 'Error al cargar el archivo: ',  $e->getMessage();
             }
-        }
+        }*/
         
         //$hojas = $spreadsheet->getSheetNames();
 
@@ -308,10 +316,6 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     } else {
         echo "<h3>Error al subir el archivo.</h3>";
     }
-}
-else {
-    echo "<h3>No hay archivo a subir.</h3>";
-}
 
     // Delete file temporal
     //unlink($ubicacion);
