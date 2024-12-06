@@ -113,7 +113,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
         <div class="card-header pb-0">
           <!-- <div class="row"> -->
           <!-- <div class="col-6 d-flex align-items-center"> -->
-          <h4 class="">CARGA DE DATOS</h4>
+          <h4>CARGA DE DATOS</h4>
           <!-- </div> -->
           <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>

@@ -520,7 +520,7 @@ closeConection($conn);
     <tr>
       <td class="subtitle">1.3.- Área de la cuenca (ha)</td>
       <td class="value"><?php echo $AREA_CUENCA ?></td>
-      <td class="subtitle">1.4.- Escurrimiento medio (hm³)</td>
+      <td class="subtitle">1.4.- Escurrimiento medio (Hm³)</td>
       <td class="value"><?php echo $ESCURRIMIENTO ?></td>
     </tr>
   </table>
@@ -590,7 +590,7 @@ closeConection($conn);
       <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA3), 2, ',', '.'); ?></td>
     </tr>
     <tr>
-      <td class="subtitle">3.2.3.2.- Volumen (hm³)</td>
+      <td class="subtitle">3.2.3.2.- Volumen (Hm³)</td>
       <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN3), 2, ',', '.'); ?></td>
       <td><?php echo number_format($SECOND_VOLUMEN3, 2, ',', '.'); ?></td>
     </tr>
@@ -605,7 +605,7 @@ closeConection($conn);
       <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA2), 2, ',', '.'); ?></td>
     </tr>
     <tr>
-      <td class="subtitle">3.2.2.2.- Volumen (hm³)</td>
+      <td class="subtitle">3.2.2.2.- Volumen (Hm³)</td>
       <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN2), 2, ',', '.'); ?></td>
       <td><?php echo number_format($SECOND_VOLUMEN2, 2, ',', '.'); ?></td>
     </tr>
@@ -620,7 +620,7 @@ closeConection($conn);
       <td colspan="2" style="text-align: center;"><?php echo number_format(floatval($COTA), 2, ',', '.'); ?></td>
     </tr>
     <tr>
-      <td class="subtitle">3.2.1.2.- Volumen (hm³)</td>
+      <td class="subtitle">3.2.1.2.- Volumen (Hm³)</td>
       <td style="width: 130px;"><?php echo number_format(floatval($FIRTS_VOLUMEN), 2, ',', '.'); ?></td>
       <td><?php echo number_format($SECOND_VOLUMEN, 2, ',', '.'); ?></td>
     </tr>
@@ -630,7 +630,7 @@ closeConection($conn);
       <td><?php echo number_format($SECOND_SUPERFICIE, 2, ',', '.'); ?></td>
     </tr>
     <tr>
-      <td class="subtitle">3.2.4.- Capacidad Útil (hm³)</td>
+      <td class="subtitle">3.2.4.- Capacidad Útil (Hm³)</td>
       <td style="width: 180px;"><?php echo number_format(floatval($CAPACIDAD_UTIL), 2, ',', '.'); ?></td>
       <td colspan="2"><?php echo number_format($CAPACIDAD_UTIL2, 2, ',', '.'); ?></td>
     </tr>

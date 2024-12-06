@@ -1459,7 +1459,7 @@ $ruta_mapas = "../../assets/img/temp/";
           <th class="text-celd" colspan="2">DESDE fecha</th>
         </tr>
         <tr>
-          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(HM3)</th>
+          <th class="text-celd" style="height: 20px;">VAR. VOL. <br>(Hm³)</th>
           <th class="text-celd" rowspan="">% VAR. <br> VOL.</th>
         </tr>
 
@@ -1506,7 +1506,7 @@ $ruta_mapas = "../../assets/img/temp/";
       <table>
         <tr>
           <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">VAR. VOL. <br> (HM3)</th>
+          <th class="text-celd">VAR. VOL. <br> (Hm³)</th>
           <th class="text-celd">% VAR. VOL.</th>
         </tr>
         <tr>
@@ -1527,7 +1527,7 @@ $ruta_mapas = "../../assets/img/temp/";
       <table>
         <tr>
           <th class="text-celd">EMBALSE</th>
-          <th class="text-celd">VAR. VOL. <br> (HM3)</th>
+          <th class="text-celd">VAR. VOL. <br> (Hm³)</th>
           <th class="text-celd">% VAR. VOL.</th>
         </tr>
         <tr>
@@ -1570,9 +1570,9 @@ $ruta_mapas = "../../assets/img/temp/";
         <th style="font-size: 12px" colspan="2">DESDE 01/JUN/2023</th>
       </tr>
       <tr>
-        <th class="celd-table">VAR. VOL. <br>(HM3)</th>
+        <th class="celd-table">VAR. VOL. <br>(Hm³)</th>
         <th class="celd-table">% VAR. VOL.</th>
-        <th class="celd-table">VAR. VOL. <br>(HM3)</th>
+        <th class="celd-table">VAR. VOL. <br>(Hm³)</th>
         <th class="celd-table">% VAR. VOL.</th>
       </tr>
       <tr>
@@ -1604,9 +1604,9 @@ $ruta_mapas = "../../assets/img/temp/";
           <th class="celd-table" rowspan="2">EMBALSE</th>
         </tr>
         <tr>
-          <th class="celd-table">VAR. VOL. <br>(HM3)</th>
+          <th class="celd-table">VAR. VOL. <br>(Hm³)</th>
           <th class="celd-table">% VAR. VOL.</th>
-          <th class="celd-table">VAR. VOL. <br>(HM3)</th>
+          <th class="celd-table">VAR. VOL. <br>(Hm³)</th>
           <th class="celd-table">% VAR. VOL.</th>
         </tr>
         <tr>
