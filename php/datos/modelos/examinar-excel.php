@@ -236,7 +236,7 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     unlink("temp/" . $nombre_archivo);
 } else {
 
-    if ($_FILES['file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['file']['tmp_name'])) {
+    if (isset($_FILES['file']) && $_FILES['file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['file']['tmp_name'])) {
 
         //Ubic temporal
         $nombre_temporal = $_FILES['file']['tmp_name'];
