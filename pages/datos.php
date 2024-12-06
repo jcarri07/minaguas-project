@@ -4,8 +4,7 @@
 </script>
 
 <?php
-ini_set('post_max_size', '400M');
-ini_set('upload_max_filesize', '400M');
+
 require_once 'php/Conexion.php';
 
 $add_where = "";
