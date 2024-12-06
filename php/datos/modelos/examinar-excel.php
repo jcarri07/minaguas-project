@@ -247,8 +247,12 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
         //$excel = PHPExcel_IOFactory::load($ubicacion);
 
 
-        $spreadsheet = IOFactory::load($ubicacion);
-        echo "abrio";
+        try {
+            $spreadsheet = IOFactory::load($ubicacion);
+            echo "abrio";
+        } catch (Exception $e) {
+            echo 'Error al cargar el archivo: ',  $e->getMessage();
+        }
         //$hojas = $spreadsheet->getSheetNames();
 
         //$excel = PHPExcel_IOFactory::load($ubicacion);
