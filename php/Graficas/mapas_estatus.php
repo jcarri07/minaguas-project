@@ -15,7 +15,7 @@ $embalses_porcentaje = [];
 $cantidades_p = [0, 0, 0, 0, 0];
 $condiciones = [];
 
-$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo';");
+$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo' and 1 in (proposito);");
 
 while ($row = mysqli_fetch_array($queryEmbalses)) {
     //Saco la ubicacion de los embalses.
@@ -76,7 +76,7 @@ $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_
     WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_sequia' AND h.estatus = 'activo' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_sequia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
     LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_sequia'
-    WHERE e.estatus = 'activo' 
+    WHERE e.estatus = 'activo' and 1 in (e.proposito)
     GROUP BY id_embalse;");
 
 $variacion_sequia = [];
@@ -123,7 +123,7 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_lluvia' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
     LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_lluvia'
-    WHERE e.estatus = 'activo' 
+    WHERE e.estatus = 'activo' and 1 in (e.proposito)
     GROUP BY id_embalse;");
 
 $variacion_lluvia = [];
@@ -166,6 +166,74 @@ $positions_markers = json_decode($positions_markers["configuracion"], true);
 
 $valores = array($cantidades_p, $cantidades_sequia, $cantidades_lluvia);
 $valores = json_encode($valores, true);
+
+$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,e.norte, e.este,e.huso,MAX(d.fecha) AS fech,               (
+    SELECT SUM(extraccion)
+            FROM detalles_extraccion dex, codigo_extraccion ce
+            WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
+               FROM datos_embalse h 
+               WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0  LIMIT 1) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
+          ) AS 'extraccion',
+          e.nombre_embalse, (SELECT cota_actual 
+               FROM datos_embalse h 
+               WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
+          FROM embalses e
+    LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+    WHERE e.estatus = 'activo' and 1 in (e.proposito)
+    GROUP BY id_embalse 
+    ORDER BY id_embalse ASC;");
+
+$datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
+
+$queryReg =  mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
+$totalreg = [];
+
+while ($reg = mysqli_fetch_array($queryReg)) {
+    $totalreg[$reg["id_region"]] = $reg["region"];
+}
+
+$embalse_abast = [];
+$regiones = [];
+$countReg = [];
+$row = 0;
+
+while ($row < count($datos_embalses)) {
+    $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
+    // CALCULO DE ABASTECIMIENTO!!
+
+    $abastecimiento = 0;
+    if ($datos_embalses[$row]["extraccion"] > 0) {
+        $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
+    }
+    if ($datos_embalses[$row]["extraccion"] == NULL) {
+        $abastecimiento = 0;
+    }
+
+    if (!in_array($totalreg[$datos_embalses[$row]["region"]], $regiones)) {
+        array_push($regiones, $totalreg[$datos_embalses[$row]["region"]]);
+        $countReg[$totalreg[$datos_embalses[$row]["region"]]] = 1;
+    } else {
+        $countReg[$totalreg[$datos_embalses[$row]["region"]]] += 1;
+    }
+
+    $icono = "f_igual";
+
+    if (($abastecimiento) <= 4) {
+        $icono = "rojo";
+    } else if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
+        $icono = "naranja";
+    } else if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
+        $icono = "amarillo";
+    } else if (($abastecimiento) > 12) {
+        $icono = "verde";
+    }
+
+    $array = [$datos_embalses[$row]["norte"], $datos_embalses[$row]["este"], $datos_embalses[$row]["huso"], $totalreg[$datos_embalses[$row]["region"]],  $datos_embalses[$row]["nombre_embalse"], $datos_embalses[$row]["id_embalse"], $abastecimiento, $icono];
+    array_push($embalse_abast, $array);
+
+    $row++;
+}
+
 // var_dump(json_encode($condiciones));
 // var_dump($embalses_porcentaje);
 // var_dump(implode(" - ",$cantidades_p));
@@ -201,6 +269,11 @@ $valores = json_encode($valores, true);
     }
 
     #mapa-periodo-dos {
+        width: 1200px;
+        height: 642px;
+    }
+
+    #mapa-abastecimiento {
         width: 1200px;
         height: 642px;
     }
@@ -420,6 +493,7 @@ $valores = json_encode($valores, true);
     <br>
     <!-- Variacion de volumen respecto a la fecha de lluvia -->
     <div id="mapa-periodo-dos" style="position:absolute; top:-100%;"></div>
+    <div id="mapa-abastecimiento" style="position:absolute; top:-100%;"></div>
     <div class="loaderPDF">
         <div class="lds-dual-ring"></div>
     </div>
@@ -507,7 +581,47 @@ $valores = json_encode($valores, true);
         iconUrl: '../../assets/icons/f-igual.png'
     })
 
+    var rojo = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 15px; height: 15px; background-color: #ff0000; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var naranja = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 15px; height: 15px; background-color: #ffaa00; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var amarillo = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 15px; height: 15px; background-color: #ffff00; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var verde = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 15px; height: 15px; background-color: #70ad47; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
 
+    var rojo_small = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 10px; height: 10px; background-color: #ff0000; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var naranja_small = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 10px; height: 10px; background-color: #ffaa00; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var amarillo_small = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 10px; height: 10px; background-color: #ffff00; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var verde_small = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 10px; height: 10px; background-color: #70ad47; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
     // Cargar el archivo GeoJSON usando fetch
 
     var highlightStyle = {
@@ -628,6 +742,14 @@ $valores = json_encode($valores, true);
         attribution: '© OpenStreetMap contributors'
     }).addTo(mapa_per_dos);
 
+    var mapa_abastecimiento = L.map('mapa-abastecimiento', {
+        zoomControl: false,
+    }).setView([9, -67], 7);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(mapa_abastecimiento);
+
 
     fetch('../../pages/venezuela.geojson')
         .then(response => response.json())
@@ -675,6 +797,11 @@ $valores = json_encode($valores, true);
                 // onEachFeature: onEachFeature,
             }).addTo(mapa_per_dos);
 
+            L.geoJSON(geoJsonWithOffset, {
+                style: highlightStyle,
+                // onEachFeature: onEachFeature,
+            }).addTo(mapa_abastecimiento);
+
             L.geoJSON(data, {
                 style: {
                     ...highlightStyle,
@@ -698,6 +825,14 @@ $valores = json_encode($valores, true);
                 },
                 onEachFeature: onEachFeature,
             }).addTo(mapa_per_dos);
+
+            L.geoJSON(data, {
+                style: {
+                    ...highlightStyle,
+                    opacity: 0,
+                },
+                onEachFeature: onEachFeature,
+            }).addTo(mapa_abastecimiento);
         })
         .catch(err => console.error('Error al cargar el archivo GeoJSON:', err));
 
@@ -727,6 +862,25 @@ $valores = json_encode($valores, true);
     <?php }
     }
     ?>
+    <?php
+    foreach ($embalse_abast as $emb) {
+        if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "" && $emb[6] <= 12) {
+            $posicion = "t";
+            if ($positions_markers[$emb[5]]) {
+                $posicion = $positions_markers[$emb[5]];
+            }
+    ?>
+
+            ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
+
+            var marker = L.marker([ubicacion[0], ubicacion[1]], {
+                icon: <?php echo $emb[7] . "_small" ?>
+            }).addTo(mapa_abastecimiento).bindPopup('<div class="markleaflet mark-<?php echo $posicion ?>"><b><?php echo $emb[4] ?></b></div>', {
+                autoClose: false,
+                closeOnClick: false
+            }).openPopup();
+    <?php }
+    } ?>
 
     const mapsContainer = document.getElementById('body-mapas');
     let mapDiv = null;
@@ -840,6 +994,61 @@ $valores = json_encode($valores, true);
 
     <?php
     }
+
+
+    foreach ($regiones as $region) { ?>
+        mapDiv = document.createElement('div');
+        mapDiv.id = "<?php echo $region ?>";
+        mapDiv.className = 'map-container-hidros';
+        mapsContainer.appendChild(mapDiv);
+        marker_embalses = [];
+        // Inicializar el mapa en el div creado
+        map = L.map(mapDiv.id, {
+            zoomControl: false,
+        }).setView([9, -67], 8);
+
+        // Agregar un tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+
+        }).addTo(map);
+
+        <?php
+
+        $filter_array = array_filter($embalse_abast, function ($k) use ($region) {
+            return $k[3] == $region;
+        });
+
+        foreach ($filter_array as $emb) {
+            if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+                $posicion = "t";
+                if ($positions_markers[$emb[5]]) {
+                    $posicion = $positions_markers[$emb[5]];
+                }
+        ?>
+
+                ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
+                marker_embalses.push(ubicacion);
+
+                var marker = L.marker([ubicacion[0], ubicacion[1]], {
+                    icon: <?php echo $emb[7] ?>
+                }).addTo(map).bindPopup('<div class="markleaflet mark-<?php echo $posicion . "-large" ?>"><b><?php echo $emb[4] ?></b></div>', {
+                    autoClose: false,
+                    closeOnClick: false
+                }).openPopup();
+        <?php }
+        } ?>
+
+        bounds = L.latLngBounds(marker_embalses);
+        map.fitBounds(bounds);
+        if (marker_embalses.length == 1) {
+            map.setZoom(8);
+        }
+
+    <?php
+
+    }
+
+
     ?>
 
     //funcion para pasar de coordenadas geograficas a coordenadas UTM
@@ -912,6 +1121,30 @@ $valores = json_encode($valores, true);
                 }
             });
 
+            const q = document.querySelector("#mapa-abastecimiento");
+            html2canvas(q, {
+                useCORS: true,
+                width: q.offsetWidth,
+                height: q.offsetHeight,
+            }).then(function(canvas) { //PROBLEMAS
+                //$("#ca").append(canvas);
+                canvas.willReadFrequently = true,
+                    dataURL = canvas.toDataURL("image/jpeg", 0.9);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '../guardar-imagen.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-mapa'; ?>&numero=' + 4);
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+
+                        console.log("listo");
+
+                    } else {
+
+                    }
+                }
+            });
+
             const z = document.querySelector("#mapa-periodo-dos");
             html2canvas(z, {
                 useCORS: true,
@@ -936,6 +1169,8 @@ $valores = json_encode($valores, true);
                     }
                 }
             });
+
+
 
             //CICLOS DE MAPAS POR HIDROLOGICA
 

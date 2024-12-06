@@ -193,7 +193,7 @@ closeConection($conn);
                     <div class="d-flex">
                       <div class="form-check">
                         <input <?php if (in_array($embalse["id_embalse"], $prioritarios)) echo "checked" ?> class="form-check-input check-prioritario" type="checkbox" value="<?php echo $embalse["id_embalse"]; ?>" id="<?php echo $embalse["id_embalse"]; ?>">
-                        <label class="label-embalse form-check-label " for="<?php echo $i; ?>">
+                        <label class="label-embalse form-check-label " for="">
                           <?php echo $embalse["nombre_embalse"]; ?>
                         </label>
                       </div>

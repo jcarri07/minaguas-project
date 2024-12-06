@@ -403,7 +403,7 @@ closeConection($conn);*/
                 </div>
               </div>
               <div class="table-responsive col-12 h-90 h-sm-90">
-                <div id="cont" class="h-100" style="min-width:1000px !important;min-height:1300px !important;"></div>
+                <div id="cont" class="h-100" style="min-width:1000px !important;min-height:1500px !important;"></div>
               </div>
             </div>
           </div>

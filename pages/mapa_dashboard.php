@@ -368,7 +368,7 @@ while ($row < count($datos_embalses)) {
     //Funcion para mostrar etiquetas con los nombres de los Estados
     function onEachFeature(feature, layer) {
         if (feature.properties && feature.properties.ESTADO) {
-            layer.bindPopup(feature.properties.ESTADO); // Muestra el nombre en un popup
+            // layer.bindPopup(feature.properties.ESTADO); // Muestra el nombre en un popup
             layer.bindTooltip(feature.properties.ESTADO, {
                 permanent: true,
                 className: "nombre-estado",

@@ -70,7 +70,7 @@ $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
+$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' and 1 in (proposito);");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
@@ -95,7 +95,7 @@ if ($count >= 1) {
            WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
       FROM embalses e
       LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-      WHERE e.estatus = 'activo'
+      WHERE e.estatus = 'activo' AND 1 in (e.proposito)
       GROUP BY id_embalse 
       ORDER BY id_embalse ASC;");
 
@@ -104,7 +104,7 @@ if ($count >= 1) {
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha1') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
  FROM embalses e
  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
- WHERE e.estatus = 'activo' 
+ WHERE e.estatus = 'activo' and 1 in (e.proposito)
  GROUP BY id_embalse;");
 
     $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
@@ -112,7 +112,7 @@ if ($count >= 1) {
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha2') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
  FROM embalses e
  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
- WHERE e.estatus = 'activo'
+ WHERE e.estatus = 'activo' AND 1 in (e.proposito)
  GROUP BY id_embalse;");
 
     $condiciones_actuales3 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fechaFormateada1' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
@@ -120,7 +120,7 @@ if ($count >= 1) {
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fechaFormateada1') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual  
   FROM embalses e
   LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fechaFormateada1'
-  WHERE e.estatus = 'activo'
+  WHERE e.estatus = 'activo' AND 1 in (e.proposito)
   GROUP BY id_embalse;");
 
     $condiciones_actuales4 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fechaFormateada2' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
@@ -128,7 +128,7 @@ if ($count >= 1) {
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fechaFormateada2') AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
    FROM embalses e
    LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fechaFormateada2'
-   WHERE e.estatus = 'activo'
+   WHERE e.estatus = 'activo' AND 1 in (e.proposito)
    GROUP BY id_embalse;");
 
 
@@ -173,15 +173,14 @@ if ($count >= 1) {
             };
 
             //cuenta de dias//
-            if($datos_embalses[$j]['extraccion'] != NULL){
+            if ($datos_embalses[$j]['extraccion'] != NULL) {
                 $dat = $datos_embalses[$j]['extraccion'] != 0 ? $datos_embalses[$j]['extraccion'] : 1;
-                if($dat == 1){
+                if ($dat == 1) {
                     $suma_extracciones[] = 0;
-                }else{
-                    $suma_extracciones[] = round(($bati->volumenActualDisponible() * 1000 / (($dat + $evaporacion + $filtracion) ))/30);
+                } else {
+                    $suma_extracciones[] = round(($bati->volumenActualDisponible() * 1000 / (($dat + $evaporacion + $filtracion))) / 30);
                 }
-                
-            }else{
+            } else {
                 $suma_extracciones[] = 0;
             }
             //----//
@@ -263,7 +262,7 @@ if ($count >= 1) {
             <div style="width:1040px !important; height:1240px;position:absolute; top:-100%;z-index: -1;"><canvas id="abastecimiento" class="border border-radius-lg"></canvas></div>
 
         </div>
-        <div class="row justify-content-center h-100" style = "background-color: white;">
+        <div class="row justify-content-center h-100" style="background-color: white;">
             <div class="col-7">
                 <div class="loaderPDF " style="height: 90% !important;align-items:end !important;">
 
@@ -367,7 +366,7 @@ if ($count >= 1) {
                                 return accumulator + currentValue
                             }, 0);
                             value = value != 0 ? value : 1;
-                            
+
                             return (Math.round((value / totalSum) * 1000) / 10).toLocaleString("de-DE") + "%";
                         }),
                         labels: {
@@ -741,7 +740,7 @@ if ($count >= 1) {
                                 return accumulator + currentValue
                             }, 0);
                             value = value != 0 ? parseFloat(value) : 1;
-                            
+
                             return (Math.round((value / totalSum) * 1000) / 10).toLocaleString("de-DE") + "%";
                         }),
                         labels: {
@@ -844,10 +843,12 @@ if ($count >= 1) {
                 xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-pie'; ?>&numero=' + 1);
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-
-                        console.log("listo");
-                        location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&volumenes=<?php echo $volumenes; ?>&lista=<?php echo $datos_codificados; ?>&fecha2=<?php echo $fecha2; ?>&valores=<?php echo $valores; ?>";
-
+                         if (this.responseText == "si") {
+                        console.log(this.responseText);
+                         location.href = "../../pages/reports/print_estatus_embalses.php?fecha1=<?php echo $fecha1; ?>&volumenes=<?php echo $volumenes; ?>&lista=<?php echo $datos_codificados; ?>&fecha2=<?php echo $fecha2; ?>&valores=<?php echo $valores; ?>";
+                     } else {
+                             console.log(this.responseText);
+                         }
                     } else {
 
                     }
