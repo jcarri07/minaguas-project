@@ -709,43 +709,43 @@ function explodeBat($value, $i = null)
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_min">Cota mínima (m s.m.n.)</label>
-                  <input value="<?php echo stringFloat($embalse["cota_min"]) ?>" type="text" class="form-control Vnumero" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
+                  <input value="<?php echo stringFloat($embalse["cota_min"]) ?>" type="text" class="form-control Vnumero numero" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_min">Volumen mínimo (Hm³)</label>
-                  <input value="<?php echo stringFloat($embalse["vol_min"]) ?>" type="text" class="form-control Vnumero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
+                  <input value="<?php echo stringFloat($embalse["vol_min"]) ?>" type="text" class="form-control Vnumero numero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_min">Superficie mínima (ha)</label>
-                  <input value="<?php echo stringFloat($embalse["sup_min"]) ?>" type="text" class="form-control Vnumero" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
+                  <input value="<?php echo stringFloat($embalse["sup_min"]) ?>" type="text" class="form-control Vnumero numero" id="sup_min" name="sup_min" placeholder="Ingrese la superficie mínima">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_nor">Cota normal (m s.m.n.)</label>
-                  <input value="<?php echo stringFloat($embalse["cota_nor"]) ?>" type="text" class="form-control Vnumero" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
+                  <input value="<?php echo stringFloat($embalse["cota_nor"]) ?>" type="text" class="form-control Vnumero numero" id="cota_nor" name="cota_nor" placeholder="Ingrese la cota normal">
                 </div>
                 <div class=" form-group">
                   <label for="vol_nor">Volumen normal (Hm³)</label>
-                  <input value="<?php echo stringFloat($embalse["vol_nor"]) ?>" type="text" class="form-control Vnumero" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
+                  <input value="<?php echo stringFloat($embalse["vol_nor"]) ?>" type="text" class="form-control Vnumero numero" id="vol_nor" name="vol_nor" placeholder="Ingrese el volumen normal">
                 </div>
                 <div class=" form-group">
                   <label for="sup_nor">Superficie normal (ha)</label>
-                  <input value="<?php echo stringFloat($embalse["sup_nor"]) ?>" type="text" class="form-control Vnumero" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
+                  <input value="<?php echo stringFloat($embalse["sup_nor"]) ?>" type="text" class="form-control Vnumero numero" id="sup_nor" name="sup_nor" placeholder="Ingrese la superficie normal">
                 </div>
               </div>
               <div class="col-md-3 col-sm-12">
                 <div class=" form-group">
                   <label for="cota_max">Cota máxima (m s.m.n.)</label>
-                  <input value="<?php echo stringFloat($embalse["cota_max"]) ?>" type="text" class="form-control Vnumero" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
+                  <input value="<?php echo stringFloat($embalse["cota_max"]) ?>" type="text" class="form-control Vnumero numero" id="cota_max" name="cota_max" placeholder="Ingrese la cota máxima">
                 </div>
                 <div class=" form-group">
                   <label for="vol_max">Volumen máximo (Hm³)</label>
-                  <input value="<?php echo stringFloat($embalse["vol_max"]) ?>" type="text" class="form-control Vnumero" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
+                  <input value="<?php echo stringFloat($embalse["vol_max"]) ?>" type="text" class="form-control Vnumero numero" id="vol_max" name="vol_max" placeholder="Ingrese el volumen máximo">
                 </div>
                 <div class=" form-group">
                   <label for="sup_max">Superficie máxima (ha)</label>
-                  <input value="<?php echo stringFloat($embalse["sup_max"]) ?>" type="text" class="form-control Vnumero" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
+                  <input value="<?php echo stringFloat($embalse["sup_max"]) ?>" type="text" class="form-control Vnumero numero" id="sup_max" name="sup_max" placeholder="Ingrese la superficie máxima">
                 </div>
               </div>
               <!--  -->
@@ -836,11 +836,11 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area">Área de la cuenca (ha)</label>
-                <input value="<?php echo $embalse["area_cuenca"]; ?>" type="text" class="form-control" id="area" name="area" placeholder="Ingrese el area de la cuenca">
+                <input value="<?php echo $embalse["area_cuenca"]; ?>" type="text" class="form-control numero" id="area" name="area" placeholder="Ingrese el area de la cuenca">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="escurrimiento">Escurrimiento medio (Hm³)</label>
-                <input value="<?php echo $embalse["escurrimiento_medio"]; ?>" type="text" class="form-control" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
+                <input value="<?php echo $embalse["escurrimiento_medio"]; ?>" type="text" class="form-control numero" id="escurrimiento" name="escurrimiento" placeholder="Ingrese el escurrimiento medio">
               </div>
             </div>
 
@@ -883,15 +883,15 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="inicio_construccion">Año de inicio de construcción</label>
-                <input value="<?php echo $embalse["inicio_construccion"]; ?>" type="text" class="form-control" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
+                <input value="<?php echo $embalse["inicio_construccion"]; ?>" type="text" class="form-control numero" id="inicio_construccion" name="inicio_construccion" placeholder="Ingrese el año de inicio de construcción">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="duracion_construccion">Duración de construcción (años)</label>
-                <input value="<?php echo $embalse["duracion_de_construccion"]; ?>" type="text" class="form-control" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duración de construcción en años">
+                <input value="<?php echo $embalse["duracion_de_construccion"]; ?>" type="text" class="form-control numero" id="duracion_construccion" name="duracion_construccion" placeholder="Ingrese la duración de construcción en años">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="inicio_operacion">Inicio de operación (año)</label>
-                <input value="<?php echo $embalse["inicio_de_operacion"]; ?>" type="text" class="form-control" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operacion">
+                <input value="<?php echo $embalse["inicio_de_operacion"]; ?>" type="text" class="form-control numero" id="inicio_operacion" name="inicio_operacion" placeholder="Ingrese el año de inicio de operacion">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="monitoreo">Monitoreo de niveles del embalse</label>
@@ -904,7 +904,7 @@ function explodeBat($value, $i = null)
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_presas">Número de presas</label>
-                <input value="<?php echo $embalse["numero_de_presas"]; ?>" type="text" class="form-control" id="numero_presas" name="numero_presas" placeholder="Ingrese el número de presas">
+                <input value="<?php echo $embalse["numero_de_presas"]; ?>" type="text" class="form-control numero" id="numero_presas" name="numero_presas" placeholder="Ingrese el número de presas">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="tipo_presa">Tipo de presa</label>
@@ -912,7 +912,7 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="altura">Altura (m)</label>
-                <input value="<?php echo $embalse["altura"]; ?>" type="text" class="form-control" id="altura" name="altura" placeholder="Ingrese la altura en metros">
+                <input value="<?php echo $embalse["altura"]; ?>" type="text" class="form-control numero" id="altura" name="altura" placeholder="Ingrese la altura en metros">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="talud_arriba">Talud aguas arriba</label>
@@ -924,23 +924,23 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="longitud_cresta">Longitud de la cresta (m)</label>
-                <input value="<?php echo $embalse["longitud_cresta"]; ?>" type="text" class="form-control" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
+                <input value="<?php echo $embalse["longitud_cresta"]; ?>" type="text" class="form-control numero" id="longitud_cresta" name="longitud_cresta" placeholder="Ingrese la longitud de la cresta en metros">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="cota_cresta">Cota de la cresta (m s.m.n.)</label>
-                <input value="<?php echo $embalse["cota_cresta"]; ?>" type="text" class="form-control" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros">
+                <input value="<?php echo $embalse["cota_cresta"]; ?>" type="text" class="form-control numero" id="cota_cresta" name="cota_cresta" placeholder="Ingrese la cota de la cresta en metros">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ancho_cresta">Ancho de la cresta (m)</label>
-                <input value="<?php echo $embalse["ancho_cresta"]; ?>" type="text" class="form-control" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
+                <input value="<?php echo $embalse["ancho_cresta"]; ?>" type="text" class="form-control numero" id="ancho_cresta" name="ancho_cresta" placeholder="Ingrese el ancho de la cresta en metros">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="volumen_terraplen">Volumen del terraplen (m³)</label>
-                <input value="<?php echo $embalse["volumen_terraplen"]; ?>" type="text" class="form-control" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
+                <input value="<?php echo $embalse["volumen_terraplen"]; ?>" type="text" class="form-control numero" id="volumen_terraplen" name="volumen_terraplen" placeholder="Ingrese el volumen del terraplen">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ancho_base">Ancho máximo de base (m)</label>
-                <input value="<?php echo $embalse["ancho_base"]; ?>" type="text" class="form-control" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
+                <input value="<?php echo $embalse["ancho_base"]; ?>" type="text" class="form-control numero" id="ancho_base" name="ancho_base" placeholder="Ingrese el ancho máximo de base en metros">
               </div>
             </div>
 
@@ -957,19 +957,19 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_compuertas_aliviadero">Número de compuertas del aliviadero</label>
-                <input value="<?php echo $embalse["numero_compuertas_aliviadero"]; ?>" type="text" class="form-control" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el número de compuertas del aliviadero">
+                <input value="<?php echo $embalse["numero_compuertas_aliviadero"]; ?>" type="text" class="form-control numero" id="numero_compuertas_aliviadero" name="numero_compuertas_aliviadero" placeholder="Ingrese el número de compuertas del aliviadero">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="carga_aliviadero">Carga sobre el vertedero (m)</label>
-                <input value="<?php echo $embalse["carga_vertedero"]; ?>" type="text" class="form-control" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
+                <input value="<?php echo $embalse["carga_vertedero"]; ?>" type="text" class="form-control numero" id="carga_aliviadero" name="carga_aliviadero" placeholder="Ingrese la carga sobre el vertedero">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="descarga_aliviadero">Descarga máxima (m³/s)</label>
-                <input value="<?php echo $embalse["descarga_maxima"]; ?>" type="text" class="form-control" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
+                <input value="<?php echo $embalse["descarga_maxima"]; ?>" type="text" class="form-control numero" id="descarga_aliviadero" name="descarga_aliviadero" placeholder="Ingrese la descarga máxima">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="longitud_aliviadero">Longitud (m)</label>
-                <input value="<?php echo $embalse["longitud_aliviadero"]; ?>" type="text" class="form-control" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud en metros">
+                <input value="<?php echo $embalse["longitud_aliviadero"]; ?>" type="text" class="form-control numero" id="longitud_aliviadero" name="longitud_aliviadero" placeholder="Ingrese la longitud en metros">
               </div>
             </div>
 
@@ -986,7 +986,7 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_compuertas_toma">Número de compuertas de la obra de toma</label>
-                <input value="<?php echo $embalse["numero_compuertas_toma"]; ?>" type="text" class="form-control" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el número de compuertas de la obra de toma">
+                <input value="<?php echo $embalse["numero_compuertas_toma"]; ?>" type="text" class="form-control numero" id="numero_compuertas_toma" name="numero_compuertas_toma" placeholder="Ingrese el número de compuertas de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
@@ -998,11 +998,11 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="gasto_toma">Gasto máximo de la obra de toma (m³/s)</label>
-                <input value="<?php echo $embalse["gasto_maximo"]; ?>" type="text" class="form-control" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto máximo de la obra de toma">
+                <input value="<?php echo $embalse["gasto_maximo"]; ?>" type="text" class="form-control numero" id="gasto_toma" name="gasto_toma" placeholder="Ingrese el gasto máximo de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="descarga_fondo">Descarga de fondo</label>
-                <input value="<?php echo $embalse["descarga_de_fondo"]; ?>" type="text" class="form-control" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo o N/A si no aplica">
+                <input value="<?php echo $embalse["descarga_de_fondo"]; ?>" type="text" class="form-control numero" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo o N/A si no aplica">
               </div>
             </div>
 
@@ -1063,23 +1063,23 @@ function explodeBat($value, $i = null)
 
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="poblacion">Población beneficiada (hab.)</label>
-                <input value="<?php echo $embalse["poblacion_beneficiada"]; ?>" type="text" class="form-control" id="poblacion" name="poblacion" placeholder="Ingrese la población beneficiada en habitantes">
+                <input value="<?php echo $embalse["poblacion_beneficiada"]; ?>" type="text" class="form-control numero" id="poblacion" name="poblacion" placeholder="Ingrese la población beneficiada en habitantes">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area_riego">Área de riego beneficiada (ha)</label>
-                <input value="<?php echo $embalse["area_de_riego_beneficiada"]; ?>" type="text" class="form-control" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
+                <input value="<?php echo $embalse["area_de_riego_beneficiada"]; ?>" type="text" class="form-control numero" id="area_riego" name="area_riego" placeholder="Ingrese el area de riego beneficiada">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area_riego">Área protegida (ha)</label>
-                <input value="<?php echo $embalse["area_protegida"]; ?>" type="text" class="form-control" id="area_protegida" name="area_protegida" placeholder="Ingrese el area pretegida">
+                <input value="<?php echo $embalse["area_protegida"]; ?>" type="text" class="form-control numero" id="area_protegida" name="area_protegida" placeholder="Ingrese el area pretegida">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area_riego">Población protegida (hab.)</label>
-                <input value="<?php echo $embalse["poblacion_protegida"]; ?>" type="text" class="form-control" id="poblacion_prote" name="poblacion_prote" placeholder="Ingrese la población protegida">
+                <input value="<?php echo $embalse["poblacion_protegida"]; ?>" type="text" class="form-control numero" id="poblacion_prote" name="poblacion_prote" placeholder="Ingrese la población protegida">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area_riego">Producción hidroeléctrica (MW)</label>
-                <input value="<?php echo $embalse["produccion_hidro"]; ?>" type="text" class="form-control" id="produccion_hidro" name="produccion_hidro" placeholder="Ingrese la producción hifroelectrica">
+                <input value="<?php echo $embalse["produccion_hidro"]; ?>" type="text" class="form-control numero" id="produccion_hidro" name="produccion_hidro" placeholder="Ingrese la producción hifroelectrica">
               </div>
               <div class="col-xl-9 col-lg-6 form-group">
                 <label class="" for="">Sectores beneficiados</label>
@@ -2183,27 +2183,152 @@ function explodeBat($value, $i = null)
   function validarNumero(event, input) {
     let valorInput = input.value;
     const codigoTecla = event.key;
-    console.log(input.id)
+    // console.log(input.id)
     if (input.id == "huso" && (codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== 'Backspace') {
       event.preventDefault();
+      // input.value = valorInput.slice(0, -1);
     }
     // Permitir solo números y una coma
-    if ((codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== '.' && codigoTecla !== 'Backspace') {
+    if ((codigoTecla < '0' || codigoTecla > '9') && codigoTecla !== '.' && codigoTecla !== ',' && codigoTecla !== 'Backspace' && codigoTecla !== 'ArrowUp' && codigoTecla !== 'ArrowDown' && codigoTecla !== 'ArrowLeft' && codigoTecla !== 'ArrowRight') {
       event.preventDefault();
+      // input.value = valorInput.slice(0, -1);
     }
 
     // Permitir solo una coma
-    // if (codigoTecla === ',' && valorInput.includes(',')) {
-    //   event.preventDefault();
-    // }
+    if (codigoTecla === ',' && valorInput.includes(',')) {
+      event.preventDefault();
+      // const numeroDeComas = valorInput.split(",").length - 1;
+      // if (numeroDeComas > 1) {
+      //   input.value = valorInput.slice(0, -1);
+      // }
+    }
+    if (codigoTecla === ',' && valorInput[valorInput.length - 1] === ".") {
+      event.preventDefault();
+      // input.value = valorInput.slice(0, -1);
+    }
     if (codigoTecla === '.' && valorInput == "") {
       event.preventDefault();
+      // input.value = valorInput.slice(0, -1);
+    }
+    if ((codigoTecla === '.' && valorInput.includes(','))) {
+      event.preventDefault();
+      // input.value = valorInput.slice(0, -1);
     }
 
-    if (codigoTecla === '.' && valorInput.includes('.')) {
+    if ((codigoTecla === '.' && valorInput[valorInput.length - 1] === ".")) {
+      console.log("gola")
       event.preventDefault();
     }
 
+    if (codigoTecla === '.' || codigoTecla === ',') {
+      let text_split = valorInput.split(".")
+      console.log(valorInput, text_split)
+      let newValorInput = "";
+      for (let i = 0; i < text_split.length; i++) {
+        // console.log(text_split[i].includes(','))
+        if (text_split[i].includes(',')) {
+          newValorInput += text_split[i];
+          break;
+        }
+        if (text_split[i].length > 3) {
+          let newSplit = [];
+          if (i == 0) {
+            newSplit = dividirEnTres(text_split[i])
+            console.log(newSplit)
+          } else {
+            newSplit = dividirEnTresIzquierda(text_split[i])
+          }
+          // console.log(newSplit);
+          newValorInput += cifrasMayoresQueTres(newSplit, i, i == text_split.length - 1);
+        } else if (text_split[i].length == 3) {
+          newValorInput += text_split[i];
+          if (i != text_split.length - 1) {
+            newValorInput += ".";
+          }
+        } else if (text_split[i].length == 2) {
+          let aux = parseInt(text_split[i]);
+          if (i != 0) {
+            aux = aux * 10;
+          }
+          newValorInput += aux.toString();
+          if (i != text_split.length - 1) {
+            newValorInput += ".";
+          }
+        } else if (text_split[i].length == 1) {
+          let aux = parseInt(text_split[i]);
+          if (i != 0) {
+            aux = aux * 100;
+          }
+          newValorInput += aux.toString();
+          if (i != text_split.length - 1) {
+            newValorInput += ".";
+          }
+        }
+      }
+      // console.log("new:" + newValorInput);
+      // console.log(dividirEnTres("2222569874"));
+      // console.log(dividirEnTresIzquierda("2222569874"));
+      input.value = newValorInput;
+    }
+
+  }
+
+  function dividirEnTres(cifra) {
+    const str = cifra.toString(); // Convertir a string
+    const resultado = [];
+
+    for (let i = str.length; i > 0; i -= 3) {
+      resultado.unshift(str.slice(Math.max(i - 3, 0), i));
+    }
+
+    return resultado;
+  }
+
+  function dividirEnTresIzquierda(cifra) {
+    const str = cifra.toString(); // Convertimos la cifra a cadena
+    const resultado = [];
+
+    for (let i = 0; i < str.length; i += 3) {
+      resultado.push(str.slice(i, i + 3)); // Extraemos los grupos de tres
+    }
+
+    return resultado;
+  }
+
+  function cifrasMayoresQueTres(text_split, index, ultima) {
+    let newValorInput = "";
+    for (let i = 0; i < text_split.length; i++) {
+      console.log(text_split[i], text_split[i].length);
+      if (text_split[i].length == 3) {
+        newValorInput += text_split[i];
+        // if (i < text_split.length) {
+        newValorInput += ".";
+        // }
+      } else if (text_split[i].length == 2) {
+        let aux = parseInt(text_split[i]);
+        if (index != 0) {
+          aux = aux * 10;
+        }
+        newValorInput += aux.toString();
+        // if (i < text_split.length) {
+        newValorInput += ".";
+        // }
+      } else if (text_split[i].length == 1) {
+        let aux = parseInt(text_split[i]);
+        if (index != 0) {
+          aux = aux * 100;
+        }
+        newValorInput += aux.toString();
+        // if (i < text_split.length) {
+        newValorInput += ".";
+        // }
+      }
+    }
+    if (ultima) {
+
+      newValorInput = newValorInput.slice(0, -1);
+    }
+    return newValorInput;
   }
 
   function formatearNumero(input) {
