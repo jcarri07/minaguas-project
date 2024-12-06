@@ -242,17 +242,19 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
         $nombre_temporal = $_FILES['file']['tmp_name'];
         $name = $_FILES['file']['name'];
         $ubicacion = 'temp/' . $name;
-        move_uploaded_file($nombre_temporal, $ubicacion);
+        //move_uploaded_file($nombre_temporal, $ubicacion);
 
         //$excel = PHPExcel_IOFactory::load($ubicacion);
 
-
-        try {
-            $spreadsheet = IOFactory::load($ubicacion);
-            echo "abrio";
-        } catch (Exception $e) {
-            echo 'Error al cargar el archivo: ',  $e->getMessage();
+        if(move_uploaded_file($nombre_temporal, $ubicacion)) {
+            try {
+                $spreadsheet = IOFactory::load($ubicacion);
+                echo "abrio";
+            } catch (Exception $e) {
+                echo 'Error al cargar el archivo: ',  $e->getMessage();
+            }
         }
+        
         //$hojas = $spreadsheet->getSheetNames();
 
         //$excel = PHPExcel_IOFactory::load($ubicacion);
