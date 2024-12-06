@@ -166,6 +166,74 @@ $positions_markers = json_decode($positions_markers["configuracion"], true);
 
 $valores = array($cantidades_p, $cantidades_sequia, $cantidades_lluvia);
 $valores = json_encode($valores, true);
+
+$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,e.norte, e.este,e.huso,MAX(d.fecha) AS fech,               (
+    SELECT SUM(extraccion)
+            FROM detalles_extraccion dex, codigo_extraccion ce
+            WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
+               FROM datos_embalse h 
+               WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0  LIMIT 1) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
+          ) AS 'extraccion',
+          e.nombre_embalse, (SELECT cota_actual 
+               FROM datos_embalse h 
+               WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
+          FROM embalses e
+    LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+    WHERE e.estatus = 'activo'
+    GROUP BY id_embalse 
+    ORDER BY id_embalse ASC;");
+
+$datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
+
+$queryReg =  mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
+$totalreg = [];
+
+while ($reg = mysqli_fetch_array($queryReg)) {
+    $totalreg[$reg["id_region"]] = $reg["region"];
+}
+
+$embalse_abast = [];
+$regiones = [];
+$countReg = [];
+$row = 0;
+
+while ($row < count($datos_embalses)) {
+    $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
+    // CALCULO DE ABASTECIMIENTO!!
+
+    $abastecimiento = 0;
+    if ($datos_embalses[$row]["extraccion"] > 0) {
+        $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
+    }
+    if ($datos_embalses[$row]["extraccion"] == NULL) {
+        $abastecimiento = 0;
+    }
+
+    if (!in_array($totalreg[$datos_embalses[$row]["region"]], $regiones)) {
+        array_push($regiones, $totalreg[$datos_embalses[$row]["region"]]);
+        $countReg[$totalreg[$datos_embalses[$row]["region"]]] = 1;
+    } else {
+        $countReg[$totalreg[$datos_embalses[$row]["region"]]] += 1;
+    }
+
+    $icono = "f_igual";
+
+    if (($abastecimiento) <= 4) {
+        $icono = "rojo";
+    } else if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
+        $icono = "naranja";
+    } else if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
+        $icono = "amarillo";
+    } else if (($abastecimiento) > 12) {
+        $icono = "verde";
+    }
+
+    $array = [$datos_embalses[$row]["norte"], $datos_embalses[$row]["este"], $datos_embalses[$row]["huso"], $totalreg[$datos_embalses[$row]["region"]],  $datos_embalses[$row]["nombre_embalse"], $datos_embalses[$row]["id_embalse"], $abastecimiento, $icono];
+    array_push($embalse_abast, $array);
+
+    $row++;
+}
+
 // var_dump(json_encode($condiciones));
 // var_dump($embalses_porcentaje);
 // var_dump(implode(" - ",$cantidades_p));
@@ -507,7 +575,26 @@ $valores = json_encode($valores, true);
         iconUrl: '../../assets/icons/f-igual.png'
     })
 
-
+    var rojo = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 15px; height: 15px; background-color: #ff0000; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var naranja = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 15px; height: 15px; background-color: #ffaa00; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var amarillo = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 15px; height: 15px; background-color: #ffff00; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var verde = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 15px; height: 15px; background-color: #70ad47; border-radius: 50%; border: 0.5px solid black;"></div>',
+        iconSize: [12, 12], // Tamaño del ícono (coincide con el tamaño del div)
+    });
     // Cargar el archivo GeoJSON usando fetch
 
     var highlightStyle = {
@@ -840,6 +927,61 @@ $valores = json_encode($valores, true);
 
     <?php
     }
+
+
+    foreach ($regiones as $region) { ?>
+        mapDiv = document.createElement('div');
+        mapDiv.id = "<?php echo $region ?>";
+        mapDiv.className = 'map-container-hidros';
+        mapsContainer.appendChild(mapDiv);
+        marker_embalses = [];
+        // Inicializar el mapa en el div creado
+        map = L.map(mapDiv.id, {
+            zoomControl: false,
+        }).setView([9, -67], 8);
+
+        // Agregar un tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+
+        }).addTo(map);
+
+        <?php
+
+        $filter_array = array_filter($embalse_abast, function ($k) use ($region) {
+            return $k[3] == $region;
+        });
+
+        foreach ($filter_array as $emb) {
+            if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
+                $posicion = "t";
+                if ($positions_markers[$emb[5]]) {
+                    $posicion = $positions_markers[$emb[5]];
+                }
+        ?>
+
+                ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
+                marker_embalses.push(ubicacion);
+
+                var marker = L.marker([ubicacion[0], ubicacion[1]], {
+                    icon: <?php echo $emb[7] ?>
+                }).addTo(map).bindPopup('<div class="markleaflet mark-<?php echo $posicion . "-large" ?>"><b><?php echo $emb[4] ?></b></div>', {
+                    autoClose: false,
+                    closeOnClick: false
+                }).openPopup();
+        <?php }
+        } ?>
+
+        bounds = L.latLngBounds(marker_embalses);
+        map.fitBounds(bounds);
+        if (marker_embalses.length == 1) {
+            map.setZoom(8);
+        }
+
+    <?php
+
+    }
+
+
     ?>
 
     //funcion para pasar de coordenadas geograficas a coordenadas UTM

@@ -12,6 +12,17 @@ require_once '../../php/batimetria.php';
 //Eso te va a dar volumen actual [1] y el volumen  minimo [1]
 //Luego se restan y se obtiene el didponible
 
+
+// Guardar la fecha de impresion del documento
+$old_estatus = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'old_estatus'");
+$fecha_hoy = date('Y-m-d H:i:s');
+
+if (mysqli_num_rows($old_estatus) > 0) {
+  mysqli_query($conn, "UPDATE configuraciones SET configuracion = '$fecha_hoy' WHERE nombre_config = 'old_estatus'");
+} else {
+  mysqli_query($conn, "INSERT INTO configuraciones (nombre_config, configuracion) VALUES ('old_estatus', '$fecha_hoy')");
+}
+
 $valores = json_decode($_GET["valores"]);
 
 //cantidad de embalses con los porcentajes
@@ -1747,7 +1758,10 @@ $ruta_mapas = "../../assets/img/temp/";
     <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>GARANTÍA DE ABASTECIMIENTO DE LOS EMBALSES</b>
     </div>
 
-    <div style="width: 500px; height: 280px; background-color: lightgray; margin-top: 20px; margin-left: 10px;"><?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?>
+    <div style="width: 500px; height: 280px; background-color: lightgray; margin-top: 20px; margin-left: 10px; position: relative;">
+      <img style="position: absolute; top:0; width:500px ; height: 280px;" src="<?php echo $ruta_mapas . "imagen-hidro-mapa-" . $region . ".png" ?>" />
+      <!-- <p style="position: absolute; top:-10px; left:5px; margin-left:3px;"><?php //echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); 
+                                                                                ?></p> -->
     </div>
 
     <div style="position: absolute; margin-top: <?php echo $A_tabla + $incremento; ?>px; margin-left: <?php echo $margin_left; ?>px; font-size: 18px; text-align: right;"><b>Región <?php echo $region ?></b>
@@ -2018,15 +2032,15 @@ $ruta_mapas = "../../assets/img/temp/";
         <?php
         $cant = 0;
         foreach ($range as $value) {
-          if (($value[3]) <= 4) {
-            $cant++;
+          //if (($value[3]) <= 4) {
+          $cant++;
         ?>
-            <tr>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $value[2]; ?></td>
-              <td class="" style="font-size: 12px;"><?php echo intval($value[3]); ?></td>
-              <td class="text-celd" style="font-size: 12px;"><?php echo $value[1]; ?></td>
-            </tr>
-        <?php }
+          <tr>
+            <td class="text-celd" style="font-size: 12px;"><?php echo $value[2]; ?></td>
+            <td class="" style="font-size: 12px;"><?php echo intval($value[3]); ?></td>
+            <td class="text-celd" style="font-size: 12px;"><?php echo $value[1]; ?></td>
+          </tr>
+        <?php //}
         } ?>
         <tr>
           <td class="height: 20px; text-celd total" style="font-size: 12px;"><b>TOTAL</b></td>
@@ -2036,7 +2050,7 @@ $ruta_mapas = "../../assets/img/temp/";
         </tr>
         <tr>
           <td class="text-celd total" style="font-size: 12px;"><b>%</b></td>
-          <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($range)), "2", ",", ".") . "%" ?></b></td>
+          <td class="" style="font-size: 12px;"><b> <?php echo number_format((($cant * 100) / count($embalse_abast)), "1", ",", ".") . "%" ?></b></td>
         </tr>
       </table>
 
