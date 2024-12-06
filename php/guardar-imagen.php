@@ -8,7 +8,12 @@ $t = $_POST['numero'];
     $aux = $data;
     $nombre_archivo = "imagen-" . $i . "-" . $t . ".png"; // Nombre del archivo
     $ruta_archivo = "../assets/img/temp/$nombre_archivo"; // Ruta donde guardar el archivo
-
+    $file = '../assets/img/temp/prueba.txt';
+    if (file_put_contents($file, 'Prueba de escritura') !== false) {
+        echo "Escritura exitosa: " . realpath($file);
+    } else {
+        echo "No se pudo escribir en el archivo.";
+    }
     // Decodificación de la imagen
     $aux = explode(";", $aux)[1];
     $aux = explode(",", $aux)[1];
