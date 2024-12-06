@@ -3,10 +3,12 @@
 
 ini_set('memory_limit', '4G');
 ini_set('max_execution_time', 400);
+ini_set('post_max_size', '400M');
+ini_set('upload_max_filesize', '400M');
 require_once '../../../vendor/autoload.php';
 require_once '../../Conexion.php';
 
-ini_set('memory_limit', '1024M');
+//ini_set('memory_limit', '1024M');
 
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
