@@ -22,10 +22,4 @@ $t = $_POST['numero'];
     } else {
         echo "si";
     }
-    $file = '../assets/img/temp/prueba.txt';
-    if (file_put_contents($file, 'Prueba de escritura') !== false) {
-        echo "Escritura exitosa: " . realpath($file);
-    } else {
-        echo "No se pudo escribir en el archivo.";
-    }
 ?>
