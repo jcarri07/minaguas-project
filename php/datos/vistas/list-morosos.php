@@ -32,21 +32,22 @@
     }
 
 
-    $add_select = "";
+    //$add_select = "";
     $add_where = "";
-    $add_group_by = "";
-    $add_order_by = "";
+    $add_where_fecha = "";
+    //$add_group_by = "";
+    //$add_order_by = "";
     if($anio != "") {
-        $add_select .= ", YEAR(d.fecha) AS anio";
-        $add_where .= " AND YEAR(d.fecha) = '$anio' ";
-        $add_group_by .= ", YEAR(d.fecha)";
-        $add_order_by .= ", anio";
+        //$add_select .= ", YEAR(d.fecha) AS anio";
+        $add_where_fecha .= " YEAR(de.fecha) = '$anio' ";
+        //$add_group_by .= ", YEAR(d.fecha)";
+        //$add_order_by .= ", anio";
     }
     if($mes != "") {
-        $add_select .= ", MONTH(d.fecha) AS mes";
-        $add_where .= " AND MONTH(d.fecha) = '$mes' ";
-        $add_group_by .= ", MONTH(d.fecha)";
-        $add_order_by .= ", mes";
+        //$add_select .= ", MONTH(d.fecha) AS mes";
+        $add_where_fecha .= " AND MONTH(de.fecha) = '$mes' ";
+        //$add_group_by .= ", MONTH(d.fecha)";
+        //$add_order_by .= ", mes";
     }
     /*if($dia != "") {
         $add_select .= ", DAY(d.fecha) AS dia";
@@ -55,24 +56,26 @@
         $add_order_by .= ", dia";
     }*/
     if($detalles_mes_morosos == "si") {
-        $add_select .= ", DAY(d.fecha) AS dia";
+        //$add_select .= ", DAY(d.fecha) AS dia";
         if($mes != "") 
             $add_where .= " AND e.id_embalse = '$id_embalse' ";
-        $add_group_by .= ", DAY(d.fecha)";
-        $add_order_by .= ", dia";
+        //$add_group_by .= ", DAY(d.fecha)";
+        //$add_order_by .= ", dia";
     }
+
+    //echo $add_where;
 
     $anio_inicio = date("Y");
     $fecha_limite = "";
     if($anio != "") {
         $anio_inicio = $anio;
-        if($anio != date("Y"))
+        /*if($anio != date("Y"))
             $fecha_limite = "'$anio-12-31'";
         else
-            $fecha_limite = "CURDATE()";
+            $fecha_limite = "CURDATE()";*/
     }
 
-    $sql = "WITH RECURSIVE dates AS (
+    /*$sql = "WITH RECURSIVE dates AS (
                 SELECT DATE('$anio_inicio-01-01') AS fecha
                 UNION ALL
                 SELECT DATE_ADD(fecha, INTERVAL 1 DAY)
@@ -91,42 +94,135 @@
             LEFT JOIN datos_embalse de ON e.id_embalse = de.id_embalse AND d.fecha = de.fecha AND de.estatus = 'activo'
             WHERE de.id_registro IS NULL AND e.estatus = 'activo' $add_where
             GROUP BY e.id_embalse $add_group_by
-            ORDER BY e.id_embalse $add_order_by;";
+            ORDER BY e.id_embalse $add_order_by;";*/
+    //$query = mysqli_query($conn, $sql);
+
+    $sql = "SELECT e.id_embalse, e.nombre_embalse, GROUP_CONCAT(de.fecha SEPARATOR '&') AS 'fecha', CONCAT(u.P_Nombre, ' ', u.P_Apellido) AS encargado
+            FROM embalses e
+            LEFT JOIN datos_embalse de 
+                ON e.id_embalse = de.id_embalse 
+                AND de.estatus = 'activo'
+                AND (/*de.fecha IS NULL OR*/ ($add_where_fecha))
+            LEFT JOIN usuarios u
+                ON u.id_usuario = e.id_encargado
+            WHERE e.estatus = 'activo'
+                /*AND (de.fecha IS NULL OR YEAR(de.fecha) = '$anio_inicio')*/
+                $add_where
+            GROUP BY e.id_embalse
+            ORDER BY e.id_embalse, de.fecha;
+    ";
     $query = mysqli_query($conn, $sql);
+
+
+    if ($mes != "") {
+        $startDate = new DateTime("$anio_inicio-$mes-01");
+    } else {
+        $startDate = new DateTime("$anio_inicio-01-01");
+    }
+    
+    if ($anio != date("Y")) {
+        $endDate = new DateTime($anio_inicio . ($mes ? "-$mes-31" : "-12-31"));
+    } else {
+        if ($mes != '' && $mes != date('m')) {
+            $endDate = new DateTime("$anio_inicio-$mes-01");
+            $endDate->modify('last day of this month');
+        } else {
+            $endDate = new DateTime(date('Y-m-d'));
+        }
+    }
+
+    //echo $startDate->format('Y-m-d');
+    //echo "<br> " . $endDate->format('Y-m-d');
+    $rangoFechas = [];
+    while ($startDate <= $endDate) {
+        $rangoFechas[] = $startDate->format('Y-m-d');
+        $startDate->modify('+1 day');
+    }
+
+
+
+
+
+
+
+    $embalses = [];
+    foreach ($query as $dato) {
+        $id = $dato['id_embalse'];
+        if (!isset($embalses[$id])) {
+            $embalses[$id] = [
+                'nombre_embalse' => $dato['nombre_embalse'],
+                'encargado' => $dato['encargado'],
+                'fechas_reporte' => [],
+            ];
+        }
+        if ($dato['fecha']) {
+            $fechas_array = explode("&", $dato['fecha']);
+            for($iterator = 0 ; $iterator < count($fechas_array) ; $iterator++)
+                $embalses[$id]['fechas_reporte'][] = $fechas_array[$iterator];
+        }
+    }
+
+    //calcular fechas faltantes
+    foreach ($embalses as $id => &$embalse) {
+        $fechasReporte = $embalse['fechas_reporte'];
+        $fechasFaltantes = array_diff($rangoFechas, $fechasReporte);
+        $embalse['fechas_faltantes'] = $fechasFaltantes;
+        $embalse['total_faltantes'] = count($fechasFaltantes);
+    }
+    unset($embalse);
+
+    $i = 1;
+    foreach ($embalses as $id => $embalse) {
+        //echo $i++ . " - $id -   Embalse: {$embalse['nombre_embalse']}\n";
+        //echo "Total de reportes faltantes: {$embalse['total_faltantes']}<br>";
+        //echo "Fechas faltantes: " . implode(', ', $embalse['fechas_faltantes']) . "\n\n";
+    }
+
 
     
 
     if($detalles_mes_morosos == "si") {
         $events = array();
-        while($row = $query->fetch_assoc()) {
+
+        //$fechas_faltantes = $embalse[$id_embalse]['fechas_faltantes'];
+        $embalse = $embalses[$id_embalse];
+        //$fechas_faltantes = implode(', ', $embalse['fechas_faltantes']);
+        //print_r($embalse['fechas_reporte']);
+
+        //while($row = $query->fetch_assoc()) {
+        foreach($embalse['fechas_faltantes'] as $fecha) {
             //$events[] = $row;
 
             $array_aux = [];
             $array_aux['id'] = "";
-            $array_aux['start'] = $row['anio'] . "-" . ($row['mes'] < 10 ? ("0" . $row['mes']) : $row['mes']) . "-" . ($row['dia'] < 10 ? ("0" . $row['dia']) : $row['dia']);
-            $array_aux['end'] = $row['anio'] . "-" . ($row['mes'] < 10 ? ("0" . $row['mes']) : $row['mes']) . "-" . ($row['dia'] < 10 ? ("0" . $row['dia']) : $row['dia']);
+            $array_aux['start'] = $fecha;
+            $array_aux['end'] = $fecha;
             $array_aux['backgroundColor'] = "#ff3c3c";
             $array_aux['borderColor'] = "#ff3c3c";
             array_push($events, $array_aux);
         }
+        unset($fecha);
+
 
 
         //Agregando en verde los dias del mes que si tienen reportes
         $dias_del_mes = cal_days_in_month(CAL_GREGORIAN, $mes, $anio);
 
-        for($i = 1 ; $i <= $dias_del_mes ; $i++){
+        /*for($i = 1 ; $i <= $dias_del_mes ; $i++){
             $aux_dia = $i < 10 ? ("0" . $i) : $i;
             $fecha_a_buscar = "$anio-$mes-$aux_dia";
-            if(buscarPosicion($events, $fecha_a_buscar, 'start') == -1 && $fecha_a_buscar <= date("Y-m-d")) {
+            if(buscarPosicion($events, $fecha_a_buscar, 'start') == -1 && $fecha_a_buscar <= date("Y-m-d")) {*/
+        foreach($embalse['fechas_reporte'] as $fecha) {
                 $array_aux = [];
                 $array_aux['id'] = "";
-                $array_aux['start'] = $fecha_a_buscar;
-                $array_aux['end'] = $fecha_a_buscar;
+                $array_aux['start'] = $fecha;
+                $array_aux['end'] = $fecha;
                 $array_aux['backgroundColor'] = "#30d82f";
                 $array_aux['borderColor'] = "#30d82f";
                 array_push($events, $array_aux);
-            }
+            /*}*/
         }
+        unset($fecha);
 
 
         $sql = "SELECT nombre_embalse FROM embalses WHERE id_embalse = '$id_embalse';";
@@ -154,7 +250,7 @@
 
 
 
-            if(mysqli_num_rows($query) > 0) {
+            if(count($embalses) > 0) {
 ?>
                 <h3 class="text-center">Reportes Faltantes en <?php echo ($mes != "" ? ($meses[($mes < 10 ? $mes % 10 : $mes)] . " de ") : "") . $anio . ($nombre_embalse != "" ? (" del Embalse $nombre_embalse") : "");?></h3>
 <?php
@@ -192,7 +288,11 @@
 
 <?php
                 $i = 0;
-                while($row = mysqli_fetch_array($query)){
+                //while($row = mysqli_fetch_array($query)){
+                foreach ($embalses as $id => $row) {
+                    if($row['total_faltantes'] == 0)
+                        continue;
+
                     $i++;
 ?>
 
@@ -211,7 +311,7 @@
                                 //if($dia == ""){
 ?>
                                     <td> 
-                                        <?php echo $row['reportes_faltantes']; ?>
+                                        <?php echo $row['total_faltantes']; ?>
                                     </td>
 <?php
                                 //}
@@ -222,7 +322,7 @@
 <?php
                                 if($mes != ""){
 ?>
-                                        <a class="btn btn-primary btn-xs px-3 mb-0" href="javascript:;" onclick="detalles_morosos_mes('<?php echo $row['id_embalse'];?>');">
+                                        <a class="btn btn-primary btn-xs px-3 mb-0" href="javascript:;" onclick="detalles_morosos_mes('<?php echo $id;?>');">
                                             Detalles
                                         </a>
 <?php
