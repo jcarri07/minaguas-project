@@ -59,7 +59,7 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
     //for($i = 0; $i < count($fullData) ; $i++){
     foreach($fullData as $key => $data){
         $fecha = $data->fecha;
-        $cota_actual = $data->cota_actual;
+        $cota_actual = $data->cota_actual != '' ? $data->cota_actual : 0;
         
         //if($key == 0) {
             $sql = "INSERT INTO datos_embalse (id_embalse, fecha, hora, cota_actual, id_encargado, archivo_importacion, fecha_importacion, estatus) 
