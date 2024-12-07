@@ -248,7 +248,7 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
         $reader = IOFactory::createReader('Xlsx');
         $reader->setReadDataOnly(true); // Ignorar formato, leer solo datos
         $spreadsheet = $reader->load($ubicacion);
-        echo 'abrio';
+        //echo 'abrio';
 
         //$excel = PHPExcel_IOFactory::load($ubicacion);
 
@@ -264,14 +264,14 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
             }
         }*/
         
-        //$hojas = $spreadsheet->getSheetNames();
+        $hojas = $spreadsheet->getSheetNames();
 
         //$excel = PHPExcel_IOFactory::load($ubicacion);
 
         // Hojas del archivo
         //$hojas = $excel->getSheetNames();
 
-/*
+
 ?>
         <div class="table-responsive mb-3 mt-5">
             <table class="table align-items-center text-sm text-center table-sm" id="hojas-excel-table">
@@ -312,7 +312,7 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
         </div>
 
 <?php
-*/
+
     } else {
         echo "<h3>Error al subir el archivo.</h3>";
     }
