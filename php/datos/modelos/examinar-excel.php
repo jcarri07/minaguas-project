@@ -63,7 +63,7 @@ if (isset($_POST['opc']) && $_POST['opc'] == "importar_data") {
         
         //if($key == 0) {
             $sql = "INSERT INTO datos_embalse (id_embalse, fecha, hora, cota_actual, id_encargado, archivo_importacion, fecha_importacion, estatus) 
-                    VALUES ('$id_embalse', '$fecha', '', '$cota_actual', '$id_encargado', '$nombre_archivo', '$fecha_importacion', 'activo');";
+                    VALUES ('$id_embalse', '$fecha', '00:00:00', '$cota_actual', '$id_encargado', '$nombre_archivo', '$fecha_importacion', 'activo');";
             $res = mysqli_query($conn, $sql);
 
             if($res == 1){
