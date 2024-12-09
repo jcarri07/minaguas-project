@@ -1593,8 +1593,8 @@ date_default_timezone_set("America/Caracas");
         return id != this.id.split("-")[0]
       })
     }
-    $("#proposito")[0].value = propositos.join(" - ");
-    $("#proposito-input")[0].value = id_propositos.join(" - ");
+    $("#proposito")[0].value = propositos.join(",");
+    $("#proposito-input")[0].value = id_propositos.join(",");
   })
 
 
@@ -1617,8 +1617,8 @@ date_default_timezone_set("America/Caracas");
         return id != this.id.split("-")[0]
       })
     }
-    $("#uso")[0].value = usos.join(" - ");
-    $("#uso-input")[0].value = id_usos.join("-");
+    $("#uso")[0].value = usos.join(",");
+    $("#uso-input")[0].value = id_usos.join(",");
   });
 
   $("#operador").on("click", function() {

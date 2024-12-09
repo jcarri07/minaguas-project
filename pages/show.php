@@ -21,8 +21,8 @@ if ($embalse_datos['inicio_de_operacion'] != "") {
   $vida_restante = "";
 }
 
-$proposito_array = explode(" - ", $embalse_datos['proposito']);
-$uso_array = explode(" - ", $embalse_datos['uso_actual']);
+$proposito_array = explode(",", $embalse_datos['proposito']);
+$uso_array = explode(",", $embalse_datos['uso_actual']);
 
 $proposito = [];
 $uso = [];

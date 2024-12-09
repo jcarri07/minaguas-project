@@ -271,7 +271,6 @@ date_default_timezone_set("America/Caracas");
 
 
   btnsMonitoreo.forEach(btn => {
-    console.log(btn)
     btn.addEventListener('click', function() {
       const embalseId = this.getAttribute('data-id');
       id.innerHTML = `${embalseId}`;
@@ -348,5 +347,4 @@ date_default_timezone_set("America/Caracas");
     }
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
-  
 </script>

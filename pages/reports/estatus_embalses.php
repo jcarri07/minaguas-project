@@ -73,7 +73,7 @@ SELECT SUM(extraccion)
            WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
       FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-WHERE e.estatus = 'activo' AND 1 IN (e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
+WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
 GROUP BY id_embalse 
 ORDER BY id_embalse ASC;");
 
@@ -82,7 +82,7 @@ FROM datos_embalse h
 WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha1' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
-WHERE e.estatus = 'activo' and 1 in (e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
+WHERE e.estatus = 'activo' and FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
 GROUP BY id_embalse;");
 
 $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
@@ -90,7 +90,7 @@ FROM datos_embalse h
 WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha2' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
-WHERE e.estatus = 'activo' and 1 in (e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
+WHERE e.estatus = 'activo' and FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
 GROUP BY id_embalse;");
 
 $condiciones_actuales3 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
@@ -98,12 +98,12 @@ FROM datos_embalse h
 WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha3' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha3'
-WHERE e.estatus = 'activo' and 1 in (e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
+WHERE e.estatus = 'activo' and FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
 GROUP BY id_embalse;");
 
 $hidro = mysqli_query($conn, "SELECT COUNT(e.id_embalse),e.operador
                 FROM embalses e
-                WHERE e.estatus = 'activo' and 1 in (e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
+                WHERE e.estatus = 'activo' and FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
                 GROUP BY e.operador
                 ORDER BY id_embalse ASC;");
 
@@ -200,7 +200,7 @@ $meses = array(
 $condiciones = [];
 $CT = [0, 0, 0, 0, 0, 0];
 
-$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo' and 1 in (proposito) AND id_embalse NOT IN ($array_excluidos);");
+$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo' and FIND_IN_SET('1', proposito) AND id_embalse NOT IN ($array_excluidos);");
 
 while ($row = mysqli_fetch_array($queryEmbalses)) {
 

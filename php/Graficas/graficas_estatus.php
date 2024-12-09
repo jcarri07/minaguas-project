@@ -65,12 +65,18 @@ $fechaFormateada2 = $fechaActual->format('Y-m-d');
 
 $valores = $_GET["valores"];
 
+$array_excluidos = 0;
+$embalses_excluidos = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'consumo_humano';");
+if (mysqli_num_rows($embalses_excluidos) > 0) {
+    $array_excluidos = mysqli_fetch_assoc($embalses_excluidos)['configuracion'];
+}
+
 $queryInameh = mysqli_query($conn, "SELECT nombre_config, configuracion FROM configuraciones WHERE nombre_config = 'fecha_sequia' OR nombre_config = 'fecha_lluvia' ORDER BY id_config ASC;");
 $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' and 1 in (proposito);");
+$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND FIND_IN_SET('1', proposito) AND id_embalse NOT IN ($array_excluidos);");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
@@ -95,7 +101,7 @@ if ($count >= 1) {
            WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) ORDER BY h.hora DESC LIMIT 1) AS cota_actual
       FROM embalses e
       LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-      WHERE e.estatus = 'activo' AND 1 IN (e.proposito)
+      WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
       GROUP BY id_embalse 
       ORDER BY id_embalse ASC;");
 
@@ -104,7 +110,7 @@ if ($count >= 1) {
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha1' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
  FROM embalses e
  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
- WHERE e.estatus = 'activo' AND 1 IN (e.proposito)
+ WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
  GROUP BY id_embalse;");
 
     $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
@@ -112,7 +118,7 @@ if ($count >= 1) {
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha2' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
  FROM embalses e
  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
- WHERE e.estatus = 'activo' AND 1 IN (e.proposito)
+ WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
  GROUP BY id_embalse;");
 
     $condiciones_actuales3 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
@@ -120,7 +126,7 @@ if ($count >= 1) {
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fechaFormateada1' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
  FROM embalses e
  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fechaFormateada1'
- WHERE e.estatus = 'activo' AND 1 IN (e.proposito)
+ WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
  GROUP BY id_embalse;");
 
     $condiciones_actuales4 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
@@ -128,7 +134,7 @@ if ($count >= 1) {
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fechaFormateada2' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
  FROM embalses e
  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fechaFormateada2'
- WHERE e.estatus = 'activo' AND 1 IN (e.proposito)
+ WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
  GROUP BY id_embalse;");
 
 
@@ -788,8 +794,8 @@ if ($count >= 1) {
 
         $datos_json = json_encode($volumen_siete);
         $volumen_siete = base64_encode($datos_json);
-        
-        
+
+
         ?>
 
 

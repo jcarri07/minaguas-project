@@ -221,14 +221,14 @@ closeConection($conn);
 
               $embalses_consumo = array_filter($embalses, function ($value) {
                 $proposito = isset($value['proposito']) && $value['proposito'] !== ""
-                  ? explode(" - ", $value['proposito'])
+                  ? explode(",", $value['proposito'])
                   : [];
 
                 $proposito = array_filter($proposito, function ($item) {
                   return is_string($item) && trim($item) !== '';
                 });
 
-                return in_array("1", $proposito);
+                return in_array(1, $proposito);
               });
               ?>
               <!-- configuraciones de embalses prioritarios -->

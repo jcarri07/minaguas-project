@@ -15,7 +15,13 @@ $embalses_porcentaje = [];
 $cantidades_p = [0, 0, 0, 0, 0];
 $condiciones = [];
 
-$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo' and 1 in (proposito);");
+$array_excluidos = 0;
+$embalses_excluidos = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'consumo_humano';");
+if (mysqli_num_rows($embalses_excluidos) > 0) {
+    $array_excluidos = mysqli_fetch_assoc($embalses_excluidos)['configuracion'];
+}
+
+$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo' AND FIND_IN_SET('1', proposito) AND id_embalse NOT IN ($array_excluidos);");
 
 while ($row = mysqli_fetch_array($queryEmbalses)) {
     //Saco la ubicacion de los embalses.
@@ -76,7 +82,7 @@ $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_
     WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_sequia' AND h.estatus = 'activo' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_sequia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
     LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_sequia'
-    WHERE e.estatus = 'activo' and 1 in (e.proposito)
+    WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
     GROUP BY id_embalse;");
 
 $variacion_sequia = [];
@@ -123,7 +129,7 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_lluvia' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
     LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_lluvia'
-    WHERE e.estatus = 'activo' and 1 in (e.proposito)
+    WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
     GROUP BY id_embalse;");
 
 $variacion_lluvia = [];
@@ -179,7 +185,7 @@ $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,regio
                WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
           FROM embalses e
     LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-    WHERE e.estatus = 'activo' and 1 in (e.proposito)
+    WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.proposito) AND e.id_embalse NOT IN ($array_excluidos)
     GROUP BY id_embalse 
     ORDER BY id_embalse ASC;");
 
