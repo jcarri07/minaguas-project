@@ -105,6 +105,8 @@ while ($row = mysqli_fetch_array($query_codigos)) {
 
 ?>
 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> -->
+<script src="./assets/js/xlsx.full/xlsx.full.min.js"></script>
 
 <div class="container-fluid py-4">
   <div class="row">
@@ -1181,6 +1183,9 @@ require_once 'php/datos/vistas/morosos.php';
       wait += '     </div>';
       wait += '   </div>';
 
+      $("#hojas-excel").html(wait);
+      $('#add-data-old .loaderParent').show();
+
       var datos = new FormData();
 
       if ($("#opc_aux").text() == "importar_data") {
@@ -1189,15 +1194,20 @@ require_once 'php/datos/vistas/morosos.php';
         datos.append('hoja', $("#nombre_hoja_aux").text());
         datos.append('nombre_archivo', $('#file')[0].files[0].name);
         datos.append('id_usuario', '<?php echo $_SESSION['Id_usuario']; ?>');
+
+        readFile($('#file')[0].files[0], $("#nombre_hoja_aux").text());
       } else {
-        datos.append('file', $('#file')[0].files[0]);
+        //datos.append('file', $('#file')[0].files[0]);
+        
+        listarHojas($('#file')[0].files[0]);
+
+        
       }
 
 
-      $("#hojas-excel").html(wait);
-      $('#add-data-old .loaderParent').show();
+      
 
-      $.ajax({
+      /*$.ajax({
         url: 'php/datos/modelos/examinar-excel.php',
         type: 'POST',
         data: datos,
@@ -1240,7 +1250,7 @@ require_once 'php/datos/vistas/morosos.php';
           $("#modal-generic .message").text("Error al examinar");
           $("#modal-generic").modal("show");
         }
-      });
+      });*/
 
     });
 
@@ -1248,6 +1258,336 @@ require_once 'php/datos/vistas/morosos.php';
       $("#opc_aux").text("importar_data");
       $("#nombre_hoja_aux").text(hoja);
       $("#form-add-data-old").trigger("submit");
+    }
+
+    function listarHojas(file) {
+      //const file = file;
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        // Obtener los nombres de las hojas
+        const sheetNames = workbook.SheetNames;
+        //console.log('Hojas:', sheetNames);
+
+        // Leer la primera hoja
+        /*const worksheet = workbook.Sheets[sheetNames[0]];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+        // Mostrar los datos
+        console.log(jsonData);
+        document.getElementById('output').innerText = JSON.stringify(jsonData, null, 2);*/
+        
+        //console.log("termino");
+
+        var html = '<div class="table-responsive mb-3 mt-5">';
+        html += '     <table class="table align-items-center text-sm text-center table-sm" id="hojas-excel-table">';
+        html += '       <thead class="table-primary">';
+        html += '         <tr>';
+        html += '           <th scope="col" class="sort" data-sort="name">#</th>';
+        html += '           <th scope="col" class="sort" data-sort="name">Nombre</th>';
+        html += '           <th scope="col"></th>';
+        html += '         </tr>';
+        html += '       </thead>';
+        html += '       <tbody class="list">';
+        
+        for(i = 0 ; i < sheetNames.length ; i++) {
+          var onclick = "importarData('" + sheetNames[i] + "');";
+          html += '       <tr>';
+          html += '         <th scope="row">';
+          html +=             i + 1;
+          html += '         </th>';
+          html += '         <td scope="row">';
+          html += '           <div class="media">';
+          html += '             <div class="media-body">';
+          html += '               <span class="name mb-0">' + sheetNames[i] + '</span>';
+          html += '             </div>';
+          html += '           </div>';
+          html += '         </td>';
+          html += '         <td>';
+          html += '           <button type="button" title="Importar data" class="btn btn-outline-secondary border-2 mb-0" style="padding: 0.3rem 0.6rem" onclick="' + onclick + '">';
+          html += '             <i class="fa fa-upload"></i>';
+          html += '           </button>';
+          html += '         </td>';
+          html += '       </tr>';
+        }
+
+        html += '       </tbody>';
+        html += '     </table>';
+        html += '   </div>';
+        //$('#add-data-old .loaderParent').hide();
+        $("#hojas-excel").html(html);
+        iniciarTabla("hojas-excel-table");
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+
+    function readFile(file, hoja) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        // Obtener los nombres de las hojas
+        //const sheetNames = workbook.SheetNames;
+        //console.log('Nombres de hojas:', sheetNames);
+
+        // Leer una hoja específica (por nombre)
+        const sheetName = hoja; // Cambia esto al nombre de tu hoja
+        const worksheet = workbook.Sheets[sheetName];
+        if (!worksheet) {
+          console.error(`La hoja "${sheetName}" no existe.`);
+          return;
+        }
+
+        // Convertir los datos de la hoja en JSON
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); // Cambia "header" según lo que necesites
+        //console.log('Datos de la hoja:', jsonData);
+
+        // Mostrar los datos en pantalla
+        //document.getElementById('output').innerText = JSON.stringify(jsonData, null, 2);
+        //$("#hojas-excel").html(JSON.stringify(jsonData, null, 2));
+
+        var columnaInicio = "E";
+        var indexColumnaInicio = columnLetterToNumber(columnaInicio);
+        var col = indexColumnaInicio;
+
+        while (col) {
+          const cellRef = XLSX.utils.encode_cell({ r: 7, c: col });
+          const cellValue = worksheet[cellRef] ? worksheet[cellRef].v : null;
+          //console.log(`Valor en ${cellRef}:`, cellValue);
+          if(cellValue === null) {
+            col = col - 3;
+            break;
+          }
+          col++;
+        }
+
+        var indexColumnaFin = col;
+        var columnaFin = columnNumberToLetter(col);
+
+        //console.log('inicio: ' + columnaInicio + ". \n fin: " + columnaFin);
+
+
+
+        //obteniendo los codigos
+        array_codigos_consulta = [];
+        for(i = indexColumnaInicio; i <= indexColumnaFin ; i++){
+          const cellRef = XLSX.utils.encode_cell({ r: 7, c: i });
+          const cellValue = worksheet[cellRef] ? worksheet[cellRef].v : null;
+          celda_codigo = cellValue;
+
+          //let celda_codigo = '=funcion("argumento")';
+          let codigo;
+
+          if (celda_codigo.includes("=")) {
+              let string = celda_codigo.replace('=', '').replace(/\s+/g, '');
+              let array = string.split('"');
+
+              var array_codigo = array[1];
+              codigo = array_codigo.split("(");
+          } else {
+              let array_codigo = celda_codigo.split("(");
+
+              codigo = ["", array_codigo[array_codigo.length - 1].replace(')', ''), ""];
+              for (let j = 0; j < array_codigo.length - 1; j++) {
+                  codigo[0] += array_codigo[j];
+
+                  if (j + 1 < array_codigo.length - 1) {
+                      codigo[0] += "(";
+                  }
+              }
+          }
+
+         // console.log(codigo);
+
+          if (codigo[0] && codigo[0] !== "" && codigo[1]) {
+            let array_aux = {
+              columna: columnNumberToLetter(i),
+              fila: '8',
+              codigo: codigo[1].split("\r")[0].replace(')', ''),
+              nombre_codigo: codigo[0]
+            };
+
+            array_codigos_consulta.push(array_aux);
+          }
+
+        }
+        //console.log(array_codigos_consulta);
+
+
+
+
+
+
+        //consultando los datos
+        fecha = "";
+        fila = 9;
+        let fullData = [];
+        while(fila){
+          var cellRef = XLSX.utils.encode_cell({ r: fila - 1, c: 1 }); // Columna B
+          const cellValue = worksheet[cellRef] ? worksheet[cellRef].v : null;
+          var valorCelda = cellValue;
+          if(valorCelda == "") {
+            //Si el valor es blanco y ademas no hay fecha o ha recorrido mas de 10 filas y no ha encontrado nada se sale del ciclo
+            //esto se hace para evitar que se haga un ciclo infitino
+            if(fecha != "" || fila >= 19){
+              fila--;
+              break;
+            }
+          }
+
+
+          
+
+          // El objeto resultante contiene los componentes de la fecha:
+          //console.log(dateObject);
+          // { y: 2023, m: 12, d: 6, H: 0, M: 0, S: 0 }
+
+          // Formatea la fecha en el formato Y-m-d
+          
+          //console.log(formattedDate);
+
+          if (isNumeric(valorCelda)) {
+            //$fecha_obj = Date::excelToDateTimeObject($valorCelda);
+            //$fecha = $fecha_obj->format('Y-m-d');
+            let dateObject = XLSX.SSF.parse_date_code(valorCelda);
+            fecha = `${dateObject.y}-${String(dateObject.m).padStart(2, '0')}-${String(dateObject.d).padStart(2, '0')}`;
+
+          }
+          else {
+            fila++;
+            continue;
+          }
+          //fullData[] = valorCelda;
+
+
+          var cellRef = XLSX.utils.encode_cell({ r: fila - 1, c: 2 }); // Columna C
+          const cota = worksheet[cellRef] ? worksheet[cellRef].v : null;
+
+          valores_extracciones = [];
+          for(var i = 0 ; i < array_codigos_consulta.length ; i++) {
+            columna_valor_extraccion = array_codigos_consulta[i].columna;
+            celda = worksheet[columna_valor_extraccion + '' + (fila)];
+            valor_extraccion_aux = 0;
+            //console.log(valor_extraccion_aux);
+            //if(celda != ""){
+              if (celda && celda.f) { 
+                valor_extraccion_aux = XLSX.utils.format_cell(celda);
+                if(!isNumeric(valor_extraccion_aux))
+                  valor_extraccion_aux = 0;
+              }
+              else {
+                valor_extraccion_aux = celda ? celda.v : null;
+              }
+
+              let array_aux = {
+                valor: valor_extraccion_aux,
+                codigo: array_codigos_consulta[i].codigo
+              };
+              valores_extracciones.push(array_aux);
+            //}
+          }
+
+          let array_aux = {
+            fecha: fecha,
+            cota_actual: cota,
+            extracciones: valores_extracciones
+          };
+
+          fullData.push(array_aux);
+
+
+          let fecha1 = new Date("<?php echo date("Y-m-d");?>");
+          let fecha2 = new Date(fecha);
+
+          if (fecha1 <= fecha2) {
+            break;
+          }
+          fila++;
+        }
+
+        //console.log(fullData);
+        //enviar datos para registrar
+        sendData(array_codigos_consulta, fullData, file.name);
+
+
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+
+    function columnLetterToNumber(letter) {
+      let number = 0;
+      for (let i = 0; i < letter.length; i++) {
+        number = number * 26 + (letter.charCodeAt(i) - 64); // 'A' tiene valor ASCII 65
+      }
+      return number - 1; // Retorna índice base 0
+    }
+
+    function columnNumberToLetter(number) {
+      let letter = '';
+      while (number >= 0) {
+        letter = String.fromCharCode((number % 26) + 65) + letter;
+        number = Math.floor(number / 26) - 1;
+      }
+      return letter;
+    }
+    function isNumeric(value) {
+      return !isNaN(value) && isFinite(value);
+    }
+    function sendData(array_codigos_consulta, fullData, namefile) {
+      var datos = new FormData();
+      datos.append('opc', $("#opc_aux").text());
+      datos.append('id_embalse', $("#id_embalse_aux").text());
+      datos.append('nombre_archivo', namefile);
+      datos.append('array_codigos_consulta', JSON.stringify(array_codigos_consulta));
+      datos.append('fullData', JSON.stringify(fullData));
+      datos.append('id_usuario', '<?php echo $_SESSION['Id_usuario']; ?>');
+
+      $.ajax({
+        url: 'php/datos/modelos/examinar-excel.php',
+        type: 'POST',
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+          $('#add-data-old .loaderParent').hide();
+
+          //if ($("#opc_aux").text() == "importar_data") {
+            $("#opc_aux").text("");
+            $("#nombre_hoja_aux").text("");
+
+            //console.log(response);
+
+            if (response == 'si') {
+              $("#modal-generic .message").text("Registro exitoso");
+              $("#modal-generic .card-footer .btn-action").attr("onclick", "$('#add-data-old').modal('hide');");
+              $("#modal-generic").modal("show");
+            } else {
+              if (response == "ya se importo") {
+                $("#modal-generic .message").text("La información de este archivo ya fue añadida al embalse " + $("#nombre_embalse_aux").text() + ". Intente con otro archivo.");
+                $("#modal-generic").modal("show");
+              } else {
+                $("#modal-generic .message").text("Error al registrar");
+                $("#modal-generic").modal("show");
+              }
+            }
+          //}
+
+          console.log(response);
+        },
+        error: function(response) {
+          $('#add-data-old .loaderParent').hide();
+          $("#modal-generic .message").text("Error al examinar");
+          $("#modal-generic").modal("show");
+        }
+      });
     }
 
     function openModalHistoryAdjunciones(id_embalse) {
