@@ -1033,7 +1033,7 @@ function explodeBat($value, $i = null)
                 <div id="modal-proposito" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
 
                   <?php
-                  $propositos_check = explode("-", $embalse["proposito"]);
+                  $propositos_check = explode(",", $embalse["proposito"]);
                   while ($proposito = mysqli_fetch_array($queryPropositos)) {
                   ?>
                     <div class="form-check opcion-prop"><input <?php if (in_array($proposito['id_proposito'], $propositos_check)) echo "checked" ?> type="checkbox" name="" id="<?php echo $proposito['id_proposito'] ?>-prop" class="prop-opcion form-check-input opcion-prop"><label class="text-sm cursor-pointer opcion-<?php echo $proposito['id_proposito'] ?>-prop opcion-prop" for="<?php echo $proposito['id_proposito'] ?>-prop"><?php echo $proposito['proposito'] ?></label></div>
@@ -1051,7 +1051,7 @@ function explodeBat($value, $i = null)
                 <div id="modal-uso" class="bg-gray-200 rounded p-3 modal-absolute" style="width: 75%;">
 
                   <?php
-                  $usos_check = explode("-", $embalse["uso_actual"]);
+                  $usos_check = explode(",", $embalse["uso_actual"]);
                   while ($proposito = mysqli_fetch_array($queryPropositos)) {
                   ?>
                     <div class="form-check opcion-uso"><input <?php if (in_array($proposito['id_proposito'], $usos_check)) echo "checked" ?> type="checkbox" name="" id="<?php echo $proposito['id_proposito'] ?>-uso" class="prop-uso form-check-input opcion-uso"><label class="text-sm cursor-pointer opcion-<?php echo $proposito['id_proposito'] ?>-uso opcion-uso" for="<?php echo $proposito['id_proposito'] ?>-uso"><?php echo $proposito['proposito'] ?></label></div>
@@ -2012,7 +2012,7 @@ function explodeBat($value, $i = null)
     id_propositos.push(input.id.split("-")[0])
   });
 
-  $("#proposito")[0].value = propositos.join(" - ");
+  $("#proposito")[0].value = propositos.join(",");
 
   $(".prop-opcion").on("change", function() {
     if ($(this).is(':checked')) {
@@ -2027,8 +2027,8 @@ function explodeBat($value, $i = null)
         return id != this.id.split("-")[0]
       })
     }
-    $("#proposito")[0].value = propositos.join(" - ");
-    $("#proposito-input")[0].value = id_propositos.join(" - ");
+    $("#proposito")[0].value = propositos.join(",");
+    $("#proposito-input")[0].value = id_propositos.join(",");
   })
 
 
@@ -2045,7 +2045,7 @@ function explodeBat($value, $i = null)
     id_usos.push(input.id.split("-")[0])
   });
 
-  $("#uso")[0].value = usos.join(" - ");
+  $("#uso")[0].value = usos.join(",");
 
   $(".prop-uso").on("change", function() {
     if ($(this).is(':checked')) {
@@ -2059,8 +2059,8 @@ function explodeBat($value, $i = null)
         return id != this.id.split("-")[0]
       })
     }
-    $("#uso")[0].value = usos.join(" - ");
-    $("#uso-input")[0].value = id_usos.join(" - ");
+    $("#uso")[0].value = usos.join(",");
+    $("#uso-input")[0].value = id_usos.join(",");
   });
 
   $("#operador").on("click", function() {

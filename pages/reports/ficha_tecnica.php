@@ -302,15 +302,15 @@ foreach ($data as $row) {
   $TIPO_OBRA_2 = $row['tipo_de_obra'];
   $ACCION_REQUERIDA = $row['accion_requerida'];
   //BENEFICIOS
-  $PROPOSITO_ID = implode(",", explode(" - ", $row['proposito']));
-  $USO_ACTUAL_ID = implode(",", explode(" - ", $row['uso_actual']));
+  $PROPOSITO_ID = implode(",", explode(",", $row['proposito']));
+  $USO_ACTUAL_ID = implode(",", explode(",", $row['uso_actual']));
   $PROPOSITO = "";
   $USO_ACTUAL = "";
   if ($PROPOSITO_ID != "") {
-    $PROPOSITO = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT proposito FROM propositos WHERE id_proposito IN ($PROPOSITO_ID)"), MYSQLI_ASSOC), 'proposito'));
+    $PROPOSITO = implode(",", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT proposito FROM propositos WHERE id_proposito IN ($PROPOSITO_ID)"), MYSQLI_ASSOC), 'proposito'));
   }
   if ($USO_ACTUAL_ID != "") {
-    $USO_ACTUAL = implode(" - ", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT proposito FROM propositos WHERE id_proposito IN ($USO_ACTUAL_ID)"), MYSQLI_ASSOC), 'proposito'));
+    $USO_ACTUAL = implode(",", array_column(mysqli_fetch_all(mysqli_query($conn, "SELECT proposito FROM propositos WHERE id_proposito IN ($USO_ACTUAL_ID)"), MYSQLI_ASSOC), 'proposito'));
   }
   // $SECTOR_BENEFICIADO = $row['sectores_beneficiados'];
   $sec_est = $row['sectores_estado'];

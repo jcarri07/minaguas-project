@@ -8,6 +8,7 @@ require_once '../batimetria.php';
 
 date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
+ini_set('max_execution_time', 400);
 
 $id = $_POST['id_embalse'];
 $tipo = $_POST['tipo'];

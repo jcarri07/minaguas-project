@@ -55,6 +55,13 @@ $anio = date('Y', strtotime($fecha1));
 $fecha_actual = date("Y-m-d");
 $fecha3 = date("Y-m-d", strtotime("-7 days", strtotime($fecha_actual)));
 
+$array_excluidos = [];
+$embalses_excluidos = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'consumo_humano';");
+if (mysqli_num_rows($embalses_excluidos) > 0) {
+  $string_excluidos = mysqli_fetch_assoc($embalses_excluidos)['configuracion'];
+  $array_excluidos = explode(",", $string_excluidos);
+}
+
 $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,MAX(d.fecha) AS fech,               (
 SELECT SUM(extraccion)
         FROM detalles_extraccion dex, codigo_extraccion ce
@@ -67,7 +74,7 @@ SELECT SUM(extraccion)
            WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
       FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-WHERE e.estatus = 'activo' AND 1 IN (e.proposito)
+WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
 GROUP BY id_embalse 
 ORDER BY id_embalse ASC;");
 
@@ -76,7 +83,7 @@ FROM datos_embalse h
 WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha1' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
-WHERE e.estatus = 'activo' and 1 in (e.proposito)
+WHERE e.estatus = 'activo' and FIND_IN_SET('1', e.uso_actual)
 GROUP BY id_embalse;");
 
 $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
@@ -84,7 +91,7 @@ FROM datos_embalse h
 WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha2' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
-WHERE e.estatus = 'activo' and 1 in (e.proposito)
+WHERE e.estatus = 'activo' and FIND_IN_SET('1', e.uso_actual)
 GROUP BY id_embalse;");
 
 $condiciones_actuales3 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
@@ -92,12 +99,12 @@ FROM datos_embalse h
 WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha3' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
 FROM embalses e
 LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha3'
-WHERE e.estatus = 'activo' and 1 in (e.proposito)
+WHERE e.estatus = 'activo' and FIND_IN_SET('1', e.uso_actual)
 GROUP BY id_embalse;");
 
 $hidro = mysqli_query($conn, "SELECT COUNT(e.id_embalse),e.operador
                 FROM embalses e
-                WHERE e.estatus = 'activo' and 1 in (e.proposito)
+                WHERE e.estatus = 'activo' and FIND_IN_SET('1', e.uso_actual)
                 GROUP BY e.operador
                 ORDER BY id_embalse ASC;");
 
@@ -194,7 +201,7 @@ $meses = array(
 $condiciones = [];
 $CT = [0, 0, 0, 0, 0, 0];
 
-$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo' and 1 in (proposito);");
+$queryEmbalses = mysqli_query($conn, "SELECT id_embalse, nombre_embalse, norte, este, huso, operador FROM embalses WHERE estatus = 'activo' and FIND_IN_SET('1', uso_actual);");
 
 while ($row = mysqli_fetch_array($queryEmbalses)) {
 
@@ -237,79 +244,79 @@ while ($row < count($datos_embalses)) {
   $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
 
   // CALCULO DE ABASTECIMIENTO!!
-
-  $abastecimiento = 0;
-  if ($datos_embalses[$row]["extraccion"] > 0) {
-    $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
-  }
-  if ($datos_embalses[$row]["extraccion"] == NULL) {
+  if (!in_array($datos_embalses[$row]["id_embalse"], $array_excluidos)) {
     $abastecimiento = 0;
+    if ($datos_embalses[$row]["extraccion"] > 0) {
+      $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
+    }
+    if ($datos_embalses[$row]["extraccion"] == NULL) {
+      $abastecimiento = 0;
+    }
+
+    if (!in_array($totalreg[$datos_embalses[$row]["region"]], $regiones)) {
+      array_push($regiones, $totalreg[$datos_embalses[$row]["region"]]);
+      $countReg[$totalreg[$datos_embalses[$row]["region"]]] = 1;
+    } else {
+      $countReg[$totalreg[$datos_embalses[$row]["region"]]] += 1;
+    }
+
+    if (array_key_exists($totalop[$datos_embalses[$row]["operador"]], $operador_abast)) {
+      if (($abastecimiento) <= 4) {
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][0] += 1;
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
+        $t_op_a[0] += 1;
+        $t_op_a[4] += 1;
+      }
+      if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][1] += 1;
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
+        $t_op_a[1] += 1;
+        $t_op_a[4] += 1;
+      }
+      if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][2] += 1;
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
+        $t_op_a[2] += 1;
+        $t_op_a[4] += 1;
+      }
+      if (($abastecimiento) > 12) {
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][3] += 1;
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
+        $t_op_a[3] += 1;
+        $t_op_a[4] += 1;
+      }
+    } else {
+      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]] = [0, 0, 0, 0, 0];
+
+      if (($abastecimiento) <= 4) {
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][0] += 1;
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
+        $t_op_a[0] += 1;
+        $t_op_a[4] += 1;
+      }
+      if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][1] += 1;
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
+        $t_op_a[1] += 1;
+        $t_op_a[4] += 1;
+      }
+      if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][2] += 1;
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
+        $t_op_a[2] += 1;
+        $t_op_a[4] += 1;
+      }
+      if (($abastecimiento) > 12) {
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][3] += 1;
+        $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
+        $t_op_a[3] += 1;
+        $t_op_a[4] += 1;
+      }
+    }
+
+    $array = [$totalreg[$datos_embalses[$row]["region"]], $totalop[$datos_embalses[$row]["operador"]], $datos_embalses[$row]["nombre_embalse"], $abastecimiento];
+    array_push($embalse_abast, $array);
   }
-
-  if (!in_array($totalreg[$datos_embalses[$row]["region"]], $regiones)) {
-    array_push($regiones, $totalreg[$datos_embalses[$row]["region"]]);
-    $countReg[$totalreg[$datos_embalses[$row]["region"]]] = 1;
-  } else {
-    $countReg[$totalreg[$datos_embalses[$row]["region"]]] += 1;
-  }
-
-  if (array_key_exists($totalop[$datos_embalses[$row]["operador"]], $operador_abast)) {
-    if (($abastecimiento) <= 4) {
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][0] += 1;
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
-      $t_op_a[0] += 1;
-      $t_op_a[4] += 1;
-    }
-    if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][1] += 1;
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
-      $t_op_a[1] += 1;
-      $t_op_a[4] += 1;
-    }
-    if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][2] += 1;
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
-      $t_op_a[2] += 1;
-      $t_op_a[4] += 1;
-    }
-    if (($abastecimiento) > 12) {
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][3] += 1;
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
-      $t_op_a[3] += 1;
-      $t_op_a[4] += 1;
-    }
-  } else {
-    $operador_abast[$totalop[$datos_embalses[$row]["operador"]]] = [0, 0, 0, 0, 0];
-
-    if (($abastecimiento) <= 4) {
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][0] += 1;
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
-      $t_op_a[0] += 1;
-      $t_op_a[4] += 1;
-    }
-    if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][1] += 1;
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
-      $t_op_a[1] += 1;
-      $t_op_a[4] += 1;
-    }
-    if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][2] += 1;
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
-      $t_op_a[2] += 1;
-      $t_op_a[4] += 1;
-    }
-    if (($abastecimiento) > 12) {
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][3] += 1;
-      $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
-      $t_op_a[3] += 1;
-      $t_op_a[4] += 1;
-    }
-  }
-
-  $array = [$totalreg[$datos_embalses[$row]["region"]], $totalop[$datos_embalses[$row]["operador"]], $datos_embalses[$row]["nombre_embalse"], $abastecimiento];
-  array_push($embalse_abast, $array);
-
   // CALCULO DE CONDICION ACTUAL!!
   if ($datos_embalses[$row]["cota_actual"] != NULL) {
     $anio = date("Y", strtotime($datos_embalses[$row]["fech"]));
@@ -1047,15 +1054,15 @@ $ruta_mapas = "../../assets/img/temp/";
   <img style="width: 550px; height: 450px; background-color: lightgray; margin-top: 50px; margin-left: 35px;" src="<?php echo $status_pie_1 ?>">
 
 
-  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 200px; margin-left: 640px;"><b> <u><?php echo $lista[3] ?> EMBALSES</u> EN CONDICIONES BUENAS Y MUY BUENAS <br> ( > 90% Y ALIVIANDO )</b></div>
+  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 200px; margin-left: 640px;"><b style="line-height: 1.5;"> <u><?php echo $lista[3] ?> EMBALSES</u> EN CONDICIONES BUENAS Y MUY BUENAS <br> ( > 90% Y ALIVIANDO )</b></div>
 
-  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 300px; margin-left: 640px;"><b> <u><?php echo $lista[2] ?> EMBALSES</u> EN CONDICIONES NORMALES ALTO <br> ( 60 % < A < 90 % )</b>
+  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 300px; margin-left: 640px;"><b style="line-height: 1.5;"> <u><?php echo $lista[2] ?> EMBALSES</u> EN CONDICIONES NORMALES ALTO <br> ( 60 % < A < 90 % )</b>
   </div>
 
-  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 400px; margin-left: 640px;"><b> <u><?php echo $lista[1] ?> EMBALSES</u> EN CONDICIONES NORMALES BAJO <br> ( 30 % < A < 60% )</b>
+  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 400px; margin-left: 640px;"><b style="line-height: 1.5;"> <u><?php echo $lista[1] ?> EMBALSES</u> EN CONDICIONES NORMALES BAJO <br> ( 30 % < A < 60% )</b>
   </div>
 
-  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 500px; margin-left: 640px;"><b> <u><?php echo $lista[0] ?> EMBALSES</u> EN CONDICIONES BAJAS ( < 30 %)</b>
+  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 500px; margin-left: 640px;"><b style="line-height: 1.5;"> <u><?php echo $lista[0] ?> EMBALSES</u> EN CONDICIONES BAJAS ( < 30 %)</b>
   </div>
 
   <div class="box-title"><b> <?php echo round(($lista[2] + $lista[3]) * 100 / ($lista[2] + $lista[3] + $lista[1] + $lista[0]), 2) ?>% DE LOS EMBALSES SE ENCUENTRAN EN CONDICIONES NORMALES A MUY BUENAS</b></div>
@@ -1075,12 +1082,18 @@ $ruta_mapas = "../../assets/img/temp/";
   <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 7px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha1)); ?> HASTA HOY</b>
   </div>
 
+  <div style="font-size: 17px; color: black; position: absolute;  margin-top: 155px; margin-left: 250px;"><b><?php echo $meses[date("n", strtotime($fecha1))]; ?></b>
+  </div>
+
   <img style="width: 450px; height: 450px; background-color: lightgray; margin-top: 80px; margin-left: 35px;" src="<?php echo $status_barra_1 ?>">
 
 
   <div style="position: absolute; width: 0.5px; height: 600px; background-color: #7F7F7F; margin-top: 110px; margin-left: 525px;"></div>
 
   <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha2)); ?> HASTA HOY</b>
+  </div>
+
+  <div style="font-size: 17px; color: black; position: absolute;  margin-top: 155px; margin-left: 750px;"><b><?php echo $meses[date("n", strtotime($fecha2))]; ?></b>
   </div>
 
   <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo $status_barra_2 ?>">

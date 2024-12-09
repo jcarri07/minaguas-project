@@ -31,6 +31,18 @@ if (isset($_POST['config'])) {
             mysqli_query($conn, "INSERT INTO configuraciones (nombre_config, configuracion) VALUES ('prioritarios', '$embalses_prioritarios')");
         }
     }
+
+    if ($_POST['config'] == "consumo-humano") {
+
+        $embalses_consumo_humano = $_POST['embalses_consumo_humano'];
+
+        $consumo_humano = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'consumo_humano'");
+        if (mysqli_num_rows($consumo_humano) > 0) {
+            mysqli_query($conn, "UPDATE configuraciones SET configuracion = '$embalses_consumo_humano' WHERE nombre_config = 'consumo_humano'");
+        } else {
+            mysqli_query($conn, "INSERT INTO configuraciones (nombre_config, configuracion) VALUES ('consumo_humano', '$embalses_consumo_humano')");
+        }
+    }
 }
 
 if (isset($_POST['eliminar'])) {
@@ -121,14 +133,14 @@ if (isset($_POST["fecha_seca"]) && isset($_POST["fecha_lluvia"])) {
     $peri_seco = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'fecha_sequia'");
     if (mysqli_num_rows($peri_seco) > 0) {
         mysqli_query($conn, "UPDATE configuraciones SET configuracion = '$nueva_fecha_seca' WHERE nombre_config = 'fecha_sequia';");
-    }else {
+    } else {
         mysqli_query($conn, "INSERT INTO configuraciones (nombre_config, configuracion) VALUES ('fecha_sequia', '$nueva_fecha_seca')");
     }
 
     $peri_lluvia = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'fecha_lluvia'");
     if (mysqli_num_rows($peri_lluvia) > 0) {
         mysqli_query($conn, "UPDATE configuraciones SET configuracion = '$nueva_fecha_lluvia' WHERE nombre_config = 'fecha_lluvia';");
-    }else {
+    } else {
         mysqli_query($conn, "INSERT INTO configuraciones (nombre_config, configuracion) VALUES ('fecha_lluvia', '$nueva_fecha_lluvia')");
     }
 

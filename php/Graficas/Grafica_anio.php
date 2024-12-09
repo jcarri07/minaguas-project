@@ -9,7 +9,7 @@ require_once '../batimetria.php';
 
 date_default_timezone_set("America/Caracas");
 setlocale(LC_TIME, "spanish");
-
+ini_set('max_execution_time', 400);
 $id = $_POST['id_embalse'];
 $tipo = $_POST['tipo'];
 $y = $_POST['anio'];
@@ -185,19 +185,13 @@ if ($count >= 1) {
 
                                         while ($j < count($datos_embalses)) {
 
-                                            if ($datos_embalses[$j]["cota_actual"] != NULL && $fech == date("Y", strtotime($datos_embalses[$j]['fecha']))) { ?> {
-                                                    x: '<?php echo $anio . "-" . date("m-d", strtotime($datos_embalses[$j]['fecha'])) . " " . $datos_embalses[$j]["hora"];  ?>',
-                                                    y: <?php echo $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];  ?>
-                                                },
-                                                <?php
+                                            if ($datos_embalses[$j]["cota_actual"] != NULL && $fech == date("Y", strtotime($datos_embalses[$j]['fecha']))) { ?> {x: '<?php echo $anio . "-" . date("m-d", strtotime($datos_embalses[$j]['fecha'])) . " " . $datos_embalses[$j]["hora"];  ?>',y: <?php echo $bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];  ?>},<?php
                                                 if ($max < $datos_embalses[$j]["cota_actual"]) {
                                                     $max = $datos_embalses[$j]["cota_actual"];
                                                 }
                                                 if ($min > $datos_embalses[$j]["cota_actual"]) {
                                                     $min = $datos_embalses[$j]["cota_actual"];
-                                                } ?>
-
-                                <?php
+                                                } ?> <?php
                                             }
 
                                             $j++;
@@ -205,16 +199,8 @@ if ($count >= 1) {
                                         if ($aux == 0) {
                                             echo "],";
                                             if ($fech == $anio) {
-                                                echo "pointBackgroundColor: function(context) {
-                                        var index = context.dataIndex;
-                                        var value = context.dataset.data[index];
-                                        return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';
-                                        },
-                                        pointRadius: function(context) {
-                                        var index = context.dataIndex;
-                                        var value = context.dataset.data[index];
-                                        return index === context.dataset.data.length - 1 ? '6' : '0';
-                                        },";
+                                                echo "pointBackgroundColor: function(context) {var index = context.dataIndex;var value = context.dataset.data[index];return index === context.dataset.data.length - 1 ? '#ff0000' : '#4472c4';},
+                                        pointRadius: function(context) {var index = context.dataIndex;var value = context.dataset.data[index];return index === context.dataset.data.length - 1 ? '6' : '0';},";
                                             };
                                             echo "categoryPercentage:1,},";
                                         }

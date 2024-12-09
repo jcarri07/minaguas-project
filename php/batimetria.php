@@ -17,7 +17,7 @@ class Batimetria
     private $vol_max;
     private $ultima_carga;
     private $embalse;
-
+    private $area_cuenca;
 
     public function __construct($id_embalse, $conn)
     {
@@ -58,6 +58,11 @@ class Batimetria
         $this->vol_min = $embalse['vol_min'];
         $this->vol_nor = $embalse['vol_nor'];
         $this->vol_max = $embalse['vol_max'];
+        $this->area_cuenca = $embalse['area_cuenca'];
+
+        $numero = str_replace(['.', ','], ['', '.'], $this->area_cuenca);
+        $numero = (float) $numero;
+        $this->area_cuenca = $numero;
 
         // $query = "SELECT fecha, hora, cota_actual FROM datos_embalse WHERE id_embalse = $id_embalse ORDER BY fecha DESC, hora DESC LIMIT 1";
         $query = " SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
@@ -417,5 +422,27 @@ class Batimetria
     //     return $this->stepByStepCloseCota($this->batimetria[$año], $cota_number, $step);
     // }
 
+    public function abastecimiento($extraccion = 45178.00)
+    {
+        $total_extraccion = $extraccion * (1 / 1000) * (1 / 1000000) * (86400 / 1);
+        $total_salidas = $total_extraccion + $this->evaporacion() + $this->filtracion();
+        $vol_actual_disp = $this->volumenActualDisponible();
 
+        $abastecimiento = ($vol_actual_disp / $total_salidas) / 30.5;
+        return $abastecimiento;
+    }
+
+    public function evaporacion($evap = 338.79)
+    {
+        $evap = floatval($evap);
+        $evaporacion = ($this->area_cuenca * ($evap / 1000) * 0.8 * (10000 / 30.5)) / 1000000;
+        return $evaporacion;
+    }
+
+    public function filtracion($porcentaje = 0.10)
+    {
+        $vol_actual = $this->getByCota($this->ultima_carga[0], $this->ultima_carga[1])[1];
+        $filtracion = (($vol_actual * $porcentaje) / 100) / 35.5;
+        return $filtracion;
+    }
 }
