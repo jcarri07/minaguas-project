@@ -220,15 +220,15 @@ closeConection($conn);
               $embalses = mysqli_fetch_all($queryEmbalses, MYSQLI_ASSOC);
 
               $embalses_consumo = array_filter($embalses, function ($value) {
-                $proposito = isset($value['proposito']) && $value['proposito'] !== ""
-                  ? explode(",", $value['proposito'])
+                $uso_actual = isset($value['uso_actual']) && $value['uso_actual'] !== ""
+                  ? explode(",", $value['uso_actual'])
                   : [];
 
-                $proposito = array_filter($proposito, function ($item) {
+                $uso_actual = array_filter($uso_actual, function ($item) {
                   return is_string($item) && trim($item) !== '';
                 });
 
-                return in_array(1, $proposito);
+                return in_array(1, $uso_actual);
               });
               ?>
               <!-- configuraciones de embalses prioritarios -->
