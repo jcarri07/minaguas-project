@@ -259,7 +259,7 @@ closeConection($conn);
 
               <div class="mt-5">
                 <h3 class="mb-2 text-center">Embalses de Consumo Humano</h3>
-                <h5 class="mb-4 text-center">Embalses tomados en cuenta para el reporte de estatus de embalses.</h5>
+                <h5 class="mb-4 text-center">Deseleccione aquellos que no son tomados en cuenta para el abastecimiento.</h5>
                 <div class="config-container-prioritarios">
                   <?php
                   if (!empty($embalses_consumo)) {
