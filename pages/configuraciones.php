@@ -3,14 +3,21 @@ require_once 'php/Conexion.php';
 
 $queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo';");
 $queryPropositosInactivos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'inactivo';");
-$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
+$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' order by nombre_embalse;");
 $stringPrioritarios = "0";
 $prioritarios = [];
 $queryPrioritarios = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'prioritarios';");
 if (mysqli_num_rows($queryPrioritarios) > 0) {
   $stringPrioritarios = mysqli_fetch_assoc($queryPrioritarios)['configuracion'];
-  // var_dump($stringPrioritarios);
   $prioritarios = explode(",", $stringPrioritarios);
+}
+
+$stringConsumoHumano = "0";
+$consumoHumano = [];
+$queryConsumoHumano = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'consumo_humano';");
+if (mysqli_num_rows($queryConsumoHumano) > 0) {
+  $stringConsumoHumano = mysqli_fetch_assoc($queryConsumoHumano)['configuracion'];
+  $consumoHumano = explode(",", $stringConsumoHumano);
 }
 
 $embalsesPriotitarios = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse IN ($stringPrioritarios);");
@@ -51,7 +58,7 @@ closeConection($conn);
     display: grid;
     place-content: center;
     grid-template-columns: repeat(auto-fill,
-        minmax(120px, 1fr));
+        minmax(140px, 1fr));
     column-gap: 10px;
   }
 
@@ -115,79 +122,124 @@ closeConection($conn);
             </a>
           </div> -->
 
-          <div class="config-container">
-
-            <!-- Configuraciones de propositos -->
-            <div class="mb-5">
-              <h3 class="mb-3 text-center">Propósitos/Usos de embalse:</h3>
-              <div class="d-flex flex-wrap justify-content-center align-items-center mb-2 gap-3 m-5">
-                <div class="">
-                  <div class="">Nuevo Propósito/Uso</div>
-                </div>
-                <div class="d-flex justify-content-center align-items-center mb-2 gap-3">
-                  <div class=""><input class="form-control" type="text" name="" id="prop-uso-text"></div>
-                  <div id="prop-uso" class="prop-uso cursor-pointer border rounded"><i class="fas fa-plus text-lg p-2"></i></div>
-                </div>
-              </div>
-              <hr>
-              <div id="config-propositos" class="config-container-hijo">
-                <?php
-                while ($row = mysqli_fetch_array($queryPropositos)) {
-                ?>
-
+          <div class="config-container----">
+            <div class="d-flex gap-4">
+              <!-- Configuraciones de propositos -->
+              <div class=" w-50">
+                <h3 class="mb-3 text-center">Propósitos/Usos de embalse</h3>
+                <div class="d-flex flex-wrap justify-content-center align-items-center mb-2 gap-3 m-5">
                   <div class="">
-                    <div class=" d-flex align-items-center">
-                      <a data-id="<?php echo $row['id_proposito']; ?>" class="editar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a>
-                      <a data-id="<?php echo $row['id_proposito']; ?>" class="eliminar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i></a>
-                      <span id="<?php echo $row['id_proposito']; ?>-span" class="label-proposito old align-self-center text-sm" for="">
-                        <?php echo $row['proposito']; ?>
-                      </span>
-                    </div>
+                    <div class="">Nuevo Propósito/Uso</div>
                   </div>
+                  <div class="d-flex justify-content-center align-items-center mb-2 gap-3">
+                    <div class=""><input class="form-control" type="text" name="" id="prop-uso-text"></div>
+                    <div id="prop-uso" class="prop-uso cursor-pointer border rounded"><i class="fas fa-plus text-lg p-2"></i></div>
+                  </div>
+                </div>
+                <hr>
+                <div id="config-propositos" class="config-container-hijo px-6">
+                  <?php
+                  while ($row = mysqli_fetch_array($queryPropositos)) {
+                  ?>
 
+                    <div class="">
+                      <div class=" d-flex align-items-center">
+                        <a data-id="<?php echo $row['id_proposito']; ?>" class="editar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a>
+                        <a data-id="<?php echo $row['id_proposito']; ?>" class="eliminar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i></a>
+                        <span id="<?php echo $row['id_proposito']; ?>-span" class="label-proposito old align-self-center text-sm" for="">
+                          <?php echo $row['proposito']; ?>
+                        </span>
+                      </div>
+                    </div>
+
+                  <?php
+                  }
+                  ?>
+                </div>
+
+                <?php
+                if (mysqli_num_rows($queryPropositosInactivos) > 0) {
+                ?>
+                  <div class="mt-4 text-sm text-dark">Eliminados</div>
                 <?php
                 }
                 ?>
+
+                <div id="config-propositos" class="config-container-hijo">
+                  <?php
+                  while ($row = mysqli_fetch_array($queryPropositosInactivos)) {
+                  ?>
+
+                    <div class="">
+                      <div class=" d-flex align-items-center">
+                        <!-- <a data-id="<?php echo $row['id_proposito']; ?>" class="editar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a> -->
+                        <a data-id="<?php echo $row['id_proposito']; ?>" class="restaurar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-redo text-dark me-2" aria-hidden="true"></i></a>
+                        <span id="<?php echo $row['id_proposito']; ?>-span" class="label-proposito old align-self-center text-sm" for="">
+                          <?php echo $row['proposito']; ?>
+                        </span>
+                      </div>
+                    </div>
+
+                  <?php
+                  }
+                  ?>
+                </div>
+
+                <div class="text-center mt-3"><button id="save-propositos" class="btn btn-primary">Guardar</button></div>
               </div>
 
-              <?php
-              if (mysqli_num_rows($queryPropositosInactivos) > 0) {
-              ?>
-                <div class="mt-4 text-sm text-dark">Eliminados</div>
-              <?php
-              }
-              ?>
-
-              <div id="config-propositos" class="config-container-hijo">
-                <?php
-                while ($row = mysqli_fetch_array($queryPropositosInactivos)) {
-                ?>
-
-                  <div class="">
-                    <div class=" d-flex align-items-center">
-                      <!-- <a data-id="<?php echo $row['id_proposito']; ?>" class="editar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a> -->
-                      <a data-id="<?php echo $row['id_proposito']; ?>" class="restaurar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-redo text-dark me-2" aria-hidden="true"></i></a>
-                      <span id="<?php echo $row['id_proposito']; ?>-span" class="label-proposito old align-self-center text-sm" for="">
-                        <?php echo $row['proposito']; ?>
-                      </span>
-                    </div>
+              <!-- configuraciones fecha inameh -->
+              <div class="w-50" style="display: flex; flex-direction: column; align-items: center;">
+                <div class="mb-5">
+                  <h3 class="mb-2 text-center" style="">Inicio de Temporadas (Según INAMEH)</h3>
+                </div>
+                <div class="d-flex gap-4">
+                  <div style="text-align: center;">
+                    <h5 class="mb-2">Fecha inicio época Seca:</h5>
+                    <label>Fecha actual:</label>
+                    <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($fechas[0])); ?>" id="fecha_actual_sequia" readonly>
+                    <label>Nueva fecha: </label>
+                    <input type="date" class="form-control" style="width: 100%;" id="fecha_inameh_seca">
                   </div>
 
-                <?php
-                }
-                ?>
+                  <div style="text-align: center; margin-left: 80px; ">
+                    <h5 class="mb-2">Fecha inicio época Lluvia:</h5>
+                    <label>Fecha actual:</label>
+                    <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($fechas[1])); ?>" id="fecha_actual_lluvia" readonly>
+                    <label>Nueva fecha: </label>
+                    <input type="date" class="form-control" style="width: 100%;" id="fecha_inameh_lluvia">
+                  </div>
+                </div>
+                <div class="text-center mt-5"><button id="periodo" class="btn btn-primary">Guardar</button></div>
               </div>
-
-              <div class="text-center mt-3"><button id="save-propositos" class="btn btn-primary">Guardar</button></div>
             </div>
 
-            <!-- configuraciones de embalses prioritarios -->
-            <div class="">
+            <div class="px-6 mt-5">
+
+              <?php
+              $embalses = mysqli_fetch_all($queryEmbalses, MYSQLI_ASSOC);
+
+              $embalses_consumo = array_filter($embalses, function ($value) {
+                $proposito = isset($value['proposito']) && $value['proposito'] !== ""
+                  ? explode(" - ", $value['proposito'])
+                  : [];
+
+                $proposito = array_filter($proposito, function ($item) {
+                  return is_string($item) && trim($item) !== '';
+                });
+
+                return in_array("1", $proposito);
+              });
+              ?>
+              <!-- configuraciones de embalses prioritarios -->
               <div>
-                <h3 class="mb-2 text-center">Embalses Prioritarios:</h3>
+                <h3 class="mb-2 text-center">Embalses Prioritarios</h3>
+                <h5 class="mb-4 text-center">Seleccione aquellos embalses que desee que aparezcan en el reporte de embalses prioritarios.</h5>
                 <div class="config-container-prioritarios">
 
                   <?php
+                  // resetear el puntero de la consulta
+                  mysqli_data_seek($queryEmbalses, 0);
                   while ($embalse = mysqli_fetch_array($queryEmbalses)) {
                   ?>
                     <div class="d-flex">
@@ -205,29 +257,40 @@ closeConection($conn);
                 <div class="text-center mt-3"><button id="save-prioritarios" class="btn btn-primary">Guardar</button></div>
               </div>
 
-              <!-- configuraciones fecha inameh -->
-
-
-              <h3 class="mb-2 text-center" style="padding-top: 50px;">Inicio de Temporadas (Según INAMEH):</h3>
-
-              <div style="display: flex; flex-direction: row; justify-content: center; padding-top: 10px;">
-                <div style="text-align: center;">
-                  <h5 class="mb-2">Fecha inicio época Seca:</h5>
-                  <label>Fecha actual:</label>
-                  <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($fechas[0])); ?>" id="fecha_actual_sequia" readonly>
-                  <label>Nueva fecha: </label>
-                  <input type="date" class="form-control" style="width: 100%;" id="fecha_inameh_seca">
+              <div class="mt-5">
+                <h3 class="mb-2 text-center">Embalses de Consumo Humano</h3>
+                <h5 class="mb-4 text-center">Embalses tomados en cuenta para el reporte de estatus de embalses.</h5>
+                <div class="config-container-prioritarios">
+                  <?php
+                  if (!empty($embalses_consumo)) {
+                    foreach ($embalses_consumo as $embalse) {
+                  ?>
+                      <div class="d-flex">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input check-consumo-humano"
+                            type="checkbox"
+                            value="<?php echo htmlspecialchars($embalse["id_embalse"]); ?>"
+                            id="embalse-<?php echo htmlspecialchars($embalse["id_embalse"]); ?>"
+                            <?php echo (isset($consumoHumano) && is_array($consumoHumano) && !in_array($embalse["id_embalse"], $consumoHumano)) ? "checked" : ""; ?>>
+                          <label class="label-embalse form-check-label" for="embalse-<?php echo htmlspecialchars($embalse["id_embalse"]); ?>">
+                            <?php echo htmlspecialchars($embalse["nombre_embalse"]); ?>
+                          </label>
+                        </div>
+                      </div>
+                  <?php
+                    }
+                  } else {
+                    echo "<p class='text-center'>No hay embalses disponibles.</p>";
+                  }
+                  ?>
                 </div>
-
-                <div style="text-align: center; margin-left: 80px; ">
-                  <h5 class="mb-2">Fecha inicio época Lluvia:</h5>
-                  <label>Fecha actual:</label>
-                  <input type="text" style="text-align: center;" class="form-control" style="width: 100%;" value="<?php echo date("d-m-Y", strtotime($fechas[1])); ?>" id="fecha_actual_lluvia" readonly>
-                  <label>Nueva fecha: </label>
-                  <input type="date" class="form-control" style="width: 100%;" id="fecha_inameh_lluvia">
+                <div class="text-center mt-3">
+                  <button id="save-consumo-humano" class="btn btn-primary">Guardar</button>
                 </div>
               </div>
-              <div class="text-center mt-3"><button id="periodo" class="btn btn-primary">Guardar</button></div>
+
+
             </div>
           </div>
 
@@ -417,6 +480,35 @@ closeConection($conn);
       data: {
         config: "prioritarios",
         embalses_prioritarios: embalses_prioritarios,
+      },
+      success: function(response) {
+        console.log(response)
+        window.location.href = "?page=configuraciones";
+
+      }
+    });
+  });
+
+  $("#save-consumo-humano").on("click", function(e) {
+    var inputs_checkeados = $('input[type="checkbox"]:not(:checked).check-consumo-humano');
+
+    var valores_inputs = [];
+    let embalses_consumo_humano = "0";
+
+    $.each(inputs_checkeados, function(index, input) {
+      valores_inputs.push($(input).val());
+    });
+
+    if (valores_inputs.length > 0) {
+      embalses_consumo_humano = valores_inputs.join(",");
+    }
+    console.log(embalses_consumo_humano);
+    $.ajax({
+      type: "POST",
+      url: "php/proces_config.php",
+      data: {
+        config: "consumo-humano",
+        embalses_consumo_humano: embalses_consumo_humano,
       },
       success: function(response) {
         console.log(response)
