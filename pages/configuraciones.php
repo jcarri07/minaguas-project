@@ -98,6 +98,15 @@ closeConection($conn);
   .label-embalse {
     font-size: 12px;
   }
+
+  .form-container {
+    border: 1px solid lightgray; /* Borde claro */
+    padding: 15px; /* Espaciado interno */
+    margin-top: 15px; /* Espaciado superior */
+    border-radius: 5px; /* Bordes redondeados */
+    align-items: center; /* Centra horizontalmente */
+    
+}
 </style>
 <div class="container-fluid py-4">
   <div class="row">
@@ -259,7 +268,7 @@ closeConection($conn);
 
               <div class="mt-5">
                 <h3 class="mb-2 text-center">Embalses de Consumo Humano</h3>
-                <h5 class="mb-4 text-center">Deseleccione aquellos que no son tomados en cuenta para el abastecimiento.</h5>
+                <h5 class="mb-4 text-center">Deseleccione los embalses de compensación</h5>
                 <div class="config-container-prioritarios">
                   <?php
                   if (!empty($embalses_consumo)) {
@@ -295,9 +304,9 @@ closeConection($conn);
 
             <div class="text-center mt-5">
               <div class="mb-5">
-                <h3 class="mb-2 text-center">Valores de filtración y evaporación por embalses.</h3>
+                <h3 class="mb-2 text-center">Valores de Filtración y Evaporación por Embalses</h3>
               </div>
-              <button class="btn btn-success" id="evap-filtracion">Actualizar valores</button>
+              <button class="btn btn-success" id="evap-filtracion"  onclick="openModal()">Actualizar valores</button>
             </div>
           </div>
 
@@ -539,16 +548,92 @@ closeConection($conn);
 
       success: function(response) {
         // console.log(response);
-        window.location.href = "?page=configuraciones";
+        window.location.href = "?page=configuraciones";   
       },
       error: function(xhr, status, error) {
         console.error(xhr.responseText);
       }
     });
   });
+
+  function openModal() {
+      $('#modal-evap').modal('show');
+    }
+
+    document.getElementById('buscador').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const inputs = document.querySelectorAll('input[type="text"]');
+
+    inputs.forEach(input => {
+        if (input.value.toLowerCase().includes(searchTerm)) {
+            input.parentElement.style.display = ''; // Mostrar el input si coincide
+        } else {
+            input.parentElement.style.display = 'none'; // Ocultar el input si no coincide
+        }
+    });
+});
 </script>
 
 
+<div class="modal fade" id="modal-evap" tabindex="-1" role="dialog" aria-labelledby="modal-evap" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content w-300">
+      <div class="modal-body p-0">
+        <button type="button" class="btn btn-secondary close-modal btn-rounded mb-0" data-bs-dismiss="modal">X</button>
+        <div class="card card-plain">
+          <div class="card-body">
+            <div class="text-center">
+              <h3 id="embalseTitulo" class="mb-2 text-center">Valores de Filtración y Evaporación</h3>
+              <h6 id="embalseTitulo" class="mb-4 text-center">Ingrese los valores de cada embalse para actualizar según la fecha que corresponda</h6>
+
+            </div>
+
+            <div class="table-responsive mb-3">
+              <table class="table align-items-center text-lg text-center table-lg" id="table">
+                <thead class="table">
+                  <tr>
+                    <th style="text-align: center; width: 30%" class="hide-cell">Embalse</th>
+                    <th style="text-align: center;  width: 25%" class="hide-cell">Filtración</th> <!--Ubicación-->
+                    <th style="text-align: center; width: 25% " class="hide-cell">Evaporación</th>
+                    <th style="text-align: center;  width: 20%" class="hide-cell">Fecha</th> <!--Ubicación-->
+
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                <tr>
+                    <th style="text-align: center;" class="hide-cell">
+                    <div class="col-auto">
+                 <label for="evaporacion" class="col-form-label">Embalse 1</label>
+                </div>
+                    </th>
+                    <td class="hide-cell" >
+                    <div class="col-auto">
+                  <input type="text" class="form-control" name="evaporacion" id="evaporacion" >
+                </div>
+                    </td> 
+                    <th style="text-align: center;" class="hide-cell">                
+                    <div class="col-auto">
+                    <input type="text" class="form-control" name="filtracion" id="filtracion">
+                    </div>
+                    </th>
+                    <th style="text-align: center;" class="hide-cell">
+                    <div class="col-auto">
+                <label for="fecha" class="col-form-label">dd/mm/aaaa</label>
+                </div>
+                    </th> 
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="modal-prop" tabindex="-1" role="dialog" aria-labelledby="modal-prop" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
