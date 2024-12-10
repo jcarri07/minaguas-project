@@ -141,19 +141,19 @@ while ($num < count($volumen_primer_periodo)) {
   // $fecha = date($row['fecha']);
   $anio = date("Y", strtotime($row['fecha']));
   $final = $bat->volumenActualDisponible();
-  $inicial = $bat->volumenDisponibleByCota($anio, $row["cota_actual"]);
+  $inicial = $bat->getByCota($anio, $row["cota_actual"])[1];
   $variacion = $final - $inicial;
   $porcentaje = $inicial != 0 ? (100 * (($final - $inicial) / ($inicial))) : 0;
 
   $anio2 = date("Y", strtotime($row2['fecha']));
   $final2 = $bat->volumenActualDisponible();
-  $inicial2 = $bat->volumenDisponibleByCota($anio2, $row2["cota_actual"]);
+  $inicial2 = $bat->getByCota($anio2, $row2["cota_actual"])[1];
   $variacion2 = $final2 - $inicial2;
   $porcentaje2 = $inicial2 != 0 ? (100 * (($final2 - $inicial2) / ($inicial2))) : 0;
 
   $anio3 = date("Y", strtotime($row3['fecha']));
   $final3 = $bat->volumenActualDisponible();
-  $inicial3 = $bat->volumenDisponibleByCota($anio3, $row3["cota_actual"]);
+  $inicial3 = $bat->getByCota($anio3, $row3["cota_actual"])[1];
   $variacion3 = $final3 - $inicial3;
   $porcentaje3 = $inicial3 != 0 ? (100 * (($final3 - $inicial3) / ($inicial3))) : 0;
 
@@ -935,15 +935,15 @@ $ruta_mapas = "../../assets/img/temp/";
           <tr>
             <td class="tablaDos" style="font-size: 12px; "><?php echo $values[6] ?></td>
             <td class="tablaDos" style="font-size: 12px; "><?php echo $values[1] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format((($values[1] * 100) / $values[0]), 2, '.', '')) : 0 ?></td>
             <td class="tablaDos" style="font-size: 12px; "><?php echo $values[2] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format((($values[2] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format((($values[2] * 100) / $values[0]), 2, '.', '')) : 0 ?></td>
             <td class="tablaDos" style="font-size: 12px; "><?php echo $values[3] . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format((($values[3] * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format((($values[3] * 100) / $values[0]), 2, '.', '')) : 0 ?></td>
             <td class="tablaDos" style="font-size: 12px; "><?php echo $values[4] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px; "><?php echo $values[5] . "/" . $values[0] ?></td>
             <td class="tablaDos" style="font-size: 12px; "><?php echo ($values[4] + $values[5]) . "/" . $values[0] ?></td>
-            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format(((($values[4] + $values[5]) * 100) / $values[0]), 2, '.', '')) : 0 ?>%</td>
+            <td class="tablaDos" style="font-size: 12px; "><?php echo $values[0] != 0 ? (number_format(((($values[4] + $values[5]) * 100) / $values[0]), 2, '.', '')) : 0 ?></td>
 
           </tr>
         <?php
@@ -973,14 +973,14 @@ $ruta_mapas = "../../assets/img/temp/";
           <td class="tablaDos" style="font-size: 12px;" rowspan="2"><b><?php echo $CT[4] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;" rowspan="2"><b><?php echo $CT[5] . "/" . $CT[0] ?></b></td>
           <td class="tablaDos" style="font-size: 12px;" rowspan="2"><b><?php echo ($CT[4] + $CT[5]) . "/" . $CT[0] ?></b></td>
-          <td class="tablaDos" style="font-size: 12px;" rowspan="2"><b><?php echo $CT[0] != 0 ? (number_format(((($CT[4] + $CT[5]) * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;" rowspan="2"><b><?php echo $CT[0] != 0 ? (number_format(((($CT[4] + $CT[5]) * 100) / $CT[0]), 2, '.', '')) : 0 ?></b></td>
         </tr>
 
         <tr>
           <td class="text-celdas total" style="font-size: 12px;"><b>%</b></td>
-          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[1] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
-          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[2] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
-          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[3] * 100) / $CT[0]), 2, '.', '')) : 0 ?>%</b></td>
+          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[1] * 100) / $CT[0]), 2, '.', '')) : 0 ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[2] * 100) / $CT[0]), 2, '.', '')) : 0 ?></b></td>
+          <td class="tablaDos" style="font-size: 12px;" colspan="2"><b><?php echo $CT[0] != 0 ? (number_format((($CT[3] * 100) / $CT[0]), 2, '.', '')) : 0 ?></b></td>
         </tr>
 
       </table>
@@ -1308,7 +1308,7 @@ $ruta_mapas = "../../assets/img/temp/";
               $tot_por_2 += $value[5];
           ?>
               <tr>
-                <td class="text-celd" style="font-size: 12px; width: 125px;"><?php echo $value[1] ?></td>
+                <td class="text-celd" style="font-size: 12px; width: 125px; height: 12px;"><?php echo $value[1] ?></td>
                 <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($value[2] < 0) {
                                                                                 echo "red";
                                                                               } else {
@@ -1318,7 +1318,7 @@ $ruta_mapas = "../../assets/img/temp/";
                                                                                 echo "red";
                                                                               } else {
                                                                                 echo "green";
-                                                                              } ?>"><?php echo number_format($value[3], 2, ",", ".") ?>%</td>
+                                                                              } ?>"><?php echo number_format($value[3], 2, ",", ".") ?></td>
                 <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($value[4] < 0) {
                                                                                 echo "red";
                                                                               } else {
@@ -1328,32 +1328,44 @@ $ruta_mapas = "../../assets/img/temp/";
                                                                                 echo "red";
                                                                               } else {
                                                                                 echo "green";
-                                                                              } ?>"><?php echo number_format($value[5], 2, ",", "."); ?>%</td>
+                                                                              } ?>"><?php echo number_format($value[5], 2, ",", "."); ?></td>
               </tr>
           <?php }
           } ?>
           <tr>
             <td class="text-celd" style="font-size: 16px; width: 125px;"><b>TOTAL</b></td>
             <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($tot_vol_1 < 0) {
-                                                                            echo "red";
+                                                                            echo "black";
                                                                           } else {
-                                                                            echo "green";
-                                                                          } ?>"><b><?php echo number_format($tot_vol_1, 2, ",", "."); ?></b></td>
+                                                                            echo "black";
+                                                                          } ?>"><b><?php if ($tot_vol_1 > 0) {
+                                                                                      echo "+";
+                                                                                    }
+                                                                                    echo number_format($tot_vol_1, 2, ",", "."); ?></b></td>
             <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($tot_por_1 < 0) {
-                                                                            echo "red";
+                                                                            echo "black";
                                                                           } else {
-                                                                            echo "green";
-                                                                          } ?>"><b><?php echo number_format($tot_por_1, 2, ",", "."); ?>%</b></td>
+                                                                            echo "black";
+                                                                          } ?>"><b><?php if ($tot_por_1 > 0) {
+                                                                                      echo "+";
+                                                                                    }
+                                                                                    echo number_format($tot_por_1, 2, ",", "."); ?></b></td>
             <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($tot_vol_2 < 0) {
-                                                                            echo "red";
+                                                                            echo "black";
                                                                           } else {
-                                                                            echo "green";
-                                                                          } ?>"><b><?php echo number_format($tot_vol_2, 2, ",", "."); ?></b></td>
+                                                                            echo "black";
+                                                                          } ?>"><b><?php if ($tot_vol_2 > 0) {
+                                                                                      echo "+";
+                                                                                    }
+                                                                                    echo number_format($tot_vol_2, 2, ",", "."); ?></b></td>
             <td class="text-celd-variacion" style="font-size: 12px; color:<?php if ($tot_por_2 < 0) {
-                                                                            echo "red";
+                                                                            echo "black";
                                                                           } else {
-                                                                            echo "green";
-                                                                          } ?>"><b><?php echo number_format($tot_por_2, 2, ",", "."); ?>%</b></td>
+                                                                            echo "black";
+                                                                          } ?>"><b><?php if ($tot_por_2 > 0) {
+                                                                                      echo "+";
+                                                                                    }
+                                                                                    echo number_format($tot_por_2, 2, ",", "."); ?></b></td>
           </tr>
         </table>
 
@@ -1683,10 +1695,10 @@ $ruta_mapas = "../../assets/img/temp/";
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[1], 2, ",", ""); ?></td>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[2], 2, ",", ""); ?></td>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[3], 2, ",", ""); ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[4], 2, ",", "") . "%"; ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[5], 2, ",", "") . "%"; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[4], 2, ",", "") . ""; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[5], 2, ",", "") . ""; ?></td>
             <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[6], 2, ",", ""); ?></td>
-            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[7], 2, ",", "") . "%"; ?></td>
+            <td class="text-celdas" style="font-size: 12px; width: 90px;"><?php echo number_format($value[7], 2, ",", "") . ""; ?></td>
           </tr>
         <?php } ?>
       </table>
@@ -1794,7 +1806,7 @@ $ruta_mapas = "../../assets/img/temp/";
           if (strtolower(trim($abast[0])) == strtolower(trim($region))) {
         ?>
             <tr>
-              <td class="" style="font-size: 12px;">
+              <td class="" style="font-size: 12px; height: 12px;">
                 <div style="background-color:<?php echo descripcion($abast[3])[1] ?>; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
               </td>
               <td class="" style="font-size: 12px;"><?php echo descripcion($abast[3])[0] ?></td>

@@ -292,6 +292,13 @@ closeConection($conn);
 
 
             </div>
+
+            <div class="text-center mt-5">
+              <div class="mb-5">
+                <h3 class="mb-2 text-center">Valores de filtración y evaporación por embalses.</h3>
+              </div>
+              <button class="btn btn-success" id="evap-filtracion">Actualizar valores</button>
+            </div>
           </div>
 
         </div>
