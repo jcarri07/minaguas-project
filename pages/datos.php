@@ -72,7 +72,7 @@ $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, conce
             tce.id <> '6' AND 
             tce.id <> '7' AND
             ce.concepto <> 'Subtotal'
-          ORDER BY codigo ASC;";
+          ORDER BY (codigo + 0) ASC;";
 $query_codigos = mysqli_query($conn, $sql);
 
 $sql = "SELECT DISTINCT YEAR(fecha) AS 'anio'
@@ -429,7 +429,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                 <div class="col">
                   <label>Cota (01)</label>
                   <div class="input-group mb-3">
-                    <input type="number" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" required>
+                    <input type="number" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" onkeydown="preventInvalidInput(event);" required>
                   </div>
                 </div>
               </div>
@@ -452,7 +452,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                   <div class="col">
                     <label>Valor</label> <!-- (1000 m<sup>3</sup>)-->
                     <div class="input-group mb-4">
-                      <input type="number" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" required>
+                      <input type="number" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" onkeydown="preventInvalidInput(event);" required>
                     </div>
                   </div>
                 </div>
@@ -662,6 +662,20 @@ require_once 'php/datos/vistas/morosos.php';
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }*/
 
+  function preventInvalidInput(event) {
+    // Lista de teclas permitidas (números, borrar, retroceso, flechas, tabulación, puntos y comas)
+    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', '.', ','];
+    
+    // Si la tecla es un número o está en las teclas permitidas, permitir la entrada
+    if (!isNaN(event.key) || allowedKeys.includes(event.key)) {
+        return;
+    }
+
+    // Prevenir cualquier otra tecla
+    event.preventDefault();
+  }
+
+  
   $(".button_fantasma").click(function(e) {
     e.preventDefault();
     $(this).prev().click();
@@ -720,7 +734,7 @@ require_once 'php/datos/vistas/morosos.php';
     htmlRows += '   <div class="col">';
     htmlRows += '       <label>Valor</label>';
     htmlRows += '       <div class="input-group mb-4">';
-    htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor" required>';
+    htmlRows += '           <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_' + count + '" placeholder="Valor" onkeydown="preventInvalidInput(event);" required>';
     htmlRows += '       </div>';
     htmlRows += '   </div>';
     htmlRows += '   <div class="col" style="flex: 0 0 0% !important;">';
@@ -746,9 +760,11 @@ require_once 'php/datos/vistas/morosos.php';
     if (value_select == '' || value_select == '30' || value_select == '31') {
       label_valor.text("Valor");
       $("#valor_extraccion_" + row).attr("type", "text");
+      $("#valor_extraccion_" + row).attr("onkeydown", "");
     } else {
       label_valor.html("Valor (1000 m<sup>3</sup>)");
       $("#valor_extraccion_" + row).attr("type", "number");
+      $("#valor_extraccion_" + row).attr("onkeydown", "preventInvalidInput(event);");
     }
 
 
@@ -803,6 +819,7 @@ require_once 'php/datos/vistas/morosos.php';
 
 
     $("#valor_extraccion_1").attr("type", "number");
+    $("#valor_extraccion_1").attr("onkeydown", "preventInvalidInput(event);");
     $("#valor_cota").attr("type", "number");
   }
 
@@ -1038,6 +1055,7 @@ require_once 'php/datos/vistas/morosos.php';
         var row = this.id.replace("tipo_extraccion_", "");
 
         $("#valor_extraccion_" + row).attr("type", "text");
+        $("#valor_extraccion_" + row).attr("onkeydown", "");
 
 
         var valor_extraccion = extraccion_aux[1];

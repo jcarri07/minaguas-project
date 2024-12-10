@@ -1054,15 +1054,15 @@ $ruta_mapas = "../../assets/img/temp/";
   <img style="width: 550px; height: 450px; background-color: lightgray; margin-top: 50px; margin-left: 35px;" src="<?php echo $status_pie_1 ?>">
 
 
-  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 200px; margin-left: 640px;"><b> <u><?php echo $lista[3] ?> EMBALSES</u> EN CONDICIONES BUENAS Y MUY BUENAS <br> ( > 90% Y ALIVIANDO )</b></div>
+  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 200px; margin-left: 640px;"><b style="line-height: 1.5;"> <u><?php echo $lista[3] ?> EMBALSES</u> EN CONDICIONES BUENAS Y MUY BUENAS <br> ( > 90% Y ALIVIANDO )</b></div>
 
-  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 300px; margin-left: 640px;"><b> <u><?php echo $lista[2] ?> EMBALSES</u> EN CONDICIONES NORMALES ALTO <br> ( 60 % < A < 90 % )</b>
+  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 300px; margin-left: 640px;"><b style="line-height: 1.5;"> <u><?php echo $lista[2] ?> EMBALSES</u> EN CONDICIONES NORMALES ALTO <br> ( 60 % < A < 90 % )</b>
   </div>
 
-  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 400px; margin-left: 640px;"><b> <u><?php echo $lista[1] ?> EMBALSES</u> EN CONDICIONES NORMALES BAJO <br> ( 30 % < A < 60% )</b>
+  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 400px; margin-left: 640px;"><b style="line-height: 1.5;"> <u><?php echo $lista[1] ?> EMBALSES</u> EN CONDICIONES NORMALES BAJO <br> ( 30 % < A < 60% )</b>
   </div>
 
-  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 500px; margin-left: 640px;"><b> <u><?php echo $lista[0] ?> EMBALSES</u> EN CONDICIONES BAJAS ( < 30 %)</b>
+  <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 500px; margin-left: 640px;"><b style="line-height: 1.5;"> <u><?php echo $lista[0] ?> EMBALSES</u> EN CONDICIONES BAJAS ( < 30 %)</b>
   </div>
 
   <div class="box-title"><b> <?php echo round(($lista[2] + $lista[3]) * 100 / ($lista[2] + $lista[3] + $lista[1] + $lista[0]), 2) ?>% DE LOS EMBALSES SE ENCUENTRAN EN CONDICIONES NORMALES A MUY BUENAS</b></div>
@@ -1082,12 +1082,18 @@ $ruta_mapas = "../../assets/img/temp/";
   <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 7px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha1)); ?> HASTA HOY</b>
   </div>
 
+  <div style="font-size: 17px; color: black; position: absolute;  margin-top: 155px; margin-left: 250px;"><b><?php echo $meses[date("n", strtotime($fecha1))]; ?></b>
+  </div>
+
   <img style="width: 450px; height: 450px; background-color: lightgray; margin-top: 80px; margin-left: 35px;" src="<?php echo $status_barra_1 ?>">
 
 
   <div style="position: absolute; width: 0.5px; height: 600px; background-color: #7F7F7F; margin-top: 110px; margin-left: 525px;"></div>
 
   <div style="font-size: 17px; color: #0070C0; position: absolute;  margin-top: 120px; margin-left: 550px;"><b>DESDE EL <?php echo date("d/m/Y", strtotime($fecha2)); ?> HASTA HOY</b>
+  </div>
+
+  <div style="font-size: 17px; color: black; position: absolute;  margin-top: 155px; margin-left: 750px;"><b><?php echo $meses[date("n", strtotime($fecha2))]; ?></b>
   </div>
 
   <img style="width: 450px; height: 450px; background-color: lightgray; position: absolute; margin-top: 180px; margin-left: 570px;" src="<?php echo $status_barra_2 ?>">
