@@ -19,7 +19,7 @@
 
 <link href="../../../assets/css/style-spinner.css" rel="stylesheet" />
 <link id="pagestyle" href="../../../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/exceljs@4.2.0/dist/exceljs.min.js"></script>
+<script src="../../../assets/js/excel.js/exceljs.min.js"></script>
 
 
 <div class="loaderPDF" id="box-loader">
