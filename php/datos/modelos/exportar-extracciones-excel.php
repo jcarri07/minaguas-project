@@ -36,6 +36,8 @@
         
         return null;
     }
+
+    $array_total = array();
     
 
     $diasSemanaEspañol = [
@@ -47,15 +49,6 @@
         'Saturday' => 'Sábado',
         'Sunday' => 'Domingo'
     ];
-
-    use PhpOffice\PhpSpreadsheet\Spreadsheet;
-    use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-    use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-    use PhpOffice\PhpSpreadsheet\Style\Fill;
-    use PhpOffice\PhpSpreadsheet\Style\Border;
-    use PhpOffice\PhpSpreadsheet\Style\Alignment;
-    use PhpOffice\PhpSpreadsheet\Style\Color;
-    use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
     $sql = "SELECT DISTINCT id_embalse, nombre_embalse, estado, municipio, parroquia, id_encargado
             FROM embalses em, estados e, municipios m, parroquias p
@@ -125,301 +118,39 @@
     }
 
 
-    function styles($hoja, $fila_inicio_color_fecha, $fila_fin_color_fecha){
-        //el uno
-        $hoja->freezePane('D9');
-
-        $hoja->getDefaultColumnDimension()->setWidth(12.56);
-        $hoja->getColumnDimension('A')->setWidth(11.11);
-        $hoja->getColumnDimension('B')->setWidth(13.89);
-        $hoja->getColumnDimension('C')->setWidth(11.11);
-        $hoja->getColumnDimension('D')->setWidth(12.89);
-        $hoja->getColumnDimension('T')->setWidth(48.89);
-        $hoja->getColumnDimension('U')->setWidth(16.89);
-        $hoja->getColumnDimension('V')->setWidth(32.22);
-
-
-        $hoja->mergeCells('A1:B1');
-        $hoja->mergeCells('A2:B2');
-        $hoja->mergeCells('A3:B3');
-        $hoja->mergeCells('A4:B4');
-        $hoja->mergeCells('A7:B7');
-        /*$hoja->mergeCells('E7:H7');
-        $hoja->mergeCells('I7:L7');
-        $hoja->mergeCells('M7:P7');
-        $hoja->mergeCells('Q7:S7');
-        $hoja->mergeCells('T7:U7');
-        $hoja->mergeCells('V7:W7');*/
-
-        $hoja->mergeCells('C7:C8');
-        $hoja->mergeCells('D7:D8');
-
-        $hoja->getRowDimension(8)->setRowHeight(53.40);
-
-
-
-        $color = '5B9BD5'; 
-        $hoja->getStyle("A7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-        $hoja->getStyle("A8")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-        $hoja->getStyle("B8")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-        $hoja->getStyle("C7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        $color = 'DDEBF7';
-        $hoja->getStyle("D7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        /*$color = "2F75B5";
-        $hoja->getStyle("E7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        $color = "A9D08E";
-        $hoja->getStyle("I7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        $color = "92D050";
-        $hoja->getStyle("M7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-
-        $color = "ED7D31";
-        $hoja->getStyle("Q7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);*/
-        
-
-
-
-        //el dos
-        $hoja->setCellValue('A1', '% De información faltante hasta la fecha:');
-        $hoja->setCellValue('A2', 'Información Faltante (días):');
-        $hoja->setCellValue('A3', 'Días Transcurridos:');
-        $hoja->setCellValue('A4', 'Información Faltante del Año:');
-        $hoja->setCellValue('A5', 'Embalse:');
-        //aqui va lo del nombre del embalse
-        $hoja->setCellValue("A7", 'FECHA');
-
-        $styleCell = $hoja->getStyle("A7");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
-
-
-        $hoja->setCellValue("A8", 'DIA');
-        $styleCell = $hoja->getStyle("A8");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
-
-        $hoja->setCellValue("B8", 'FECHA');
-        $styleCell = $hoja->getStyle("B8");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
-
-        $hoja->setCellValue("C7", 'Cota Actual (msnm)');
-        $styleCell = $hoja->getStyle("C7");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $styleCell->getFont()->setColor(new Color(Color::COLOR_WHITE));
-
-        $hoja->setCellValue("D7", 'Dias de Reserva de Agua');
-        $styleCell = $hoja->getStyle("D7");
-        $styleCell->getFont()->setBold(true);
-        $styleCell->getAlignment()->setWrapText(true);
-        $styleCell->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $styleCell->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-
-
-
-        //el tres
-        $hoja->getStyle("C1")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $hoja->getStyle("C2")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $hoja->getStyle("C3")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $hoja->getStyle("C4")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-
-
-        //el cinco
-        $hoja->getStyle("B" . $fila_inicio_color_fecha . ":B" . $fila_fin_color_fecha)
-        ->getFill()
-        ->setFillType(Fill::FILL_SOLID)
-        ->getStartColor()
-        ->setARGB('DDEBF7');
-    }
-
+    $array_extracciones_all = array();
+    $array_embalses_all = array();
     if(mysqli_num_rows($query) > 0) {
-
-        $spreadsheet = new Spreadsheet();
-
-        $global_iterator = 0;
-        while($row = mysqli_fetch_array($query)) {
-
-            //Reseteando las cantidades y sumatorias a 0 para cada embalse
-            foreach($array_codigos as &$codigo) {
-                $codigo['sumatoria'] = 0;
-                $codigo['cantidad'] = 0;
-            }
-            unset($codigo);
-
-
-
-
-            if($global_iterator == 0) {
-                $hoja = $spreadsheet->getActiveSheet();
-                $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
-            }
-            else {
-                //$hoja = $spreadsheet->createSheet();
-                //$hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
-
-                $hojaAnterior = $spreadsheet->getSheet(0); // Obtiene la primera hoja
-                $hoja = clone $hojaAnterior; // Clona la hoja
-                $hoja->setTitle(mb_strtoupper($row['nombre_embalse']));
-
-                // Añadir la hoja clonada al libro de trabajo
-                $spreadsheet->addSheet($hoja);
-            }
-
-
-            /*for ($i = 1; $i <= 100; $i++) {
-                $hoja->setCellValue('A' . $i, 'Dato ' . $i);
-            }*/
-
-            
-
-            
-            //el uno
-            
-
-
-
-            $tipo_extraccion = "";
-            $cont = 0;
-            $index_columna_inicio = Coordinate::columnIndexFromString("E");
-            $columna_inicio = "E";
-            $index_columna_final = "";
-            $columna_final = "";
-            $tipo_extraccion_actual = "";
-
-            //Añadiendo los tipo de extracciones
-            foreach($array_tipos_de_extraccion as $tipo_extraccion) {
-                $index_columna_final = $index_columna_inicio + $tipo_extraccion['cant'] - 1;
-                $columna_final = Coordinate::stringFromColumnIndex($index_columna_final);
-
-                $hoja->mergeCells($columna_inicio . '7:' . $columna_final. '7');
-
-                $color = "FFFFFF";
-                if($tipo_extraccion['id_tipo_extraccion'] == '1')
-                    $color = "2F75B5";
-                if($tipo_extraccion['id_tipo_extraccion'] == '2')
-                    $color = "A9D08E";
-                if($tipo_extraccion['id_tipo_extraccion'] == '3')
-                    $color = "92D050";
-                if($tipo_extraccion['id_tipo_extraccion'] == '4')
-                    $color = "ED7D31";
-
-                $hoja->getStyle($columna_inicio . "7")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-                
-
-                $string = $tipo_extraccion['nombre'];
-                if($tipo_extraccion['cantidad_primaria'] != "" && $tipo_extraccion['cantidad_primaria'] != "0")
-                    $string .= " (" . $tipo_extraccion['cantidad_primaria'] . " " . $tipo_extraccion['unidad'] . ")";
-
-                $hoja->setCellValue($columna_inicio . "7", $string);
-
-                $hoja->getStyle($columna_inicio . "7")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                $hoja->getStyle($columna_inicio . "7")->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-
-
-                //Añadiendo codigos de las extracciones
-                $index_column_aux = $index_columna_inicio;
-                $column_aux = Coordinate::stringFromColumnIndex($index_column_aux);
-                foreach($array_codigos as &$codigo) {
-                    if($codigo['id_tipo_extraccion'] == $tipo_extraccion['id_tipo_extraccion']) {
-
-                        $codigo['columna'] = $column_aux;
-
-                        //Se ingresa mas abajo en conjunto con el promedio
-                        //$hoja->setCellValue($column_aux . "8", $codigo['name'] . " (" . $codigo['codigo'] . ")");
-
-                        $hoja->getStyle($column_aux . "8")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                        $hoja->getStyle($column_aux . "8")->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-
-                        if($codigo['id_tipo_extraccion'] != "5")
-                            $hoja->getStyle($column_aux . "8")->getFont()->setSize(9);
-
-                        $index_column_aux += 1;
-                        $column_aux = Coordinate::stringFromColumnIndex($index_column_aux);
-                    }
-                }
-                unset($codigo);
-
-
-                //Obteniendo el siguente tipo de extraccion
-                $index_columna_inicio = $index_columna_final + 1;
-                $columna_inicio = Coordinate::stringFromColumnIndex($index_columna_inicio);
-
-            }
-
-
-
-            //La columna que dice "reportado por"
-            $index_columna_final = $index_columna_inicio + 1;
-            $columna_final = Coordinate::stringFromColumnIndex($index_columna_final);
-            $COLUMNA_FINAL_REPORTE = $columna_final;
-            $hoja->mergeCells($columna_inicio . '7:' . $columna_final. '7');
-            $hoja->setCellValue($columna_inicio . "7", "Reportado por");
-
-            $hoja->getStyle($columna_inicio . "7")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-            $hoja->getStyle($columna_inicio . "7")->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-            
-            $hoja->setCellValue($columna_inicio . "8", "Nombre");
-            $hoja->getStyle($columna_inicio . "8")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-            $hoja->getStyle($columna_inicio . "8")->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-
-            $hoja->setCellValue($columna_final . "8", "Fecha");
-            $hoja->getStyle($columna_final . "8")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-            $hoja->getStyle($columna_final . "8")->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-
-
-            //Bordes
-            $celdaInicio = 'A7';
-            $celdaFin = $columna_final . '8';
-
-            // Aplicar bordes a las celdas del rango específico
-            $hoja->getStyle($celdaInicio . ':' . $celdaFin)->applyFromArray([
-                'borders' => [
-                    'allBorders' => [
-                        'borderStyle' => Border::BORDER_THIN,
-                        'color' => ['argb' => '000000'],
-                    ],
-                ],
-            ]);
-
-
-            //Añadiendo membrete
-            //el dos
-            $hoja->setCellValue('B5', mb_strtoupper($row['nombre_embalse']));
-
+        while($row_embalse = mysqli_fetch_array($query)) {
+            //while($row = mysqli_fetch_array($query_tipos_de_extraccion)){
+            /*$array_aux = [];
+            $array_aux['id_embalse'] = $row_embalse['id_embalse'];
+            $array_aux['nombre_embalse'] = $row_embalse['nombre_embalse'];
+            $array_aux['estado'] = $row_embalse['estado'];
+            $array_aux['municipio'] = $row_embalse['municipio'];
+            $array_aux['parroquia'] = $row_embalse['parroquia'];
+            $array_aux['id_encargado'] = $row_embalse['id_encargado'];
+            array_push($array_embalses_all, $array_aux);*/
+            //}
 
             //Filas de extracciones
             $sql = "SELECT de.id_registro AS 'id_registro', fecha, hora, cota_actual, 
-                        (
-                            SELECT GROUP_CONCAT(id_codigo_extraccion, '&', extraccion, '&', id_detalles_extraccion SEPARATOR ';')
-                            FROM detalles_extraccion dex
-                            WHERE de.id_registro = dex.id_registro
-                        ) AS 'extraccion', 
-                        (
-                            SELECT CONCAT(P_Nombre, ' ', P_Apellido) 
-                            FROM usuarios u 
-                            WHERE u.id_usuario = de.id_encargado
-                        ) AS 'encargado'
-                    FROM datos_embalse de
-                    WHERE id_embalse = '$row[id_embalse]' AND de.estatus = 'activo' AND YEAR(fecha) = '$anio'
-                    GROUP BY de.id_registro
-                    ORDER BY fecha DESC, id_registro DESC;";
+                    (
+                        SELECT GROUP_CONCAT(id_codigo_extraccion, '&', extraccion, '&', id_detalles_extraccion SEPARATOR ';')
+                        FROM detalles_extraccion dex
+                        WHERE de.id_registro = dex.id_registro
+                    ) AS 'extraccion', 
+                    (
+                        SELECT CONCAT(P_Nombre, ' ', P_Apellido) 
+                        FROM usuarios u 
+                        WHERE u.id_usuario = de.id_encargado
+                    ) AS 'encargado'
+                FROM datos_embalse de
+                WHERE id_embalse = '$row_embalse[id_embalse]' AND de.estatus = 'activo' AND YEAR(fecha) = '$anio'
+                GROUP BY de.id_registro
+                ORDER BY fecha DESC, id_registro DESC;";
             $query_extracciones = mysqli_query($conn, $sql);
-            
+
             $array_extracciones = array();
             while($row = mysqli_fetch_array($query_extracciones)){
                 $array_aux = [];
@@ -432,241 +163,26 @@
                 array_push($array_extracciones, $array_aux);
             }
 
-            $ultimoDiaDelAnio = date('Y-m-d', strtotime("$anio-12-31"));
+            $array_aux_2 = [];
+            $array_aux_2['id_embalse'] = $row_embalse['id_embalse'];
+            $array_aux_2['nombre_embalse'] = $row_embalse['nombre_embalse'];
+            $array_aux_2['estado'] = $row_embalse['estado'];
+            $array_aux_2['municipio'] = $row_embalse['municipio'];
+            $array_aux_2['parroquia'] = $row_embalse['parroquia'];
+            $array_aux_2['id_encargado'] = $row_embalse['id_encargado'];
+            $array_aux_2['extracciones'] = $array_extracciones;
+            //array_push($array_embalses_all, $array_aux);
+            $array_embalses_all[$row_embalse['id_embalse']] = $array_aux_2;
 
-            // Calcular la cantidad de días en el año sumando 1 al último día del año
-            $numberOfDays = date('z', strtotime($ultimoDiaDelAnio)) + 1;
-
-            $dia_actual = "$anio-01-01";
-            $fila_actual = 9;
-            $cant_registros = 0;
-            $fila_inicio_color_fecha = $fila_actual;
-            //$columna_actual = "A";
-            for($i = 0 ; $i < $numberOfDays ; $i++) {
-
-                //new - dejar en blanco las celdas de a fila
-                if($global_iterator > 0) {
-                    $hoja->setCellValue("C" . $fila_actual, ""); //Dejando en blanco la cota anterior
-                    foreach($array_codigos as &$codigo) {
-                        $hoja->setCellValue($codigo['columna'] . $fila_actual, "");
-                    }
-                    unset($codigo);
-                }
-
-
-                $hoja->setCellValue("A" . $fila_actual, $diasSemanaEspañol[date('l', strtotime($dia_actual))]);
-                $hoja->getStyle("A" . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-
-                $hoja->setCellValue("B" . $fila_actual, date("d/m/Y",strtotime($dia_actual)));
-                $hoja->getStyle("B" . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-                //el cinco
-                //$hoja->getStyle("B", $fila_actual)->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('DDEBF7');
-
-
-                //$filasEncontradas = [];
-                /*foreach ($array_extracciones as $extraccion) {
-                    if ($extraccion['fecha'] === date("Y-m-d", strtotime($dia_actual))) {
-                        //$filasEncontradas[] = $extraccion;
-
-                        $hoja->setCellValue("C" . $fila_actual, $extraccion['cota_actual']);
-                        $hoja->getStyle("C" . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                        echo $extraccion['fecha'] . " - " . date("Y-m-d", strtotime($dia_actual)) . "<br>";
-                    }
-                    
-                }*/
-
-                //Aplicando color a las celdas (tarda en generarse el excel)
-                /*$index_aux = Coordinate::columnIndexFromString($COLUMNA_FINAL_REPORTE);
-                $final_aux = Coordinate::stringFromColumnIndex($index_aux - 4);
-                //echo 'C' , $fila_actual . ":" . $final_aux . $fila_actual; echo "<br>";
-                $hoja->getStyle('C' . $fila_actual . ":" . $final_aux . $fila_actual)->applyFromArray([
-                    'fill' => [
-                        'fillType' => Fill::FILL_SOLID,
-                        'startColor' => ['argb' => 'FFF4D5'],
-                    ],
-                ]);*/
-
-
-                //Añadiendo extracciones
-                $index_row = buscarPosicion($array_extracciones, date("Y-m-d", strtotime($dia_actual)), 'fecha');
-                if($index_row != -1) {
-                    $cant_registros++;
-                    $extraccion = $array_extracciones[$index_row];
-                    $hoja->setCellValue("C" . $fila_actual, $extraccion['cota_actual']);
-                    $hoja->getStyle("C" . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-
-                    if($extraccion['extraccion'] != NULL) {
-                        $extraccion_aux = explode(";", $extraccion['extraccion']);
-                        for($j = 0 ; $j < count($extraccion_aux) ; $j++) {
-                            if($extraccion_aux[$j] !== "") {
-                                $fila = explode("&", $extraccion_aux[$j]);
-
-                                $index_extraccion = buscarPosicion($array_codigos, $fila[0], 'id_codigo_extraccion');
-                                $columna_extraccion = $array_codigos[$index_extraccion]['columna'];
-
-                                //AUmentado la cantidad de reportes y su suma
-                                if( $array_codigos[$index_extraccion]['sumable'] == true &&
-                                    $fila[1] != "" && 
-                                    $fila[1] != 0 && 
-                                    $fila[1] != "0"
-                                ) {
-                                    /*$array_codigos[$index_extraccion]['sumatoria'] += $fila[1];
-                                    $array_codigos[$index_extraccion]['cantidad']++;*/
-                                    $tiene_formato_para_sumarse = false;
-                                    if (is_numeric($fila[1])) {
-                                        $tiene_formato_para_sumarse = true;
-                                    }
-                                    if (!is_numeric($fila[1])) {
-                                        //echo "fecha: " . $dia_actual . " - Name: " . $array_codigos[$index_extraccion]['name'] . " id: " . $extraccion['id_registro'] . " valor: " . $fila[1] . "<br>";
-                                        $fila[1] = convertirValor($fila[1]);
-                                        if ($fila[1] !== null) {
-                                            //echo "ahora si <br>";
-                                            $tiene_formato_para_sumarse = true;
-                                        }
-                                        else
-                                            echo "malo <br>";
-                                    }
-
-                                    if($tiene_formato_para_sumarse) {
-                                        $array_codigos[$index_extraccion]['sumatoria'] += $fila[1];
-                                        $array_codigos[$index_extraccion]['cantidad']++;
-                                    }
-                                }
-
-                                $valor_extraccion = $fila[1];
-                                if($array_codigos[$index_extraccion]['id_codigo_extraccion'] == "30") {
-                                    if(is_numeric($valor_extraccion)) {
-                                        $valor_extraccion = $fila[1] . "%";
-                                        if($fila[1] < 1) {
-                                            $valor_extraccion = ($fila[1] * 100) . "%";
-                                        }
-                                    }
-                                }
-
-                                $hoja->setCellValue($columna_extraccion . $fila_actual, $valor_extraccion);
-                                $hoja->getStyle($columna_extraccion . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                                $hoja->getStyle($columna_extraccion . $fila_actual)->getNumberFormat()->setFormatCode('0.00');
-
-                            }
-                        }
-                    }
-
-                    //Añadiendo informacion a la celda de "reportado"
-                    $index_aux = Coordinate::columnIndexFromString($COLUMNA_FINAL_REPORTE);
-                    $final_aux = Coordinate::stringFromColumnIndex($index_aux - 1);
-                    $hoja->setCellValue($final_aux . $fila_actual, $extraccion['encargado']);
-                    $hoja->getStyle($final_aux . $fila_actual)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                }
-
-
-                
-
-                /*foreach ($filasEncontradas as $extraccion) {
-                    if($extraccion)
-                }*/
-
-
-                //Bordes en las celdas de extracciones (tarda en generarse el excel)
-                $celdaInicio = 'A' . $fila_actual;
-                $celdaFin = $COLUMNA_FINAL_REPORTE . $fila_actual;
-
-                // Aplicar bordes a las celdas del rango específico
-                /*$hoja->getStyle($celdaInicio . ':' . $celdaFin)->applyFromArray([
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => Border::BORDER_THIN,
-                            'color' => ['argb' => '000000'],
-                        ],
-                    ],
-                ]);*/
-
-                $dia_actual = date("Y-m-d",strtotime($dia_actual."+ 1 days")); 
-                $fila_actual++;
-
-            }
-            $fila_fin_color_fecha = $fila_actual - 1;
-
-
-            //Añadiendo valores de estadisticas a la cabecera de la hoja
-            $dia_del_anio_aux = (date("Y") == $anio) ? (date('z') + 1) : $numberOfDays;
-            $hoja->setCellValue('C1', number_format(100 - ($cant_registros * 100 / $dia_del_anio_aux), 2, ".", "") . "%"); // % de informacion faltante hasta la fecha
-            
-            //$hoja->setCellValue('D1', date('z') );
-            $hoja->setCellValue('C2', $numberOfDays - $cant_registros); // Información Faltante (días)
-            $hoja->setCellValue('C3', $dia_del_anio_aux); // Días transcurridos
-            $hoja->setCellValue('C4', number_format(100 - ($cant_registros * 100 / $numberOfDays), 2, ".", "") . "%"); // % de informacion faltante del año 
-            
-
-
-            //el tres
-
-
-
-
-            //Añadiendo estilos a la hoja
-            if($global_iterator == 0)
-                styles($hoja, $fila_inicio_color_fecha, $fila_fin_color_fecha);
-
-            $global_iterator++;
-
-
-
-
-
-
-            //Añadiendo los promedios a los codigos
-            //aca no se necesita la referencia con el "&", ya que no se asignara ningun valor al array
-            foreach($array_codigos as $codigo) {
-                if($codigo['sumable']) {
-                    $divisor = $codigo['cantidad'] > 0 ? $codigo['cantidad'] : 1;
-                    $promedio = number_format( ($codigo['sumatoria'] / $divisor), 2, ',', '');
-
-                    $contenido_celda = $codigo['name'] . " (" . $codigo['codigo'] . ")" . "\n" . $promedio;
-                    $hoja->setCellValue($codigo['columna'] . "8", $contenido_celda);
-
-                    //Esto es para que se implemente el salto de linea en la celda
-                    $hoja->getStyle($codigo['columna'] . "8")->getAlignment()->setWrapText(true);
-                }
-                else
-                    $hoja->setCellValue($codigo['columna'] . "8", $codigo['name'] . " (" . $codigo['codigo'] . ")");
-            }
-
-
-
-
-
+            //$array_embalses_all[$row_embalse['id_embalse']] = $array_extracciones;
         }
-
-        //closeConection($conn);
-
-        $spreadsheet->setActiveSheetIndex(0);
-
-        //Generar el documento excel
-        $writer = new Xlsx($spreadsheet);
-
-        // Guardar el archivo en el servidor o enviarlo al navegador para descarga
-        $nombreArchivo = __DIR__ . "/temp/EXTRACCIONES_$anio.xlsx";
-        $writer->save($nombreArchivo);
-
-        if (file_exists($nombreArchivo)) {
-            // Configurar los encabezados HTTP para indicar que se va a descargar un archivo
-            //header('Content-Description: File Transfer');
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment; filename="' . basename($nombreArchivo) . '"');
-            //header('Expires: 0');
-            //header('Cache-Control: must-revalidate');
-            //header('Pragma: public');
-            header('Content-Length: ' . filesize($nombreArchivo));
-            // Leer el archivo y enviar su contenido al navegador
-            readfile($nombreArchivo);
-            // Eliminar el archivo del servidor (opcional)
-            unlink($nombreArchivo);
-            exit;
-        } else {
-            die('El archivo no existe.');
-        }
-
     }
 
+    $array_total['tipos_extraccion'] = $array_tipos_de_extraccion;
+    $array_total['array_codigos'] = $array_codigos;
+    $array_total['array_embalses_all'] = $array_embalses_all;
+
     closeConection($conn);
+
+    echo json_encode(['array_total' => $array_total]);
 ?>

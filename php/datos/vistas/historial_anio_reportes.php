@@ -172,6 +172,12 @@ while (date('Y', $dia) == $anio) {
     if (date($anio . "-12-31") == date("Y-m-d", $dia))
         $total_dias_anio--;
 }
+
+$ultimoDiaDelAnio = date('Y-m-d', strtotime("$anio-12-31"));
+
+// Calcular la cantidad de días en el año sumando 1 al último día del año
+$numberOfDays = date('z', strtotime($ultimoDiaDelAnio)) + 1;
+
 ?>
 
 <?php
@@ -188,7 +194,8 @@ while (date('Y', $dia) == $anio) {
                 </tr>
                 <tr>
                     <th>Información Faltante (días) <?php echo ($anio == date("Y")) ? " en el año" : ""; ?></th>
-                    <td><?php echo $total_dias_anio - $total_registros; ?></td>
+                    <!-- <td><?php //echo $total_dias_anio - $total_registros . " / " . $total_dias_anio . " " . $total_registros; ?></td> -->
+                    <td><?php echo $numberOfDays - $total_registros; ?></td>
                 </tr>
                 <tr>
                     <th>Días transcurridos en el año</th>
