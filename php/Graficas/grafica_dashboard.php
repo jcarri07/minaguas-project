@@ -55,7 +55,7 @@ if ($count >= 1) {
   LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_dia' AND d.cota_actual <> 0
   WHERE e.estatus = 'activo'
   GROUP BY id_embalse 
-  ORDER BY id_embalse ASC;");
+  ORDER BY nombre_embalse ASC;");
 
     $condiciones_anio = mysqli_query($conn, "SELECT e.id_embalse,MAX(d.fecha) AS fecha,
   e.nombre_embalse, (SELECT cota_actual 
@@ -65,7 +65,7 @@ if ($count >= 1) {
   LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_anio' AND d.cota_actual <> 0
   WHERE e.estatus = 'activo'
   GROUP BY id_embalse 
-  ORDER BY id_embalse ASC;");
+  ORDER BY nombre_embalse ASC;");
 
     $datos_embalses = mysqli_fetch_all($r, MYSQLI_ASSOC);
     $volumen_dias = mysqli_fetch_all($condiciones_dias, MYSQLI_ASSOC);
