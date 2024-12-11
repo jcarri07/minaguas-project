@@ -30,12 +30,12 @@ $r = mysqli_query($conn, "SELECT id_embalse FROM embalses WHERE estatus = 'activ
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
-    $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,MAX(d.fecha) AS fech,
+    $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,MAX(d.fecha) AS fecha,
   e.nombre_embalse, (SELECT cota_actual 
        FROM datos_embalse h 
        WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AND h.estatus = 'activo' AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
   FROM embalses e
-  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.cota_actual <> 0
   WHERE e.estatus = 'activo'
   GROUP BY id_embalse 
   ORDER BY id_embalse ASC;");
@@ -45,7 +45,7 @@ if ($count >= 1) {
        FROM datos_embalse h 
        WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.fecha <= '$fecha_dia' AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AND h.estatus = 'activo' AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
   FROM embalses e
-  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_dia'
+  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_dia' AND d.cota_actual <> 0
   WHERE e.estatus = 'activo'
   GROUP BY id_embalse 
   ORDER BY id_embalse ASC;");
@@ -55,7 +55,7 @@ if ($count >= 1) {
        FROM datos_embalse h 
        WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.fecha <= '$fecha_anio' AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AND h.estatus = 'activo' AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
   FROM embalses e
-  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_anio'
+  LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha_anio' AND d.cota_actual <> 0
   WHERE e.estatus = 'activo'
   GROUP BY id_embalse 
   ORDER BY id_embalse ASC;");
@@ -73,7 +73,7 @@ if ($count >= 1) {
         $nor = $bati->volumenNormal();
         if ($datos_embalses[$j]["cota_actual"] != NULL) {
 
-            $x = $bati->getByCota(date('Y', strtotime($datos_embalses[$j]["fech"])), $datos_embalses[$j]["cota_actual"])[1];
+            $x = $bati->getByCota(date('Y', strtotime($datos_embalses[$j]["fecha"])), $datos_embalses[$j]["cota_actual"])[1];
 
             //$bati->getByCota($anio, $datos_embalses[$j]["cota_max"])[1]-$bati->getByCota($anio, $datos_embalses[$j]["cota_min"])[1];
             if (($x - $min) <= 0) {

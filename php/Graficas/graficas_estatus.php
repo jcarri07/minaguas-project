@@ -80,46 +80,37 @@ $r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND FI
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
-    // $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse, MAX(d.fecha) AS fech,(SELECT MAX(hora) FROM datos_embalse WHERE fecha = d.fecha AND cota_actual <> 0 AND id_embalse = d.id_embalse) AS hora,
-    //     e.nombre_embalse, (SELECT cota_actual 
-    //                        FROM datos_embalse h 
-    //                        WHERE h.id_embalse = d.id_embalse AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
-    // FROM embalses e
-    // LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-    // WHERE e.estatus = 'activo'
-    // GROUP BY id_embalse 
-    // ORDER BY id_embalse ASC;");
-    $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,MAX(d.fecha) AS fech,               (
+    $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,(SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AS fech,               (
         SELECT SUM(extraccion)
         FROM detalles_extraccion dex, codigo_extraccion ce
         WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
            FROM datos_embalse h 
-           WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) ORDER BY h.hora DESC LIMIT 1) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4') 
+           WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = fech ORDER BY h.hora DESC LIMIT 1) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4') 
       ) AS 'extraccion',
       e.nombre_embalse, (SELECT cota_actual 
            FROM datos_embalse h 
-           WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) ORDER BY h.hora DESC LIMIT 1) AS cota_actual
+           WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = fech ORDER BY h.hora DESC LIMIT 1) AS cota_actual
       FROM embalses e
       LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
       WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
       GROUP BY id_embalse 
       ORDER BY id_embalse ASC;");
 
-    $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
+   $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
     FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha1' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
- FROM embalses e
- LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
- WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
- GROUP BY id_embalse;");
+    WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha1' AND h.estatus = 'activo' AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
+    FROM embalses e
+    LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha1'
+    WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
+    GROUP BY id_embalse;");
 
-    $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
+$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
     FROM datos_embalse h 
-    WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 AND da.fecha <= '$fecha2' ORDER BY da.fecha DESC LIMIT 1) AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual 
- FROM embalses e
- LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
- WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
- GROUP BY id_embalse;");
+    WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha2' AND h.estatus = 'activo' AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
+    FROM embalses e
+    LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo' AND d.fecha <= '$fecha2'
+    WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
+    GROUP BY id_embalse;");
 
     $condiciones_actuales3 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
     FROM datos_embalse h 
