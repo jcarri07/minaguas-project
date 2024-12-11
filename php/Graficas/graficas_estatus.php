@@ -284,12 +284,77 @@ if ($count >= 1) {
         </div>
     </body>
     <script>
+        const arbitra = {
+            id: 'arbitra',
+            dr: function(lines, ctx, left, right, y) {
+                ctx.save();
+
+                lines.forEach(line => {
+                    const {
+                        yvalue,
+                        color
+                    } = line;
+
+                    ctx.beginPath();
+                    ctx.lineWidth = 1.5;
+                    ctx.moveTo(left, y.getPixelForValue(yvalue));
+                    ctx.lineTo(right, y.getPixelForValue(yvalue));
+                    ctx.strokeStyle = color; // Cambiar color según tus preferencias
+                    //ctx.fillText(cota + ": " + yvalue.toLocaleString("de-DE") + " (Hm³)", right * 4.2 / 6, y.getPixelForValue(yvalue) + h);
+                    ctx.stroke();
+                });
+                ctx.restore();
+            },
+
+            beforeDatasetsDraw: function(chart, args, plugins) {
+                const {
+                    ctx,
+                    scales: {
+                        x,
+                        y
+                    },
+                    chartArea: {
+                        left,
+                        right
+                    }
+                } = chart;
+
+                // Obtener las líneas específicas para este gráfico
+                const lines = chart.options.plugins.arbitra.lines;
+
+                // Llamada a la función dr() dentro del contexto del plugin con las líneas específicas
+                this.dr(lines, ctx, left, right, y);
+
+                // Resto del código del plugin
+            },
+        };
+
+        const scaleChart = {
+        id: 'scaleChart',
+            beforeDatasetsDraw(chart, args, plugins) {
+                const {
+                    ctx
+                } = chart;
+                ctx.save();
+                if (!chart.originalOuterRadius) {
+                    chart.originalOuterRadius = chart.getDatasetMeta(0).data[0].
+                    outerRadius;
+                }
+                console.log(chart.originalOuterRadius);
+                //console.log(chart.getDatasetMeta(0).data[0].outerRadius = 200)
+                const scaleFactor = plugins.scaleFactor || 1;
+                chart.getDatasetMeta(0).data.forEach((dataPoint, index) => {
+                    dataPoint.outerRadius = chart.originalOuterRadius * scaleFactor;
+                })
+            }
+        }
+
         let cha = new Chart(chart, {
             type: 'pie',
             title: 'grafica',
 
             data: {
-                labels: ["Baja", "Normal baja", "Normal alta", "Buena y muy buena"],
+                labels: ["Bajo     |", "Normal bajo      |", "Normal alto      |", "Buenas y muy buenas"],
                 datasets: [
 
                     <?php
@@ -337,7 +402,12 @@ if ($count >= 1) {
                     axis: 'x',
                 },
                 layout: {
-                    padding: 20,
+                    padding: {
+                        top: 40,
+                        bottom: 30,
+                        left: 30,
+                        right: 30,
+                    },
                 },
                 plugins: {
 
@@ -345,7 +415,7 @@ if ($count >= 1) {
                         position: 'bottom',
 
                         labels: {
-                            padding: 25,
+                            padding: 20,
                             display: true,
                             // This more specific font property overrides the global property
                             font: {
@@ -356,6 +426,9 @@ if ($count >= 1) {
 
                         }
                     },
+                    scaleChart:{
+                        scaleFactor:0.8,
+                    },
                     title: {
                         display: false,
                         text: 'Embalse',
@@ -365,22 +438,22 @@ if ($count >= 1) {
                         }
                     },
                     datalabels: {
-                        anchor: 'middle',
-                        align: 'middle',
+                        anchor: 'end',
+                        align: 'end',
                         formatter: ((value, ctx) => {
                             const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
                                 return accumulator + currentValue
                             }, 0);
                             value = value != 0 ? value : 1;
 
-                            return (Math.round((value / totalSum) * 1000) / 10).toLocaleString("de-DE") + "%";
+                            return (Math.round((value / totalSum) * 10000) / 100).toLocaleString("de-DE") + "%";
                         }),
                         labels: {
                             title: {
                                 font: {
                                     weight: 'bold',
                                     family: 'Arial',
-                                    size: 26,
+                                    size: 40,
                                 },
                                 color: '#000000',
                             },
@@ -390,7 +463,7 @@ if ($count >= 1) {
                 },
 
             },
-            plugins: [ChartDataLabels],
+            plugins: [ChartDataLabels,scaleChart],
 
         });
         $('#progress-bar').attr('aria-valuenow', <?php echo 25; ?>).css('width', <?php echo 25 ?> + '%');
@@ -403,7 +476,7 @@ if ($count >= 1) {
                 labels: [
                     ["Volumen", "Útil", "Total(VUT)"],
                     ["Volumen", "Total", "Actual"],
-                    ["Volumen", "Total", "<?php echo date('d/m/y', strtotime($fecha1)); ?>"],
+                    ["Volumen", "Total", "<?php echo date('d/m/Y', strtotime($fecha1)); ?>"],
                     ["Variación  de", "Volumen", "Hasta Hoy"]
                 ],
                 datasets: [
@@ -413,7 +486,7 @@ if ($count >= 1) {
                     echo '{
                             
                             label:"Dato",
-                            data:[' . round($volumen_fechas[0], 2) . ',' . round($volumen_fechas[1], 2) . ',' . round($volumen_fechas[2], 2) . ',' . round(abs($volumen_fechas[2] - $volumen_fechas[1]), 2);
+                            data:[' . round($volumen_fechas[0], 2) . ',' . round($volumen_fechas[1], 2) . ',' . round($volumen_fechas[2], 2) . ',' . round(($volumen_fechas[1] - $volumen_fechas[2]), 2);
 
                     echo "],
                         backgroundColor:[";
@@ -483,11 +556,18 @@ if ($count >= 1) {
                             },
                         },
                     },
+                    arbitra: {
+                        lines: [{
+                                yvalue: 0,
+                                color: 'black',
+                            },
+                            // Agrega más líneas según sea necesario
+                        ],
+                    },
                 },
                 scales: {
 
                     x: {
-
                         ticks: {
 
                             font: {
@@ -521,7 +601,7 @@ if ($count >= 1) {
                 },
 
             },
-            plugins: [ChartDataLabels],
+            plugins: [arbitra, ChartDataLabels],
 
         });
         $('#progress-bar').attr('aria-valuenow', <?php echo 50; ?>).css('width', <?php echo 50 ?> + '%');
@@ -533,7 +613,7 @@ if ($count >= 1) {
                 labels: [
                     ["Volumen", "Útil", "Total(VUT)"],
                     ["Volumen", "Total", "Actual"],
-                    ["Volumen", "Total", "<?php echo date('d/m/y', strtotime($fecha2)); ?>"],
+                    ["Volumen", "Total", "<?php echo date('d/m/Y', strtotime($fecha2)); ?>"],
                     ["Variación  de", "Volumen", "Hasta Hoy"]
                 ],
                 datasets: [
@@ -543,7 +623,7 @@ if ($count >= 1) {
                     echo '{
                             
                             label:"Dato",
-                            data:[' . round($volumen_fechas[0], 2) . ',' . round($volumen_fechas[1], 2) . ',' . round($volumen_fechas[3], 2) . ',' . round(abs($volumen_fechas[3] - $volumen_fechas[1]), 2);
+                            data:[' . round($volumen_fechas[0], 2) . ',' . round($volumen_fechas[1], 2) . ',' . round($volumen_fechas[3], 2) . ',' . round(($volumen_fechas[1] - $volumen_fechas[3]), 2);
 
                     echo "],
                         backgroundColor:[";
@@ -616,6 +696,14 @@ if ($count >= 1) {
                             },
                         },
                     },
+                    arbitra: {
+                        lines: [{
+                                yvalue: 0,
+                                color: 'black',
+                            },
+                            // Agrega más líneas según sea necesario
+                        ],
+                    },
                 },
                 scales: {
 
@@ -654,7 +742,7 @@ if ($count >= 1) {
                 },
 
             },
-            plugins: [ChartDataLabels],
+            plugins: [arbitra, ChartDataLabels],
 
         });
         $('#progress-bar').attr('aria-valuenow', <?php echo 75; ?>).css('width', <?php echo 75 ?> + '%');
@@ -711,7 +799,12 @@ if ($count >= 1) {
                     axis: 'x',
                 },
                 layout: {
-                    padding: 20,
+                    padding: {
+                        top: 15,
+                        bottom: 15,
+                        left: 50,
+                        right: 50,
+                    },
                 },
                 plugins: {
 
@@ -719,12 +812,12 @@ if ($count >= 1) {
                         position: 'bottom',
 
                         labels: {
-                            padding: 25,
+                            padding: 20,
                             display: true,
                             // This more specific font property overrides the global property
                             font: {
                                 weight: 'bold',
-                                size: 32,
+                                size: 24,
                                 family: 'Arial',
                             },
 
@@ -739,15 +832,15 @@ if ($count >= 1) {
                         }
                     },
                     datalabels: {
-                        anchor: 'middle',
-                        align: 'middle',
+                        anchor: 'end',
+                        align: 'end',
                         formatter: ((value, ctx) => {
                             const totalSum = ctx.dataset.data.reduce((accumulator, currentValue) => {
                                 return accumulator + currentValue
                             }, 0);
                             value = value != 0 ? parseFloat(value) : 1;
 
-                            return (Math.round((value / totalSum) * 1000) / 10).toLocaleString("de-DE") + "%";
+                            return (Math.round((value / totalSum) * 10000) / 100).toLocaleString("de-DE") + "%";
                         }),
                         labels: {
                             title: {
@@ -759,12 +852,15 @@ if ($count >= 1) {
                                 color: '#000000',
                             },
                         },
-                    }
+                    },
+                    scaleChart:{
+                        scaleFactor:0.85,
+                    },
 
                 },
 
             },
-            plugins: [ChartDataLabels],
+            plugins: [ChartDataLabels,scaleChart],
 
         });
         $('#progress-bar').attr('aria-valuenow', <?php echo 100; ?>).css('width', <?php echo 100 ?> + '%');
