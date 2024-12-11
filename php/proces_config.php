@@ -43,6 +43,44 @@ if (isset($_POST['config'])) {
             mysqli_query($conn, "INSERT INTO configuraciones (nombre_config, configuracion) VALUES ('consumo_humano', '$embalses_consumo_humano')");
         }
     }
+
+    date_default_timezone_set('America/Caracas');
+
+
+    if ($_POST['config'] == "evap-filt") {
+
+        $datos = $_POST['datos'];
+        $new_datos = json_decode($datos, true);
+
+        $evap_filt = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'evap_filt'");
+        if (mysqli_num_rows($evap_filt) > 0) {
+            $config = mysqli_fetch_assoc($evap_filt)['configuracion'];
+            $pre_datos = json_decode($config, true);
+
+            foreach ($new_datos as $key => &$fila) {
+                if (array_key_exists($key, $pre_datos)) {
+                    if ($pre_datos[$key]['evaporacion'] != $fila['evaporacion'] || $pre_datos[$key]['filtracion'] != $fila['filtracion']) {
+                        $pre_datos[$key]['fecha'] = date("Y-m-d");
+                        $pre_datos[$key]['evaporacion'] = $fila['evaporacion'];
+                        $pre_datos[$key]['filtracion'] = $fila['filtracion'];
+                    }
+                } else {
+                    $fila['fecha'] = date("Y-m-d");
+                    $pre_datos[$key] = $fila;
+                }
+            }
+
+            $datos = json_encode($pre_datos);
+
+            mysqli_query($conn, "UPDATE configuraciones SET configuracion = '$datos' WHERE nombre_config = 'evap_filt'");
+        } else {
+            foreach ($new_datos as &$fila) {
+                $fila['fecha'] = date("Y-m-d");
+            }
+            $datos = json_encode($new_datos);
+            mysqli_query($conn, "INSERT INTO configuraciones (nombre_config, configuracion) VALUES ('evap_filt', '$datos')");
+        }
+    }
 }
 
 if (isset($_POST['eliminar'])) {

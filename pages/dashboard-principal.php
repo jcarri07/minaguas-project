@@ -730,8 +730,8 @@ closeConection($conn);*/
       processData: false,
       success: function(response) {
         //$("#contenedor").html("");
+        console.log("Volumen actual");
         $("#cont").html(response);
-
       },
       error: function(response) {
 
@@ -801,7 +801,7 @@ closeConection($conn);*/
     });
   }
 
-  
+
   mapa_dashboard();
   grafica_dashboard();
   volumen_actual();

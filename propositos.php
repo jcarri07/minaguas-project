@@ -12,7 +12,9 @@ if (mysqli_num_rows($embalses) > 0) {
         $uso = $row['uso_actual'];
 
         $proposito_nuevo = str_replace(" - ", ",", $proposito);
+        $proposito_nuevo = str_replace(" , ", ",", $proposito);
         $uso_nuevo = str_replace("-", ",", $uso);
+        $uso_nuevo = str_replace(" , ", ",", $uso);
 
         mysqli_query($conn, "UPDATE embalses SET proposito = '$proposito_nuevo', uso_actual = '$uso_nuevo' WHERE id_embalse = '$id'");
     }

@@ -701,7 +701,7 @@ function explodeBat($value, $i = null)
 
                 <div class="form-group">
                   <label for="vida_util">Vida útil (años)</label>
-                  <input value="<?php echo $embalse["vida_util"]; ?>" type="text" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
+                  <input value="<?php echo $embalse["vida_util"]; ?>" type="text" class="form-control numero" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
                 </div>
               </div>
 
@@ -836,7 +836,7 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area">Área de la cuenca (ha)</label>
-                <input value="<?php echo $embalse["area_cuenca"]; ?>" type="text" class="form-control numero" id="area" name="area" placeholder="Ingrese el area de la cuenca">
+                <input value="<?php echo $embalse["area_cuenca"]; ?>" type="text" class="form-control Vnumero numero" id="area" name="area" placeholder="Ingrese el área de la cuenca">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="escurrimiento">Escurrimiento medio (Hm³)</label>
@@ -1150,7 +1150,7 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-4 col-lg-6 form-group">
                 <label for="f_cedula">Cédula</label>
-                <input value="<?php echo $embalse["f_cedula"]; ?>" type="text" class="form-control" id="f_cedula" name="f_cedula" placeholder="Ingrese la cédula">
+                <input value="<?php echo $embalse["f_cedula"]; ?>" type="text" class="form-control numero" id="f_cedula" name="f_cedula" placeholder="Ingrese la cédula">
               </div>
               <div class="col-xl-4 col-lg-6 form-group">
                 <label for="f_nombres">Nombres</label>

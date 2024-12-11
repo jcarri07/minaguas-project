@@ -556,7 +556,7 @@ date_default_timezone_set("America/Caracas");
                   </div>
                   <div class="form-group">
                     <label for="vida_util">Vida útil (años)</label>
-                    <input type="number" class="form-control" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
+                    <input type="number" class="form-control numero" id="vida_util" name="vida_util" placeholder="Ingrese la vida útil en años">
                   </div>
                 </div>
 
@@ -670,7 +670,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="area">Área de la cuenca (ha)</label>
-                  <input type="text" class="form-control numero" id="area" name="area" placeholder="Ingrese el area de la cuenca">
+                  <input type="text" class="form-control Vnumero numero" id="area" name="area" placeholder="Ingrese el área de la cuenca">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="escurrimiento">Escurrimiento medio (Hm³)</label>
@@ -960,7 +960,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-4 col-lg-6 form-group">
                   <label for="f_cedula">Cédula</label>
-                  <input type="text" class="form-control" id="f_cedula" name="f_cedula" placeholder="Ingrese la cédula">
+                  <input type="text" class="form-control numero" id="f_cedula" name="f_cedula" placeholder="Ingrese la cédula">
                 </div>
                 <div class="col-xl-4 col-lg-6 form-group">
                   <label for="f_nombres">Nombres</label>
@@ -1875,7 +1875,7 @@ date_default_timezone_set("America/Caracas");
             campo.className += " input-error";
           }
         } else if ((!regex.test(campo.value))) {
-          errorMessages.push("El campo '<b>" + label + "</b>' debe contener solo números.");
+          errorMessages.push("El campo '<b>" + label + "</b>' debe respetar el formato numérico.");
           if (!campo.classList.contains('input-error')) {
             campo.className += " input-error";
           }
