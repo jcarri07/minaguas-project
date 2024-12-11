@@ -421,14 +421,14 @@
             $query_extracciones = mysqli_query($conn, $sql);
             
             $array_extracciones = array();
-            while($row = mysqli_fetch_array($query_extracciones)){
+            while($row2 = mysqli_fetch_array($query_extracciones)){
                 $array_aux = [];
-                $array_aux['id_registro'] = $row['id_registro'];
-                $array_aux['fecha'] = $row['fecha'];
-                $array_aux['hora'] = $row['hora'];
-                $array_aux['cota_actual'] = $row['cota_actual'];
-                $array_aux['extraccion'] = $row['extraccion'];
-                $array_aux['encargado'] = $row['encargado'];
+                $array_aux['id_registro'] = $row2['id_registro'];
+                $array_aux['fecha'] = $row2['fecha'];
+                $array_aux['hora'] = $row2['hora'];
+                $array_aux['cota_actual'] = $row2['cota_actual'];
+                $array_aux['extraccion'] = $row2['extraccion'];
+                $array_aux['encargado'] = $row2['encargado'];
                 array_push($array_extracciones, $array_aux);
             }
 
