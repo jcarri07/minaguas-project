@@ -488,7 +488,7 @@ $año_actual = date('Y');
                     <td>+ 14 cm</td>
                 </tr>
                 <tr>
-                    <td>Vol. Inicial Hm3</td>
+                    <td>Vol. Inicial Hm³</td>
                     <td>414,80</td>
                     <td>414,82</td>
                     <td>414,84</td>
