@@ -1170,12 +1170,12 @@ while ($row < count($datos_embalses)) {
                 xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'estatus-mapa'; ?>&numero=' + 3);
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
+                        if (this.responseText == "si") {
+                            console.log("listo");
+                            location.href = "graficas_estatus.php?valores=<?php echo $valores; ?>";
+                        } else {
 
-                        console.log("listo");
-                        location.href = "graficas_estatus.php?valores=<?php echo $valores; ?>";
-
-                    } else {
-
+                        }
                     }
                 }
             });
