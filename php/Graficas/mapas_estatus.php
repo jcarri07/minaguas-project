@@ -196,6 +196,12 @@ $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 $queryReg =  mysqli_query($conn, "SELECT * FROM regiones WHERE estatus = 'activo'");
 $totalreg = [];
 
+$evaporacionFiltracion = [];
+$queryEvaporacionFiltracion = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'evap_filt';");
+if (mysqli_num_rows($queryEvaporacionFiltracion) > 0) {
+    $evaporacionFiltracion = json_decode(mysqli_fetch_assoc($queryEvaporacionFiltracion)['configuracion'], true);
+}
+
 while ($reg = mysqli_fetch_array($queryReg)) {
     $totalreg[$reg["id_region"]] = $reg["region"];
 }
@@ -212,7 +218,14 @@ while ($row < count($datos_embalses)) {
     if (!in_array($datos_embalses[$row]["id_embalse"], $array_excluidos)) {
         $abastecimiento = 0;
         if ($datos_embalses[$row]["extraccion"] > 0) {
-            $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
+            if (array_key_exists($datos_embalses[$row]["id_embalse"], $evaporacionFiltracion)) {
+                $evaporacio = $evaporacionFiltracion[$datos_embalses[$row]["id_embalse"]]["evaporacion"];
+                $filtracion = $evaporacionFiltracion[$datos_embalses[$row]["id_embalse"]]["filtracion"];
+                $abastecimiento = $emb->abastecimiento($datos_embalses[$row]["extraccion"], $evaporacio, $filtracion);
+            } else {
+                $abastecimiento = $emb->abastecimiento($datos_embalses[$row]["extraccion"]);
+            }
+            // $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
         }
         if ($datos_embalses[$row]["extraccion"] == NULL) {
             $abastecimiento = 0;

@@ -85,14 +85,10 @@ function formatoNumero($valor)
 }
 
 
-function stringFloatttt($num, $dec = 2)
+function stringFloatFormat($num, $dec = 2)
 {
-  // return number_format(floatval(str_replace(',', '.', $num)), $dec, ',', '.');
-  // return floatval(str_replace('.', ',', $num));
-  // return $num;
-  $numero_limpio = str_replace('.', '', $num);
-  $numero_limpio = str_replace(',', '.', $numero_limpio);
-  $numero = floatval($numero_limpio);
+  $num = str_replace(['.', ','], ['', '.'], $num);
+  $numero = floatval($num);
   return number_format($numero, $dec, ",", ".");
 }
 
@@ -103,6 +99,7 @@ function stringFloat($num, $dec = 2)
   // return $num;
   // $numero_limpio = str_replace('.', ',', $num);
   // $numero_limpio = str_replace(',', '.', $numero_limpio);
+  // $num = str_replace(['.', ','], ['', '.'], $num);
   $numero = floatval($num);
   return number_format($numero, $dec, ",", ".");
 }
@@ -836,7 +833,7 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="area">Área de la cuenca (ha)</label>
-                <input value="<?php echo $embalse["area_cuenca"]; ?>" type="text" class="form-control Vnumero numero" id="area" name="area" placeholder="Ingrese el área de la cuenca">
+                <input value="<?php echo stringFloatFormat($embalse["area_cuenca"]); ?>" type="text" class="form-control Vnumero numero" id="area" name="area" placeholder="Ingrese el área de la cuenca">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="escurrimiento">Escurrimiento medio (Hm³)</label>
@@ -854,11 +851,11 @@ function explodeBat($value, $i = null)
               <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="organo">Órgano rector</label>
-                  <input value="<?php echo $embalse["organo_rector"]; ?>" type="text" class="form-control" id="organo" name="organo" placeholder="Ingrese el organo rector">
+                  <input value="<?php echo $embalse["organo_rector"]; ?>" type="text" class="form-control expandible" id="organo" name="organo" placeholder="Ingrese el organo rector">
                 </div>
                 <div class="form-group">
                   <label for="personal">Personal encargado a nivel central</label>
-                  <input value="<?php echo $embalse["personal_encargado"]; ?>" type="text" class="form-control" id="personal" name="personal" placeholder="Personal encargado a nivel central">
+                  <input value="<?php echo $embalse["personal_encargado"]; ?>" type="text" class="form-control expandible" id="personal" name="personal" placeholder="Personal encargado a nivel central">
                 </div>
               </div>
             </div>
@@ -871,15 +868,15 @@ function explodeBat($value, $i = null)
               </div> -->
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="autoridad">Autoridad responsable del embalse</label>
-                <input value="<?php echo $embalse["autoridad_responsable"]; ?>" type="text" class="form-control" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
+                <input value="<?php echo $embalse["autoridad_responsable"]; ?>" type="text" class="form-control expandible" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="proyectista">Proyectista</label>
-                <input value="<?php echo $embalse["proyectista"]; ?>" type="text" class="form-control" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
+                <input value="<?php echo $embalse["proyectista"]; ?>" type="text" class="form-control expandible" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="constructor">Constructor</label>
-                <input value="<?php echo $embalse["constructor"]; ?>" type="text" class="form-control" id="constructor" name="constructor" placeholder="Ingrese el constructor">
+                <input value="<?php echo $embalse["constructor"]; ?>" type="text" class="form-control expandible" id="constructor" name="constructor" placeholder="Ingrese el constructor">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="inicio_construccion">Año de inicio de construcción</label>
@@ -895,7 +892,7 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="monitoreo">Monitoreo de niveles del embalse</label>
-                <input value="<?php echo $embalse["monitoreo_del_embalse"]; ?>" type="text" class="form-control" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
+                <input value="<?php echo $embalse["monitoreo_del_embalse"]; ?>" type="text" class="form-control expandible" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
               </div>
             </div>
 
@@ -949,11 +946,11 @@ function explodeBat($value, $i = null)
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ubicacion_aliviadero">Ubicación del aliviadero</label>
-                <input value="<?php echo $embalse["ubicacion_aliviadero"]; ?>" type="text" class="form-control" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicación del aliviadero">
+                <input value="<?php echo $embalse["ubicacion_aliviadero"]; ?>" type="text" class="form-control expandible" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicación del aliviadero">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="tipo_aliviadero">Tipo de aliviadero</label>
-                <input value="<?php echo $embalse["tipo_aliviadero"]; ?>" type="text" class="form-control" id="tipo_aliviadero" name="tipo_aliviadero" placeholder="Ingrese el tipo de aliviadero">
+                <input value="<?php echo $embalse["tipo_aliviadero"]; ?>" type="text" class="form-control expandible" id="tipo_aliviadero" name="tipo_aliviadero" placeholder="Ingrese el tipo de aliviadero">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_compuertas_aliviadero">Número de compuertas del aliviadero</label>
@@ -978,11 +975,11 @@ function explodeBat($value, $i = null)
             <div class="row">
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="ubicacion_toma">Ubicación de la obra de toma</label>
-                <input value="<?php echo $embalse["ubicacion_toma"]; ?>" type="text" class="form-control" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicación de la obra de toma">
+                <input value="<?php echo $embalse["ubicacion_toma"]; ?>" type="text" class="form-control expandible" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicación de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="tipo_toma">Tipo de obra de toma</label>
-                <input value="<?php echo $embalse["tipo_toma"]; ?>" type="text" class="form-control" id="tipo_toma" name="tipo_toma" placeholder="Ingrese el tipo de obra de toma">
+                <input value="<?php echo $embalse["tipo_toma"]; ?>" type="text" class="form-control expandible" id="tipo_toma" name="tipo_toma" placeholder="Ingrese el tipo de obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="numero_compuertas_toma">Número de compuertas de la obra de toma</label>
@@ -990,11 +987,11 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
-                <input value="<?php echo $embalse["mecanismos_de_emergencia"]; ?>" type="text" class="form-control" id="emergencia_toma" name="emergencia_toma" placeholder="Ingrese los mecanismos de emergencia de la obra de toma">
+                <input value="<?php echo $embalse["mecanismos_de_emergencia"]; ?>" type="text" class="form-control expandible" id="emergencia_toma" name="emergencia_toma" placeholder="Ingrese los mecanismos de emergencia de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="regulacion_toma">Mecanismos de regulación de la obra de toma</label>
-                <input value="<?php echo $embalse["mecanismos_de_regulacion"]; ?>" type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulación de la obra de toma">
+                <input value="<?php echo $embalse["mecanismos_de_regulacion"]; ?>" type="text" class="form-control expandible" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulación de la obra de toma">
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="gasto_toma">Gasto máximo de la obra de toma (m³/s)</label>
@@ -1002,7 +999,7 @@ function explodeBat($value, $i = null)
               </div>
               <div class="col-xl-3 col-lg-6 form-group">
                 <label for="descarga_fondo">Descarga de fondo</label>
-                <input value="<?php echo $embalse["descarga_de_fondo"]; ?>" type="text" class="form-control numero" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo o N/A si no aplica">
+                <input value="<?php echo $embalse["descarga_de_fondo"]; ?>" type="text" class="form-control expandible" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo o N/A si no aplica">
               </div>
             </div>
 
@@ -1487,6 +1484,37 @@ function explodeBat($value, $i = null)
       }
     });
 
+    // cambiar a expandibles
+    // $(input).on('dblclick', function() {
+    //   var $input = $(this);
+    //   var $div = $('<div contenteditable="true" class="editable-div"></div>')
+    //     .text($input.val())
+    //     .insertAfter($input)
+    //     .addClass($input.attr('class'));
+
+    //   $input.hide();
+    //   $div.show().focus().addClass('expanded');
+
+    //   $div.on('blur', function() {
+    //     $input.val($div.text());
+    //     $div.remove();
+    //     $input.show().removeClass('expanded');
+    //   });
+
+    //   $div.on('keydown', function(e) {
+    //     if (e.key === 'Enter') {
+    //       e.preventDefault();
+    //       $div.blur();
+    //     }
+    //   });
+    // });
+
+  });
+
+  var expandibles = $(".expandible");
+
+
+  expandibles.each(function(index, input) {
     $(input).on('dblclick', function() {
       var $input = $(this);
       var $div = $('<div contenteditable="true" class="editable-div"></div>')
@@ -1510,7 +1538,6 @@ function explodeBat($value, $i = null)
         }
       });
     });
-
   });
 </script>
 
