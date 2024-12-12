@@ -79,7 +79,7 @@ while ($row = mysqli_fetch_array($queryEmbalses)) {
 
 // var_dump($condiciones);
 
-$condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, e.operador, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_sequia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+$condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, e.operador, MAX(d.fecha) AS fecha,(SELECT cota_actual 
     FROM datos_embalse h 
     WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_sequia' AND h.estatus = 'activo' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_sequia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
@@ -126,7 +126,7 @@ $mapas_hidrologicas_sequia = array_reduce($variacion_sequia, function ($counts, 
 
 
 
-$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, e.operador, MAX(d.fecha) AS fecha,(select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) AS horas,(SELECT cota_actual 
+$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,cota_min,cota_max,e.nombre_embalse, e.norte, e.este, e.huso, e.operador, MAX(d.fecha) AS fecha,(SELECT cota_actual 
     FROM datos_embalse h 
     WHERE h.id_embalse = e.id_embalse AND h.estatus = 'activo' AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha_lluvia' AND h.hora = (select MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND fecha <= '$fecha_lluvia' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
@@ -175,21 +175,21 @@ $positions_markers = json_decode($positions_markers["configuracion"], true);
 $valores = array($cantidades_p, $cantidades_sequia, $cantidades_lluvia);
 $valores = json_encode($valores, true);
 
-$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,e.norte, e.este,e.huso,MAX(d.fecha) AS fech,               (
-    SELECT SUM(extraccion)
-            FROM detalles_extraccion dex, codigo_extraccion ce
-            WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
-               FROM datos_embalse h 
-               WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0  LIMIT 1) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
-          ) AS 'extraccion',
-          e.nombre_embalse, (SELECT cota_actual 
-               FROM datos_embalse h 
-               WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = (SELECT MAX(da.fecha) FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0) AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = h.fecha AND estatus = 'activo' AND id_embalse = d.id_embalse) AND cota_actual <> 0 LIMIT 1) AS cota_actual
-          FROM embalses e
-    LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-    WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
-    GROUP BY id_embalse 
-    ORDER BY id_embalse ASC;");
+$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,e.norte, e.este,e.huso,(SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AS fech,               (
+SELECT SUM(extraccion)
+        FROM detalles_extraccion dex, codigo_extraccion ce
+        WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
+           FROM datos_embalse h 
+           WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = fech AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
+      ) AS 'extraccion',
+      e.nombre_embalse, (SELECT cota_actual 
+           FROM datos_embalse h 
+           WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = fech AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
+      FROM embalses e
+LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
+GROUP BY id_embalse 
+ORDER BY id_embalse ASC;");
 
 $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
 

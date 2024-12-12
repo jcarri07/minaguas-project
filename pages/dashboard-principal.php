@@ -743,6 +743,7 @@ closeConection($conn);*/
 
   function grafica_dashboard() {
     $("#contenedor-1").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
+    $("#cont").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
     $.ajax({
       url: 'php/Graficas/grafica_dashboard.php',
       cache: false,
@@ -804,7 +805,7 @@ closeConection($conn);*/
 
   mapa_dashboard();
   grafica_dashboard();
-  volumen_actual();
+  //volumen_actual();
   grafica_extraccion();
   $(document).ready(function() {
 
@@ -954,7 +955,7 @@ closeConection($conn);*/
     });
   }
 
-  setInterval(volumen_actual, 1800000);
+  //setInterval(volumen_actual, 1800000);
   setInterval(mapa_dashboard, 1800000);
   setInterval(grafica_dashboard, 1800000);
   setInterval(grafica_extraccion, 1800000);
