@@ -26,8 +26,8 @@ while ($row = mysqli_fetch_array($queryUsers)) {
 
 
 
-$embalseBat = new Batimetria(5, $conn);
-$abastecimiento_meses = $embalseBat->abastecimiento();
+$embalseBat = new Batimetria(42, $conn);
+$abastecimiento_meses = $embalseBat->abastecimiento(10.28);
 // $variable = $embalseBat->volumenMinimo();
 // $volumen_normal = $embalseBat->volumenNormal();
 // $volumen_minimo = $embalseBat->volumenMinimo();

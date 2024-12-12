@@ -422,25 +422,30 @@ class Batimetria
     //     return $this->stepByStepCloseCota($this->batimetria[$año], $cota_number, $step);
     // }
 
-    public function abastecimiento($extraccion = 45178.00)
+    public function abastecimiento($extraccion = 0, $evaporacion = 0, $filtracion = 0)
     {
-        $total_extraccion = $extraccion * (1 / 1000) * (1 / 1000000) * (86400 / 1);
-        $total_salidas = $total_extraccion + $this->evaporacion() + $this->filtracion();
+        $extraccion_litros = $extraccion * 1000 * 1000 / 86400;
+        $total_extraccion = $extraccion_litros * (1 / 1000) * (1 / 1000000) * (86400 / 1); // tentativa con 1 / 1000
+        // $total_extraccion = $extraccion * (1 / 1000000) * (86400 / 1); // sin 1 / 1000
+        $total_salidas = $total_extraccion + $this->evaporacion($evaporacion) + $this->filtracion($filtracion);
         $vol_actual_disp = $this->volumenActualDisponible();
 
         $abastecimiento = ($vol_actual_disp / $total_salidas) / 30.5;
         return $abastecimiento;
     }
 
-    public function evaporacion($evap = 338.79)
+    public function evaporacion($evap = 0)
     {
+        $evap = str_replace(['.', ','], ['', '.'], $evap);
         $evap = floatval($evap);
         $evaporacion = ($this->area_cuenca * ($evap / 1000) * 0.8 * (10000 / 30.5)) / 1000000;
         return $evaporacion;
     }
 
-    public function filtracion($porcentaje = 0.10)
+    public function filtracion($porcentaje = 0)
     {
+        $porcentaje = str_replace(['.', ','], ['', '.'], $porcentaje);
+        $porcentaje = floatval($porcentaje);
         $vol_actual = $this->getByCota($this->ultima_carga[0], $this->ultima_carga[1])[1];
         $filtracion = (($vol_actual * $porcentaje) / 100) / 35.5;
         return $filtracion;

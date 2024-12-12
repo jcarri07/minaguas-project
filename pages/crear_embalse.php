@@ -688,11 +688,11 @@ date_default_timezone_set("America/Caracas");
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
                     <label for="organo">Órgano rector</label>
-                    <input type="text" class="form-control" id="organo" name="organo" placeholder="Ingrese el órgano rector">
+                    <input type="text" class="form-control expandible" id="organo" name="organo" placeholder="Ingrese el órgano rector">
                   </div>
                   <div class="form-group">
                     <label for="personal">Personal encargado a nivel central</label>
-                    <input type="text" class="form-control" id="personal" name="personal" placeholder="Personal encargado a nivel central">
+                    <input type="text" class="form-control expandible" id="personal" name="personal" placeholder="Personal encargado a nivel central">
                   </div>
                 </div>
               </div>
@@ -704,15 +704,15 @@ date_default_timezone_set("America/Caracas");
                 </div> -->
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="autoridad">Autoridad responsable del embalse</label>
-                  <input type="text" class="form-control" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
+                  <input type="text" class="form-control expandible" id="autoridad" name="autoridad" placeholder="Autoridad responsable del embalse">
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="proyectista">Proyectista</label>
-                  <input type="text" class="form-control" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
+                  <input type="text" class="form-control expandible" id="proyectista" name="proyectista" placeholder="Ingrese el proyectista">
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="constructor">Constructor</label>
-                  <input type="text" class="form-control" id="constructor" name="constructor" placeholder="Ingrese el constructor">
+                  <input type="text" class="form-control expandible" id="constructor" name="constructor" placeholder="Ingrese el constructor">
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="inicio_construccion">Año de inicio de construcción</label>
@@ -728,7 +728,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 form-group">
                   <label for="monitoreo">Monitoreo de niveles del embalse</label>
-                  <input type="text" class="form-control" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
+                  <input type="text" class="form-control expandible" id="monitoreo" name="monitoreo" placeholder="Ingrese el tipo de monitoreo del embalse">
                 </div>
               </div>
 
@@ -783,11 +783,11 @@ date_default_timezone_set("America/Caracas");
               <div class="row">
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="ubicacion_aliviadero">Ubicación del aliviadero</label>
-                  <input type="text" class="form-control" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicación del aliviadero">
+                  <input type="text" class="form-control expandible" id="ubicacion_aliviadero" name="ubicacion_aliviadero" placeholder="Ingrese la ubicación del aliviadero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="tipo_aliviadero">Tipo de aliviadero</label>
-                  <input type="text" class="form-control" id="tipo_aliviadero" name="tipo_aliviadero" placeholder="Ingrese el tipo de aliviadero">
+                  <input type="text" class="form-control expandible" id="tipo_aliviadero" name="tipo_aliviadero" placeholder="Ingrese el tipo de aliviadero">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="numero_compuertas_aliviadero">Número de compuertas del aliviadero</label>
@@ -812,11 +812,11 @@ date_default_timezone_set("America/Caracas");
               <div class="row">
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="ubicacion_toma">Ubicación de la obra de toma</label>
-                  <input type="text" class="form-control" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicación de la obra de toma">
+                  <input type="text" class="form-control expandible" id="ubicacion_toma" name="ubicacion_toma" placeholder="Ingrese la ubicación de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="tipo_toma">Tipo de obra de toma</label>
-                  <input type="text" class="form-control" id="tipo_toma" name="tipo_toma" placeholder="Ingrese el tipo de obra de toma">
+                  <input type="text" class="form-control expandible" id="tipo_toma" name="tipo_toma" placeholder="Ingrese el tipo de obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="numero_compuertas_toma">Número de compuertas de la obra de toma</label>
@@ -824,11 +824,11 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="emergencia_toma">Mecanismos de emergencia de la obra de toma</label>
-                  <input type="text" class="form-control" id="emergencia_toma" name="emergencia_toma" placeholder="Ingrese los mecanismos de emergencia de la obra de toma">
+                  <input type="text" class="form-control expandible" id="emergencia_toma" name="emergencia_toma" placeholder="Ingrese los mecanismos de emergencia de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="regulacion_toma">Mecanismos de regulación de la obra de toma</label>
-                  <input type="text" class="form-control" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulación de la obra de toma">
+                  <input type="text" class="form-control expandible" id="regulacion_toma" name="regulacion_toma" placeholder="Ingrese los mecanismos de regulación de la obra de toma">
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="gasto_toma">Gasto máximo de la obra de toma (m³/s)</label>
@@ -836,7 +836,7 @@ date_default_timezone_set("America/Caracas");
                 </div>
                 <div class="col-xl-3 col-lg-6 form-group">
                   <label for="descarga_fondo">Descarga de fondo</label>
-                  <input type="text" class="form-control" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo o N/A si no aplica">
+                  <input type="text" class="form-control expandible" id="descarga_fondo" name="descarga_fondo" placeholder="Ingrese la descarga de fondo o N/A si no aplica">
                 </div>
               </div>
 
@@ -1118,6 +1118,35 @@ date_default_timezone_set("America/Caracas");
       }
     });
 
+    // cambiar a expandibles
+    // $(input).on('dblclick', function() {
+    //   var $input = $(this);
+    //   var $div = $('<div contenteditable="true" class="editable-div"></div>')
+    //     .text($input.val())
+    //     .insertAfter($input)
+    //     .addClass($input.attr('class'));
+
+    //   $input.hide();
+    //   $div.show().focus().addClass('expanded');
+
+    //   $div.on('blur', function() {
+    //     $input.val($div.text());
+    //     $div.remove();
+    //     $input.show().removeClass('expanded');
+    //   });
+
+    //   $div.on('keydown', function(e) {
+    //     if (e.key === 'Enter') {
+    //       e.preventDefault();
+    //       $div.blur();
+    //     }
+    //   });
+    // });
+
+  });
+
+  var expandibles = $(".expandible");
+  expandibles.each(function(index, input) {
     $(input).on('dblclick', function() {
       var $input = $(this);
       var $div = $('<div contenteditable="true" class="editable-div"></div>')
@@ -1141,7 +1170,6 @@ date_default_timezone_set("America/Caracas");
         }
       });
     });
-
   });
 </script>
 

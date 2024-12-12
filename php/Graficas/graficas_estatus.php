@@ -128,7 +128,11 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_
  WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
  GROUP BY id_embalse;");
 
-
+    $evaporacionFiltracion = [];
+    $queryEvaporacionFiltracion = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'evap_filt';");
+    if (mysqli_num_rows($queryEvaporacionFiltracion) > 0) {
+        $evaporacionFiltracion = json_decode(mysqli_fetch_assoc($queryEvaporacionFiltracion)['configuracion'], true);
+    }
 
     $datos_embalses = mysqli_fetch_all($almacenamiento_actual, MYSQLI_ASSOC);
     $volumen_primer_periodo = mysqli_fetch_all($condiciones_actuales1, MYSQLI_ASSOC);
@@ -175,7 +179,14 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_
                 if ($dat == 1) {
                     $suma_extracciones[] = 0;
                 } else {
-                    $suma_extracciones[] = round(($bati->volumenActualDisponible() * 1000 / (($dat + $evaporacion + $filtracion))) / 30);
+                    if (array_key_exists($datos_embalses[$j]["id_embalse"], $evaporacionFiltracion)) {
+                        $evaporacio = $evaporacionFiltracion[$datos_embalses[$j]["id_embalse"]]["evaporacion"];
+                        $filtracion = $evaporacionFiltracion[$datos_embalses[$j]["id_embalse"]]["filtracion"];
+                        $suma_extracciones[] = $bati->abastecimiento($datos_embalses[$j]["extraccion"], $evaporacio, $filtracion);
+                    } else {
+                        $suma_extracciones[] = $bati->abastecimiento($datos_embalses[$j]["extraccion"]);
+                    }
+                    // $suma_extracciones[] = round(($bati->volumenActualDisponible() * 1000 / (($dat + $evaporacion + $filtracion))) / 30);
                 }
             } else {
                 $suma_extracciones[] = 0;
@@ -321,7 +332,7 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_
         };
 
         const scaleChart = {
-        id: 'scaleChart',
+            id: 'scaleChart',
             beforeDatasetsDraw(chart, args, plugins) {
                 const {
                     ctx
@@ -417,8 +428,8 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_
 
                         }
                     },
-                    scaleChart:{
-                        scaleFactor:0.8,
+                    scaleChart: {
+                        scaleFactor: 0.8,
                     },
                     title: {
                         display: false,
@@ -454,7 +465,7 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_
                 },
 
             },
-            plugins: [ChartDataLabels,scaleChart],
+            plugins: [ChartDataLabels, scaleChart],
 
         });
         $('#progress-bar').attr('aria-valuenow', <?php echo 25; ?>).css('width', <?php echo 25 ?> + '%');
@@ -844,14 +855,14 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_
                             },
                         },
                     },
-                    scaleChart:{
-                        scaleFactor:0.85,
+                    scaleChart: {
+                        scaleFactor: 0.85,
                     },
 
                 },
 
             },
-            plugins: [ChartDataLabels,scaleChart],
+            plugins: [ChartDataLabels, scaleChart],
 
         });
         $('#progress-bar').attr('aria-valuenow', <?php echo 100; ?>).css('width', <?php echo 100 ?> + '%');
