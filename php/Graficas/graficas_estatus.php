@@ -856,7 +856,7 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_
                         },
                     },
                     scaleChart: {
-                        scaleFactor: 0.85,
+                        scaleFactor: 0.8,
                     },
 
                 },
