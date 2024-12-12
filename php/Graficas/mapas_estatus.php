@@ -1187,7 +1187,7 @@ while ($row < count($datos_embalses)) {
                             console.log("listo");
                             location.href = "graficas_estatus.php?valores=<?php echo $valores; ?>";
                         } else {
-
+                            console.log(this.responseText);
                         }
                     }
                 }

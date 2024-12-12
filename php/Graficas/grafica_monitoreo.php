@@ -1300,12 +1300,12 @@ $j = 0;
             xhr.send('imagen=' + dataURL + '&nombre=<?php echo 'monitoreo-semana'; ?>&numero=' + 1);
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-
-                    console.log("listo");
-                    location.href = "../../pages/reports/print_monitoreo.php?id=" + <?php echo $id; ?> + "&volumen=<?php echo $volumen; ?>&cota=<?php echo $cot; ?>&name=<?php echo $embalse[0]['nombre_embalse']; ?>&index=<?php echo $Nsemanas; ?>&semanas=<?php echo $nse; ?>&fecha=<?php echo $fecha1; ?>";
-
-                } else {
-
+                    if (this.responseText == "si") {
+                        console.log("listo");
+                        location.href = "../../pages/reports/print_monitoreo.php?id=" + <?php echo $id; ?> + "&volumen=<?php echo $volumen; ?>&cota=<?php echo $cot; ?>&name=<?php echo $embalse[0]['nombre_embalse']; ?>&index=<?php echo $Nsemanas; ?>&semanas=<?php echo $nse; ?>&fecha=<?php echo $fecha1; ?>";
+                    } else {
+                        console.log(this.responseText);
+                    }
                 }
             }
         });

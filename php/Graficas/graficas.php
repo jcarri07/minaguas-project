@@ -750,16 +750,17 @@ if ($count >= 1) {
                     xhr.send('imagen=' + dataURL + '&nombre=<?php echo $embalses[$t]['id_embalse']; ?>&numero=' + 3);
                     xhr.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
-                            $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
-                                                                                                                            $count++; ?> + '%');
-                            console.log("listo");
-                            <?php if ($t == (count($embalses) - 1)) {
-                                echo "location.href = '../../pages/reports/print_embalses_prioritarios.php?pri=" . $pri . "';";
+                            if (this.responseText == "si") {
+                                $('#progress-bar').attr('aria-valuenow', <?php echo (($count) * 100 / (30)); ?>).css('width', <?php echo (($count) * 100 / (30));
+                                                                                                                                $count++; ?> + '%');
+                                console.log("listo");
+                                <?php if ($t == (count($embalses) - 1)) {
+                                    echo "location.href = '../../pages/reports/print_embalses_prioritarios.php?pri=" . $pri . "';";
+                                }
+                                ?> //AQUI CARRIZALES
+                            } else {
+                                console.log(this.responseText);
                             }
-                            ?> //AQUI CARRIZALES
-
-                        } else {
-                            //console.log('error al generar graficas');
                         }
                     }
                 });
