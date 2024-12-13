@@ -187,10 +187,10 @@ if ($count >= 1) {
                         animations: true,
                         responsive: true,
                         maintainAspectRatio: false,
-                        interaction: {
-                            intersect: false,
-                            axis: 'y',
-                        },
+                        // interaction: {
+                        //     intersect: false,
+                        //     axis: 'y',
+                        // },
                         layout: {
                             padding: {
                                 top: 25,
