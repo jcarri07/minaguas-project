@@ -90,8 +90,6 @@ if ($count >= 1) {
         // }
         $min = $bati->volumenMinimo();
         $nor = $bati->volumenNormal();
-        $d = ($nor - $min) > 0 ? ($nor - $min) : 1;
-        array_push($div,$d);
 
         $max = ($nor - $min) > 0 ? ($nor - $min) : 0;
         array_push($array, round($max, 3));
@@ -364,7 +362,7 @@ if ($count >= 1) {
                 }
 
                 // Añadir etiqueta
-                $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs($datos[$j]) * (100 / $div[$j])), 0) . "%)'";
+                $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs($datos[$j]) * (100 / $array[$j])), 0) . "%)'";
 
                 // Añadir el punto de datos
                 $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $datos[$j] . " }";
@@ -384,7 +382,6 @@ if ($count >= 1) {
             }
             ?>
             const maxValues = [<?php echo implode(", ", $array); ?>];
-            const maxValues2 = [<?php echo implode(", ", $div); ?>];
 
             let cha = new Chart(chart, {
                 type: 'bar',
