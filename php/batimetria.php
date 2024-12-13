@@ -72,7 +72,7 @@ class Batimetria
         // LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
         // WHERE e.estatus = 'activo' AND e.id_embalse = '$id_embalse'
         // GROUP BY id_embalse;";
-        $query = "SELECT id_embalse, CONCAT(fecha, ' ', hora) AS fecha, cota_actual FROM datos_embalse WHERE id_embalse = '$id_embalse' AND cota_actual <> 0 ORDER BY fecha DESC LIMIT 1";
+        $query = "SELECT id_embalse, CONCAT(fecha, ' ', hora) AS fecha, cota_actual FROM datos_embalse WHERE id_embalse = '$id_embalse' AND cota_actual <> 0 AND estatus = 'activo' ORDER BY fecha DESC LIMIT 1";
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {
