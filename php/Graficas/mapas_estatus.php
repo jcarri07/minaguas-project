@@ -172,6 +172,10 @@ $positions_query = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nomb
 $positions_markers = mysqli_fetch_assoc($positions_query);
 $positions_markers = json_decode($positions_markers["configuracion"], true);
 
+$positions_query_2 = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'marks_posiciones'");
+$positions_markers_2 = mysqli_fetch_assoc($positions_query_2);
+$positions_markers_2 = json_decode($positions_markers_2["configuracion"], true);
+
 $valores = array($cantidades_p, $cantidades_sequia, $cantidades_lluvia);
 $valores = json_encode($valores, true);
 
@@ -741,8 +745,8 @@ while ($row < count($datos_embalses)) {
     foreach ($variacion_sequia as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
             $posicion = "t";
-            if (array_key_exists($emb[7], $positions_markers)) {
-                $posicion = $positions_markers[$emb[7]];
+            if (array_key_exists($emb[7], $positions_markers_2)) {
+                $posicion = $positions_markers_2[$emb[7]];
             }
     ?>
 
@@ -870,8 +874,8 @@ while ($row < count($datos_embalses)) {
     foreach ($variacion_lluvia as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
             $posicion = "t";
-            if (array_key_exists($emb[5], $positions_markers)) {
-                $posicion = $positions_markers[$emb[5]];
+            if (array_key_exists($emb[5], $positions_markers_2)) {
+                $posicion = $positions_markers_2[$emb[5]];
             }
     ?>
 
@@ -890,8 +894,8 @@ while ($row < count($datos_embalses)) {
     foreach ($embalse_abast as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "" && $emb[6] <= 12) {
             $posicion = "t";
-            if (array_key_exists($emb[5], $positions_markers)) {
-                $posicion = $positions_markers[$emb[5]];
+            if (array_key_exists($emb[5], $positions_markers_2)) {
+                $posicion = $positions_markers_2[$emb[5]];
             }
     ?>
 
