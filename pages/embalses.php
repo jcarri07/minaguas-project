@@ -26,8 +26,8 @@ while ($row = mysqli_fetch_array($queryUsers)) {
 
 
 
-$embalseBat = new Batimetria(42, $conn);
-$abastecimiento_meses = $embalseBat->abastecimiento(10.28);
+// $embalseBat = new Batimetria(42, $conn);
+// $abastecimiento_meses = $embalseBat->abastecimiento(10.28);
 // $variable = $embalseBat->volumenMinimo();
 // $volumen_normal = $embalseBat->volumenNormal();
 // $volumen_minimo = $embalseBat->volumenMinimo();
@@ -54,6 +54,17 @@ $abastecimiento_meses = $embalseBat->abastecimiento(10.28);
 // echo json_encode($arrayEstados[0][1], $estados['1']);
 // closeConection($conn);
 ?>
+
+<style>
+  .oculto {
+    display: none;
+  }
+
+  .ocultar {
+    display: none !important;
+  }
+</style>
+
 <div class="container-fluid py-4">
   <div class="row">
     <!--<div class="col-lg-8">
@@ -158,7 +169,7 @@ $abastecimiento_meses = $embalseBat->abastecimiento(10.28);
           <!-- <div class="row"> -->
           <!-- <div class="col-6 d-flex align-items-center"> -->
           <!-- <h4 style="font-family: 'Calibri', sans-serif;">EMBALSES</h4> -->
-          <h4>EMBALSES <?php echo $abastecimiento_meses ?></h4>
+          <h4>EMBALSES</h4>
           <!-- </div> -->
           <!--<div class="col-6 text-end">
                   <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
@@ -176,7 +187,100 @@ $abastecimiento_meses = $embalseBat->abastecimiento(10.28);
             <?php } ?>
           </div>
 
-          <div class="dt-responsive table-responsive">
+          <div style="height: 800px; position: relative;" class="w-100 d-flex flex-column no-oculto">
+            <div class="w-100 d-flex justify-content-between placeholder-glow">
+              <div style="width: 200px; height: 40px; background-color:rgb(204, 204, 204);" class="rounded placeholder"></div>
+              <div style="width: 200px; height: 40px; background-color: rgb(204, 204, 204);" class="rounded placeholder"></div>
+            </div>
+            <div class="w-100 d-flex justify-content-between">
+              <table
+                class="table table-striped table-bordered nowrap dataTable no-footer"
+                aria-describedby="table-embalses_info">
+                <thead>
+                  <tr>
+                    <th
+                      style="width: 0px">
+                      Embalse
+                    </th>
+                    <th
+                      style="width: 0px">
+                      Volumen disponible
+                    </th>
+                    <th
+                      style="text-align: center; width: 0px">
+                      Encargado
+                    </th>
+                    <th
+                      style="text-align: center; width: 0px">
+                      Acción
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  for ($i = 0; $i < 10; $i++) {
+                  ?>
+                    <tr style="height: 58px;" class="odd">
+                      <td style="vertical-align: middle" class="sorting_1">
+                        <div class="px-3 placeholder-glow">
+                          <!-- <h6 class="mb-1 text-dark font-weight-bold text-sm">Agua Fría</h6> -->
+                          <div style="width: 150px; height: 20px; background-color: rgb(204, 204, 204); margin-bottom: 1px;" class="rounded placeholder"></div>
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle" class="hide-cell">
+                        <div class="d-flex flex-column px-3 placeholder-glow">
+                          <!-- <h6 class="mb-1 text-dark font-weight-bold text-sm">
+                          5,31 <span style="font-size: 12px">Hm</span>³
+                        </h6>
+                        <span style="display: none">5,31</span> -->
+                          <div style="width: 150px; height: 20px; background-color: rgb(204, 204, 204); margin-bottom: 1px;" class="rounded placeholder"></div>
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle" class="hide-cell">
+                        <div class="d-flex justify-content-center">
+                          <div class="placeholder-glow">
+                            <!-- <h6 class="mb-1 text-dark font-weight-bold text-sm">
+                            Alirio Rojas
+                          </h6> -->
+                            <div style="width: 150px; height: 20px; background-color: rgb(204, 204, 204); margin-bottom: 1px;" class="rounded placeholder"></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center justify-content-center text-sm placeholder-glow">
+                          <!-- <a
+                          data-id="28"
+                          class="show-embalse btn btn-link text-dark px-2 mb-0"
+                          href="?page=show"><i class="fas fa-eye text-dark text-md me-2" aria-hidden="true"></i><span class="hide-cell">Ver</span></a>
+                        <a
+                          data-id="28"
+                          class="editar-embalse btn btn-link text-dark px-2 mb-0"><i
+                            class="fas fa-pencil-alt text-dark text-md me-2"
+                            aria-hidden="true"></i><span class="hide-cell">Editar</span></a>
+                        <a
+                          data-id="28"
+                          class="eliminar-embalse btn btn-link text-dark px-2 mb-0"><i
+                            class="fas fa-trash text-dark text-md me-2"
+                            aria-hidden="true"></i><span class="hide-cell">Eliminar</span></a> -->
+                          <div style="width: 250px; height: 20px; background-color: rgb(204, 204, 204); margin-bottom: 1px;" class="rounded placeholder"></div>
+                        </div>
+                      </td>
+                    </tr>
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+              <link href="./assets/css/style-spinner.css" rel="stylesheet" />
+              <div class="loaderPDF">
+                <div class="lds-dual-ring"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dt-responsive table-responsive oculto">
             <!-- <div class="d-flex justify-content-end align-items-center gap-2">
                 <div>Buscar:</div>
                 <div><input type="text" id="table-embalses_filter_input" class="form-control py-1" placeholder="Buscar en las tablas"></div>
@@ -286,7 +390,7 @@ $abastecimiento_meses = $embalseBat->abastecimiento(10.28);
             </a>
           </div> -->
 
-            <div class="dt-responsive table-responsive">
+            <div class="dt-responsive table-responsive oculto">
               <?php
               if (mysqli_num_rows($queryEmbalsesEliminados) > 0) {
               ?>
@@ -677,6 +781,9 @@ $abastecimiento_meses = $embalseBat->abastecimiento(10.28);
       iniciarTabla('table-embalses-eliminados');
     }
 
+    $(".oculto").show();
+    console.log($(".no-oculto"))
+    $(".no-oculto")[0].className += " ocultar";
   });
 </script>
 
