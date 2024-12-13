@@ -76,6 +76,7 @@ ORDER BY d.fecha ASC;";
                             ctx.textBaseline = 'bottom';
                             ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
                             ctx.fillStyle = 'blue';
+                            total = dataset.data[dataset.data.length - 1].y;
                             tot = parseFloat(total);
                             formateado = new Intl.NumberFormat('de-DE', {
                                 minimumFractionDigits: 2,
