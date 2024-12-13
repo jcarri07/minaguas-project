@@ -358,9 +358,10 @@ closeConection($conn);*/
 
           </div>
           <div class="d-flex justify-content-center align-items-center bg-secondary w-100 rounded" style="height: 700px;">
+          <div class="rounded" id="mapa-c" style="position:absolute; height: 700px;width:79%;z-index:1400 !important;background-color:#8392ab"></div>
             <div id="mapa-container" class="d-flex rounded" style="height: 700px; overflow: hidden !important;"></div>
             <!-- <div id="mapa-portada" style="width: 100%; height: 100%;"></div> -->
-
+            
           </div>
 
           <div class="row justify-content-center gap-sm-2 ">
@@ -742,28 +743,35 @@ closeConection($conn);*/
   }
 
   function grafica_dashboard() {
-    $("#contenedor-1").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
-    $("#cont").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
-    $.ajax({
-      url: 'php/Graficas/grafica_dashboard.php',
-      cache: false,
-      contentType: false,
-      processData: false,
-      success: function(response) {
-        //$("#contenedor").html("");
-        $("#contenedor-1").html(response);
+    return new Promise((resolve) => {
+      $("#contenedor-1").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
+      $("#cont").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
+      $("#contenedor-4").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
+      $("#mapa-c").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF" style="top:-100%;"><div class="lds-dual-ring"></div></div>');
+      $.ajax({
+        url: 'php/Graficas/grafica_dashboard.php',
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+          //$("#contenedor").html("");
+          $("#contenedor-1").html(response);
+          $("#mapa-c").fadeOut();
+          resolve();
+        },
+        error: function(response) {
 
-      },
-      error: function(response) {
+          alertify.error("Error inesperado.");
 
-        alertify.error("Error inesperado.");
-
-      }
+        }
+      });
+      
     });
-  }
+
+  };
 
   function mapa_dashboard() {
-    $("#mapa-container").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF" style="top:-100%;"><div class="lds-dual-ring"></div></div>');
+
     $.ajax({
       url: 'pages/mapa_dashboard.php',
       cache: false,
@@ -783,7 +791,7 @@ closeConection($conn);*/
   };
 
   function grafica_extraccion() {
-    $("#contenedor-4").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
+
     $.ajax({
       url: 'php/Graficas/grafica_extracciones.php',
       cache: false,
@@ -804,9 +812,9 @@ closeConection($conn);*/
 
 
   mapa_dashboard();
-  grafica_dashboard();
+  grafica_dashboard().then(() => {grafica_extraccion();});
   //volumen_actual();
-  grafica_extraccion();
+  
   $(document).ready(function() {
 
     //cargarGrafico();
