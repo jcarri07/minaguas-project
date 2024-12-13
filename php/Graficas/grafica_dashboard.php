@@ -340,7 +340,7 @@ if ($count >= 1) {
                 // }
 
                 //$div = ($nor - $min) > 0 ? ($nor - $min) : 1;
-                if ($div[$j] > 0) {
+                if ($array[$j] > 0) {
                     $percentage = (abs($datos[$j]) * (100 / $array[$j]));
                 } else {
                     $percentage = 0;
