@@ -332,7 +332,7 @@ closeConection($conn);*/
             <h6 class="d-flex justify-content-center align-items-center" id="title-4" style="margin-top: -15px; margin-bottom: -3px;">
               <!--Lo de Miguel-->
             </h6>
-            <div class="d-flex justify-content-center align-items-center">
+            <div id="spin" class="d-flex justify-content-center align-items-center">
               <div class="d-flex flex-column justify-content-center align-items-center rounded" id="">
                 <div class="" id="contenedor-4">
                 </div>
@@ -745,8 +745,8 @@ closeConection($conn);*/
   function grafica_dashboard() {
     return new Promise((resolve) => {
       $("#contenedor-1").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
-      $("#cont").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
-      $("#contenedor-4").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF"><div class="lds-dual-ring"></div></div>');
+      $("#cont").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF3"><div class="lds-dual-ring"></div></div>');
+      $("#contenedor-4").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF2"><div class="lds-dual-ring"></div></div>');
       $("#mapa-c").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF" style="top:-100%;"><div class="lds-dual-ring"></div></div>');
       $.ajax({
         url: 'php/Graficas/grafica_dashboard.php',
