@@ -270,7 +270,7 @@ while ($row < count($datos_embalses)) {
 
 <head>
     <meta charset="UTF-8">
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
     <link rel="stylesheet" href="../../assets/css/leaflet.css" />
@@ -696,7 +696,7 @@ while ($row < count($datos_embalses)) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
 
             $posicion = "t";
-            if ($positions_markers[$emb[6]]) {
+            if (array_key_exists($emb[6], $positions_markers)) {
                 $posicion = $positions_markers[$emb[6]];
             }
     ?>
@@ -741,7 +741,7 @@ while ($row < count($datos_embalses)) {
     foreach ($variacion_sequia as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
             $posicion = "t";
-            if ($positions_markers[$emb[7]]) {
+            if (array_key_exists($emb[7], $positions_markers)) {
                 $posicion = $positions_markers[$emb[7]];
             }
     ?>
@@ -870,7 +870,7 @@ while ($row < count($datos_embalses)) {
     foreach ($variacion_lluvia as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
             $posicion = "t";
-            if ($positions_markers[$emb[5]]) {
+            if (array_key_exists($emb[5], $positions_markers)) {
                 $posicion = $positions_markers[$emb[5]];
             }
     ?>
@@ -890,7 +890,7 @@ while ($row < count($datos_embalses)) {
     foreach ($embalse_abast as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "" && $emb[6] <= 12) {
             $posicion = "t";
-            if ($positions_markers[$emb[5]]) {
+            if (array_key_exists($emb[5], $positions_markers)) {
                 $posicion = $positions_markers[$emb[5]];
             }
     ?>
@@ -939,7 +939,7 @@ while ($row < count($datos_embalses)) {
         foreach ($filter_array as $emb) {
             if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
                 $posicion = "t";
-                if ($positions_markers[$emb[7]]) {
+                if (array_key_exists($emb[7], $positions_markers)) {
                     $posicion = $positions_markers[$emb[7]];
                 }
         ?>
@@ -993,7 +993,7 @@ while ($row < count($datos_embalses)) {
         foreach ($filter_array as $emb) {
             if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
                 $posicion = "t";
-                if ($positions_markers[$emb[5]]) {
+                if (array_key_exists($emb[5], $positions_markers)) {
                     $posicion = $positions_markers[$emb[5]];
                 }
         ?>
@@ -1045,7 +1045,7 @@ while ($row < count($datos_embalses)) {
         foreach ($filter_array as $emb) {
             if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
                 $posicion = "t";
-                if ($positions_markers[$emb[5]]) {
+                if (array_key_exists($emb[5], $positions_markers)) {
                     $posicion = $positions_markers[$emb[5]];
                 }
         ?>

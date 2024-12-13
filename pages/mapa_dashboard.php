@@ -397,7 +397,7 @@ while ($row < count($datos_embalses)) {
     foreach ($embalses_abast as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
             $posicion = "t";
-            if ($positions_markers[$emb[6]]) {
+            if (array_key_exists($emb[6], $positions_markers)) {
                 $posicion = $positions_markers[$emb[6]];
             }
     ?>
