@@ -61,7 +61,7 @@ if ($count >= 1) {
                             ctx
                         } = chart;
                         const dataset = chart.data.datasets[0];
-                        const meta = chart.getDatasetMeta(0);
+                        const meta = chart.getDatasetMeta(chart.data.datasets.length-1);
 
                         if (meta.hidden) return;
 
@@ -76,6 +76,7 @@ if ($count >= 1) {
                             ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
                             ctx.fillStyle = 'blue';
                             total = dataset.data[dataset.data.length - 1].y;
+                            tot = parseFloat(total);
                             formateado = new Intl.NumberFormat('de-DE', {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2

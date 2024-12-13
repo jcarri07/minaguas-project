@@ -90,8 +90,6 @@ if ($count >= 1) {
         // }
         $min = $bati->volumenMinimo();
         $nor = $bati->volumenNormal();
-        $d = ($nor - $min) > 0 ? ($nor - $min) : 1;
-        array_push($div,$d);
 
         $max = ($nor - $min) > 0 ? ($nor - $min) : 0;
         array_push($array, round($max, 3));
@@ -332,7 +330,7 @@ if ($count >= 1) {
                 //$nor = $bati->volumenNormal();
                 // if ($datos_embalses[$j]["cota_actual"] != NULL) {
 
-                $sum[$j] = $datos[$j];
+                //$sum[$j] = $datos[$j];
                 // if (($x - $min) <= 0) {
                 //     $sum[$j] = 0;
                 // } else {
@@ -340,14 +338,14 @@ if ($count >= 1) {
                 // }
 
                 //$div = ($nor - $min) > 0 ? ($nor - $min) : 1;
-                if ($div[$j] != 1) {
-                    $percentage = (abs($sum[$j]) * (100 / $div[$j]));
+                if ($array[$j] > 0) {
+                    $percentage = (abs($datos[$j]) * (100 / $array[$j]));
                 } else {
                     $percentage = 0;
                 }
 
                 // Determinar el color basado en el porcentaje
-                if ($sum[$j] == 0 || $percentage < 30) {
+                if ($percentage == 0 || $percentage < 30) {
                     $backgroundColors[] = "'#fd0200'"; // rojo
                 };
                 if ($percentage >= 30 && $percentage < 60) {
@@ -364,10 +362,10 @@ if ($count >= 1) {
                 }
 
                 // Añadir etiqueta
-                $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs($sum[$j]) * (100 / $div[$j])), 0) . "%)'";
+                $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs($datos[$j]) * (100 / $array[$j])), 0) . "%)'";
 
                 // Añadir el punto de datos
-                $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $sum[$j] . " }";
+                $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $datos[$j] . " }";
                 // } else {
                 //     // Caso de cota_actual nulo
                 //     $backgroundColors[] = "'#fd0200'"; // color por defecto (rojo)

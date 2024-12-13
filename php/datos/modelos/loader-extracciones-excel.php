@@ -52,6 +52,7 @@
 
     let i = 0;
     var anio = "<?php echo $_GET['anio'];?>";
+    let embalses_names = [];
 
     setInterval(() => {
         if(i < array_embalses.length) {
@@ -123,8 +124,15 @@
             // Suponemos que cada `sheetData` es un array de arrays (AOA) que representa las filas de la hoja
             //const ws = XLSX.utils.aoa_to_sheet('');
 
-            // Nombre dinámico de la hoja (puedes personalizarlo según sea necesario)
-            const sheetName = item.nombre_embalse.toUpperCase();
+            // Comprobando que no hayan dos embalses con el mismo nombre
+            let sheetName = item.nombre_embalse.toUpperCase();
+            let suffix = 1;
+            if(embalses_names.includes(sheetName)) {
+                //return;
+                sheetName = `${item.nombre_embalse.toUpperCase()}_${suffix}`;
+                suffix++;
+            }
+            embalses_names.push(sheetName);
             const ws = wb.addWorksheet(sheetName);
 
             // Congelar la primera fila y la primera columna

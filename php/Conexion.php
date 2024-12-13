@@ -20,7 +20,7 @@ if (contiene_subcadena($fullPath, "C:")) {
     $dbname = "minagua_db";
 } else {
 
-    if(contiene_subcadena($fullPath, "sbtelecom.host")) {
+    if(contiene_subcadena($fullPath, "sbtebpav")) {
         /*NameCheap*/
         $host = "localhost";
         $user = "sbtebpav_minaguas_user";
