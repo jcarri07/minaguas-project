@@ -700,8 +700,8 @@ while ($row < count($datos_embalses)) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
 
             $posicion = "t";
-            if (array_key_exists($emb[6], $positions_markers)) {
-                $posicion = $positions_markers[$emb[6]];
+            if (array_key_exists($emb[6], $positions_markers_2)) {
+                $posicion = $positions_markers_2[$emb[6]];
             }
     ?>
             // console.log("Prueba");
