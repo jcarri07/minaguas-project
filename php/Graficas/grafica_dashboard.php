@@ -347,7 +347,7 @@ if ($count >= 1) {
                 }
 
                 // Determinar el color basado en el porcentaje
-                if ($sum[$j] == 0 || $percentage < 30) {
+                if ($percentage == 0 || $percentage < 30) {
                     $backgroundColors[] = "'#fd0200'"; // rojo
                 };
                 if ($percentage >= 30 && $percentage < 60) {
