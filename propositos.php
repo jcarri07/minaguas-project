@@ -1,6 +1,6 @@
 <?php
 
-include '../minaguas-project/php/Conexion.php';
+include './php/Conexion.php';
 
 $embalses = mysqli_query($conn, "SELECT id_embalse, proposito, uso_actual FROM embalses");
 

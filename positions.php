@@ -6,7 +6,7 @@
 ] -->
 
 <?php
-include '../minaguas-project/php/Conexion.php';
+include './php/Conexion.php';
 
 
 $positions = [
