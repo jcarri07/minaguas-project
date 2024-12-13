@@ -20,18 +20,21 @@ if (contiene_subcadena($fullPath, "C:")) {
     $dbname = "minagua_db";
 } else {
 
-    /*NameCheap*/
-    /*$host = "localhost";
-    $user = "sbtebpav_minaguas_user";
-    $pass = "Minaguasroot#";
-    $dbname = "sbtebpav_minagua_db";*/
-
-    /*AWS*/
-    //$host = "54.232.118.19";
-    $host = "localhost";
-    $user = "root";
-    $pass = "xsM6U1teIzPGP6g";
-    $dbname = "sima_db";
+    if(contiene_subcadena($fullPath, "sbtebpav")) {
+        /*NameCheap*/
+        $host = "localhost";
+        $user = "sbtebpav_minaguas_user";
+        $pass = "Minaguasroot#";
+        $dbname = "sbtebpav_minagua_db";
+    }
+    else {
+        /*AWS*/
+        //$host = "54.232.118.19";
+        $host = "localhost";
+        $user = "root";
+        $pass = "xsM6U1teIzPGP6g";
+        $dbname = "sima_db";
+    }
 }
 
 

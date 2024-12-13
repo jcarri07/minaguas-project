@@ -12,7 +12,8 @@ CREATE TABLE `usuarios` (
   Cedula varchar(255) DEFAULT NULL,
   Correo varchar(255) DEFAULT NULL,
   Telefono varchar(255) DEFAULT NULL,
-  Tipo enum('Admin','User') DEFAULT NULL,
+  /*Tipo enum('Admin','User') DEFAULT NULL,*/
+  Tipo varchar(255) DEFAULT NULL,
   estatus enum('activo','inactivo') DEFAULT NULL
 );
 
