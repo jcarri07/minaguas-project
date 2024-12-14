@@ -751,31 +751,31 @@ $ruta_mapas = "../../assets/img/temp/";
     <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
     <p style="position: absolute; top: 20px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-    <div style="position: absolute; left: 20px; top: 2px; background-color: red;
+    <div style="position: absolute; left: 20px; top: 2px; background-color: #73B2FF;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición baja (< 30%) <b> <?php echo $valores[0][0] ?> Embalses</b></p>
 
 
       <p style="position: absolute; top: 40px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-      <div style="position: absolute; left: 20px; top: 2px; background-color: #44BEF0;
+      <div style="position: absolute; left: 20px; top: 2px; background-color: #00FFC5;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Bajo (30% < A> 60%) <b> <?php echo $valores[0][1] ?> Embalses</b></p>
 
 
         <p style="position: absolute; top: 60px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-        <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
+        <div style="position: absolute; left: 20px; top: 2px; background-color: #00A889;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Alto (60% < A> 90%) <b> <?php echo $valores[0][2] ?> Embalses</b></p>
 
 
           <p style="position: absolute; top: 80px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-          <div style="position: absolute; left: 20px; top: 2px; background-color: green;
+          <div style="position: absolute; left: 20px; top: 2px; background-color: #0070FF;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición Buena (> 90%) <b> <?php echo $valores[0][3] ?> Embalses</b></p>
 
 
           <p style="position: absolute; top: 100px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-          <div style="position: absolute; left: 20px; top: 2px; background-color: #58F558;
+          <div style="position: absolute; left: 20px; top: 2px; background-color: #002673;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición de Alivio <b> <?php echo $valores[0][4] ?> Embalses</b></p>
 
 

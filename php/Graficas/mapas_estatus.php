@@ -213,49 +213,52 @@ while ($reg = mysqli_fetch_array($queryReg)) {
 $embalse_abast = [];
 $regiones = [];
 $countReg = [];
+$excluidos_reg = [];
 $row = 0;
 
 while ($row < count($datos_embalses)) {
     $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
     // CALCULO DE ABASTECIMIENTO!!
 
-    if (!in_array($datos_embalses[$row]["id_embalse"], $array_excluidos)) {
-        $abastecimiento = 0;
-        if ($datos_embalses[$row]["extraccion"] > 0) {
-            if (array_key_exists($datos_embalses[$row]["id_embalse"], $evaporacionFiltracion)) {
-                $evaporacio = $evaporacionFiltracion[$datos_embalses[$row]["id_embalse"]]["evaporacion"];
-                $filtracion = $evaporacionFiltracion[$datos_embalses[$row]["id_embalse"]]["filtracion"];
-                $abastecimiento = $emb->abastecimiento($datos_embalses[$row]["extraccion"], $evaporacio, $filtracion);
-            } else {
-                $abastecimiento = $emb->abastecimiento($datos_embalses[$row]["extraccion"]);
-            }
-            // $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
-        }
-        if ($datos_embalses[$row]["extraccion"] == NULL) {
-            $abastecimiento = 0;
-        }
-
-        if (!in_array($totalreg[$datos_embalses[$row]["region"]], $regiones)) {
-            array_push($regiones, $totalreg[$datos_embalses[$row]["region"]]);
-            $countReg[$totalreg[$datos_embalses[$row]["region"]]] = 1;
+    $abastecimiento = 0;
+    if ($datos_embalses[$row]["extraccion"] > 0) {
+        if (array_key_exists($datos_embalses[$row]["id_embalse"], $evaporacionFiltracion)) {
+            $evaporacio = $evaporacionFiltracion[$datos_embalses[$row]["id_embalse"]]["evaporacion"];
+            $filtracion = $evaporacionFiltracion[$datos_embalses[$row]["id_embalse"]]["filtracion"];
+            $abastecimiento = $emb->abastecimiento($datos_embalses[$row]["extraccion"], $evaporacio, $filtracion);
         } else {
-            $countReg[$totalreg[$datos_embalses[$row]["region"]]] += 1;
+            $abastecimiento = $emb->abastecimiento($datos_embalses[$row]["extraccion"]);
         }
+        // $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
+    }
+    if ($datos_embalses[$row]["extraccion"] == NULL) {
+        $abastecimiento = 0;
+    }
 
-        $icono = "f_igual";
+    if (!in_array($totalreg[$datos_embalses[$row]["region"]], $regiones)) {
+        array_push($regiones, $totalreg[$datos_embalses[$row]["region"]]);
+        $countReg[$totalreg[$datos_embalses[$row]["region"]]] = 1;
+    } else {
+        $countReg[$totalreg[$datos_embalses[$row]["region"]]] += 1;
+    }
 
-        if (($abastecimiento) <= 4) {
-            $icono = "rojo";
-        } else if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
-            $icono = "naranja";
-        } else if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
-            $icono = "amarillo";
-        } else if (($abastecimiento) > 12) {
-            $icono = "verde";
-        }
+    $icono = "f_igual";
 
-        $array = [$datos_embalses[$row]["norte"], $datos_embalses[$row]["este"], $datos_embalses[$row]["huso"], $totalreg[$datos_embalses[$row]["region"]],  $datos_embalses[$row]["nombre_embalse"], $datos_embalses[$row]["id_embalse"], $abastecimiento, $icono];
+    if (($abastecimiento) <= 4) {
+        $icono = "rojo";
+    } else if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
+        $icono = "naranja";
+    } else if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
+        $icono = "amarillo";
+    } else if (($abastecimiento) > 12) {
+        $icono = "verde";
+    }
+
+    $array = [$datos_embalses[$row]["norte"], $datos_embalses[$row]["este"], $datos_embalses[$row]["huso"], $totalreg[$datos_embalses[$row]["region"]],  $datos_embalses[$row]["nombre_embalse"], $datos_embalses[$row]["id_embalse"], $abastecimiento, $icono];
+    if (!in_array($datos_embalses[$row]["id_embalse"], $array_excluidos)) {
         array_push($embalse_abast, $array);
+    } else {
+        array_push($excluidos_reg, $array);
     }
 
     $row++;
@@ -559,21 +562,65 @@ while ($row < count($datos_embalses)) {
         }
     });
 
-    var i_rojo = new PointIcon({
-        iconUrl: '../../assets/icons/i-rojo.png'
+    var i_rojo = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 10px; height: 10px; background-color: #73B2FF; border-radius: 50%;"></div>',
+        iconSize: [10, 10], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var i_azulclaro = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 10px; height: 10px; background-color: #00FFC5; border-radius: 50%;"></div>',
+        iconSize: [10, 10], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var i_azul = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 10px; height: 10px; background-color: #00A889; border-radius: 50%;"></div>',
+        iconSize: [10, 10], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var i_verde = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 10px; height: 10px; background-color: #0070FF; border-radius: 50%;"></div>',
+        iconSize: [10, 10], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+    var i_verdeclaro = L.divIcon({
+        className: '', // Evitar estilos predeterminados
+        html: '<div style="width: 10px; height: 10px; background-color: #002673; border-radius: 50%;"></div>',
+        iconSize: [10, 10], // Tamaño del ícono (coincide con el tamaño del div)
+    });
+
+    var i_rojo_triangulo = new PointIcon({
+        iconUrl: '../../assets/icons/i-rojo-triangulo.png'
     })
-    var i_azulclaro = new PointIcon({
-        iconUrl: '../../assets/icons/i-azulclaro.png'
+    var i_azulclaro_triangulo = new PointIcon({
+        iconUrl: '../../assets/icons/i-azulclaro-triangulo.png'
     })
-    var i_azul = new PointIcon({
-        iconUrl: '../../assets/icons/i-azul.png'
+    var i_azul_triangulo = new PointIcon({
+        iconUrl: '../../assets/icons/i-azul-triangulo.png'
     })
-    var i_verde = new PointIcon({
-        iconUrl: '../../assets/icons/i-verde.png'
+    var i_verde_triangulo = new PointIcon({
+        iconUrl: '../../assets/icons/i-verde-triangulo.png'
     })
-    var i_verdeclaro = new PointIcon({
-        iconUrl: '../../assets/icons/i-verdeclaro.png'
+    var i_verdeclaro_triangulo = new PointIcon({
+        iconUrl: '../../assets/icons/i-verdeclaro-triangulo.png'
     })
+    var compensacion = new PointIconLarge({
+        iconUrl: '../../assets/icons/i-verde-triangulo.png'
+    })
+    // var i_rojo = new PointIcon({
+    //     iconUrl: '../../assets/icons/i-rojo.png'
+    // })
+    // var i_azulclaro = new PointIcon({
+    //     iconUrl: '../../assets/icons/i-azulclaro.png'
+    // })
+    // var i_azul = new PointIcon({
+    //     iconUrl: '../../assets/icons/i-azul.png'
+    // })
+    // var i_verde = new PointIcon({
+    //     iconUrl: '../../assets/icons/i-verde.png'
+    // })
+    // var i_verdeclaro = new PointIcon({
+    //     iconUrl: '../../assets/icons/i-verdeclaro.png'
+    // })
     var f_arriba = new ArrowIcon({
         iconUrl: '../../assets/icons/f-arriba.png'
     })
@@ -708,7 +755,11 @@ while ($row < count($datos_embalses)) {
             ubicacion = geoToUtm(<?php echo $emb[0] . "," . $emb[1] . "," . $emb[2] ?>)
 
             var marker = L.marker([ubicacion[0], ubicacion[1]], {
-                icon: <?php echo $emb[4] ?>
+                icon: <?php if (in_array($emb[6], $array_excluidos)) {
+                            echo $emb[4] . "_triangulo";
+                        } else {
+                            echo $emb[4];
+                        } ?>
             }).addTo(mapa_portada).bindPopup('<div class="markleaflet mark-<?php echo $posicion ?>"><b><?php echo $emb[5] ?></b></div>', {
                 autoClose: false,
                 closeOnClick: false
@@ -1045,6 +1096,10 @@ while ($row < count($datos_embalses)) {
         $filter_array = array_filter($embalse_abast, function ($k) use ($region) {
             return $k[3] == $region;
         });
+        $filter_excluidos = array_filter($excluidos_reg, function ($k) use ($region) {
+            return $k[3] == $region;
+        });
+        $filter_array = array_merge($filter_array, $filter_excluidos);
 
         foreach ($filter_array as $emb) {
             if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
@@ -1058,7 +1113,11 @@ while ($row < count($datos_embalses)) {
                 marker_embalses.push(ubicacion);
 
                 var marker = L.marker([ubicacion[0], ubicacion[1]], {
-                    icon: <?php echo $emb[7] ?>
+                    icon: <?php if (in_array($emb[5], $array_excluidos)) {
+                                echo "compensacion";
+                            } else {
+                                echo $emb[7];
+                            } ?>
                 }).addTo(map).bindPopup('<div class="markleaflet mark-<?php echo $posicion . "-large" ?>"><b><?php echo $emb[4] ?></b></div>', {
                     autoClose: false,
                     closeOnClick: false

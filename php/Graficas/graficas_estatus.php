@@ -65,10 +65,11 @@ $fechaFormateada2 = $fechaActual->format('Y-m-d');
 
 $valores = $_GET["valores"];
 
-$array_excluidos = 0;
+$array_excluidos = [];
 $embalses_excluidos = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'consumo_humano';");
 if (mysqli_num_rows($embalses_excluidos) > 0) {
-    $array_excluidos = mysqli_fetch_assoc($embalses_excluidos)['configuracion'];
+    $string_excluidos = mysqli_fetch_assoc($embalses_excluidos)['configuracion'];
+    $array_excluidos = explode(",", $string_excluidos);
 }
 
 $queryInameh = mysqli_query($conn, "SELECT nombre_config, configuracion FROM configuraciones WHERE nombre_config = 'fecha_sequia' OR nombre_config = 'fecha_lluvia' ORDER BY id_config ASC;");
@@ -96,7 +97,7 @@ if ($count >= 1) {
       GROUP BY id_embalse 
       ORDER BY id_embalse ASC;");
 
-   $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
+    $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
     FROM datos_embalse h 
     WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha1' AND h.estatus = 'activo' AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha1' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
@@ -104,7 +105,7 @@ if ($count >= 1) {
     WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
     GROUP BY id_embalse;");
 
-$condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
+    $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
     FROM datos_embalse h 
     WHERE h.id_embalse = e.id_embalse AND h.fecha = MAX(d.fecha) AND d.fecha <= '$fecha2' AND h.estatus = 'activo' AND h.hora = (SELECT MAX(hora) FROM datos_embalse WHERE fecha = MAX(d.fecha) AND estatus = 'activo' AND fecha <= '$fecha2' AND id_embalse = d.id_embalse) LIMIT 1) AS cota_actual 
     FROM embalses e
@@ -174,29 +175,33 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_
             };
 
             //cuenta de dias//
-            if ($datos_embalses[$j]['extraccion'] != NULL) {
-                $dat = $datos_embalses[$j]['extraccion'] != 0 ? $datos_embalses[$j]['extraccion'] : 1;
-                if ($dat == 1) {
-                    $suma_extracciones[] = 0;
-                } else {
-                    if (array_key_exists($datos_embalses[$j]["id_embalse"], $evaporacionFiltracion)) {
-                        $evaporacio = $evaporacionFiltracion[$datos_embalses[$j]["id_embalse"]]["evaporacion"];
-                        $filtracion = $evaporacionFiltracion[$datos_embalses[$j]["id_embalse"]]["filtracion"];
-                        $suma_extracciones[] = $bati->abastecimiento($datos_embalses[$j]["extraccion"], $evaporacio, $filtracion);
+            if (!in_array($datos_embalses[$j]["id_embalse"], $array_excluidos)) {
+                if ($datos_embalses[$j]['extraccion'] != NULL) {
+                    $dat = $datos_embalses[$j]['extraccion'] != 0 ? $datos_embalses[$j]['extraccion'] : 1;
+                    if ($dat == 1) {
+                        $suma_extracciones[] = 0;
                     } else {
-                        $suma_extracciones[] = $bati->abastecimiento($datos_embalses[$j]["extraccion"]);
+                        if (array_key_exists($datos_embalses[$j]["id_embalse"], $evaporacionFiltracion)) {
+                            $evaporacio = $evaporacionFiltracion[$datos_embalses[$j]["id_embalse"]]["evaporacion"];
+                            $filtracion = $evaporacionFiltracion[$datos_embalses[$j]["id_embalse"]]["filtracion"];
+                            $suma_extracciones[] = $bati->abastecimiento($datos_embalses[$j]["extraccion"], $evaporacio, $filtracion);
+                        } else {
+                            $suma_extracciones[] = $bati->abastecimiento($datos_embalses[$j]["extraccion"]);
+                        }
+                        // $suma_extracciones[] = round(($bati->volumenActualDisponible() * 1000 / (($dat + $evaporacion + $filtracion))) / 30);
                     }
-                    // $suma_extracciones[] = round(($bati->volumenActualDisponible() * 1000 / (($dat + $evaporacion + $filtracion))) / 30);
+                } else {
+                    $suma_extracciones[] = 0;
                 }
-            } else {
-                $suma_extracciones[] = 0;
             }
             //----//
 
         } else {
 
             $lista[0]++;
-            $suma_extracciones[] = 0;
+            if (!in_array($datos_embalses[$j]["id_embalse"], $array_excluidos)) {
+                $suma_extracciones[] = 0;
+            }
         };
 
 
@@ -245,7 +250,7 @@ $condiciones_actuales2 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_
 
     <head>
         <meta charset="UTF-8">
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/png" href="../../assets/img/logos/cropped-mminaguas.webp">
         <script src="../../assets/js/Chart.js"></script>
