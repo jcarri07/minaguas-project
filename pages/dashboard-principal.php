@@ -761,7 +761,7 @@ closeConection($conn);*/
         },
         error: function(response) {
 
-          alertify.error("Error inesperado.");
+          console.log(response);
 
         }
       });
