@@ -259,6 +259,7 @@ if ($count >= 1) {
 
                 // Añadir el punto de datos
                 $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $datos[$j] . " }";
+                $dataPointsM[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $array[$j] . " }";
                 // } else {
                 //     // Caso de cota_actual nulo
                 //     $backgroundColors[] = "'#fd0200'"; // color por defecto (rojo)
@@ -302,6 +303,18 @@ if ($count >= 1) {
                         borderWidth: 1,
                         categoryPercentage: 1,
                         barPercentage: 0.9
+                    },{
+                        backgroundColor:['#e1e1e1'],
+
+                        data: [
+                            <?php
+                            // Convertir puntos de datos en una cadena separada por comas
+                            echo implode(", ", $dataPointsM);
+                            ?>
+                        ],
+                        borderWidth: 1,
+                        categoryPercentage: 1,
+                        barPercentage: 0.9
                     }, ],
 
                 },
@@ -326,7 +339,11 @@ if ($count >= 1) {
                                     const label = context.dataset.label || '';
                                     const value = context.raw;
                                     const labelName = context.label; // Muestra el nombre de la etiqueta única
+                                    if(context.datasetIndex == 0){
                                     return labelName + ': ' + (Math.round(value.x * 100) / 100).toLocaleString("de-DE");
+                                    }else{
+                                        return 'Capacidad Maxima: ' + (Math.round(value.x * 100) / 100).toLocaleString("de-DE"); 
+                                    }
                                 }
                             }
                         }, //Aqui van los cambios de minaguas nuevos
@@ -357,7 +374,15 @@ if ($count >= 1) {
                             anchor: 'end',
                             align: 'end',
                             formatter: function(value, context) {
-                                return (Math.round(value.x * 100) / 100).toLocaleString("de-DE");
+                                if(context.datasetIndex == 0){
+                                    
+                                    return (Math.round(value.x * 100) / 100).toLocaleString("de-DE");
+
+                                }else{
+                                    return "";
+                                }
+                                //console.log(context.datasetIndex);
+                                
                             },
                             labels: {
                                 title: {
@@ -411,7 +436,7 @@ if ($count >= 1) {
                         },
                         y: {
 
-
+                            stacked: true,
                             border: {
                                 display: false,
                             },
