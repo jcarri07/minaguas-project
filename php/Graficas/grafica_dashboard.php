@@ -33,7 +33,7 @@ $fecha_anio = $fechaActual->format('Y-m-d');
 // $fecha1 = $fechas[0]['configuracion'];
 // $fecha2 = $fechas[1]['configuracion'];
 //$anio = date('Y', strtotime($fecha1));
-$r = mysqli_query($conn, "SELECT id_embalse, nombre_embalse FROM embalses WHERE estatus = 'activo'ORDER BY nombre_embalse ASC;");
+$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo'ORDER BY nombre_embalse ASC;");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
