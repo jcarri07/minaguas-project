@@ -74,7 +74,9 @@ closeConection($conn);
                       </div-->
               <div class="row ">
                 <div class="mb-3 col-6">
-                  <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" autocomplete="new-password" name="password" required>
+                  <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" autocomplete="new-password" name="password" pattern="(?=.*[A-Z].*[A-Z])(?=.*[a-z].*[a-z])(?=.*[0-9].*[0-9])(?=.*[\W_].*[\W_]).{8,14}"
+                    title="La contraseña debe tener exactamente 14 caracteres con al menos 2 mayúsculas, 2 minúsculas, 2 caracteres especiales y 2 números."
+                    required>
                 </div>
                 <div class="mb-3 col-6">
                   <input type="password" class="form-control" placeholder="Repetir Contraseña" aria-label="confirmar" name="confirmar" required>
@@ -160,7 +162,8 @@ closeConection($conn);
 
               <div class="mb-2">
                 <label>Contraseña</label>
-                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" value="">
+                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" name="Epassword" value="" pattern="(?=.*[A-Z].*[A-Z])(?=.*[a-z].*[a-z])(?=.*[0-9].*[0-9])(?=.*[\W_].*[\W_]).{8,14}"
+                  title="La contraseña debe tener exactamente 14 caracteres con al menos 2 mayúsculas, 2 minúsculas, 2 caracteres especiales y 2 números.">
               </div>
 
               <?php if ($_SESSION["Tipo"] == "SuperAdmin") { ?>
@@ -647,7 +650,7 @@ closeConection($conn);
       if (this.validity.valueMissing) {
         this.setCustomValidity('Por favor, introduce una contraseña.');
       } else if (this.validity.typeMismatch) {
-        this.setCustomValidity('Por favor, introduce un correo electrónico válido. (Ej: ejemplo@ejemplo.com)');
+        this.setCustomValidity('Error: La contraseña debe tener exactamente 14 caracteres e incluir al menos 2 mayúsculas, 2 minúsculas, 2 caracteres especiales y 2 números.');
       } else {
         this.setCustomValidity('');
       }
@@ -804,72 +807,74 @@ closeConection($conn);
     $("[name='Etelefono']").change(permitirSoloNumeros("Etelefono"));
     $("[name='telefono']").change(permitirSoloNumeros("telefono"));
 
-    $("[name='Enombres']").on('invalid', function () {
-    if (this.validity.valueMissing) {
-      this.setCustomValidity('Por favor, introduce un Nombre de usuario.');
-    } else if (this.validity.tooShort) {
-      this.setCustomValidity('El nombre de usuario debe tener al menos 5 caracteres.');
-    } else {
+    $("[name='Enombres']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce un Nombre de usuario.');
+      } else if (this.validity.tooShort) {
+        this.setCustomValidity('El nombre de usuario debe tener al menos 5 caracteres.');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
       this.setCustomValidity('');
-    }
-  }).on('input', function () {
-    this.setCustomValidity('');
-  });
-  $("[name='Eapellidos']").on('invalid', function () {
-    if (this.validity.valueMissing) {
-      this.setCustomValidity('Por favor, introduce un Apellido de usuario.');
-    } else if (this.validity.tooShort) {
-      this.setCustomValidity('El nombre de usuario debe tener al menos 5 caracteres.');
-    } else {
+    });
+    $("[name='Eapellidos']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce un Apellido de usuario.');
+      } else if (this.validity.tooShort) {
+        this.setCustomValidity('El nombre de usuario debe tener al menos 5 caracteres.');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
       this.setCustomValidity('');
-    }
-  }).on('input', function () {
-    this.setCustomValidity('');
-  });
+    });
 
-  // Validar "Correo electrónico"
-  $("[name='Eemail']").on('invalid', function () {
-    if (this.validity.valueMissing) {
-      this.setCustomValidity('Por favor, introduce tu correo electrónico.');
-    } else if (this.validity.typeMismatch) {
-      this.setCustomValidity('Por favor, introduce un correo electrónico válido. (Ej: ejemplo@ejemplo.com)');
-    } else {
+    // Validar "Correo electrónico"
+    $("[name='Eemail']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce tu correo electrónico.');
+      } else if (this.validity.typeMismatch) {
+        this.setCustomValidity('Por favor, introduce un correo electrónico válido. (Ej: ejemplo@ejemplo.com)');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
       this.setCustomValidity('');
-    }
-  }).on('input', function () {
-    this.setCustomValidity('');
-  });
-  $("[name='Ecedula']").on('invalid', function () {
-    if (this.validity.valueMissing) {
-      this.setCustomValidity('Por favor, introduce la cedula.');
-    } else if (this.validity.typeMismatch) {
-      this.setCustomValidity('Por favor, introduce una cedula con formato válido entre 5 y 8 caracteres.');
-    } else {
+    });
+    $("[name='Ecedula']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce la cedula.');
+      } else if (this.validity.typeMismatch) {
+        this.setCustomValidity('Por favor, introduce una cedula con formato válido entre 5 y 8 caracteres.');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
       this.setCustomValidity('');
-    }
-  }).on('input', function () {
-    this.setCustomValidity('');
-  });
-  $("[name='Etelefono']").on('invalid', function () {
-    if (this.validity.valueMissing) {
-      this.setCustomValidity('Por favor, introduce un numero de telefono.');
-    } else if (this.validity.typeMismatch) {
-      this.setCustomValidity('Por favor, introduce un numero de telefono válido de 11 caracteres. (Ej: 04121234567)');
-    } else {
+    });
+    $("[name='Etelefono']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce un numero de telefono.');
+      } else if (this.validity.typeMismatch) {
+        this.setCustomValidity('Por favor, introduce un numero de telefono válido de 11 caracteres. (Ej: 04121234567)');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
       this.setCustomValidity('');
-    }
-  }).on('input', function () {
-    this.setCustomValidity('');
-  });
-  $("[name='Epassword']").on('invalid', function () {
-    if (this.validity.valueMissing) {
-      this.setCustomValidity('Por favor, introduce una contraseña.');
-    } else {
+    });
+    $("[name='Epassword']").on('invalid', function() {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Por favor, introduce una contraseña.');
+      } else if (this.validity.typeMismatch) {
+        this.setCustomValidity('Error: La contraseña debe tener exactamente 14 caracteres e incluir al menos 2 mayúsculas, 2 minúsculas, 2 caracteres especiales y 2 números.');
+      } else {
+        this.setCustomValidity('');
+      }
+    }).on('input', function() {
       this.setCustomValidity('');
-    }
-  }).on('input', function () {
-    this.setCustomValidity('');
-  });
+    });
 
     $("#form2").submit(function(e) {
       e.preventDefault();
