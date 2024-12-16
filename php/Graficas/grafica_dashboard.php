@@ -230,8 +230,12 @@ if ($count >= 1) {
                 //$div = ($nor - $min) > 0 ? ($nor - $min) : 1;
                 if ($array[$j] > 0) {
                     $percentage = (abs($datos[$j]) * (100 / $array[$j]));
+                    // Añadir etiqueta
+                    $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs($datos[$j]) * (100 / $array[$j])), 0) . "%)'";
                 } else {
                     $percentage = 0;
+                    // Añadir etiqueta
+                    $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (0%)'";
                 }
 
                 // Determinar el color basado en el porcentaje
@@ -251,8 +255,7 @@ if ($count >= 1) {
                     $backgroundColors[] = "'#55fe01'"; // color extra (verde claro)
                 }
 
-                // Añadir etiqueta
-                $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs($datos[$j]) * (100 / $array[$j])), 0) . "%)'";
+
 
                 // Añadir el punto de datos
                 $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $datos[$j] . " }";
