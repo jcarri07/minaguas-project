@@ -342,7 +342,7 @@ if ($count >= 1) {
                                     if(context.datasetIndex == 0){
                                     return labelName + ': ' + (Math.round(value.x * 100) / 100).toLocaleString("de-DE");
                                     }else{
-                                        return 'Capacidad Maxima: ' + (Math.round(value.x * 100) / 100).toLocaleString("de-DE"); 
+                                        return 'Capacidad Total: ' + (Math.round(value.x * 100) / 100).toLocaleString("de-DE"); 
                                     }
                                 }
                             }
