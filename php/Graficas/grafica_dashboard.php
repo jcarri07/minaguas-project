@@ -117,7 +117,7 @@ if ($count >= 1) {
     <script>
         $("#cont").html('<canvas id="chart"></canvas>');
 
-        $(document).ready(function() {
+        
             arbi = {
                 id: 'arbitra',
                 dr: function(lines, ctx, left, right, y) {
@@ -533,7 +533,7 @@ if ($count >= 1) {
                 },
                 plugins: [ChartDataLabels],
             });
-        });
+        
     </script>
 <?php };
 closeConection($conn); ?>
