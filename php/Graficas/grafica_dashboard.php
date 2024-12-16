@@ -117,7 +117,7 @@ if ($count >= 1) {
     <script>
         $("#cont").html('<canvas id="chart"></canvas>');
 
-        
+        $(document).ready(function() {
             arbi = {
                 id: 'arbitra',
                 dr: function(lines, ctx, left, right, y) {
@@ -162,114 +162,7 @@ if ($count >= 1) {
                     // Resto del código del plugin
                 }
             };
-            let cha1 = new Chart(barra1, {
-                type: 'bar',
-                title: 'grafica',
 
-                data: {
-
-                    datasets: [
-                        <?php
-
-                        echo '{
-                            
-                            label:"Volumen Util Actual(VTD)",
-                            data:{Volumen:' . round($volumen_fechas[1], 2) . '},';
-                        echo "backgroundColor:'#2e75b6',
-                        borderColor:'#2e75b6',
-                        borderWidth:2},";
-                        echo '{
-                            
-                            label:"Volumen Util Total(VUT)",
-                            data:{Volumen:' . round($volumen_fechas[0], 2) . '},';
-
-                        echo "backgroundColor:'#9fe3a3',
-                        borderColor:'#2e75b6',
-                        borderWidth:2}";
-                        ?>
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-
-                    interaction: {
-                        intersect: true,
-                        axis: 'x',
-                    },
-                    layout: {
-                        padding: 10,
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            display: false,
-                            labels: {
-
-                                // This more specific font property overrides the global property
-                                font: {
-
-                                    size: 12,
-                                },
-                            }
-                        },
-                        title: {
-                            display: false,
-                            text: 'Embalse',
-                            fullSize: true,
-                            font: {
-                                size: 20
-                            }
-                        },
-                        arbitra: {
-                            lines: [{
-                                yvalue: <?php echo round($volumen_fechas[1], 2) ?>,
-                                cota: "",
-                                color: 'black',
-                                h: -5,
-                            }, ]
-                        },
-                    },
-                    scales: {
-                        x: {
-                            stacked: true,
-                            labels: ["Volumen"],
-                            ticks: {
-                                display: true,
-                                font: {
-
-                                    size: 16,
-                                    family: 'Arial',
-                                },
-                            },
-                        },
-                        y: {
-                            stacked: false,
-                            title: {
-                                display: true,
-                                text: 'Volumen (Hm³)',
-                                font: {
-
-                                    size: 14,
-                                    family: 'Arial',
-                                    weight: 'bold',
-                                },
-
-                            },
-                            ticks: {
-                                font: {
-                                    size: 12,
-                                    family: 'Arial',
-                                },
-                                callback: function(valor, index, valores) {
-                                    return valor.toLocaleString("de-DE");
-                                },
-                            },
-                        },
-                    },
-                },
-                plugins: [arbi],
-            });
             $("#contenedor-2").html('<?php
                                         $valor = $volumen_fechas[2] != 0 ? 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[2]) : 0;
                                         $valorFormat = number_format(($valor), 2, ",", ".");
@@ -310,13 +203,13 @@ if ($count >= 1) {
             // $x = $bati->volumenActualDisponible();
             //$x = $bati->getByCota($anio, $datos_embalses[1]["cota_actual"])[1];
             // echo "console.log('volúmen:" . $x . ",cota:" . $datos_embalses[1]["cota_actual"] . "');";
-            
+
             $j = 0;
             $sum = [];
             $backgroundColors = [];
             $labels = [];
             $dataPoints = [];
-            
+
             while ($j < count($datos_embalses)) {
 
                 // $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
@@ -533,7 +426,115 @@ if ($count >= 1) {
                 },
                 plugins: [ChartDataLabels],
             });
-        
+            let cha1 = new Chart(barra1, {
+                type: 'bar',
+                title: 'grafica',
+
+                data: {
+
+                    datasets: [
+                        <?php
+
+                        echo '{
+                            
+                            label:"Volumen Util Actual(VTD)",
+                            data:{Volumen:' . round($volumen_fechas[1], 2) . '},';
+                        echo "backgroundColor:'#2e75b6',
+                        borderColor:'#2e75b6',
+                        borderWidth:2},";
+                        echo '{
+                            
+                            label:"Volumen Util Total(VUT)",
+                            data:{Volumen:' . round($volumen_fechas[0], 2) . '},';
+
+                        echo "backgroundColor:'#9fe3a3',
+                        borderColor:'#2e75b6',
+                        borderWidth:2}";
+                        ?>
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    interaction: {
+                        intersect: true,
+                        axis: 'x',
+                    },
+                    layout: {
+                        padding: 10,
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            display: false,
+                            labels: {
+
+                                // This more specific font property overrides the global property
+                                font: {
+
+                                    size: 12,
+                                },
+                            }
+                        },
+                        title: {
+                            display: false,
+                            text: 'Embalse',
+                            fullSize: true,
+                            font: {
+                                size: 20
+                            }
+                        },
+                        arbitra: {
+                            lines: [{
+                                yvalue: <?php echo round($volumen_fechas[1], 2) ?>,
+                                cota: "",
+                                color: 'black',
+                                h: -5,
+                            }, ]
+                        },
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            labels: ["Volumen"],
+                            ticks: {
+                                display: true,
+                                font: {
+
+                                    size: 16,
+                                    family: 'Arial',
+                                },
+                            },
+                        },
+                        y: {
+                            stacked: false,
+                            title: {
+                                display: true,
+                                text: 'Volumen (Hm³)',
+                                font: {
+
+                                    size: 14,
+                                    family: 'Arial',
+                                    weight: 'bold',
+                                },
+
+                            },
+                            ticks: {
+                                font: {
+                                    size: 12,
+                                    family: 'Arial',
+                                },
+                                callback: function(valor, index, valores) {
+                                    return valor.toLocaleString("de-DE");
+                                },
+                            },
+                        },
+                    },
+                },
+                plugins: [arbi],
+            });
+        });
     </script>
 <?php };
 closeConection($conn); ?>
