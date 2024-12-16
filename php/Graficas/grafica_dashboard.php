@@ -5,6 +5,7 @@
 <?php
 require_once '../Conexion.php';
 require_once '../batimetria.php';
+ini_set('max_execution_time', 400);
 $volumen_fechas = array(
     "0" => 0,
     "1" => 0,
@@ -304,16 +305,12 @@ if ($count >= 1) {
 
                                         ?>');
 
-
             <?php //$bati = new Batimetria($datos_embalses[1]["id_embalse"], $conn);
             // $batimetria = $bati->getBatimetria();
             // $x = $bati->volumenActualDisponible();
             //$x = $bati->getByCota($anio, $datos_embalses[1]["cota_actual"])[1];
             // echo "console.log('volúmen:" . $x . ",cota:" . $datos_embalses[1]["cota_actual"] . "');";
-            ?>
-
-            <?php
-
+            
             $j = 0;
             $sum = [];
             $backgroundColors = [];
