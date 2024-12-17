@@ -20,7 +20,7 @@ $periodo = $_POST['periodo'];
 $y = $anio;
 $ver = $_POST['ver'];
 
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
+$r = mysqli_query($conn, "SELECT cota_min,cota_nor,cota_max FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
@@ -76,6 +76,7 @@ ORDER BY d.fecha ASC;";
                             ctx.textBaseline = 'bottom';
                             ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
                             ctx.fillStyle = 'blue';
+                            total = dataset.data[dataset.data.length - 1].y;
                             tot = parseFloat(total);
                             formateado = new Intl.NumberFormat('de-DE', {
                                 minimumFractionDigits: 2,

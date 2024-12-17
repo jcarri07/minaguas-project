@@ -34,7 +34,7 @@ $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
+$r = mysqli_query($conn, "SELECT id_embalse FROM embalses WHERE estatus = 'activo';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
@@ -187,10 +187,10 @@ if ($count >= 1) {
                         animations: true,
                         responsive: true,
                         maintainAspectRatio: false,
-                        interaction: {
-                            intersect: false,
-                            axis: 'y',
-                        },
+                        // interaction: {
+                        //     intersect: false,
+                        //     axis: 'y',
+                        // },
                         layout: {
                             padding: {
                                 top: 25,

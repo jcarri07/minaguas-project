@@ -19,14 +19,15 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
     <div class=col-md-3></div>
     <div class="card col-md-6">
       <div class="card-header pb-0">
+      <form id="form" role="form">
         <div class="d-flex">
           <h4 class="mb-0 mt-1">EDITAR PERFIL</h4>
-          <button type="button" id="edit" class="btn btn-primary btn-sm ms-auto">Guardar</button>
+          <button type="submit" id="edit" class="btn btn-primary btn-sm ms-auto">Guardar</button>
 
         </div>
         <div class="card-body">
           <p class="text-uppercase text-sm">Información de Usuario</p>
-          <form id="form" role="form">
+          
             <div class="mb-3">
               <label>Nombre(s)</label>
               <input type="text" class="form-control" placeholder="Nombres" aria-label="nombres" name="nombres" value="<?php echo $_SESSION["P_Nombre"] . ' ' . $_SESSION["S_Nombre"] ?>" required <?php echo $aux; ?>>
@@ -58,11 +59,11 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
             <div id="con" class="row">
               <div class="mb-3 col-6">
                 <label>Nueva Contraseña</label>
-                <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="Password" name="confirmar" Value="" required>
+                <input type="password" class="form-control" placeholder="Nueva Contraseña" aria-label="Password" name="password" Value="" pattern="(?=.*[A-Z].*[A-Z])(?=.*[a-z].*[a-z])(?=.*[0-9].*[0-9])(?=.*[\W_].*[\W_]).{8,14}" title="La contraseña debe tener exactamente 14 caracteres con al menos 2 mayúsculas, 2 minúsculas, 2 caracteres especiales y 2 números." required>
               </div>
               <div class="mb-3 col-6">
                 <label>Confirmar Contraseña</label>
-                <input type="password" class="form-control" placeholder="Confirmar Contraseña" aria-label="confirmar" name="password" Value="" required>
+                <input type="password" class="form-control" placeholder="Confirmar Contraseña" aria-label="confirmar" name="confirmar" Value="" required>
               </div>
 
             </div>
@@ -174,8 +175,8 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
   <script>
     $(Document).ready(function() {
 
-      $("#edit").click(function() {
-
+      $("#form").submit(function(e) {
+        e.preventDefault();
 
         var values = new FormData();
 
@@ -296,5 +297,24 @@ if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
       };
       $("[name='cedula']").change(permitirSoloNumeros("cedula"));
       $("[name='telefono']").change(permitirSoloNumeros("telefono"));
+      $("[name='password']").on('invalid', function() {
+        if (this.validity.valueMissing) {
+          this.setCustomValidity('Por favor, introduce una contraseña.');
+        } else if (this.validity.typeMismatch) {
+          this.setCustomValidity('Error: La contraseña debe tener exactamente 14 caracteres e incluir al menos 2 mayúsculas, 2 minúsculas, 2 caracteres especiales y 2 números.');
+        } else {
+          this.setCustomValidity('');
+        }
+      }).on('input', function() {
+        this.setCustomValidity('');
+      });
+      $("[name='confirmar']").on('input', function() {
+        const password = $("[name='password']").val();
+        if ($(this).val() !== password) {
+          this.setCustomValidity('Las contraseñas no coinciden.');
+        } else {
+          this.setCustomValidity('');
+        }
+      });
     });
   </script>

@@ -6,7 +6,7 @@
 ] -->
 
 <?php
-include '../minaguas-project/php/Conexion.php';
+include './php/Conexion.php';
 
 
 $positions = [
@@ -100,7 +100,7 @@ $positions_estatus = [
     25 => "r",
     26 => "tr",
     27 => "r",
-    28 => "tl",
+    28 => "tr",
     29 => "r",
     30 => "r",
     31 => "l",
@@ -126,7 +126,7 @@ $positions_estatus = [
     51 => "l",
     52 => "tr",
     53 => "b",
-    54 => "t",
+    54 => "tr",
     55 => "tl",
     56 => "t",
     57 => "t",
@@ -138,8 +138,8 @@ $positions_estatus = [
     64 => "b",
     65 => "r",
     66 => "br",
-    68 => "t",
-    69 => "t",
+    68 => "tl",
+    69 => "b",
     70 => "t",
 ];
 

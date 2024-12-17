@@ -35,14 +35,33 @@ $cantidades_p = [0, 0, 0, 0, 0];
 $condiciones = [];
 $row = 0;
 
+$evaporacionFiltracion = [];
+$queryEvaporacionFiltracion = mysqli_query($conn, "SELECT * FROM configuraciones WHERE nombre_config = 'evap_filt';");
+if (mysqli_num_rows($queryEvaporacionFiltracion) > 0) {
+    $evaporacionFiltracion = json_decode(mysqli_fetch_assoc($queryEvaporacionFiltracion)['configuracion'], true);
+}
+
 while ($row < count($datos_embalses)) {
     $array = array($datos_embalses[$row]["norte"], $datos_embalses[$row]["este"], $datos_embalses[$row]["huso"]);
 
     $emb = new Batimetria($datos_embalses[$row]["id_embalse"], $conn);
 
     $abastecimiento = 0;
+    // if ($datos_embalses[$row]["extraccion"] > 0) {
+    //     $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
+    // }
     if ($datos_embalses[$row]["extraccion"] > 0) {
-        $abastecimiento = (($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30;
+        if (array_key_exists($datos_embalses[$row]["id_embalse"], $evaporacionFiltracion)) {
+            $evaporacio = $evaporacionFiltracion[$datos_embalses[$row]["id_embalse"]]["evaporacion"];
+            $filtracion = $evaporacionFiltracion[$datos_embalses[$row]["id_embalse"]]["filtracion"];
+            $abastecimiento = $emb->abastecimiento($datos_embalses[$row]["extraccion"], $evaporacio, $filtracion);
+        } else {
+            $abastecimiento = $emb->abastecimiento($datos_embalses[$row]["extraccion"]);
+        }
+        // $abastecimiento = round((($emb->volumenActualDisponible() * 1000) / $datos_embalses[$row]["extraccion"]) / 30);
+    }
+    if ($datos_embalses[$row]["extraccion"] == NULL) {
+        $abastecimiento = 0;
     }
 
     array_push($array, $datos_embalses[$row]["nombre_embalse"]);
@@ -54,16 +73,16 @@ while ($row < count($datos_embalses)) {
 
     // Dependiendo del porcentaje, se asigna su icono, y se cuenta para su categoria.
     // $abastecimiento = intval($abastecimiento);
-    if (intval($abastecimiento) < 5) {
+    if ($abastecimiento <= 4) {
         $icono .= "rojo_";
     }
-    if (intval($abastecimiento) > 4 && intval($abastecimiento) < 9) {
+    if ($abastecimiento > 4 && $abastecimiento <= 8) {
         $icono .= "naranja_";
     }
-    if (intval($abastecimiento) > 8 && intval($abastecimiento) < 13) {
+    if ($abastecimiento > 8 && $abastecimiento <= 12) {
         $icono .= "amarillo_";
     }
-    if (intval($abastecimiento) > 12) {
+    if ($abastecimiento > 12) {
         $icono .= "verde_";
     }
 
@@ -397,7 +416,7 @@ while ($row < count($datos_embalses)) {
     foreach ($embalses_abast as $emb) {
         if ($emb[0] != "" && $emb[1] != "" && $emb[2] != "") {
             $posicion = "t";
-            if ($positions_markers[$emb[6]]) {
+            if (array_key_exists($emb[6], $positions_markers)) {
                 $posicion = $positions_markers[$emb[6]];
             }
     ?>

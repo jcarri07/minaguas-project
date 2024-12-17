@@ -174,7 +174,7 @@ $res = mysqli_query($conn, "SELECT fecha,DAYOFWEEK(fecha) AS dia,(SELECT MAX(cot
                             GROUP BY fecha 
                             ORDER BY fecha;");
 
-$emb = mysqli_query($conn, "SELECT * FROM embalses WHERE id_embalse = '$id' AND estatus = 'activo';");
+$emb = mysqli_query($conn, "SELECT id_embalse,cota_min,cota_nor,cota_max FROM embalses WHERE id_embalse = '$id' AND estatus = 'activo';");
 
 $an = mysqli_query($conn, "SELECT * FROM datos_embalse WHERE estatus = 'activo' AND YEAR(fecha) = '$anio' AND id_embalse = '$id' AND cota_actual <> 0 GROUP BY fecha ORDER BY fecha ASC;");
 

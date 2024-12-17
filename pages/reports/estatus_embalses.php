@@ -327,7 +327,7 @@ while ($row < count($datos_embalses)) {
       }
     }
 
-    $array = [$totalreg[$datos_embalses[$row]["region"]], $totalop[$datos_embalses[$row]["operador"]], $datos_embalses[$row]["nombre_embalse"], $abastecimiento];
+    $array = [$totalreg[$datos_embalses[$row]["region"]], $totalop[$datos_embalses[$row]["operador"]], $datos_embalses[$row]["nombre_embalse"], $abastecimiento, descripcion($abastecimiento)[1]];
     array_push($embalse_abast, $array);
   }
   // CALCULO DE CONDICION ACTUAL!!
@@ -751,31 +751,31 @@ $ruta_mapas = "../../assets/img/temp/";
     <h5 style="text-align:center; letter-spacing: 5px; width: 100%;">LEYENDA</h5>
     <p style="position: absolute; top: 20px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-    <div style="position: absolute; left: 20px; top: 2px; background-color: red;
+    <div style="position: absolute; left: 20px; top: 2px; background-color: #73B2FF;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición baja (< 30%) <b> <?php echo $valores[0][0] ?> Embalses</b></p>
 
 
       <p style="position: absolute; top: 40px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-      <div style="position: absolute; left: 20px; top: 2px; background-color: #44BEF0;
+      <div style="position: absolute; left: 20px; top: 2px; background-color: #00FFC5;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Bajo (30% < A> 60%) <b> <?php echo $valores[0][1] ?> Embalses</b></p>
 
 
         <p style="position: absolute; top: 60px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-        <div style="position: absolute; left: 20px; top: 2px; background-color: blue;
+        <div style="position: absolute; left: 20px; top: 2px; background-color: #00A889;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición Normal Alto (60% < A> 90%) <b> <?php echo $valores[0][2] ?> Embalses</b></p>
 
 
           <p style="position: absolute; top: 80px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-          <div style="position: absolute; left: 20px; top: 2px; background-color: green;
+          <div style="position: absolute; left: 20px; top: 2px; background-color: #0070FF;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición Buena (> 90%) <b> <?php echo $valores[0][3] ?> Embalses</b></p>
 
 
           <p style="position: absolute; top: 100px;
         text-align: left; padding-left: 40px; font-size: 12px;">
-          <div style="position: absolute; left: 20px; top: 2px; background-color: #58F558;
+          <div style="position: absolute; left: 20px; top: 2px; background-color: #002673;
          border-radius: 5; height: 10px; width: 10px;"></div>Condición de Alivio <b> <?php echo $valores[0][4] ?> Embalses</b></p>
 
 
@@ -793,8 +793,8 @@ $ruta_mapas = "../../assets/img/temp/";
 
   <?php
   $inicial = false;
-  $total_filas = 40;
-  $extras = 4; //cabecera y total
+  $total_filas = 35;
+  $extras = 5; //cabecera y total
   $acumulado = 0;
   $top_margin = 0;
   $titulos_condiciones = [
@@ -819,8 +819,10 @@ $ruta_mapas = "../../assets/img/temp/";
     }, []);
 
     $filas_tablas = count($embalses_condicion);
+    $lineas = $filas_tablas + $extras;
+    $espacio = $total_filas - $acumulado;
 
-    if (($filas_tablas + $extras) <= ($total_filas - $acumulado)) {
+    if (($espacio) > ($lineas)) {
       if ($acumulado == 0) {
         if (!$inicial) {
           $inicial = true;
@@ -834,6 +836,9 @@ $ruta_mapas = "../../assets/img/temp/";
     } else {
       $inicial = true;
       $acumulado = 0;
+      $lineas = $filas_tablas + $extras;
+      $espacio = $total_filas - $acumulado;
+      $acumulado = $acumulado + $filas_tablas + $extras;
     }
   ?>
 
@@ -849,7 +854,7 @@ $ruta_mapas = "../../assets/img/temp/";
         <!-- <div style="position: absolute; top: 80px; left: 115px; font-size: 18px; color:#000000; margin-bottom:5px;"> -->
       <?php } ?>
 
-      <b style="margin-left: 100px;"><?php echo $titulos_condiciones[$key]; ?> </b>
+      <b style="margin-left: 100px;"><?php echo $titulos_condiciones[$key] ?> </b>
 
       <table style="margin-bottom: 10px; margin-left: 100px;">
         <tr>
@@ -1777,7 +1782,7 @@ $ruta_mapas = "../../assets/img/temp/";
 
   function descripcion($meses)
   {
-    $meses = intval($meses);
+    // $meses = intval($meses);
     // if ($meses < 1) return "0 meses";
     if ($meses <= 4) return ["0-4 meses", "#ff0000"];
     if ($meses > 4 && $meses <= 8) return ["5-8 meses", "#ffaa00"];
@@ -1821,19 +1826,58 @@ $ruta_mapas = "../../assets/img/temp/";
           return $a[3] <=> $b[3]; // Comparar las cadenas en el índice 2 (tipo)
         });
 
-        foreach ($embalse_abast as $abast) {
+        // $filter_region = array_filter($embalse_abast, function ($value) use ($region) {
+        //   return strtolower(trim($value[3])) == strtolower(trim($region));
+        // });
+
+        // $typeCount = array_reduce($embalse_abast, function ($counts, $item) {
+        //   $tipo = $item[4]; // Índice del tipo
+        //   $counts[$tipo] = ($counts[$tipo] ?? 0) + 1; // Incrementar el conteo para este tipo
+        //   return $counts;
+        // }, []);
+
+        $filter_region = array_values(array_filter($embalse_abast, function ($value) use ($region) {
+          return isset($value[0]) && strtolower(trim($value[0])) == strtolower(trim($region));
+        }));
+
+        $typeCount = array_reduce($filter_region, function ($counts, $item) {
+          if (isset($item[4])) {
+            $tipo = $item[4];
+            $counts[$tipo] = ($counts[$tipo] ?? 0) + 1;
+          }
+          return $counts;
+        }, []);
+
+        // $hidroCount = array_reduce($filter_region, function ($counts, $item) {
+        //   if (isset($item[1])) {
+        //     $tipo = $item[1];
+        //     $counts[$tipo] = ($counts[$tipo] ?? 0) + 1;
+        //   }
+        //   return $counts;
+        // }, []);
+
+        $j = 0;
+        foreach ($filter_region as $index => $abast) {
           if (strtolower(trim($abast[0])) == strtolower(trim($region))) {
         ?>
             <tr>
-              <td class="" style="font-size: 12px; height: 12px;">
-                <div style="background-color:<?php echo descripcion($abast[3])[1] ?>; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
-              </td>
-              <td class="" style="font-size: 12px;"><?php echo descripcion($abast[3])[0] ?></td>
+              <?php if ($index == 0 || $abast[4] != $filter_region[$index - 1][4]) { ?>
+                <td rowspan="<?php echo $typeCount[$abast[4]] ?>" class="" style="font-size: 12px; height: 12px;">
+                  <div style="background-color:<?php echo descripcion($abast[3])[1] ?>; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
+                </td>
+              <?php } ?>
+              <td class="" style="font-size: 12px; border-left: 0px"><?php echo descripcion($abast[3])[0] ?></td>
               <td class="" style="font-size: 12px;"><?php echo $abast[2] ?></td>
               <td class="" style="font-size: 12px;"><?php echo intval($abast[3]) ?></td>
-              <td class="" style="font-size: 12px;"><?php echo $abast[1] ?></td>
+              <?php //if ($index == 0 || $abast[1] != $filter_region[$index - 1][1]) { 
+              ?>
+              <td rowspan="<?php //echo $hidroCount[$abast[1]] 
+                            ?>" class="" style="font-size: 12px;"><?php echo $abast[1] ?></td>
+              <?php //} 
+              ?>
             </tr>
         <?php }
+          $j++;
         } ?>
       </table>
 
@@ -2016,7 +2060,10 @@ $ruta_mapas = "../../assets/img/temp/";
 
     $filas_tablas = count($range);
 
-    if (($filas_tablas + $extras_abast) <= ($total_filas_abast - $acumulado_abast)) {
+    $lineas = $filas_tablas + $extras_abast;
+    $espacio = $total_filas_abast - $acumulado_abast;
+
+    if (($lineas) <= ($espacio)) {
       if ($acumulado_abast == 0) {
         if (!$inicial_abast) {
           $inicial_abast = true;
@@ -2030,8 +2077,12 @@ $ruta_mapas = "../../assets/img/temp/";
     } else {
       $inicial_abast = true;
       $acumulado_abast = 0;
+      $lineas = $filas_tablas + $extras_abast;
+      $espacio = $total_filas_abast - $acumulado_abast;
+      $acumulado_abast = $acumulado_abast + $filas_tablas + $extras_abast;
     }
   ?>
+
 
     <?php if ($inicial_abast) { ?>
       <page orientation="portrait">
