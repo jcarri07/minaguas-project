@@ -153,7 +153,7 @@ $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, conce
                 ce.estatus = 'activo' AND 
                 tce.estatus = 'activo' AND
                 (tce.id = '1' OR tce.id = '2' OR tce.id = '3' OR tce.id = '4')
-            ORDER BY codigo ASC;";
+            ORDER BY (codigo+0) ASC;";
 $query = mysqli_query($conn, $sql);
 
 
@@ -277,14 +277,14 @@ $numberOfDays = date('z', strtotime($ultimoDiaDelAnio)) + 1;
                                 <?php
                                 $index = buscarPosicion($array_sumas, $row['codigo'], 'codigo');
                                 if ($index !== -1) {
-                                    echo number_format($array_sumas[$index]['suma'], 3, ",", ".");
+                                    echo number_format($array_sumas[$index]['suma'], 2, ",", ".");
                                     $sum_cat += $array_sumas[$index]['suma'];
                                     $sum_total += $array_sumas[$index]['suma'];
                                 } else
                                     echo "";
 
                                 if ($es_total) {
-                                    echo number_format($sum_cat, 3, ",", ".");
+                                    echo number_format($sum_cat, 2, ",", ".");
                                     $sum_cat = 0;
                                 }
 
@@ -294,7 +294,7 @@ $numberOfDays = date('z', strtotime($ultimoDiaDelAnio)) + 1;
                                 <?php
                                 if ($index !== -1) {
                                     $divisor = $array_sumas[$index]['cant_mayor_0'] != "0" ? $array_sumas[$index]['cant_mayor_0'] : 1;
-                                    echo number_format(($array_sumas[$index]['suma'] / $divisor), 3, ",", ".");
+                                    echo number_format(($array_sumas[$index]['suma'] / $divisor), 2, ",", ".");
                                 } else
                                     echo "";
 
@@ -306,7 +306,7 @@ $numberOfDays = date('z', strtotime($ultimoDiaDelAnio)) + 1;
                                 <?php
                                 if ($index !== -1) {
                                     $divisor = $array_sumas[$index]['cant_mayor_0'] != "0" ? $array_sumas[$index]['cant_mayor_0'] : 1;
-                                    echo number_format((($array_sumas[$index]['suma'] / $divisor) * 1000000 / 86400), 3, ",", ".");
+                                    echo number_format((($array_sumas[$index]['suma'] / $divisor) * 1000000 / 86400), 2, ",", ".");
                                 } else
                                     echo "";
 
