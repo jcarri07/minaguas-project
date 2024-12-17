@@ -771,7 +771,7 @@ closeConection($conn);*/
   };
 
   function mapa_dashboard() {
-
+    $("#mapa-container").html('<link href="./assets/css/style-spinner.css" rel="stylesheet" /><div class="loaderPDF" style="top:-100%;"><div class="lds-dual-ring"></div></div>');
     $.ajax({
       url: 'pages/mapa_dashboard.php',
       cache: false,

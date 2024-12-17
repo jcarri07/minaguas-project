@@ -259,7 +259,7 @@ if ($count >= 1) {
 
                 // Añadir el punto de datos
                 $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $datos[$j] . " }";
-                $dataPointsM[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $array[$j] . " }";
+                //$dataPointsM[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $array[$j] . " }";
                 // } else {
                 //     // Caso de cota_actual nulo
                 //     $backgroundColors[] = "'#fd0200'"; // color por defecto (rojo)
@@ -303,19 +303,21 @@ if ($count >= 1) {
                         borderWidth: 1,
                         categoryPercentage: 1,
                         barPercentage: 0.9
-                    },{
-                        backgroundColor:['#e1e1e1'],
+                    },
+                    // {
+                    //     backgroundColor:['#e1e1e1'],
 
-                        data: [
-                            <?php
-                            // Convertir puntos de datos en una cadena separada por comas
-                            echo implode(", ", $dataPointsM);
-                            ?>
-                        ],
-                        borderWidth: 1,
-                        categoryPercentage: 1,
-                        barPercentage: 0.9
-                    }, ],
+                    //     data: [
+                    //         <?php
+                    //         // Convertir puntos de datos en una cadena separada por comas
+                    //         echo implode(", ", $dataPointsM);
+                    //         ?>
+                    //     ],
+                    //     borderWidth: 1,
+                    //     categoryPercentage: 1,
+                    //     barPercentage: 0.9
+                    // },
+                 ],
 
                 },
 
