@@ -5,6 +5,7 @@
 <?php
 require_once '../Conexion.php';
 require_once '../batimetria.php';
+ini_set('max_execution_time', 400);
 $volumen_fechas = array(
     "0" => 0,
     "1" => 0,
@@ -33,7 +34,7 @@ $fecha_anio = $fechaActual->format('Y-m-d');
 // $fecha1 = $fechas[0]['configuracion'];
 // $fecha2 = $fechas[1]['configuracion'];
 //$anio = date('Y', strtotime($fecha1));
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo'ORDER BY nombre_embalse ASC;");
+$r = mysqli_query($conn, "SELECT id_embalse, nombre_embalse FROM embalses WHERE estatus = 'activo'ORDER BY nombre_embalse ASC;");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
@@ -161,6 +162,300 @@ if ($count >= 1) {
                     // Resto del código del plugin
                 }
             };
+
+            $("#contenedor-2").html('<?php
+                                        $valor = $volumen_fechas[2] != 0 ? 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[2]) : 0;
+                                        $valorFormat = number_format(($valor), 2, ",", ".");
+                                        if ($valor > 0) {
+
+                                            echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
+                                        };
+                                        if ($valor == 0) {
+
+                                            echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
+                                        };
+                                        if ($valor < 0) {
+
+                                            echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
+                                        };
+
+                                        ?>');
+            $("#contenedor-3").html('<?php
+                                        $valor = $volumen_fechas[3] != 0 ? 100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[3]) : 0;
+                                        $valorFormat = number_format(($valor), 2, ",", ".");
+                                        if ($valor > 0) {
+
+                                            echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
+                                        };
+                                        if ($valor == 0) {
+
+                                            echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
+                                        };
+                                        if ($valor < 0) {
+
+                                            echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
+                                        };
+
+                                        ?>');
+
+            <?php //$bati = new Batimetria($datos_embalses[1]["id_embalse"], $conn);
+            // $batimetria = $bati->getBatimetria();
+            // $x = $bati->volumenActualDisponible();
+            //$x = $bati->getByCota($anio, $datos_embalses[1]["cota_actual"])[1];
+            // echo "console.log('volúmen:" . $x . ",cota:" . $datos_embalses[1]["cota_actual"] . "');";
+
+            $j = 0;
+            $sum = [];
+            $backgroundColors = [];
+            $labels = [];
+            $dataPoints = [];
+
+            while ($j < count($datos_embalses)) {
+
+                // $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
+                // $batimetria = $bati->getBatimetria();
+                //$x = $datos[$j]; //$bati->volumenActualDisponible(); //$bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
+                //$min = $bati->volumenMinimo();
+                //$max = $bati->volumenMaximo();
+                //$nor = $bati->volumenNormal();
+                // if ($datos_embalses[$j]["cota_actual"] != NULL) {
+
+                //$sum[$j] = $datos[$j];
+                // if (($x - $min) <= 0) {
+                //     $sum[$j] = 0;
+                // } else {
+                //     $sum[$j] = $x - $min;
+                // }
+
+                //$div = ($nor - $min) > 0 ? ($nor - $min) : 1;
+                if ($array[$j] > 0) {
+                    $percentage = (abs($datos[$j]) * (100 / $array[$j]));
+                    // Añadir etiqueta
+                    $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs($datos[$j]) * (100 / $array[$j])), 0) . "%)'";
+                } else {
+                    $percentage = 0;
+                    // Añadir etiqueta
+                    $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (0%)'";
+                }
+
+                // Determinar el color basado en el porcentaje
+                if ($percentage == 0 || $percentage < 30) {
+                    $backgroundColors[] = "'#fd0200'"; // rojo
+                };
+                if ($percentage >= 30 && $percentage < 60) {
+                    $backgroundColors[] = "'#72dffd'"; // anaranjado
+                };
+                if ($percentage >= 60 && $percentage < 90) {
+                    $backgroundColors[] = "'#0066eb'"; // verde
+                };
+                if ($percentage >= 90 && $percentage <= 100) {
+                    $backgroundColors[] = "'#3ba500'"; // azul
+                };
+                if ($percentage >= 100) {
+                    $backgroundColors[] = "'#55fe01'"; // color extra (verde claro)
+                }
+
+
+
+                // Añadir el punto de datos
+                $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $datos[$j] . " }";
+                //$dataPointsM[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $array[$j] . " }";
+                // } else {
+                //     // Caso de cota_actual nulo
+                //     $backgroundColors[] = "'#fd0200'"; // color por defecto (rojo)
+                //     $labels[] = "'Embalse " . $embalses[$j]["nombre_embalse"] . " (0%)'";
+                //     $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: 0 }";
+                // }
+
+
+                // $j++;
+                // if ($j < count($datos_embalses)) {
+                //     echo ",";
+                // };
+                $j++;
+            }
+            ?>
+            const maxValues = [<?php echo implode(", ", $array); ?>];
+
+            let cha = new Chart(chart, {
+                type: 'bar',
+                title: 'grafica',
+                label: 'Embalses',
+                data: {
+                    datasets: [{
+                        backgroundColor: [
+                            <?php
+
+
+
+
+                            // Convertir los arrays en cadenas separadas por comas
+                            echo implode(", ", $backgroundColors);
+                            ?>
+                        ],
+
+                        data: [
+                            <?php
+                            // Convertir puntos de datos en una cadena separada por comas
+                            echo implode(", ", $dataPoints);
+                            ?>
+                        ],
+                        borderWidth: 1,
+                        categoryPercentage: 1,
+                        barPercentage: 0.9
+                    },
+                    // {
+                    //     backgroundColor:['#e1e1e1'],
+
+                    //     data: [
+                    //         <?php
+                    //         // Convertir puntos de datos en una cadena separada por comas
+                    //         echo implode(", ", $dataPointsM);
+                    //         ?>
+                    //     ],
+                    //     borderWidth: 1,
+                    //     categoryPercentage: 1,
+                    //     barPercentage: 0.9
+                    // },
+                 ],
+
+                },
+
+                options: {
+
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    interaction: {
+                        intersect: false,
+                        axis: 'y',
+                    },
+                    elements: {
+                        borderWidth: 1,
+                    },
+                    plugins: {
+
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw;
+                                    const labelName = context.label; // Muestra el nombre de la etiqueta única
+                                    if(context.datasetIndex == 0){
+                                    return labelName + ': ' + (Math.round(value.x * 100) / 100).toLocaleString("de-DE");
+                                    }else{
+                                        return 'Volumen Útil Total(VUT): ' + (Math.round(value.x * 100) / 100).toLocaleString("de-DE"); 
+                                    }
+                                }
+                            }
+                        }, //Aqui van los cambios de minaguas nuevos
+
+
+                        legend: {
+                            position: 'bottom',
+                            align: 'start',
+                            display: false,
+                            labels: {
+
+                                // This more specific font property overrides the global property
+                                font: {
+                                    size: 10
+                                },
+
+                            }
+                        },
+                        title: {
+                            display: false,
+                            text: 'Embalse',
+                            fullSize: true,
+                            font: {
+                                size: 30
+                            }
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            formatter: function(value, context) {
+                                if(context.datasetIndex == 0){
+                                    
+                                    return (Math.round(value.x * 100) / 100).toLocaleString("de-DE");
+
+                                }else{
+                                    return "";
+                                }
+                                //console.log(context.datasetIndex);
+                                
+                            },
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold',
+                                        family: 'Arial',
+                                    },
+                                    color: function(context) {
+                                        // Obtén el valor actual del dato y su valor máximo correspondiente
+                                        const value = context.dataset.data[context.dataIndex].x;
+                                        const maxValue = maxValues[context.dataIndex];
+                                        //console.log(maxValue);
+                                        // Calcula el porcentaje
+
+                                        if (maxValue == 0) {
+                                            percentage = 0;
+                                        } else {
+                                            percentage = value * 100 / maxValue;
+                                        }
+
+                                        // Si el porcentaje es menor que 30, cambia el color a rojo
+                                        return percentage <= 30 ? '#fd0200' : 'black';
+                                    },
+                                },
+                            },
+                        },
+
+                    },
+                    scales: {
+
+                        x: {
+
+                            title: {
+                                display: true,
+                                text: 'Volumen (Hm³)',
+
+                                font: {
+                                    size: 16
+                                },
+                            },
+                            ticks: {
+
+                                font: {
+                                    size: 14
+                                },
+                                callback: function(valor, index, valores) {
+                                    return valor.toLocaleString("de-DE");
+                                },
+                            },
+
+                        },
+                        y: {
+
+                            stacked: true,
+                            border: {
+                                display: false,
+                            },
+                            ticks: {
+                                font: {
+                                    size: 13
+                                },
+
+                            },
+
+                        },
+
+
+                    },
+                },
+                plugins: [ChartDataLabels],
+            });
             let cha1 = new Chart(barra1, {
                 type: 'bar',
                 title: 'grafica',
@@ -268,273 +563,6 @@ if ($count >= 1) {
                     },
                 },
                 plugins: [arbi],
-            });
-            $("#contenedor-2").html('<?php
-                                        $valor = $volumen_fechas[2] != 0 ? 100 * (($volumen_fechas[1] - $volumen_fechas[2]) / $volumen_fechas[2]) : 0;
-                                        $valorFormat = number_format(($valor), 2, ",", ".");
-                                        if ($valor > 0) {
-
-                                            echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
-                                        };
-                                        if ($valor == 0) {
-
-                                            echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
-                                        };
-                                        if ($valor < 0) {
-
-                                            echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
-                                        };
-
-                                        ?>');
-            $("#contenedor-3").html('<?php
-                                        $valor = $volumen_fechas[3] != 0 ? 100 * (($volumen_fechas[1] - $volumen_fechas[3]) / $volumen_fechas[3]) : 0;
-                                        $valorFormat = number_format(($valor), 2, ",", ".");
-                                        if ($valor > 0) {
-
-                                            echo '<h1 class="align-items-center"><i class="fa fa-arrow-up" style="padding-right: 10px; color: green;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
-                                        };
-                                        if ($valor == 0) {
-
-                                            echo '<h1 class="align-items-center"><i class="fa fa-minus" style="padding-right: 10px; color: gray;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
-                                        };
-                                        if ($valor < 0) {
-
-                                            echo '<h1 class="align-items-center"><i class="fa fa-arrow-down" style="padding-right: 10px; color: red;"></i></div><span class="" style="font-size:50px !important">' . $valorFormat . '%</span></h1>';
-                                        };
-
-                                        ?>');
-
-
-            <?php //$bati = new Batimetria($datos_embalses[1]["id_embalse"], $conn);
-            // $batimetria = $bati->getBatimetria();
-            // $x = $bati->volumenActualDisponible();
-            //$x = $bati->getByCota($anio, $datos_embalses[1]["cota_actual"])[1];
-            // echo "console.log('volúmen:" . $x . ",cota:" . $datos_embalses[1]["cota_actual"] . "');";
-            ?>
-
-            <?php
-
-            $j = 0;
-            $sum = [];
-            $backgroundColors = [];
-            $labels = [];
-            $dataPoints = [];
-            
-            while ($j < count($datos_embalses)) {
-
-                // $bati = new Batimetria($datos_embalses[$j]["id_embalse"], $conn);
-                // $batimetria = $bati->getBatimetria();
-                //$x = $datos[$j]; //$bati->volumenActualDisponible(); //$bati->getByCota($anio, $datos_embalses[$j]["cota_actual"])[1];
-                //$min = $bati->volumenMinimo();
-                //$max = $bati->volumenMaximo();
-                //$nor = $bati->volumenNormal();
-                // if ($datos_embalses[$j]["cota_actual"] != NULL) {
-
-                //$sum[$j] = $datos[$j];
-                // if (($x - $min) <= 0) {
-                //     $sum[$j] = 0;
-                // } else {
-                //     $sum[$j] = $x - $min;
-                // }
-
-                //$div = ($nor - $min) > 0 ? ($nor - $min) : 1;
-                if ($array[$j] > 0) {
-                    $percentage = (abs($datos[$j]) * (100 / $array[$j]));
-                } else {
-                    $percentage = 0;
-                }
-
-                // Determinar el color basado en el porcentaje
-                if ($percentage == 0 || $percentage < 30) {
-                    $backgroundColors[] = "'#fd0200'"; // rojo
-                };
-                if ($percentage >= 30 && $percentage < 60) {
-                    $backgroundColors[] = "'#72dffd'"; // anaranjado
-                };
-                if ($percentage >= 60 && $percentage < 90) {
-                    $backgroundColors[] = "'#0066eb'"; // verde
-                };
-                if ($percentage >= 90 && $percentage <= 100) {
-                    $backgroundColors[] = "'#3ba500'"; // azul
-                };
-                if ($percentage >= 100) {
-                    $backgroundColors[] = "'#55fe01'"; // color extra (verde claro)
-                }
-
-                // Añadir etiqueta
-                $labels[] = "'Embalse " . $datos_embalses[$j]["nombre_embalse"] . " (" . round((abs($datos[$j]) * (100 / $array[$j])), 0) . "%)'";
-
-                // Añadir el punto de datos
-                $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: " . $datos[$j] . " }";
-                // } else {
-                //     // Caso de cota_actual nulo
-                //     $backgroundColors[] = "'#fd0200'"; // color por defecto (rojo)
-                //     $labels[] = "'Embalse " . $embalses[$j]["nombre_embalse"] . " (0%)'";
-                //     $dataPoints[] = "{ y: '" . $datos_embalses[$j]["nombre_embalse"] . "', x: 0 }";
-                // }
-
-
-                // $j++;
-                // if ($j < count($datos_embalses)) {
-                //     echo ",";
-                // };
-                $j++;
-            }
-            ?>
-            const maxValues = [<?php echo implode(", ", $array); ?>];
-
-            let cha = new Chart(chart, {
-                type: 'bar',
-                title: 'grafica',
-                label: 'Embalses',
-                data: {
-                    datasets: [{
-                        backgroundColor: [
-                            <?php
-
-
-
-
-                            // Convertir los arrays en cadenas separadas por comas
-                            echo implode(", ", $backgroundColors);
-                            ?>
-                        ],
-
-                        data: [
-                            <?php
-                            // Convertir puntos de datos en una cadena separada por comas
-                            echo implode(", ", $dataPoints);
-                            ?>
-                        ],
-                        borderWidth: 1,
-                        categoryPercentage: 1,
-                        barPercentage: 0.9
-                    }, ],
-
-                },
-
-                options: {
-
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    interaction: {
-                        intersect: false,
-                        axis: 'y',
-                    },
-                    elements: {
-                        borderWidth: 1,
-                    },
-                    plugins: {
-
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.dataset.label || '';
-                                    const value = context.raw;
-                                    const labelName = context.label; // Muestra el nombre de la etiqueta única
-                                    return labelName + ': ' + (Math.round(value.x * 100) / 100).toLocaleString("de-DE");
-                                }
-                            }
-                        }, //Aqui van los cambios de minaguas nuevos
-
-
-                        legend: {
-                            position: 'bottom',
-                            align: 'start',
-                            display: false,
-                            labels: {
-
-                                // This more specific font property overrides the global property
-                                font: {
-                                    size: 10
-                                },
-
-                            }
-                        },
-                        title: {
-                            display: false,
-                            text: 'Embalse',
-                            fullSize: true,
-                            font: {
-                                size: 30
-                            }
-                        },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'end',
-                            formatter: function(value, context) {
-                                return (Math.round(value.x * 100) / 100).toLocaleString("de-DE");
-                            },
-                            labels: {
-                                title: {
-                                    font: {
-                                        weight: 'bold',
-                                        family: 'Arial',
-                                    },
-                                    color: function(context) {
-                                        // Obtén el valor actual del dato y su valor máximo correspondiente
-                                        const value = context.dataset.data[context.dataIndex].x;
-                                        const maxValue = maxValues[context.dataIndex];
-                                        //console.log(maxValue);
-                                        // Calcula el porcentaje
-
-                                        if (maxValue == 0) {
-                                            percentage = 0;
-                                        } else {
-                                            percentage = value * 100 / maxValue;
-                                        }
-
-                                        // Si el porcentaje es menor que 30, cambia el color a rojo
-                                        return percentage <= 30 ? '#fd0200' : 'black';
-                                    },
-                                },
-                            },
-                        },
-
-                    },
-                    scales: {
-
-                        x: {
-
-                            title: {
-                                display: true,
-                                text: 'Volumen (Hm³)',
-
-                                font: {
-                                    size: 16
-                                },
-                            },
-                            ticks: {
-
-                                font: {
-                                    size: 14
-                                },
-                                callback: function(valor, index, valores) {
-                                    return valor.toLocaleString("de-DE");
-                                },
-                            },
-
-                        },
-                        y: {
-
-
-                            border: {
-                                display: false,
-                            },
-                            ticks: {
-                                font: {
-                                    size: 13
-                                },
-
-                            },
-
-                        },
-
-
-                    },
-                },
-                plugins: [ChartDataLabels],
             });
         });
     </script>

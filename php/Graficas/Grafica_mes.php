@@ -20,7 +20,7 @@ $periodo = $_POST['periodo'];
 $y = $anio;
 $ver = $_POST['ver'];
 
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
+$r = mysqli_query($conn, "SELECT cota_min,cota_nor,cota_max FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 

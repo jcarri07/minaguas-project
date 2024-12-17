@@ -77,7 +77,7 @@ $fechas = mysqli_fetch_all($queryInameh, MYSQLI_ASSOC);
 $fecha1 = $fechas[0]['configuracion'];
 $fecha2 = $fechas[1]['configuracion'];
 $anio = date('Y', strtotime($fecha1));
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND FIND_IN_SET('1', uso_actual);");
+$r = mysqli_query($conn, "SELECT id_embalse FROM embalses WHERE estatus = 'activo' AND FIND_IN_SET('1', uso_actual);");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 
@@ -141,7 +141,7 @@ if ($count >= 1) {
     $volumen_quince = mysqli_fetch_all($condiciones_actuales3, MYSQLI_ASSOC);
     $volumen_siete = mysqli_fetch_all($condiciones_actuales4, MYSQLI_ASSOC);
 
-    $embalses = mysqli_fetch_all($r, MYSQLI_ASSOC);
+    //$embalses = mysqli_fetch_all($r, MYSQLI_ASSOC);
 
     $j = 0;
 

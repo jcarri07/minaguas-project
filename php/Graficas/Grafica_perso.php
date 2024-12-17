@@ -18,7 +18,6 @@ $array_aux = explode("-", $fecha1);
 $anio = $array_aux["0"];
 $me = $array_aux["1"];
 $y = $anio;
-$anio = $anio;
 $ver = $_POST['ver'];
 
 if ($tipo == "bar") {
@@ -41,7 +40,7 @@ $bati = new Batimetria($id, $conn);
 $batimetria = $bati->getBatimetria();
 
 $res = mysqli_query($conn, $aux);
-$r = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
+$r = mysqli_query($conn, "SELECT cota_min,cota_nor,cota_max FROM embalses WHERE estatus = 'activo' AND id_embalse = '$id';");
 $count = mysqli_num_rows($r);
 if ($count >= 1) {
 

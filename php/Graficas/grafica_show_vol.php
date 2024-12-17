@@ -22,8 +22,7 @@ $vol_batimetria = number_format($embalse->volumenDisponible(), 2, ".", "");
         new Chart(ctx, {
             type: 'bar',
             data: {
-                // labels: [['Diseño','(Hm³)'], ['Batimetría','(Hm³)'], ['Actual (<?php //echo $porcentaje."%" 
-                                                                                    ?>)','(Hm³)']],
+                // labels: [['Diseño','(Hm³)'], ['Batimetría','(Hm³)'], ['Actual (<?php //echo $porcentaje."%"?>)','(Hm³)']],
                 labels: [
                     ['Diseño', '(Hm³)'],
                     ['Batimetría (<?php echo $embalse->getCloseYear() ?>)', '(Hm³)']

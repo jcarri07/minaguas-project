@@ -409,8 +409,8 @@ while ($row < count($datos_embalses)) {
         })
         .catch(err => console.error('Error al cargar el archivo GeoJSON:', err));
 
-    let ubicacion;
-    let posicion;
+    var ubicacion;
+    var posicion;
 
     <?php
     foreach ($embalses_abast as $emb) {
