@@ -111,7 +111,7 @@ foreach ($spreadsheet->getSheetNames() as $sheetName) {
 $resultado = mysqli_query($conn, $consulta);
 if ($resultado) {
 
-    echo "Los datos se guardaron correctamente en la base de datos.";
+    // echo "Los datos se guardaron correctamente en la base de datos.";
     // header("Location: ../main.php?page=embalses");
     // echo "<script>window.location='../main.php?page=embalses';</script>";
 } else {
