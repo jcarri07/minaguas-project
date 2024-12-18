@@ -147,19 +147,19 @@ while ($num < count($volumen_primer_periodo)) {
   // $fecha = date($row['fecha']);
   $anio = date("Y", strtotime($row['fecha']));
   $final = $bat->volumenActualDisponible();
-  $inicial = $bat->getByCota($anio, $row["cota_actual"])[1];
+  $inicial = $bat->volumenDisponibleByCota($anio, $row["cota_actual"]);
   $variacion = $final - $inicial;
   $porcentaje = $inicial != 0 ? (100 * (($final - $inicial) / ($inicial))) : 0;
 
   $anio2 = date("Y", strtotime($row2['fecha']));
   $final2 = $bat->volumenActualDisponible();
-  $inicial2 = $bat->getByCota($anio2, $row2["cota_actual"])[1];
+  $inicial2 = $bat->volumenDisponibleByCota($anio2, $row2["cota_actual"]);
   $variacion2 = $final2 - $inicial2;
   $porcentaje2 = $inicial2 != 0 ? (100 * (($final2 - $inicial2) / ($inicial2))) : 0;
 
   $anio3 = date("Y", strtotime($row3['fecha']));
   $final3 = $bat->volumenActualDisponible();
-  $inicial3 = $bat->getByCota($anio3, $row3["cota_actual"])[1];
+  $inicial3 = $bat->volumenDisponibleByCota($anio3, $row3["cota_actual"]);
   $variacion3 = $final3 - $inicial3;
   $porcentaje3 = $inicial3 != 0 ? (100 * (($final3 - $inicial3) / ($inicial3))) : 0;
 
@@ -1083,7 +1083,7 @@ $ruta_mapas = "../../assets/img/temp/";
   <div style="font-size: 15px; color:#000000; position: absolute;  margin-top: 500px; margin-left: 640px;"><b style="line-height: 1.5;"> <u><?php echo $lista[0] ?> EMBALSES</u> EN CONDICIONES BAJAS ( < 30 %)</b>
   </div>
 
-  <div class="box-title"><b> <?php echo round(($lista[2] + $lista[3]) * 100 / ($lista[2] + $lista[3] + $lista[1] + $lista[0]), 2) ?>% DE LOS EMBALSES SE ENCUENTRAN EN CONDICIONES NORMALES A MUY BUENAS</b></div>
+  <div class="box-title"><b> <?php echo round(($lista[1] + $lista[2] + $lista[3]) * 100 / ($lista[2] + $lista[3] + $lista[1] + $lista[0]), 2) ?>% DE LOS EMBALSES SE ENCUENTRAN EN CONDICIONES NORMALES A MUY BUENAS</b></div>
 
   <!-- PAGINA 6 -->
 
