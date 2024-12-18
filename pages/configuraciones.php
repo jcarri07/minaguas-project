@@ -1,7 +1,7 @@
 <?php
 require_once 'php/Conexion.php';
 
-$queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo';");
+$queryPropositos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'activo' OR estatus = 'principal';");
 $queryPropositosInactivos = mysqli_query($conn, "SELECT * FROM propositos WHERE estatus = 'inactivo';");
 $queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo' order by nombre_embalse;");
 $stringPrioritarios = "0";
@@ -170,14 +170,18 @@ closeConection($conn);
 
                     <div class="">
                       <div class=" d-flex align-items-center">
-                        <a data-id="<?php echo $row['id_proposito']; ?>" class="editar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a>
-                        <a data-id="<?php echo $row['id_proposito']; ?>" class="eliminar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i></a>
+                        <?php if ($row['estatus'] == 'activo') { ?>
+                          <a data-id="<?php echo $row['id_proposito']; ?>" class="editar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a>
+                          <a data-id="<?php echo $row['id_proposito']; ?>" class="eliminar-pro btn btn-link text-dark px-0 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i></a>
+                        <?php } else { ?>
+                          <a class="btn btn-link text-dark px-0 mb-0"><i class="fas fa-check-double text-dark me-2" aria-hidden="true"></i></a>
+
+                        <?php } ?>
                         <span id="<?php echo $row['id_proposito']; ?>-span" class="label-proposito old align-self-center text-sm" for="">
                           <?php echo $row['proposito']; ?>
                         </span>
                       </div>
                     </div>
-
                   <?php
                   }
                   ?>
@@ -341,6 +345,17 @@ closeConection($conn);
   <button type="submit">Enviar</button>
 </form> -->
 
+<template id="template-proposito">
+  <div class="">
+    <div class=" d-flex align-items-center">
+      <a id="" class="editar-pro-new btn btn-link text-dark px-0 mb-0"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a>
+      <a id="" class="eliminar-pro-new btn btn-link text-dark px-0 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i></a>
+      <span class="label-proposito label-proposito-new align-self-center text-sm text-dark" for="">
+
+      </span>
+    </div>
+  </div>
+</template>
 
 <div class="modal fade" id="modal-evap" tabindex="-1" role="dialog" aria-labelledby="modal-evap" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -440,17 +455,7 @@ closeConection($conn);
   </div>
 </div>
 
-<template id=" template-proposito">
-                <div class="">
-                  <div class=" d-flex align-items-center">
-                    <a id="" class="editar-pro-new btn btn-link text-dark px-0 mb-0"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a>
-                    <a id="" class="eliminar-pro-new btn btn-link text-dark px-0 mb-0"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i></a>
-                    <span class="label-proposito label-proposito-new align-self-center text-sm text-dark" for="">
 
-                    </span>
-                  </div>
-                </div>
-                </template>
 
                 <!-- <template id=" template-propositoo">
                 <div class="d-flex">
@@ -483,7 +488,6 @@ closeConection($conn);
                     let find = false;
 
                     removerClase($(".finded"), "finded");
-
                     for (let index = 0; index < propositos.length; index++) {
                       if (propositos[index].innerText.trim().toLocaleLowerCase() == proposito.value.trim().toLocaleLowerCase()) {
                         find = true;

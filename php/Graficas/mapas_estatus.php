@@ -547,6 +547,13 @@ while ($row < count($datos_embalses)) {
         }
     });
 
+    var ArrowIconNew = L.Icon.extend({
+        options: {
+            iconSize: [10, 10],
+        }
+    });
+
+
     var PointIconLarge = L.Icon.extend({
         options: {
             shadowUrl: '../../assets/icons/i-sombra.png',
@@ -627,7 +634,7 @@ while ($row < count($datos_embalses)) {
     var f_abajo = new ArrowIcon({
         iconUrl: '../../assets/icons/f-abajo.png'
     })
-    var f_igual = new ArrowIcon({
+    var f_igual = new ArrowIconNew({
         iconUrl: '../../assets/icons/f-igual.png'
     })
 
