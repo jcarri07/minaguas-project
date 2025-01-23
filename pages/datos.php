@@ -918,9 +918,16 @@ require_once 'php/datos/vistas/morosos.php';
 
 
   $("#valor_cota").on("blur", function() {
+    var valor = this.value;
+
+    //En el caso que se crea string en Formato 123.456.789,10 se formatea a numerico para poder calcularse
+    if (typeof valor === 'string' && valor.includes('.')) {
+      valor = parseFloat(valor.replace(/\./g, '').replace(',', '.'));
+    }
+
     var datos = new FormData();
     datos.append('id', $("#id_embalse_aux").text());
-    datos.append('valor', this.value);
+    datos.append('valor', valor);
     datos.append('anio', "<?php echo date("Y"); ?>");
 
     var valor = this.value;
