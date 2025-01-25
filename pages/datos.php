@@ -132,24 +132,31 @@ while ($row = mysqli_fetch_array($query_codigos)) {
               </div>-->
 
 
-          <?php
+<?php
           if (mysqli_num_rows($query) > 0) {
+?>
+            <div class="text-center">
+<?php
             if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin") {
-          ?>
-              <div class="text-center">
-                <button type="button" class="btn btn-primary" onclick="exportExcel();">
-                  Exportar Extracciones en Excel
-                  <i class="fa fa-file-excel-o" style="margin-left: 5px; font-size: 18px;"></i>
-                </button>
-
+?>
+              <button type="button" class="btn btn-primary" onclick="exportExcel();">
+                Exportar Extracciones en Excel
+                <i class="fa fa-file-excel-o" style="margin-left: 5px; font-size: 18px;"></i>
+              </button>
+<?php
+              }
+              
+              // El botón de morosos está disponible para Admin, SuperAdmin y Visitante
+              if ($_SESSION["Tipo"] == "Admin" || $_SESSION["Tipo"] == "SuperAdmin" || $_SESSION["Tipo"] == "Visitante") {
+?>
                 <button type="button" class="btn btn-danger" onclick="morosos('no', '');">
                   Morosos por Reportar
                   <i class="fa fa-exclamation-triangle" style="margin-left: 5px; font-size: 18px;"></i>
                 </button>
-              </div>
-            <?php
-            }
-            ?>
+<?php
+              }
+?>
+            </div>
             <div class="table-responsive mb-3">
               <table class="table align-items-center text-sm text-center table-sm" id="table">
                 <thead class="table-primary">
