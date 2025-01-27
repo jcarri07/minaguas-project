@@ -77,6 +77,10 @@ if ($count >= 1) {
                                                                   } else {
                                                                     if ($val["Tipo"] == "User") {
                                                                       echo "Usuario";
+                                                                    }else{
+                                                                      if ($val["Tipo"] == "Visitante") {
+                                                                        echo "Solo Lectura";
+                                                                      }
                                                                     }
                                                                   } ?></h6>
                         </div>
@@ -246,6 +250,10 @@ if ($count >= 1) {
                                                                     } else {
                                                                       if ($val["Tipo"] == "User") {
                                                                         echo "Usuario";
+                                                                      }else{
+                                                                        if ($val["Tipo"] == "Visitante") {
+                                                                          echo "Solo Lectura";
+                                                                        }
                                                                       }
                                                                     } ?></h6>
                           </div>
