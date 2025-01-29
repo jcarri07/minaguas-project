@@ -463,15 +463,15 @@ $j = 0;
                                     if ($bati->getByCota($anio, $min)[1] < 100) {
                                         echo 0;
                                     } else {
-                                        echo $bati->getByCota($anio, $min)[1];
+                                        echo round($bati->getByCota($anio, $min)[1],0);
                                     }
                                 } else {
-                                    echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
+                                    echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],0);
                                 }; ?>,
                         max: <?php if ($max > $embalse[0]["cota_max"]) {
-                                    echo $bati->getByCota($anio, $max)[1] + 10;
+                                    echo round($bati->getByCota($anio, $max)[1] + 10,0);
                                 } else {
-                                    echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 10;
+                                    echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 10,0);
                                 }; ?>,
                         border: {
                             display: false,
@@ -775,14 +775,14 @@ $j = 0;
                         },
                     },
                     min: <?php if ($min < $embalse[0]["cota_min"]) {
-                                echo $bati->getByCota($anio, $min)[1];
+                                echo round($bati->getByCota($anio, $min)[1],0);
                             } else {
-                                echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
+                                echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],0);
                             }; ?>,
                     max: <?php if ($max > $embalse[0]["cota_max"]) {
-                                echo $bati->getByCota($anio, $max)[1] + 20;
+                                echo round($bati->getByCota($anio, $max)[1] + 20,0);
                             } else {
-                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 20;
+                                echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 20,0);
                             }; ?>,
                     border: {
                         display: false,
@@ -979,18 +979,18 @@ $j = 0;
                     },
                     min: <?php $aux = $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
                             if ($min < $embalse[0]["cota_min"]) {
-                                echo $bati->getByCota($anio, $min)[1];
+                                echo round($bati->getByCota($anio, $min)[1],0);
                             } else {
                                 if ($aux - 200 < 0) {
                                     echo 0;
                                 } else {
-                                    echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1] - 200;
+                                    echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1] - 200,0);
                                 }
                             }; ?>,
                     max: <?php if ($max > $embalse[0]["cota_max"]) {
-                                echo $bati->getByCota($anio, $max)[1] + 20;
+                                echo round($bati->getByCota($anio, $max)[1] + 20,0);
                             } else {
-                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 20;
+                                echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 20,0);
                             }; ?>,
                     border: {
                         display: false,
@@ -1190,14 +1190,14 @@ $j = 0;
                         },
                     },
                     min: <?php if ($min < $embalse[0]["cota_min"]) {
-                                echo $bati->getByCota($anio, $min)[1];
+                                echo round($bati->getByCota($anio, $min)[1],0);
                             } else {
-                                echo $bati->getByCota($anio, $embalse[0]["cota_min"])[1];
+                                echo round($bati->getByCota($anio, $embalse[0]["cota_min"])[1],0);
                             }; ?>,
                     max: <?php if ($max > $embalse[0]["cota_max"]) {
-                                echo $bati->getByCota($anio, $max)[1] + 20;
+                                echo round($bati->getByCota($anio, $max)[1] + 20,0);
                             } else {
-                                echo $bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 20;
+                                echo round($bati->getByCota($anio, $embalse[0]["cota_max"])[1] + 20,0);
                             }; ?>,
                     border: {
                         display: false,

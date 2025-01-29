@@ -303,7 +303,7 @@ closeConection($conn);*/
           <div class="d-flex flex-column gap-5 p-2 justify-content-center align-items-center shadow border rounded bg-white" id="container-cards" style="width: 400px; height:450px;">
             <div class="col-12 flex-column justify-content-center align-items-center rounded border" style="width:100%;height:45%">
               <h5 class="d-flex justify-content-center align-items-center">
-                VARIACIÓN DESDE HACE 7 DIAS
+                VARIACIÓN DESDE HACE 7 DÍAS
               </h5>
               <div class="d-flex flex-col pt-4 justify-content-center align-items-center">
                 <div class="ps-3" id="contenedor-2">

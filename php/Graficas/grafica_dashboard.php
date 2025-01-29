@@ -467,14 +467,14 @@ if ($count >= 1) {
 
                         echo '{
                             
-                            label:"Volumen Util Actual(VTD)",
+                            label:"Volumen Útil Actual(VTD)",
                             data:{Volumen:' . round($volumen_fechas[1], 2) . '},';
                         echo "backgroundColor:'#2e75b6',
                         borderColor:'#2e75b6',
                         borderWidth:2},";
                         echo '{
                             
-                            label:"Volumen Util Total(VUT)",
+                            label:"Volumen Útil Total(VUT)",
                             data:{Volumen:' . round($volumen_fechas[0], 2) . '},';
 
                         echo "backgroundColor:'#9fe3a3',
