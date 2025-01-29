@@ -436,7 +436,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                 <div class="col">
                   <label>Cota (01)</label>
                   <div class="input-group mb-3">
-                    <input type="number" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" onkeydown="preventInvalidInput(event);" required>
+                    <input type="number" step="0.00001" class="form-control" name="valor_cota" id="valor_cota" placeholder="Cota" aria-label="Cota" aria-describedby="name-addon" onkeydown="preventInvalidInput(event);" required>
                   </div>
                 </div>
               </div>
