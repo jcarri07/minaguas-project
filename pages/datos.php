@@ -703,6 +703,8 @@ require_once 'php/datos/vistas/morosos.php';
 <script>
   iniciarTabla('table');
 
+  var edit = false;
+
   $(document).ready(function() {
     /*$("#modal-generic .message").text("Registro exitoso");
     $("#modal-generic").modal("show");*/
@@ -792,6 +794,7 @@ require_once 'php/datos/vistas/morosos.php';
 
 
   function openModalAdd(id_embalse, nombre_embalse) {
+    edit = false;
     $("#id_embalse_aux").text(id_embalse);
     $("#nombre_embalse_aux").text(nombre_embalse);
     $("#opc_aux").text("add");
@@ -928,7 +931,7 @@ require_once 'php/datos/vistas/morosos.php';
     var valor = this.value;
 
     //En el caso que se crea string en Formato 123.456.789,10 se formatea a numerico para poder calcularse
-    if (typeof valor === 'string' && valor.includes('.')) {
+    if (typeof valor === 'string' && valor.includes('.') && edit) {
       valor = parseFloat(valor.replace(/\./g, '').replace(',', '.'));
     }
 
@@ -1029,6 +1032,7 @@ require_once 'php/datos/vistas/morosos.php';
     }
 
     function openModalDetalles(id_registro, fecha, hora, cota, extraccion) {
+      edit = true;
       $("#id_aux").text(id_registro);
       $("#valor_cota").attr("type", "text");
       //$("#opc_aux").text("edit");
