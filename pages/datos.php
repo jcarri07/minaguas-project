@@ -459,7 +459,7 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                   <div class="col">
                     <label>Valor</label> <!-- (1000 m<sup>3</sup>)-->
                     <div class="input-group mb-4">
-                      <input type="number" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" onkeydown="preventInvalidInput(event);" required>
+                      <input type="number" step="0.00001" class="form-control" name="valor_extraccion[]" id="valor_extraccion_1" placeholder="Valor" onkeydown="preventInvalidInput(event);" required>
                     </div>
                   </div>
                 </div>
