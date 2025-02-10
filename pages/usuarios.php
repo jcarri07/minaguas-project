@@ -89,7 +89,7 @@ closeConection($conn);
                 <select name="tipo" class="form-select" required>
                   <option value="Admin">Administrador</option>
                   <option value="User">Usuario</option>
-                  <option value="Visitante">Visitante</option>
+                  <option value="Visitante">Solo Lectura</option>
                 </select>
 
               <?php } ?>
@@ -172,7 +172,7 @@ closeConection($conn);
                 <select name="Etipo" class="form-select" required>
                   <option value="Admin">Administrador</option>
                   <option value="User">Usuario</option>
-                  <option value="Visitante">Visitante</option>
+                  <option value="Visitante">Solo Lectura</option>
                 </select>
 
               <?php } ?>

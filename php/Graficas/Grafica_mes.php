@@ -334,12 +334,12 @@ ORDER BY d.fecha ASC;";
                                         },
                                     },
                                     min: <?php if ($min < $embalses[0]["cota_min"]) {
-                                                echo $bati->getByCota($anio, $min)[1];
+                                                echo round($bati->getByCota($anio, $min)[1],0);
                                             } else {
                                                 if ($bati->getByCota($anio, $embalses[0]["cota_min"])[1] - 200 < 0) {
                                                     echo 0;
                                                 } else {
-                                                    echo $bati->getByCota($anio, $embalses[0]["cota_min"])[1] - 200;
+                                                    echo round($bati->getByCota($anio, $embalses[0]["cota_min"])[1] - 200,0);
                                                 }
                                             }; ?>,
                                     max: <?php if ($max > $embalses[0]["cota_max"]) {
@@ -617,18 +617,18 @@ ORDER BY d.fecha ASC;";
                                         },
                                     },
                                     min: <?php if ($min < $embalses[0]["cota_min"]) {
-                                                echo $min;
+                                                echo round($min,0);
                                             } else {
                                                 if (($embalses[0]["cota_min"] - 2) < 0) {
                                                     echo 0;
                                                 } else {
-                                                    echo $embalses[0]["cota_min"] - 2;
+                                                    echo round($embalses[0]["cota_min"] - 2,0);
                                                 }
                                             }; ?>,
                                     max: <?php if ($max > $embalses[0]["cota_max"]) {
-                                                echo $max + 2;
+                                                echo round($max + 2,0);
                                             } else {
-                                                echo $embalses[0]["cota_max"] + 5;
+                                                echo round($embalses[0]["cota_max"] + 5,0);
                                             }; ?>,
                                     border: {
                                         display: false,

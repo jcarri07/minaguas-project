@@ -365,12 +365,12 @@ if ($count >= 1) {
                 },
                 min: <?php $aux = $bati->getByCota($anio, $embalses[$t]["cota_min"])[1];
                         if ($min < $embalses[$t]["cota_min"]) {
-                            echo $bati->getByCota($anio, $min)[1];
+                            echo round($bati->getByCota($anio, $min)[1],0);
                         } else {
                             if ($aux - 200 < 0) {
                                 echo 0;
                             } else {
-                                echo $bati->getByCota($anio, $embalses[$t]["cota_min"])[1] - 200;
+                                echo round($bati->getByCota($anio, $embalses[$t]["cota_min"])[1] - 200,0);
                             }
                         }; ?>,
                 max: <?php if ($max > $embalses[$t]["cota_max"]) {

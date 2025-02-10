@@ -31,6 +31,16 @@ function buscarPosicion($array, $valorABuscar, $columna)
     return $posicion !== false ? $posicion : -1;
 }
 
+function convertirValor($valor) {
+    $valor = str_replace(',', '.', $valor);
+
+    if (is_numeric($valor)) {
+        return floatval($valor);
+    }
+    
+    return null;
+}
+
 //Solo se guardan los codigos que se pueden sumar
 $sql = "SELECT nombre, cantidad_primaria, unidad, codigo, leyenda_sistema, concepto, uso, ce.id AS 'id_codigo_extraccion', IF(leyenda_sistema <> '', leyenda_sistema, concepto) AS 'name'
             FROM tipo_codigo_extraccion tce, codigo_extraccion ce
@@ -176,12 +186,12 @@ if (mysqli_num_rows($query) > 0) {
                 <thead class="table-primary">
                     <tr>
                         <th scope="col" class="sort" data-sort="name">#</th>
-                        <th scope="col" class="sort" data-sort="name">Fecha y Hora (00)</th>
-                        <th scope="col" class="sort" data-sort="budget">Cota (01)</th>
-                        <th scope="col" class="sort" data-sort="budget">Extracción (1000 <span style="text-transform: lowercase;">m</span><sup>3</sup>) (23)</th>
-                        <th scope="col" class="sort" data-sort="budget">Abertura (cm,%) (29)</th>
-                        <th scope="col" class="sort" data-sort="budget">Caudal (<span style="text-transform: lowercase;">m<sup>3</sup>/s)</span> (30)</th>
-                        <th scope="col" class="sort" data-sort="budget">Cargado por</th>
+                        <th scope="col" class="sort" data-sort="name">FECHA Y HORA (00)</th>
+                        <th scope="col" class="sort" data-sort="budget">CORA (01)</th>
+                        <th scope="col" class="sort" data-sort="budget">EXTRACCIÓN (1000 <span style="text-transform: lowercase;">m</span><sup>3</sup>) (23)</th>
+                        <th scope="col" class="sort" data-sort="budget">ABERTURA (cm,%) (29)</th>
+                        <th scope="col" class="sort" data-sort="budget">CAUDAL (<span style="text-transform: lowercase;">m<sup>3</sup>/s)</span> (30)</th>
+                        <th scope="col" class="sort" data-sort="budget">CARGADO POR</th>
                         <th scope="col" style="min-width: 60px;"></th>
                     </tr>
                 </thead>
@@ -248,11 +258,11 @@ if (mysqli_num_rows($query) > 0) {
                                 <span style="display:none"><?php echo number_format($extraccion, 2, ",", ""); ?></span>
                             </td>
                             <td>
-                                <?php echo $abertura; ?>
+                                <?php echo is_numeric($abertura) ? number_format($abertura, 2, ",", ".") : (is_numeric(convertirValor($abertura)) ? number_format(convertirValor($abertura), 2, ",", ".")  : $abertura); ?>
                             </td>
                             <td>
-                                <?php echo is_numeric($caudal) ? number_format($extraccion, 2, ",", ".") : $caudal; ?>
-                                <span style="display:none"><?php echo is_numeric($caudal) ? number_format($extraccion, 2, ",", "") : $caudal; ?></span>
+                                <?php echo is_numeric($caudal) ? number_format($extraccion, 2, ",", ".") : (is_numeric(convertirValor($caudal)) ? number_format(convertirValor($caudal), 2, ",", ".")  : $caudal); ?>
+                                <span style="display:none"><?php echo is_numeric($caudal) ? number_format($extraccion, 2, ",", "") : (is_numeric(convertirValor($caudal)) ? number_format(convertirValor($caudal), 2, ",", ".")  : $caudal); ?></span>
                             </td>
                             <td>
                                 <?php echo ($row['encargado'] != "" && $row['encargado'] != NULL) ? $row['encargado'] : "-"; ?>
