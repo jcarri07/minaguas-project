@@ -491,6 +491,7 @@ if (1) {
   $flecha_arriba = "../../assets/icons/f-arriba.png";
   $flecha_abajo = "../../assets/icons/f-abajo.png";
   $sin_cambio = "../../assets/icons/f-igual.png";
+  $compensacion = "../../assets/icons/compensacion.png";
   $status_pie_1 = "../../assets/img/temp/imagen-estatus-pie-1.png";
   $status_pie_2 = "../../assets/img/temp/imagen-estatus-pie-2.png";
   $status_barra_1 = "../../assets/img/temp/imagen-estatus-barra-1.png";
@@ -507,6 +508,7 @@ if (1) {
   $flecha_arriba = "../../assets/icons/f-arriba.png";
   $flecha_abajo = "../../assets/icons/f-abajo.png";
   $sin_cambio = "../../assets/icons/f-igual.png";
+  $compensacion = "../../assets/icons/compensacion.png";
   $status_pie_1 = "../../assets/img/temp/imagen-estatus-pie-1.png";
   $status_pie_2 = "../../assets/img/temp/imagen-estatus-pie-2.png";
   $status_barra_1 = "../../assets/img/temp/imagen-estatus-barra-1.png";
@@ -782,7 +784,9 @@ $ruta_mapas = "../../assets/img/temp/";
           <p style="position: absolute; top: 120px;
         text-align: left; padding-left: 40px; font-size: 12px;">
           <div style="position: absolute; left: 20px; top: 2px; width: 0; height: 0;
-        border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 10px solid black;"></div> EDC (Embalse de Compensación)</p>
+        ">
+            <img style="width:10px ; height: 10px;" src="<?php echo $compensacion ?>" />
+          </div> EDC (Embalse de Compensación)</p>
 
   </div>
   <h4 style="position: absolute; top: 690px; text-align: center; text-justify: center;"><?php echo "$dia_actual DE " . getMonthName() . " $año_actual" ?></h4>
@@ -1193,7 +1197,7 @@ $ruta_mapas = "../../assets/img/temp/";
 
     <p style="position: absolute; top: 110px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
+    <div style="position: absolute; left: 17px; top: 2px; height: 20px; width: 20px;"><img style="width: 15px; height: 15px;" src="<?php echo $sin_cambio ?>">
     </div>Sin Cambios <b> <?php echo $valores[1][2] ?> Embalses</b></p>
 
   </div>
@@ -1241,7 +1245,7 @@ $ruta_mapas = "../../assets/img/temp/";
 
     <p style="position: absolute; top: 110px;
         text-align: left; padding-left: 40px; font-size: 15px;">
-    <div style="position: absolute; left: 15px; top: 2px; height: 20px; width: 20px;"><img style="width: 20px; height: 15px;" src="<?php echo $sin_cambio ?>">
+    <div style="position: absolute; left: 17px; top: 2px; height: 20px; width: 20px;"><img style="width: 15px; height: 15px;" src="<?php echo $sin_cambio ?>">
     </div>Sin Cambios <b> <?php echo $valores[2][2] ?> Embalses</b></p>
 
 
@@ -1288,12 +1292,12 @@ $ruta_mapas = "../../assets/img/temp/";
     <div style="width: 500px; height: 280px; background-color: lightgray; margin-top: 20px; margin-left: 10px; position: relative;">
       <!-- MAPAS HIDROLOGICOS -->
       <img style="position: absolute; top:0; width:500px ; height: 280px;" src="<?php echo $ruta_mapas . "imagen-hidro-mapa-" . $operador . "-sequia.png" ?>" />
-      <p style="position: absolute; top:-10px; left:5px; margin-left:3px;"><?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?></p>
+      <p style="position: absolute; top:-30px; left:5px; margin-left:3px;"><?php echo mb_convert_case(date('d', strtotime($fecha1)) . ' DE ' . $meses[date('n', strtotime($fecha1))], MB_CASE_UPPER, 'UTF-8'); ?></p>
     </div>
 
     <div style="width: 500px; height: 280px; background-color: lightgray; position: absolute; margin-top: 430px; margin-left: 10px;">
       <img style="position: absolute; top:0; width:500px ; height: 280px;" src="<?php echo $ruta_mapas . "imagen-hidro-mapa-" . $operador . "-lluvia.png" ?>" />
-      <p style="position: absolute; top:-10px; left:5px; margin-left:3px;"><?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?></p>
+      <p style="position: absolute; top:-30px; left:5px; margin-left:3px;"><?php echo mb_convert_case(date('d', strtotime($fecha2)) . ' DE ' . $meses[date('n', strtotime($fecha2))], MB_CASE_UPPER, 'UTF-8'); ?></p>
       <!-- MAPAS HIDROLOGICOS -->
     </div>
 
@@ -1677,8 +1681,9 @@ $ruta_mapas = "../../assets/img/temp/";
     <img style="position: absolute;  width:90px ; height: 80px; float: right; top: 5px " src="<?php echo $logo_combinado ?>" />
     <h1 style="position: absolute; top: 10px; font-size: 16px; font-style: italic;text-align: right; text-justify: center; color:#1B569D">PLAN DE RECUPERACIÓN DE FUENTES HÍDRICAS</h1>
   </div>
-
-  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY <?php echo $fecha3 . " - " . $fecha2; ?></b>
+  <?php //echo $fecha3 . " - " . $fecha2; 
+  ?>
+  <div style="font-size: 18px; color:#000000; position: absolute;  margin-top: 70px; margin-left: 5px;"><b>VARIACIONES DE VOLUMEN DE LOS EMBALSES HASTA HOY</b>
   </div>
 
   <div style="position: absolute; margin-top: 80px; margin-left: 30px; width: 95%; height: 100px;">

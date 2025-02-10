@@ -474,7 +474,7 @@ function explodeBat($value, $i = null)
                   <p><?php echo number_format(floatval($embalse_datos["area_cuenca"]), 2, ",", ".") ?> ha</p>
                 </div>
                 <div>
-                  <span class="fw-bold" for="">Propósitos:</span>
+                  <span class="fw-bold" for="">Propósito(s):</span>
                   <p><?php echo implode(", ", $proposito) ?></p>
                 </div>
               </div>
@@ -497,7 +497,7 @@ function explodeBat($value, $i = null)
                   <p><?php echo $vida_restante ?> años</p>
                 </div>
                 <div>
-                  <span class="fw-bold" for="">Úso actual:</span>
+                  <span class="fw-bold" for="">Úso(s):</span>
                   <p><?php echo implode(", ", $uso) ?></p>
                 </div>
               </div>

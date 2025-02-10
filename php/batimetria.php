@@ -18,6 +18,7 @@ class Batimetria
     private $ultima_carga;
     private $embalse;
     private $area_cuenca;
+    private $disenio;
 
     public function __construct($id_embalse, $conn)
     {
@@ -59,6 +60,7 @@ class Batimetria
         $this->vol_nor = $embalse['vol_nor'];
         $this->vol_max = $embalse['vol_max'];
         $this->area_cuenca = $embalse['area_cuenca'];
+        $this->disenio = $embalse['inicio_de_operacion'];
 
         $numero = str_replace(['.', ','], ['', '.'], $this->area_cuenca);
         $numero = (float) $numero;
@@ -373,6 +375,11 @@ class Batimetria
             // return $this->volumenDisponible();
             return 0;
         }
+    }
+
+    public function getDisenio()
+    {
+        return $this->disenio;
     }
 
     public function getEmbalse()

@@ -569,6 +569,12 @@ while ($row < count($datos_embalses)) {
         }
     });
 
+    var ArrowIconLargeNew = L.Icon.extend({
+        options: {
+            iconSize: [20, 20],
+        }
+    });
+
     var i_rojo = L.divIcon({
         className: '', // Evitar estilos predeterminados
         html: '<div style="width: 10px; height: 10px; background-color: #73B2FF; border-radius: 50%;"></div>',
@@ -659,7 +665,7 @@ while ($row < count($datos_embalses)) {
     var f_abajo_large = new ArrowIconLarge({
         iconUrl: '../../assets/icons/f-abajo.png'
     })
-    var f_igual_large = new ArrowIconLarge({
+    var f_igual_large = new ArrowIconLargeNew({
         iconUrl: '../../assets/icons/f-igual.png'
     })
 
