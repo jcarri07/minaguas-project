@@ -50,14 +50,20 @@ $sql = "WITH reporte_hoy AS (
         SELECT DISTINCT 
           em.id_embalse, 
           em.nombre_embalse,
-          GROUP_CONCAT(DISTINCT m.municipio) AS municipio,
+          GROUP_CONCAT(DISTINCT e.estado) AS estado,
           em.id_encargado,
-          COALESCE(rh.reportado_hoy, 'no') AS reportado_hoy
+          COALESCE(rh.reportado_hoy, 'no') AS reportado_hoy,
+          CONCAT(P_Nombre, ' ', P_Apellido) AS 'encargado',
+          o.operador AS 'operador'
         FROM embalses em
-        LEFT JOIN municipios m 
-          ON FIND_IN_SET(m.id_municipio, em.id_municipio) OR em.id_municipio = ''
+        LEFT JOIN estados e
+          ON FIND_IN_SET(e.id_estado, em.id_estado) OR em.id_estado = ''
         LEFT JOIN reporte_hoy rh
           ON rh.id_embalse = em.id_embalse
+        LEFT JOIN usuarios u
+          ON em.id_encargado = u.id_usuario
+        LEFT JOIN operadores o
+          ON em.operador = o.id_operador
         WHERE em.estatus = 'activo' $add_where
         GROUP BY em.id_embalse, em.nombre_embalse, em.id_encargado;";
 
@@ -161,8 +167,12 @@ while ($row = mysqli_fetch_array($query_codigos)) {
               <table class="table align-items-center text-sm text-center table-sm" id="table">
                 <thead class="table-primary">
                   <tr>
-                    <th scope="col" class="sort" data-sort="name">Nombre</th>
-                    <th scope="col" class="sort hide-cell" data-sort="budget">Municipio</th> <!--Ubicación-->
+                    <th scope="col" class="sort" data-sort="name">ESTADO</th>
+                    <th scope="col" class="sort" data-sort="name">EMBALSE</th>
+                    <th scope="col" class="sort" data-sort="name">HIDROLÓGICA</th>
+                    <th scope="col" class="sort" data-sort="name">ENCARGADO</th>
+                    <th scope="col" class="sort" data-sort="name">MOROSIDAD (AÑO)</th>
+                    <!-- <th scope="col" class="sort hide-cell" data-sort="budget">Municipio</th> Ubicación -->
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -178,19 +188,52 @@ while ($row = mysqli_fetch_array($query_codigos)) {
                       <th scope="row">
                         <div class="media">
                           <div class="media-body">
+                            <?php
+                              $estado = str_replace(",", ", ", $row['estado']);
+                              if (strlen($estado) > 150)
+                                $estado = substr($estado, 0, 150) . "...";
+                              echo $estado;
+                            ?>
+                          </div>
+                        </div>
+                      </th>
+                      <th scope="row">
+                        <div class="media">
+                          <div class="media-body">
                             <span class="name mb-0 text-dark"><?php echo $row['nombre_embalse']; ?></span>
                           </div>
                         </div>
                       </th>
-                      <td class="hide-cell" style="white-space: normal !important;">
+                      <th scope="row">
+                        <div class="media">
+                          <div class="media-body">
+                            <span class="name mb-0 text-dark"><?php echo $row['operador']; ?></span>
+                          </div>
+                        </div>
+                      </th>
+                      <th scope="row">
+                        <div class="media">
+                          <div class="media-body">
+                            <span class="name mb-0 text-dark"><?php echo $row['encargado']; ?></span>
+                          </div>
+                        </div>
+                      </th>
+                      <th scope="row">
+                        <div class="media">
+                          <div class="media-body">
+                            <span class="name mb-0 text-dark" id="morosidad_embalse_<?php echo $row['id_embalse']; ?>"></span>
+                          </div>
+                        </div>
+                      </th>
+                      <!-- <td class="hide-cell" style="white-space: normal !important;"> -->
                         <?php
                         //echo $row['estado'] . ", " . $row['municipio'] . ", " . $row['parroquia'];
-                        $municipio = str_replace(",", ", ", $row['municipio']);
-                        if (strlen($municipio) > 150)
-                          $municipio = substr($municipio, 0, 150) . "...";
-                        echo $municipio;
+                        // $municipio = str_replace(",", ", ", $row['municipio']);
+                        // if (strlen($municipio) > 150)
+                        //   $municipio = substr($municipio, 0, 150) . "...";
+                        // echo $municipio;
                         ?>
-                      </td>
+                      <!-- </td> -->
                       <td>
                         <!--<a class="btn btn-primary btn-sm px-3 mb-0" href="javascript:;" onclick="$('#add').modal('show');">
                       <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
@@ -766,7 +809,7 @@ require_once 'php/datos/vistas/morosos.php';
     var value_select = select.value;
     var label_valor = $("#valor_extraccion_" + row).parent().prev();
 
-    if (value_select == '' || value_select == '30' || value_select == '31') {
+    if (value_select == '' || value_select == '30') { //antes estaba 31
       label_valor.text("Valor");
       $("#valor_extraccion_" + row).attr("type", "text");
       $("#valor_extraccion_" + row).attr("onkeydown", "");
@@ -979,10 +1022,12 @@ require_once 'php/datos/vistas/morosos.php';
             $("#add .btn-submit").attr("disabled", true);
           } else {
             var string = '<div class="col" style="font-size: 0.75em;">';
-            string += '<span>Capacidad o Volumen (02): <b>' + response[0][1] + ' (1000 m<sup>3</sup>)</b></span>';
+            // string += '<span>Capacidad o Volumen (02): <b>' + response[0][1] + ' (1000 m<sup>3</sup>)</b></span>';
+            string += '<span>Capacidad o Volumen (02): <b>' + response[0][1] + ' (Hm<sup>3</sup>)</b></span>';
             string += '</div>';
             string += '<div class="col small" style="font-size: 0.75em;">';
-            string += '<span>Área o Superficie (03): <b>' + response[0][0] + ' (1000 m<sup>2</sup>)</b></span>';
+            // string += '<span>Área o Superficie (03): <b>' + response[0][0] + ' (1000 m<sup>2</sup>)</b></span>';
+            string += '<span>Área o Superficie (03): <b>' + response[0][0] + ' (Ha<sup></sup>)</b></span>';
             string += '</div>';
 
             $("#add .btn-submit").attr("disabled", false);
