@@ -378,7 +378,8 @@ closeConection($conn);
                       <div style="margin-top: 20px;">Embalse</div>
                     </th>
                     <th style="text-align: center; font-size:small; font-weight:semibold;  width: 25%" class="hide-cell">
-                      <div>(Hm³)</div>
+                      <div
+                        style="text-transform: lowercase;">(mm/mes)</div>
                       <div>Evaporación</div>
                     </th> <!--Ubicación-->
                     <th style="text-align: center; font-size:small; font-weight:semibold; width: 25% " class="hide-cell">

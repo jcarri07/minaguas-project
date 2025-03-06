@@ -62,21 +62,103 @@ if (mysqli_num_rows($embalses_excluidos) > 0) {
   $array_excluidos = explode(",", $string_excluidos);
 }
 
-$almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,(SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AS fech,               (
-SELECT SUM(extraccion)
-        FROM detalles_extraccion dex, codigo_extraccion ce
-        WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
-           FROM datos_embalse h 
-           WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = fech AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
-      ) AS 'extraccion',
-      e.nombre_embalse, (SELECT cota_actual 
-           FROM datos_embalse h 
-           WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = fech AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
-      FROM embalses e
-LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
-WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
-GROUP BY id_embalse 
-ORDER BY id_embalse ASC;");
+// $almacenamiento_actual = mysqli_query($conn, "SELECT e.id_embalse,operador,region,nombre_embalse,(SELECT da.fecha FROM datos_embalse da WHERE da.id_embalse = d.id_embalse AND da.estatus = 'activo' AND da.cota_actual <> 0 ORDER BY da.fecha DESC LIMIT 1) AS fech,               (
+// SELECT SUM(extraccion)
+//         FROM detalles_extraccion dex, codigo_extraccion ce
+//         WHERE ce.id = dex.id_codigo_extraccion AND dex.id_registro = (SELECT id_registro
+//            FROM datos_embalse h 
+//            WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = fech AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AND (ce.id_tipo_codigo_extraccion = '1' OR ce.id_tipo_codigo_extraccion = '2' OR ce.id_tipo_codigo_extraccion = '3' OR ce.id_tipo_codigo_extraccion = '4')
+//       ) AS 'extraccion',
+//       e.nombre_embalse, (SELECT cota_actual 
+//            FROM datos_embalse h 
+//            WHERE h.id_embalse = d.id_embalse AND h.estatus = 'activo' AND h.fecha = fech AND cota_actual <> 0 ORDER BY h.hora DESC LIMIT 1) AS cota_actual
+//       FROM embalses e
+// LEFT JOIN datos_embalse d ON d.id_embalse = e.id_embalse AND d.estatus = 'activo'
+// WHERE e.estatus = 'activo' AND FIND_IN_SET('1', e.uso_actual)
+// GROUP BY id_embalse 
+// ORDER BY id_embalse ASC;");
+
+$almacenamiento_actual = mysqli_query($conn, "SELECT 
+    e.id_embalse,
+    e.operador,
+    e.region,
+    e.nombre_embalse,
+    '2025-02' AS mes,  -- Fijamos el mes y año manualmente
+        CASE
+            WHEN (
+                SELECT COUNT(*)
+                FROM datos_embalse d2
+                WHERE d2.id_embalse = e.id_embalse
+                  AND d2.estatus = 'activo'
+                  AND DATE_FORMAT(d2.fecha, '%Y-%m') = '2025-02'
+                  AND DAY(d2.fecha) <= 5
+                  AND EXISTS (
+                      SELECT 1
+                      FROM detalles_extraccion dex
+                      JOIN codigo_extraccion ce ON dex.id_codigo_extraccion = ce.id
+                      WHERE dex.id_registro = d2.id_registro
+                        AND ce.id_tipo_codigo_extraccion IN ('2', '3')
+                  ) = 0
+            ) THEN (
+                SELECT AVG(
+                    (SELECT SUM(dex.extraccion)
+                      FROM detalles_extraccion dex
+                      JOIN codigo_extraccion ce ON dex.id_codigo_extraccion = ce.id
+                      WHERE dex.id_registro = d3.id_registro
+                        AND ce.id_tipo_codigo_extraccion IN ('2', '3')
+                    )
+                )
+                FROM datos_embalse d3
+                WHERE d3.id_embalse = e.id_embalse
+                  AND d3.estatus = 'activo'
+                  AND DATE_FORMAT(d3.fecha, '%Y-%m') = '2025-01'
+            )
+            ELSE (
+                SELECT AVG(
+                    (SELECT SUM(dex.extraccion)
+                      FROM detalles_extraccion dex
+                      JOIN codigo_extraccion ce ON dex.id_codigo_extraccion = ce.id
+                      WHERE dex.id_registro = d.id_registro
+                        AND ce.id_tipo_codigo_extraccion IN ('2', '3')
+                    )
+                )
+                FROM datos_embalse d
+                WHERE d.id_embalse = e.id_embalse
+                  AND d.estatus = 'activo'
+                  AND DATE_FORMAT(d.fecha, '%Y-%m') = '2025-02'
+            )
+        END
+    AS extraccion,
+    (
+        SELECT h.fecha
+        FROM datos_embalse h
+        WHERE h.id_embalse = e.id_embalse
+          AND h.estatus = 'activo'
+          AND h.cota_actual <> 0
+          AND h.cota_actual IS NOT NULL
+        ORDER BY h.fecha DESC, h.hora DESC
+        LIMIT 1
+    ) AS fech,
+    (
+        SELECT h.cota_actual
+        FROM datos_embalse h
+        WHERE h.id_embalse = e.id_embalse
+          AND h.estatus = 'activo'
+          AND h.cota_actual <> 0
+          AND h.cota_actual IS NOT NULL
+        ORDER BY h.fecha DESC, h.hora DESC
+        LIMIT 1
+    ) AS cota_actual
+FROM 
+    embalses e
+WHERE 
+    e.estatus = 'activo' 
+    AND FIND_IN_SET('1', e.uso_actual)
+GROUP BY 
+    e.id_embalse, e.operador, e.region, e.nombre_embalse
+ORDER BY 
+    e.id_embalse ASC;
+");
 
 $condiciones_actuales1 = mysqli_query($conn, "SELECT e.id_embalse,operador,cota_min,cota_max,e.nombre_embalse, MAX(d.fecha) AS fecha,(SELECT cota_actual 
     FROM datos_embalse h 

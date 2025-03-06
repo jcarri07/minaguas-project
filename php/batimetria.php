@@ -437,6 +437,11 @@ class Batimetria
         // $total_extraccion = $extraccion * (1 / 1000000) * (86400 / 1); // sin 1 / 1000
         $total_salidas = $total_extraccion + $this->evaporacion($evaporacion) + $this->filtracion($filtracion);
         $vol_actual_disp = $this->volumenActualDisponible();
+        $vol_normal = $this->volumenNormal();
+
+        if ($vol_actual_disp > $vol_normal) {
+            $vol_actual_disp = $vol_normal;
+        }
 
         $abastecimiento = ($vol_actual_disp / $total_salidas) / 30.5;
         return $abastecimiento;
@@ -444,9 +449,17 @@ class Batimetria
 
     public function evaporacion($evap = 0)
     {
+
+        $area = 0;
+        if ($this->ultima_carga !== "") {
+            $area = $this->getByCota($this->ultima_carga[0], $this->ultima_carga[1])[0];
+        } else {
+            $area = $this->superficieNormal();
+        }
+
         $evap = str_replace(['.', ','], ['', '.'], $evap);
         $evap = floatval($evap);
-        $evaporacion = ($this->area_cuenca * ($evap / 1000) * 0.8 * (10000 / 30.5)) / 1000000;
+        $evaporacion = ($area * ($evap / 1000) * 0.8 * (10000 / 30.5)) / 1000000;
         return $evaporacion;
     }
 
