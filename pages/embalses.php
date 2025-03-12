@@ -332,7 +332,7 @@ while ($row = mysqli_fetch_array($queryUsers)) {
                       <td style="vertical-align: middle;" class="hide-cell">
                         <div class="d-flex flex-column px-3">
 
-                          <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?></h6>
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?></h6>
                           <span style="display:none"><?php echo number_format($embal->volumenDisponible(), 2, ',', '') ?></span>
                           <!-- <span class="text-xs">20/12/2023</span> -->
                         </div>

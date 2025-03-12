@@ -358,25 +358,25 @@ while ($row < count($datos_embalses)) {
     }
 
     if (array_key_exists($totalop[$datos_embalses[$row]["operador"]], $operador_abast)) {
-      if (($abastecimiento) <= 4) {
+      if (($abastecimiento) < 5) {
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][0] += 1;
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
         $t_op_a[0] += 1;
         $t_op_a[4] += 1;
       }
-      if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
+      if (($abastecimiento) >= 5 && ($abastecimiento) < 9) {
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][1] += 1;
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
         $t_op_a[1] += 1;
         $t_op_a[4] += 1;
       }
-      if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
+      if (($abastecimiento) >= 9 && ($abastecimiento) < 13) {
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][2] += 1;
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
         $t_op_a[2] += 1;
         $t_op_a[4] += 1;
       }
-      if (($abastecimiento) > 12) {
+      if (($abastecimiento) >= 13) {
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][3] += 1;
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
         $t_op_a[3] += 1;
@@ -385,25 +385,25 @@ while ($row < count($datos_embalses)) {
     } else {
       $operador_abast[$totalop[$datos_embalses[$row]["operador"]]] = [0, 0, 0, 0, 0];
 
-      if (($abastecimiento) <= 4) {
+      if (($abastecimiento) < 5) {
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][0] += 1;
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
         $t_op_a[0] += 1;
         $t_op_a[4] += 1;
       }
-      if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
+      if (($abastecimiento) >= 5 && ($abastecimiento) < 9) {
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][1] += 1;
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
         $t_op_a[1] += 1;
         $t_op_a[4] += 1;
       }
-      if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
+      if (($abastecimiento) >= 9 && ($abastecimiento) < 13) {
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][2] += 1;
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
         $t_op_a[2] += 1;
         $t_op_a[4] += 1;
       }
-      if (($abastecimiento) > 12) {
+      if (($abastecimiento) >= 13) {
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][3] += 1;
         $operador_abast[$totalop[$datos_embalses[$row]["operador"]]][4] += 1;
         $t_op_a[3] += 1;
@@ -463,15 +463,15 @@ usort($embalse_abast, function ($a, $b) {
 });
 
 $alerta_roja = array_filter($embalse_abast, function ($value) {
-  return $value[3] <= 4;
+  return $value[3] < 5;
 });
 
 $alerta_naranja = array_filter($embalse_abast, function ($value) {
-  return $value[3] > 4 && $value[3] <= 8;
+  return $value[3] >= 5 && $value[3] < 9;
 });
 
 $alerta_amarilla = array_filter($embalse_abast, function ($value) {
-  return $value[3] > 8 && $value[3] <= 12;
+  return $value[3] >= 9 && $value[3] < 13;
 });
 
 function agregarACondiciones($operador, &$array, $porcentaje, $totalop)
@@ -1873,10 +1873,10 @@ $ruta_mapas = "../../assets/img/temp/";
   {
     // $meses = intval($meses);
     // if ($meses < 1) return "0 meses";
-    if ($meses <= 4) return ["0-4 meses", "#ff0000"];
-    if ($meses > 4 && $meses <= 8) return ["5-8 meses", "#ffaa00"];
-    if ($meses > 8 && $meses <= 12) return ["9-12 meses", "#ffff00"];
-    if ($meses > 12) return ["+12 meses", "#70ad47"];
+    if ($meses < 5) return ["0-4 meses", "#ff0000"];
+    if ($meses >= 5 && $meses < 9) return ["5-8 meses", "#ffaa00"];
+    if ($meses >= 9 && $meses < 13) return ["9-12 meses", "#ffff00"];
+    if ($meses >= 13) return ["+12 meses", "#70ad47"];
   }
 
   ?>
@@ -1954,10 +1954,15 @@ $ruta_mapas = "../../assets/img/temp/";
                 <td rowspan="<?php echo $typeCount[$abast[4]] ?>" class="" style="font-size: 12px; height: 12px;">
                   <div style="background-color:<?php echo descripcion($abast[3])[1] ?>; border-radius: 5; height: 10px; width: 10px; border: 0.5px solid black;"></div>
                 </td>
+                <td rowspan="<?php echo $typeCount[$abast[4]] ?>" class="" style="font-size: 12px; border-left: 0px">
+                  <?php echo descripcion($abast[3])[0]
+                  ?>
+                </td>
               <?php } ?>
-              <td class="" style="font-size: 12px; border-left: 0px"><?php echo descripcion($abast[3])[0] ?></td>
+              <!-- <td class="" style="font-size: 12px; border-left: 0px"><?php //echo descripcion($abast[3])[0] 
+                                                                          ?></td> -->
               <td class="" style="font-size: 12px;"><?php echo $abast[2] ?></td>
-              <td class="" style="font-size: 12px;"><?php echo intval($abast[3]) ?></td>
+              <td class="" style="font-size: 12px;"><?php echo number_format($abast[3], 1, ",", ".") ?></td>
               <?php //if ($index == 0 || $abast[1] != $filter_region[$index - 1][1]) { 
               ?>
               <td rowspan="<?php //echo $hidroCount[$abast[1]] 
@@ -2205,7 +2210,7 @@ $ruta_mapas = "../../assets/img/temp/";
         ?>
           <tr>
             <td class="text-celd" style="font-size: 12px;"><?php echo $value[2]; ?></td>
-            <td class="" style="font-size: 12px;"><?php echo intval($value[3]); ?></td>
+            <td class="" style="font-size: 12px;"><?php echo number_format($value[3], 1, ",", ".") ?></td>
             <td class="text-celd" style="font-size: 12px;"><?php echo $value[1]; ?></td>
           </tr>
         <?php //}

@@ -244,13 +244,13 @@ while ($row < count($datos_embalses)) {
 
     $icono = "f_igual";
 
-    if (($abastecimiento) <= 4) {
+    if (($abastecimiento) < 5) {
         $icono = "rojo";
-    } else if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
+    } else if (($abastecimiento) >= 5 && ($abastecimiento) < 9) {
         $icono = "naranja";
-    } else if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
+    } else if (($abastecimiento) >= 9 && ($abastecimiento) < 13) {
         $icono = "amarillo";
-    } else if (($abastecimiento) > 12) {
+    } else if (($abastecimiento) >= 13) {
         $icono = "verde";
     }
 

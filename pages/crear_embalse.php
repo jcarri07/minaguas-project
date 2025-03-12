@@ -560,10 +560,19 @@ date_default_timezone_set("America/Caracas");
                   </div>
                 </div>
 
-                <div class="col-md-3 col-sm-12">
-                  <div class=" form-group">
-                    <label for="cota_min">Cota mínima (m s.m.n.)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
-                    <input type="text" class="form-control Vnumero numero" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
+                <div class="col-md-3 col-sm-12 position-relative">
+                  <div class="form-group position-absolute  top-0 mt-n2 start-50 translate-middle">
+                    <label for="cota_minima">Cota mínima (m s.m.n.)</label>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-6">
+                      <label for="cota_min">Actual <span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
+                      <input type="text" class="form-control Vnumero numero" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
+                    </div>
+                    <div class="form-group col-6">
+                      <label for="cota_min">Diseño <span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
+                      <input type="text" class="form-control Vnumero numero" id="cota_min_dis" name="cota_min_dis" placeholder="Ingrese la cota minima">
+                    </div>
                   </div>
                   <div class=" form-group">
                     <label for="vol_min">Volumen mínimo (Hm³)<span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
