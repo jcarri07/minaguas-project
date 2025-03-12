@@ -78,19 +78,21 @@ if (mysqli_num_rows($embalses_excluidos) > 0) {
 // GROUP BY id_embalse 
 // ORDER BY id_embalse ASC;");
 
+$mes_actual_almacenamiento = date('Y-m');
+
 $almacenamiento_actual = mysqli_query($conn, "SELECT 
     e.id_embalse,
     e.operador,
     e.region,
     e.nombre_embalse,
-    '2025-02' AS mes,  -- Fijamos el mes y año manualmente
+    '$mes_actual_almacenamiento' AS mes,  -- Fijamos el mes y año manualmente
         CASE
             WHEN (
                 SELECT COUNT(*)
                 FROM datos_embalse d2
                 WHERE d2.id_embalse = e.id_embalse
                   AND d2.estatus = 'activo'
-                  AND DATE_FORMAT(d2.fecha, '%Y-%m') = '2025-02'
+                  AND DATE_FORMAT(d2.fecha, '%Y-%m') = '$mes_actual_almacenamiento'
                   AND DAY(d2.fecha) <= 5
                   AND EXISTS (
                       SELECT 1
@@ -125,7 +127,7 @@ $almacenamiento_actual = mysqli_query($conn, "SELECT
                 FROM datos_embalse d
                 WHERE d.id_embalse = e.id_embalse
                   AND d.estatus = 'activo'
-                  AND DATE_FORMAT(d.fecha, '%Y-%m') = '2025-02'
+                  AND DATE_FORMAT(d.fecha, '%Y-%m') = '$mes_actual_almacenamiento'
             )
         END
     AS extraccion,
