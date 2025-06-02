@@ -244,13 +244,13 @@ while ($row < count($datos_embalses)) {
 
     $icono = "f_igual";
 
-    if (($abastecimiento) <= 4) {
+    if (($abastecimiento) < 5) {
         $icono = "rojo";
-    } else if (($abastecimiento) > 4 && ($abastecimiento) <= 8) {
+    } else if (($abastecimiento) >= 5 && ($abastecimiento) < 9) {
         $icono = "naranja";
-    } else if (($abastecimiento) > 8 && ($abastecimiento) <= 12) {
+    } else if (($abastecimiento) >= 9 && ($abastecimiento) < 13) {
         $icono = "amarillo";
-    } else if (($abastecimiento) > 12) {
+    } else if (($abastecimiento) >= 13) {
         $icono = "verde";
     }
 
@@ -547,6 +547,13 @@ while ($row < count($datos_embalses)) {
         }
     });
 
+    var ArrowIconNew = L.Icon.extend({
+        options: {
+            iconSize: [10, 10],
+        }
+    });
+
+
     var PointIconLarge = L.Icon.extend({
         options: {
             shadowUrl: '../../assets/icons/i-sombra.png',
@@ -559,6 +566,12 @@ while ($row < count($datos_embalses)) {
     var ArrowIconLarge = L.Icon.extend({
         options: {
             iconSize: [30, 20],
+        }
+    });
+
+    var ArrowIconLargeNew = L.Icon.extend({
+        options: {
+            iconSize: [20, 20],
         }
     });
 
@@ -627,7 +640,7 @@ while ($row < count($datos_embalses)) {
     var f_abajo = new ArrowIcon({
         iconUrl: '../../assets/icons/f-abajo.png'
     })
-    var f_igual = new ArrowIcon({
+    var f_igual = new ArrowIconNew({
         iconUrl: '../../assets/icons/f-igual.png'
     })
 
@@ -652,7 +665,7 @@ while ($row < count($datos_embalses)) {
     var f_abajo_large = new ArrowIconLarge({
         iconUrl: '../../assets/icons/f-abajo.png'
     })
-    var f_igual_large = new ArrowIconLarge({
+    var f_igual_large = new ArrowIconLargeNew({
         iconUrl: '../../assets/icons/f-igual.png'
     })
 

@@ -2,11 +2,13 @@
 require_once 'php/Conexion.php';
 require_once 'php/batimetria.php';
 
-$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'activo';");
+$queryEmbalses = mysqli_query($conn, "SELECT * FROM embalses em LEFT JOIN operadores o
+          ON em.operador = o.id_operador WHERE em.estatus = 'activo'");
 $queryEstados = mysqli_query($conn, "SELECT * FROM estados;");
 $queryUsers = mysqli_query($conn, "SELECT * FROM usuarios;");
 // $result = mysqli_fetch_assoc($queriEstados);
-$queryEmbalsesEliminados = mysqli_query($conn, "SELECT * FROM embalses WHERE estatus = 'inactivo';");
+$queryEmbalsesEliminados = mysqli_query($conn, "SELECT * FROM embalses em LEFT JOIN operadores o
+          ON em.operador = o.id_operador WHERE em.estatus = 'inactivo'");
 $numEliminados = mysqli_num_rows($queryEmbalsesEliminados);
 
 $estados = array();
@@ -200,19 +202,23 @@ while ($row = mysqli_fetch_array($queryUsers)) {
                   <tr>
                     <th
                       style="width: 0px">
-                      Embalse
+                      EMBALSE
                     </th>
                     <th
                       style="width: 0px">
-                      Volumen disponible
+                      CAPACIDAD ÚTIL
+                    </th>
+                    <th
+                      style="width: 0px">
+                      HIDROLÓGICA
                     </th>
                     <th
                       style="text-align: center; width: 0px">
-                      Encargado
+                      ENCARGADO / CARGO
                     </th>
                     <th
                       style="text-align: center; width: 0px">
-                      Acción
+                      ACCIÓN
                     </th>
                   </tr>
                 </thead>
@@ -224,6 +230,15 @@ while ($row = mysqli_fetch_array($queryUsers)) {
                       <td style="vertical-align: middle" class="sorting_1">
                         <div class="px-3 placeholder-glow">
                           <!-- <h6 class="mb-1 text-dark font-weight-bold text-sm">Agua Fría</h6> -->
+                          <div style="width: 150px; height: 20px; background-color: rgb(204, 204, 204); margin-bottom: 1px;" class="rounded placeholder"></div>
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle" class="hide-cell">
+                        <div class="d-flex flex-column px-3 placeholder-glow">
+                          <!-- <h6 class="mb-1 text-dark font-weight-bold text-sm">
+                          5,31 <span style="font-size: 12px">Hm</span>³
+                        </h6>
+                        <span style="display: none">5,31</span> -->
                           <div style="width: 150px; height: 20px; background-color: rgb(204, 204, 204); margin-bottom: 1px;" class="rounded placeholder"></div>
                         </div>
                       </td>
@@ -291,10 +306,11 @@ while ($row = mysqli_fetch_array($queryUsers)) {
               <table id="table-embalses" class="table table-striped table-bordered nowrap">
                 <thead>
                   <tr>
-                    <th>Embalse</th>
-                    <th class="hide-cell">Volumen disponible</th>
-                    <th style="text-align: center;" class="hide-cell">Encargado</th>
-                    <th style="text-align: center;">Acción</th>
+                    <th>EMBALSE</th>
+                    <th class="hide-cell">CAPACIDAD ÚTIL <span style="font-size: 12px">(Hm</span>³)</th>
+                    <th class="hide-cell">HIDROLÓGICA </th>
+                    <th style="text-align: center;" class="hide-cell">ENCARGADO / CARGO</th>
+                    <th style="text-align: center;">ACCIÓN</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -316,9 +332,17 @@ while ($row = mysqli_fetch_array($queryUsers)) {
                       <td style="vertical-align: middle;" class="hide-cell">
                         <div class="d-flex flex-column px-3">
 
-                          <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?> <span style="font-size: 12px">Hm</span>³</h6>
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?></h6>
                           <span style="display:none"><?php echo number_format($embal->volumenDisponible(), 2, ',', '') ?></span>
                           <!-- <span class="text-xs">20/12/2023</span> -->
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;" class="">
+                        <!-- class="d-flex flex-column px-3 mt-2 mb-2" style="height: 100%;" -->
+                        <div class="px-3">
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['operador'] ?> </h6>
+                          <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; 
+                                                      ?> </span> -->
                         </div>
                       </td>
                       <td style="vertical-align: middle;" class="hide-cell">
@@ -329,7 +353,7 @@ while ($row = mysqli_fetch_array($queryUsers)) {
                             <?php
                                 } else {
                             ?>
-                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
+                              <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?> <?php if (trim($row["f_cargo"]) !== "") { ?> <?php echo " / " . $row['f_cargo'] ?> <? } else { ?><?php echo "" ?><?php } ?></h6>
                             <?php } ?>
                           </div>
                         </div>
@@ -397,10 +421,11 @@ while ($row = mysqli_fetch_array($queryUsers)) {
                 <table id="table-embalses-eliminados" class="table table-striped table-bordered nowrap">
                   <thead>
                     <tr>
-                      <th>Embalse</th>
-                      <th class="hide-cell">Volumen disponible</th>
-                      <th style="text-align: center;" class="hide-cell">Encargado</th>
-                      <th style="text-align: center;">Acción</th>
+                      <th>EMBALSE</th>
+                      <th class="hide-cell">CAPACIDAD ÚTIL <span style="font-size: 12px">(Hm</span>³)</th>
+                      <th class="hide-cell">HIDROLÓGICA</th>
+                      <th style="text-align: center;" class="hide-cell">ENCARGADO / CARGO</th>
+                      <th style="text-align: center;">ACCIÓN</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -418,9 +443,17 @@ while ($row = mysqli_fetch_array($queryUsers)) {
                         <td class="hide-cell">
                           <div class="d-flex flex-column px-3">
                             <?php $embal = new Batimetria($row["id_embalse"], $conn) ?>
-                            <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?> <span style="font-size: 12px">Hm</span>³</h6>
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo number_format($embal->volumenDisponible(), 2, ',', '.') ?></h6>
                             <span style="display:none"><?php echo number_format($embal->volumenDisponible(), 2, ',', '') ?></span>
                             <!-- <span class="text-xs">20/12/2023</span> -->
+                          </div>
+                        </td>
+                        <td style="vertical-align: middle;" class="">
+                          <!-- class="d-flex flex-column px-3 mt-2 mb-2" style="height: 100%;" -->
+                          <div class="px-3">
+                            <h6 class="mb-1 text-dark font-weight-bold text-sm"> <?php echo $row['operador'] ?> </h6>
+                            <!-- <span class="text-xs"> <?php //echo $estados[$row['id_estado']]; 
+                                                        ?> </span> -->
                           </div>
                         </td>
                         <td style="vertical-align: middle;" class="hide-cell">
@@ -431,7 +464,7 @@ while ($row = mysqli_fetch_array($queryUsers)) {
                               <?php
                                   } else {
                               ?>
-                                <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?></h6>
+                                <h6 class="mb-1 text-dark font-weight-bold text-sm"><?php echo $encargados[$row['id_encargado']] ?><?php if (trim($row["f_cargo"]) !== "") { ?> <?php echo " / " . $row['f_cargo'] ?> <? } else { ?><?php echo "" ?><?php } ?></h6>
                               <?php } ?>
                             </div>
                           </div>

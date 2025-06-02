@@ -703,11 +703,25 @@ function explodeBat($value, $i = null)
               </div>
 
               <!--  -->
-              <div class="col-md-3 col-sm-12">
-                <div class=" form-group">
-                  <label for="cota_min">Cota mínima (m s.m.n.)</label>
-                  <input value="<?php echo stringFloat($embalse["cota_min"]) ?>" type="text" class="form-control Vnumero numero" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
+              <div class="col-md-3 col-sm-12 position-relative">
+                <div class="form-group position-absolute  top-0 mt-n2 start-50 translate-middle">
+                  <label for="cota_minima">Cota mínima (m s.m.n.)</label>
                 </div>
+                <div class="row">
+                  <div class="form-group col-6">
+                    <label for="cota_min">Actual <span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
+                    <input value="<?php echo stringFloat($embalse["cota_min"]) ?>" type="text" class="form-control Vnumero numero" id="cota_min" name="cota_min" placeholder="Ingrese la cota minima">
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="cota_min">Diseño <span style="font-size: 11px; color:dimgray"> (EJ: 1.234,56)</span></label>
+                    <input value="<?php echo stringFloat($embalse["cota_min_dis"]) ?>" type="text" class="form-control Vnumero numero" id="cota_min_dis" name="cota_min_dis" placeholder="Ingrese la cota minima">
+                  </div>
+                </div>
+                <!-- <div class=" form-group">
+                  <label for="cota_min">Cota mínima (m s.m.n.)</label>
+                  <input value="<?php //echo stringFloat($embalse["cota_min"]) 
+                                ?>" type="text" class="form-control Vnumero numero" id="cota_min" name="cota_min" placeholder="Ingrese la cota mínima">
+                </div> -->
                 <div class=" form-group">
                   <label for="vol_min">Volumen mínimo (Hm³)</label>
                   <input value="<?php echo stringFloat($embalse["vol_min"]) ?>" type="text" class="form-control Vnumero numero" id="vol_min" name="vol_min" placeholder="Ingrese el volumen mínimo">

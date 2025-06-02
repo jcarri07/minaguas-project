@@ -226,16 +226,16 @@ if ($count >= 1) {
 
     $j = 0;
     while ($j < count($suma_extracciones)) {
-        if ($suma_extracciones[$j] <= 4 && $suma_extracciones[$j] >= 0) {
+        if ($suma_extracciones[$j] < 5 && $suma_extracciones[$j] >= 0) {
             $condicion[0]++;
         };
-        if ($suma_extracciones[$j] > 4 && $suma_extracciones[$j] <= 8) {
+        if ($suma_extracciones[$j] >= 5 && $suma_extracciones[$j] < 9) {
             $condicion[1]++;
         };
-        if ($suma_extracciones[$j] > 8 && $suma_extracciones[$j] <= 12) {
+        if ($suma_extracciones[$j] >= 9 && $suma_extracciones[$j] < 13) {
             $condicion[2]++;
         };
-        if ($suma_extracciones[$j] > 12) {
+        if ($suma_extracciones[$j] >= 13) {
             $condicion[3]++;
         };
         $j++;

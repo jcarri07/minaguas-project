@@ -113,11 +113,13 @@
 
     ajustar_meses_morosos("", true);
 
-    function morosos(detalles, id_embalse){
+    function morosos(detalles, id_embalse, data_only = false){
 
-        $("#modal-morosos .card-body .content").html("<h3 class='text-center'>Cargando...</h3>");
-        $("#modal-morosos .card-header .text-title").text("Morosos en Reportar");
-        $("#modal-morosos").modal("show");
+        if(!data_only){
+            $("#modal-morosos .card-body .content").html("<h3 class='text-center'>Cargando...</h3>");
+            $("#modal-morosos .card-header .text-title").text("Morosos en Reportar");
+            $("#modal-morosos").modal("show");
+        }
 
         var datos = new FormData();
         //datos.append('id_embalse', id_embalse);
@@ -125,6 +127,7 @@
         datos.append('mes', $("#mes_morosos").val());
         datos.append('detalles_mes_morosos', detalles);
         datos.append('id_embalse', id_embalse);
+        datos.append('data_only', data_only);
 
         $.ajax({
             url: 			'php/datos/vistas/list-morosos.php',
@@ -134,8 +137,31 @@
             contentType:    false,
             processData:    false,
             success: function(response){
-                $("#modal-morosos .card-body .content").html(response);
-                iniciarTabla('table-morosos');
+                if(data_only){
+                    // console.log(JSON.parse(response));
+                    let data = JSON.parse(response); 
+
+                    // Object.keys(data).forEach(key => {
+                    //     let embalse = data[key];
+
+                    //     $("#morosidad_embalse_" + key).text(embalse.total_faltantes);
+                    // });
+
+                    let table = $('#table').DataTable();
+
+                    // Agregar evento después de la inicialización
+                    table.on('draw.dt', function () {
+                        Object.keys(data).forEach(key => {
+                            let embalse = data[key];
+                            $("#morosidad_embalse_" + key).text(embalse.total_faltantes);
+                        });
+                    });
+                    table.draw();
+                }
+                else{
+                    $("#modal-morosos .card-body .content").html(response);
+                    iniciarTabla('table-morosos');
+                }
             }
             ,
             error: function(response){
@@ -161,5 +187,10 @@
     function detalles_morosos_mes(id_embalse) {
         morosos('si', id_embalse);
     }
+
+    $(document).ready(function() {
+        // console.log("ready!");
+        morosos('no', '', true);
+    });
 </script>
 

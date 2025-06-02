@@ -474,7 +474,7 @@ function explodeBat($value, $i = null)
                   <p><?php echo number_format(floatval($embalse_datos["area_cuenca"]), 2, ",", ".") ?> ha</p>
                 </div>
                 <div>
-                  <span class="fw-bold" for="">Propósitos:</span>
+                  <span class="fw-bold" for="">Propósito(s):</span>
                   <p><?php echo implode(", ", $proposito) ?></p>
                 </div>
               </div>
@@ -497,7 +497,7 @@ function explodeBat($value, $i = null)
                   <p><?php echo $vida_restante ?> años</p>
                 </div>
                 <div>
-                  <span class="fw-bold" for="">Úso actual:</span>
+                  <span class="fw-bold" for="">Úso(s):</span>
                   <p><?php echo implode(", ", $uso) ?></p>
                 </div>
               </div>
@@ -569,8 +569,8 @@ function explodeBat($value, $i = null)
             </div>
             <div class="w-full embalse-caracteristicas">
               <div style="display: grid; grid-template-columns: 25% 25%; justify-content: end; justify-items:center;">
-                <div class="w-100 text-center b-l b-t">Diseño</div>
-                <div class="w-100 text-center b-l b-t b-r"><?php echo $embalse->getCloseYear(); ?></div>
+                <div class="w-100 text-center b-l b-t b-r">Diseño</div>
+                <div class="w-100 text-center b-t b-r">Actual (<?php echo $embalse->getCloseYear(); ?>)</div>
               </div>
               <div style="display: grid; grid-template-columns: 25% 25% 50%; justify-items:center; align-items: center">
                 <div class="border-cell w-100 h-100 d-flex flex-column justify-content-center">
@@ -588,7 +588,8 @@ function explodeBat($value, $i = null)
                   </div>
                 </div>
                 <div class="w-100" style="display: grid; grid-template-columns: 50% 50%; justify-items:center;">
-                  <div class="w-100 text-center b-t b-l b-r" style="grid-column: span 2;"><?php echo number_format($embalse->cotaMinima(), 3, ",", ".")  ?></div>
+                  <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval(($embalse_datos["cota_min_dis"])), 3, ",", ".")  ?></div>
+                  <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->cotaMinima(), 3, ",", ".")  ?></div>
                   <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["vol_min"]), 2, ",", ".") ?></div>
                   <div class="w-100 text-center b-t b-r"><?php echo number_format($embalse->volumenMinimo(), 2, ".", "") ?></div>
                   <div class="w-100 text-center b-t b-l b-r"><?php echo number_format(floatval($embalse_datos["sup_min"]), 2, ",", ".") ?></div>

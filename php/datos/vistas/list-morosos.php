@@ -7,6 +7,8 @@
     $mes = $_POST['mes'];
     $detalles_mes_morosos = $_POST['detalles_mes_morosos'];
     $id_embalse = $_POST['id_embalse'];
+    $data_only = $_POST['data_only'];
+
 
     $nombre_embalse = "";
 
@@ -235,6 +237,11 @@
 
     closeConection($conn);
 
+    if($data_only == 'true'){
+        echo json_encode($embalses);
+        return true;
+    }
+
 
 
     if($detalles_mes_morosos == "si") {
@@ -265,17 +272,17 @@
                             <thead class="table-primary">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">#</th>
-                                    <th scope="col" class="sort" data-sort="name">Embalse</th>
-                                    <th scope="col" class="sort" data-sort="budget">Encargado</th>
+                                    <th scope="col" class="sort" data-sort="name">EMBALSE</th>
+                                    <th scope="col" class="sort" data-sort="budget">ENCARGADO</th>
 <?php
                                 if($mes == "") {
 ?>
-                                    <th scope="col" class="sort" data-sort="budget">Reportes faltantes en el año</th>
+                                    <th scope="col" class="sort" data-sort="budget">REPORTES FALTANTES EN EL AÑO</th>
 <?php
                                 }
                                 else {
 ?>
-                                    <th scope="col" class="sort" data-sort="budget">Reportes faltantes en el mes</th>
+                                    <th scope="col" class="sort" data-sort="budget">REPORTES FALTANTES EN EL MES</th>
 <?php
                                 }
 
