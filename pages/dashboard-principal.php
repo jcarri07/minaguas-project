@@ -189,7 +189,7 @@ closeConection($conn);*/
         </div>
       </a>
     </div> -->
-    <?php if ($_SESSION["Tipo"] == "Admin") { ?>
+    <?php //if ($_SESSION["Tipo"] == "Admin") { ?>
       <!-- <div class="col-xl-3 col-sm-6">
         <a href="?page=reportes">
           <div class="card">
@@ -215,7 +215,7 @@ closeConection($conn);*/
           </div>
         </a>
       </div> -->
-    <?php }  ?>
+    <?php //}  ?>
   </div>
 
 
