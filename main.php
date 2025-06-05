@@ -9,6 +9,7 @@ if (!isset($_SESSION["Id_usuario"])) {
 
 date_default_timezone_set("America/Caracas");
 header('Content-Type: text/html; charset=UTF-8');
+phpinfo();
 ?>
 <!--
 =========================================================
@@ -339,7 +340,7 @@ header('Content-Type: text/html; charset=UTF-8');
     ?>
     <div class="">
       <?php
-        phpinfo();
+        
 //         echo '<pre>';
 // print_r($_SESSION);
 // echo '</pre>';
