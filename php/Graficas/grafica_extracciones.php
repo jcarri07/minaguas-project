@@ -40,25 +40,27 @@ if ($count >= 1) {
 
     $hace_30_dias = date("Y-m-d", strtotime(date("Y-m-d") . "- 30 days"));
 
+    $sql = "SELECT tce.nombre AS 'tipo_extraccion', 
+                COALESCE(ROUND(suma_extracciones, 5), 0) AS 'suma'
+                    FROM (
+                    SELECT tce.id, tce.nombre
+                    FROM tipo_codigo_extraccion tce
+                    WHERE tce.id IN ('1', '2', '3', '4')
+                ) AS tce
+                    LEFT JOIN (
+                    SELECT ce.id_tipo_codigo_extraccion, 
+                            SUM(CAST(de.extraccion AS DOUBLE)) AS suma_extracciones
+                    FROM detalles_extraccion de
+                    JOIN codigo_extraccion ce ON de.id_codigo_extraccion = ce.id
+                    JOIN datos_embalse dem ON de.id_registro = dem.id_registro
+                    WHERE dem.fecha >= '$hace_30_dias' AND dem.estatus = 'activo'
+                    GROUP BY ce.id_tipo_codigo_extraccion
+                ) AS sumas ON tce.id = sumas.id_tipo_codigo_extraccion
+                ORDER BY tce.id;";
+
     $almacenamiento_actual = mysqli_query(
         $conn,
-        "SELECT tce.nombre AS 'tipo_extraccion', 
-        COALESCE(ROUND(suma_extracciones, 5), 0) AS 'suma'
-            FROM (
-            SELECT tce.id, tce.nombre
-            FROM tipo_codigo_extraccion tce
-            WHERE tce.id IN ('1', '2', '3', '4')
-        ) AS tce
-            LEFT JOIN (
-            SELECT ce.id_tipo_codigo_extraccion, 
-                    SUM(CAST(de.extraccion AS DOUBLE)) AS suma_extracciones
-            FROM detalles_extraccion de
-            JOIN codigo_extraccion ce ON de.id_codigo_extraccion = ce.id
-            JOIN datos_embalse dem ON de.id_registro = dem.id_registro
-            WHERE dem.fecha >= '$hace_30_dias' AND dem.estatus = 'activo'
-            GROUP BY ce.id_tipo_codigo_extraccion
-        ) AS sumas ON tce.id = sumas.id_tipo_codigo_extraccion
-        ORDER BY tce.id;"
+        $sql
     );
 
 
