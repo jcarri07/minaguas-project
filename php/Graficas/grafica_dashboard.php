@@ -3,6 +3,9 @@
 <!-- <script src="./assets/js/jquery/jquery.min.js"></script> -->
 <script src="./assets/js/chartjs-plugin-datalabels@2.js"></script>
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+};
 require_once '../Conexion.php';
 require_once '../batimetria.php';
 ini_set('max_execution_time', 400);
