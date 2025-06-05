@@ -339,9 +339,10 @@ header('Content-Type: text/html; charset=UTF-8');
     ?>
     <div class="">
       <?php
-        echo '<pre>';
-print_r($_SESSION);
-echo '</pre>';
+        phpinfo();
+//         echo '<pre>';
+// print_r($_SESSION);
+// echo '</pre>';
       ?>
     </div>
     <footer class="footer pt-2 pb-4" style=" flex-shrink: none;
