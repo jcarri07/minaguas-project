@@ -4,7 +4,9 @@
 </script>
 
 <?php
-
+        echo '<pre>';
+print_r($_SESSION);
+echo '</pre>';
 require_once 'php/Conexion.php';
 
 $add_where = "";
